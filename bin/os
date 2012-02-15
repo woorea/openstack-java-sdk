@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+COMMAND=$@
+
+pushd `dirname $0` > /dev/null
+BASEDIR=`pwd`
+popd > /dev/null
+
+. ~/.credentials/openstack
+
+if [[ "$FORMAT" == "" ]]; then
+	FORMAT=raw
+fi
+
+NAILGUN_PORT=2102 ${BASEDIR}/ng org.openstack.client.cli.OpenstackCli --format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}" "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}" 
+
