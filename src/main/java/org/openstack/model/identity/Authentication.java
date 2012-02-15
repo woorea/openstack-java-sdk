@@ -1,4 +1,5 @@
 package org.openstack.model.identity;
+
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -6,50 +7,50 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="auth")
+@XmlRootElement(name = "auth")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Authentication implements Serializable {
 
-	@XmlAccessorType(XmlAccessType.NONE)
-	public static class PasswordCredentials {
-		
-		@XmlAttribute
-		private String username;
-		
-		@XmlAttribute
-		private String password;
+    @XmlAccessorType(XmlAccessType.NONE)
+    public static class PasswordCredentials {
 
-		public String getUsername() {
-			return username;
-		}
+        @XmlAttribute
+        private String username;
 
-		public void setUsername(String username) {
-			this.username = username;
-		}
+        @XmlAttribute
+        private String password;
 
-		public String getPassword() {
-			return password;
-		}
+        public String getUsername() {
+            return username;
+        }
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
-		
-	}
-	
-	@XmlElement
-	private PasswordCredentials passwordCredentials;
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
-	public PasswordCredentials getPasswordCredentials() {
-		return passwordCredentials;
-	}
+        public String getPassword() {
+            return password;
+        }
 
-	public void setPasswordCredentials(PasswordCredentials passwordCredentials) {
-		this.passwordCredentials = passwordCredentials;
-	}
-	
-	
-	
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+    }
+
+    @XmlElement
+    private PasswordCredentials passwordCredentials;
+
+    @XmlAttribute()
+    public String tenantName;
+
+    public PasswordCredentials getPasswordCredentials() {
+        return passwordCredentials;
+    }
+
+    public void setPasswordCredentials(PasswordCredentials passwordCredentials) {
+        this.passwordCredentials = passwordCredentials;
+    }
+
 }

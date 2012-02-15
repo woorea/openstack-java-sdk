@@ -5,73 +5,70 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class User implements Serializable {
-	
-	@XmlAttribute
-	private String id;
-	
-	@XmlAttribute
-	private String name;
-	
-	@XmlAttribute
-	private String password;
-	
-	@XmlAttribute
-	private String email;
-	
-	@XmlAttribute
-	private boolean enabled;
 
-	public String getId() {
-		return id;
-	}
+    @XmlAttribute
+    private String id;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    @XmlAttribute
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    @XmlAttribute
+    private String password;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlAttribute
+    private String email;
 
-	public String getPassword() {
-		return password;
-	}
+    @XmlAttribute
+    private boolean enabled;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password
-				+ ", email=" + email + ", enabled=" + enabled + "]";
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", enabled=" + enabled + "]";
+    }
 
 }
-

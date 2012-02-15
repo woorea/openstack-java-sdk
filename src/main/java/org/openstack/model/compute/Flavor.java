@@ -15,88 +15,89 @@ import org.openstack.model.atom.Link;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Flavor implements Serializable {
 
-	@XmlAttribute
-	private String id;
-	
-	@XmlAttribute
-	private String name;
-	
-	@XmlAttribute
-	private int ram;
-	
-	@XmlAttribute
-	private int vcpus;
-	
-	@XmlAttribute(name="rxtx_factor")
-	private float rxTxFactor;
-	
-	@XmlAttribute
-	private int disk;
-	
-	@XmlElement(name="link", namespace="http://www.w3.org/2005/Atom")
-	private List<Link> links;
+    @XmlAttribute
+    private String id;
 
-	public String getId() {
-		return id;
-	}
+    @XmlAttribute
+    private String name;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    @XmlAttribute
+    private int ram;
 
-	public String getName() {
-		return name;
-	}
+    @XmlAttribute
+    private int vcpus;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlAttribute
+    public Integer swap;
 
-	public int getRam() {
-		return ram;
-	}
+    @XmlAttribute(name = "rxtx_factor")
+    private float rxTxFactor;
 
-	public void setRam(int ram) {
-		this.ram = ram;
-	}
+    @XmlAttribute
+    private int disk;
 
-	public int getVcpus() {
-		return vcpus;
-	}
+    @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
+    private List<Link> links;
 
-	public void setVcpus(int vcpus) {
-		this.vcpus = vcpus;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public float getRxTxFactor() {
-		return rxTxFactor;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setRxTxFactor(float rxTxFactor) {
-		this.rxTxFactor = rxTxFactor;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getDisk() {
-		return disk;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDisk(int disk) {
-		this.disk = disk;
-	}
+    public int getRam() {
+        return ram;
+    }
 
-	public List<Link> getLinks() {
-		return links;
-	}
+    public void setRam(int ram) {
+        this.ram = ram;
+    }
 
-	public void setLinks(List<Link> links) {
-		this.links = links;
-	}
+    public int getVcpus() {
+        return vcpus;
+    }
 
-	@Override
-	public String toString() {
-		return "Flavor [id=" + id + ", name=" + name + ", ram=" + ram
-				+ ", vcpus=" + vcpus + ", rxtxFactor=" + rxTxFactor + ", disk="
-				+ disk + ", links=" + links + "]";
-	}
-	
+    public void setVcpus(int vcpus) {
+        this.vcpus = vcpus;
+    }
+
+    public float getRxTxFactor() {
+        return rxTxFactor;
+    }
+
+    public void setRxTxFactor(float rxTxFactor) {
+        this.rxTxFactor = rxTxFactor;
+    }
+
+    public int getDisk() {
+        return disk;
+    }
+
+    public void setDisk(int disk) {
+        this.disk = disk;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
+    @Override
+    public String toString() {
+        return "Flavor [id=" + id + ", name=" + name + ", ram=" + ram + ", vcpus=" + vcpus + ", rxtxFactor=" + rxTxFactor + ", disk=" + disk + ", links=" + links + "]";
+    }
+
 }

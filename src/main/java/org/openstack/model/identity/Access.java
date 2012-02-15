@@ -1,62 +1,71 @@
 package org.openstack.model.identity;
+
 import java.io.Serializable;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="access")
+@XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Access implements Serializable {
+    @XmlElement(nillable = true, name = "service")
+    @XmlElementWrapper(name = "serviceCatalog")
+    public List<Service> serviceCatalog;
 
-	@XmlAccessorType(XmlAccessType.NONE)
-	public static class Token implements Serializable {
-		
-		@XmlAttribute
-		private String id;
-		
-		@XmlAttribute
-		private String expires;
+    @XmlAccessorType(XmlAccessType.NONE)
+    public static class Token implements Serializable {
 
-		public String getId() {
-			return id;
-		}
+        @XmlAttribute
+        private String id;
 
-		public void setId(String id) {
-			this.id = id;
-		}
+        @XmlAttribute
+        private String expires;
 
-		public String getExpires() {
-			return expires;
-		}
+        public String getId() {
+            return id;
+        }
 
-		public void setExpires(String expires) {
-			this.expires = expires;
-		}
+        public void setId(String id) {
+            this.id = id;
+        }
 
-		@Override
-		public String toString() {
-			return "Token [id=" + id + ", expires=" + expires + "]";
-		}
-		
-	}
-	
-	@XmlElement
-	private Token token;
+        public String getExpires() {
+            return expires;
+        }
 
-	public Token getToken() {
-		return token;
-	}
+        public void setExpires(String expires) {
+            this.expires = expires;
+        }
 
-	public void setToken(Token token) {
-		this.token = token;
-	}
+        @Override
+        public String toString() {
+            return "Token [id=" + id + ", expires=" + expires + "]";
+        }
 
-	@Override
-	public String toString() {
-		return "Access [token=" + token + "]";
-	}
-	
+    }
+
+    @XmlElement
+    private Token token;
+
+    @XmlElement
+    public User user;
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "Access [token=" + token + "]";
+    }
+
 }

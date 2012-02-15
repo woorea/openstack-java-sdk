@@ -3,14 +3,17 @@ package org.openstack.model.compute.server;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.namespace.QName;
 
+import org.openstack.client.common.ExtensionData;
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.Metadata;
 import org.openstack.model.compute.Addresses;
@@ -22,283 +25,238 @@ import org.openstack.model.compute.Image;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Server implements Serializable {
 
-	@XmlAttribute
-	private String id;
-	
-	@XmlAttribute
-	private String name;
-	
-	@XmlAttribute
-	private String status;
-	
-	@XmlAttribute
-	private Date updated;
-	
-	@XmlAttribute
-	private Date created;
-	
-	@XmlAttribute
-	private String hostId;
-	
-	@XmlAttribute
-	private String userId;
-	
-	@XmlAttribute
-	private String tenantId;
-	
-	@XmlAttribute(name="accessIPv4")
-	private String accessIpV4;
-	
-	@XmlAttribute(name="accessIPv6")
-	private String accessIpV6;
-	
-	@XmlAttribute(name="vm_state", namespace="http://docs.openstack.org/compute/ext/extended_status/api/v1.1")
-	private String vmState;
-	
-	@XmlAttribute(name="task_state", namespace="http://docs.openstack.org/compute/ext/extended_status/api/v1.1")
-	private String taskState;
-	
-	@XmlAttribute(name="power_state", namespace="http://docs.openstack.org/compute/ext/extended_status/api/v1.1")
-	private String powerState;
-	
-	@XmlAttribute(namespace="http://docs.rackspacecloud.com/servers/api/ext/diskConfig/v1.0")
-	private String diskConfig;
-	
-	@XmlAttribute
-	private String adminPass;
-	
-	@XmlAttribute()
-	private String progress;
-	
-	@XmlAttribute(name="config_drive")
-	private String configDrive;
-	
-	@XmlAttribute(name="key_name")
-	private String keyName;
-	
-	@XmlElement
-	private Image image;
-	
-	@XmlElement
-	private Flavor flavor;
-	
-	@XmlElement
-	private Fault fault;
-	
-	@XmlElement
-	private Metadata metadata;
-	
-	@XmlElement
-	private Addresses addresses;
-	
-	@XmlElement(name="link", namespace="http://www.w3.org/2005/Atom")
-	private List<Link> links;
+    @XmlAttribute
+    private String id;
 
-	public String getId() {
-		return id;
-	}
+    @XmlAttribute
+    private String name;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    @XmlAttribute
+    private String status;
 
-	public String getName() {
-		return name;
-	}
+    @XmlAttribute
+    private Date updated;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlAttribute
+    private Date created;
 
-	public String getStatus() {
-		return status;
-	}
+    @XmlAttribute
+    private String hostId;
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    @XmlAttribute
+    private String userId;
 
-	public Date getUpdated() {
-		return updated;
-	}
+    @XmlAttribute
+    private String tenantId;
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
+    @XmlAttribute(name = "accessIPv4")
+    private String accessIpV4;
 
-	public Date getCreated() {
-		return created;
-	}
+    @XmlAttribute(name = "accessIPv6")
+    private String accessIpV6;
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    @XmlAnyAttribute
+    private Map<QName, Object> extensionAttributes;
 
-	public String getHostId() {
-		return hostId;
-	}
+    @XmlAttribute
+    private String adminPass;
 
-	public void setHostId(String hostId) {
-		this.hostId = hostId;
-	}
+    @XmlAttribute()
+    private String progress;
 
-	public String getUserId() {
-		return userId;
-	}
+    @XmlAttribute(name = "config_drive")
+    private String configDrive;
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    @XmlAttribute(name = "key_name")
+    private String keyName;
 
-	public String getTenantId() {
-		return tenantId;
-	}
+    @XmlElement
+    private Image image;
 
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    @XmlElement
+    private Flavor flavor;
 
-	public String getAccessIpV4() {
-		return accessIpV4;
-	}
+    @XmlElement
+    private Fault fault;
 
-	public void setAccessIpV4(String accessIpV4) {
-		this.accessIpV4 = accessIpV4;
-	}
+    @XmlElement
+    private Metadata metadata;
 
-	public String getAccessIpV6() {
-		return accessIpV6;
-	}
+    @XmlElement
+    private Addresses addresses;
 
-	public void setAccessIpV6(String accessIpV6) {
-		this.accessIpV6 = accessIpV6;
-	}
+    @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
+    private List<Link> links;
 
-	public String getVmState() {
-		return vmState;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setVmState(String vmState) {
-		this.vmState = vmState;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getTaskState() {
-		return taskState;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setTaskState(String taskState) {
-		this.taskState = taskState;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPowerState() {
-		return powerState;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setPowerState(String powerState) {
-		this.powerState = powerState;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getDiskConfig() {
-		return diskConfig;
-	}
+    public Date getUpdated() {
+        return updated;
+    }
 
-	public void setDiskConfig(String diskConfig) {
-		this.diskConfig = diskConfig;
-	}
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
-	public String getAdminPass() {
-		return adminPass;
-	}
+    public Date getCreated() {
+        return created;
+    }
 
-	public void setAdminPass(String adminPass) {
-		this.adminPass = adminPass;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public String getProgress() {
-		return progress;
-	}
+    public String getHostId() {
+        return hostId;
+    }
 
-	public void setProgress(String progress) {
-		this.progress = progress;
-	}
+    public void setHostId(String hostId) {
+        this.hostId = hostId;
+    }
 
-	public String getConfigDrive() {
-		return configDrive;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setConfigDrive(String configDrive) {
-		this.configDrive = configDrive;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getKeyName() {
-		return keyName;
-	}
+    public String getTenantId() {
+        return tenantId;
+    }
 
-	public void setKeyName(String keyName) {
-		this.keyName = keyName;
-	}
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-	public Image getImage() {
-		return image;
-	}
+    public String getAccessIpV4() {
+        return accessIpV4;
+    }
 
-	public void setImage(Image image) {
-		this.image = image;
-	}
+    public void setAccessIpV4(String accessIpV4) {
+        this.accessIpV4 = accessIpV4;
+    }
 
-	public Flavor getFlavor() {
-		return flavor;
-	}
+    public String getAccessIpV6() {
+        return accessIpV6;
+    }
 
-	public void setFlavor(Flavor flavor) {
-		this.flavor = flavor;
-	}
+    public void setAccessIpV6(String accessIpV6) {
+        this.accessIpV6 = accessIpV6;
+    }
 
-	public Fault getFault() {
-		return fault;
-	}
+    public String getAdminPass() {
+        return adminPass;
+    }
 
-	public void setFault(Fault fault) {
-		this.fault = fault;
-	}
+    public void setAdminPass(String adminPass) {
+        this.adminPass = adminPass;
+    }
 
-	public Metadata getMetadata() {
-		return metadata;
-	}
+    public String getProgress() {
+        return progress;
+    }
 
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
-	}
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
 
-	public Addresses getAddresses() {
-		return addresses;
-	}
+    public String getConfigDrive() {
+        return configDrive;
+    }
 
-	public void setAddresses(Addresses addresses) {
-		this.addresses = addresses;
-	}
+    public void setConfigDrive(String configDrive) {
+        this.configDrive = configDrive;
+    }
 
-	public List<Link> getLinks() {
-		return links;
-	}
+    public String getKeyName() {
+        return keyName;
+    }
 
-	public void setLinks(List<Link> links) {
-		this.links = links;
-	}
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
+    }
 
-	@Override
-	public String toString() {
-		return "Server [id=" + id + ", name=" + name + ", status=" + status
-				+ ", updated=" + updated + ", created=" + created + ", hostId="
-				+ hostId + ", userId=" + userId + ", tenantId=" + tenantId
-				+ ", accessIpV4=" + accessIpV4 + ", accessIpV6=" + accessIpV6
-				+ ", vmState=" + vmState + ", taskState=" + taskState
-				+ ", powerState=" + powerState + ", diskConfig=" + diskConfig
-				+ ", adminPass=" + adminPass + ", progress=" + progress
-				+ ", configDrive=" + configDrive + ", keyName=" + keyName
-				+ ", image=" + image + ", flavor=" + flavor + ", fault="
-				+ fault + ", metadata=" + metadata + ", addresses=" + addresses
-				+ ", links=" + links + "]";
-	}
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Flavor getFlavor() {
+        return flavor;
+    }
+
+    public void setFlavor(Flavor flavor) {
+        this.flavor = flavor;
+    }
+
+    public Fault getFault() {
+        return fault;
+    }
+
+    public void setFault(Fault fault) {
+        this.fault = fault;
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public Addresses getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Addresses addresses) {
+        this.addresses = addresses;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
+    @Override
+    public String toString() {
+        return "Server [id=" + id + ", name=" + name + ", status=" + status + ", updated=" + updated + ", created=" + created + ", hostId=" + hostId + ", userId=" + userId + ", tenantId=" + tenantId
+                + ", accessIpV4=" + accessIpV4 + ", accessIpV6=" + accessIpV6 + ", adminPass=" + adminPass + ", progress=" + progress + ", configDrive=" + configDrive + ", keyName=" + keyName
+                + ", image=" + image + ", flavor=" + flavor + ", fault=" + fault + ", metadata=" + metadata + ", addresses=" + addresses + ", links=" + links + "]";
+    }
+
+    public ExtensionData getExtensionData() {
+        return new ExtensionData(extensionAttributes);
+    }
 
 }

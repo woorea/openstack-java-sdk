@@ -28,8 +28,8 @@ public class TokensResource extends Resource {
 			
 			@Override
 			public ClientResponse handle(ClientRequest cr) throws ClientHandlerException {
-				//cr.getHeaders().putSingle("X-Auth-Token", access.getToken().getId());
-				cr.getHeaders().putSingle("X-Auth-Token", "woorea");
+				cr.getHeaders().putSingle("X-Auth-Token", access.getToken().getId());
+//				cr.getHeaders().putSingle("X-Auth-Token", "woorea");
 				return getNext().handle(cr);
 			}
 		});
