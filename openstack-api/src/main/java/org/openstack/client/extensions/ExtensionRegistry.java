@@ -21,7 +21,7 @@ public class ExtensionRegistry {
     }
 
     public ExtensionValues parseAllExtensions(ExtensionData extensionData) {
-        Map<Class<?>, Object> results = Maps.newHashMap();
+    	ExtensionValues results = new ExtensionValues();
 
         Map<QName, Object> extensionAttributes = extensionData.getExtensionAttributes();
         Set<String> namespaces = Sets.newHashSet();
@@ -40,11 +40,11 @@ public class ExtensionRegistry {
             Class<?> attributeClass = extension.getAttributeClass();
             if (attributeClass != null) {
             	Object o = parseExtensionAttributes(extensionData, attributeClass);
-                results.put(o.getClass(), o);
+                results.add(o);
             }
         }
 
-        return new ExtensionValues(results);
+        return results;
     }
 
     private <T> T parseExtensionAttributes(ExtensionData extensionData, Class<T> attributeClass) {
