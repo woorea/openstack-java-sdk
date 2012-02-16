@@ -1,30 +1,66 @@
 package org.openstack.client.common;
 
+import java.util.Map;
+
 import javax.ws.rs.core.MediaType;
 
+import org.openstack.client.imagestore.UrlUtils;
+
+import com.google.common.collect.Maps;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 
 public class Resource {
+	protected Client client;
+	protected String resource;
+	
+	public Resource(Client client, String resource) {
+		this.client = client;
+		this.resource = resource;
+	}
 
-    protected Client client;
+	protected Resource() {
+	}
 
-    protected String resource;
+	protected Builder addAcceptHeaders(WebResource webResource) {
+		return webResource.accept(MediaType.APPLICATION_XML);
+	}
+	
+	public void initialize(Client client, String resource) {
+		if (this.client != null)
+			throw new IllegalStateException();
+		this.client = client;
+		this.resource = resource;
+	}
 
-    public Resource(Client client, String resource) {
-        this.client = client;
-        this.resource = resource;
-    }
+	protected Builder resource() {
+		WebResource builder = client.resource(resource);
+		return addAcceptHeaders(builder);
+	}
 
-    protected Builder resource() {
-        return client.resource(resource).accept(MediaType.APPLICATION_XML);
-    }
+	protected Builder resource(String relativePath) {
+		String resourceUrl = UrlUtils.join(resource, relativePath);
+		WebResource builder = client.resource(resourceUrl);
+		return addAcceptHeaders(builder);
+	}
+	
+	final Map<String, Resource> resources = Maps.newHashMap();
 
-    protected Builder resource(String relativePath) {
-        String resourceUrl = resource;
-        if (!resource.endsWith("/") && !relativePath.startsWith("/"))
-            resourceUrl += "/";
-        resourceUrl += relativePath;
-        return client.resource(resourceUrl).accept(MediaType.APPLICATION_XML);
-    }
+	protected <T extends Resource> T getResource(String relativePath, Class<T> clazz) {
+		T instance = (T) resources.get(relativePath);
+		if (instance == null) {
+			try {
+				instance = (T) clazz.newInstance();
+			} catch (InstantiationException e) {
+				throw new IllegalStateException("Error creating resource instance", e);
+			} catch (IllegalAccessException e) {
+				throw new IllegalStateException("Error creating resource instance", e);
+			}
+			String childResourcePath = UrlUtils.join(resource, relativePath);
+			instance.initialize(client, childResourcePath);
+			resources.put(relativePath, instance);
+		}
+		return instance;
+	}
 }

@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import org.kohsuke.args4j.Option;
+import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.common.OpenStackClientFactory;
+import org.openstack.client.common.OpenstackClient;
+import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.compute.ComputeResource;
 import org.openstack.client.compute.TenantResource;
 import org.openstack.client.identity.IdentityResource;
@@ -78,6 +81,12 @@ public class ConfigurationOptions extends CliOptions {
         TenantResource tenant = compute.tenant();
 
         return tenant;
+    }
+    
+    public OpenstackImageClient buildImageClient() throws IOException {
+        OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
+        OpenstackClient client = new OpenstackClient(server, credentials , debug);
+        return client.getImageClient();
     }
 
 }
