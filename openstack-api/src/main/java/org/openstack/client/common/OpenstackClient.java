@@ -17,12 +17,6 @@ public class OpenstackClient {
 
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
-        // We can add it as a singleton for more speed
-        // config.getSingletons().add(OpenstackJaxbContextProvider.INSTANCE);
-        config.getClasses().add(OpenstackJaxbContextProvider.class);
-
-        config.getClasses().add(OpenstackJaxbMarshallerProvider.class);
-
         Client client = Client.create(config);
 
         if (verbose) {

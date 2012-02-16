@@ -33,5 +33,9 @@
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.openstack</groupId>
+		    <artifactId>openstack-commons</artifactId>
+		</dependency>
 	</dependencies>
 </project>
