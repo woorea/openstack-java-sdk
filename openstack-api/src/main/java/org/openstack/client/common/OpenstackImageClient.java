@@ -6,8 +6,10 @@ import org.openstack.client.imagestore.GlanceRootResource;
 public class OpenstackImageClient {
     private final OpenstackAuthenticationClient authClient;
 
-    public OpenstackImageClient(OpenstackAuthenticationClient authClient) {
+    public OpenstackImageClient(OpenstackAuthenticationClient authClient) throws OpenstackException {
         this.authClient = authClient;
+
+        root();
     }
 
     GlanceRootResource root;
@@ -20,5 +22,9 @@ public class OpenstackImageClient {
         }
 
         return root;
+    }
+
+    public OpenstackAuthenticationClient getAuthenticationClient() {
+        return authClient;
     }
 }

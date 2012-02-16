@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.atom.Link;
-import org.openstack.model.common.Metadata;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

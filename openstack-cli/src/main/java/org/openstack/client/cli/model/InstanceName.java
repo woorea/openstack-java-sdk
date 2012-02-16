@@ -2,6 +2,7 @@ package org.openstack.client.cli.model;
 
 import java.util.List;
 
+import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.InstanceNameAutoCompleter;
 import org.openstack.model.compute.server.Server;
@@ -17,7 +18,7 @@ public class InstanceName extends StringWrapper {
         super(key);
     }
 
-    public String findInstanceId(OpenstackCliContext context) {
+    public String findInstanceId(OpenstackCliContext context) throws OpenstackException {
         List<Server> matches = Lists.newArrayList();
         for (Server instance : context.getInstances()) {
             if (instance.getName().equals(getKey())) {

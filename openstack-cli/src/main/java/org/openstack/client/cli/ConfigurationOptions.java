@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.kohsuke.args4j.Option;
 import org.openstack.client.OpenstackCredentials;
+import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenStackClientFactory;
 import org.openstack.client.common.OpenstackClient;
+import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.compute.ComputeResource;
 import org.openstack.client.compute.TenantResource;
@@ -36,57 +38,73 @@ public class ConfigurationOptions extends CliOptions {
     @Option(name = "-debug", usage = "enable debug output")
     boolean debug;
 
-    public TenantResource buildComputeClient() throws IOException {
-        OpenStackClientFactory osf = new OpenStackClientFactory();
-        Client client = debug ? osf.createWithStdoutLogging() : osf.create();
-        IdentityResource identity = new IdentityResource(client, server);
-        Authentication authentication = new Authentication();
-        Authentication.PasswordCredentials passwordCredentials = new Authentication.PasswordCredentials();
-        passwordCredentials.setUsername(username);
-        passwordCredentials.setPassword(password);
-        authentication.tenantName = tenantId;
-        authentication.setPasswordCredentials(passwordCredentials);
-        Access access = identity.tokens().authenticate(authentication);
-        // TenantsRepresentation representation = identity.tenants().list();
-        // List<Tenant> tenants = representation.getList();
-        // for (Tenant tenant : tenants) {
-        // System.out.println(tenant);
-        // }
+    // public OpenstackComputeClient buildComputeClient() throws IOException {
+    // OpenStackClientFactory osf = new OpenStackClientFactory();
+    // Client client = debug ? osf.createWithStdoutLogging() : osf.create();
+    // IdentityResource identity = new IdentityResource(client, server);
+    // Authentication authentication = new Authentication();
+    // Authentication.PasswordCredentials passwordCredentials = new
+    // Authentication.PasswordCredentials();
+    // passwordCredentials.setUsername(username);
+    // passwordCredentials.setPassword(password);
+    // authentication.tenantName = tenantId;
+    // authentication.setPasswordCredentials(passwordCredentials);
+    // Access access = identity.tokens().authenticate(authentication);
+    // // TenantsRepresentation representation = identity.tenants().list();
+    // // List<Tenant> tenants = representation.getList();
+    // // for (Tenant tenant : tenants) {
+    // // System.out.println(tenant);
+    // // }
+    //
+    // List<Service> foundServices = Lists.newArrayList();
+    // for (Service service : access.serviceCatalog) {
+    // if ("compute".equals(service.getType())) {
+    // foundServices.add(service);
+    // }
+    // }
+    //
+    // if (foundServices.isEmpty()) {
+    // throw new IllegalArgumentException("Cannot find compute service");
+    // }
+    //
+    // if (foundServices.size() != 1) {
+    // throw new IllegalArgumentException("Found multiple compute services");
+    // }
+    //
+    // Service service = foundServices.get(0);
+    //
+    // ServiceEndpoint bestEndpoint = null;
+    // for (ServiceEndpoint endpoint : service.endpoints) {
+    // bestEndpoint = endpoint;
+    // }
+    // if (bestEndpoint == null) {
+    // throw new IllegalArgumentException("Cannot find suitable endpoint");
+    // }
+    // ComputeResource compute = new ComputeResource(client,
+    // bestEndpoint.publicURL);
+    // TenantResource tenant = compute.tenant();
+    //
+    // return tenant;
+    // }
 
-        List<Service> foundServices = Lists.newArrayList();
-        for (Service service : access.serviceCatalog) {
-            if ("compute".equals(service.getType())) {
-                foundServices.add(service);
-            }
-        }
-
-        if (foundServices.isEmpty()) {
-            throw new IllegalArgumentException("Cannot find compute service");
-        }
-
-        if (foundServices.size() != 1) {
-            throw new IllegalArgumentException("Found multiple compute services");
-        }
-
-        Service service = foundServices.get(0);
-
-        ServiceEndpoint bestEndpoint = null;
-        for (ServiceEndpoint endpoint : service.endpoints) {
-            bestEndpoint = endpoint;
-        }
-        if (bestEndpoint == null) {
-            throw new IllegalArgumentException("Cannot find suitable endpoint");
-        }
-        ComputeResource compute = new ComputeResource(client, bestEndpoint.publicURL);
-        TenantResource tenant = compute.tenant();
-
-        return tenant;
+    public OpenstackComputeClient buildComputeClient() throws OpenstackException {
+        OpenstackClient client = getOpenstackClient();
+        return client.getComputeClient();
     }
-    
-    public OpenstackImageClient buildImageClient() throws IOException {
-        OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
-        OpenstackClient client = new OpenstackClient(server, credentials , debug);
+
+    public OpenstackImageClient buildImageClient() throws OpenstackException {
+        OpenstackClient client = getOpenstackClient();
         return client.getImageClient();
+    }
+
+    OpenstackClient client = null;
+
+    private OpenstackClient getOpenstackClient() {
+        if (client == null) {
+            OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
+            client = new OpenstackClient(server, credentials, debug);
+        }
+        return client;
     }
 
 }

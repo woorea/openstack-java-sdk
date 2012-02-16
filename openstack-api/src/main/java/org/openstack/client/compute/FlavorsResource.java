@@ -1,12 +1,12 @@
 package org.openstack.client.compute;
 
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.client.common.PagingList;
 import org.openstack.client.common.Resource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource.Builder;
 
 public class FlavorsResource extends Resource {
 
@@ -14,14 +14,13 @@ public class FlavorsResource extends Resource {
         super(client, resource);
     }
 
-    public FlavorsRepresentation list() {
-        FlavorList list = client.resource(resource).accept(MediaType.APPLICATION_XML).get(FlavorList.class);
-        return new FlavorsRepresentation(client, list);
+    public Iterable<Flavor> list() {
+        return list(true);
     }
 
-    public FlavorsRepresentation details() {
-        FlavorList list = resource("detail").get(FlavorList.class);
-        return new FlavorsRepresentation(client, list);
+    public Iterable<Flavor> list(boolean details) {
+        Builder r = details ? resource("detail") : resource();
+        return PagingList.build(client, r.get(FlavorList.class));
     }
 
     public Flavor create(Flavor flavor) {

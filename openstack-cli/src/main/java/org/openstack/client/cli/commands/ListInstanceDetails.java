@@ -1,10 +1,8 @@
 package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.InstanceName;
-import org.openstack.client.compute.ServerRepresentation;
-import org.openstack.client.compute.TenantResource;
+import org.openstack.client.common.OpenstackComputeClient;
 
 public class ListInstanceDetails extends OpenstackCliCommandRunnerBase {
     @Argument(index = 0)
@@ -16,11 +14,9 @@ public class ListInstanceDetails extends OpenstackCliCommandRunnerBase {
 
     @Override
     public Object runCommand() throws Exception {
-        OpenstackCliContext context = getContext();
-        TenantResource tenant = context.getComputeClient();
+        OpenstackComputeClient tenant = getComputeClient();
         // TODO: We don't format any extra details
-        ServerRepresentation server = tenant.servers().server(serverId.getKey()).show();
-        return server.getModel();
+        return tenant.root().servers().server(serverId.getKey()).show();
     }
 
 }

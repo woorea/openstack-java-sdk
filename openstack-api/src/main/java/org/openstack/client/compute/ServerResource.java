@@ -5,7 +5,10 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.client.compute.ext.FloatingIpsResource;
+import org.openstack.client.compute.ext.SecurityGroupsResource;
+import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.server.Server;
 import org.openstack.model.compute.server.action.AddFixedIpAction;
 import org.openstack.model.compute.server.action.ChangePasswordAction;
@@ -34,7 +37,7 @@ import org.openstack.model.compute.server.action.UnpauseAction;
 
 import com.sun.jersey.api.client.Client;
 
-public class ServerResource extends Resource {
+public class ServerResource extends ComputeResourceBase {
 
     private FloatingIpsResource floatingIps;
 
@@ -54,17 +57,13 @@ public class ServerResource extends Resource {
 
     }
 
-    public ServerResource(Client client, String resource) {
-        super(client, resource);
-    }
-
-    public ServerRepresentation show() {
-        Server server = client.resource(resource).accept(MediaType.APPLICATION_XML).get(Server.class);
-        return new ServerRepresentation(client, server);
+    public Server show() {
+        Server server = resource().get(Server.class);
+        return server;
     }
 
     public ServerRepresentation update(Server server) {
-        Server serverResult = client.resource(resource).accept(MediaType.APPLICATION_XML).put(Server.class, server);
+        Server serverResult = put(Server.class, server);
         return new ServerRepresentation(client, serverResult);
     }
 
@@ -317,6 +316,10 @@ public class ServerResource extends Resource {
             consoles = new ConsolesResource(client, new StringBuilder(resource).append("/consoles").toString());
         }
         return consoles;
+    }
+
+    public SecurityGroupList listSecurityGroups() {
+        return getChildResource("os-security-groups", SecurityGroupsResource.class).list();
     }
 
 }

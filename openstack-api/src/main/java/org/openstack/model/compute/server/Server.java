@@ -15,11 +15,11 @@ import javax.xml.namespace.QName;
 
 import org.openstack.client.common.ExtensionData;
 import org.openstack.model.atom.Link;
-import org.openstack.model.common.Metadata;
 import org.openstack.model.compute.Addresses;
 import org.openstack.model.compute.Fault;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
+import org.openstack.model.compute.Metadata;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

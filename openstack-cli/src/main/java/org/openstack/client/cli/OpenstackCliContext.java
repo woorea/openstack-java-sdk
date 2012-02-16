@@ -3,8 +3,10 @@ package org.openstack.client.cli;
 import java.io.IOException;
 import java.util.List;
 
+import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
 import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
+import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.compute.TenantResource;
 import org.openstack.model.compute.Flavor;
@@ -14,7 +16,7 @@ import com.fathomdb.cli.CliContextBase;
 
 public class OpenstackCliContext extends CliContextBase {
     final ConfigurationOptions options;
-    TenantResource computeClient;
+    OpenstackComputeClient computeClient;
     OpenstackImageClient glanceClient;
     
     public OpenstackCliContext(ConfigurationOptions options) throws IOException {
@@ -23,11 +25,11 @@ public class OpenstackCliContext extends CliContextBase {
         this.options = options;
     }
 
-    public synchronized TenantResource getComputeClient() {
+    public synchronized OpenstackComputeClient getComputeClient()  {
         if (computeClient == null) {
             try {
                 computeClient = options.buildComputeClient();
-            } catch (IOException e) {
+            } catch (OpenstackException e) {
                 throw new IllegalArgumentException("Error connecting to OpenStack", e);
             }
         }
@@ -38,7 +40,7 @@ public class OpenstackCliContext extends CliContextBase {
         if (glanceClient == null) {
             try {
             	glanceClient = options.buildImageClient();
-            } catch (IOException e) {
+            } catch (OpenstackException e) {
                 throw new IllegalArgumentException("Error connecting to OpenStack", e);
             }
         }
@@ -58,19 +60,19 @@ public class OpenstackCliContext extends CliContextBase {
         return (OpenstackCliContext) CliContextBase.get();
     }
 
-    public List<Image> getImages() {
-        TenantResource computeClient = getComputeClient();
-        return computeClient.images().list().getList();
+    public List<Image> getImages() throws OpenstackException {
+        OpenstackComputeClient computeClient = getComputeClient();
+        return computeClient.root().images().list().getList();
     }
 
-    public List<Server> getInstances() {
-        TenantResource computeClient = getComputeClient();
-        return computeClient.servers().list(false).getList();
+    public List<Server> getInstances() throws OpenstackException {
+        OpenstackComputeClient computeClient = getComputeClient();
+        return computeClient.root().servers().list(false).getList();
     }
 
-    public List<Flavor> getFlavors() {
-        TenantResource computeClient = getComputeClient();
-        return computeClient.flavors().list().getList();
+    public Iterable<Flavor> getFlavors() throws OpenstackException {
+        OpenstackComputeClient computeClient = getComputeClient();
+        return computeClient.root().flavors().list(false);
     }
 
 }

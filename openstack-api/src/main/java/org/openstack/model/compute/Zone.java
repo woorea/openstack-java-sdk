@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.Metadata;
 
 @XmlRootElement(name="zone", namespace="http://docs.rackspacecloud.com/servers/api/v1.0")
 @XmlAccessorType(XmlAccessType.NONE)

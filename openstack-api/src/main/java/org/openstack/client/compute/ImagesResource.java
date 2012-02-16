@@ -3,6 +3,7 @@ package org.openstack.client.compute;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.imagestore.UrlUtils;
 import org.openstack.model.compute.ImageList;
 
 import com.sun.jersey.api.client.Client;
@@ -24,7 +25,7 @@ public class ImagesResource extends Resource {
     }
 
     public ImageResource image(String id) {
-        return new ImageResource(client, new StringBuilder(resource).append("/").append(id).toString());
+        return new ImageResource(client, UrlUtils.join(resource, id));
     }
 
 }

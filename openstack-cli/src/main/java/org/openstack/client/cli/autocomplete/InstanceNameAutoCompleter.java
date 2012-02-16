@@ -3,6 +3,7 @@ package org.openstack.client.cli.autocomplete;
 import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
+import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.TenantResource;
 import org.openstack.model.compute.server.Server;
 import com.fathomdb.cli.CliContext;
@@ -17,8 +18,8 @@ public class InstanceNameAutoCompleter extends SimpleArgumentAutoCompleter {
         List<String> strings = Lists.newArrayList();
 
         OpenstackCliContext osContext = (OpenstackCliContext) context;
-        TenantResource computeClient = osContext.getComputeClient();
-        List<Server> servers = computeClient.servers().list(false).getList();
+        OpenstackComputeClient computeClient = osContext.getComputeClient();
+        List<Server> servers = computeClient.root().servers().list(false).getList();
         for (Server server : servers) {
             strings.add(server.getId());
             strings.add(server.getName());

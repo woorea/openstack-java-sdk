@@ -4,8 +4,10 @@ import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.FlavorName;
 import org.openstack.client.cli.model.ImageName;
+import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.ServerRepresentation;
 import org.openstack.client.compute.TenantResource;
+import org.openstack.model.compute.server.Server;
 import org.openstack.model.compute.server.ServerForCreate;
 
 public class CreateInstance extends OpenstackCliCommandRunnerBase {
@@ -36,15 +38,14 @@ public class CreateInstance extends OpenstackCliCommandRunnerBase {
             throw new IllegalArgumentException("Cannot find flavor: " + flavorName.getKey());
         }
 
-        TenantResource tenant = context.getComputeClient();
+        OpenstackComputeClient tenant = context.getComputeClient();
         ServerForCreate serverForCreate = new ServerForCreate();
         serverForCreate.setName(instanceName);
 
         serverForCreate.setImageRef(imageId);
         serverForCreate.setFlavorRef(flavorId);
 
-        ServerRepresentation server = tenant.servers().create(serverForCreate);
-        return server.getModel();
+        return tenant.root().servers().create(serverForCreate);
     }
 
 }

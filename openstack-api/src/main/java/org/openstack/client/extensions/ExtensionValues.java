@@ -2,21 +2,21 @@ package org.openstack.client.extensions;
 
 import java.util.Map;
 
-import org.testng.collections.Maps;
+import com.google.common.collect.Maps;
 
 public class ExtensionValues {
 
-	final Map<Class<?>, Object> results = Maps.newHashMap();
+    final Map<Class<?>, Object> results = Maps.newHashMap();
 
-	public ExtensionValues() {
-	}
+    public ExtensionValues() {
+    }
 
-	@SuppressWarnings("unchecked")
-	public <T> T get(Class<T> clazz) {
-		return (T) results.get(clazz);
-	}
+    @SuppressWarnings("unchecked")
+    public <T> T get(Class<T> clazz) {
+        return (T) results.get(clazz);
+    }
 
-	public void add(Object o) {
-		results.put(o.getClass(), o);
-	}
+    public void add(Object o) {
+        results.put(o.getClass(), o);
+    }
 }

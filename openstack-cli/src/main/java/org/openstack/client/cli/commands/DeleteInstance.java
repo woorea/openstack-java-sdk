@@ -3,6 +3,7 @@ package org.openstack.client.cli.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.InstanceName;
+import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.TenantResource;
 
 public class DeleteInstance extends OpenstackCliCommandRunnerBase {
@@ -22,8 +23,8 @@ public class DeleteInstance extends OpenstackCliCommandRunnerBase {
             throw new IllegalArgumentException("Cannot find instance: " + instanceName.getKey());
         }
 
-        TenantResource tenant = context.getComputeClient();
-        tenant.servers().server(serverId).delete();
+        OpenstackComputeClient tenant = context.getComputeClient();
+        tenant.root().servers().server(serverId).delete();
         return serverId;
     }
 

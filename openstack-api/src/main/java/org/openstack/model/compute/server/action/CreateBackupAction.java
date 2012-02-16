@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.ws.Action;
 
-import org.openstack.model.common.Metadata;
+import org.openstack.model.compute.Metadata;
 
 @XmlRootElement(name="createBackup")
 @XmlAccessorType(XmlAccessType.NONE)

@@ -2,6 +2,7 @@ package org.openstack.client.cli.model;
 
 import java.util.List;
 
+import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.ImageNameAutoCompleter;
 import org.openstack.model.compute.Image;
@@ -17,7 +18,7 @@ public class ImageName extends StringWrapper {
         super(key);
     }
 
-    public String findImageId(OpenstackCliContext context) {
+    public String findImageId(OpenstackCliContext context) throws OpenstackException {
         List<Image> matches = Lists.newArrayList();
         for (Image image : context.getImages()) {
             if (image.getName().equals(getKey())) {

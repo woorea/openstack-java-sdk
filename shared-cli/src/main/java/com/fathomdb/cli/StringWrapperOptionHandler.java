@@ -10,11 +10,11 @@ import org.kohsuke.args4j.spi.OptionHandler;
 import org.kohsuke.args4j.spi.Parameters;
 import org.kohsuke.args4j.spi.Setter;
 
-public class StringWrapperOptionHandler extends OptionHandler<StringWrapper> {
+public class StringWrapperOptionHandler<T> extends OptionHandler<T> {
 
     private static final String ILLEGAL_OPERAND = "\"{1}\" is not a valid value for \"{0}\"";
 
-    public StringWrapperOptionHandler(CmdLineParser parser, OptionDef option, Setter<? super StringWrapper> setter) {
+    public StringWrapperOptionHandler(CmdLineParser parser, OptionDef option, Setter<? super T> setter) {
         super(parser, option, setter);
     }
 
@@ -22,9 +22,9 @@ public class StringWrapperOptionHandler extends OptionHandler<StringWrapper> {
     public int parseArguments(Parameters params) throws CmdLineException {
         String token = params.getParameter(0);
         try {
-            Class<? super StringWrapper> fieldType = setter.getType();
-            Constructor<? super StringWrapper> constructor = fieldType.getConstructor(String.class);
-            StringWrapper o = (StringWrapper) constructor.newInstance(token);
+            Class<? super T> fieldType = setter.getType();
+            Constructor<? super T> constructor = fieldType.getConstructor(String.class);
+            T o = (T) constructor.newInstance(token);
             setter.addValue(o);
             return 1;
         } catch (Exception e) {

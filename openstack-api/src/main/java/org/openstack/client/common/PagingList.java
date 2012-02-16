@@ -1,4 +1,4 @@
-package org.openstack.client.imagestore;
+package org.openstack.client.common;
 
 import java.util.Iterator;
 import java.util.List;
@@ -72,6 +72,10 @@ public class PagingList<T> implements Iterable<T> {
             throw new UnsupportedOperationException();
         }
 
+    }
+
+    public static <T> Iterable<T> build(Client client, PagingListBase<T> page) {
+        return new PagingList<T>(client, page);
     }
 
 }

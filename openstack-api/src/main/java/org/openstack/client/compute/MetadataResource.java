@@ -6,8 +6,8 @@ import com.sun.jersey.api.client.Client;
 
 public class MetadataResource extends Resource {
 
-	public MetadataResource(Client client, String resource) {
-		super(client, resource);
-	}
+    public MetadataResource(Client client, String resource) {
+        super(client, resource);
+    }
 
 }

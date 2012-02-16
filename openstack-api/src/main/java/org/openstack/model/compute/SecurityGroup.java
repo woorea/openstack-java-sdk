@@ -10,71 +10,85 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="security_group")
+@XmlRootElement(name = "security_group")
 @XmlAccessorType(XmlAccessType.NONE)
 public class SecurityGroup implements Serializable {
-	
-	@XmlAttribute
-	private int id;
-	
-	@XmlAttribute(name="tenant_id")
-	private String tenantId;
-	
-	@XmlAttribute
-	private String name;
-	
-	@XmlElement
-	private String description;
-	
-	@XmlElementWrapper(name="rules")
-	@XmlElement(name="rule")
-	private List<SecurityGroupRule> rules;
 
-	public int getId() {
-		return id;
-	}
+    @XmlAttribute
+    public Integer id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @XmlAttribute(name = "tenant_id")
+    private String tenantId;
 
-	public String getTenantId() {
-		return tenantId;
-	}
+    // The name shifts from being an element to being an attribute; sigh
+    // I think it's an element when we're creating a server, and an attribute when we're creating a group
+    // We pass both (the same) and accept either.
+    // TODO: Get this fixed
+    @XmlAttribute(name = "name")
+    protected String nameAttribute;
 
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    @XmlElement(name = "name")
+    protected String nameElement;
 
-	public String getName() {
-		return name;
-	}
+    @XmlElement
+    private String description;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlElementWrapper(name = "rules")
+    @XmlElement(name = "rule")
+    public List<SecurityGroupRule> rules;
 
-	public String getDescription() {
-		return description;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public List<SecurityGroupRule> getRules() {
-		return rules;
-	}
+    public String getTenantId() {
+        return tenantId;
+    }
 
-	public void setRules(List<SecurityGroupRule> rules) {
-		this.rules = rules;
-	}
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-	@Override
-	public String toString() {
-		return "SecurityGroup [id=" + id + ", tenantId=" + tenantId + ", name="
-				+ name + ", description=" + description + ", rules=" + rules
-				+ "]";
-	}
-	
+    public String getName() {
+        if (nameAttribute == null) {
+            return nameElement;
+        }
+        if (nameElement == null) {
+            return nameAttribute;
+        }
+        if (!nameElement.equals(nameAttribute))
+            throw new IllegalStateException();
+        return nameElement;
+    }
+
+    public void setName(String name) {
+        this.nameAttribute = name;
+        this.nameElement = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<SecurityGroupRule> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<SecurityGroupRule> rules) {
+        this.rules = rules;
+    }
+
+    @Override
+    public String toString() {
+        return "SecurityGroup [id=" + id + ", tenantId=" + tenantId + ", name=" + name + ", description=" + description + ", rules=" + rules + "]";
+    }
+
 }

@@ -2,6 +2,7 @@ package org.openstack.client.cli.model;
 
 import java.util.List;
 
+import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.FlavorNameAutoCompleter;
 import org.openstack.model.compute.Flavor;
@@ -17,7 +18,7 @@ public class FlavorName extends StringWrapper {
         super(key);
     }
 
-    public String findImageId(OpenstackCliContext context) {
+    public String findImageId(OpenstackCliContext context) throws OpenstackException {
         List<Flavor> matches = Lists.newArrayList();
         for (Flavor flavor : context.getFlavors()) {
             if (flavor.getName().equals(getKey())) {

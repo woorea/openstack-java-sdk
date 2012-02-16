@@ -3,6 +3,7 @@ package org.openstack.client.cli.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.ImageName;
+import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.TenantResource;
 
 public class DeleteImage extends OpenstackCliCommandRunnerBase {
@@ -22,8 +23,8 @@ public class DeleteImage extends OpenstackCliCommandRunnerBase {
             throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
         }
 
-        TenantResource tenant = context.getComputeClient();
-        tenant.images().image(imageId).delete();
+        OpenstackComputeClient tenant = context.getComputeClient();
+        tenant.root().images().image(imageId).delete();
         return imageId;
     }
 

@@ -9,50 +9,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class Personality implements Serializable {
 
-	@XmlAccessorType(XmlAccessType.NONE)
-	public static final class Item {
-		
-		@XmlAttribute
-		private String path;
-		
-		@XmlAttribute
-		private String contents;
+    @XmlAccessorType(XmlAccessType.NONE)
+    public static final class File {
 
-		public String getPath() {
-			return path;
-		}
+        @XmlAttribute
+        public String path;
 
-		public void setPath(String path) {
-			this.path = path;
-		}
+        @XmlValue
+        public byte[] contents;
 
-		public String getContents() {
-			return contents;
-		}
+    }
 
-		public void setContents(String contents) {
-			this.contents = contents;
-		}
-	
-	}
-	
-	@XmlElement(name="item")
-	private List<Item> items = new ArrayList<Item>();
+    @XmlElement(name = "file")
+    public List<File> files = new ArrayList<File>();
 
-	public List<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-
-	
-	
 }

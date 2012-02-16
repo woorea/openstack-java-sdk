@@ -8,121 +8,128 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.Metadata;
+import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.SecurityGroupList;
 
-@XmlRootElement(name="server", namespace="")
+@XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ServerForCreate implements Serializable {
 
-	@XmlAttribute
-	private String name;
-	
-	@XmlAttribute
-	private String imageRef;
-	
-	@XmlAttribute
-	private String flavorRef;
-	
-	@XmlAttribute(name="accessIPv4")
-	private String accessIpV4;
-	
-	@XmlAttribute(name="accessIPv6")
-	private String accessIpV6;
-	
-	@XmlAttribute
-	private String zone;
-	
-	@XmlAttribute
-	private String keyName;
-	
-	@XmlElement
-	private Metadata metadata = new Metadata();
-	
-	@XmlElement
-	private Personality personality = new Personality();
-	
-	@XmlElement
-	private SecurityGroupList securityGroups = new SecurityGroupList();
+    @XmlAttribute
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    @XmlAttribute
+    private String imageRef;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlAttribute
+    private String flavorRef;
 
-	public String getImageRef() {
-		return imageRef;
-	}
+    @XmlAttribute(name = "accessIPv4")
+    private String accessIpV4;
 
-	public void setImageRef(String imageRef) {
-		this.imageRef = imageRef;
-	}
+    @XmlAttribute(name = "accessIPv6")
+    private String accessIpV6;
 
-	public String getFlavorRef() {
-		return flavorRef;
-	}
+    @XmlAttribute
+    private String zone;
 
-	public void setFlavorRef(String flavorRef) {
-		this.flavorRef = flavorRef;
-	}
+    @XmlAttribute
+    private String keyName;
 
-	public String getZone() {
-		return zone;
-	}
+    @XmlElement
+    private Metadata metadata = new Metadata();
 
-	public void setZone(String zone) {
-		this.zone = zone;
-	}
+    @XmlElement
+    private Personality personality = new Personality();
 
-	public String getKeyName() {
-		return keyName;
-	}
+    @XmlElement(name = "security_groups")
+    private SecurityGroupList securityGroups = new SecurityGroupList();
 
-	public void setKeyName(String keyName) {
-		this.keyName = keyName;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getAccessIpV4() {
-		return accessIpV4;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setAccessIpV4(String accessIpV4) {
-		this.accessIpV4 = accessIpV4;
-	}
+    public String getImageRef() {
+        return imageRef;
+    }
 
-	public String getAccessIpV6() {
-		return accessIpV6;
-	}
+    public void setImageRef(String imageRef) {
+        this.imageRef = imageRef;
+    }
 
-	public void setAccessIpV6(String accessIpV6) {
-		this.accessIpV6 = accessIpV6;
-	}
+    public String getFlavorRef() {
+        return flavorRef;
+    }
 
-	public Metadata getMetadata() {
-		return metadata;
-	}
+    public void setFlavorRef(String flavorRef) {
+        this.flavorRef = flavorRef;
+    }
 
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
-	}
+    public String getZone() {
+        return zone;
+    }
 
-	public Personality getPersonality() {
-		return personality;
-	}
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
 
-	public void setPersonality(Personality personality) {
-		this.personality = personality;
-	}
+    public String getKeyName() {
+        return keyName;
+    }
 
-	public SecurityGroupList getSecurityGroups() {
-		return securityGroups;
-	}
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
+    }
 
-	public void setSecurityGroups(SecurityGroupList securityGroups) {
-		this.securityGroups = securityGroups;
-	}
-	
+    public String getAccessIpV4() {
+        return accessIpV4;
+    }
+
+    public void setAccessIpV4(String accessIpV4) {
+        this.accessIpV4 = accessIpV4;
+    }
+
+    public String getAccessIpV6() {
+        return accessIpV6;
+    }
+
+    public void setAccessIpV6(String accessIpV6) {
+        this.accessIpV6 = accessIpV6;
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public Personality getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(Personality personality) {
+        this.personality = personality;
+    }
+
+    public SecurityGroupList getSecurityGroups() {
+        return securityGroups;
+    }
+
+    public void setSecurityGroups(SecurityGroupList securityGroups) {
+        this.securityGroups = securityGroups;
+    }
+
+    public void addUploadFile(String path, byte[] contents) {
+        Personality.File item = new Personality.File();
+        item.path = path;
+        item.contents = contents;
+        personality.files.add(item);
+    }
+
 }
