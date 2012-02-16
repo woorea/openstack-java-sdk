@@ -1,4 +1,4 @@
-package com.fathomdb;
+package org.openstack.utils;
 
 public class Casts {
     /**

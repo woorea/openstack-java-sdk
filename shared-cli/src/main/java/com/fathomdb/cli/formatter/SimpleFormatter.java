@@ -3,8 +3,9 @@ package com.fathomdb.cli.formatter;
 import java.io.IOException;
 import java.util.List;
 
+import org.openstack.utils.Casts;
 
-import com.fathomdb.Casts;
+
 import com.fathomdb.cli.output.OutputSink;
 import com.google.common.collect.Lists;
 

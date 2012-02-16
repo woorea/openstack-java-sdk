@@ -10,7 +10,8 @@ import java.util.List;
 
 import jline.ConsoleReader;
 
-import com.fathomdb.Io;
+import org.openstack.utils.Io;
+
 import com.fathomdb.cli.commands.CommandRunner;
 import com.fathomdb.cli.output.OutputSink;
 import com.fathomdb.cli.output.RawOutputSink;

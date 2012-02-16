@@ -40,7 +40,11 @@
             <artifactId>jython</artifactId>
             <version>2.5.0</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.openstack</groupId>
+            <artifactId>openstack-commons</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

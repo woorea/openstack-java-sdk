@@ -1,5 +1,12 @@
 package org.openstack.client;
 
-public class AbstractOpenStackTest {
+import org.testng.annotations.BeforeClass;
 
+public class AbstractOpenStackTest {
+    protected OpenstackTestContext context;
+
+    @BeforeClass
+    public void setUp() {
+        context = OpenstackTestContext.buildFromProperties();
+    }
 }
