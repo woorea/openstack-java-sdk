@@ -1,0 +1,6 @@
+trap system.exit (securitymanager?)
+look for resource leaks thanks to threadlocals
+provide directory scanning functionality for automatic deployment (a la Tomcat)
+lightweight authentication (APOP? CRAM-MD5? DIGEST-MD5?)
+pass client file separator and path separator to server
+handle JVM-ish command line arguments (-cp, -Dkey=value)

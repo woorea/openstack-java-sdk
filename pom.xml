@@ -11,7 +11,7 @@
         <module>openstack-api</module>
         <module>shared-cli</module>
         <module>openstack-cli</module>
-        <module>openstack-stresstool</module>
+        <module>nailgun</module>
         <module>openstack-commons</module>
     </modules>
 

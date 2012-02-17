@@ -1,0 +1,14 @@
+Pete Kirkham
+  Nov. 25, 2004
+    Provided code to trap System.exit()
+    (It took me *forever* to get around to integrating this.)
+
+  Nov. 24, 2004
+    Reported bug (and solution) in NGInputStream that could corrupt
+    some packets.
+    
+    Provided Win32 port of NailGun client.
+  
+Angsuman Chakraborty
+  Nov. 24, 2004
+	Provided a second Win32 port of NailGun client.

@@ -1,0 +1,125 @@
+The goal of the NailGun protocol (NGP) is to allow for remotely-hosted
+individual command line programs.  To this end, it makes the following
+available to the server:
+
+	- client environment variables
+	- client command line arguments
+	- client working directory
+	- client stdin
+	- client stdout
+	- client stderr
+	
+The server can read from the client's stdin, and can direct output to
+the client's stdout and stderr.  The server can also specify an exit
+code which the client program will use to exit immediately.
+
+The initial implementation uses a TCP socket.  There may be a performance
+benefit to using domain sockets on *nix systems sometime in the future.
+
+Communications proceed as follows (chunk descriptions are below):
+
+	1.	Client connects to server.
+	2.	Client transmits zero or more "Argument" chunks.
+	3.	Client transmits zero or more "Environment" chunks.
+	4.	Client transmits exactly one "Working Directory" chunk.
+	5.	Client transmits exactly one "Command" chunk.
+	
+	after step 5, the following may happen, interleaved and in any order:
+	
+	6.a		Client transmits zero or more "stdin" chunks.
+		6.a.i	Until the client transmits a "stdin-eof" chunk.
+	6.b		Server transmits zero or more "stdout" chunks.
+	6.c	 Server transmits zero or more "stderr" chunks.
+	
+	step 6* repeats indefinitely until:
+	
+	7.	Server transmits an "exit" chunk.
+	
+A "chunk" is a variable-length block of data beginning with a 5-byte chunk header and
+followed by an optional payload.  The chunk header consists of:
+
+	- The length of the chunk's payload (i.e., not including the header)
+	  as a four-byte big-endian unsigned long.  The high-order byte is header[0] 
+	  and the low-order byte is header[3].
+	  
+	- A single byte identifying the type of chunk.  For convenience, chunk types
+	  are identified using memorable US-ASCII characters as follows:
+	  
+	  	'A' - Argument chunk
+	  	'E' - Environment chunk
+	  	'D' - Working Directory chunk
+	  	'C' - Command chunk
+	  	'0' - Stdin chunk
+	  	'1' - Stdout chunk
+	  	'2' - Stderr chunk
+	  	'.' - Stdin-eof chunk
+	  	'X' - Exit chunk
+	  	
+Argument Chunks
+---------------
+Argument chunks are the arguments available to the ng client via its argv[] array, with
+the following modifications:
+
+	- Any command line options intended to control client behavior (such as IP address
+	  and port of server) are removed.
+	  
+	- If argv[0] is the name of the client program, argv[1] is considered the "command"
+	  (sent in the command chunk), and arguments are transmitted to the server beginning
+	  with argv[2].
+	  
+	- If argv[0] is *not* the name of the client program, it is assumed that the client
+	  was symlinked to a command name, in which case argv[0] is sent as the command and
+	  arguments are transmitted to the server beginning with argv[1].
+	  
+Exactly one argument is sent in its entirety in each argument chunk.
+	  
+
+Environment Chunks
+------------------
+
+Environment chunks are the environment variables available to the ng client via its env[]
+array, with no modifications.
+
+Exactly one environment variable is sent in its entirety in each environment chunk.
+
+
+Working Directory Chunk
+-----------------------
+
+Exactly one working directory chunk must be sent by the client, containing the working
+directory from which the client was launched.
+
+
+Command Chunk
+-------------
+
+Exactly one command chunk must be sent by the client, containing in its entirety the
+command to run.
+
+
+Stdin, Stdout, Stderr Chunks
+----------------------------
+
+Each stream may consist of multiple chunks as necessary.  For example, the client will
+probably buffer stdin before transmitting it to the server, so the payloads of Stdin
+chunks will always have a size less than or equal to the buffer size.  The server may
+need to interleave stdout and stderr, resulting in some small chunks as well.
+
+No transformations are made on the data contained within the chunks.  The data are
+the raw bytes read from stdin/to be sent to stdout/stderr.
+
+Stdin-eof Chunk
+---------------
+
+The server will need to know when there's no more input to read.  This is signalled by
+the client using a Stdin-eof chunk with no payload.  No more Stdin chunks may follow
+a Stdin-oef chunk.
+
+
+Exit Chunk
+----------
+
+The server can instruct the client to exit with a code specified in an Exit chunk.  The
+code is contained within the payload as a US-ASCII string representation of the exit code
+in decimal format.  A c-based client would use atoi on the payload in order to determine
+the exit code.  The client should gracefully close the socket to the server prior to exiting.

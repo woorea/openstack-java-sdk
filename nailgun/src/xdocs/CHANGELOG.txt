@@ -1,0 +1,50 @@
+v 0.7.1 (February 3, 2005)
+	Added trap for System.exit(). 
+	Client now exits with appropriate exit code.
+	
+v 0.7 (January 3, 2005)
+	Added windows binary compilation to build process.
+
+	Added IP Address specification to NGServer commandline (to
+	override default behavior of binding to all addresses).
+
+	Added automatic port selection to NGServer (by specifying
+	port 0).  Selected port is displayed to System.out at startup.
+
+	Added ability to specify a default Nail to run if an invalid
+	alias/classname is specified by the client.
+	
+	Added ability to disable classname resolution in NGServer, forcing
+	users to run Nails only by alias if disabled.
+	
+	Added thread pooling for running nails.  Pool is currently hardcoded
+	to a limit of ten.
+	
+	Added --nailgun-version command line option to client to
+	display client version and exit.
+	
+	Added --nailgun-showversion command line option to client to
+	display client version and continue.
+
+	Added --nailgun-help command line option to client to
+	display usage information.
+
+	Added client reporting of local file and path separators via remote
+	environment chunks.
+	
+	Improved usage info display.
+	
+	Added ng-version built-in nail to display server version.
+	
+	InvocationTargetExceptions on Nails now re-throw their cause
+	for more useful information.
+
+	Added shutdown hook for clean shutdown after Ctrl-C on NGServer.
+	
+	Fixed a bug in ThreadLocalInputStream and ThreadLocalOutputStream
+	that resulted in the ignoring of defaults.
+	
+	Fixed a bug that caused a segfault if ng is invoked with no arguments.
+	
+v 0.6 (November 21, 2004)
+	Initial Release
