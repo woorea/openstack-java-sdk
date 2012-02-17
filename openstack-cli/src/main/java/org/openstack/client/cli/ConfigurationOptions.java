@@ -1,26 +1,13 @@
 package org.openstack.client.cli;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.kohsuke.args4j.Option;
 import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.OpenstackException;
-import org.openstack.client.common.OpenStackClientFactory;
 import org.openstack.client.common.OpenstackClient;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
-import org.openstack.client.compute.ComputeResource;
-import org.openstack.client.compute.TenantResource;
-import org.openstack.client.identity.IdentityResource;
-import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Authentication;
-import org.openstack.model.identity.Service;
-import org.openstack.model.identity.ServiceEndpoint;
 
 import com.fathomdb.cli.CliOptions;
-import com.google.common.collect.Lists;
-import com.sun.jersey.api.client.Client;
 
 public class ConfigurationOptions extends CliOptions {
     @Option(name = "-u", aliases = { "--username", "--user" }, usage = "login username")
@@ -99,7 +86,7 @@ public class ConfigurationOptions extends CliOptions {
 
     OpenstackClient client = null;
 
-    private OpenstackClient getOpenstackClient() {
+    public OpenstackClient getOpenstackClient() {
         if (client == null) {
             OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
             client = new OpenstackClient(server, credentials, debug);

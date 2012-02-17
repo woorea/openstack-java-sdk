@@ -8,7 +8,11 @@ pushd `dirname $0` > /dev/null
 BASEDIR=`pwd`
 popd > /dev/null
 
-. ~/.credentials/openstack
+if [[ "$PROFILE" == "" ]]; then
+	PROFILE=openstack
+fi
+
+. ~/.credentials/${PROFILE}
 
 if [[ "$FORMAT" == "" ]]; then
 	FORMAT=raw

@@ -9,12 +9,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.collect.Lists;
+
 @XmlRootElement()
 @XmlAccessorType(XmlAccessType.NONE)
 public class Service implements Serializable {
 
     @XmlElement(nillable = true, name = "endpoint")
-    public List<ServiceEndpoint> endpoints;
+    private List<ServiceEndpoint> endpoints;
 
     @XmlAttribute
     private String id;
@@ -63,6 +65,13 @@ public class Service implements Serializable {
     @Override
     public String toString() {
         return "Service [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", endpoints=" + endpoints + "]";
+    }
+
+    public List<ServiceEndpoint> getEndpoints() {
+        if (endpoints == null) {
+            endpoints = Lists.newArrayList();
+        }
+        return endpoints;
     }
 
 }

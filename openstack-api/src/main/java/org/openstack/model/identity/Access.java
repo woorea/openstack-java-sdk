@@ -10,12 +10,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.collect.Lists;
+
 @XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Access implements Serializable {
     @XmlElement(nillable = true, name = "service")
     @XmlElementWrapper(name = "serviceCatalog")
-    public List<Service> serviceCatalog;
+    private List<Service> serviceCatalog;
 
     @XmlAccessorType(XmlAccessType.NONE)
     public static class Token implements Serializable {
@@ -66,6 +68,13 @@ public class Access implements Serializable {
     @Override
     public String toString() {
         return "Access [token=" + token + "]";
+    }
+
+    public List<Service> getServiceCatalog() {
+        if (serviceCatalog == null) {
+            serviceCatalog = Lists.newArrayList();
+        }
+        return serviceCatalog;
     }
 
 }

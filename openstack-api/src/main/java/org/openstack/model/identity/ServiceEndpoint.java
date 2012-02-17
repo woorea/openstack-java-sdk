@@ -8,18 +8,50 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class ServiceEndpoint {
 
     @XmlAttribute
-    public String region;
+    private String region;
 
     @XmlAttribute
-    public String tenantId;
+    private String tenantId;
 
     @XmlAttribute
-    public String internalURL;
+    private String internalURL;
 
     @XmlAttribute
-    public String publicURL;
+    private String publicURL;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public String getInternalURL() {
+        return internalURL;
+    }
+
+    public void setInternalURL(String internalURL) {
+        this.internalURL = internalURL;
+    }
+
+    public String getPublicURL() {
+        return publicURL;
+    }
+
+    public void setPublicURL(String publicURL) {
+        this.publicURL = publicURL;
+    }
 
     // @XmlElement
-    // public ServiceVersion version;
+    // private ServiceVersion version;
 
 }

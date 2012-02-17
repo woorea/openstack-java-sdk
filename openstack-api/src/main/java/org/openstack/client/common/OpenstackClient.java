@@ -39,4 +39,8 @@ public class OpenstackClient {
     public OpenstackComputeClient getComputeClient() throws OpenstackException {
         return new OpenstackComputeClient(authenticationClient);
     }
+
+    public OpenstackAuthenticationClient getAuthenticationClient() {
+        return authenticationClient;
+    }
 }

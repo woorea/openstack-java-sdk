@@ -8,7 +8,6 @@ import org.openstack.client.identity.IdentityResource;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
 import org.openstack.model.identity.Service;
-import org.openstack.model.identity.ServiceEndpoint;
 
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
@@ -56,7 +55,7 @@ public class OpenstackAuthenticationClient {
     public String getBestEndpoint(String serviceType) throws OpenstackException {
         Access access = getAuthenticationToken();
         List<Service> foundServices = Lists.newArrayList();
-        for (Service service : access.serviceCatalog) {
+        for (Service service : access.getServiceCatalog()) {
             if (serviceType.equals(service.getType())) {
                 foundServices.add(service);
             }
@@ -72,11 +71,11 @@ public class OpenstackAuthenticationClient {
 
         Service service = foundServices.get(0);
 
-        if (service.endpoints.size() != 1) {
+        if (service.getEndpoints().size() != 1) {
             throw new OpenstackException("Unhandled number of endpoints");
         }
 
-        String bestUrl = service.endpoints.get(0).publicURL;
+        String bestUrl = service.getEndpoints().get(0).getPublicURL();
 
         if (bestUrl == null) {
             throw new OpenstackException("Cannot find endpoint URL for image service");
