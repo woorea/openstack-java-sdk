@@ -16,9 +16,10 @@ public class OpenstackTestContext {
     public static OpenstackTestContext buildFromProperties() {
         OpenstackTestContext context = new OpenstackTestContext();
 
-        boolean verbose = false;
-
         Properties properties = System.getProperties();
+
+        boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "false"));
+
         String url = properties.getProperty("openstack.auth.url", "http://127.0.0.1:5000/v2.0");
         String username = properties.getProperty("openstack.auth.user", "demo");
         String secret = properties.getProperty("openstack.auth.secret", "supersecret");

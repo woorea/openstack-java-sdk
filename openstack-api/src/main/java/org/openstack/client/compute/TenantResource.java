@@ -173,4 +173,8 @@ public class TenantResource extends Resource {
         return getChildResource("os-security-group-rules", SecurityGroupRulesResource.class);
     }
 
+    public ExtensionsResource extensions() {
+        return getChildResource("extensions", ExtensionsResource.class);
+    }
+
 }

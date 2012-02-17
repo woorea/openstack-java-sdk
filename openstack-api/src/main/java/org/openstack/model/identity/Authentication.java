@@ -45,6 +45,9 @@ public class Authentication implements Serializable {
     @XmlAttribute()
     public String tenantName;
 
+    // @XmlAttribute()
+    // public String tenantId;
+
     public PasswordCredentials getPasswordCredentials() {
         return passwordCredentials;
     }

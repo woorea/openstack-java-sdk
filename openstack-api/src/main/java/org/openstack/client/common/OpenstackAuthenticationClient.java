@@ -39,6 +39,7 @@ public class OpenstackAuthenticationClient {
         passwordCredentials.setUsername(credentials.getUsername());
         passwordCredentials.setPassword(credentials.getPassword());
         authentication.tenantName = credentials.getTenant();
+        // authentication.tenantId = credentials.getTenant();
         authentication.setPasswordCredentials(passwordCredentials);
         Access access = identity.tokens().authenticate(authentication);
         return access;
