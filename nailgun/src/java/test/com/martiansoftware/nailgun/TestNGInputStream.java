@@ -21,6 +21,7 @@ package com.martiansoftware.nailgun;
 import java.io.ByteArrayInputStream;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import junit.framework.TestCase;
 
@@ -41,7 +42,7 @@ public class TestNGInputStream extends TestCase {
 	public void testNGInputStreamIntoArray() throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DataOutputStream dout = new DataOutputStream(out);
-		NGInputStream in = new NGInputStream(new ByteArrayInputStream(TESTDATA), dout);
+		NGInputStream in = new NGInputStream(new DataInputStream(new ByteArrayInputStream(TESTDATA)), dout);
 		
 		assertTrue(in.available() > 0);
 		assertFalse(in.markSupported());
@@ -68,7 +69,7 @@ public class TestNGInputStream extends TestCase {
 	
 	public void testNGInputStreamCharByChar() throws Exception {
 		StringBuffer buf = new StringBuffer();
-		NGInputStream in = new NGInputStream(new ByteArrayInputStream(TESTDATA), new DataOutputStream(new ByteArrayOutputStream()));
+		NGInputStream in = new NGInputStream(new DataInputStream(new ByteArrayInputStream(TESTDATA)), new DataOutputStream(new ByteArrayOutputStream()));
 		int c = in.read();
 		while (c != -1) {
 			buf.append((char) c);
