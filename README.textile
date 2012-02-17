@@ -136,7 +136,8 @@ h1. Maven
 We use maven to build the project.  Some helpful maven commands:
 
 @mvn eclipse:eclipse@ _Create the eclipse projects_
-@mvn build@ _Builds everything_
+@mvn install@ _Builds everything, runs unit & integration tests, installs into your maven repo_
+@mvn install -Dmaven.test.skip=true@ _As above, but without running tests_
 @mvn test@ _Runs unit tests_
 @mvn verify@ _Runs integration tests_
 
