@@ -5,10 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.openstack.client.OpenstackException;
 import org.openstack.client.common.PagingList;
 import org.openstack.model.image.Image;
 import org.openstack.model.image.ImageList;
-import org.openstack.model.image.JsonImage;
+import org.openstack.model.image.ImageUploadResponse;
 import org.openstack.utils.Io;
 
 import com.sun.jersey.api.client.WebResource.Builder;
@@ -23,14 +24,14 @@ public class ImagesResource extends GlanceResourceBase {
         Builder imagesResource = details ? resource("detail") : resource();
 
         ImageList imageList = imagesResource.get(ImageList.class);
-        return new PagingList<Image>(client, imageList);
+        return PagingList.build(client, imageList);
     }
 
     public ImageResource image(String imageId) {
         return buildChildResource(imageId, ImageResource.class);
     }
 
-    public Image addImage(File imageFile, Image properties) throws IOException {
+    public Image addImage(File imageFile, Image properties) throws IOException, OpenstackException {
         FileInputStream fis = new FileInputStream(imageFile);
         try {
             properties.setSize(imageFile.length());
@@ -41,13 +42,14 @@ public class ImagesResource extends GlanceResourceBase {
         }
     }
 
-    public Image addImage(InputStream imageStream, Image properties) throws IOException {
+    public Image addImage(InputStream imageStream, Image properties) throws OpenstackException, IOException {
         Builder builder = resource();
 
         builder = GlanceHeaderUtils.setHeaders(builder, properties);
 
-        JsonImage uploaded = builder.post(JsonImage.class, imageStream);
-        return uploaded.image;
+        ImageUploadResponse response = builder.post(ImageUploadResponse.class, imageStream);
+        Image image = response.getImage();
+        return image;
     }
 
 }

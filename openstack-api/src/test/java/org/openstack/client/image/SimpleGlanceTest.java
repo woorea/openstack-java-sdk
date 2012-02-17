@@ -158,6 +158,26 @@ public class SimpleGlanceTest extends AbstractOpenStackTest {
         assertNull(uploaded.getContainerFormat());
     }
 
+    // Skipped for now... @Test
+    public void testNullNameFails() throws Exception {
+        // It's not clear whether a null name is supposed to fail or not
+        // https://bugs.launchpad.net/glance/+bug/934492
+        OpenstackClient client = context.client;
+        OpenstackImageClient glance = client.getImageClient();
+
+        RandomUtil random = new RandomUtil();
+        int imageLength = 128;
+        long seed = random.nextLong();
+
+        RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
+
+        Image template = new Image();
+
+        Image uploaded = glance.root().images().addImage(stream, template);
+        System.out.println(uploaded);
+        Assert.fail("Image upload without a name should fail");
+    }
+
     private Image findImageById(List<Image> images, String id) {
         for (Image image : images) {
             if (id.equals(image.getId()))

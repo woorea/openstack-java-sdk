@@ -18,14 +18,6 @@ public class FlavorList extends PagingListBase<Flavor> {
     @XmlElement(name = "flavor")
     private List<Flavor> list = new ArrayList<Flavor>();
 
-    public List<Flavor> getList() {
-        return list;
-    }
-
-    public void setList(List<Flavor> list) {
-        this.list = list;
-    }
-
     @Override
     public Iterator<Flavor> iterateItemsOnPage() {
         return list.iterator();

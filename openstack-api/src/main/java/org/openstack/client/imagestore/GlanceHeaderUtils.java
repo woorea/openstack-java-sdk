@@ -33,7 +33,7 @@ class GlanceHeaderUtils {
         if (properties.getName() != null) {
             builder.header("x-image-meta-name", properties.getName());
         } else {
-            throw new IllegalArgumentException("Name is required");
+            // throw new IllegalArgumentException("Name is required");
         }
 
         if (properties.getId() != null) {
