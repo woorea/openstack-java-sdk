@@ -11,7 +11,9 @@
         <module>openstack-api</module>
         <module>shared-cli</module>
         <module>openstack-cli</module>
+		<!-- not uploaded yet
         <module>openstack-stresstool</module>
+		-->
         <module>openstack-commons</module>
     </modules>
 
