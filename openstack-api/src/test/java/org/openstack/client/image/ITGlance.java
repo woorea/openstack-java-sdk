@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
-public class SimpleGlanceTest extends AbstractOpenStackTest {
+public class ITGlance extends AbstractOpenStackTest {
 
     @Test
     public void testListImagesAndDetails() throws OpenstackException {

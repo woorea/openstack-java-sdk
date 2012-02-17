@@ -8,7 +8,7 @@ import org.openstack.model.compute.ExtensionList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TestExtensions extends ComputeApiTest {
+public class ITExtensions extends ComputeApiTest {
 
     @Test
     public void testListExtensions() throws OpenstackException {
