@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.model.compute.Flavor;
+import org.openstack.client.common.PagingList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 
