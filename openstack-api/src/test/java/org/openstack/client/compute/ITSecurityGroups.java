@@ -85,17 +85,21 @@ public class ITSecurityGroups extends ComputeApiTest {
 			newRule.setIpProtocol("tcp");
 			newRule.setParentGroupId(created.getId());
 
-			CreateSecurityGroupRuleRequest createdRule = nova.root().securityGroupRules().create(newRule);
+			SecurityGroupRule createdRule = nova.root().securityGroupRules().create(newRule);
+			Assert.assertNotEquals(createdRule.id, "");
 
 			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
 			assertSecurityGroupEquals(fetched, created);
 
 			Assert.assertEquals(fetched.getRules().size(), 1);
 			SecurityGroupRule rule = fetched.getRules().get(0);
-			Assert.assertEquals(rule.getFromPort(), newRule.getFromPort());
-			Assert.assertEquals(rule.getToPort(), newRule.getToPort());
-			Assert.assertEquals(rule.getIpProtocol(), newRule.getIpProtocol());
-			Assert.assertEquals(rule.getIpRange().cidr, newRule.getCidr());
+			assertSecurityGroupRuleEquals(newRule, rule);
+
+			// // List the rules directly
+			// {
+			// SecurityGroupRule found = nova.root().securityGroupRules().securityGroupRule(createdRule.id).fetch();
+			// assertSecurityGroupRuleEquals(newRule, found);
+			// }
 		}
 
 		// Drop the rule
@@ -117,6 +121,13 @@ public class ITSecurityGroups extends ComputeApiTest {
 		}
 
 		Assert.assertNull(fetched);
+	}
+
+	private void assertSecurityGroupRuleEquals(CreateSecurityGroupRuleRequest newRule, SecurityGroupRule rule) {
+		Assert.assertEquals(rule.getFromPort(), newRule.getFromPort());
+		Assert.assertEquals(rule.getToPort(), newRule.getToPort());
+		Assert.assertEquals(rule.getIpProtocol(), newRule.getIpProtocol());
+		Assert.assertEquals(rule.getIpRange().cidr, newRule.getCidr());
 	}
 
 	/**
