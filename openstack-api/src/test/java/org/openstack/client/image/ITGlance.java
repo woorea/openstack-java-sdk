@@ -28,7 +28,7 @@ import com.google.common.collect.Lists;
 
 public class ITGlance extends AbstractOpenStackTest {
 
-    @Test
+    //@Test
     public void testListImagesAndDetails() throws OpenstackException {
         OpenstackClient client = context.client;
         OpenstackImageClient glance = client.getImageClient();
@@ -60,7 +60,7 @@ public class ITGlance extends AbstractOpenStackTest {
 
     final int MAX_LENGTH = 16 * 1024 * 1024;
 
-    @Test
+    //@Test
     public void testImageUploadAndDelete() throws Exception {
         OpenstackClient client = context.client;
         OpenstackImageClient glance = client.getImageClient();
@@ -136,7 +136,7 @@ public class ITGlance extends AbstractOpenStackTest {
         assertEquals(actualHash, expectedHash);
     }
 
-    @Test
+    //@Test
     public void testNullFormatsFails() throws Exception {
         // Apparently this is supposed to fail; right now it isn't though!
         // https://bugs.launchpad.net/glance/+bug/933702

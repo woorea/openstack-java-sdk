@@ -15,27 +15,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SecurityGroup implements Serializable {
 
     @XmlAttribute
-    public Integer id;
+    protected Integer id;
 
     @XmlAttribute(name = "tenant_id")
-    private String tenantId;
+    protected String tenantId;
 
     // The name shifts from being an element to being an attribute; sigh
     // I think it's an element when we're creating a server, and an attribute when we're creating a group
     // We pass both (the same) and accept either.
     // TODO: Get this fixed
-    @XmlAttribute(name = "name")
-    protected String nameAttribute;
-
-    @XmlElement(name = "name")
-    protected String nameElement;
+    protected String name;
 
     @XmlElement
-    private String description;
+    protected String description;
 
     @XmlElementWrapper(name = "rules")
     @XmlElement(name = "rule")
-    public List<SecurityGroupRule> rules;
+    protected List<SecurityGroupRule> rules;
 
     public Integer getId() {
         return id;
@@ -53,7 +49,9 @@ public class SecurityGroup implements Serializable {
         this.tenantId = tenantId;
     }
 
+    @XmlAttribute(name = "name")
     public String getName() {
+    	/*
         if (nameAttribute == null) {
             return nameElement;
         }
@@ -63,11 +61,16 @@ public class SecurityGroup implements Serializable {
         if (!nameElement.equals(nameAttribute))
             throw new IllegalStateException();
         return nameElement;
+        */
+    	return name;
     }
 
     public void setName(String name) {
+    	this.name = name;
+    	/*
         this.nameAttribute = name;
         this.nameElement = name;
+        */
     }
 
     public String getDescription() {

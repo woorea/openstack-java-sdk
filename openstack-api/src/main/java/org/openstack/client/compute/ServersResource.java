@@ -3,9 +3,9 @@ package org.openstack.client.compute;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.compute.ext.ComputeResourceBase;
-import org.openstack.model.compute.server.Server;
-import org.openstack.model.compute.server.ServerForCreate;
-import org.openstack.model.compute.server.ServerList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.ServerList;
 
 public class ServersResource extends ComputeResourceBase {
 

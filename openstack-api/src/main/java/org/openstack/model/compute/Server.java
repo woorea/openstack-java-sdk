@@ -1,4 +1,4 @@
-package org.openstack.model.compute.server;
+package org.openstack.model.compute;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,11 +15,6 @@ import javax.xml.namespace.QName;
 
 import org.openstack.client.common.ExtensionData;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.Addresses;
-import org.openstack.model.compute.Fault;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Metadata;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

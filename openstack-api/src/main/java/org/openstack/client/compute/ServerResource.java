@@ -9,7 +9,7 @@ import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.client.compute.ext.FloatingIpsResource;
 import org.openstack.client.compute.ext.SecurityGroupsResource;
 import org.openstack.model.compute.SecurityGroupList;
-import org.openstack.model.compute.server.Server;
+import org.openstack.model.compute.Server;
 import org.openstack.model.compute.server.action.AddFixedIpAction;
 import org.openstack.model.compute.server.action.ChangePasswordAction;
 import org.openstack.model.compute.server.action.ConfirmResizeAction;

@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.model.compute.server.Server;
+import org.openstack.model.compute.Server;
 
 public class AsyncServerOperation implements Future<Server> {
     static final Logger log = Logger.getLogger(AsyncServerOperation.class.getName());
@@ -52,7 +52,7 @@ public class AsyncServerOperation implements Future<Server> {
         this.finishStates = finishStates;
     }
 
-    Server waitForState(long timeout, TimeUnit unit) throws TimeoutException, InterruptedException, OpenstackException {
+    Server waitForState(long timeout, TimeUnit unit) throws OpenstackException {
         try {
             long timeoutAt = unit != null ? System.currentTimeMillis() + unit.toMillis(timeout) : Long.MAX_VALUE;
             while (true) {
@@ -82,9 +82,14 @@ public class AsyncServerOperation implements Future<Server> {
                 }
 
                 if (System.currentTimeMillis() > timeoutAt)
-                    throw new TimeoutException("Server did not transition to expected state within timeout");
+                    throw new OpenstackException("Server did not transition to expected state within timeout");
 
-                Thread.sleep(POLL_INTERVAL_MILLISECONDS);
+                try {
+                	Thread.sleep(POLL_INTERVAL_MILLISECONDS);
+                } catch (InterruptedException e) {
+					throw new OpenstackException(e.getMessage(), e);
+				}
+                
             }
         } finally {
             done = true;
@@ -97,12 +102,12 @@ public class AsyncServerOperation implements Future<Server> {
     }
 
     @Override
-    public Server get() throws InterruptedException, ExecutionException {
+    public Server get() {
         try {
             return get(0, null);
-        } catch (TimeoutException e) {
-            // Shouldn't happen without a timeout specified!!
-            throw new IllegalStateException("Unexpected error", e);
+        } catch (Exception e) {
+            // TimeoutException shouldn't happen without a timeout specified!!
+            throw new OpenstackException("Unexpected error", e);
         }
     }
 

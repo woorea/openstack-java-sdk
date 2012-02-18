@@ -5,7 +5,8 @@ import java.util.List;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.TenantResource;
-import org.openstack.model.compute.server.Server;
+import org.openstack.model.compute.Server;
+
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
 

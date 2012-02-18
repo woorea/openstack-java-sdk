@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class ITExtensions extends ComputeApiTest {
 
-    @Test
+    //@Test
     public void testListExtensions() throws OpenstackException {
         OpenstackClient client = context.client;
         OpenstackComputeClient nova = client.getComputeClient();

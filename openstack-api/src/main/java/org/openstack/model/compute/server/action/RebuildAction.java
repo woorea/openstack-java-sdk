@@ -1,15 +1,17 @@
 package org.openstack.model.compute.server.action;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.compute.Metadata;
-import org.openstack.model.compute.server.Personality;
+import org.openstack.model.compute.ServerForCreate;
 
 @XmlRootElement(name="rebuild")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -24,8 +26,9 @@ public class RebuildAction implements Serializable {
 	@XmlElement
 	private Metadata metadata;
 	
-	@XmlElement
-	private Personality personality;
+	@XmlElementWrapper(name = "personality")
+	@XmlElement(name = "file")
+	private List<ServerForCreate.File> personality;
 	
 	@XmlElement
 	private String imageRef;
@@ -54,11 +57,11 @@ public class RebuildAction implements Serializable {
 		this.metadata = metadata;
 	}
 
-	public Personality getPersonality() {
+	public List<ServerForCreate.File> getPersonality() {
 		return personality;
 	}
 
-	public void setPersonality(Personality personality) {
+	public void setPersonality(List<ServerForCreate.File> personality) {
 		this.personality = personality;
 	}
 

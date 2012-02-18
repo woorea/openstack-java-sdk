@@ -3,8 +3,8 @@ package org.openstack.client.common;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.compute.AsyncServerOperation;
 import org.openstack.client.compute.TenantResource;
-import org.openstack.model.compute.server.Server;
-import org.openstack.model.compute.server.ServerForCreate;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerForCreate;
 
 import com.google.common.collect.Lists;
 

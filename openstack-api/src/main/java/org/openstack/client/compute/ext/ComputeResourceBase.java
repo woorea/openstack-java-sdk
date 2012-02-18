@@ -11,12 +11,12 @@ public abstract class ComputeResourceBase extends Resource {
     }
 
     protected <T> T post(Class<T> retClass, Object body) {
-        Builder builder = resource().type(MediaType.APPLICATION_XML);
+        Builder builder = resource().accept(MediaType.APPLICATION_XML).type(MediaType.APPLICATION_XML);
         return builder.post(retClass, body);
     }
 
     protected <T> T put(Class<T> retClass, Object body) {
-        Builder builder = resource().type(MediaType.APPLICATION_XML);
+        Builder builder = resource().accept(MediaType.APPLICATION_XML).type(MediaType.APPLICATION_XML);
         return builder.put(retClass, body);
     }
 }

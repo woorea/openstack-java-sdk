@@ -5,7 +5,7 @@ import java.util.List;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.InstanceNameAutoCompleter;
-import org.openstack.model.compute.server.Server;
+import org.openstack.model.compute.Server;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;

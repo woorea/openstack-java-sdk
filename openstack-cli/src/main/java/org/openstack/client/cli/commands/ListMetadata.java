@@ -5,8 +5,8 @@ import org.openstack.client.cli.model.InstanceName;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.ServerRepresentation;
 import org.openstack.model.compute.Metadata;
+import org.openstack.model.compute.Server;
 import org.openstack.model.compute.Metadata.Item;
-import org.openstack.model.compute.server.Server;
 
 public class ListMetadata extends OpenstackCliCommandRunnerBase {
     @Argument(index = 0)

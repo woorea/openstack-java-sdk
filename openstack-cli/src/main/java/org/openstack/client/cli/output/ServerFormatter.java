@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import org.openstack.client.extensions.Extension;
 import org.openstack.client.extensions.ExtensionRegistry;
 import org.openstack.client.extensions.ExtensionValues;
+import org.openstack.model.compute.Server;
 import org.openstack.model.compute.extensions.diskconfig.DiskConfigAttributes;
 import org.openstack.model.compute.extensions.extendedstatus.ExtendedStatusAttributes;
-import org.openstack.model.compute.server.Server;
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
 

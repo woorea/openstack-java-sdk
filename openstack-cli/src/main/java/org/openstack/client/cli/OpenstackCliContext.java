@@ -11,7 +11,7 @@ import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.server.Server;
+import org.openstack.model.compute.Server;
 
 import com.fathomdb.cli.CliContextBase;
 

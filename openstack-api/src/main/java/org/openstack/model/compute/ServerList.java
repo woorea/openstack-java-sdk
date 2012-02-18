@@ -1,4 +1,4 @@
-package org.openstack.model.compute.server;
+package org.openstack.model.compute;
 
 import java.util.ArrayList;
 import java.util.List;
