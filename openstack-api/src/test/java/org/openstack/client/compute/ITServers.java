@@ -10,6 +10,7 @@ import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerForCreate;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class ITServers extends ComputeApiTest {
@@ -32,6 +33,10 @@ public class ITServers extends ComputeApiTest {
         	}
         }
         
+		if (image == null) {
+			throw new SkipException("Skipping test because image not found");
+		}
+
         ServerForCreate serverForCreate = new ServerForCreate();
         serverForCreate.setName("eureka1");
         serverForCreate.setFlavorRef("1");
