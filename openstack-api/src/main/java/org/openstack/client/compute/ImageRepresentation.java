@@ -1,6 +1,5 @@
 package org.openstack.client.compute;
 
-
 import org.openstack.model.compute.Image;
 
 import com.sun.jersey.api.client.Client;

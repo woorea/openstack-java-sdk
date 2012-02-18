@@ -16,7 +16,7 @@ public class ListImages extends OpenstackCliCommandRunnerBase {
     public Object runCommand() throws Exception {
         OpenstackComputeClient tenant = getComputeClient();
         ImagesRepresentation images = tenant.root().images().details();
-        return images.getList();
+        return images.asList();
     }
 
 }

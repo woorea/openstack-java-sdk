@@ -14,7 +14,7 @@ public class ListInstances extends OpenstackCliCommandRunnerBase {
     public Object runCommand() throws Exception {
         OpenstackComputeClient tenant = getComputeClient();
         ServersRepresentation servers = tenant.root().servers().list(true);
-        return servers.getList();
+        return servers.asList();
     }
 
 }

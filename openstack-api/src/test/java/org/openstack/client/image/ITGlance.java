@@ -32,7 +32,7 @@ public class ITGlance extends AbstractOpenStackTest {
     public void testListImagesAndDetails() throws OpenstackException {
         OpenstackClient client = context.client;
         OpenstackImageClient glance = client.getImageClient();
-        List<Image> images = Lists.newArrayList(glance.root().images().list());
+        List<Image> images = Lists.newArrayList(glance.root().images().list().asModels());
 
         for (Image image : images) {
             Image details = glance.root().images().image(image.getId()).show();
@@ -93,7 +93,7 @@ public class ITGlance extends AbstractOpenStackTest {
             assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
         }
 
-        List<Image> allImages = Lists.newArrayList(glance.root().images().list());
+        List<Image> allImages = Lists.newArrayList(glance.root().images().list().asModels());
 
         Image foundInAll = findImageById(allImages, uploaded.getId());
         assertNotNull(foundInAll);
@@ -112,7 +112,7 @@ public class ITGlance extends AbstractOpenStackTest {
 
         for (int i = 0; i < 60; i++) {
             // Wait for up to 60 seconds for the image to be deleted
-            allImages = Lists.newArrayList(glance.root().images().list());
+            allImages = Lists.newArrayList(glance.root().images().list().asModels());
             foundInAll = findImageById(allImages, uploaded.getId());
             if (foundInAll == null)
                 break;

@@ -1,7 +1,6 @@
 package org.openstack.client.compute;
 
 import org.openstack.client.OpenstackException;
-import org.openstack.client.common.OpenstackClient;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.model.compute.Extension;
 import org.openstack.model.compute.ExtensionList;
@@ -12,8 +11,7 @@ public class ITExtensions extends ComputeApiTest {
 
     @Test
     public void testListExtensions() throws OpenstackException {
-        OpenstackClient client = context.client;
-        OpenstackComputeClient nova = client.getComputeClient();
+        OpenstackComputeClient nova = getComputeClient();
         ExtensionList extensions = nova.root().extensions().list();
         for (Extension extension : extensions) {
             Extension details = nova.root().extensions().extension(extension.getAlias()).show();
