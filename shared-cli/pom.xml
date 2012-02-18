@@ -39,6 +39,7 @@
             <groupId>org.python</groupId>
             <artifactId>jython</artifactId>
             <version>2.5.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
