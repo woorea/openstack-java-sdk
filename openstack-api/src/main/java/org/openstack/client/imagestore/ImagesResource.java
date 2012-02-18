@@ -16,40 +16,46 @@ import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ImagesResource extends GlanceResourceBase {
 
-    public Iterable<Image> list() {
-        return list(true);
-    }
+	public Iterable<Image> list() {
+		return list(true);
+	}
 
-    public Iterable<Image> list(boolean details) {
-        Builder imagesResource = details ? resource("detail") : resource();
+	public Iterable<Image> list(boolean details) {
+		Builder imagesResource = details ? resource("detail") : resource();
 
-        ImageList imageList = imagesResource.get(ImageList.class);
-        return PagingList.build(client, imageList);
-    }
+		ImageList imageList = imagesResource.get(ImageList.class);
+		return PagingList.build(client, imageList);
+	}
 
-    public ImageResource image(String imageId) {
-        return buildChildResource(imageId, ImageResource.class);
-    }
+	public ImageResource image(String imageId) {
+		return buildChildResource(imageId, ImageResource.class);
+	}
 
-    public Image addImage(File imageFile, Image properties) throws IOException, OpenstackException {
-        FileInputStream fis = new FileInputStream(imageFile);
-        try {
-            properties.setSize(imageFile.length());
+	public Image addImage(File imageFile, Image properties) throws IOException, OpenstackException {
+		FileInputStream fis = new FileInputStream(imageFile);
+		try {
 
-            return addImage(fis, properties);
-        } finally {
-            Io.safeClose(fis);
-        }
-    }
+			return addImage(fis, imageFile.length(), properties);
+		} finally {
+			Io.safeClose(fis);
+		}
+	}
 
-    public Image addImage(InputStream imageStream, Image properties) throws OpenstackException, IOException {
-        Builder builder = resource();
+	public Image addImage(InputStream imageStream, long imageStreamLength, Image properties) throws OpenstackException,
+			IOException {
+		Builder builder = resource();
 
-        builder = GlanceHeaderUtils.setHeaders(builder, properties);
+		builder = GlanceHeaderUtils.setHeaders(builder, properties);
 
-        ImageUploadResponse response = builder.post(ImageUploadResponse.class, imageStream);
-        Image image = response.getImage();
-        return image;
-    }
+		if (imageStreamLength != -1) {
+			properties.setSize(imageStreamLength);
+
+			imageStream = new KnownLengthInputStream(imageStream, imageStreamLength);
+		}
+
+		ImageUploadResponse response = builder.post(ImageUploadResponse.class, imageStream);
+		Image image = response.getImage();
+		return image;
+	}
 
 }

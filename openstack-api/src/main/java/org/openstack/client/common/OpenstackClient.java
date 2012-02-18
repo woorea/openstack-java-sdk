@@ -6,6 +6,7 @@ import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.OpenstackException;
+import org.openstack.client.imagestore.KnownLengthInputStreamProvider;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -25,6 +26,8 @@ public class OpenstackClient {
         if (objectMapper != null) {
             config.getSingletons().add(new ObjectMapperProvider(objectMapper));
         }
+
+        config.getClasses().add(KnownLengthInputStreamProvider.class);
 
         Client client = Client.create(config);
 
