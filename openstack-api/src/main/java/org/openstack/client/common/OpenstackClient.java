@@ -32,6 +32,8 @@ public class OpenstackClient {
             client.addFilter(new LoggingFilter(System.out));
         }
 
+        client.addFilter(new OpenstackExceptionClientFilter());
+
         return client;
     }
 

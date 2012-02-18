@@ -3,6 +3,7 @@ package org.openstack.client.compute;
 import java.util.Set;
 
 import org.openstack.client.OpenstackException;
+import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
@@ -10,7 +11,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Sets;
-import com.sun.jersey.api.client.UniformInterfaceException;
 
 public class ITSecurityGroups extends ComputeApiTest {
 
@@ -32,8 +32,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		Assert.assertEquals(actual.getDescription(), expected.getDescription());
 	}
 
-	@Test(expectedExceptions = { UniformInterfaceException.class })
-	// TODO: Map to OpenStackException
+	@Test(expectedExceptions = { OpenstackNotFoundException.class })
 	public void testNonExistentSecurityGroup() throws OpenstackException {
 		OpenstackComputeClient nova = getComputeClient();
 
@@ -78,8 +77,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		fetched = null;
 		try {
 			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
-		} catch (UniformInterfaceException e) {
-			// TODO: This should be OpenstackNotFoundException
+		} catch (OpenstackNotFoundException e) {
 			// Expected; leave fetched as null
 		}
 
@@ -89,8 +87,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 	/**
 	 * Description is limited to 255 chars
 	 */
-	// TODO: Map to OpenStackException
-	@Test(expectedExceptions = { UniformInterfaceException.class })
+	@Test(expectedExceptions = { OpenstackException.class })
 	public void testBigDescriptionFails() throws OpenstackException {
 		OpenstackComputeClient nova = getComputeClient();
 
