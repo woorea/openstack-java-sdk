@@ -5,8 +5,10 @@ import java.util.Set;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.model.compute.CreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.SecurityGroupRule;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -71,6 +73,39 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 		SecurityGroup fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
 		assertSecurityGroupEquals(fetched, created);
+
+		Assert.assertEquals(fetched.getRules().size(), 0);
+
+		// Create a rule
+		{
+			CreateSecurityGroupRuleRequest newRule = new CreateSecurityGroupRuleRequest();
+			newRule.setCidr("1.2.3.4/32");
+			newRule.setFromPort(1234);
+			newRule.setToPort(5678);
+			newRule.setIpProtocol("tcp");
+			newRule.setParentGroupId(created.getId());
+
+			CreateSecurityGroupRuleRequest createdRule = nova.root().securityGroupRules().create(newRule);
+
+			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
+			assertSecurityGroupEquals(fetched, created);
+
+			Assert.assertEquals(fetched.getRules().size(), 1);
+			SecurityGroupRule rule = fetched.getRules().get(0);
+			Assert.assertEquals(rule.getFromPort(), newRule.getFromPort());
+			Assert.assertEquals(rule.getToPort(), newRule.getToPort());
+			Assert.assertEquals(rule.getIpProtocol(), newRule.getIpProtocol());
+			Assert.assertEquals(rule.getIpRange().cidr, newRule.getCidr());
+		}
+
+		// Drop the rule
+		{
+			SecurityGroupRule rule = fetched.getRules().get(0);
+			nova.root().securityGroupRules().securityGroupRule(rule.id).delete();
+
+			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
+			Assert.assertEquals(fetched.getRules().size(), 0);
+		}
 
 		nova.root().securityGroups().securityGroup(created.getId()).delete();
 

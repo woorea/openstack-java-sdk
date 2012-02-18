@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "rule")
+@XmlRootElement(name = "security_group_rule")
 @XmlAccessorType(XmlAccessType.NONE)
 public class CreateSecurityGroupRuleRequest implements Serializable {
 		
