@@ -16,6 +16,11 @@
     <build>
         <sourceDirectory>src/java/prod</sourceDirectory>
         <testSourceDirectory>src/java/test</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/java/prod</directory>
+            </resource>
+        </resources>
 
         <plugins>
             <plugin>
