@@ -8,5 +8,5 @@ popd > /dev/null
 
 NAILGUN_PORT=2102
 
-java -jar ${BASEDIR}/../openstack-cli/target/openstack-cli-0.0.1-SNAPSHOT-jar-with-dependencies.jar --listen=${NAILGUN_PORT}
+java -jar ${BASEDIR}/../openstack-cli/target/openstack-cli-standalone.jar --listen=${NAILGUN_PORT}
 
