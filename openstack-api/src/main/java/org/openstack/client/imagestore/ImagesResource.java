@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.openstack.client.OpenstackException;
-import org.openstack.client.common.PagingList;
 import org.openstack.model.image.Image;
 import org.openstack.model.image.ImageList;
 import org.openstack.model.image.ImageUploadResponse;
@@ -16,16 +15,16 @@ import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ImagesResource extends GlanceResourceBase {
 
-	public Iterable<Image> list() {
-		return list(true);
-	}
+    public ImagesRepresentation list() {
+        return list(true);
+    }
 
-	public Iterable<Image> list(boolean details) {
-		Builder imagesResource = details ? resource("detail") : resource();
+    public ImagesRepresentation list(boolean details) {
+        Builder imagesResource = details ? resource("detail") : resource();
 
-		ImageList imageList = imagesResource.get(ImageList.class);
-		return PagingList.build(client, imageList);
-	}
+        ImageList imageList = imagesResource.get(ImageList.class);
+        return new ImagesRepresentation(client, imageList);
+    }
 
 	public ImageResource image(String imageId) {
 		return buildChildResource(imageId, ImageResource.class);

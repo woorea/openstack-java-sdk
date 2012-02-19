@@ -1,11 +1,11 @@
 package org.openstack.client.compute;
 
-import javax.ws.rs.core.MediaType;
-
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerForCreate;
 import org.openstack.model.compute.ServerList;
+
+import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ServersResource extends ComputeResourceBase {
 
@@ -22,13 +22,14 @@ public class ServersResource extends ComputeResourceBase {
      * @return
      */
     public ServersRepresentation list(boolean detail) {
-        ServerList list = null;
-        if (detail) {
-            list = client.resource(new StringBuilder(resource).append("/detail").toString()).accept(MediaType.APPLICATION_XML).get(ServerList.class);
-        } else {
-            list = client.resource(resource).accept(MediaType.APPLICATION_XML).get(ServerList.class);
-        }
+        Builder r = detail ? resource("detail") : resource();
+        ServerList list = r.get(ServerList.class);
+
         return new ServersRepresentation(client, list);
+    }
+
+    public ServersRepresentation list() {
+        return list(true);
     }
 
     public Server create(ServerForCreate serverForCreate) {

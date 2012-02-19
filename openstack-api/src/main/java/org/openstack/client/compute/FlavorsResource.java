@@ -1,6 +1,5 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.common.PagingList;
 import org.openstack.client.common.Resource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
@@ -14,13 +13,13 @@ public class FlavorsResource extends Resource {
         super(client, resource);
     }
 
-    public Iterable<Flavor> list() {
+    public FlavorsRepresentation list() {
         return list(true);
     }
 
-    public Iterable<Flavor> list(boolean details) {
+    public FlavorsRepresentation list(boolean details) {
         Builder r = details ? resource("detail") : resource();
-        return PagingList.build(client, r.get(FlavorList.class));
+        return new FlavorsRepresentation(client, r.get(FlavorList.class));
     }
 
     public Flavor create(Flavor flavor) {

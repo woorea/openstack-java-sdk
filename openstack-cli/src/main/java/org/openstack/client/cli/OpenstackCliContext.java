@@ -1,7 +1,6 @@
 package org.openstack.client.cli;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
@@ -64,19 +63,19 @@ public class OpenstackCliContext extends CliContextBase {
         return (OpenstackCliContext) CliContextBase.get();
     }
 
-    public List<Image> getImages() throws OpenstackException {
+    public Iterable<Image> getImages() throws OpenstackException {
         OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().images().list().getList();
+        return computeClient.root().images().list().asModels();
     }
 
-    public List<Server> getInstances() throws OpenstackException {
+    public Iterable<Server> getInstances() throws OpenstackException {
         OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().servers().list(false).getList();
+        return computeClient.root().servers().list(false).asModels();
     }
 
     public Iterable<Flavor> getFlavors() throws OpenstackException {
         OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().flavors().list(false);
+        return computeClient.root().flavors().list(false).asModels();
     }
 
 }

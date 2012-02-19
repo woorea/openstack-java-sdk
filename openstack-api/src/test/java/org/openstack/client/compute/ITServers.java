@@ -25,7 +25,7 @@ public class ITServers extends ComputeApiTest {
         
         ImagesRepresentation images = nova.root().images().list();
         Image image = null;
-        for(Image i : images.getList()) {
+        for(Image i : images.asModels()) {
         	System.out.println(i);
         	if(i.getId().equals("1a0772cd-066c-4de3-a395-b28913e8cfa4")) {
         		image = i;

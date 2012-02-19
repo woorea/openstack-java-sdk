@@ -1,6 +1,7 @@
 package org.openstack.model.compute;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,21 +9,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.ListWithAtomLinks;
+import org.openstack.model.common.PagingListBase;
 
-@XmlRootElement(name="servers")
+@XmlRootElement(name = "servers")
 @XmlAccessorType(XmlAccessType.NONE)
-public class ServerList extends ListWithAtomLinks {
+public class ServerList extends PagingListBase<Server> {
 
-	@XmlElement(name="server")
+	@XmlElement(name = "server")
 	private List<Server> list = new ArrayList<Server>();
 
-	public List<Server> getList() {
-		return list;
+	@Override
+	public Iterator<Server> iterateItemsOnPage() {
+		return list.iterator();
 	}
 
-	public void setList(List<Server> list) {
-		this.list = list;
-	}
-	
 }

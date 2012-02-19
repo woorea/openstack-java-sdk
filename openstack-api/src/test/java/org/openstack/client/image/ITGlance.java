@@ -29,186 +29,168 @@ import com.google.common.collect.Lists;
 
 public class ITGlance extends AbstractOpenStackTest {
 
-	void skipIfNoGlance() {
-		// throw new SkipException("Skipping because glance not present");
-	}
+    @Test
+    public void testListImagesAndDetails() throws OpenstackException {
+        OpenstackClient client = context.client;
+        OpenstackImageClient glance = client.getImageClient();
+        List<Image> images = Lists.newArrayList(glance.root().images().list().asModels());
 
-	@Test
-	public void testListImagesAndDetails() throws OpenstackException {
-		skipIfNoGlance();
+        for (Image image : images) {
+            Image details = glance.root().images().image(image.getId()).show();
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
-		List<Image> images = Lists.newArrayList(glance.root().images().list());
+            assertImageEquals(details, image);
+        }
+    }
 
-		for (Image image : images) {
-			Image details = glance.root().images().image(image.getId()).show();
+    private void assertImageEquals(Image actual, Image expected) {
+        assertEquals(actual.getId(), expected.getId());
+        assertEquals(actual.getChecksum(), expected.getChecksum());
+        assertEquals(actual.getContainerFormat(), expected.getContainerFormat());
+        assertEquals(actual.getCreatedAt(), expected.getCreatedAt());
+        assertEquals(actual.getDeletedAt(), expected.getDeletedAt());
+        assertEquals(actual.getDiskFormat(), expected.getDiskFormat());
+        assertEquals(actual.getMinDisk(), expected.getMinDisk());
+        assertEquals(actual.getMinRam(), expected.getMinRam());
+        assertEquals(actual.getName(), expected.getName());
+        assertEquals(actual.getOwner(), expected.getOwner());
+        assertEquals(actual.getSize(), expected.getSize());
+        assertEquals(actual.getStatus(), expected.getStatus());
 
-			assertImageEquals(details, image);
-		}
-	}
+        assertPropertiesEquals(actual.getProperties(), expected.getProperties());
+    }
 
-	private void assertImageEquals(Image actual, Image expected) {
-		assertEquals(actual.getId(), expected.getId());
-		assertEquals(actual.getChecksum(), expected.getChecksum());
-		assertEquals(actual.getContainerFormat(), expected.getContainerFormat());
-		assertEquals(actual.getCreatedAt(), expected.getCreatedAt());
-		assertEquals(actual.getDeletedAt(), expected.getDeletedAt());
-		assertEquals(actual.getDiskFormat(), expected.getDiskFormat());
-		assertEquals(actual.getMinDisk(), expected.getMinDisk());
-		assertEquals(actual.getMinRam(), expected.getMinRam());
-		assertEquals(actual.getName(), expected.getName());
-		assertEquals(actual.getOwner(), expected.getOwner());
-		assertEquals(actual.getSize(), expected.getSize());
-		assertEquals(actual.getStatus(), expected.getStatus());
+    final int MAX_LENGTH = 16 * 1024 * 1024;
 
-		assertPropertiesEquals(actual.getProperties(), expected.getProperties());
-	}
+    @Test
+    public void testImageUploadAndDelete() throws Exception {
+        OpenstackClient client = context.client;
+        OpenstackImageClient glance = client.getImageClient();
 
-	final int MAX_LENGTH = 16 * 1024 * 1024;
+        RandomUtil random = new RandomUtil();
+        int imageLength = random.uniform(1, MAX_LENGTH);
+        long seed = random.nextLong();
 
-	@Test
-	public void testImageUploadAndDelete() throws Exception {
-		skipIfNoGlance();
+        RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
+        Image template = new Image();
+        template.setName(random.randomAsciiString(1, 64).trim());
 
-		RandomUtil random = new RandomUtil();
-		int imageLength = random.uniform(1, MAX_LENGTH);
-		long seed = random.nextLong();
+        Image uploaded = glance.root().images().addImage(stream, imageLength, template);
+        assertEquals(uploaded.getSize(), Long.valueOf(imageLength));
+        assertEquals(uploaded.getName(), template.getName());
+        assertNull(uploaded.getDeletedAt());
+        assertNotNull(uploaded.getCreatedAt());
+        assertNotNull(uploaded.getUpdatedAt());
+        assertNotNull(uploaded.getId());
+        assertEquals(uploaded.isDeleted(), Boolean.FALSE);
+        assertNull(uploaded.getDiskFormat());
+        assertNull(uploaded.getContainerFormat());
+        assertNotNull(uploaded.getOwner());
+        assertEquals(uploaded.getStatus(), "active");
 
-		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
+        {
+            Md5Hash md5 = new Md5Hash();
+            byte[] hash = md5.hash(stream.clone());
+            assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
+        }
 
-		Image template = new Image();
-		template.setName(random.randomAsciiString(1, 64).trim());
+        List<Image> allImages = Lists.newArrayList(glance.root().images().list().asModels());
 
-		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
-		assertEquals(uploaded.getSize(), Long.valueOf(imageLength));
-		assertEquals(uploaded.getName(), template.getName());
-		assertNull(uploaded.getDeletedAt());
-		assertNotNull(uploaded.getCreatedAt());
-		assertNotNull(uploaded.getUpdatedAt());
-		assertNotNull(uploaded.getId());
-		assertEquals(uploaded.isDeleted(), Boolean.FALSE);
-		assertNull(uploaded.getDiskFormat());
-		assertNull(uploaded.getContainerFormat());
-		assertNotNull(uploaded.getOwner());
-		assertEquals(uploaded.getStatus(), "active");
+        Image foundInAll = findImageById(allImages, uploaded.getId());
+        assertNotNull(foundInAll);
+        assertImageEquals(foundInAll, uploaded);
 
-		{
-			Md5Hash md5 = new Md5Hash();
-			byte[] hash = md5.hash(stream.clone());
-			assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
-		}
+        Image details = glance.root().images().image(uploaded.getId()).show();
+        assertImageEquals(details, uploaded);
 
-		List<Image> allImages = Lists.newArrayList(glance.root().images().list());
+        {
+            InputStream is = glance.root().images().image(uploaded.getId()).openImage();
+            assertStreamsTheSame(is, stream.clone());
+            is.close();
+        }
 
-		Image foundInAll = findImageById(allImages, uploaded.getId());
-		assertNotNull(foundInAll);
-		assertImageEquals(foundInAll, uploaded);
+        glance.root().images().image(uploaded.getId()).delete();
 
-		Image details = glance.root().images().image(uploaded.getId()).show();
-		assertImageEquals(details, uploaded);
+        for (int i = 0; i < 60; i++) {
+            // Wait for up to 60 seconds for the image to be deleted
+            allImages = Lists.newArrayList(glance.root().images().list().asModels());
+            foundInAll = findImageById(allImages, uploaded.getId());
+            if (foundInAll == null)
+                break;
+            Thread.sleep(1000);
+        }
 
-		{
-			InputStream is = glance.root().images().image(uploaded.getId()).openImage();
-			assertStreamsTheSame(is, stream.clone());
-			is.close();
-		}
+        assertNull(foundInAll);
 
-		glance.root().images().image(uploaded.getId()).delete();
+        try {
+            glance.root().images().image(uploaded.getId()).show();
+            Assert.fail();
+        } catch (OpenstackNotFoundException e) {
+            // Expected!
+        }
+    }
 
-		for (int i = 0; i < 60; i++) {
-			// Wait for up to 60 seconds for the image to be deleted
-			allImages = Lists.newArrayList(glance.root().images().list());
-			foundInAll = findImageById(allImages, uploaded.getId());
-			if (foundInAll == null)
-				break;
-			Thread.sleep(1000);
-		}
+    private void assertStreamsTheSame(InputStream actual, InputStream expected) throws DigestException, IOException {
+        byte[] actualHash = new Md5Hash().hash(actual);
+        byte[] expectedHash = new Md5Hash().hash(expected);
 
-		assertNull(foundInAll);
+        assertEquals(actualHash, expectedHash);
+    }
 
-		try {
-			glance.root().images().image(uploaded.getId()).show();
-			Assert.fail();
-		} catch (OpenstackNotFoundException e) {
-			// Expected!
-		}
-	}
+    @Test
+    public void testNullFormatsFails() throws Exception {
+        // Apparently this is supposed to fail; right now it isn't though!
+        // https://bugs.launchpad.net/glance/+bug/933702
 
-	private void assertStreamsTheSame(InputStream actual, InputStream expected) throws DigestException, IOException {
-		byte[] actualHash = new Md5Hash().hash(actual);
-		byte[] expectedHash = new Md5Hash().hash(expected);
+        OpenstackClient client = context.client;
+        OpenstackImageClient glance = client.getImageClient();
 
-		assertEquals(actualHash, expectedHash);
-	}
+        RandomUtil random = new RandomUtil();
+        int imageLength = 128;
+        long seed = random.nextLong();
 
-	@Test
-	public void testNullFormatsFails() throws Exception {
-		skipIfNoGlance();
+        RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
-		// Apparently this is supposed to fail; right now it isn't though!
-		// https://bugs.launchpad.net/glance/+bug/933702
+        Image template = new Image();
+        template.setName(random.randomAsciiString(1, 64).trim());
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
+        Image uploaded = glance.root().images().addImage(stream, imageLength, template);
+        assertNull(uploaded.getDiskFormat());
+        assertNull(uploaded.getContainerFormat());
+    }
 
-		RandomUtil random = new RandomUtil();
-		int imageLength = 128;
-		long seed = random.nextLong();
+    // Skipped for now... @Test
+    public void testNullNameFails() throws Exception {
+        // It's not clear whether a null name is supposed to fail or not
+        // https://bugs.launchpad.net/glance/+bug/934492
+        OpenstackClient client = context.client;
+        OpenstackImageClient glance = client.getImageClient();
 
-		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
+        RandomUtil random = new RandomUtil();
+        int imageLength = 128;
+        long seed = random.nextLong();
 
-		Image template = new Image();
-		template.setName(random.randomAsciiString(1, 64).trim());
+        RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
-		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
-		assertNull(uploaded.getDiskFormat());
-		assertNull(uploaded.getContainerFormat());
-	}
+        Image template = new Image();
 
-	@Test
-	public void testNullNameFails() throws Exception {
-		skipIfNoGlance();
+        Image uploaded = glance.root().images().addImage(stream, imageLength, template);
+        System.out.println(uploaded);
+        Assert.fail("Image upload without a name should fail");
+    }
 
-		// It's not clear whether a null name is supposed to fail or not
-		// https://bugs.launchpad.net/glance/+bug/934492
-		skipUntilBugFixed(934492);
+    private Image findImageById(List<Image> images, String id) {
+        for (Image image : images) {
+            if (id.equals(image.getId()))
+                return image;
+        }
+        return null;
+    }
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
+    private void assertPropertiesEquals(ImageProperties actual, ImageProperties expected) {
+        Map<String, Object> actualMap = actual.asMap();
+        Map<String, Object> expectedMap = expected.asMap();
 
-		RandomUtil random = new RandomUtil();
-		int imageLength = 128;
-		long seed = random.nextLong();
-
-		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
-
-		Image template = new Image();
-
-		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
-		System.out.println(uploaded);
-		Assert.fail("Image upload without a name should fail");
-	}
-
-	private void skipUntilBugFixed(int bugNumber) {
-		throw new SkipException("Skipping because of bug #" + bugNumber);
-	}
-
-	private Image findImageById(List<Image> images, String id) {
-		for (Image image : images) {
-			if (id.equals(image.getId()))
-				return image;
-		}
-		return null;
-	}
-
-	private void assertPropertiesEquals(ImageProperties actual, ImageProperties expected) {
-		Map<String, Object> actualMap = actual.asMap();
-		Map<String, Object> expectedMap = expected.asMap();
-
-		assertEquals(actualMap, expectedMap);
-	}
+        assertEquals(actualMap, expectedMap);
+    }
 }

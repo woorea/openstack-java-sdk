@@ -4,12 +4,10 @@ import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.compute.TenantResource;
 import org.openstack.model.compute.Server;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
-
 import com.google.common.collect.Lists;
 
 public class InstanceNameAutoCompleter extends SimpleArgumentAutoCompleter {
@@ -20,7 +18,7 @@ public class InstanceNameAutoCompleter extends SimpleArgumentAutoCompleter {
 
         OpenstackCliContext osContext = (OpenstackCliContext) context;
         OpenstackComputeClient computeClient = osContext.getComputeClient();
-        List<Server> servers = computeClient.root().servers().list(false).getList();
+        Iterable<Server> servers = computeClient.root().servers().list(false).asModels();
         for (Server server : servers) {
             strings.add(server.getId());
             strings.add(server.getName());
