@@ -66,6 +66,18 @@ public class AsyncServerOperation implements Future<Server> {
                     status = "DELETED";
                 }
 
+                // Some versions (Diablo?) would return additional information in the status
+                // e.g. BUILD(networking).  We need to split this out.
+                String subStatus = null;
+                if (status.contains("(")) {
+					int leftBracketIndex = status.indexOf('(');
+					int rightBracketIndex = status.indexOf(')');
+					if (leftBracketIndex != -1 && rightBracketIndex > leftBracketIndex) {
+						subStatus = status.substring(leftBracketIndex + 1, rightBracketIndex);
+						status = status.substring(0, leftBracketIndex);
+					}
+                }
+
                 if (finishStates.contains(status)) {
                     log.fine("Finished polling; server status is " + status + " progess=" + server.getProgress());
                     return server;
