@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.google.common.collect.Lists;
+
 @XmlAccessorType(XmlAccessType.NONE)
 public class Addresses implements Serializable {
 
@@ -76,11 +78,17 @@ public class Addresses implements Serializable {
     }
 
     @XmlElement(name = "network")
-    public List<Network> networks;
+    private List<Network> networks;
 
     @Override
     public String toString() {
         return "Addresses [networks=" + networks + "]";
     }
 
+	public List<Network> getNetworks() {
+		if (networks == null) {
+			networks = Lists.newArrayList();
+		}
+		return networks;
+	}
 }

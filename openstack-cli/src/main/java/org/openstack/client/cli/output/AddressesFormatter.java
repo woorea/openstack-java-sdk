@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.openstack.model.compute.Addresses;
 import org.openstack.model.compute.Addresses.Network.Ip;
+
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
-
 import com.google.common.collect.Maps;
 
 public class AddressesFormatter extends SimpleFormatter<Addresses> {
@@ -22,7 +22,7 @@ public class AddressesFormatter extends SimpleFormatter<Addresses> {
         LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
         StringBuilder sb = new StringBuilder();
-        formatNetworks(sb, o.networks);
+        formatNetworks(sb, o.getNetworks());
 
         values.put("networks", sb.toString());
 
@@ -34,7 +34,7 @@ public class AddressesFormatter extends SimpleFormatter<Addresses> {
             return null;
 
         StringBuilder sb = new StringBuilder();
-        formatNetworks(sb, addresses.networks);
+        formatNetworks(sb, addresses.getNetworks());
         return sb.toString();
     }
 
