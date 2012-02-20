@@ -1,6 +1,5 @@
 package org.openstack.client.common;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.openstack.model.identity.Access;
@@ -9,7 +8,6 @@ import org.openstack.model.identity.Access.Token;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.ClientFilter;
-import com.sun.jersey.api.client.filter.LoggingFilter;
 
 class OpenstackAuthenticationFilter extends ClientFilter {
 	static final Logger log = Logger.getLogger(OpenstackAuthenticationFilter.class.getName());

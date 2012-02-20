@@ -68,6 +68,10 @@ public class TenantResource extends Resource {
         return getChildResource("os-networks", NetworksResource.class);
     }
 
+    public FloatingIpsResource floatingIps() {
+    	return getChildResource("os-floating-ips", FloatingIpsResource.class);
+    }
+    
 	public FloatingIpPoolsResource floatingIpPools() {
 		return getChildResource("os-floating-ip-pools", FloatingIpPoolsResource.class);
 	}

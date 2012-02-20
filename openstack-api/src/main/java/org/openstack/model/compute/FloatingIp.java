@@ -20,6 +20,12 @@ public class FloatingIp implements Serializable {
 	@XmlAttribute
 	private String pool;
 
+	@XmlAttribute
+	private String instance_id;
+	
+	@XmlAttribute
+	private String fixed_ip;
+	
 	public String getId() {
 		return id;
 	}

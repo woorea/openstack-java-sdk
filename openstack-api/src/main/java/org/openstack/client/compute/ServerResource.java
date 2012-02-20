@@ -11,6 +11,7 @@ import org.openstack.client.compute.ext.SecurityGroupsResource;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.server.action.AddFixedIpAction;
+import org.openstack.model.compute.server.action.AddFloatingIpAction;
 import org.openstack.model.compute.server.action.ChangePasswordAction;
 import org.openstack.model.compute.server.action.ConfirmResizeAction;
 import org.openstack.model.compute.server.action.Console;
@@ -26,6 +27,7 @@ import org.openstack.model.compute.server.action.PauseAction;
 import org.openstack.model.compute.server.action.RebootAction;
 import org.openstack.model.compute.server.action.RebuildAction;
 import org.openstack.model.compute.server.action.RemoveFixedIpAction;
+import org.openstack.model.compute.server.action.RemoveFloatingIpAction;
 import org.openstack.model.compute.server.action.ResetNetworkAction;
 import org.openstack.model.compute.server.action.ResizeAction;
 import org.openstack.model.compute.server.action.RestoreAction;
@@ -255,6 +257,24 @@ public class ServerResource extends ComputeResourceBase {
     }
 
     /**
+     * Attaches a floating IP to the instance.
+     */
+    public void addFloatingIp(String ip) {
+        AddFloatingIpAction action = new AddFloatingIpAction();
+        action.setAddress(ip);
+        executeAction(String.class, action);
+    }
+
+    /**
+     * Detaches a floating IP from the instance
+     */
+    public void removeFloatingIp(String ip) {
+        RemoveFloatingIpAction action = new RemoveFloatingIpAction();
+        action.setAddress(ip);
+        executeAction(String.class, action);
+    }
+
+    /**
      * Get text console log output from Server.
      * 
      * @return
@@ -290,9 +310,6 @@ public class ServerResource extends ComputeResourceBase {
         // "os-volume_attachments"
     }
 
-    /**
-     * Allow Admins to view pending server actions
-     */
     public FloatingIpsResource floatingIps() {
     	return getChildResource("os-floating-ips", FloatingIpsResource.class);
     }
