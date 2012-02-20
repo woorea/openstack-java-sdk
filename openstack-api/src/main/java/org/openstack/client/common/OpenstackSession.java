@@ -1,5 +1,6 @@
 package org.openstack.client.common;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.openstack.client.OpenstackCredentials;
@@ -13,7 +14,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
-public class OpenstackSession {
+public class OpenstackSession implements Serializable {
 	Access access;
 
 	final String authenticationUrl;

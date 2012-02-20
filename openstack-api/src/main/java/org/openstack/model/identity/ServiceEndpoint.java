@@ -1,11 +1,13 @@
 package org.openstack.model.identity;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlAccessorType(XmlAccessType.NONE)
-public class ServiceEndpoint {
+public class ServiceEndpoint implements Serializable {
 
     @XmlAttribute
     private String region;
