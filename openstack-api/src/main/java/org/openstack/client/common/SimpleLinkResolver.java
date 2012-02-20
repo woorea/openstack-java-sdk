@@ -45,6 +45,9 @@ public class SimpleLinkResolver implements LinkResolver {
 		// may this is fixed in the current revision
 		// so simply comment this
 
+		// This may actually be because the link shouldn't embed the client version?
+		// If this isn't just a hack, we should probably avoid changing the Link URI!
+
 		try {
 			URI uri = URI.create(link.getHref());
 			String path = uri.getPath();
