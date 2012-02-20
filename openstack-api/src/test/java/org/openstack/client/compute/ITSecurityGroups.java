@@ -58,8 +58,8 @@ public class ITSecurityGroups extends ComputeApiTest {
 	public void testCreateAndDelete() throws OpenstackException {
 		OpenstackComputeClient nova = getComputeClient();
 
-		String groupName = random.randomAsciiString(1, 128);
-		String description = random.randomAsciiString(1, 255);
+		String groupName = random.randomAsciiString(1, 128).trim();
+		String description = random.randomAsciiString(1, 255).trim();
 
 		SecurityGroup createRequest = new SecurityGroup();
 		createRequest.setName(groupName);
