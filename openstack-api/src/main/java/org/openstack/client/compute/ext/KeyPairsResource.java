@@ -6,6 +6,8 @@ import org.openstack.client.common.Resource;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairList;
 
+import com.sun.jersey.api.client.WebResource.Builder;
+
 /**
  * Keypair Support
  * 
@@ -13,6 +15,12 @@ import org.openstack.model.compute.KeyPairList;
  * 
  */
 public class KeyPairsResource extends Resource {
+
+	// KeyPairsResource seems to be JSON only
+	// TODO: Is this an OpenStack bug or an HP bug?
+	protected Builder addAcceptHeaders(Builder webResource) {
+		return webResource.accept(MediaType.APPLICATION_JSON);
+	}
 
 	/**
 	 * List of keypairs for a user
