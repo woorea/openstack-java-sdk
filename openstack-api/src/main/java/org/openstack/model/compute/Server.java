@@ -200,22 +200,10 @@ public class Server implements Serializable {
 	}
 
 	public Image getImage(OpenstackSession session) {
-		if (image.getName() == null) {
-			image = Iterables.find(image.getLinks(), new Predicate<Link>() {
-				@Override
-				public boolean apply(Link link) {
-					if("bookmark".equals(link.getRel())) {
-						//dirty hack since urls are not correct in the XML
-						//may this is fixed in the current revision
-						//so simply comment this
-						link.setHref(link.getHref().replace(":8774/", ":8774/v1.1/"));
-						return true;
-					} else {
-						return false;
-					}
-				}
-
-			}).follow(session, "GET", Image.class);
+		if (session != null) {
+			if (image != null || image.getName() == null) {
+				image = session.getLinkResolver().resolveImage(image.getId(), image.getLinks());
+			}
 		}
 		return image;
 	}

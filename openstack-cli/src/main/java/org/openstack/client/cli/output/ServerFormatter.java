@@ -8,6 +8,7 @@ import org.openstack.client.extensions.Extension;
 import org.openstack.client.extensions.ExtensionRegistry;
 import org.openstack.client.extensions.ExtensionValues;
 import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.extensions.diskconfig.DiskConfigAttributes;
 import org.openstack.model.compute.extensions.extendedstatus.ExtendedStatusAttributes;
@@ -34,8 +35,15 @@ public class ServerFormatter extends SimpleFormatter<Server> {
             flavorName = flavor.getName();
         }
 
+        Image image = o.getImage(context.getOpenstackSession());
+        String imageName = null;
+        if (image != null) {
+            imageName = image.getName();
+        }
+
         values.put("id", o.getId());
         values.put("flavor", flavorName);
+        values.put("image", imageName);
         values.put("name", o.getName());
         values.put("status", o.getStatus());
         values.put("networks", AddressesFormatter.formatAddresses(o.getAddresses()));
