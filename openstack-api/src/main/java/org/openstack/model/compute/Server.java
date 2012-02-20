@@ -225,23 +225,10 @@ public class Server implements Serializable {
 	}
 
 	public Flavor getFlavor(OpenstackSession session) {
-		if (flavor.getName() == null) {
-			flavor = Iterables.find(flavor.getLinks(), new Predicate<Link>() {
-
-				@Override
-				public boolean apply(Link link) {
-					if("bookmark".equals(link.getRel())) {
-						//dirty hack since urls are not correct in the XML
-						//may this is fixed in the current revision
-						//so simply comment this
-						link.setHref(link.getHref().replace(":8774/", ":8774/v1.1/"));
-						return true;
-					} else {
-						return false;
-					}
-				}
-
-			}).follow(session, "GET", Flavor.class);
+		if (session != null) {
+			if (flavor != null || flavor.getName() == null) {
+				flavor = session.getLinkResolver().resolveFlavor(flavor.getId(), flavor.getLinks());
+			}
 		}
 		return flavor;
 	}

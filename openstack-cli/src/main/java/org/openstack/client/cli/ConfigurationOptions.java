@@ -3,6 +3,7 @@ package org.openstack.client.cli;
 import org.kohsuke.args4j.Option;
 import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.OpenstackException;
+import org.openstack.client.common.CachingLinkResolver;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.common.OpenstackSession;
@@ -87,6 +88,9 @@ public class ConfigurationOptions extends CliOptions {
     public OpenstackSession getOpenstackSession() {
         if (session == null) {
             session = new OpenstackSession(server);
+            session.setVerbose(debug);
+
+            session.setLinkResolver(new CachingLinkResolver(session));
         }
 
         if (!session.isAuthenticated()) {

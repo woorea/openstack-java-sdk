@@ -21,6 +21,8 @@ public class OpenstackSession implements Serializable {
 
 	private boolean verbose;
 
+	transient LinkResolver linkResolver;
+
 	public OpenstackSession(String authUrl) {
 		this.authenticationUrl = authUrl;
 	}
@@ -121,4 +123,14 @@ public class OpenstackSession implements Serializable {
 		return verbose;
 	}
 
+	public LinkResolver getLinkResolver() {
+		if (linkResolver == null) {
+			linkResolver = new SimpleLinkResolver(this);
+		}
+		return linkResolver;
+	}
+
+	public void setLinkResolver(LinkResolver linkResolver) {
+		this.linkResolver = linkResolver;
+	}
 }
