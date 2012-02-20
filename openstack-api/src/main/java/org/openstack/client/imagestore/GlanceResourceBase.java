@@ -11,7 +11,7 @@ abstract class GlanceResourceBase extends Resource {
     public GlanceResourceBase() {
     }
     
-	protected Builder addAcceptHeaders(WebResource webResource) {
+	protected Builder addAcceptHeaders(Builder webResource) {
         // Glance only speaks JSON
         return webResource.accept(MediaType.APPLICATION_JSON);
     }

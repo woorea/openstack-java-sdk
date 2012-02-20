@@ -24,7 +24,7 @@ public class Resource {
 	protected Resource() {
 	}
 
-	protected Builder addAcceptHeaders(WebResource webResource) {
+	protected Builder addAcceptHeaders(Builder webResource) {
 		return webResource.accept(MediaType.APPLICATION_XML);
 	}
 
@@ -36,16 +36,26 @@ public class Resource {
 	}
 
 	protected Builder resource() {
-		WebResource builder = session.resource(resource);
-		return addAcceptHeaders(builder);
+		return resource(null, null);
 	}
 
 	protected Builder resource(String relativePath) {
-		String resourceUrl = UrlUtils.join(resource, relativePath);
-		WebResource builder = session.resource(resourceUrl);
-		return addAcceptHeaders(builder);
+		return resource(relativePath, null);
 	}
 
+	protected Builder resource(String relativePath, MediaType mediaType) {
+		String resourceUrl = relativePath != null ? UrlUtils.join(resource, relativePath) : resource;
+		WebResource webResource = session.resource(resourceUrl);
+		Builder builder = webResource.getRequestBuilder();
+		if (mediaType == null) {
+			addAcceptHeaders(builder);
+		} else {
+			builder.accept(mediaType);
+		}
+		return builder;
+	}
+
+	
 	final Map<String, Resource> resources = Maps.newHashMap();
 
 	protected <T extends Resource> T getChildResource(String relativePath, Class<T> clazz) {
