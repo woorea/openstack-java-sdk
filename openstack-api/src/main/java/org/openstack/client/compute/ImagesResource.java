@@ -1,31 +1,28 @@
 package org.openstack.client.compute;
 
-import javax.ws.rs.core.MediaType;
-
 import org.openstack.client.common.Resource;
-import org.openstack.client.imagestore.UrlUtils;
+import org.openstack.client.common.SimplePagingList;
+import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 
-import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ImagesResource extends Resource {
 
-    public ImagesResource(Client client, String resource) {
-        super(client, resource);
+    public Iterable<Image> list(boolean detail) {
+    	Builder r = detail ? resource("detail") : resource();
+    	ImageList page = r.get(ImageList.class);
+    	
+    	// Does this actually page?
+        return new SimplePagingList<Image>(session, page);
     }
 
-    public ImagesRepresentation list() {
-        ImageList list = client.resource(resource).accept(MediaType.APPLICATION_XML).get(ImageList.class);
-        return new ImagesRepresentation(client, list);
-    }
-
-    public ImagesRepresentation details() {
-        ImageList list = client.resource(new StringBuffer(resource).append("/detail").toString()).accept(MediaType.APPLICATION_XML).get(ImageList.class);
-        return new ImagesRepresentation(client, list);
+    public Iterable<Image> list() {
+    	return list(true);
     }
 
     public ImageResource image(String id) {
-        return new ImageResource(client, UrlUtils.join(resource, id));
+        return buildChildResource(id, ImageResource.class);
     }
 
 }

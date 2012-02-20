@@ -2,15 +2,18 @@ package org.openstack.client;
 
 import java.util.Properties;
 
-import org.openstack.client.common.OpenstackClient;
+import org.openstack.client.common.OpenstackSession;
 
 public class OpenstackTestContext {
-    public OpenstackClient client;
+    public OpenstackSession session;
 
-    public OpenstackClient connect(String url, OpenstackCredentials credentials, boolean verbose) {
-        OpenstackClient client = new OpenstackClient(url, credentials, verbose);
-        this.client = client;
-        return client;
+    public OpenstackSession connect(String url, OpenstackCredentials credentials, boolean verbose) {
+    	OpenstackSession session = new OpenstackSession(url, credentials);
+        this.session = session;
+        if (verbose) {
+        	session.setVerbose(true);
+        }
+        return session;
     }
 
     public static OpenstackTestContext buildFromProperties() {

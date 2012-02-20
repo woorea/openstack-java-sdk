@@ -16,6 +16,7 @@ import com.sun.jersey.api.client.Client;
 public class Test {
 
     public static void main(String[] args) {
+    	/*
         OpenStackClientFactory osf = new OpenStackClientFactory();
         Client client = osf.create();
         IdentityResource identity = new IdentityResource(client, "http://192.168.1.49:5000/v2.0");
@@ -30,6 +31,7 @@ public class Test {
         for (Tenant tenant : tenants) {
             System.out.println(tenant);
         }
+        */
         /*
          * UsersResource usersResource = identity.users(); UsersRepresentation usersRepresentation = usersResource.list(); List<User> users = usersRepresentation.getList(); for(User user : users) {
          * System.out.println(user); }
@@ -61,8 +63,8 @@ public class Test {
         // representation = representation.next();
         // System.out.println(representation.getList());
 
-        ComputeResource compute = new ComputeResource(client, "http://192.168.1.49:8774/v1.1");
-        TenantResource tenant = compute.tenant(); // tenants.get(0).getId());
+        //ComputeResource compute = new ComputeResource(client, "http://192.168.1.49:8774/v1.1");
+        //TenantResource tenant = compute.tenant(); // tenants.get(0).getId());
 
         // client.resource("http://192.168.1.49:8774/v2/1/extensions").accept(MediaType.APPLICATION_JSON).get(String.class);
 
@@ -87,7 +89,7 @@ public class Test {
          * 
          * System.out.println(tenant.servers().server(servers.get(0).getId()).getConsoleOutput(20)); System.out.println(tenant.servers().server(servers.get(0).getId()).getVncConsole("novnc"));
          */
-        System.out.println(tenant.zones().list().getList());
+        //System.out.println(tenant.zones().list().getList());
 
         // tenant.servers().server(servers.get(0).getId()).getVNCConsole("novnc");
 

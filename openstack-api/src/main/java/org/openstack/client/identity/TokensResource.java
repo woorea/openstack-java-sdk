@@ -7,28 +7,13 @@ import org.apache.commons.codec.binary.Hex;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
 
-import com.sun.jersey.api.client.ClientHandlerException;
-import com.sun.jersey.api.client.ClientRequest;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.filter.ClientFilter;
-
 public class TokensResource extends IdentityResourceBase {
 
     public Access authenticate(Authentication authentication) {
         // String password = authentication.getPasswordCredentials().getPassword();
         // authentication.getPasswordCredentials().setPassword(sha512(password));
         // .type(MediaType.APPLICATION_XML) ?
-        final Access access = resource().post(Access.class, authentication);
-        client.addFilter(new ClientFilter() {
-
-            @Override
-            public ClientResponse handle(ClientRequest cr) throws ClientHandlerException {
-                cr.getHeaders().putSingle("X-Auth-Token", access.getToken().getId());
-                // cr.getHeaders().putSingle("X-Auth-Token", "woorea");
-                return getNext().handle(cr);
-            }
-        });
-        return access;
+    	return resource().post(Access.class, authentication);
     }
 
     private String toHex(byte[] digest) {

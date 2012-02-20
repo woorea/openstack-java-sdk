@@ -1,5 +1,8 @@
 package org.openstack.client.compute;
 
+import javax.ws.rs.core.MediaType;
+
+import org.openstack.client.common.SimplePagingList;
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerForCreate;
@@ -21,14 +24,13 @@ public class ServersResource extends ComputeResourceBase {
      * @param detail
      * @return
      */
-    public ServersRepresentation list(boolean detail) {
+    public Iterable<Server> list(boolean detail) {
         Builder r = detail ? resource("detail") : resource();
-        ServerList list = r.get(ServerList.class);
-
-        return new ServersRepresentation(client, list);
+        ServerList page = r.get(ServerList.class);
+        return new SimplePagingList<Server>(session, page);
     }
 
-    public ServersRepresentation list() {
+    public Iterable<Server> list() {
         return list(true);
     }
 

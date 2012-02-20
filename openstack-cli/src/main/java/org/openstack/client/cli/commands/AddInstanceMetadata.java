@@ -3,10 +3,9 @@ package org.openstack.client.cli.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.model.InstanceName;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.compute.ServerRepresentation;
 import org.openstack.model.compute.Metadata;
-import org.openstack.model.compute.Server;
 import org.openstack.model.compute.Metadata.Item;
+import org.openstack.model.compute.Server;
 
 public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
     @Argument(index = 0)
@@ -39,8 +38,7 @@ public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
         item.setValue(value);
         metadata.getItems().add(item);
 
-        ServerRepresentation ret = compute.root().servers().server(instanceId).update(server);
-        return ret.getModel();
+        return compute.root().servers().server(instanceId).update(server);
     }
 
 }

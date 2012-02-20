@@ -6,8 +6,4 @@ import com.sun.jersey.api.client.Client;
 
 public class SnapshotsResource extends Resource {
 
-	public SnapshotsResource(Client client, String resource) {
-		super(client, resource);
-	}
-
 }

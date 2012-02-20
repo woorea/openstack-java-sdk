@@ -1,5 +1,6 @@
 package org.openstack.client.compute;
 
+import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.Resource;
 import org.openstack.client.compute.ext.FloatingIpsResource;
 import org.openstack.client.compute.ext.KeyPairsResource;
@@ -23,146 +24,68 @@ import com.sun.jersey.api.client.Client;
 
 public class TenantResource extends Resource {
 
-    private FlavorsResource flavors;
+	public TenantResource(OpenstackSession session, String resource) {
+		initialize(session, resource);
+	}
 
-    private ImagesResource images;
-
-    private ConsolesResource consoles;
-
-    private ZonesResource zones;
-
-    private VolumeTypesResource volumeTypes;
-
-    private VolumesResource volumes;
-
-    private VirtualStorageArraysResource virtualStorageArrays;
-
-    private UsersResource users;
-
-    private SimpleTenantUsageResource usage;
-
-    private QuotasResource quotasResource;
-
-    private NetworksResource networks;
-
-    private KeyPairsResource keyPairs;
-
-    private HostsResource hosts;
-
-    private FloatingIpsResource floatingIps;
-
-    private FloatingIpPoolsResource floatingIpPools;
-
-    private FloatingIpDnsResource floatingIpDns;
-
-    private CloudPipeResource cloudPipe;
-
-    private AccountsResource accounts;
-
-    public TenantResource(Client client, String resource) {
-        super(client, resource);
-    }
-
-    public ServersResource servers() {
+	public ServersResource servers() {
         return getChildResource("servers", ServersResource.class);
     }
 
     public FlavorsResource flavors() {
-        if (flavors == null) {
-            flavors = new FlavorsResource(client, new StringBuilder(resource).append("/flavors").toString());
-        }
-        return flavors;
+        return getChildResource("flavors", FlavorsResource.class);
     }
 
     public ImagesResource images() {
-        if (images == null) {
-            images = new ImagesResource(client, new StringBuilder(resource).append("/images").toString());
-        }
-        return images;
+        return getChildResource("images", ImagesResource.class);
     }
 
     public ZonesResource zones() {
-        if (zones == null) {
-            zones = new ZonesResource(client, new StringBuilder(resource).append("/zones").toString());
-        }
-        return zones;
+        return getChildResource("zones", ZonesResource.class);
     }
 
     public VolumeTypesResource volumeTypes() {
-        if (volumeTypes == null) {
-            volumeTypes = new VolumeTypesResource(client, new StringBuilder(resource).append("/os-volume-types").toString());
-        }
-        return volumeTypes;
+        return getChildResource("os-volume-types", VolumeTypesResource.class);
     }
 
     public VolumesResource volumes() {
-        if (volumes == null) {
-            volumes = new VolumesResource(client, new StringBuilder(resource).append("/os-volumes").toString());
-        }
-        return volumes;
+        return getChildResource("os-volumes", VolumesResource.class);
     }
 
     public VirtualStorageArraysResource virtualStorageArrays() {
-        if (virtualStorageArrays == null) {
-            virtualStorageArrays = new VirtualStorageArraysResource(client, new StringBuilder(resource).append("/vsa").toString());
-        }
-        return virtualStorageArrays;
+        return getChildResource("vsa", VirtualStorageArraysResource.class);
     }
 
     public SimpleTenantUsageResource usage() {
-        if (usage == null) {
-            usage = new SimpleTenantUsageResource(client, new StringBuilder(resource).append("/os-simple-tenant-usage").toString());
-        }
-        return usage;
+        return getChildResource("os-simple-tenant-usage", SimpleTenantUsageResource.class);
     }
 
     public QuotasResource quotas() {
-        if (quotasResource == null) {
-            quotasResource = new QuotasResource(client, new StringBuilder(resource).append("/os-quota-sets").toString());
-        }
-        return quotasResource;
+        return getChildResource("os-quota-sets", QuotasResource.class);
     }
 
     public NetworksResource networks() {
-        if (networks == null) {
-            networks = new NetworksResource(client, new StringBuilder(resource).append("/os-networks").toString());
-        }
-        return networks;
+        return getChildResource("os-networks", NetworksResource.class);
     }
 
-    public FloatingIpPoolsResource floatingIpPools() {
-        if (floatingIpPools == null) {
-            floatingIpPools = new FloatingIpPoolsResource(client, new StringBuilder(resource).append("/os-floating-ip-pools").toString());
-        }
-        return floatingIpPools;
-    }
+	public FloatingIpPoolsResource floatingIpPools() {
+		return getChildResource("os-floating-ip-pools", FloatingIpPoolsResource.class);
+	}
 
-    public FloatingIpDnsResource floatingIpDns() {
-        if (floatingIpDns == null) {
-            floatingIpDns = new FloatingIpDnsResource(client, new StringBuilder(resource).append("/os-floating-ip-pools").toString());
-        }
-        return floatingIpDns;
-    }
+	public FloatingIpDnsResource floatingIpDns() {
+		return getChildResource("os-floating-ip-dns", FloatingIpDnsResource.class);
+	}
 
-    public CloudPipeResource cloudPipe() {
-        if (cloudPipe == null) {
-            cloudPipe = new CloudPipeResource(client, new StringBuilder(resource).append("/os-cloudpipe").toString());
-        }
-        return cloudPipe;
-    }
+	public CloudPipeResource cloudPipe() {
+		return getChildResource("os-cloudpipe", CloudPipeResource.class);
+	}
 
-    public AccountsResource accounts() {
-        if (accounts == null) {
-            accounts = new AccountsResource(client, new StringBuilder(resource).append("/accounts").toString());
-        }
-        return accounts;
-    }
+	public AccountsResource accounts() {
+		return getChildResource("accounts", AccountsResource.class);
+	}
 
     public KeyPairsResource keyPairs() {
-        if (keyPairs == null) {
-            keyPairs = new KeyPairsResource(client, new StringBuilder(resource).append("/os-keypairs").toString());
-        }
-        return keyPairs;
+    	return getChildResource("os-keypairs", KeyPairsResource.class);
     }
 
     public SecurityGroupsResource securityGroups() {

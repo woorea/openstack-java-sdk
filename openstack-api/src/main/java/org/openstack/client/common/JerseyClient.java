@@ -4,8 +4,6 @@ import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
-import org.openstack.client.OpenstackCredentials;
-import org.openstack.client.OpenstackException;
 import org.openstack.client.imagestore.KnownLengthInputStreamProvider;
 
 import com.sun.jersey.api.client.Client;
@@ -14,11 +12,14 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 
-public class OpenstackClient {
-    final OpenstackAuthenticationClient authenticationClient;
+enum JerseyClient {
 
-    Client buildClient(boolean verbose) {
-        ClientConfig config = new DefaultClientConfig();
+	INSTANCE;
+	
+	private Client client;
+	
+	private JerseyClient() {
+		ClientConfig config = new DefaultClientConfig();
 
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
@@ -29,18 +30,23 @@ public class OpenstackClient {
 
         config.getClasses().add(KnownLengthInputStreamProvider.class);
 
-        Client client = Client.create(config);
-
-        if (verbose) {
-            client.addFilter(new LoggingFilter(System.out));
-        }
+        client = Client.create(config);
 
         client.addFilter(new OpenstackExceptionClientFilter());
-
-        return client;
-    }
-
-    /**
+	}
+	
+	public JerseyClient verbose(boolean verbose) {
+		if(verbose) {
+			client.addFilter(new LoggingFilter(System.out));
+		}
+		return this;
+	}
+	
+	Client getJerseyClient() {
+		return client;
+	}
+	
+	/**
      * Build a custom JSON ObjectMapper, or null if we should use default.
      * 
      * @return
@@ -86,22 +92,5 @@ public class OpenstackClient {
 
         return objectMapper;
     }
-
-    public OpenstackClient(String url, OpenstackCredentials credentials, boolean verbose) {
-        Client client = buildClient(verbose);
-
-        this.authenticationClient = new OpenstackAuthenticationClient(client, url, credentials);
-    }
-
-    public OpenstackImageClient getImageClient() throws OpenstackException {
-        return new OpenstackImageClient(authenticationClient);
-    }
-
-    public OpenstackComputeClient getComputeClient() throws OpenstackException {
-        return new OpenstackComputeClient(authenticationClient);
-    }
-
-    public OpenstackAuthenticationClient getAuthenticationClient() {
-        return authenticationClient;
-    }
+	
 }

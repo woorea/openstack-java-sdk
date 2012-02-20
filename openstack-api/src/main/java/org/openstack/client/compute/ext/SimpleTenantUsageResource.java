@@ -12,8 +12,4 @@ import com.sun.jersey.api.client.Client;
  */
 public class SimpleTenantUsageResource extends Resource {
 
-	public SimpleTenantUsageResource(Client client, String resource) {
-		super(client, resource);
-	}
-
 }

@@ -1,10 +1,10 @@
 package org.openstack.client.imagestore;
 
-import com.sun.jersey.api.client.Client;
+import org.openstack.client.common.OpenstackSession;
 
 public class GlanceRootResource extends GlanceResourceBase {
-    public GlanceRootResource(Client client, String resource) {
-        initialize(client, resource);
+    public GlanceRootResource(OpenstackSession session, String resource) {
+        initialize(session, resource);
     }
 
     public ImagesResource images() {

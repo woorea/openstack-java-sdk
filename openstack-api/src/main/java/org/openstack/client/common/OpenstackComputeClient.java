@@ -9,21 +9,19 @@ import org.openstack.model.compute.ServerForCreate;
 import com.google.common.collect.Lists;
 
 public class OpenstackComputeClient {
-    private final OpenstackAuthenticationClient authClient;
+	
+	OpenstackSession session;
+	TenantResource root;
 
-    public OpenstackComputeClient(OpenstackAuthenticationClient authClient) throws OpenstackException {
-        this.authClient = authClient;
-
+    public OpenstackComputeClient(OpenstackSession session) {
+    	this.session = session;
         root();
     }
 
-    TenantResource root;
-
     public synchronized TenantResource root() throws OpenstackException {
         if (root == null) {
-            String endpoint = authClient.getBestEndpoint("compute");
-
-            root = new TenantResource(authClient.getClient(), endpoint);
+            String endpoint = session.getBestEndpoint("compute");
+            root = new TenantResource(session, endpoint);
         }
 
         return root;
@@ -33,4 +31,8 @@ public class OpenstackComputeClient {
         Server server = root().servers().create(create);
         return new AsyncServerOperation(this, server, server.getId(), Lists.newArrayList("BUILD"), Lists.newArrayList("ACTIVE"));
     }
+
+	public OpenstackSession getSession() {
+		return session;
+	}
 }

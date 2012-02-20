@@ -23,4 +23,9 @@ public class ServerList extends PagingListBase<Server> {
 		return list.iterator();
 	}
 
+	@Override
+	public String toString() {
+		return "ServerList [list=" + list + "]";
+	}
+
 }

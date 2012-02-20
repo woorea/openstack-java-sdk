@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.openstack.client.OpenstackException;
+import org.openstack.client.OpenstackNotAuthorizedException;
 import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.model.compute.BadRequest;
 import org.openstack.model.compute.ItemNotFound;
@@ -33,6 +34,12 @@ class OpenstackExceptionClientFilter extends ClientFilter {
 			}
 
 			throw new OpenstackNotFoundException(message);
+		}
+		
+		if (httpStatus == 401) {
+			String message = "Not authorized";
+		
+			throw new OpenstackNotAuthorizedException(message);
 		}
 		
 		if (httpStatus == 400) {

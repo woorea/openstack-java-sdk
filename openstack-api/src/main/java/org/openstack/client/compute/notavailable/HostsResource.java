@@ -12,8 +12,5 @@ import com.sun.jersey.api.client.Client;
  */
 public class HostsResource extends Resource {
 
-	public HostsResource(Client client, String resource) {
-		super(client, resource);
-	}
 
 }

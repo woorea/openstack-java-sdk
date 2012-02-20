@@ -1,6 +1,7 @@
 package org.openstack.client.compute;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.SimplePagingList;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
 
@@ -9,17 +10,15 @@ import com.sun.jersey.api.client.WebResource.Builder;
 
 public class FlavorsResource extends Resource {
 
-    public FlavorsResource(Client client, String resource) {
-        super(client, resource);
-    }
 
-    public FlavorsRepresentation list() {
+    public Iterable<Flavor> list() {
         return list(true);
     }
 
-    public FlavorsRepresentation list(boolean details) {
+    public Iterable<Flavor> list(boolean details) {
         Builder r = details ? resource("detail") : resource();
-        return new FlavorsRepresentation(client, r.get(FlavorList.class));
+        FlavorList page = r.get(FlavorList.class);
+        return new SimplePagingList<Flavor>(session, page);
     }
 
     public Flavor create(Flavor flavor) {
@@ -27,7 +26,7 @@ public class FlavorsResource extends Resource {
     }
 
     public FlavorResource flavor(String id) {
-        return new FlavorResource(client, new StringBuilder(resource).append("/").append(id).toString());
+        return buildChildResource(id, FlavorResource.class);
     }
 
 }

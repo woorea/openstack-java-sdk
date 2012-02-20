@@ -3,9 +3,9 @@ package org.openstack.client.cli;
 import org.kohsuke.args4j.Option;
 import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.OpenstackException;
-import org.openstack.client.common.OpenstackClient;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
+import org.openstack.client.common.OpenstackSession;
 
 import com.fathomdb.cli.CliOptions;
 
@@ -75,23 +75,26 @@ public class ConfigurationOptions extends CliOptions {
     // }
 
     public OpenstackComputeClient buildComputeClient() throws OpenstackException {
-        OpenstackClient client = getOpenstackClient();
-        return client.getComputeClient();
+        return getOpenstackSession().getComputeClient();
     }
 
     public OpenstackImageClient buildImageClient() throws OpenstackException {
-        OpenstackClient client = getOpenstackClient();
-        return client.getImageClient();
+        return getOpenstackSession().getImageClient();
     }
 
-    OpenstackClient client = null;
+    OpenstackSession session = null;
 
-    public OpenstackClient getOpenstackClient() {
-        if (client == null) {
-            OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
-            client = new OpenstackClient(server, credentials, debug);
+    public OpenstackSession getOpenstackSession() {
+        if (session == null) {
+            session = new OpenstackSession(server);
         }
-        return client;
+
+        if (!session.isAuthenticated()) {
+            OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
+            session.authenticate(credentials);
+        }
+
+        return session;
     }
 
 }

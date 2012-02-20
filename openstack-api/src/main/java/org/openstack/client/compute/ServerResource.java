@@ -39,20 +39,11 @@ import com.sun.jersey.api.client.Client;
 
 public class ServerResource extends ComputeResourceBase {
 
-    private FloatingIpsResource floatingIps;
-
-    private ConsolesResource consoles;
-
-    private MetadataResource metadata;
-
     public static class IpsResource extends Resource {
 
-        public IpsResource(Client client, String resource) {
-            super(client, resource);
-        }
 
         public String list(String networkId) {
-            return client.resource(new StringBuilder(resource).append("/ips").toString()).accept(MediaType.APPLICATION_XML).get(String.class);
+            return resource("ips").get(String.class);
         }
 
     }
@@ -62,9 +53,8 @@ public class ServerResource extends ComputeResourceBase {
         return server;
     }
 
-    public ServerRepresentation update(Server server) {
-        Server serverResult = put(Server.class, server);
-        return new ServerRepresentation(client, serverResult);
+    public Server update(Server server) {
+        return put(Server.class, server);
     }
 
     public void delete() {
@@ -212,11 +202,11 @@ public class ServerResource extends ComputeResourceBase {
      * @return
      */
     public String pendingActions() {
-        return client.resource(new StringBuilder(resource).append("/actions").toString()).accept(MediaType.APPLICATION_XML).get(String.class);
+    	return resource("actions").get(String.class);
     }
 
     public String virtualInterfaces() {
-        return client.resource(new StringBuilder(resource).append("/os-virtual-interfaces").toString()).accept(MediaType.APPLICATION_XML).get(String.class);
+      	return resource("os-virtual-interfaces").get(String.class);
     }
 
     public void createBackup(CreateBackupAction createBackupAction) {
@@ -228,19 +218,16 @@ public class ServerResource extends ComputeResourceBase {
      * 
      * @return
      */
-    public void diagnostics() {
-        client.resource(new StringBuilder(resource).append("/diagnostics").toString()).accept(MediaType.APPLICATION_XML).get(String.class);
+    public String diagnostics() {
+    	return resource("diagnostics").get(String.class);
     }
 
     public IpsResource ips() {
-        return new IpsResource(client, new StringBuilder(resource).append("/ips").toString());
+    	return getChildResource("ips", IpsResource.class);
     }
 
     public MetadataResource metadata() {
-        if (metadata == null) {
-            metadata = new MetadataResource(client, resource);
-        }
-        return metadata;
+    	return getChildResource("metadata", MetadataResource.class);
     }
 
     /**
@@ -290,7 +277,7 @@ public class ServerResource extends ComputeResourceBase {
     }
 
     private <T> T executeAction(Class<T> c, Object action) {
-        return client.resource(new StringBuilder(resource).append("/action").toString()).type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(c, action);
+        return resource("action").type(MediaType.APPLICATION_XML).post(c, action);
     }
 
     public void createAttachment() {
@@ -305,17 +292,11 @@ public class ServerResource extends ComputeResourceBase {
      * Allow Admins to view pending server actions
      */
     public FloatingIpsResource floatingIps() {
-        if (floatingIps == null) {
-            floatingIps = new FloatingIpsResource(client, new StringBuilder(resource).append("/os-floating-ips").toString());
-        }
-        return floatingIps;
+    	return getChildResource("os-floating-ips", FloatingIpsResource.class);
     }
 
     public ConsolesResource consoles() {
-        if (consoles == null) {
-            consoles = new ConsolesResource(client, new StringBuilder(resource).append("/consoles").toString());
-        }
-        return consoles;
+    	return getChildResource("consoles", ConsolesResource.class);
     }
 
     public SecurityGroupList listSecurityGroups() {

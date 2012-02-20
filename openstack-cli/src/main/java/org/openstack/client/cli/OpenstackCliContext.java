@@ -5,9 +5,9 @@ import java.io.IOException;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
 import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
-import org.openstack.client.common.OpenstackClient;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
+import org.openstack.client.common.OpenstackSession;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.Server;
@@ -16,8 +16,6 @@ import com.fathomdb.cli.CliContextBase;
 
 public class OpenstackCliContext extends CliContextBase {
     final ConfigurationOptions options;
-    OpenstackComputeClient computeClient;
-    OpenstackImageClient glanceClient;
 
     public OpenstackCliContext(ConfigurationOptions options) throws IOException {
         super(new OpenstackCliCommandRegistry(), new OpenstackCliFormatterRegistry());
@@ -25,30 +23,16 @@ public class OpenstackCliContext extends CliContextBase {
         this.options = options;
     }
 
-    public OpenstackClient getOpenstackClient() {
-        return options.getOpenstackClient();
+    public OpenstackSession getOpenstackSession() {
+        return options.getOpenstackSession();
     }
 
-    public synchronized OpenstackComputeClient getComputeClient() {
-        if (computeClient == null) {
-            try {
-                computeClient = options.buildComputeClient();
-            } catch (OpenstackException e) {
-                throw new IllegalArgumentException("Error connecting to OpenStack", e);
-            }
-        }
-        return computeClient;
+    public OpenstackComputeClient getComputeClient() {
+        return getOpenstackSession().getComputeClient();
     }
 
-    public synchronized OpenstackImageClient buildImageClient() {
-        if (glanceClient == null) {
-            try {
-                glanceClient = options.buildImageClient();
-            } catch (OpenstackException e) {
-                throw new IllegalArgumentException("Error connecting to OpenStack", e);
-            }
-        }
-        return glanceClient;
+    public OpenstackImageClient buildImageClient() {
+        return getOpenstackSession().getImageClient();
     }
 
     public ConfigurationOptions getOptions() {
@@ -65,17 +49,17 @@ public class OpenstackCliContext extends CliContextBase {
 
     public Iterable<Image> getImages() throws OpenstackException {
         OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().images().list().asModels();
+        return computeClient.root().images().list();
     }
 
     public Iterable<Server> getInstances() throws OpenstackException {
         OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().servers().list(false).asModels();
+        return computeClient.root().servers().list(false);
     }
 
     public Iterable<Flavor> getFlavors() throws OpenstackException {
         OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().flavors().list(false).asModels();
+        return computeClient.root().flavors().list(false);
     }
 
 }

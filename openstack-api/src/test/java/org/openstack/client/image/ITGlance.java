@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Hex;
-import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.OpenstackNotFoundException;
-import org.openstack.client.common.OpenstackClient;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.utils.RandomDataInputStream;
 import org.openstack.client.utils.RandomUtil;
@@ -27,19 +25,14 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
 
-public class ITGlance extends AbstractOpenStackTest {
-
-	void skipIfNoGlance() {
-		// throw new SkipException("Skipping because glance not present");
-	}
+public class ITGlance extends GlanceIntegrationTest {
 
 	@Test
 	public void testListImagesAndDetails() throws OpenstackException {
 		skipIfNoGlance();
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
-		List<Image> images = Lists.newArrayList(glance.root().images().list().asModels());
+		OpenstackImageClient glance = getImageClient();
+		List<Image> images = Lists.newArrayList(glance.root().images().list());
 
 		for (Image image : images) {
 			Image details = glance.root().images().image(image.getId()).show();
@@ -65,14 +58,14 @@ public class ITGlance extends AbstractOpenStackTest {
 		assertPropertiesEquals(actual.getProperties(), expected.getProperties());
 	}
 
+	// Heap size problems should be fixed now!
 	final int MAX_LENGTH = 16 * 1024 * 1024;
 
 	@Test
 	public void testImageUploadAndDelete() throws Exception {
 		skipIfNoGlance();
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
+		OpenstackImageClient glance = getImageClient();
 
 		RandomUtil random = new RandomUtil();
 		int imageLength = random.uniform(1, MAX_LENGTH);
@@ -102,7 +95,7 @@ public class ITGlance extends AbstractOpenStackTest {
 			assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
 		}
 
-		List<Image> allImages = Lists.newArrayList(glance.root().images().list().asModels());
+		List<Image> allImages = Lists.newArrayList(glance.root().images().list());
 
 		Image foundInAll = findImageById(allImages, uploaded.getId());
 		assertNotNull(foundInAll);
@@ -121,7 +114,7 @@ public class ITGlance extends AbstractOpenStackTest {
 
 		for (int i = 0; i < 60; i++) {
 			// Wait for up to 60 seconds for the image to be deleted
-			allImages = Lists.newArrayList(glance.root().images().list().asModels());
+			allImages = Lists.newArrayList(glance.root().images().list());
 			foundInAll = findImageById(allImages, uploaded.getId());
 			if (foundInAll == null)
 				break;
@@ -152,8 +145,7 @@ public class ITGlance extends AbstractOpenStackTest {
 		// Apparently this is supposed to fail; right now it isn't though!
 		// https://bugs.launchpad.net/glance/+bug/933702
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
+		OpenstackImageClient glance = getImageClient();
 
 		RandomUtil random = new RandomUtil();
 		int imageLength = 128;
@@ -181,8 +173,7 @@ public class ITGlance extends AbstractOpenStackTest {
 		// https://bugs.launchpad.net/glance/+bug/934492
 		skipUntilBugFixed(934492);
 
-		OpenstackClient client = context.client;
-		OpenstackImageClient glance = client.getImageClient();
+		OpenstackImageClient glance = getImageClient();
 
 		RandomUtil random = new RandomUtil();
 		int imageLength = 128;

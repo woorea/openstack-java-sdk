@@ -2,8 +2,6 @@ package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
 
-import com.sun.jersey.api.client.Client;
-
 /**
  * Instance rescue mode
  * 
@@ -11,10 +9,6 @@ import com.sun.jersey.api.client.Client;
  *
  */
 public class RescueResource extends Resource {
-
-	public RescueResource(Client client, String resource) {
-		super(client, resource);
-	}
 	
 	
 

@@ -1,12 +1,9 @@
 package org.openstack.client.compute.ext;
 
-import javax.ws.rs.core.MediaType;
-
 import org.openstack.client.common.Resource;
-import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 
-import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource.Builder;
 
 /**
  * The volume types API controller for the Openstack API
@@ -15,10 +12,6 @@ import com.sun.jersey.api.client.Client;
  * 
  */
 public class VolumesResource extends Resource {
-
-	public VolumesResource(Client client, String resource) {
-		super(client, resource);
-	}
 	
 	/**
 	 * Returns the list of volume types
@@ -26,11 +19,8 @@ public class VolumesResource extends Resource {
 	 * @return
 	 */
 	public VolumeList list(boolean detail) {
-		if(detail) {
-			return client.resource(new StringBuilder(resource).append("/detail").toString()).accept(MediaType.APPLICATION_XML).get(VolumeList.class);
-		} else {
-			return client.resource(resource).accept(MediaType.APPLICATION_XML).get(VolumeList.class);
-		}
+		Builder r = detail ? resource("detail") : resource();
+		return r.get(VolumeList.class);
 	}
 
 	/**
@@ -39,12 +29,12 @@ public class VolumesResource extends Resource {
 	 * @param flavor
 	 * @return
 	 */
-	public Volume create(Volume volume) {
-		return null;
-	}
+//	public Volume create(Volume volume) {
+//		return null;
+//	}
 
 	public VolumeResource volume(String id) {
-		return new VolumeResource(client, new StringBuilder(resource).append("/").append(id).toString());
+		return buildChildResource(id, VolumeResource.class);
 	}
 
 }

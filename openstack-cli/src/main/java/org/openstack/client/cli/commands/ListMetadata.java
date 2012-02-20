@@ -3,10 +3,7 @@ package org.openstack.client.cli.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.model.InstanceName;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.compute.ServerRepresentation;
-import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.Metadata.Item;
 
 public class ListMetadata extends OpenstackCliCommandRunnerBase {
     @Argument(index = 0)

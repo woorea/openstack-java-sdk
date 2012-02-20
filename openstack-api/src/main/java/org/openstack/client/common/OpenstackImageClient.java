@@ -1,30 +1,29 @@
 package org.openstack.client.common;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.imagestore.GlanceRootResource;
 
 public class OpenstackImageClient {
-    private final OpenstackAuthenticationClient authClient;
+	
+	final OpenstackSession session;
+	GlanceRootResource root;
 
-    public OpenstackImageClient(OpenstackAuthenticationClient authClient) throws OpenstackException {
-        this.authClient = authClient;
-
+    public OpenstackImageClient(OpenstackSession session) {
+    	this.session = session;
         root();
     }
 
-    GlanceRootResource root;
-
-    public synchronized GlanceRootResource root() throws OpenstackException {
+    public synchronized GlanceRootResource root() {
         if (root == null) {
-            String endpoint = authClient.getBestEndpoint("image");
+            String endpoint = session.getBestEndpoint("image");
 
-            root = new GlanceRootResource(authClient.getClient(), endpoint);
+            root = new GlanceRootResource(session, endpoint);
         }
 
         return root;
     }
 
-    public OpenstackAuthenticationClient getAuthenticationClient() {
-        return authClient;
-    }
+	public OpenstackSession getSession() {
+		return session;
+	}
+
 }
