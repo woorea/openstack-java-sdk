@@ -48,16 +48,17 @@ public class OpenstackSession implements Serializable {
 		Client jerseyClient = JerseyClient.INSTANCE.getJerseyClient();
 		WebResource resource = jerseyClient.resource(resourceUrl);
 
+		if (isVerbose()) {
+			// But verbose filter is just easier done here!
+			resource.addFilter(new LoggingFilter(System.out));
+		}
+
 		// It could be nice to just put the OpenstackSession into a property,
 		// and have a constant filterset.  BUT head() doesn't use properties.
 		// resource.setProperty(OpenstackSession.class.getName(), this);
 
 		resource.addFilter(new OpenstackAuthenticationFilter(access));
 		
-		if (isVerbose()) {
-			// But verbose filter is just easier done here!
-			resource.addFilter(new LoggingFilter(System.out));
-		}
 		
 		return resource;
 	}
@@ -132,5 +133,9 @@ public class OpenstackSession implements Serializable {
 
 	public void setLinkResolver(LinkResolver linkResolver) {
 		this.linkResolver = linkResolver;
+	}
+
+	public String getAuthenticationUrl() {
+		return authenticationUrl;
 	}
 }
