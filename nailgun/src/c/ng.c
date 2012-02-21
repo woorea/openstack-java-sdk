@@ -261,6 +261,22 @@ void handleSocketClose() {
   cleanUpAndExit(NAILGUN_CONNECTION_BROKEN);
 }
 
+int
+recv_fully(int socket, char *buf, unsigned long len)
+{
+	unsigned long done = 0;
+	int count;
+	while (done < len) {
+		count = read(socket, buf + done, len - done);
+		if (count <= 0) {
+			if (done == 0) return count;
+			break;
+		}
+		done += count;
+	}
+	return done;
+}
+
 /**
  * Receives len bytes from the nailgun socket and copies them to the specified file descriptor.
  * Used to route data to stdout or stderr on the client.
@@ -277,7 +293,7 @@ void recvToFD(HANDLE destFD, char *buf, unsigned long len) {
     int bytesToRead = (BUFSIZE < bytesRemaining) ? BUFSIZE : bytesRemaining;
     int thisPass = 0;
     
-    thisPass = recv(nailgunsocket, buf, bytesToRead, MSG_WAITALL);
+    thisPass = recv_fully(nailgunsocket, buf, bytesToRead);
     if (thisPass < bytesToRead) handleSocketClose();
     
    
@@ -315,9 +331,9 @@ void recvToFD(HANDLE destFD, char *buf, unsigned long len) {
 void processExit(char *buf, unsigned long len) {
   int exitcode;
   int bytesToRead = (BUFSIZE - 1 < len) ? BUFSIZE - 1 : len;
-  int bytesRead = recv(nailgunsocket, buf, bytesToRead, MSG_WAITALL);
+  int bytesRead = recv_fully(nailgunsocket, buf, bytesToRead);
   
-  if (bytesRead < 0) {
+  if (bytesRead < bytesToRead) {
     handleSocketClose();
   }
   
@@ -446,7 +462,7 @@ void processnailgunstream() {
     unsigned long len;
     char chunkType;
 
-    bytesRead = recv(nailgunsocket, buf, CHUNK_HEADER_LEN, MSG_WAITALL);
+    bytesRead = recv_fully(nailgunsocket, buf, CHUNK_HEADER_LEN);
 
     if (bytesRead < CHUNK_HEADER_LEN) {
       handleSocketClose();
