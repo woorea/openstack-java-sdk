@@ -74,7 +74,7 @@ public class ITGlance extends GlanceIntegrationTest {
 		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
 		Image template = new Image();
-		template.setName(random.randomAsciiString(1, 64).trim());
+		template.setName(random.randomAlphanumericString(1, 64).trim());
 
 		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
 		assertEquals(uploaded.getSize(), Long.valueOf(imageLength));
@@ -154,7 +154,7 @@ public class ITGlance extends GlanceIntegrationTest {
 		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
 		Image template = new Image();
-		template.setName(random.randomAsciiString(1, 64).trim());
+		template.setName(random.randomAlphanumericString(1, 64).trim());
 
 		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
 		assertNull(uploaded.getDiskFormat());

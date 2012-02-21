@@ -65,8 +65,8 @@ public class ITKeyPairs extends ComputeApiTest {
 	@Test
 	public void testCreateAndDelete() throws OpenstackException {
 		// OSAPI-BUG: I think an full-ascii name is often undeletable
-		// String name = random.randomAlphanumericString(1, 12).trim();
-		String name = random.randomAsciiString(1, 10).trim();
+		// String name = random.randomAsciiString(1, 10).trim();
+		String name = random.randomAlphanumericString(1, 12).trim();
 
 		testCreateAndDelete(name);
 	}
@@ -103,9 +103,9 @@ public class ITKeyPairs extends ComputeApiTest {
 	public void testHardName5() throws OpenstackException {
 		throw new SkipException("Problems deleting keypairs with slashes");
 
-//		String name = "J/SB";
-//
-//		testCreateAndDelete(name);
+		// String name = "J/SB";
+		//
+		// testCreateAndDelete(name);
 	}
 
 	@Test

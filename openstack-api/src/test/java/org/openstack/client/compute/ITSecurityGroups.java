@@ -137,8 +137,8 @@ public class ITSecurityGroups extends ComputeApiTest {
 	public void testBigDescriptionFails() throws OpenstackException {
 		OpenstackComputeClient nova = getComputeClient();
 
-		String description = random.randomAsciiString(500);
-		String groupName = random.randomAsciiString(1, 128);
+		String description = random.randomAlphanumericString(500);
+		String groupName = random.randomAlphanumericString(1, 128);
 
 		SecurityGroup createRequest = new SecurityGroup();
 		createRequest.setName(groupName);
