@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
+import com.google.common.collect.Lists;
+
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -82,11 +84,11 @@ public class ServerForCreate implements Serializable {
 	private String keyName;
 
 	@XmlElement
-	private Metadata metadata = new Metadata();
+	private Metadata metadata;
 
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name="file")
-	private List<File> personality = new ArrayList<File>();
+	private List<File> personality;
 
 	/**
 	 * This security groups are not created on the fly. They must be exist in
@@ -94,7 +96,7 @@ public class ServerForCreate implements Serializable {
 	 */
 	@XmlElementWrapper(name = "security_groups")
 	@XmlElement(name = "security_group")
-	private List<SecurityGroup> securityGroups = new ArrayList<SecurityGroup>();
+	private List<SecurityGroup> securityGroups;
 
 	public String getName() {
 		return name;
@@ -153,6 +155,9 @@ public class ServerForCreate implements Serializable {
 	}
 
 	public Metadata getMetadata() {
+		if (metadata == null) {
+			metadata = new Metadata();
+		}
 		return metadata;
 	}
 
@@ -161,6 +166,9 @@ public class ServerForCreate implements Serializable {
 	}
 
 	public List<File> getPersonality() {
+		if (personality == null) {
+			personality = Lists.newArrayList();
+		}
 		return personality;
 	}
 
@@ -169,6 +177,9 @@ public class ServerForCreate implements Serializable {
 	}
 
 	public List<SecurityGroup> getSecurityGroups() {
+		if (securityGroups == null) {
+			securityGroups = Lists.newArrayList();
+		}
 		return securityGroups;
 	}
 
@@ -180,7 +191,7 @@ public class ServerForCreate implements Serializable {
 		File item = new File();
 		item.path = path;
 		item.contents = contents;
-		personality.add(item);
+		getPersonality().add(item);
 	}
 
 	@Override

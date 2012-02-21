@@ -63,6 +63,9 @@ public class Addresses implements Serializable {
         }
 
         public List<Ip> getIps() {
+        	if (ips == null) {
+        		ips = Lists.newArrayList();
+        	}
             return ips;
         }
 
