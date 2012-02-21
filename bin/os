@@ -2,6 +2,16 @@
 
 set -e
 
+NAILGUN=ng-nailgun
+
+if ! builtin type -p ${NAILGUN} &>/dev/null; then
+	NAILGUN=ng
+	if ! builtin type -p ${NAILGUN} &>/dev/null; then
+		echo "${NAILGUN} not found; try sudo apt-get install nailgun"
+		exit 1
+	fi
+fi
+
 COMMAND=$@
 
 pushd `dirname $0` > /dev/null
@@ -18,5 +28,5 @@ if [[ "$FORMAT" == "" ]]; then
 	FORMAT=raw
 fi
 
-NAILGUN_PORT=2102 ${BASEDIR}/ng org.openstack.client.cli.OpenstackCli --format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}" "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}" 
+NAILGUN_PORT=2102 ${NAILGUN} org.openstack.client.cli.OpenstackCli --format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}" "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}"
 
