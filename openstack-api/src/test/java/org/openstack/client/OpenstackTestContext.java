@@ -1,8 +1,12 @@
 package org.openstack.client;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import org.openstack.client.common.OpenstackSession;
+import org.openstack.utils.Io;
 
 public class OpenstackTestContext {
 
@@ -21,6 +25,24 @@ public class OpenstackTestContext {
 		OpenstackTestContext context = new OpenstackTestContext();
 
 		Properties properties = System.getProperties();
+
+		String configPath = properties.getProperty("openstack.config", null);
+		if (configPath != null) {
+			if (configPath.startsWith("~/")) {
+				String home = System.getProperty("user.home");
+				configPath = home + File.separator + configPath.substring(2);
+			}
+			File configFile = new File(configPath);
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream(configFile);
+				properties.load(fis);
+			} catch (IOException e) {
+				throw new IllegalArgumentException("Error loading config file: " + configPath, e);
+			} finally {
+				Io.safeClose(fis);
+			}
+		}
 
 		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "false"));
 
