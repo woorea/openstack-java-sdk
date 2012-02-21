@@ -2,6 +2,7 @@ package org.openstack.client;
 
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.OpenstackSession.Feature;
+import org.openstack.client.compute.ServerResource;
 import org.openstack.client.compute.TenantResource;
 import org.openstack.client.identity.IdentityResource;
 import org.openstack.model.compute.Flavor;
@@ -52,6 +53,12 @@ public class Test {
 		Iterable<Flavor> flavors = compute.flavors().list();
 		for (Flavor f : flavors) {
 			System.out.println(f);
+		}
+
+		Iterable<Server> servers = compute.servers().list();
+		for (Server s : servers) {
+			ServerResource sr = new ServerResource(session, s);
+			System.out.println(sr.get(true).show());
 		}
 
 		// ServerForCreate serverForCreate = new ServerForCreate();

@@ -17,7 +17,16 @@ public class FlavorResource extends Resource {
 
 			@Override
 			public boolean apply(Link link) {
-				return "bookmark".equals(link.getRel());
+				if ("bookmark".equals(link.getRel())) {
+					// This is the bookmark i get from trunk (wihout protocol version)
+					// http://192.168.1.49:8774/7da90d9067ab4890ae94779a1859db8a/servers/d87c6d44-8118-4c11-8259-b9c784965d59
+					if (!link.getHref().contains("/v1.1")) {
+						link.setHref(link.getHref().replace(":8774/", ":8774/v1.1/"));
+					}
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}).getHref());
 	}
