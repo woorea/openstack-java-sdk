@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.ws.rs.core.MediaType;
-
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.utils.Io;
 
@@ -23,14 +21,13 @@ public class OpenstackTestContext {
 		if (format != null) {
 			if (format.equals("json")) {
 				session.with(OpenstackSession.Feature.FORCE_JSON);
-			}
-			else if (format.equals("xml")) {
+			} else if (format.equals("xml")) {
 				session.with(OpenstackSession.Feature.FORCE_XML);
 			} else {
 				throw new IllegalArgumentException("Unknown format: " + format);
 			}
 		}
-		
+
 		session.authenticate(url, credentials);
 		return session;
 	}
@@ -66,7 +63,7 @@ public class OpenstackTestContext {
 		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
 
 		String format = properties.getProperty("openstack.format", null);
-		
+
 		OpenstackCredentials credentials = new OpenstackCredentials(username, secret, tenant);
 		context.connect(url, credentials, format, verbose);
 		return context;
