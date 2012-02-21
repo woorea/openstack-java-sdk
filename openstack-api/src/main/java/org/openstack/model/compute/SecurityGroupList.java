@@ -1,13 +1,13 @@
 package org.openstack.model.compute;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Lists;
@@ -16,8 +16,9 @@ import com.google.common.collect.Lists;
 @XmlAccessorType(XmlAccessType.NONE)
 public class SecurityGroupList implements Serializable, Iterable<SecurityGroup> {
 
+	@XmlElementWrapper(name = "security_groups")
 	@XmlElement(name = "security_group")
-	private List<SecurityGroup> list = new ArrayList<SecurityGroup>();
+	private List<SecurityGroup> list;
 
 	public List<SecurityGroup> getList() {
 		if (list == null) {

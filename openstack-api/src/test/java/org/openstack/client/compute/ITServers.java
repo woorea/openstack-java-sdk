@@ -76,19 +76,5 @@ public class ITServers extends ComputeApiTest {
         nova.root().servers().server(server.getId()).delete();
 	}
 
-	@Test
-    public void testListSecurityGroups() throws OpenstackException {
-        OpenstackComputeClient nova = getComputeClient();
-        SecurityGroupList securityGroups = nova.root().securityGroups().list();
-        for (org.openstack.model.compute.SecurityGroup securityGroup : securityGroups.getList()) {
-        	org.openstack.model.compute.SecurityGroup securityGroup2 = nova.root().securityGroups().securityGroup(securityGroup.getId()).show();
-            
-            Assert.assertEquals(securityGroup.getId(), securityGroup2.getId());
-            Assert.assertEquals(securityGroup.getTenantId(), securityGroup2.getTenantId());
-            Assert.assertEquals(securityGroup.getName(), securityGroup2.getName());
-            Assert.assertEquals(securityGroup.getDescription(), securityGroup2.getDescription());
-            
-        }
-    }
 	
 }
