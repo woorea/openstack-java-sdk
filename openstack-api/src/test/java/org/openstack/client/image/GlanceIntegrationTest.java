@@ -13,7 +13,7 @@ public abstract class GlanceIntegrationTest extends AbstractOpenStackTest {
 	}
 
 	protected void skipIfNoGlance() {
-		if (!context.haveGlance()) {
+		if (!context.isGlanceEnabled()) {
 			throw new SkipException("Skipping because glance not present / accessible");
 		}
 	}
