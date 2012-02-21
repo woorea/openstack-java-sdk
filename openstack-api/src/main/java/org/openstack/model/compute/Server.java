@@ -203,6 +203,13 @@ public class Server implements Serializable {
 		this.keyName = keyName;
 	}
 
+	public String getImageId() {
+		if (image != null) {
+			return image.getId();
+		}
+		return null;
+	}
+	
 	public Image getImage(OpenstackSession session) {
 		if (session != null) {
 			if (image != null && image.getName() == null) {
