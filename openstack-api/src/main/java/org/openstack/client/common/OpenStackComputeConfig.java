@@ -8,7 +8,7 @@ public class OpenStackComputeConfig implements Serializable {
 
 	public enum Feature {
 
-		VERBOSE(true);
+		VERBOSE(false);
 
 		private boolean enabled;
 

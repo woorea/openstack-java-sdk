@@ -88,7 +88,10 @@ public class ConfigurationOptions extends CliOptions {
 
 	public OpenstackSession getOpenstackSession() {
 		if (session == null) {
-			session = new OpenstackSession().with(Feature.VERBOSE);
+			session = new OpenstackSession();
+			if (debug) {
+				session = session.with(Feature.VERBOSE);
+			}
 
 			session.setLinkResolver(new CachingLinkResolver(session));
 		}
