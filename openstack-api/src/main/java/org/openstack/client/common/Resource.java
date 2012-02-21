@@ -1,5 +1,6 @@
 package org.openstack.client.common;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
@@ -75,7 +76,14 @@ public class Resource {
 		} catch (IllegalAccessException e) {
 			throw new IllegalStateException("Error creating resource instance", e);
 		}
-		String childResourcePath = UrlUtils.join(resource, relativePath);
+
+		// TODO: Make this encoding less of a hack
+		String encoded = relativePath;
+		encoded = URLEncoder.encode(encoded);
+		encoded = encoded.replace("+", "%20");
+		encoded = encoded.replace("%2F", "/");
+
+		String childResourcePath = UrlUtils.join(resource, encoded);
 		instance.initialize(session, childResourcePath);
 		return instance;
 	}

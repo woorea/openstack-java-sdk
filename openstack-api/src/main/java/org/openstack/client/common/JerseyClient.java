@@ -65,7 +65,7 @@ enum JerseyClient {
         {
             // If we want to put a top-level element in the JSON
             objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-            objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+//            objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
         }
 
         {

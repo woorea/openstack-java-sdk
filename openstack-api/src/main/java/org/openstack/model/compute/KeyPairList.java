@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
@@ -18,8 +20,8 @@ import com.google.common.collect.Lists;
 @XmlAccessorType(XmlAccessType.NONE)
 public class KeyPairList implements Serializable, Iterable<KeyPair> {
 
-	@XmlElementWrapper(name = "keypairs", namespace = "")
 	@XmlElement(name = "keypair", namespace = "")
+	@JsonProperty("keypairs")
 	private List<KeyPairListItem> list;
 
 	@XmlAccessorType(XmlAccessType.NONE)

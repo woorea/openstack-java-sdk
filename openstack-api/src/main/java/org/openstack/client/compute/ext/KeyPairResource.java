@@ -24,4 +24,9 @@ public class KeyPairResource extends Resource {
 		resource().delete();
 	}
 
+	// OSAPI-BUG: This function is missing from the OS API
+	// public KeyPair show() {
+	// return resource().get(KeyPair.class);
+	// }
+
 }

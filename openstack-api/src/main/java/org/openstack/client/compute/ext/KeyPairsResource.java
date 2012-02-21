@@ -1,5 +1,7 @@
 package org.openstack.client.compute.ext;
 
+import java.net.URLEncoder;
+
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
@@ -31,6 +33,7 @@ public class KeyPairsResource extends Resource {
 	public KeyPairList list() {
 		return resource().get(KeyPairList.class);
 	}
+
 	/**
 	 * Create or import keypair.
 	 * 
@@ -42,10 +45,10 @@ public class KeyPairsResource extends Resource {
 	 * @return
 	 */
 	public KeyPair create(KeyPair keyPair) {
-		CreateKeyPairResponse response = resource().post(CreateKeyPairResponse.class, keyPair);
+		CreateKeyPairResponse response = resource().type(MediaType.APPLICATION_JSON_TYPE).post(CreateKeyPairResponse.class, keyPair);
 		return response.getKeyPair();
 	}
-	
+
 	public KeyPairResource keypair(String name) {
 		return buildChildResource(name, KeyPairResource.class);
 	}

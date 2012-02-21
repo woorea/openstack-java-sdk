@@ -3,11 +3,10 @@ package org.openstack.client.compute;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackSession;
+import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerForCreate;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
@@ -31,6 +30,7 @@ public class ITServers extends ComputeApiTest {
 
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {
+
 		OpenstackComputeClient nova = getComputeClient();
 
 		OpenstackSession session = nova.getSession();
@@ -46,15 +46,28 @@ public class ITServers extends ComputeApiTest {
 				image = i;
 				break;
 			}
+
+			// HP Cloud image
+			if (i.getName().equals("Ubuntu Lucid 10.04 LTS Server 64-bit")) {
+				image = i;
+				break;
+			}
 		}
 
 		if (image == null) {
 			throw new SkipException("Skipping test because image not found");
 		}
 
+		Flavor bestFlavor = null;
+		for (Flavor flavor : nova.root().flavors().list()) {
+			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
+				bestFlavor = flavor;
+			}
+		}
+
 		ServerForCreate serverForCreate = new ServerForCreate();
-		serverForCreate.setName("eureka1");
-		serverForCreate.setFlavorRef("1");
+		serverForCreate.setName(random.randomAlphanumericString(10));
+		serverForCreate.setFlavorRef(bestFlavor.getId());
 		serverForCreate.setImageRef(image.getId());
 		// serverForCreate.setSecurityGroups(new ArrayList<ServerForCreate.SecurityGroup>() {{
 		// add(new ServerForCreate.SecurityGroup("test"));
@@ -66,28 +79,11 @@ public class ITServers extends ComputeApiTest {
 		 */
 
 		Server server = nova.root().servers().create(serverForCreate);
-
 		System.out.println(server.getImage(session).getMinDisk());
 
 		System.out.println(server);
 		System.out.println("DELETING");
 		nova.root().servers().server(server.getId()).delete();
-	}
-
-	@Test
-	public void testListSecurityGroups() throws OpenstackException {
-		OpenstackComputeClient nova = getComputeClient();
-		SecurityGroupList securityGroups = nova.root().securityGroups().list();
-		for (org.openstack.model.compute.SecurityGroup securityGroup : securityGroups.getList()) {
-			org.openstack.model.compute.SecurityGroup securityGroup2 = nova.root().securityGroups()
-					.securityGroup(securityGroup.getId()).show();
-
-			Assert.assertEquals(securityGroup.getId(), securityGroup2.getId());
-			Assert.assertEquals(securityGroup.getTenantId(), securityGroup2.getTenantId());
-			Assert.assertEquals(securityGroup.getName(), securityGroup2.getName());
-			Assert.assertEquals(securityGroup.getDescription(), securityGroup2.getDescription());
-
-		}
 	}
 
 }
