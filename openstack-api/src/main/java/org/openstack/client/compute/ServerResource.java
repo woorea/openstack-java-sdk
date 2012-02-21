@@ -51,10 +51,6 @@ public class ServerResource extends ComputeResourceBase {
 
 	}
 
-	public Server show() {
-		return representation;
-	}
-
 	public ServerResource get(boolean eager) {
 		representation = resource().get(Server.class);
 		if (eager) {
@@ -64,20 +60,31 @@ public class ServerResource extends ComputeResourceBase {
 		return this;
 	}
 
+	public ServerResource get() {
+		return get(false);
+	}
+
 	public ImageResource getImage() {
 		if (representation == null) {
-			get(false);
+			get();
 		}
 		Image image = representation.getImage();
-		return image != null ? new ImageResource() : null;
+		return image != null ? new ImageResource(session, image) : null;
 	}
 
 	public FlavorResource getFlavor() {
 		if (representation == null) {
-			get(false);
+			get();
 		}
 		Flavor flavor = representation.getFlavor();
-		return flavor != null ? new FlavorResource() : null;
+		return flavor != null ? new FlavorResource(session, flavor) : null;
+	}
+
+	public Server show() {
+		if (representation == null) {
+			get();
+		}
+		return representation;
 	}
 
 	public Server update(Server server) {
