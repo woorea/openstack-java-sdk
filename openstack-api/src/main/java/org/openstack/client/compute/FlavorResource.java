@@ -4,10 +4,16 @@ import org.openstack.client.common.Resource;
 import org.openstack.model.compute.Flavor;
 
 public class FlavorResource extends Resource {
-	
-	public Flavor show() {
-		return resource().get(Flavor.class);
-	}
-	
-}
 
+	private Flavor representation;
+
+	public Flavor show() {
+		return representation;
+	}
+
+	public FlavorResource get() {
+		representation = resource().get(Flavor.class);
+		return this;
+	}
+
+}

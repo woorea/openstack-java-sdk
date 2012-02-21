@@ -6,19 +6,24 @@ import org.openstack.model.compute.Metadata;
 
 public class ImageResource extends Resource {
 
+	private Image representation;
 
-    public Image show() {
-        Image image = resource().get(Image.class);
-        return image;
-    }
+	public Image show() {
+		return representation;
+	}
 
-    public void delete() {
-        resource().delete();
-    }
+	public void delete() {
+		resource().delete();
+	}
 
-    public Metadata metadata() {
-        // /metadata
-        return new Metadata();
-    }
+	public Metadata metadata() {
+		// /metadata
+		return new Metadata();
+	}
+
+	public ImageResource get() {
+		representation = resource().get(Image.class);
+		return this;
+	}
 
 }
