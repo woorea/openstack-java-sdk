@@ -3,6 +3,7 @@ package org.openstack.client.compute;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackSession;
+import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.SecurityGroupList;
@@ -48,15 +49,28 @@ public class ITServers extends ComputeApiTest {
         		image = i;
         		break;
         	}
+        	
+        	// HP Cloud image
+        	if (i.getName().equals("Ubuntu Lucid 10.04 LTS Server 64-bit")) {
+        		image = i;
+        		break;
+        	}
         }
         
 		if (image == null) {
 			throw new SkipException("Skipping test because image not found");
 		}
+		
+		Flavor bestFlavor = null;
+		for (Flavor flavor : nova.root().flavors().list()) {
+			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
+				bestFlavor = flavor;
+			}
+		}
 
         ServerForCreate serverForCreate = new ServerForCreate();
-        serverForCreate.setName("eureka1");
-        serverForCreate.setFlavorRef("1");
+        serverForCreate.setName(random.randomAlphanumericString(10));
+        serverForCreate.setFlavorRef(bestFlavor.getId());
         serverForCreate.setImageRef(image.getId());
         //serverForCreate.setSecurityGroups(new ArrayList<ServerForCreate.SecurityGroup>() {{
         //	add(new ServerForCreate.SecurityGroup("test"));

@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.module.SimpleModule;
 import org.openstack.model.compute.Addresses;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Server;
 
 public class OpenstackSerializationModule extends SimpleModule {
 
@@ -13,9 +14,9 @@ public class OpenstackSerializationModule extends SimpleModule {
 		addSerializer(Addresses.class, new AddressesSerializer());
 		addDeserializer(Addresses.class, new AddressesDeserializer());
 
-		// addDeserializer(SecurityGroup.class, new RootWrap<SecurityGroup>(SecurityGroup.class));
 		installSmartDeserializer(SecurityGroup.class);
 		installSmartDeserializer(SecurityGroupList.class);
+		installSmartDeserializer(Server.class);
 	}
 
 	private <T> void installSmartDeserializer(Class<T> c) {

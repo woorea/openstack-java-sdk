@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
 
 import com.google.common.base.Function;
@@ -102,6 +103,15 @@ public class SimpleClassInfo {
 			String jsonName = null;
 
 			Class<?> collectionItemType = null;
+
+			if (jsonName == null) {
+				JsonProperty annotation = field.getAnnotation(JsonProperty.class);
+				if (annotation != null) {
+					jsonName = annotation.value();
+					if ("".equals(jsonName))
+						jsonName = null;
+				}
+			}
 
 			if (jsonName == null) {
 				XmlElementWrapper xmlElementWrapperAnnotation = field.getAnnotation(XmlElementWrapper.class);
