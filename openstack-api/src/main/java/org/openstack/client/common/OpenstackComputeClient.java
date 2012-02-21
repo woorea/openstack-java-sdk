@@ -29,8 +29,7 @@ public class OpenstackComputeClient {
 
 	public AsyncServerOperation createServer(ServerForCreate create) throws OpenstackException {
 		Server server = root().servers().create(create);
-		return new AsyncServerOperation(this, server, server.getId(), Lists.newArrayList("BUILD"),
-				Lists.newArrayList("ACTIVE"));
+		return AsyncServerOperation.wrapServerCreate(this, server);
 	}
 
 	public OpenstackSession getSession() {
