@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
@@ -19,10 +18,7 @@ import org.openstack.client.common.ExtensionData;
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.model.atom.Link;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
-@XmlRootElement(name="server")
+@XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Server implements Serializable {
 
@@ -94,7 +90,7 @@ public class Server implements Serializable {
 
 	@XmlAttribute
 	private String uuid;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -209,7 +205,7 @@ public class Server implements Serializable {
 
 	public Image getImage(OpenstackSession session) {
 		if (session != null) {
-			if (image != null || image.getName() == null) {
+			if (image != null && image.getName() == null) {
 				image = session.getLinkResolver().resolveImage(image.getId(), image.getLinks());
 			}
 		}
@@ -222,7 +218,7 @@ public class Server implements Serializable {
 
 	public Flavor getFlavor(OpenstackSession session) {
 		if (session != null) {
-			if (flavor != null || flavor.getName() == null) {
+			if (flavor != null && flavor.getName() == null) {
 				flavor = session.getLinkResolver().resolveFlavor(flavor.getId(), flavor.getLinks());
 			}
 		}

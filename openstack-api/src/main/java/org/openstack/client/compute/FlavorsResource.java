@@ -16,9 +16,9 @@ public class FlavorsResource extends Resource {
     }
 
     public Iterable<Flavor> list(boolean details) {
-        Builder r = details ? resource("detail") : resource();
-        FlavorList page = r.get(FlavorList.class);
-        return new SimplePagingList<Flavor>(session, page);
+		Builder r = details ? resource("detail") : resource();
+		FlavorList page = r.get(FlavorList.class);
+		return new SimplePagingList<Flavor>(session, page);
     }
 
     public Flavor create(Flavor flavor) {

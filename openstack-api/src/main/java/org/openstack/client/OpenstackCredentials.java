@@ -3,11 +3,15 @@ package org.openstack.client;
 public class OpenstackCredentials {
 	final String username;
 	final String password;
-	final String tenant;
+	String tenant;
 
-	public OpenstackCredentials(String username, String password, String tenant) {
+	public OpenstackCredentials(String username, String password) {
 		this.username = username;
 		this.password = password;
+	}
+
+	public OpenstackCredentials(String username, String password, String tenant) {
+		this(username, password);
 		this.tenant = tenant;
 	}
 
@@ -21,6 +25,10 @@ public class OpenstackCredentials {
 
 	public String getTenant() {
 		return tenant;
+	}
+
+	public void setTenant(String tenant) {
+		this.tenant = tenant;
 	}
 
 }

@@ -15,22 +15,115 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
 public class OpenstackSession implements Serializable {
+
+	public enum Feature {
+
+		VERBOSE(true);
+
+		private boolean enabled;
+
+		public boolean isEnabled() {
+			return enabled;
+		}
+
+		public int mask() {
+			return (1 << ordinal());
+		}
+
+		private Feature(boolean enabled) {
+			this.enabled = enabled;
+		}
+	}
+
+	private int features;
+
+	private OpenStackIdentityConfig identityConfig;
+
+	private OpenStackComputeConfig computeConfig;
+
+	private OpenStackImageConfig imageConfig;
+
 	Access access;
-
-	final String authenticationUrl;
-
-	private boolean verbose;
 
 	transient LinkResolver linkResolver;
 
-	public OpenstackSession(String authUrl) {
-		this.authenticationUrl = authUrl;
+	public OpenstackSession() {
+
+		// calculate the bitmap
+		for (Feature f : Feature.class.getEnumConstants()) {
+			if (f.isEnabled()) {
+				features = features | f.mask();
+			}
+		}
+
+		computeConfig = new OpenStackComputeConfig();
+
+		identityConfig = new OpenStackIdentityConfig();
+
+		imageConfig = new OpenStackImageConfig();
+
 	}
 
-	public OpenstackSession(String authUrl, OpenstackCredentials credentials) {
-		this(authUrl);
-		authenticate(credentials);
+	public OpenstackSession enable(Feature feature) {
+		features = features | feature.mask();
+		return this;
 	}
+
+	public OpenstackSession disable(Feature feature) {
+		features = features & ~feature.mask();
+		return this;
+	}
+
+	public OpenStackIdentityConfig getIdentityConfig() {
+		return identityConfig;
+	}
+
+	public void setIdentityConfig(OpenStackIdentityConfig identityConfig) {
+		this.identityConfig = identityConfig;
+	}
+
+	public OpenStackComputeConfig getComputeConfig() {
+		return computeConfig;
+	}
+
+	public void setComputeConfig(OpenStackComputeConfig computeConfig) {
+		this.computeConfig = computeConfig;
+	}
+
+	public OpenStackImageConfig getImageConfig() {
+		return imageConfig;
+	}
+
+	public void setImageConfig(OpenStackImageConfig imageConfig) {
+		this.imageConfig = imageConfig;
+	}
+
+	public boolean isEnabled(Feature feature) {
+		return (features & feature.mask()) == 1;
+	}
+
+	public OpenstackSession with(Feature... features) {
+		for (Feature feature : features) {
+			this.features = this.features | feature.mask();
+		}
+		return this;
+	}
+
+	public OpenstackSession without(Feature... features) {
+		for (Feature feature : features) {
+			this.features = this.features & ~feature.mask();
+		}
+		return this;
+	}
+
+	//
+
+	/*
+	 * public OpenstackSession(String authURL) { this.authenticationUrl = authURL; }
+	 * 
+	 * public OpenstackSession(String authUrl, OpenstackCredentials credentials) { this(authUrl);
+	 * authenticate(credentials); }
+	 */
 
 	public boolean isAuthenticated() {
 		return access != null;
@@ -40,7 +133,6 @@ public class OpenstackSession implements Serializable {
 		// TODO: Allow saving credentials and automatically re-authenticate on timeout
 		// if (access == null)
 		// access = getAuthenticationClient().authenticate();
-
 		return access;
 	}
 
@@ -48,18 +140,17 @@ public class OpenstackSession implements Serializable {
 		Client jerseyClient = JerseyClient.INSTANCE.getJerseyClient();
 		WebResource resource = jerseyClient.resource(resourceUrl);
 
-		if (isVerbose()) {
+		if (isEnabled(Feature.VERBOSE)) {
 			// But verbose filter is just easier done here!
 			resource.addFilter(new LoggingFilter(System.out));
 		}
 
 		// It could be nice to just put the OpenstackSession into a property,
-		// and have a constant filterset.  BUT head() doesn't use properties.
+		// and have a constant filterset. BUT head() doesn't use properties.
 		// resource.setProperty(OpenstackSession.class.getName(), this);
 
 		resource.addFilter(new OpenstackAuthenticationFilter(access));
-		
-		
+
 		return resource;
 	}
 
@@ -72,10 +163,11 @@ public class OpenstackSession implements Serializable {
 	}
 
 	public OpenstackAuthenticationClient getAuthenticationClient() {
-		return new OpenstackAuthenticationClient(this, authenticationUrl);
+		return new OpenstackAuthenticationClient(this);
 	}
 
-	public void authenticate(OpenstackCredentials credentials) {
+	public void authenticate(String authURL, OpenstackCredentials credentials) {
+		identityConfig.setAuthenticationURL(authURL);
 		Access access = getAuthenticationClient().authenticate(credentials);
 		this.access = access;
 	}
@@ -116,14 +208,6 @@ public class OpenstackSession implements Serializable {
 		return link.follow(this, null, clazz);
 	}
 
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
-
-	public boolean isVerbose() {
-		return verbose;
-	}
-
 	public LinkResolver getLinkResolver() {
 		if (linkResolver == null) {
 			linkResolver = new SimpleLinkResolver(this);
@@ -135,7 +219,4 @@ public class OpenstackSession implements Serializable {
 		this.linkResolver = linkResolver;
 	}
 
-	public String getAuthenticationUrl() {
-		return authenticationUrl;
-	}
 }

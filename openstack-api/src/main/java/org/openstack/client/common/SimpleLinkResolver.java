@@ -10,8 +10,6 @@ import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 
 /**
  * Resolves links by fetching the linked-to item

@@ -5,31 +5,32 @@ import java.util.Properties;
 import org.openstack.client.common.OpenstackSession;
 
 public class OpenstackTestContext {
-    public OpenstackSession session;
 
-    public OpenstackSession connect(String url, OpenstackCredentials credentials, boolean verbose) {
-    	OpenstackSession session = new OpenstackSession(url, credentials);
-        this.session = session;
-        if (verbose) {
-        	session.setVerbose(true);
-        }
-        return session;
-    }
+	public OpenstackSession session;
 
-    public static OpenstackTestContext buildFromProperties() {
-        OpenstackTestContext context = new OpenstackTestContext();
+	public OpenstackSession connect(String url, OpenstackCredentials credentials, boolean verbose) {
+		session = new OpenstackSession();
+		session.authenticate(url, credentials);
+		if (verbose) {
+			session.with(OpenstackSession.Feature.VERBOSE);
+		}
+		return session;
+	}
 
-        Properties properties = System.getProperties();
+	public static OpenstackTestContext buildFromProperties() {
+		OpenstackTestContext context = new OpenstackTestContext();
 
-        boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "false"));
+		Properties properties = System.getProperties();
 
-        String url = properties.getProperty("openstack.auth.url", "http://127.0.0.1:5000/v2.0");
-        String username = properties.getProperty("openstack.auth.user", "demo");
-        String secret = properties.getProperty("openstack.auth.secret", "supersecret");
-        String tenant = properties.getProperty("openstack.auth.tenant", "demo");
+		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "false"));
 
-        OpenstackCredentials credentials = new OpenstackCredentials(username, secret, tenant);
-        context.connect(url, credentials, verbose);
-        return context;
-    }
+		String url = properties.getProperty("openstack.auth.url", "http://127.0.0.1:5000/v2.0");
+		String username = properties.getProperty("openstack.auth.user", "demo");
+		String secret = properties.getProperty("openstack.auth.secret", "supersecret");
+		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
+
+		OpenstackCredentials credentials = new OpenstackCredentials(username, secret, tenant);
+		context.connect(url, credentials, verbose);
+		return context;
+	}
 }
