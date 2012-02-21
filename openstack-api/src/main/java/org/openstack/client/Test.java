@@ -4,9 +4,9 @@ import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.OpenstackSession.Feature;
 import org.openstack.client.compute.TenantResource;
 import org.openstack.client.identity.IdentityResource;
+import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.ServerForCreate;
 import org.openstack.model.identity.Tenant;
 
 public class Test {
@@ -41,31 +41,38 @@ public class Test {
 		Image image = null;
 		for (Image i : images) {
 			System.out.println(i);
-			if (i.getId().equals("1a0772cd-066c-4de3-a395-b28913e8cfa4")) {
+			if (i.getName().equals("cirros-0.3.0-x86_64-blank")) {
 				image = i;
 				break;
 			}
 		}
 
-		ServerForCreate serverForCreate = new ServerForCreate();
-		serverForCreate.setName("eureka1");
-		serverForCreate.setFlavorRef("1");
-		serverForCreate.setImageRef(image.getId());
+		System.out.println(image);
+
+		Iterable<Flavor> flavors = compute.flavors().list();
+		for (Flavor f : flavors) {
+			System.out.println(f);
+		}
+
+		// ServerForCreate serverForCreate = new ServerForCreate();
+		// serverForCreate.setName("eureka1");
+		// serverForCreate.setFlavorRef("1");
+		// serverForCreate.setImageRef(image.getId());
 		// serverForCreate.setSecurityGroups(new ArrayList<ServerForCreate.SecurityGroup>() {{
 		// add(new ServerForCreate.SecurityGroup("test"));
 		// }});
-		System.out.println(serverForCreate);
+		// System.out.println(serverForCreate);
 
 		/*
 		 * AsyncServerOperation async = nova.createServer(serverForCreate); Server server = async.get();
 		 */
 
-		Server server = compute.servers().create(serverForCreate);
-		System.out.println(server.getImage(session).getMinDisk());
-
-		System.out.println(server);
-		System.out.println("DELETING");
-		compute.servers().server(server.getId()).delete();
+		// Server server = compute.servers().create(serverForCreate);
+		// System.out.println(server.getImage(session).getMinDisk());
+		//
+		// System.out.println(server);
+		// System.out.println("DELETING");
+		// compute.servers().server(server.getId()).delete();
 
 		// TODO: Review the endpoint resolver for admin.
 		// for (User user : identity.users().list()) {
