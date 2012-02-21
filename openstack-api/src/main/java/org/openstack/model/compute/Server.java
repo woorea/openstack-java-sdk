@@ -15,7 +15,6 @@ import javax.xml.namespace.QName;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.client.common.ExtensionData;
-import org.openstack.client.common.OpenstackSession;
 import org.openstack.model.atom.Link;
 
 @XmlRootElement(name = "server")
@@ -214,29 +213,11 @@ public class Server implements Serializable {
 		return null;
 	}
 
-	public Image getImage(OpenstackSession session) {
-		if (session != null) {
-			if (image != null && image.getName() == null) {
-				image = session.getLinkResolver().resolveImage(image.getId(), image.getLinks());
-			}
-		}
-		return image;
-	}
-
 	public void setImage(Image image) {
 		this.image = image;
 	}
 
 	public Flavor getFlavor() {
-		return flavor;
-	}
-
-	public Flavor getFlavor(OpenstackSession session) {
-		if (session != null) {
-			if (flavor != null && flavor.getName() == null) {
-				flavor = session.getLinkResolver().resolveFlavor(flavor.getId(), flavor.getLinks());
-			}
-		}
 		return flavor;
 	}
 
