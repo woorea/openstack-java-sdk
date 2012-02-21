@@ -25,6 +25,7 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -184,7 +185,7 @@ class NGSession extends Thread {
 				DataOutputStream sockout = new DataOutputStream(socket.getOutputStream());
 	
 				// client info - command line arguments and environment
-				List remoteArgs = new java.util.ArrayList();
+				List remoteArgs = new ArrayList();
 				Properties remoteEnv = new Properties();
 				
 				String cwd = null;			// working directory
@@ -229,6 +230,10 @@ class NGSession extends Thread {
 									
 						default:	// freakout?
 					}
+				}
+
+				if (command.equals("ng") || command.equals("ng-nailgun")) {
+				    command = (String) remoteArgs.remove(0);
 				}
 	
 				updateThreadName(socket.getInetAddress().getHostAddress() + ": " + command);
