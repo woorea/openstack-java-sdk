@@ -11,18 +11,19 @@ import com.google.common.collect.Maps;
 
 public class FloatingIpFormatter extends SimpleFormatter<FloatingIp> {
 
-    public FloatingIpFormatter() {
-        super(FloatingIp.class);
-    }
+	public FloatingIpFormatter() {
+		super(FloatingIp.class);
+	}
 
-    @Override
-    public void visit(FloatingIp o, OutputSink sink) throws IOException {
-        LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
+	@Override
+	public void visit(FloatingIp o, OutputSink sink) throws IOException {
+		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
-        values.put("id", o.getId());
-        values.put("ip", o.getIp());
-        values.put("pool", o.getPool());
+		values.put("id", o.getId());
+		values.put("ip", o.getIp());
+		values.put("pool", o.getPool());
+		values.put("instance", o.getInstanceId());
 
-        sink.outputRow(values);
-    }
+		sink.outputRow(values);
+	}
 }

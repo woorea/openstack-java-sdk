@@ -7,25 +7,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="floating_ip", namespace="")
+@XmlRootElement(name = "floating_ip", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
 public class FloatingIp implements Serializable {
-	
+
 	@XmlAttribute
 	private String id;
-	
+
 	@XmlAttribute
 	private String ip;
-	
+
 	@XmlAttribute
 	private String pool;
 
-	@XmlAttribute
-	private String instance_id;
-	
-	@XmlAttribute
-	private String fixed_ip;
-	
+	@XmlAttribute(name = "instance_id")
+	private String instanceId;
+
+	@XmlAttribute(name = "fixed_ip")
+	private String fixedIp;
+
 	public String getId() {
 		return id;
 	}
@@ -54,5 +54,13 @@ public class FloatingIp implements Serializable {
 	public String toString() {
 		return "FloatingIp [id=" + id + ", ip=" + ip + ", pool=" + pool + "]";
 	}
-	
+
+	public String getInstanceId() {
+		return instanceId;
+	}
+
+	public void setInstanceId(String instanceId) {
+		this.instanceId = instanceId;
+	}
+
 }
