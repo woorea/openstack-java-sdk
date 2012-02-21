@@ -2,6 +2,10 @@ package org.openstack.client.internals;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.namespace.QName;
 
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;
@@ -56,7 +60,22 @@ public class SmartDeserializer<T> extends StdDeserializer<T> {
 							return t;
 						}
 					}
-					reportUnknownProperty(ctxt, clazz, key);
+
+					if (classInfo.hasAnyAttribute()) {
+						Map<QName, Object> anyAttribute = classInfo.getAnyAttribute(t);
+						QName qname = new QName(key);
+						switch (jp.nextToken()) {
+						case VALUE_STRING:
+							anyAttribute.put(qname, jp.getText());
+							break;
+
+						default:
+							throw ctxt.wrongTokenException(jp, JsonToken.VALUE_STRING, "Unexpected token");
+						}
+					} else {
+						reportUnknownProperty(ctxt, clazz, key);
+						jp.skipChildren();
+					}
 					continue;
 				}
 

@@ -6,10 +6,12 @@ import java.lang.reflect.TypeVariable;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
@@ -24,12 +26,13 @@ public class SimpleClassInfo {
 	final ImmutableMap<String, FieldInfo> fieldsByJsonKey;
 	final Class<?> clazz;
 	private String jsonName;
+	private Field anyAttributeField;
 
 	public SimpleClassInfo(Class<?> c) {
 		this.clazz = c;
-	
+
 		discoverClassInfo();
-		
+
 		this.fields = discoverFields(c);
 
 		this.fieldsByJsonKey = Maps.uniqueIndex(fields, new Function<FieldInfo, String>() {
@@ -52,7 +55,6 @@ public class SimpleClassInfo {
 			}
 		}
 
-		
 		if (jsonName == null) {
 			jsonName = clazz.getSimpleName();
 		}
@@ -100,6 +102,13 @@ public class SimpleClassInfo {
 		List<FieldInfo> fields = Lists.newArrayList();
 
 		for (Field field : c.getDeclaredFields()) {
+			XmlAnyAttribute xmlAnyAttribute = field.getAnnotation(XmlAnyAttribute.class);
+			if (xmlAnyAttribute != null) {
+				anyAttributeField = field;
+				anyAttributeField.setAccessible(true);
+				continue;
+			}
+
 			String jsonName = null;
 
 			Class<?> collectionItemType = null;
@@ -170,5 +179,22 @@ public class SimpleClassInfo {
 
 	public String getJsonName() {
 		return jsonName;
+	}
+
+	public boolean hasAnyAttribute() {
+		return anyAttributeField != null;
+	}
+	
+	public Map<QName, Object> getAnyAttribute(Object target) {
+		try {
+			Map<QName, Object> map = (Map<QName, Object>) anyAttributeField.get(target);
+			if (map == null) {
+				anyAttributeField.set(target, map);
+				map = Maps.newHashMap();
+			}
+			return map;
+		} catch (IllegalAccessException e) {
+			throw new IllegalStateException("Error getting field value", e);
+		}
 	}
 }
