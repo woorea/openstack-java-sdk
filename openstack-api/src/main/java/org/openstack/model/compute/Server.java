@@ -209,7 +209,7 @@ public class Server implements Serializable {
 		}
 		return null;
 	}
-	
+
 	public Image getImage(OpenstackSession session) {
 		if (session != null) {
 			if (image != null && image.getName() == null) {
@@ -280,5 +280,4 @@ public class Server implements Serializable {
 	public ExtensionData getExtensionData() {
 		return new ExtensionData(extensionAttributes);
 	}
-
 }

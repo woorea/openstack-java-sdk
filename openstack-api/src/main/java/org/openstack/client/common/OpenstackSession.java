@@ -20,9 +20,7 @@ public class OpenstackSession implements Serializable {
 
 	public enum Feature {
 
-		VERBOSE(false),
-		FORCE_JSON(false),
-		FORCE_XML(false);
+		VERBOSE(false), FORCE_JSON(false), FORCE_XML(false);
 
 		private boolean enabled;
 
