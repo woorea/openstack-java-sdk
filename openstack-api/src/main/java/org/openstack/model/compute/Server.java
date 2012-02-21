@@ -203,6 +203,10 @@ public class Server implements Serializable {
 		this.keyName = keyName;
 	}
 
+	public Image getImage() {
+		return image;
+	}
+
 	public String getImageId() {
 		if (image != null) {
 			return image.getId();
@@ -221,6 +225,10 @@ public class Server implements Serializable {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public Flavor getFlavor() {
+		return flavor;
 	}
 
 	public Flavor getFlavor(OpenstackSession session) {
@@ -280,4 +288,5 @@ public class Server implements Serializable {
 	public ExtensionData getExtensionData() {
 		return new ExtensionData(extensionAttributes);
 	}
+
 }
