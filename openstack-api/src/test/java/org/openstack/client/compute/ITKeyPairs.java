@@ -4,7 +4,6 @@ import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.model.compute.KeyPair;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class ITKeyPairs extends ComputeApiTest {
@@ -73,6 +72,9 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName1() throws OpenstackException {
+		// Problems with difficult names reported as bug #937408
+		skipUntilBugFixed(937408);
+
 		String name = "{JSB";
 
 		testCreateAndDelete(name);
@@ -80,6 +82,9 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName2() throws OpenstackException {
+		// Problems with difficult names reported as bug #937408
+		skipUntilBugFixed(937408);
+
 		String name = "'JSB";
 
 		testCreateAndDelete(name);
@@ -87,6 +92,9 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName3() throws OpenstackException {
+		// Problems with difficult names reported as bug #937408
+		skipUntilBugFixed(937408);
+
 		String name = "F ZZ";
 
 		testCreateAndDelete(name);
@@ -94,6 +102,9 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName4() throws OpenstackException {
+		// Problems with difficult names reported as bug #937408
+		skipUntilBugFixed(937408);
+
 		String name = ">JSB";
 
 		testCreateAndDelete(name);
@@ -101,15 +112,19 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName5() throws OpenstackException {
-		throw new SkipException("Problems deleting keypairs with slashes");
+		// Problems with difficult names reported as bug #937408
+		skipUntilBugFixed(937408);
 
-		// String name = "J/SB";
-		//
-		// testCreateAndDelete(name);
+		String name = "J/SB";
+
+		testCreateAndDelete(name);
 	}
 
 	@Test
 	public void testHardName6() throws OpenstackException {
+		// Problems with difficult names reported as bug #937408
+		skipUntilBugFixed(937408);
+
 		String name = "J~SB";
 
 		testCreateAndDelete(name);

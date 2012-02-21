@@ -20,7 +20,6 @@ import org.openstack.model.image.Image;
 import org.openstack.model.image.ImageProperties;
 import org.openstack.utils.Md5Hash;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -159,10 +158,6 @@ public class ITGlance extends GlanceIntegrationTest {
 		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
 		assertNull(uploaded.getDiskFormat());
 		assertNull(uploaded.getContainerFormat());
-	}
-
-	private void skipUntilBugFixed(int bugNumber) {
-		throw new SkipException("Skipping because of bug #" + bugNumber);
 	}
 
 	@Test
