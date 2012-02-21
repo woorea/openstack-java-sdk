@@ -3,14 +3,18 @@ package org.openstack.client.common;
 import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
+import org.codehaus.jackson.map.module.SimpleModule;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 import org.openstack.client.imagestore.KnownLengthInputStreamProvider;
+import org.openstack.client.internals.OpenstackSerializationModule;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
+import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.map.DeserializationConfig;
 
 enum JerseyClient {
 
@@ -27,6 +31,9 @@ enum JerseyClient {
         if (objectMapper != null) {
             config.getSingletons().add(new ObjectMapperProvider(objectMapper));
         }
+
+        OpenstackSerializationModule simpleModule = new OpenstackSerializationModule();
+        objectMapper.registerModule(simpleModule);
 
         config.getClasses().add(KnownLengthInputStreamProvider.class);
 
@@ -57,8 +64,8 @@ enum JerseyClient {
 
         {
             // If we want to put a top-level element in the JSON
-            // objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-            // objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+            objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+            objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
         }
 
         {

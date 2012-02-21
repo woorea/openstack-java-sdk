@@ -80,7 +80,8 @@ public class ServerForCreate implements Serializable {
 	@XmlAttribute
 	private String zone;
 
-	@XmlAttribute
+	// OSAPI-BUG: I think this is only valid in JSON
+	@XmlAttribute(name="key_name")
 	private String keyName;
 
 	@XmlElement

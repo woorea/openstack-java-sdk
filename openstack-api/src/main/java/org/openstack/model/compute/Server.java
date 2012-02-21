@@ -10,9 +10,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.client.common.ExtensionData;
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.model.atom.Link;
@@ -20,7 +22,7 @@ import org.openstack.model.atom.Link;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-@XmlRootElement
+@XmlRootElement(name="server")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Server implements Serializable {
 
@@ -43,9 +45,11 @@ public class Server implements Serializable {
 	private String hostId;
 
 	@XmlAttribute
+	@JsonProperty("user_id")
 	private String userId;
 
 	@XmlAttribute
+	@JsonProperty("tenant_id")
 	private String tenantId;
 
 	@XmlAttribute(name = "accessIPv4")
@@ -85,8 +89,12 @@ public class Server implements Serializable {
 	private Addresses addresses;
 
 	@XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
+	@JsonProperty("links")
 	private List<Link> links;
 
+	@XmlAttribute
+	private String uuid;
+	
 	public String getId() {
 		return id;
 	}

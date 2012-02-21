@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.atom.Link;
 
 @XmlRootElement
@@ -37,7 +38,8 @@ public class Flavor implements Serializable {
     private int disk;
 
     @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
-    private List<Link> links;
+    @JsonProperty("links")
+	private List<Link> links;
 
     public String getId() {
         return id;

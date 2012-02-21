@@ -20,6 +20,12 @@ public class KeyPair implements Serializable {
 	@XmlElement(namespace="")
 	private String fingerprint;
 
+	@XmlElement(name="user_id")
+	private String userId;
+	
+	@XmlElement(name="private_key")
+	private String privateKey;
+	
 	public String getName() {
 		return name;
 	}

@@ -3,6 +3,7 @@ package org.openstack.client.compute.ext;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
+import org.openstack.model.compute.CreateKeyPairResponse;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairList;
 
@@ -41,7 +42,8 @@ public class KeyPairsResource extends Resource {
 	 * @return
 	 */
 	public KeyPair create(KeyPair keyPair) {
-		return resource().type(MediaType.APPLICATION_XML).post(KeyPair.class, keyPair);
+		CreateKeyPairResponse response = resource().post(CreateKeyPairResponse.class, keyPair);
+		return response.getKeyPair();
 	}
 	
 	public KeyPairResource keypair(String name) {

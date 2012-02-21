@@ -34,7 +34,6 @@ public class KeyPairList implements Serializable, Iterable<KeyPair> {
 		public void setKeypair(KeyPair keypair) {
 			this.keypair = keypair;
 		}
-
 	}
 
 	public List<KeyPairListItem> getList() {

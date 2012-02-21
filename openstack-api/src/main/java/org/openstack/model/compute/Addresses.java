@@ -80,6 +80,7 @@ public class Addresses implements Serializable {
 
     }
 
+    
     @XmlElement(name = "network")
     private List<Network> networks;
 

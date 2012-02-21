@@ -7,8 +7,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.atom.Link;
 
 @XmlRootElement
@@ -44,6 +46,7 @@ public class Image implements Serializable {
 	//RAX-DCF="http://docs.rackspacecloud.com/servers/api/ext/diskConfig/v1.0"
 	
 	@XmlElement(name="link", namespace="http://www.w3.org/2005/Atom")
+	@JsonProperty("links")
 	private List<Link> links;
 
 	public String getId() {
