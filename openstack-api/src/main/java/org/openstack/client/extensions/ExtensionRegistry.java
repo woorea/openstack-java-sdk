@@ -24,26 +24,28 @@ public class ExtensionRegistry {
     	ExtensionValues results = new ExtensionValues();
 
         Map<QName, Object> extensionAttributes = extensionData.getExtensionAttributes();
-        Set<String> namespaces = Sets.newHashSet();
-        for (QName qname : extensionAttributes.keySet()) {
-            namespaces.add(qname.getNamespaceURI());
+        if (extensionAttributes != null) {
+	        Set<String> namespaces = Sets.newHashSet();
+	        for (QName qname : extensionAttributes.keySet()) {
+	            namespaces.add(qname.getNamespaceURI());
+	        }
+	
+	        for (String namespace : namespaces) {
+	            Extension extension = findExtensionByNamespace(namespace);
+	            if (extension == null) {
+	                // TODO: We could have a generic placeholder...
+	                log.info("Ignoring unknown namespace: " + namespace);
+	
+	                continue;
+	            }
+	            Class<?> attributeClass = extension.getAttributeClass();
+	            if (attributeClass != null) {
+	            	Object o = parseExtensionAttributes(extensionData, attributeClass);
+	                results.add(o);
+	            }
+	        }
         }
-
-        for (String namespace : namespaces) {
-            Extension extension = findExtensionByNamespace(namespace);
-            if (extension == null) {
-                // TODO: We could have a generic placeholder...
-                log.info("Ignoring unknown namespace: " + namespace);
-
-                continue;
-            }
-            Class<?> attributeClass = extension.getAttributeClass();
-            if (attributeClass != null) {
-            	Object o = parseExtensionAttributes(extensionData, attributeClass);
-                results.add(o);
-            }
-        }
-
+        
         return results;
     }
 
