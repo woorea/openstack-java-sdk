@@ -20,10 +20,11 @@ public class FloatingIpsResource extends Resource {
 
 	// Floating IPs seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?
-	protected Builder addAcceptHeaders(Builder webResource) {
-		return webResource.accept(MediaType.APPLICATION_JSON);
+	@Override
+	protected MediaType getDefaultContentType() {
+		return MediaType.APPLICATION_JSON_TYPE;
 	}
-	
+
 	/**
 	 * Return a list of floating ips allocated to a project.
 	 * 

@@ -5,14 +5,12 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 public class SecurityGroupsResource extends ComputeResourceBase {
 
 	@Override
-	protected Builder addAcceptHeaders(Builder webResource) {
+	protected MediaType getDefaultContentType() {
 		// Whitespace problems when using XML
-		return webResource.accept(MediaType.APPLICATION_JSON);
+		return MediaType.APPLICATION_JSON_TYPE;
 	}
 	
     public SecurityGroupList list() {

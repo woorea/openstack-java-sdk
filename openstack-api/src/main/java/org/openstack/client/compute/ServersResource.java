@@ -36,8 +36,7 @@ public class ServersResource extends ComputeResourceBase {
 
 	public Server create(ServerForCreate serverForCreate) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		Builder builder = resource(null, MediaType.valueOf(session.getComputeConfig().getAcceptHeader())).type(
-				MediaType.valueOf(session.getComputeConfig().getTypeHeader()));
+		Builder builder = resource(null, MediaType.APPLICATION_JSON_TYPE);
 		return builder.post(Server.class, serverForCreate);
 
 		// return post(Server.class, serverForCreate);

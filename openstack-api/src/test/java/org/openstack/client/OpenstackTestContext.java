@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.utils.Io;
 
@@ -12,12 +14,24 @@ public class OpenstackTestContext {
 
 	public OpenstackSession session;
 
-	public OpenstackSession connect(String url, OpenstackCredentials credentials, boolean verbose) {
+	public OpenstackSession connect(String url, OpenstackCredentials credentials, String format, boolean verbose) {
 		session = new OpenstackSession();
-		session.authenticate(url, credentials);
 		if (verbose) {
 			session.with(OpenstackSession.Feature.VERBOSE);
 		}
+
+		if (format != null) {
+			if (format.equals("json")) {
+				session.with(OpenstackSession.Feature.FORCE_JSON);
+			}
+			else if (format.equals("xml")) {
+				session.with(OpenstackSession.Feature.FORCE_XML);
+			} else {
+				throw new IllegalArgumentException("Unknown format: " + format);
+			}
+		}
+		
+		session.authenticate(url, credentials);
 		return session;
 	}
 
@@ -51,8 +65,10 @@ public class OpenstackTestContext {
 		String secret = properties.getProperty("openstack.auth.secret", "supersecret");
 		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
 
+		String format = properties.getProperty("openstack.format", null);
+		
 		OpenstackCredentials credentials = new OpenstackCredentials(username, secret, tenant);
-		context.connect(url, credentials, verbose);
+		context.connect(url, credentials, format, verbose);
 		return context;
 	}
 }

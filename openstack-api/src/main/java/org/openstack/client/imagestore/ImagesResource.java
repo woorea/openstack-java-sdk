@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.client.OpenstackException;
 import org.openstack.client.common.SimplePagingList;
 import org.openstack.model.image.Image;
@@ -43,7 +45,7 @@ public class ImagesResource extends GlanceResourceBase {
 
 	public Image addImage(InputStream imageStream, long imageStreamLength, Image properties) throws OpenstackException,
 			IOException {
-		Builder builder = resource();
+		Builder builder = resource(null, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 
 		builder = GlanceHeaderUtils.setHeaders(builder, properties);
 

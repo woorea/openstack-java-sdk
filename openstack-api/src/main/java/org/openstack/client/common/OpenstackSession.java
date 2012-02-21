@@ -3,6 +3,8 @@ package org.openstack.client.common;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.OpenstackException;
 import org.openstack.model.atom.Link;
@@ -18,7 +20,9 @@ public class OpenstackSession implements Serializable {
 
 	public enum Feature {
 
-		VERBOSE(true);
+		VERBOSE(false),
+		FORCE_JSON(false),
+		FORCE_XML(false);
 
 		private boolean enabled;
 
@@ -217,6 +221,16 @@ public class OpenstackSession implements Serializable {
 
 	public void setLinkResolver(LinkResolver linkResolver) {
 		this.linkResolver = linkResolver;
+	}
+
+	public MediaType getForceContentType() {
+		if (isEnabled(Feature.FORCE_JSON)) {
+			return MediaType.APPLICATION_JSON_TYPE;
+		}
+		if (isEnabled(Feature.FORCE_XML)) {
+			return MediaType.APPLICATION_XML_TYPE;
+		}
+		return null;
 	}
 
 }

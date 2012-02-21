@@ -27,10 +27,6 @@ public class OpenStackComputeConfig implements Serializable {
 
 	private int features;
 
-	private String acceptHeader = MediaType.APPLICATION_XML;
-
-	private String typeHeader = MediaType.APPLICATION_XML;
-
 	public OpenStackComputeConfig() {
 
 		// calculate the bitmap
@@ -57,22 +53,6 @@ public class OpenStackComputeConfig implements Serializable {
 			this.features = this.features & ~feature.mask();
 		}
 		return this;
-	}
-
-	public void setAcceptHeader(String value) {
-		this.acceptHeader = value;
-	}
-
-	public String getAcceptHeader() {
-		return this.acceptHeader;
-	}
-
-	public void setTypeHeader(String value) {
-		this.typeHeader = value;
-	}
-
-	public String getTypeHeader() {
-		return this.typeHeader;
 	}
 
 }

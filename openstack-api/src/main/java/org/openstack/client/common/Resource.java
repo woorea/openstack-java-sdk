@@ -25,8 +25,8 @@ public class Resource {
 	protected Resource() {
 	}
 
-	protected Builder addAcceptHeaders(Builder webResource) {
-		return webResource.accept(MediaType.APPLICATION_XML);
+	protected MediaType getDefaultContentType() {
+		return MediaType.APPLICATION_XML_TYPE;
 	}
 
 	public void initialize(OpenstackSession session, String resource) {
@@ -44,19 +44,35 @@ public class Resource {
 		return resource(relativePath, null);
 	}
 
-	protected Builder resource(String relativePath, MediaType mediaType) {
+	protected Builder resource(String relativePath, MediaType contentType) {
 		String resourceUrl = relativePath != null ? UrlUtils.join(resource, relativePath) : resource;
 		WebResource webResource = session.resource(resourceUrl);
 		Builder builder = webResource.getRequestBuilder();
-		if (mediaType == null) {
-			addAcceptHeaders(builder);
-		} else {
-			builder.accept(mediaType);
+
+		MediaType forceContentType = session.getForceContentType();
+
+		if (forceContentType != null) {
+			// Only force the contentType if it is XML, JSON, or unspecified
+			// (e.g. don't change the content type on a glance image upload!)
+			if (contentType == null || contentType == MediaType.APPLICATION_JSON_TYPE
+					|| contentType == MediaType.APPLICATION_XML_TYPE) {
+				contentType = forceContentType;
+			}
 		}
+
+		if (contentType == null) {
+			contentType = getDefaultContentType();
+		}
+
+		builder = builder.accept(contentType);
+		if (contentType == MediaType.APPLICATION_JSON_TYPE || contentType == MediaType.APPLICATION_XML_TYPE) {
+			// Assume we're going to be posting the same type (for now!)
+			builder = builder.type(contentType);
+		}
+
 		return builder;
 	}
 
-	
 	final Map<String, Resource> resources = Maps.newHashMap();
 
 	protected <T extends Resource> T getChildResource(String relativePath, Class<T> clazz) {
@@ -87,5 +103,5 @@ public class Resource {
 		instance.initialize(session, childResourcePath);
 		return instance;
 	}
-	
+
 }

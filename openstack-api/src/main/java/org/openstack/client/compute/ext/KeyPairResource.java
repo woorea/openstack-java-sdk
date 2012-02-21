@@ -16,9 +16,11 @@ public class KeyPairResource extends Resource {
 
 	// JSON Only?
 	// TODO: Is this an OpenStack bug or an HP bug?
-	protected Builder addAcceptHeaders(Builder webResource) {
-		return webResource.accept(MediaType.APPLICATION_JSON);
+	@Override
+	protected MediaType getDefaultContentType() {
+		return MediaType.APPLICATION_JSON_TYPE;
 	}
+
 
 	public void delete() {
 		resource().delete();

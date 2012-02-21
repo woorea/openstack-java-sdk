@@ -9,8 +9,6 @@ import org.openstack.model.compute.CreateKeyPairResponse;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairList;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 /**
  * Keypair Support
  * 
@@ -21,8 +19,9 @@ public class KeyPairsResource extends Resource {
 
 	// KeyPairsResource seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?
-	protected Builder addAcceptHeaders(Builder webResource) {
-		return webResource.accept(MediaType.APPLICATION_JSON);
+	@Override
+	protected MediaType getDefaultContentType() {
+		return MediaType.APPLICATION_JSON_TYPE;
 	}
 
 	/**
@@ -45,7 +44,7 @@ public class KeyPairsResource extends Resource {
 	 * @return
 	 */
 	public KeyPair create(KeyPair keyPair) {
-		CreateKeyPairResponse response = resource().type(MediaType.APPLICATION_JSON_TYPE).post(CreateKeyPairResponse.class, keyPair);
+		CreateKeyPairResponse response = resource().post(CreateKeyPairResponse.class, keyPair);
 		return response.getKeyPair();
 	}
 

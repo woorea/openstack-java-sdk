@@ -8,9 +8,9 @@ import com.sun.jersey.api.client.WebResource.Builder;
 
 public class SecurityGroupResource extends ComputeResourceBase {
 	@Override
-	protected Builder addAcceptHeaders(Builder webResource) {
+	protected MediaType getDefaultContentType() {
 		// Whitespace problems when using XML
-		return webResource.accept(MediaType.APPLICATION_JSON);
+		return MediaType.APPLICATION_JSON_TYPE;
 	}
 	
     public SecurityGroup show() {
