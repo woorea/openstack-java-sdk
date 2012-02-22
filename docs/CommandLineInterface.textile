@@ -1,0 +1,84 @@
+h1. The Java Command Line Interface
+
+h2. Introduction
+
+The command line interface serves as an example consumer of the Java bindings to the OpenStack API.
+It isn't intended to replace the 'nova' client, though some people have been known to prefer it.
+OK.  The developer has been known to prefer it.
+
+h2. Direct Usage
+
+Build the code using @mvn package@, if you haven't already done so.
+
+This builds everything, including an all-in-one JAR which can be run standalone.
+
+If you're running devstack, you should then be able to run this (replacing the server address with your keystone server address):
+@java -jar openstack-cli/target/openstack-cli-standalone.jar --user demo --password supersecret --tenant demo --server http://192.168.71.1:5000/v2.0/ list-flavors@
+
+h2. Usage with nailgun
+
+Nailgun is a way of running the OpenStack CLI as a server, and quickly connecting to it using a small C client, rather than starting a JVM every time.
+
+Unfortunately, the version of nailgun shipped with Debian/Ubuntu has a few bugs.  We recommend installing/using the version we provide.  Simply do this:
+
+<pre>
+cd nailgun
+make
+cd ..
+</pre>
+
+Now, there are some helper scripts that are very useful: bin/os and bin/start-os-server.
+
+bin/start-os-server starts the nailgun server, so it'll be listening for connections.  Run it:
+
+@bin/start-os-server@
+
+The OpenStack CLI should now be running as a server, listening on port 2012
+
+Now, you'll want to create a configuration file to hold your credentials.  By default, we look for ~/.credentials/openstack
+
+It should look like this (edit with your own details):
+
+<pre>
+OS_USERNAME=demo
+OS_PASSWORD=supersecret
+OS_TENANT_NAME=demo
+OS_AUTH_URL=http://192.168.71.1:5000/v2.0
+</pre>
+
+Everything should now be ready; try running
+
+@bin/os list-flavors@
+
+And you should get a list of flavors (much faster than you did previously).
+
+
+h2. Enabling bash auto-completion
+
+The CLI tool has some nice bash auto-completion features.  You'll want the 'os' command on your PATH; I like to put symlinks in ~/bin for this.
+
+<pre>
+BASEDIR=`pwd`
+mkdir -p ~/bin
+cd ~/bin
+ln -s ${BASEDIR}/bin/os
+ln -s ${BASEDIR}/nailgun/ng
+cd /etc/bash_completion.d/
+sudo ln -s ${BASEDIR}/etc/bash_completion.d/os
+cd ${BASEDIR}
+. /etc/bash_completion
+</pre>
+
+That last command (@. /etc/bash_completion@) lets the bash auto completion features take effect in the current session.  You can run it
+in other sessions, it should happen automatically on new sessions from now on.
+
+So now try typing:
+@os [TAB][TAB]@ (where [TAB] means press the [TAB] key)
+@os l[TAB]@ (should auto-complete the beginning of the list- command)
+@os list-fl[TAB]@ (should auto-complete the beginning of the list-flavors command)
+
+
+Argument auto-completion is also smart.  For example, the command to create a server is
+@os create-server <name> <image> <flavor>@
+
+If you type @os create-server test1 [TAB][TAB]@ then a list of images should be provided to you.

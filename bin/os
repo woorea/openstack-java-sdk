@@ -2,21 +2,24 @@
 
 set -e
 
-NAILGUN=ng-nailgun
-
-if ! builtin type -p ${NAILGUN} &>/dev/null; then
-	NAILGUN=ng
-	if ! builtin type -p ${NAILGUN} &>/dev/null; then
-		echo "${NAILGUN} not found; try sudo apt-get install nailgun"
-		exit 1
-	fi
-fi
-
 COMMAND=$@
 
 pushd `dirname $0` > /dev/null
 BASEDIR=`pwd`
 popd > /dev/null
+
+NAILGUN=ng-nailgun
+if ! builtin type -p ${NAILGUN} &>/dev/null; then
+	NAILGUN=ng
+	if ! builtin type -p ${NAILGUN} &>/dev/null; then
+		NAILGUN=${BASEDIR}/../nailgun/ng
+		if ! builtin type -p ${NAILGUN} &>/dev/null; then
+			echo "${NAILGUN} not found; try sudo apt-get install nailgun"
+			exit 1
+		fi
+	fi
+fi
+
 
 if [[ "$PROFILE" == "" ]]; then
 	PROFILE=openstack

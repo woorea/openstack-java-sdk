@@ -8,5 +8,9 @@ popd > /dev/null
 
 NAILGUN_PORT=2102
 
-java -jar ${BASEDIR}/../openstack-cli/target/openstack-cli-standalone.jar --listen=${NAILGUN_PORT}
+LOG_DIR=${BASEDIR}/logs
+
+mkdir -p ${LOG_DIR}
+
+nohup java -jar ${BASEDIR}/../openstack-cli/target/openstack-cli-standalone.jar --listen=${NAILGUN_PORT} >> ${LOG_DIR}/server.log &
 
