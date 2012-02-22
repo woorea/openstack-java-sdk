@@ -77,6 +77,9 @@ public class SimpleLinkResolver implements LinkResolver {
 	}
 
 	private Link findLink(List<Link> links, String findRel) {
+		if (links == null)
+			return null;
+
 		for (Link link : links) {
 			if (Objects.equal(link.getRel(), findRel)) {
 				return link;

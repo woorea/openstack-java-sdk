@@ -8,6 +8,8 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.OpenstackException;
 import org.openstack.model.atom.Link;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Service;
 
@@ -229,6 +231,20 @@ public class OpenstackSession implements Serializable {
 			return MediaType.APPLICATION_XML_TYPE;
 		}
 		return null;
+	}
+
+	public Image resolveImage(Image image) {
+		if (image == null)
+			return null;
+
+		return getLinkResolver().resolveImage(image.getId(), image.getLinks());
+	}
+
+	public Flavor resolveFlavor(Flavor flavor) {
+		if (flavor == null)
+			return null;
+
+		return getLinkResolver().resolveFlavor(flavor.getId(), flavor.getLinks());
 	}
 
 }

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.client.compute.ServerResource;
+import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.extensions.Extension;
 import org.openstack.client.extensions.ExtensionRegistry;
 import org.openstack.client.extensions.ExtensionValues;
@@ -28,17 +28,15 @@ public class ServerFormatter extends SimpleFormatter<Server> {
 	public void visit(Server server, OutputSink sink) throws IOException {
 		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
-		OpenstackCliContext context = OpenstackCliContext.get();
+		OpenstackSession session = OpenstackCliContext.get().getOpenstackSession();
 
-		ServerResource sr = new ServerResource(context.getOpenstackSession(), server);
-
-		Flavor flavor = sr.getFlavor().show();
+		Flavor flavor = session.resolveFlavor(server.getFlavor());
 		String flavorName = null;
 		if (flavor != null) {
 			flavorName = flavor.getName();
 		}
 
-		Image image = sr.getImage().show();
+		Image image = session.resolveImage(server.getImage());
 		String imageName = null;
 		if (image != null) {
 			imageName = image.getName();
