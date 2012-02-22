@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-public class RandomDataInputStream extends InputStream {
+public class RandomDataInputStream extends InputStream implements Cloneable {
     final int streamLength;
     final long seed;
     int left;
