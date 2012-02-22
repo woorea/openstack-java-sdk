@@ -6,12 +6,12 @@ h3. Identity API (keystone)
 
 h4. Access
 
-<pre>
+```java
 // X-Auth-Token (no tenant selected)
 OpenstackSession session = new OpenstackSession().with(Feature.VERBOSE);
 OpenstackCredentials credentials = new OpenstackCredentials("admin", "woorea");
 session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
-</pre>
+```
 
 h4. Tenants
 
