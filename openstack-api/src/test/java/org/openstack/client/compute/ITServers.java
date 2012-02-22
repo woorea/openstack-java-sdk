@@ -23,7 +23,7 @@ public class ITServers extends ComputeApiTest {
 		// System.out.println(list);
 
 		for (Server server : list) {
-			Image image = server.getImage(session);
+			Image image = new ServerResource(session, server).getImage().show();
 			System.out.println(image);
 			// System.out.println("DELETING");
 			// nova.root().servers().server(server.getId()).delete();
@@ -80,8 +80,6 @@ public class ITServers extends ComputeApiTest {
 
 		Server server = nova.root().servers().create(serverForCreate);
 
-		
-
 		// In trunk, the server returned from the create operation does not have image or flavor set
 		// In Diablo(?)/HP Cloud, the image id is returned
 		if (server.getImageId() != null) {
@@ -90,48 +88,47 @@ public class ITServers extends ComputeApiTest {
 			// Not great, but nothing we can do about it
 			System.out.println("No image returned from server create");
 		}
-		
+
 		// Wait for the server to be ready
 		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(nova, server);
 		Server ready = async.get();
 
 		Assert.assertEquals("ACTIVE", ready.getStatus());
 		checkLinkedItems(session, ready);
-		
+
 		// Delete the server
 		System.out.println(server);
 		System.out.println("DELETING");
 		nova.root().servers().server(server.getId()).delete();
-		
+
 		AsyncServerOperation asyncDelete = AsyncServerOperation.wrapServerDelete(nova, server);
 		asyncDelete.get();
-		
+
 		Server stillHere = null;
 		try {
 			stillHere = nova.root().servers().server(server.getId()).show();
-		}
-		catch (OpenstackNotFoundException e) {
+		} catch (OpenstackNotFoundException e) {
 			// Good!
 		}
 		Assert.assertNull(stillHere);
 	}
 
 	private void checkLinkedItems(OpenstackSession session, Server ready) {
-		Assert.assertNotNull(ready.getImage(null));
-		Assert.assertNotNull(ready.getImage(null).getId());
-		Assert.assertNotNull(ready.getFlavor(null));
-		Assert.assertNotNull(ready.getFlavor(null).getId());
+		Assert.assertNotNull(ready.getImage());
+		Assert.assertNotNull(ready.getImage().getId());
+		Assert.assertNotNull(ready.getFlavor());
+		Assert.assertNotNull(ready.getFlavor().getId());
 
-		Assert.assertNotNull(ready.getImage(session));
-		Assert.assertNotNull(ready.getImage(session).getId());
-		Assert.assertNotNull(ready.getImage(session).getName());
-		Assert.assertNotNull(ready.getImage(session).getMinDisk());
-		System.out.println(ready.getImage(session).getMinDisk());
+		Assert.assertNotNull(ready.getImage());
+		Assert.assertNotNull(ready.getImage().getId());
+		Assert.assertNotNull(ready.getImage().getName());
+		Assert.assertNotNull(ready.getImage().getMinDisk());
+		System.out.println(ready.getImage().getMinDisk());
 
-		Assert.assertNotNull(ready.getFlavor(session));
-		Assert.assertNotNull(ready.getFlavor(session).getId());
-		Assert.assertNotNull(ready.getFlavor(session).getName());
-		Assert.assertNotNull(ready.getFlavor(session).getRam());
+		Assert.assertNotNull(ready.getFlavor());
+		Assert.assertNotNull(ready.getFlavor().getId());
+		Assert.assertNotNull(ready.getFlavor().getName());
+		Assert.assertNotNull(ready.getFlavor().getRam());
 	}
 
 }

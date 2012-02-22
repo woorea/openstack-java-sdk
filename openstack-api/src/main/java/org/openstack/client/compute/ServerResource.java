@@ -4,10 +4,14 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
+import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.Resource;
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.client.compute.ext.FloatingIpsResource;
 import org.openstack.client.compute.ext.SecurityGroupsResource;
+import org.openstack.model.atom.Link;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.server.action.AddFixedIpAction;
@@ -37,289 +41,340 @@ import org.openstack.model.compute.server.action.SuspendAction;
 import org.openstack.model.compute.server.action.UnlockAction;
 import org.openstack.model.compute.server.action.UnpauseAction;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.WebResource.Builder;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 public class ServerResource extends ComputeResourceBase {
 
-    public static class IpsResource extends Resource {
+	private Server representation;
 
+	public static class IpsResource extends Resource {
 
-        public String list(String networkId) {
-            return resource("ips").get(String.class);
-        }
+		public String list(String networkId) {
+			return resource("ips").get(String.class);
+		}
 
-    }
+	}
 
-    public Server show() {
-        Server server = resource().get(Server.class);
-        return server;
-    }
+	public ServerResource(OpenstackSession session, Server server) {
+		initialize(session, Iterables.find(server.getLinks(), new Predicate<Link>() {
 
-    public Server update(Server server) {
-        return put(Server.class, server);
-    }
+			@Override
+			public boolean apply(Link link) {
+				if ("bookmark".equals(link.getRel())) {
+					// This is the bookmark i get from trunk (wihout protocol version)
+					// http://192.168.1.49:8774/7da90d9067ab4890ae94779a1859db8a/servers/d87c6d44-8118-4c11-8259-b9c784965d59
+					if (!link.getHref().contains("/v1.1")) {
+						link.setHref(link.getHref().replace(":8774/", ":8774/v1.1/"));
+					}
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}).getHref());
+	}
 
-    public void delete() {
-        resource().delete();
-    }
+	public ServerResource get(boolean eager) {
+		representation = resource().get(Server.class);
+		if (eager) {
+			representation.setImage(getImage().get().show());
+			representation.setFlavor(getFlavor().get().show());
+		}
+		return this;
+	}
 
-    /**
-     * Restore a previously deleted instance.
-     * 
-     */
-    public void restore() {
-        executeAction(String.class, new RestoreAction());
-    }
+	public ServerResource get() {
+		return get(false);
+	}
 
-    /**
-     * Force delete of instance before deferred cleanup.
-     * 
-     */
-    public void forceDelete() {
-        executeAction(String.class, new ForceDeleteAction());
-    }
+	public ImageResource getImage() {
+		if (representation == null) {
+			get();
+		}
+		Image image = representation.getImage();
+		return image != null ? new ImageResource(session, image) : null;
+	}
 
-    /**
-     * Update the password for a server.
-     * 
-     * @param adminPass
-     */
-    public void changePassword(String adminPass) {
-        ChangePasswordAction changePasswordAction = new ChangePasswordAction();
-        changePasswordAction.setAdminPass(adminPass);
-        executeAction(String.class, changePasswordAction);
-    }
+	public FlavorResource getFlavor() {
+		if (representation == null) {
+			get();
+		}
+		Flavor flavor = representation.getFlavor();
+		return flavor != null ? new FlavorResource(session, flavor) : null;
+	}
 
-    /**
-     * Reboot a server.
-     * 
-     * @param type
-     *            either REBOOT_SOFT for a software-level reboot, or REBOOT_HARD for a virtual power cycle hard reboot.
-     */
-    public void reboot(String type) {
-        RebootAction rebootAction = new RebootAction();
-        executeAction(String.class, rebootAction);
-    }
+	public Server show() {
+		if (representation == null) {
+			get();
+		}
+		return representation;
+	}
 
-    /**
-     * Rebuild -- shut down and then re-image -- a server.
-     * 
-     * @param rebuildAction
-     */
-    public void rebuild(RebuildAction rebuildAction) {
-        executeAction(String.class, rebuildAction);
-    }
+	public Server update(Server server) {
+		return put(Server.class, server);
+	}
 
-    public void resize(ResizeAction resizeAction) {
-        executeAction(String.class, resizeAction);
-    }
+	public void delete() {
+		resource().delete();
+	}
 
-    /**
-     * Confirm that the resize worked, thus removing the original server.
-     * 
-     */
-    public void confirmResize() {
-        executeAction(String.class, new ConfirmResizeAction());
-    }
+	/**
+	 * Restore a previously deleted instance.
+	 * 
+	 */
+	public void restore() {
+		executeAction(String.class, new RestoreAction());
+	}
 
-    /**
-     * Revert a previous resize, switching back to the old server.
-     * 
-     */
-    public void revertResize() {
-        executeAction(String.class, new RevertResize());
-    }
+	/**
+	 * Force delete of instance before deferred cleanup.
+	 * 
+	 */
+	public void forceDelete() {
+		executeAction(String.class, new ForceDeleteAction());
+	}
 
-    /**
-     * Snapshot a server.
-     * 
-     * @param name
-     *            Name to give the snapshot image
-     * @param metadata
-     *            to give newly-created image entity
-     * 
-     */
-    public void createImage(String name, Map<String, String> metadata) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
+	/**
+	 * Update the password for a server.
+	 * 
+	 * @param adminPass
+	 */
+	public void changePassword(String adminPass) {
+		ChangePasswordAction changePasswordAction = new ChangePasswordAction();
+		changePasswordAction.setAdminPass(adminPass);
+		executeAction(String.class, changePasswordAction);
+	}
 
-    public void pause() {
-        executeAction(String.class, new PauseAction());
-    }
+	/**
+	 * Reboot a server.
+	 * 
+	 * @param type
+	 *            either REBOOT_SOFT for a software-level reboot, or REBOOT_HARD for a virtual power cycle hard reboot.
+	 */
+	public void reboot(String type) {
+		RebootAction rebootAction = new RebootAction();
+		executeAction(String.class, rebootAction);
+	}
 
-    public void unpause() {
-        executeAction(String.class, new UnpauseAction());
-    }
+	/**
+	 * Rebuild -- shut down and then re-image -- a server.
+	 * 
+	 * @param rebuildAction
+	 */
+	public void rebuild(RebuildAction rebuildAction) {
+		executeAction(String.class, rebuildAction);
+	}
 
-    public void suspend() {
-        executeAction(String.class, new SuspendAction());
-    }
+	public void resize(ResizeAction resizeAction) {
+		executeAction(String.class, resizeAction);
+	}
 
-    public void resume() {
-        executeAction(String.class, new ResumeAction());
-    }
+	/**
+	 * Confirm that the resize worked, thus removing the original server.
+	 * 
+	 */
+	public void confirmResize() {
+		executeAction(String.class, new ConfirmResizeAction());
+	}
 
-    /**
-     * Resize a server's resources.
-     * 
-     * flavor: the :class:`Flavor` (or its ID) to resize to.
-     * 
-     * Until a resize event is confirmed with :meth:`confirm_resize`, the old server will be kept around and you'll be able to roll back to the old flavor quickly with :meth:`revert_resize`. All
-     * resizes are automatically confirmed after 24 hours.
-     */
-    public void resize(String flavorId) {
-        ResizeAction resizeAction = new ResizeAction();
-        // resizeAction.setAutoDiskConfig(autoDiskConfig);
-        resizeAction.setFlavorRef(flavorId);
-        executeAction(String.class, resizeAction);
-    }
+	/**
+	 * Revert a previous resize, switching back to the old server.
+	 * 
+	 */
+	public void revertResize() {
+		executeAction(String.class, new RevertResize());
+	}
 
-    /**
-     * Migrate a server to a new host in the same zone.
-     * 
-     */
-    public void migrate() {
-        executeAction(String.class, new MigrateAction());
-    }
+	/**
+	 * Snapshot a server.
+	 * 
+	 * @param name
+	 *            Name to give the snapshot image
+	 * @param metadata
+	 *            to give newly-created image entity
+	 * 
+	 */
+	public void createImage(String name, Map<String, String> metadata) {
+		throw new UnsupportedOperationException("Not implemented yet");
+	}
 
-    public void resetNetwork() {
-        executeAction(String.class, new ResetNetworkAction());
-    }
+	public void pause() {
+		executeAction(String.class, new PauseAction());
+	}
 
-    public void injectNetworkInfo() {
-        executeAction(String.class, new InjectNetworkInfoAction());
-    }
+	public void unpause() {
+		executeAction(String.class, new UnpauseAction());
+	}
 
-    public void lock() {
-        executeAction(String.class, new LockAction());
-    }
+	public void suspend() {
+		executeAction(String.class, new SuspendAction());
+	}
 
-    public void unlock() {
-        executeAction(String.class, new UnlockAction());
-    }
+	public void resume() {
+		executeAction(String.class, new ResumeAction());
+	}
 
-    /**
-     * Allow Admins to view pending server actions
-     * 
-     * @return
-     */
-    public String pendingActions() {
-    	return resource("actions").get(String.class);
-    }
+	/**
+	 * Resize a server's resources.
+	 * 
+	 * flavor: the :class:`Flavor` (or its ID) to resize to.
+	 * 
+	 * Until a resize event is confirmed with :meth:`confirm_resize`, the old server will be kept around and you'll be
+	 * able to roll back to the old flavor quickly with :meth:`revert_resize`. All resizes are automatically confirmed
+	 * after 24 hours.
+	 */
+	public void resize(String flavorId) {
+		ResizeAction resizeAction = new ResizeAction();
+		// resizeAction.setAutoDiskConfig(autoDiskConfig);
+		resizeAction.setFlavorRef(flavorId);
+		executeAction(String.class, resizeAction);
+	}
 
-    public String virtualInterfaces() {
-      	return resource("os-virtual-interfaces").get(String.class);
-    }
+	/**
+	 * Migrate a server to a new host in the same zone.
+	 * 
+	 */
+	public void migrate() {
+		executeAction(String.class, new MigrateAction());
+	}
 
-    public void createBackup(CreateBackupAction createBackupAction) {
+	public void resetNetwork() {
+		executeAction(String.class, new ResetNetworkAction());
+	}
 
-    }
+	public void injectNetworkInfo() {
+		executeAction(String.class, new InjectNetworkInfoAction());
+	}
 
-    /**
-     * Allow Admins to view server diagnostics through server action
-     * 
-     * @return
-     */
-    public String diagnostics() {
-    	return resource("diagnostics").get(String.class);
-    }
+	public void lock() {
+		executeAction(String.class, new LockAction());
+	}
 
-    public IpsResource ips() {
-    	return getChildResource("ips", IpsResource.class);
-    }
+	public void unlock() {
+		executeAction(String.class, new UnlockAction());
+	}
 
-    public MetadataResource metadata() {
-    	return getChildResource("metadata", MetadataResource.class);
-    }
+	/**
+	 * Allow Admins to view pending server actions
+	 * 
+	 * @return
+	 */
+	public String pendingActions() {
+		return resource("actions").get(String.class);
+	}
 
-    /**
-     * Adds an IP on a given network to an instance.
-     * 
-     * @return
-     */
-    public String addFixedIp(String networkId) {
-        AddFixedIpAction addFixedIpAction = new AddFixedIpAction();
-        addFixedIpAction.setNetworkId(networkId);
-        return executeAction(String.class, addFixedIpAction);
-    }
+	public String virtualInterfaces() {
+		return resource("os-virtual-interfaces").get(String.class);
+	}
 
-    /**
-     * Removes an IP from an instance.
-     * 
-     * @return
-     */
-    public String removeFixedIp(String address) {
-        RemoveFixedIpAction removeFixedIpAction = new RemoveFixedIpAction();
-        removeFixedIpAction.setAddress(address);
-        return executeAction(String.class, removeFixedIpAction);
-    }
+	public void createBackup(CreateBackupAction createBackupAction) {
 
-    /**
-     * Attaches a floating IP to the instance.
-     */
-    public void addFloatingIp(String ip) {
-        AddFloatingIpAction action = new AddFloatingIpAction();
-        action.setAddress(ip);
-        executeAction(String.class, action);
-    }
+	}
 
-    /**
-     * Detaches a floating IP from the instance
-     */
-    public void removeFloatingIp(String ip) {
-        RemoveFloatingIpAction action = new RemoveFloatingIpAction();
-        action.setAddress(ip);
-        executeAction(String.class, action);
-    }
+	/**
+	 * Allow Admins to view server diagnostics through server action
+	 * 
+	 * @return
+	 */
+	public String diagnostics() {
+		return resource("diagnostics").get(String.class);
+	}
 
-    /**
-     * Get text console log output from Server.
-     * 
-     * @return
-     */
-    public Console getVncConsole(String type) {
-        GetVncConsoleAction action = new GetVncConsoleAction();
-        action.setType(type);
-        Console console = executeAction(Console.class, action);
-        return console;
-    }
+	public IpsResource ips() {
+		return getChildResource("ips", IpsResource.class);
+	}
 
-    /**
-     * Get text console output.
-     * 
-     * @return
-     */
-    public String getConsoleOutput(Integer length) {
-        GetConsoleOutputAction action = new GetConsoleOutputAction();
-        action.setLength(length);
-        Output output = executeAction(Output.class, action);
-        return output.getContent();
-    }
+	public MetadataResource metadata() {
+		return getChildResource("metadata", MetadataResource.class);
+	}
 
-    private <T> T executeAction(Class<T> c, Object action) {
-        return resource("action").type(MediaType.APPLICATION_XML).post(c, action);
-    }
+	/**
+	 * Adds an IP on a given network to an instance.
+	 * 
+	 * @return
+	 */
+	public String addFixedIp(String networkId) {
+		AddFixedIpAction addFixedIpAction = new AddFixedIpAction();
+		addFixedIpAction.setNetworkId(networkId);
+		return executeAction(String.class, addFixedIpAction);
+	}
 
-    public void createAttachment() {
-        // "os-volume_attachments"
-    }
+	/**
+	 * Removes an IP from an instance.
+	 * 
+	 * @return
+	 */
+	public String removeFixedIp(String address) {
+		RemoveFixedIpAction removeFixedIpAction = new RemoveFixedIpAction();
+		removeFixedIpAction.setAddress(address);
+		return executeAction(String.class, removeFixedIpAction);
+	}
 
-    public void delteAttachment() {
-        // "os-volume_attachments"
-    }
+	/**
+	 * Attaches a floating IP to the instance.
+	 */
+	public void addFloatingIp(String ip) {
+		AddFloatingIpAction action = new AddFloatingIpAction();
+		action.setAddress(ip);
+		executeAction(String.class, action);
+	}
 
-    public FloatingIpsResource floatingIps() {
-    	return getChildResource("os-floating-ips", FloatingIpsResource.class);
-    }
+	/**
+	 * Detaches a floating IP from the instance
+	 */
+	public void removeFloatingIp(String ip) {
+		RemoveFloatingIpAction action = new RemoveFloatingIpAction();
+		action.setAddress(ip);
+		executeAction(String.class, action);
+	}
 
-    public ConsolesResource consoles() {
-    	return getChildResource("consoles", ConsolesResource.class);
-    }
+	/**
+	 * Get text console log output from Server.
+	 * 
+	 * @return
+	 */
+	public Console getVncConsole(String type) {
+		GetVncConsoleAction action = new GetVncConsoleAction();
+		action.setType(type);
+		Console console = executeAction(Console.class, action);
+		return console;
+	}
 
-    public SecurityGroupList listSecurityGroups() {
-        return getChildResource("os-security-groups", SecurityGroupsResource.class).list();
-    }
+	/**
+	 * Get text console output.
+	 * 
+	 * @return
+	 */
+	public String getConsoleOutput(Integer length) {
+		GetConsoleOutputAction action = new GetConsoleOutputAction();
+		action.setLength(length);
+		Output output = executeAction(Output.class, action);
+		return output.getContent();
+	}
+
+	private <T> T executeAction(Class<T> c, Object action) {
+		return resource("action").type(MediaType.APPLICATION_XML).post(c, action);
+	}
+
+	public void createAttachment() {
+		// "os-volume_attachments"
+	}
+
+	public void delteAttachment() {
+		// "os-volume_attachments"
+	}
+
+	public FloatingIpsResource floatingIps() {
+		return getChildResource("os-floating-ips", FloatingIpsResource.class);
+	}
+
+	public ConsolesResource consoles() {
+		return getChildResource("consoles", ConsolesResource.class);
+	}
+
+	public SecurityGroupList listSecurityGroups() {
+		return getChildResource("os-security-groups", SecurityGroupsResource.class).list();
+	}
 
 }

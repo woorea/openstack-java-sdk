@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import org.openstack.client.cli.OpenstackCliContext;
+import org.openstack.client.compute.ServerResource;
 import org.openstack.client.extensions.Extension;
 import org.openstack.client.extensions.ExtensionRegistry;
 import org.openstack.client.extensions.ExtensionValues;
@@ -19,51 +20,53 @@ import com.google.common.collect.Maps;
 
 public class ServerFormatter extends SimpleFormatter<Server> {
 
-    public ServerFormatter() {
-        super(Server.class);
-    }
+	public ServerFormatter() {
+		super(Server.class);
+	}
 
-    @Override
-    public void visit(Server o, OutputSink sink) throws IOException {
-        LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
+	@Override
+	public void visit(Server server, OutputSink sink) throws IOException {
+		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
-        OpenstackCliContext context = OpenstackCliContext.get();
+		OpenstackCliContext context = OpenstackCliContext.get();
 
-        Flavor flavor = o.getFlavor(context.getOpenstackSession());
-        String flavorName = null;
-        if (flavor != null) {
-            flavorName = flavor.getName();
-        }
+		ServerResource sr = new ServerResource(context.getOpenstackSession(), server);
 
-        Image image = o.getImage(context.getOpenstackSession());
-        String imageName = null;
-        if (image != null) {
-            imageName = image.getName();
-        }
+		Flavor flavor = sr.getFlavor().show();
+		String flavorName = null;
+		if (flavor != null) {
+			flavorName = flavor.getName();
+		}
 
-        values.put("id", o.getId());
-        values.put("flavor", flavorName);
-        values.put("image", imageName);
-        values.put("name", o.getName());
-        values.put("status", o.getStatus());
-        values.put("networks", AddressesFormatter.formatAddresses(o.getAddresses()));
+		Image image = sr.getImage().show();
+		String imageName = null;
+		if (image != null) {
+			imageName = image.getName();
+		}
 
-        ExtensionRegistry registry = new ExtensionRegistry();
-        registry.add(new Extension(DiskConfigAttributes.class));
-        registry.add(new Extension(ExtendedStatusAttributes.class));
+		values.put("id", server.getId());
+		values.put("flavor", flavorName);
+		values.put("image", imageName);
+		values.put("name", server.getName());
+		values.put("status", server.getStatus());
+		values.put("networks", AddressesFormatter.formatAddresses(server.getAddresses()));
 
-        ExtensionValues extensions = registry.parseAllExtensions(o.getExtensionData());
+		ExtensionRegistry registry = new ExtensionRegistry();
+		registry.add(new Extension(DiskConfigAttributes.class));
+		registry.add(new Extension(ExtendedStatusAttributes.class));
 
-        {
-            DiskConfigAttributes attributes = extensions.get(DiskConfigAttributes.class);
-            values.put("disk", attributes);
-        }
+		ExtensionValues extensions = registry.parseAllExtensions(server.getExtensionData());
 
-        {
-            ExtendedStatusAttributes attributes = extensions.get(ExtendedStatusAttributes.class);
-            values.put("extstatus", attributes);
-        }
+		{
+			DiskConfigAttributes attributes = extensions.get(DiskConfigAttributes.class);
+			values.put("disk", attributes);
+		}
 
-        sink.outputRow(values);
-    }
+		{
+			ExtendedStatusAttributes attributes = extensions.get(ExtendedStatusAttributes.class);
+			values.put("extstatus", attributes);
+		}
+
+		sink.outputRow(values);
+	}
 }
