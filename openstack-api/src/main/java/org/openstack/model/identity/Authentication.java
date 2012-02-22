@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Authentication implements Serializable {
 
     @XmlAccessorType(XmlAccessType.NONE)
-    public static class PasswordCredentials {
+    public static class PasswordCredentials implements Serializable {
 
         @XmlAttribute
         private String username;

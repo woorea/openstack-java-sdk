@@ -52,7 +52,7 @@ public class ServerForCreate implements Serializable {
 
 	@XmlType
 	@XmlAccessorType(XmlAccessType.NONE)
-	public static final class File {
+	public static final class File implements Serializable {
 
 		@XmlAttribute
 		public String path;

@@ -25,7 +25,7 @@ public class KeyPairList implements Serializable, Iterable<KeyPair> {
 	private List<KeyPairListItem> list;
 
 	@XmlAccessorType(XmlAccessType.NONE)
-	public static class KeyPairListItem {
+	public static class KeyPairListItem implements Serializable {
 		@XmlElement(name = "keypair")
 		KeyPair keypair;
 
