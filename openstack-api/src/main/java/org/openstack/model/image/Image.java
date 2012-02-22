@@ -1,5 +1,6 @@
 package org.openstack.model.image;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "image")
-public class Image {
+public class Image implements Serializable {
     @XmlAttribute
     private String uri;
     @XmlAttribute
