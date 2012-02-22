@@ -29,7 +29,7 @@ public class TextOutputSink implements OutputSink {
 
     final LinkedHashMap<String, Column> columns = new LinkedHashMap<String, Column>();
 
-    class Column {
+    static class Column {
         final String name;
         int maxWidth;
 
@@ -57,7 +57,7 @@ public class TextOutputSink implements OutputSink {
         }
     }
 
-    class Row {
+    static class Row {
         final Map<Column, String> values;
 
         public Row(Map<Column, String> values) {
@@ -103,7 +103,7 @@ public class TextOutputSink implements OutputSink {
         rows.add(row);
     }
 
-    static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+    final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
 
     private String toString(Object value) {
         if (value == null)
