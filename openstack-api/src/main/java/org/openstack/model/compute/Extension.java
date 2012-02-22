@@ -15,7 +15,7 @@ public class Extension {
     private String alias;
 
     @XmlAttribute
-    private Date updated;
+    private String updated;
 
     @XmlAttribute
     private String namespace;
@@ -34,11 +34,11 @@ public class Extension {
         this.alias = alias;
     }
 
-    public Date getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 
