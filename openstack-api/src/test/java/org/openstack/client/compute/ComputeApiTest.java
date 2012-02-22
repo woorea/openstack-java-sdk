@@ -8,8 +8,6 @@ import org.testng.annotations.Test;
 
 @Test
 public class ComputeApiTest extends AbstractOpenStackTest {
-	protected RandomUtil random = new RandomUtil();
-
 	public OpenstackComputeClient getComputeClient() throws OpenstackException {
 		return context.session.getComputeClient();
 	}

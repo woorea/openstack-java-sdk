@@ -15,7 +15,6 @@ import org.openstack.client.OpenstackException;
 import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.utils.RandomDataInputStream;
-import org.openstack.client.utils.RandomUtil;
 import org.openstack.model.image.Image;
 import org.openstack.model.image.ImageProperties;
 import org.openstack.utils.Md5Hash;
@@ -66,7 +65,6 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		OpenstackImageClient glance = getImageClient();
 
-		RandomUtil random = new RandomUtil();
 		int imageLength = random.uniform(1, MAX_LENGTH);
 		long seed = random.nextLong();
 
@@ -146,7 +144,6 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		OpenstackImageClient glance = getImageClient();
 
-		RandomUtil random = new RandomUtil();
 		int imageLength = 128;
 		long seed = random.nextLong();
 
@@ -170,7 +167,6 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		OpenstackImageClient glance = getImageClient();
 
-		RandomUtil random = new RandomUtil();
 		int imageLength = 128;
 		long seed = random.nextLong();
 
