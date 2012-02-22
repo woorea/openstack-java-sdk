@@ -15,6 +15,7 @@ import org.openstack.utils.Io;
 import com.fathomdb.cli.commands.CommandRunner;
 import com.fathomdb.cli.output.OutputSink;
 import com.fathomdb.cli.output.RawOutputSink;
+import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
@@ -180,7 +181,7 @@ class CliSimpleRepl implements Repl {
 
     public boolean runScripts(List<File> scriptFiles) throws IOException {
         for (File scriptFile : scriptFiles) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(scriptFile)));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(scriptFile), Charsets.UTF_8));
             try {
                 while (true) {
                     String line = reader.readLine();

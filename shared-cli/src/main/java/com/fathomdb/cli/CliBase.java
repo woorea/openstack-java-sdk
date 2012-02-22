@@ -1,6 +1,7 @@
 package com.fathomdb.cli;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.openstack.utils.Io;
 
 import com.fathomdb.cli.output.OutputSink;
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.martiansoftware.nailgun.NGContext;
 import com.martiansoftware.nailgun.NGServer;
@@ -105,10 +107,10 @@ public class CliBase {
             CliContextBase.setThreadLocal(context);
 
             try {
-                PrintWriter out = new PrintWriter(System.out);
+                PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, Charsets.UTF_8));
                 OutputSink outputSink = options.format.buildOutputSink(context, out);
 
-                PrintWriter err = new PrintWriter(System.err);
+                PrintWriter err = new PrintWriter(new OutputStreamWriter(System.err, Charsets.UTF_8));
 
                 ShellType shellType = options.shellType;
 
