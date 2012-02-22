@@ -7,28 +7,31 @@ h3. Identity API (keystone)
 h4. Access
 
 <pre>
-OpenStackClientFactory osf = new OpenStackClientFactory();
-Client client = osf.create();
-IdentityResource identity = new IdentityResource(client, "http://192.168.1.49:5000/v2.0");
-Authentication authentication = new Authentication();
-Authentication.PasswordCredentials passwordCredentials = new Authentication.PasswordCredentials();
-passwordCredentials.setUsername("demo");
-passwordCredentials.setPassword("woorea");
-authentication.setPasswordCredentials(passwordCredentials);
-Access access = identity.tokens().authenticate(authentication);
+// X-Auth-Token (no tenant selected)
+OpenstackSession session = new OpenstackSession().with(Feature.VERBOSE);
+OpenstackCredentials credentials = new OpenstackCredentials("admin", "woorea");
+session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
 </pre>
 
 h4. Tenants
 
 <pre>
-TenantsRepresentation representation = identity.tenants().list();
-List<Tenant> tenants = representation.getList();
-for(Tenant tenant : tenants) {
+// Let' show our available tenants
+IdentityResource identity = session.getAuthenticationClient().root();
+Iterable<Tenant> tenants = identity.tenants().list();
+for (Tenant tenant : tenants) {
 	System.out.println(tenant);
+}
+
+// Ok, I will choose the first available tenant (
+for (Tenant tenant : tenants) {
+	credentials.setTenant(tenant.getName());
+	session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
+	break;
 }
 </pre>
 
-h4. Users
+h4. Users (this is from previous revision)
 
 <pre>
 UsersResource usersResource = identity.users();
@@ -42,7 +45,7 @@ UserResource userResource = usersResource.user(users.get(0).getId());
 System.out.println(userResource.show());
 </pre>
 
-h4. Roles
+h4. Roles (this is from previous revision)
 
 <pre>
 RolesResource rolesResource = identity.roles();
@@ -56,7 +59,7 @@ RoleResource roleResource = rolesResource.role(roles.get(0).getId());
 System.out.println(roleResource.show());
 </pre>
 
-h4. Services
+h4. Services (this is from previous revision)
 
 <pre>
 ServicesResource servicesResource = identity.services();
@@ -70,7 +73,7 @@ ServiceResource serviceResource = servicesResource.service(services.get(0).getId
 System.out.println(serviceResource.show());
 </pre>
 
-h4. EndpointTemplates
+h4. EndpointTemplates (this is from previous revision)
 
 <pre>
 EndpointTemplatesResource endpointTemplatesResource = identity.endpointTemplates();
@@ -89,46 +92,59 @@ h3. Compute API (nova)
 h4. Select a Tenant
 
 <pre>
-ComputeResource compute = new ComputeResource(client, "http://192.168.1.49:8774/v1.1");
-TenantResource tenant = compute.tenant(tenants.get(0).getId());
+// Give me access to compute API on the selected tenant
+TenantResource compute = session.getComputeClient().root();
+for (Server s : compute.servers().list()) {
+	System.out.println(s);
+}
 </pre>
 
 h4. Images
 
 <pre>
-ImagesRepresentation imagesRepresentation = tenant.images().list();
-imagesRepresentation.fetchAll();
-for(Image image : imagesRepresentation.getList()) {
-	System.out.println(image);
+// List the available images
+Iterable<Image> images = compute.images().list();
+Image image = null;
+for (Image i : images) {
+	System.out.println(i);
+
+	//If it's the devstack default image, then i go to select it
+	if (i.getName().equals("cirros-0.3.0-x86_64-blank")) {
+		image = i;
+		break;
+	}
 }
+
+// Show me the image details
+System.out.println(image);
 </pre>
 
 h4. Flavors
 
 <pre>
-FlavorsRepresentation flavorsRepresentation = tenant.flavors().list();
-flavorsRepresentation.fetchAll();
-for(Flavor flavor : flavorsRepresentation.getList()) {
-	System.out.println(flavor);
+// List the available flavors
+Iterable<Flavor> flavors = compute.flavors().list();
+for (Flavor f : flavors) {
+	System.out.println(f);
 }
 </pre>
 
 h4. Servers
 
 <pre>
-ServersRepresentation serversRepresentation = tenant.servers().list(true);
-serversRepresentation.fetchAll();
-List<Server> servers = serversRepresentation.getList();
-for(Server server : servers) {
-	System.out.println(server);
+// List the servers
+Iterable<Server> servers = compute.servers().list();
+for (Server s : servers) {
+	ServerResource sr = new ServerResource(session, s);
+	System.out.println(sr.get(true).show());
 }
 </pre>
 
 h4. Server Actions
 
 <pre>
-System.out.println(tenant.servers().server(servers.get(0).getId()).getConsoleOutput(20));
-System.out.println(tenant.servers().server(servers.get(0).getId()).getVncConsole("novnc"));
+System.out.println(compute.servers().server(servers.get(0).getId()).getConsoleOutput(20));
+System.out.println(compute.servers().server(servers.get(0).getId()).getVncConsole("novnc"));
 </pre>
 
 h1. Maven

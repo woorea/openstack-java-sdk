@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.SimpleLinkResolver;
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.client.compute.ext.FloatingIpsResource;
 import org.openstack.client.compute.ext.SecurityGroupsResource;
@@ -56,6 +57,10 @@ public class ServerResource extends ComputeResourceBase {
 
 	}
 
+	public ServerResource() {
+
+	}
+
 	public ServerResource(OpenstackSession session, Server server) {
 		initialize(session, Iterables.find(server.getLinks(), new Predicate<Link>() {
 
@@ -64,9 +69,7 @@ public class ServerResource extends ComputeResourceBase {
 				if ("bookmark".equals(link.getRel())) {
 					// This is the bookmark i get from trunk (wihout protocol version)
 					// http://192.168.1.49:8774/7da90d9067ab4890ae94779a1859db8a/servers/d87c6d44-8118-4c11-8259-b9c784965d59
-					if (!link.getHref().contains("/v1.1")) {
-						link.setHref(link.getHref().replace(":8774/", ":8774/v1.1/"));
-					}
+					SimpleLinkResolver.fixLinkHref(link);
 					return true;
 				} else {
 					return false;
@@ -89,7 +92,7 @@ public class ServerResource extends ComputeResourceBase {
 	}
 
 	public ImageResource getImage() {
-		if (representation == null) {
+		if (representation == null || representation.getImage() == null) {
 			get();
 		}
 		Image image = representation.getImage();
@@ -97,7 +100,7 @@ public class ServerResource extends ComputeResourceBase {
 	}
 
 	public FlavorResource getFlavor() {
-		if (representation == null) {
+		if (representation == null || representation.getFlavor() == null) {
 			get();
 		}
 		Flavor flavor = representation.getFlavor();

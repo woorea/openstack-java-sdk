@@ -119,11 +119,17 @@ public class ITServers extends ComputeApiTest {
 		Assert.assertNotNull(ready.getFlavor());
 		Assert.assertNotNull(ready.getFlavor().getId());
 
+		System.out.println("XXX " + new ServerResource(context.session, ready).getImage().show());
+
+		ready.setImage(new ServerResource(context.session, ready).getImage().show());
+
 		Assert.assertNotNull(ready.getImage());
 		Assert.assertNotNull(ready.getImage().getId());
 		Assert.assertNotNull(ready.getImage().getName());
 		Assert.assertNotNull(ready.getImage().getMinDisk());
 		System.out.println(ready.getImage().getMinDisk());
+
+		ready.setFlavor(new ServerResource(context.session, ready).getFlavor().show());
 
 		Assert.assertNotNull(ready.getFlavor());
 		Assert.assertNotNull(ready.getFlavor().getId());

@@ -54,7 +54,7 @@ public class OpenstackTestContext {
 			}
 		}
 
-		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "false"));
+		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
 
 		String url = properties.getProperty("openstack.auth.url", "http://127.0.0.1:5000/v2.0");
 		String username = properties.getProperty("openstack.auth.user", "demo");
