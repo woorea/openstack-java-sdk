@@ -38,7 +38,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		return flavor;
 	}
 
-	private void fixLinkHref(Link link) {
+	public static void fixLinkHref(Link link) {
 		// dirty hack since urls are not correct in the XML
 		// may this is fixed in the current revision
 		// so simply comment this
