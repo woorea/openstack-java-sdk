@@ -1,5 +1,6 @@
 package org.openstack.model.image;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonAnySetter;
 import com.google.common.collect.Maps;
 
 @XmlAccessorType(XmlAccessType.NONE)
-public class ImageProperties {
+public class ImageProperties implements Serializable {
     final Map<String, Object> properties = Maps.newHashMap();
 
     /**
