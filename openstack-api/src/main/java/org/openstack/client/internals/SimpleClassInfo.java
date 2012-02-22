@@ -189,8 +189,8 @@ public class SimpleClassInfo {
 		try {
 			Map<QName, Object> map = (Map<QName, Object>) anyAttributeField.get(target);
 			if (map == null) {
-				anyAttributeField.set(target, map);
 				map = Maps.newHashMap();
+				anyAttributeField.set(target, map);
 			}
 			return map;
 		} catch (IllegalAccessException e) {
