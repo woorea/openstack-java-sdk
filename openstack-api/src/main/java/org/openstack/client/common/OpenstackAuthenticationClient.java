@@ -12,8 +12,6 @@ public class OpenstackAuthenticationClient {
 
 	private IdentityResource root;
 
-	Access authenticationToken = null;
-
 	OpenstackAuthenticationClient(OpenstackSession session) {
 		this.session = session;
 	}
