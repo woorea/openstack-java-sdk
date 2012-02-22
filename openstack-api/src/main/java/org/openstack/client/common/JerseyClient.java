@@ -14,13 +14,12 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.DeserializationConfig;
 
-enum JerseyClient {
+public final class JerseyClient {
 
-	INSTANCE;
+	public static final JerseyClient INSTANCE = new JerseyClient();
 	
-	private Client client;
+	final Client client;
 	
 	private JerseyClient() {
 		ClientConfig config = new DefaultClientConfig();
