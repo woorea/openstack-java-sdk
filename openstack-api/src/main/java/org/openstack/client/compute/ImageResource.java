@@ -25,7 +25,6 @@ public class ImageResource extends Resource {
 			public boolean apply(Link link) {
 				if ("bookmark".equals(link.getRel())) {
 					// This is the bookmark i get from trunk (wihout protocol version)
-					// http://192.168.1.49:8774/7da90d9067ab4890ae94779a1859db8a/servers/d87c6d44-8118-4c11-8259-b9c784965d59
 					SimpleLinkResolver.fixLinkHref(link);
 					return true;
 				} else {
@@ -35,7 +34,15 @@ public class ImageResource extends Resource {
 		}).getHref());
 	}
 
+	public ImageResource get() {
+		representation = resource().get(Image.class);
+		return this;
+	}
+
 	public Image show() {
+		if (representation == null) {
+			get();
+		}
 		return representation;
 	}
 
@@ -46,11 +53,6 @@ public class ImageResource extends Resource {
 	public Metadata metadata() {
 		// /metadata
 		return new Metadata();
-	}
-
-	public ImageResource get() {
-		representation = resource().get(Image.class);
-		return this;
 	}
 
 }

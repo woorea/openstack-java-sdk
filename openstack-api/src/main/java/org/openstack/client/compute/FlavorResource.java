@@ -34,13 +34,16 @@ public class FlavorResource extends Resource {
 		}).getHref());
 	}
 
-	public Flavor show() {
-		return representation;
-	}
-
 	public FlavorResource get() {
 		representation = resource().get(Flavor.class);
 		return this;
+	}
+
+	public Flavor show() {
+		if (representation == null) {
+			get();
+		}
+		return representation;
 	}
 
 }

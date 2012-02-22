@@ -92,7 +92,7 @@ public class ServerResource extends ComputeResourceBase {
 	}
 
 	public ImageResource getImage() {
-		if (representation == null) {
+		if (representation == null || representation.getImage() == null) {
 			get();
 		}
 		Image image = representation.getImage();
@@ -100,7 +100,7 @@ public class ServerResource extends ComputeResourceBase {
 	}
 
 	public FlavorResource getFlavor() {
-		if (representation == null) {
+		if (representation == null || representation.getFlavor() == null) {
 			get();
 		}
 		Flavor flavor = representation.getFlavor();
