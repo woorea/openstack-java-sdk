@@ -3,8 +3,7 @@ h1. The Java Command Line Interface
 h2. Introduction
 
 The command line interface serves as an example consumer of the Java bindings to the OpenStack API.
-It isn't intended to replace the 'nova' client, though some people have been known to prefer it.
-OK.  The developer has been known to prefer it.
+It isn't intended to replace the 'nova' client, though it may be an alternative for basic usage.
 
 h2. Direct Usage
 
