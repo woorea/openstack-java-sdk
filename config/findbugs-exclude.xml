@@ -1,0 +1,10 @@
+<FindBugsFilter>
+
+    <Match>
+        <!-- 
+        EI,EI2: Exposed internal implementation.  Not worth fixing (?)
+        -->
+        <Bug code="EI,EI2" />
+    </Match>
+
+</FindBugsFilter>

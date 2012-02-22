@@ -99,6 +99,7 @@
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
                     <xmlOutput>true</xmlOutput>
+                    <excludeFilterFile>config/findbugs-exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
         </plugins>
