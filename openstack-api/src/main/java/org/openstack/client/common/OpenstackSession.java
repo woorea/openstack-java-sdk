@@ -145,7 +145,6 @@ public class OpenstackSession implements Serializable {
 		WebResource resource = jerseyClient.resource(resourceUrl);
 
 		if (isEnabled(Feature.VERBOSE)) {
-			// But verbose filter is just easier done here!
 			resource.addFilter(new LoggingFilter(System.out));
 		}
 
