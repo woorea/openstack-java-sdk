@@ -18,6 +18,12 @@ public class Role implements Serializable {
 	@XmlAttribute
 	private String name;
 
+	@XmlAttribute
+	private String serviceId;
+
+	@XmlAttribute
+	private String tenantId;
+
 	public String getId() {
 		return id;
 	}

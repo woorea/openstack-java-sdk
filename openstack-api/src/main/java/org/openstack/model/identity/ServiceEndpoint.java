@@ -22,7 +22,16 @@ public class ServiceEndpoint implements Serializable {
     private String publicURL;
 
     @XmlAttribute
+    private String publicURL2;
+
+    @XmlAttribute
     private String adminURL;
+
+    @XmlAttribute
+    private String versionId;
+
+    @XmlAttribute
+    private String versionList;
 
     public String getRegion() {
         return region;
