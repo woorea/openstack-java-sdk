@@ -352,12 +352,18 @@ public class ServerResource extends ComputeResourceBase {
 	public String getConsoleOutput(Integer length) {
 		GetConsoleOutputAction action = new GetConsoleOutputAction();
 		action.setLength(length);
-		Output output = executeAction(Output.class, action);
+
+		// XML output is not escaped correctly.  Bug #939386
+		Output output = executeAction(Output.class, action, MediaType.APPLICATION_JSON_TYPE);
 		return output.getContent();
 	}
 
 	private <T> T executeAction(Class<T> c, Object action) {
-		return resource("action").type(MediaType.APPLICATION_XML).post(c, action);
+		return executeAction(c, action, null);
+	}
+
+	private <T> T executeAction(Class<T> c, Object action, MediaType forceType) {
+		return resource("action", forceType).post(c, action);
 	}
 
 	public void createAttachment() {
