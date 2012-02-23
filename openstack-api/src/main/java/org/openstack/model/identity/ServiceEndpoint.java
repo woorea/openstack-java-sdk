@@ -21,6 +21,9 @@ public class ServiceEndpoint implements Serializable {
     @XmlAttribute
     private String publicURL;
 
+    @XmlAttribute
+    private String adminURL;
+
     public String getRegion() {
         return region;
     }

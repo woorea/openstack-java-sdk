@@ -56,10 +56,16 @@ public class SimpleClassInfo {
 		}
 
 		if (jsonName == null) {
-			jsonName = clazz.getSimpleName();
+			jsonName = firstToLowerCase(clazz.getSimpleName());
 		}
 
 		this.jsonName = jsonName;
+	}
+
+	private static String firstToLowerCase(String s) {
+		if (s == null || s.isEmpty()) return s;
+
+		return Character.toLowerCase(s.charAt(0)) + s.substring(1);
 	}
 
 	static class FieldInfo {
@@ -150,7 +156,7 @@ public class SimpleClassInfo {
 			}
 
 			if (jsonName == null) {
-				jsonName = field.getName();
+				jsonName = firstToLowerCase(field.getName());
 			}
 
 			if (field.getType() == List.class) {

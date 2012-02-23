@@ -6,6 +6,7 @@ import org.openstack.model.compute.Addresses;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
+import org.openstack.model.identity.Access;
 
 public class OpenstackSerializationModule extends SimpleModule {
 
@@ -14,9 +15,13 @@ public class OpenstackSerializationModule extends SimpleModule {
 		addSerializer(Addresses.class, new AddressesSerializer());
 		addDeserializer(Addresses.class, new AddressesDeserializer());
 
+		// Compute
 		installSmartDeserializer(SecurityGroup.class);
 		installSmartDeserializer(SecurityGroupList.class);
 		installSmartDeserializer(Server.class);
+
+		// Keystone (Redux)
+		installSmartDeserializer(Access.class);
 	}
 
 	private <T> void installSmartDeserializer(Class<T> c) {
