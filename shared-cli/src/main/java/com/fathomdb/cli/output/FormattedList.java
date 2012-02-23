@@ -6,19 +6,23 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 
 import com.fathomdb.cli.formatter.FormatterRegistry;
 import com.google.common.collect.Lists;
 
-public class FormattedList<T> extends ArrayList<T> {
+public class FormattedList<T> implements Iterable<T> {
     private static final long serialVersionUID = 1L;
     private final FormatterRegistry registry;
 
     final boolean decorate;
 
+    final List<T> items;
+
     public FormattedList(FormatterRegistry registry, Iterable<T> items, boolean decorate) {
-        super(Lists.newArrayList(items));
+        this.items = Lists.newArrayList(items);
         this.registry = registry;
         this.decorate = decorate;
     }
@@ -49,4 +53,8 @@ public class FormattedList<T> extends ArrayList<T> {
         return writer.toString();
     }
 
+	@Override
+	public Iterator<T> iterator() {
+		return items.iterator();
+	}
 }
