@@ -57,7 +57,7 @@ public class ITGlance extends GlanceIntegrationTest {
 	}
 
 	// Heap size problems should be fixed now!
-	final int MAX_LENGTH = 16 * 1024 * 1024;
+	static final int MAX_LENGTH = 16 * 1024 * 1024;
 
 	@Test
 	public void testImageUploadAndDelete() throws Exception {

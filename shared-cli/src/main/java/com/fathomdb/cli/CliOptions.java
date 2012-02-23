@@ -20,6 +20,14 @@ public class CliOptions {
     @Argument
     public List<String> arguments = new ArrayList<String>();
 
-    public boolean isServer;
+	boolean serverMode;
+
+	public boolean isServerMode() {
+		return serverMode;
+	}
+
+	public void setServerMode(boolean serverMode) {
+		this.serverMode = serverMode;
+	}
 
 }

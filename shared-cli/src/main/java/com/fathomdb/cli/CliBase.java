@@ -77,7 +77,7 @@ public class CliBase {
         int retcode = 0;
 
         CliOptions options = handler.buildOptionsBean();
-        options.isServer = isServer;
+        options.setServerMode(isServer);
 
         CmdLineParser parser = new CmdLineParser(options);
         try {
