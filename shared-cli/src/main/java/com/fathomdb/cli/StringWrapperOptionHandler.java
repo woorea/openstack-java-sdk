@@ -12,28 +12,32 @@ import org.kohsuke.args4j.spi.Setter;
 
 public class StringWrapperOptionHandler<T> extends OptionHandler<T> {
 
-    private static final String ILLEGAL_OPERAND = "\"{1}\" is not a valid value for \"{0}\"";
+	private static final String ILLEGAL_OPERAND = "\"{1}\" is not a valid value for \"{0}\"";
 
-    public StringWrapperOptionHandler(CmdLineParser parser, OptionDef option, Setter<? super T> setter) {
-        super(parser, option, setter);
-    }
+	public StringWrapperOptionHandler(CmdLineParser parser, OptionDef option, Setter<? super T> setter) {
+		super(parser, option, setter);
+	}
 
-    @Override
-    public int parseArguments(Parameters params) throws CmdLineException {
-        String token = params.getParameter(0);
-        try {
-            Class<? super T> fieldType = setter.getType();
-            Constructor<? super T> constructor = fieldType.getConstructor(String.class);
-            T o = (T) constructor.newInstance(token);
-            setter.addValue(o);
-            return 1;
-        } catch (Exception e) {
-            throw new CmdLineException(MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
-        }
-    }
+	@Override
+	public int parseArguments(Parameters params) throws CmdLineException {
+		String token = params.getParameter(0);
+		try {
+			Class<? super T> fieldType = setter.getType();
+			Constructor<? super T> constructor = fieldType.getConstructor(String.class);
+			T o = (T) constructor.newInstance(token);
+			setter.addValue(o);
+			return 1;
+		} catch (SecurityException e) {
+			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
+		} catch (ReflectiveOperationException e) {
+			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
+		} catch (IllegalArgumentException e) {
+			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
+		}
+	}
 
-    @Override
-    public String getDefaultMetaVariable() {
-        return "VAL";
-    }
+	@Override
+	public String getDefaultMetaVariable() {
+		return "VAL";
+	}
 }
