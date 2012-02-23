@@ -63,7 +63,8 @@ public class SimpleClassInfo {
 	}
 
 	private static String firstToLowerCase(String s) {
-		if (s == null || s.isEmpty()) return s;
+		if (s == null || s.isEmpty())
+			return s;
 
 		return Character.toLowerCase(s.charAt(0)) + s.substring(1);
 	}
@@ -107,6 +108,15 @@ public class SimpleClassInfo {
 	private List<FieldInfo> discoverFields(Class<?> c) {
 		List<FieldInfo> fields = Lists.newArrayList();
 
+		while (c != null) {
+			addFields(fields, c);
+			c = c.getSuperclass();
+		}
+
+		return fields;
+	}
+
+	private void addFields(List<FieldInfo> fields, Class<?> c) {
 		for (Field field : c.getDeclaredFields()) {
 			XmlAnyAttribute xmlAnyAttribute = field.getAnnotation(XmlAnyAttribute.class);
 			if (xmlAnyAttribute != null) {
@@ -167,7 +177,6 @@ public class SimpleClassInfo {
 			FieldInfo fieldInfo = new FieldInfo(field, jsonName, collectionItemType);
 			fields.add(fieldInfo);
 		}
-		return fields;
 	}
 
 	static final Map<Class<?>, SimpleClassInfo> cache = Maps.newHashMap();
@@ -190,7 +199,7 @@ public class SimpleClassInfo {
 	public boolean hasAnyAttribute() {
 		return anyAttributeField != null;
 	}
-	
+
 	public Map<QName, Object> getAnyAttribute(Object target) {
 		try {
 			Map<QName, Object> map = (Map<QName, Object>) anyAttributeField.get(target);
