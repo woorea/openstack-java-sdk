@@ -3,6 +3,7 @@ package org.openstack.client.internals;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.module.SimpleModule;
 import org.openstack.model.compute.Addresses;
+import org.openstack.model.compute.BadRequest;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
@@ -19,6 +20,7 @@ public class OpenstackSerializationModule extends SimpleModule {
 		installSmartDeserializer(SecurityGroup.class);
 		installSmartDeserializer(SecurityGroupList.class);
 		installSmartDeserializer(Server.class);
+		installSmartDeserializer(BadRequest.class);
 
 		// Keystone (Redux)
 		installSmartDeserializer(Access.class);
