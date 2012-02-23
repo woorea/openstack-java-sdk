@@ -65,6 +65,9 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		OpenstackImageClient glance = getImageClient();
 
+		String containerFormat = "bare";
+		String diskFormat = "raw";
+
 		int imageLength = random.uniform(1, MAX_LENGTH);
 		long seed = random.nextLong();
 
@@ -72,6 +75,8 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		Image template = new Image();
 		template.setName(random.randomAlphanumericString(1, 64).trim());
+		template.setDiskFormat(diskFormat );
+		template.setContainerFormat(containerFormat);
 
 		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
 		assertEquals(uploaded.getSize(), Long.valueOf(imageLength));
@@ -81,8 +86,8 @@ public class ITGlance extends GlanceIntegrationTest {
 		assertNotNull(uploaded.getUpdatedAt());
 		assertNotNull(uploaded.getId());
 		assertEquals(uploaded.isDeleted(), Boolean.FALSE);
-		assertNull(uploaded.getDiskFormat());
-		assertNull(uploaded.getContainerFormat());
+		assertEquals(uploaded.getDiskFormat(), diskFormat);
+		assertEquals(uploaded.getContainerFormat(), containerFormat);
 		assertNotNull(uploaded.getOwner());
 		assertEquals(uploaded.getStatus(), "active");
 
@@ -135,12 +140,13 @@ public class ITGlance extends GlanceIntegrationTest {
 		assertEquals(actualHash, expectedHash);
 	}
 
-	@Test
+	@Test(expectedExceptions=OpenstackException.class)
 	public void testNullFormatsFails() throws Exception {
 		skipIfNoGlance();
 
-		// Apparently this is supposed to fail; right now it isn't though!
 		// https://bugs.launchpad.net/glance/+bug/933702
+		// The patch for this landed about Feb 23, 2012
+		//skipUntilBugFixed(933702);
 
 		OpenstackImageClient glance = getImageClient();
 
