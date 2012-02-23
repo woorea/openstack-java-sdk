@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 
 
@@ -58,6 +61,7 @@ public class ServerForCreate implements Serializable {
 		public String path;
 
 		@XmlValue
+		@JsonProperty("contents")
 		public byte[] contents;
 
 	}
@@ -83,6 +87,11 @@ public class ServerForCreate implements Serializable {
 	// OSAPI-BUG: I think this is only valid in JSON
 	@XmlAttribute(name="key_name")
 	private String keyName;
+
+	// We have a problem here - config_drive can be both a boolean and an image ref...
+	// But booleans can't be quoted!
+	@XmlAttribute(name="config_drive")
+	private boolean configDrive;
 
 	@XmlElement
 	private Metadata metadata;
@@ -195,6 +204,10 @@ public class ServerForCreate implements Serializable {
 		getPersonality().add(item);
 	}
 
+	public void addUploadFile(String path, String contents) {
+		addUploadFile(path, contents.getBytes(Charsets.UTF_8));
+	}
+
 	@Override
 	public String toString() {
 		return "ServerForCreate [name=" + name + ", imageRef=" + imageRef
@@ -203,6 +216,14 @@ public class ServerForCreate implements Serializable {
 				+ ", keyName=" + keyName + ", metadata=" + metadata
 				+ ", personality=" + personality + ", securityGroups="
 				+ securityGroups + "]";
+	}
+
+	public boolean getConfigDrive() {
+		return configDrive;
+	}
+
+	public void setConfigDrive(boolean configDrive) {
+		this.configDrive = configDrive;
 	}
 
 }

@@ -7,11 +7,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 @XmlRootElement(name="output", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Output implements Serializable {
 
 	@XmlValue
+	@JsonProperty("output")
 	private String content;
 
 	public String getContent() {
