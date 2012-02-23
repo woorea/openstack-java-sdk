@@ -149,4 +149,27 @@ public class ITSecurityGroups extends ComputeApiTest {
 		nova.root().securityGroups().create(createRequest);
 	}
 
+	@Test
+	public void testDuplicateNameFails() throws OpenstackException {
+		OpenstackComputeClient nova = getComputeClient();
+
+		String groupName = random.randomAlphanumericString(1, 128).trim();
+		String description = random.randomAlphanumericString(1, 255).trim();
+
+		SecurityGroup createRequest = new SecurityGroup();
+		createRequest.setName(groupName);
+		createRequest.setDescription(description);
+
+		SecurityGroup created1 = nova.root().securityGroups().create(createRequest);
+		Assert.assertNotNull(created1);
+
+		try {
+			SecurityGroup created2 = nova.root().securityGroups().create(createRequest);
+			Assert.fail();
+		} catch (OpenstackException e) {
+			// This would ideally be a better exception (different error code), but we can cope...
+			Assert.assertTrue(e.getMessage().contains("already exists"), "Unexpected message: " + e.getMessage());
+		}
+	}
+
 }
