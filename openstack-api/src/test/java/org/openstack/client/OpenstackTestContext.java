@@ -34,9 +34,9 @@ public class OpenstackTestContext {
 	}
 
 	public static OpenstackTestContext buildFromProperties() {
-		Properties properties = System.getProperties();
+		Properties properties = new Properties();
 
-		String configPath = properties.getProperty("openstack.config", null);
+		String configPath = System.getProperties().getProperty("openstack.config", null);
 		if (configPath != null) {
 			if (configPath.startsWith("~/")) {
 				String home = System.getProperty("user.home");
@@ -53,6 +53,9 @@ public class OpenstackTestContext {
 				Io.safeClose(fis);
 			}
 		}
+
+		// Command line properties should take precedence
+		properties.putAll(System.getProperties());
 
 		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
 
