@@ -37,8 +37,6 @@ public final class JerseyClient {
         config.getClasses().add(KnownLengthInputStreamProvider.class);
 
         client = Client.create(config);
-
-        client.addFilter(new OpenstackExceptionClientFilter());
 	}
 	
 	public JerseyClient verbose(boolean verbose) {

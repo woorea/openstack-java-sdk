@@ -154,6 +154,8 @@ public class OpenstackSession implements Serializable {
 
 		resource.addFilter(new OpenstackAuthenticationFilter(access));
 
+		resource.addFilter(new OpenstackExceptionClientFilter());
+
 		return resource;
 	}
 
