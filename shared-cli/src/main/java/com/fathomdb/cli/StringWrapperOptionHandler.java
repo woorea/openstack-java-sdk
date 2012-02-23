@@ -1,6 +1,7 @@
 package com.fathomdb.cli;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 
 import org.kohsuke.args4j.CmdLineException;
@@ -29,9 +30,15 @@ public class StringWrapperOptionHandler<T> extends OptionHandler<T> {
 			return 1;
 		} catch (SecurityException e) {
 			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
-		} catch (ReflectiveOperationException e) {
+		} catch (InvocationTargetException e) {
 			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
 		} catch (IllegalArgumentException e) {
+			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
+		} catch (InstantiationException e) {
+			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
+		} catch (IllegalAccessException e) {
+			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
+		} catch (NoSuchMethodException e) {
 			throw new CmdLineException(owner, MessageFormat.format(ILLEGAL_OPERAND, option.toString(), token));
 		}
 	}
