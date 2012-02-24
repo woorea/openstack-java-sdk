@@ -32,7 +32,7 @@ public class ImageResource extends GlanceResourceBase {
         throw new OpenstackException("Unexpected HTTP status code: " + httpStatus);
     }
 
-	public InputStream openImage() {
+	public InputStream openStream() {
         return resource().get(InputStream.class);
     }
 

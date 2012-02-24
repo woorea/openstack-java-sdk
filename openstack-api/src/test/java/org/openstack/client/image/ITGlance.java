@@ -107,7 +107,7 @@ public class ITGlance extends GlanceIntegrationTest {
 		assertImageEquals(details, uploaded);
 
 		{
-			InputStream is = glance.root().images().image(uploaded.getId()).openImage();
+			InputStream is = glance.root().images().image(uploaded.getId()).openStream();
 			assertStreamsTheSame(is, stream.clone());
 			is.close();
 		}
@@ -139,7 +139,7 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		// https://bugs.launchpad.net/glance/+bug/933702
 		// The patch for this landed about Feb 23, 2012
-		//skipUntilBugFixed(933702);
+		skipUntilBugFixed(933702);
 
 		OpenstackImageClient glance = getImageClient();
 
