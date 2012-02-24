@@ -122,6 +122,12 @@ public class SimpleClassInfo {
 				}
 			}
 
+			if (field.getType() == Boolean.class) {
+				if (src instanceof String) {
+					return Boolean.parseBoolean((String) src);
+				}
+			}
+
 			throw new IllegalArgumentException();
 		}
 

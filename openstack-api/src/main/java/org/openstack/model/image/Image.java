@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.client.internals.SimpleClassInfo;
+import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
+
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "image")
 public class Image implements Serializable {
@@ -203,5 +206,17 @@ public class Image implements Serializable {
                 + createdAt + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", status=" + status + ", isPublic=" + isPublic + ", minRam=" + minRam + ", minDisk=" + minDisk + ", owner="
                 + owner + ", deleted=" + deleted + ", isProtected=" + isProtected + ", id=" + id + ", properties=" + properties + "]";
     }
+
+	static final SimpleClassInfo CLASS_INFO = new SimpleClassInfo(Image.class);
+
+	public void put(String key, String value) {
+		FieldInfo field = CLASS_INFO.getField(key);
+		if (field == null) {
+			getProperties().addProperty(key, value);
+		} else {
+			Object setValue = field.convertToValue(value);
+			field.setValue(this, setValue);
+		}
+	}
 
 }
