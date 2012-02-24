@@ -6,7 +6,7 @@ public class OpenstackCliFormatterRegistry extends FormatterRegistryBase {
 
     public OpenstackCliFormatterRegistry() {
         addDefaultFormatters();
-        dicoverFormatters(getClass().getPackage());
+        discoverFormatters(getClass().getPackage());
     }
 
 }
