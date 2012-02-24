@@ -15,51 +15,56 @@ import org.openstack.model.compute.Server;
 import com.fathomdb.cli.CliContextBase;
 
 public class OpenstackCliContext extends CliContextBase {
-    final ConfigurationOptions options;
+	final ConfigurationOptions options;
 
-    public OpenstackCliContext(ConfigurationOptions options) throws IOException {
-        super(new OpenstackCliCommandRegistry(), new OpenstackCliFormatterRegistry());
+	public OpenstackCliContext(ConfigurationOptions options) throws IOException {
+		super(new OpenstackCliCommandRegistry(), new OpenstackCliFormatterRegistry());
 
-        this.options = options;
-    }
+		this.options = options;
+	}
 
-    public OpenstackSession getOpenstackSession() {
-        return options.getOpenstackSession();
-    }
+	public OpenstackSession getOpenstackSession() {
+		return options.getOpenstackSession();
+	}
 
-    public OpenstackComputeClient getComputeClient() {
-        return getOpenstackSession().getComputeClient();
-    }
+	public OpenstackComputeClient getComputeClient() {
+		return getOpenstackSession().getComputeClient();
+	}
 
-    public OpenstackImageClient buildImageClient() {
-        return getOpenstackSession().getImageClient();
-    }
+	public OpenstackImageClient buildImageClient() {
+		return getOpenstackSession().getImageClient();
+	}
 
-    public ConfigurationOptions getOptions() {
-        return options;
-    }
+	public ConfigurationOptions getOptions() {
+		return options;
+	}
 
-    public void connect() {
-        // getComputeClient();
-    }
+	public void connect() {
+		// getComputeClient();
+	}
 
-    public static OpenstackCliContext get() {
-        return (OpenstackCliContext) CliContextBase.get();
-    }
+	public static OpenstackCliContext get() {
+		return (OpenstackCliContext) CliContextBase.get();
+	}
 
-    public Iterable<Image> getImages() throws OpenstackException {
-        OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().images().list();
-    }
+	public Iterable<Image> getImages() throws OpenstackException {
+		OpenstackComputeClient computeClient = getComputeClient();
+		return computeClient.root().images().list();
+	}
 
-    public Iterable<Server> getInstances() throws OpenstackException {
-        OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().servers().list(false);
-    }
+	public Iterable<Server> getInstances() throws OpenstackException {
+		OpenstackComputeClient computeClient = getComputeClient();
+		return computeClient.root().servers().list(false);
+	}
 
-    public Iterable<Flavor> getFlavors() throws OpenstackException {
-        OpenstackComputeClient computeClient = getComputeClient();
-        return computeClient.root().flavors().list(false);
-    }
+	public Iterable<Flavor> getFlavors() throws OpenstackException {
+		OpenstackComputeClient computeClient = getComputeClient();
+		return computeClient.root().flavors().list(false);
+	}
+
+	public Iterable<org.openstack.model.image.Image> getGlanceImages() {
+		OpenstackImageClient client = buildImageClient();
+		return client.root().images().list();
+	}
 
 }
