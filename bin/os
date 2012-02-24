@@ -1,12 +1,72 @@
 #!/bin/bash
 
-set -e
+PRG="$0"
 
-COMMAND=$@
+while [ -h "$PRG" ] ; do
+   PRG=`readlink "$PRG"`
+done
 
-pushd `dirname $0` > /dev/null
+pushd `dirname $PRG` > /dev/null
 BASEDIR=`pwd`
 popd > /dev/null
+
+DEFAULT_FORMAT=""
+
+parse_arguments () {
+  while getopts ":pq:" optname
+    do
+      case "$optname" in
+        "p")
+          echo "Option $optname is specified"
+          ;;
+        "q")
+          echo "Option $optname has value $OPTARG"
+          ;;
+        "?")
+          echo "Unknown option $OPTARG"
+          ;;
+        ":")
+          echo "No argument value for option $OPTARG"
+          ;;
+        *)
+        # Should not occur
+          echo "Unknown error while processing options"
+          ;;
+      esac
+    done
+  return $OPTIND
+}
+
+do_action() {
+	local verb=$1
+	shift
+
+	case "$verb" in
+        "browser")
+          x-www-browser $@
+          ;;
+        *)
+          echo "Unknown action: ${verb}"
+          exit 1
+          ;;
+    esac
+}
+
+optinfo=$(parse_arguments "$@")
+#argstart=$?
+shift $((OPTIND-1))
+
+set -e
+
+# Intelligent selection of default format based on command
+# i.e. run as an action if it's an action and user didn't override
+if [[ "$1" == "run-vnc" ]]; then
+	DEFAULT_FORMAT="action"
+fi
+
+if [[ "$DEFAULT_FORMAT" == "" ]]; then
+	DEFAULT_FORMAT="raw"
+fi
 
 NAILGUN=ng-nailgun
 if ! builtin type -p ${NAILGUN} &>/dev/null; then
@@ -28,8 +88,31 @@ fi
 . ~/.credentials/${PROFILE}
 
 if [[ "$FORMAT" == "" ]]; then
-	FORMAT=raw
+	FORMAT=${DEFAULT_FORMAT}
 fi
 
-NAILGUN_PORT=2102 ${NAILGUN} org.openstack.client.cli.OpenstackCli --format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}" "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}"
+args=(--format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}")
 
+export NAILGUN_PORT=2102
+cmd=(${NAILGUN} org.openstack.client.cli.OpenstackCli)
+
+if [[ "${FORMAT}" == "action" ]]; then
+	action=`${cmd[@]} ${args[@]} "${@}"`
+	do_action ${action}
+else
+	${cmd[@]} ${args[@]} "${@}"
+fi
+
+
+#USE_NAILGUN=1
+
+#if [[ "${1}" == "create-image" ]]; then
+#	USE_NAILGUN=0
+#fi
+
+
+#if [[ ${USE_NAILGUN} == "1" ]]; then
+#	NAILGUN_PORT=2102 ${NAILGUN} org.openstack.client.cli.OpenstackCli  "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}"
+#else
+#	java -jar ${BASEDIR}/openstack-cli-standalone.jar --format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}" "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}"
+#fi

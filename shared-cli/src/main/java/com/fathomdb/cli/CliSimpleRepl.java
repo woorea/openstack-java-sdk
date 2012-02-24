@@ -13,6 +13,7 @@ import jline.ConsoleReader;
 import org.openstack.utils.Io;
 
 import com.fathomdb.cli.commands.CommandRunner;
+import com.fathomdb.cli.output.ActionOutputSink;
 import com.fathomdb.cli.output.OutputSink;
 import com.fathomdb.cli.output.RawOutputSink;
 import com.google.common.base.Charsets;
