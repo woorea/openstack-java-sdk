@@ -1,6 +1,12 @@
 package org.openstack.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.Charset;
 
 /**
@@ -23,6 +29,14 @@ public class Utf8 {
 
 	public static byte[] getBytes(String s) {
 		return s.getBytes(CHARSET);
+	}
+
+	public static InputStreamReader openFile(File file) throws FileNotFoundException {
+		return new InputStreamReader(new FileInputStream(file), CHARSET);
+	}
+
+	public static Reader openReader(InputStream is) {
+		return new InputStreamReader(is, CHARSET);
 	}
 
 }

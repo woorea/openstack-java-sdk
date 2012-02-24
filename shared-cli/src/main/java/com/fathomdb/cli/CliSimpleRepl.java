@@ -11,6 +11,7 @@ import java.util.List;
 import jline.ConsoleReader;
 
 import org.openstack.utils.Io;
+import org.openstack.utils.Utf8;
 
 import com.fathomdb.cli.commands.CommandRunner;
 import com.fathomdb.cli.output.ActionOutputSink;
@@ -182,7 +183,7 @@ class CliSimpleRepl implements Repl {
 
     public boolean runScripts(List<File> scriptFiles) throws IOException {
         for (File scriptFile : scriptFiles) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(scriptFile), Charsets.UTF_8));
+            BufferedReader reader = new BufferedReader(Utf8.openFile(scriptFile));
             try {
                 while (true) {
                     String line = reader.readLine();

@@ -54,12 +54,12 @@ public class Io {
 	}
 
 	public static String readAll(InputStream inputStream) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, Charsets.UTF_8));
+		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, Utf8.CHARSET));
 		return readAll(in);
 	}
 
 	public static String readAll(File file) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
+		BufferedReader in = new BufferedReader(Utf8.openFile(file));
 		try {
 			return readAll(in);
 		} finally {
