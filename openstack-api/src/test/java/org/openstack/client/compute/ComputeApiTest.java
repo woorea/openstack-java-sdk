@@ -38,6 +38,18 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 		}
 		return null;
 	}
+	
+	protected Image findImageByName(String name) {
+		OpenstackComputeClient nova = getComputeClient();
+
+		Iterable<Image> images = nova.root().images().list();
+		for (Image i : images) {
+			if (i.getName().equals(name)) {
+				return i;
+			}
+		}
+		return null;
+	}
 
 	protected Image getUecImage() {
 		Image image = findUecImage();

@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,8 +52,7 @@ public class Io {
 	}
 
 	public static String readAll(InputStream inputStream) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				inputStream));
+		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 		return readAll(in);
 	}
 
@@ -64,4 +64,17 @@ public class Io {
 			safeClose(in);
 		}
 	}
+
+	public static void copyStreams(InputStream is, OutputStream os) throws IOException {
+        byte[] buffer = new byte[32768];
+        while (true) {
+            int bytesRead = is.read(buffer);
+            if (bytesRead == -1) {
+                break;
+            }
+
+            os.write(buffer, 0, bytesRead);
+        }
+    }
+
 }
