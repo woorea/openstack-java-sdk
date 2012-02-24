@@ -12,7 +12,7 @@ public class Md5HashTest {
         String s = new String("Hello world");
         byte[] actual = Hex.fromHex("3e25960a79dbc69b674cd4ec67a72c62");
 
-        byte[] bytes = s.getBytes();
+        byte[] bytes = Utf8.getBytes(s);
         byte[] hash1 = new Md5Hash().hash(s);
         byte[] hash2 = new Md5Hash().hash(bytes);
         byte[] hash3 = new Md5Hash().hash(new ByteArrayInputStream(bytes));
