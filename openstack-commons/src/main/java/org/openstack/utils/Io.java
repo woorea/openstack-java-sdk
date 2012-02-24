@@ -3,7 +3,7 @@ package org.openstack.utils;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.google.common.base.Charsets;
 
 /**
  * Utility functions to do with IO
@@ -52,12 +54,12 @@ public class Io {
 	}
 
 	public static String readAll(InputStream inputStream) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+		BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, Charsets.UTF_8));
 		return readAll(in);
 	}
 
 	public static String readAll(File file) throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader(file));
+		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
 		try {
 			return readAll(in);
 		} finally {
