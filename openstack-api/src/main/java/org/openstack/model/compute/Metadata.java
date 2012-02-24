@@ -2,6 +2,7 @@ package org.openstack.model.compute;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,9 +12,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
+import com.google.common.collect.Lists;
+
 @XmlType
 @XmlAccessorType(XmlAccessType.NONE)
-public class Metadata implements Serializable {
+public class Metadata implements Serializable, Iterable<Metadata.Item> {
 
     @XmlAccessorType(XmlAccessType.NONE)
     public static final class Item implements Serializable {
@@ -53,14 +56,18 @@ public class Metadata implements Serializable {
     }
 
     @XmlElement(name = "item")
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items;
 
     public List<Item> getItems() {
+    	if (items == null) {
+    		items = Lists.newArrayList();
+    	}
         return items;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
+	@Override
+	public Iterator<Item> iterator() {
+		return getItems().iterator();
+	}
 
 }

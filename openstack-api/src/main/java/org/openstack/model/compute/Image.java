@@ -1,6 +1,7 @@
 package org.openstack.model.compute;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,9 +10,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.atom.Link;
+
+import com.google.common.collect.Lists;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
@@ -41,7 +46,54 @@ public class Image implements Serializable {
 	private int progress;
 	
 	@XmlElement
-	private Metadata metadata;
+	private ImageMetadata metadata;
+	
+	@XmlAccessorType(XmlAccessType.NONE)
+	public static class ImageMetadata implements Iterable<ImageMetadata.ImageMetadataItem> {
+
+	    @XmlAccessorType(XmlAccessType.NONE)
+	    public static final class ImageMetadataItem  {
+
+	        @XmlAttribute
+	        private String key;
+
+	        @XmlValue
+	        private String value;
+
+	        public String getKey() {
+	            return key;
+	        }
+
+	        public void setKey(String key) {
+	            this.key = key;
+	        }
+
+	        public String getValue() {
+	            return value;
+	        }
+
+	        public void setValue(String value) {
+	            this.value = value;
+	        }
+
+	    }
+
+	    @XmlElement(name = "meta")
+	    private List<ImageMetadataItem> items;
+
+	    public List<ImageMetadataItem> getItems() {
+	    	if (items == null) {
+	    		items = Lists.newArrayList();
+	    	}
+	        return items;
+	    }
+
+		@Override
+		public Iterator<ImageMetadataItem> iterator() {
+			return getItems().iterator();
+		}
+	}
+
 	
 	//RAX-DCF="http://docs.rackspacecloud.com/servers/api/ext/diskConfig/v1.0"
 	
@@ -105,11 +157,11 @@ public class Image implements Serializable {
 		this.progress = progress;
 	}
 
-	public Metadata getMetadata() {
+	public ImageMetadata getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
+	public void setMetadata(ImageMetadata metadata) {
 		this.metadata = metadata;
 	}
 
