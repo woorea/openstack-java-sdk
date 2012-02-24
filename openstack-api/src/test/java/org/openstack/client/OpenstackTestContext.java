@@ -12,6 +12,7 @@ public class OpenstackTestContext {
 
 	public OpenstackSession session;
 	private boolean glanceEnabled;
+	private boolean swiftEnabled;
 
 	public OpenstackSession connect(String url, OpenstackCredentials credentials, String format, boolean verbose) {
 		session = new OpenstackSession();
@@ -67,9 +68,11 @@ public class OpenstackTestContext {
 		String format = properties.getProperty("openstack.format", null);
 
 		boolean glanceEnabled = Boolean.parseBoolean(properties.getProperty("openstack.glance", "true"));
+		boolean swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "true"));
 
 		OpenstackTestContext context = new OpenstackTestContext();
 		context.glanceEnabled = glanceEnabled;
+		context.swiftEnabled = swiftEnabled;
 
 		OpenstackCredentials credentials = new OpenstackCredentials(username, secret, tenant);
 		context.connect(url, credentials, format, verbose);
@@ -78,5 +81,9 @@ public class OpenstackTestContext {
 
 	public boolean isGlanceEnabled() {
 		return glanceEnabled;
+	}
+
+	public boolean isSwiftEnabled() {
+		return swiftEnabled;
 	}
 }

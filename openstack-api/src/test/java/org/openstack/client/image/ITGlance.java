@@ -133,13 +133,6 @@ public class ITGlance extends GlanceIntegrationTest {
 		}
 	}
 
-	private void assertStreamsTheSame(InputStream actual, InputStream expected) throws DigestException, IOException {
-		byte[] actualHash = new Md5Hash().hash(actual);
-		byte[] expectedHash = new Md5Hash().hash(expected);
-
-		assertEquals(actualHash, expectedHash);
-	}
-
 	@Test(expectedExceptions=OpenstackException.class)
 	public void testNullFormatsFails() throws Exception {
 		skipIfNoGlance();

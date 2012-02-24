@@ -51,6 +51,10 @@ public class RandomUtil {
 		return random.nextLong();
 	}
 
-
+	public RandomDataInputStream randomStream(int maxLength) {
+		int imageLength = uniform(1, maxLength);
+		long seed = random.nextLong();
+		return new RandomDataInputStream(imageLength, seed);
+	}
 
 }

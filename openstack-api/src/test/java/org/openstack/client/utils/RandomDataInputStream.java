@@ -66,4 +66,8 @@ public class RandomDataInputStream extends InputStream implements Cloneable {
         return new RandomDataInputStream(streamLength, seed);
     }
 
+	public int getStreamLength() {
+		return streamLength;
+	}
+
 }

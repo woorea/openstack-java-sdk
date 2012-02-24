@@ -3,8 +3,13 @@ package org.openstack.client.internals;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.TypeVariable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -69,7 +74,7 @@ public class SimpleClassInfo {
 		return Character.toLowerCase(s.charAt(0)) + s.substring(1);
 	}
 
-	static class FieldInfo {
+	public static class FieldInfo {
 		final Field field;
 		final String jsonName;
 		final Class<?> collectionItemType;
@@ -98,6 +103,26 @@ public class SimpleClassInfo {
 			} catch (IllegalAccessException e) {
 				throw new IllegalStateException("Error setting field value", e);
 			}
+		}
+
+		public Object convertToValue(Object src) {
+			if (field.getType() == src.getClass()) {
+				return src;
+			}
+
+			if (field.getType() == java.util.Date.class) {
+				if (src instanceof String) {
+					return new Date((String) src);
+				}
+			}
+
+			if (field.getType() == Long.class) {
+				if (src instanceof String) {
+					return Long.parseLong((String) src);
+				}
+			}
+
+			throw new IllegalArgumentException();
 		}
 
 		public Class<?> getValueType() {
