@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
@@ -39,4 +41,7 @@ public class Utf8 {
 		return new InputStreamReader(is, CHARSET);
 	}
 
+	public static OutputStreamWriter openWriter(OutputStream outputStream) {
+		return new OutputStreamWriter(outputStream, CHARSET);
+	}
 }
