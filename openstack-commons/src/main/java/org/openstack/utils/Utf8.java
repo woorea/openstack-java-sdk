@@ -23,7 +23,7 @@ public class Utf8 {
 		return toString(baos.toByteArray());
 	}
 
-	private static String toString(byte[] bytes) {
+	public static String toString(byte[] bytes) {
 		return new String(bytes, CHARSET);
 	}
 
