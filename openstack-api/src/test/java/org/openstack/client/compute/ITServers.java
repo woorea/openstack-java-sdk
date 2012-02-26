@@ -29,6 +29,20 @@ public class ITServers extends ComputeApiTest {
 			// nova.root().servers().server(server.getId()).delete();
 		}
 	}
+	
+	@Test
+	public void showServer() {
+//		OpenstackComputeClient nova = getComputeClient();
+//		OpenstackSession session = nova.getSession();
+//		
+//		Iterator<Server> servers = nova.root().servers().list().iterator();
+//		
+//		if(servers.hasNext()) {
+//			Server server = servers.next();
+//			Server server2 = nova.root().servers().server(server.getId()).show();
+//			Assert.assertEquals(server.getId(), server2.getId());
+//		}
+	}
 
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {

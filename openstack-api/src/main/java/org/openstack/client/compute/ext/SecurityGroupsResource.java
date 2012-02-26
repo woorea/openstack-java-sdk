@@ -2,10 +2,11 @@ package org.openstack.client.compute.ext;
 
 import javax.ws.rs.core.MediaType;
 
+import org.openstack.client.common.ResourceExtension;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 
-public class SecurityGroupsResource extends ComputeResourceBase {
+public class SecurityGroupsResource extends ComputeResourceBase implements ResourceExtension {
 
 	@Override
 	protected MediaType getDefaultContentType() {

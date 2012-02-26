@@ -1,6 +1,7 @@
 package org.openstack.client.compute.notavailable;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 
 /**
  * Adds actions to create cloudpipe instances.
@@ -14,7 +15,7 @@ import org.openstack.client.common.Resource;
  * @author sp
  * 
  */
-public class CloudPipeResource extends Resource {
+public class CloudPipeResource extends Resource implements ResourceExtension {
 
 
 }

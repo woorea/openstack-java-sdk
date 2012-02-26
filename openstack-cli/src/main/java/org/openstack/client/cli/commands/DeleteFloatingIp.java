@@ -2,6 +2,7 @@ package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.client.compute.ext.FloatingIpsResource;
 
 public class DeleteFloatingIp extends OpenstackCliCommandRunnerBase {
     @Argument(index = 0)
@@ -15,7 +16,7 @@ public class DeleteFloatingIp extends OpenstackCliCommandRunnerBase {
     public Object runCommand() throws Exception {
         OpenstackComputeClient compute = getComputeClient();
 
-        compute.root().floatingIps().floatingIp(id).delete();
+        compute.root().extension(FloatingIpsResource.class).floatingIp(id).delete();
 
         return id;
     }

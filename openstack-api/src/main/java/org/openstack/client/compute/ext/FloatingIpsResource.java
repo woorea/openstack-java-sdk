@@ -3,6 +3,7 @@ package org.openstack.client.compute.ext;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 import org.openstack.model.compute.CreateFloatingIpResponse;
 import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.FloatingIpList;
@@ -13,7 +14,7 @@ import org.openstack.model.compute.FloatingIpList;
  * @author sp
  * 
  */
-public class FloatingIpsResource extends Resource {
+public class FloatingIpsResource extends Resource implements ResourceExtension {
 
 	// Floating IPs seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?

@@ -1,6 +1,7 @@
 package org.openstack.client.cli.commands;
 
 import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.client.compute.ext.FloatingIpsResource;
 
 public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 
@@ -12,7 +13,7 @@ public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
     public Object runCommand() throws Exception {
         OpenstackComputeClient compute = getComputeClient();
 
-        return compute.root().floatingIps().create();
+        return compute.root().extension(FloatingIpsResource.class).create();
     }
 
 }

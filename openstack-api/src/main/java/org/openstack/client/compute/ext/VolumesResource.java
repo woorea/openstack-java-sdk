@@ -1,6 +1,7 @@
 package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 import org.openstack.model.compute.VolumeList;
 
 import com.sun.jersey.api.client.WebResource.Builder;
@@ -11,7 +12,7 @@ import com.sun.jersey.api.client.WebResource.Builder;
  * @author sp
  * 
  */
-public class VolumesResource extends Resource {
+public class VolumesResource extends Resource implements ResourceExtension {
 	
 	/**
 	 * Returns the list of volume types

@@ -5,6 +5,7 @@ import java.util.List;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.compute.TenantResource;
+import org.openstack.client.compute.ext.SecurityGroupsResource;
 import org.openstack.model.compute.SecurityGroup;
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
@@ -19,7 +20,7 @@ public class SecurityGroupNameAutoCompleter extends SimpleArgumentAutoCompleter 
 
         OpenstackCliContext osContext = (OpenstackCliContext) context;
         OpenstackComputeClient computeClient = osContext.getComputeClient();
-        List<SecurityGroup> securityGroups = computeClient.root().securityGroups().list().getList();
+        List<SecurityGroup> securityGroups = computeClient.root().extension(SecurityGroupsResource.class).list().getList();
         for (SecurityGroup securityGroup : securityGroups) {
             strings.add(securityGroup.getName());
         }

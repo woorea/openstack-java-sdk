@@ -3,8 +3,7 @@ package org.openstack.client.compute.ext;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
-
-import com.sun.jersey.api.client.WebResource.Builder;
+import org.openstack.client.common.ResourceExtension;
 
 /**
  * Keypair Support
@@ -12,7 +11,7 @@ import com.sun.jersey.api.client.WebResource.Builder;
  * @author sp
  * 
  */
-public class KeyPairResource extends Resource {
+public class KeyPairResource extends Resource implements ResourceExtension {
 
 	// JSON Only?
 	// TODO: Is this an OpenStack bug or an HP bug?
