@@ -27,9 +27,13 @@ public class Access implements Serializable {
 
         @XmlAttribute
         private String expires;
-
+        
         @XmlElement
         private Tenant tenant;
+
+        @XmlElementWrapper(name = "tenants")
+        @XmlElement(name = "tenant")
+        private List<Tenant> tenants;
 
         public String getId() {
             return id;
@@ -55,10 +59,19 @@ public class Access implements Serializable {
 			this.tenant = tenant;
 		}
 
-        @Override
-        public String toString() {
-            return "Token [id=" + id + ", expires=" + expires + "]";
-        }
+		public List<Tenant> getTenants() {
+			return tenants;
+		}
+
+		public void setTenants(List<Tenant> tenants) {
+			this.tenants = tenants;
+		}
+
+		@Override
+		public String toString() {
+			return "Token [id=" + id + ", expires=" + expires + ", tenant=" + tenant + ", tenants=" + tenants + "]";
+		}
+
     }
 
     @XmlElement

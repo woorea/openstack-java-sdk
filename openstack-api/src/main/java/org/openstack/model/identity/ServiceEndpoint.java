@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 @XmlAccessorType(XmlAccessType.NONE)
 public class ServiceEndpoint implements Serializable {
 
+	@XmlAttribute
+    private String id;
+	
     @XmlAttribute
     private String region;
 
