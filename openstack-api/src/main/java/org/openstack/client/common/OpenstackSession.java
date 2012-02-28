@@ -13,6 +13,7 @@ import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Service;
+import org.openstack.model.identity.keystone.KeyStoneService;
 
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;

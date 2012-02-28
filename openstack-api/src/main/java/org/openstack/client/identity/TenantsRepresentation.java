@@ -17,7 +17,7 @@ public class TenantsRepresentation {
 		this.model = model;
 	}
 	
-	public List<org.openstack.model.identity.Tenant> getList() {
+	public List<org.openstack.model.identity.keystone.KeyStoneTenant> getList() {
 		return model.getList();
 	}
 	

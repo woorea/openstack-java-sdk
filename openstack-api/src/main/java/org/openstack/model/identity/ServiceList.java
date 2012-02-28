@@ -9,19 +9,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.ListWithAtomLinks;
+import org.openstack.model.identity.keystone.KeyStoneService;
 
 @XmlRootElement(name="services", namespace="http://docs.openstack.org/identity/api/ext/OS-KSADM/v1.0")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ServiceList extends ListWithAtomLinks {
 
 	@XmlElement(name="service", namespace="http://docs.openstack.org/identity/api/ext/OS-KSADM/v1.0")
-	private List<Service> list = new ArrayList<Service>();
+	private List<KeyStoneService> list = new ArrayList<KeyStoneService>();
 
-	public List<Service> getList() {
+	public List<KeyStoneService> getList() {
 		return list;
 	}
 
-	public void setList(List<Service> list) {
+	public void setList(List<KeyStoneService> list) {
 		this.list = list;
 	}
 	

@@ -9,24 +9,25 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.PagingListBase;
+import org.openstack.model.identity.keystone.KeyStoneTenant;
 
 @XmlRootElement(name = "tenants")
 @XmlAccessorType(XmlAccessType.NONE)
-public class TenantList extends PagingListBase<Tenant> {
+public class TenantList extends PagingListBase<KeyStoneTenant> {
 
 	@XmlElement(name = "tenant")
-	private List<Tenant> list;
+	private List<KeyStoneTenant> list;
 
-	public List<Tenant> getList() {
+	public List<KeyStoneTenant> getList() {
 		return list;
 	}
 
-	public void setList(List<Tenant> list) {
+	public void setList(List<KeyStoneTenant> list) {
 		this.list = list;
 	}
 
 	@Override
-	public Iterator<Tenant> iterateItemsOnPage() {
+	public Iterator<KeyStoneTenant> iterateItemsOnPage() {
 		return list.iterator();
 	}
 

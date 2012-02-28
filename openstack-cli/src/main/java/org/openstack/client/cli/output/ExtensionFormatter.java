@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openstack.model.compute.Extension;
 import org.openstack.model.identity.ServiceEndpoint;
+import org.openstack.model.identity.keystone.KeyStoneServiceEndpoint;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
@@ -29,13 +30,13 @@ public class ExtensionFormatter extends SimpleFormatter<Extension> {
         sink.outputRow(values);
     }
 
-    public static String formatEndpoints(List<ServiceEndpoint> endpoints) {
+    public static String formatEndpoints(List<KeyStoneServiceEndpoint> endpoints) {
         StringBuilder sb = new StringBuilder();
         formatEndpoints(sb, endpoints);
         return sb.toString();
     }
 
-    public static void formatEndpoints(StringBuilder sb, List<ServiceEndpoint> endpoints) {
+    public static void formatEndpoints(StringBuilder sb, List<KeyStoneServiceEndpoint> endpoints) {
         for (int i = 0; i < endpoints.size(); i++) {
             if (i != 0)
                 sb.append(",");

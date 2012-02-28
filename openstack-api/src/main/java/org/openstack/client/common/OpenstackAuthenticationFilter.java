@@ -3,7 +3,7 @@ package org.openstack.client.common;
 import java.util.logging.Logger;
 
 import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Access.Token;
+import org.openstack.model.identity.keystone.KeyStoneAccess.Token;
 
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
@@ -19,7 +19,7 @@ class OpenstackAuthenticationFilter extends ClientFilter {
 	}
 
 	public ClientResponse handle(ClientRequest request) {
-		Token token = null;
+		Access.Token token = null;
 		if (access != null) {
 			token = access.getToken();
 		}

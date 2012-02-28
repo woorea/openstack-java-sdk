@@ -9,6 +9,7 @@ import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.Server;
 import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.keystone.KeyStoneTenant;
 
 public class Test {
 
@@ -21,7 +22,7 @@ public class Test {
 
 		IdentityResource identity = session.getAuthenticationClient().root();
 
-		Iterable<Tenant> tenants = identity.tenants().list();
+		Iterable<KeyStoneTenant> tenants = identity.tenants().list();
 		for (Tenant tenant : tenants) {
 			System.out.println(tenant);
 		}
