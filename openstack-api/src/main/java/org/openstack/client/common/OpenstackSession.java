@@ -3,6 +3,7 @@ package org.openstack.client.common;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
@@ -16,11 +17,13 @@ import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Access.Token;
 
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public abstract class OpenstackSession implements Serializable {
+	static final Logger log = Logger.getLogger(OpenstackSession.class.getName());
 
 	public enum Feature {
 
@@ -146,7 +149,7 @@ public abstract class OpenstackSession implements Serializable {
 
 	public RequestBuilder resource(String resourceUrl) {
 		RequestBuilder request = createRequestBuilder(resourceUrl);
-		
+
 		if (isEnabled(Feature.VERBOSE)) {
 			request.setVerbose(true);
 		}
@@ -164,7 +167,7 @@ public abstract class OpenstackSession implements Serializable {
 		if (authTokenId != null && !authTokenId.isEmpty()) {
 			request.putHeader("X-Auth-Token", authTokenId);
 		}
-		
+
 		return request;
 	}
 
@@ -189,7 +192,7 @@ public abstract class OpenstackSession implements Serializable {
 	public void authenticate(String authURL, OpenstackCredentials credentials) {
 		authenticate(authURL, credentials, false);
 	}
-	
+
 	public void authenticate(String authURL, OpenstackCredentials credentials, boolean storeCredentials) {
 		if (storeCredentials) {
 			this.credentials = credentials;
@@ -205,7 +208,7 @@ public abstract class OpenstackSession implements Serializable {
 		Set<String> serviceTypes = Sets.newHashSet();
 		for (Service service : access.getServiceCatalog()) {
 			serviceTypes.add(service.getType());
-			
+
 			if (serviceType.equals(service.getType())) {
 				foundServices.add(service);
 			}
@@ -215,11 +218,13 @@ public abstract class OpenstackSession implements Serializable {
 			throw new OpenstackException("Cannot find service: " + serviceType + ".  Available services: " + Joiner.on(",").join(serviceTypes));
 		}
 
+		Service service;
 		if (foundServices.size() != 1) {
-			throw new OpenstackException("Found multiple services of type: " + serviceType);
+			log.fine("Found multiple services of type: " + serviceType + ".  Found: " + Joiner.on(',').join(foundServices));
+			service = pickBest(foundServices);
+		} else {
+			service = foundServices.get(0);
 		}
-
-		Service service = foundServices.get(0);
 
 		if (service.getEndpoints().size() != 1) {
 			throw new OpenstackException("Unhandled number of endpoints");
@@ -232,6 +237,33 @@ public abstract class OpenstackSession implements Serializable {
 		}
 
 		return bestUrl;
+	}
+
+	private Service pickBest(List<Service> services) {
+		Function<Service, Float> scoreFunction = new Function<Service, Float>() {
+			@Override
+			public Float apply(Service s) {
+				float score = 0;
+				if (s.getName().endsWith("OpenStack")) {
+					score += 10;
+				}
+				return score;
+			}
+		};
+		
+		Float bestScore = null;
+		Service best = null;
+		for (Service candidate : services) {
+			Float score = scoreFunction.apply(candidate);
+			if (bestScore == null || bestScore.floatValue() < score.floatValue()) {
+				bestScore = score;
+				best = candidate;
+			} else if (bestScore.floatValue() == score.floatValue()) {
+				throw new IllegalArgumentException("Cannot choose between candidates: " + best + " vs " + candidate);
+			}
+		}
+		
+		return best;
 	}
 
 	public <T> T followLink(Link link, Class<T> clazz) {
@@ -288,5 +320,4 @@ public abstract class OpenstackSession implements Serializable {
 		authenticate(identityConfig.getAuthenticationURL(), credentials, false);
 	}
 
-	
 }

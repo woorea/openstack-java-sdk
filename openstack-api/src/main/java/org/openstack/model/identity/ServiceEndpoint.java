@@ -65,7 +65,15 @@ public class ServiceEndpoint implements Serializable {
         this.publicURL = publicURL;
     }
 
+	@Override
+	public String toString() {
+		return "ServiceEndpoint [region=" + region + ", tenantId=" + tenantId + ", internalURL=" + internalURL
+				+ ", publicURL=" + publicURL + ", publicURL2=" + publicURL2 + ", adminURL=" + adminURL + ", versionId="
+				+ versionId + ", versionList=" + versionList + "]";
+	}
+
     // @XmlElement
     // private ServiceVersion version;
 
+    
 }

@@ -53,8 +53,11 @@ public abstract class RequestBuilder {
 	}
 
 	public RequestBuilder setContentType(MediaType contentType) {
-		if (this.contentType != null)
-			throw new IllegalStateException();
+		if (this.contentType != null) {
+			if (this.contentType.equals(contentType))
+				return this;
+			throw new IllegalStateException("Attempt to change contentType from " + this.contentType + " to " + contentType);
+		}
 
 		this.contentType = contentType;
 		return this;
