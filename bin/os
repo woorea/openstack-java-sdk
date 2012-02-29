@@ -93,7 +93,7 @@ fi
 
 args=(--format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --server "${OS_AUTH_URL}")
 
-if [[ "$TENANT_NAME" != "" ]]; then
+if [[ "$OS_TENANT_NAME" != "" ]]; then
 args=("${args[@]}" --tenant "${OS_TENANT_NAME}" )
 fi
 
