@@ -91,7 +91,11 @@ if [[ "$FORMAT" == "" ]]; then
 	FORMAT=${DEFAULT_FORMAT}
 fi
 
-args=(--format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}")
+args=(--format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --server "${OS_AUTH_URL}")
+
+if [[ "$TENANT_NAME" != "" ]]; then
+args=("${args[@]}" --tenant "${OS_TENANT_NAME}" )
+fi
 
 export NAILGUN_PORT=2102
 cmd=(${NAILGUN} org.openstack.client.cli.OpenstackCli)
