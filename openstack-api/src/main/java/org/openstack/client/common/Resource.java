@@ -28,25 +28,24 @@ public class Resource {
 		return MediaType.APPLICATION_XML_TYPE;
 	}
 
-	public void initialize(OpenstackSession session, String resource) {
+	protected void initialize(OpenstackSession session, String resource) {
 		if (this.session != null)
 			throw new IllegalStateException("Double initialization");
 		this.session = session;
 		this.resource = resource;
 	}
 
-	protected Builder resource() {
+	protected RequestBuilder resource() {
 		return resource(null, null);
 	}
 
-	protected Builder resource(String relativePath) {
+	protected RequestBuilder resource(String relativePath) {
 		return resource(relativePath, null);
 	}
 
-	protected Builder resource(String relativePath, MediaType contentType) {
+	protected RequestBuilder resource(String relativePath, MediaType contentType) {
 		String resourceUrl = relativePath != null ? UrlUtils.join(resource, relativePath) : resource;
-		WebResource webResource = session.resource(resourceUrl);
-		Builder builder = webResource.getRequestBuilder();
+		RequestBuilder request = session.resource(resourceUrl);
 
 		MediaType forceContentType = session.getForceContentType();
 
@@ -63,13 +62,13 @@ public class Resource {
 			contentType = getDefaultContentType();
 		}
 
-		builder = builder.accept(contentType);
+		request.addAcceptType(contentType);
 		if (contentType == MediaType.APPLICATION_JSON_TYPE || contentType == MediaType.APPLICATION_XML_TYPE) {
 			// Assume we're going to be posting the same type (for now!)
-			builder = builder.type(contentType);
+			request.setContentType(contentType);
 		}
 
-		return builder;
+		return request;
 	}
 
 	final Map<String, Resource> resources = Maps.newHashMap();

@@ -2,6 +2,7 @@ package org.openstack.client.common;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.core.MediaType;
 
@@ -13,13 +14,13 @@ import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Service;
+import org.openstack.model.identity.Access.Token;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.LoggingFilter;
+import com.google.common.collect.Sets;
 
-public class OpenstackSession implements Serializable {
+public abstract class OpenstackSession implements Serializable {
 
 	public enum Feature {
 
@@ -51,6 +52,8 @@ public class OpenstackSession implements Serializable {
 	Access access;
 
 	transient LinkResolver linkResolver;
+
+	private OpenstackCredentials credentials;
 
 	public OpenstackSession() {
 
@@ -141,24 +144,31 @@ public class OpenstackSession implements Serializable {
 		return access;
 	}
 
-	public WebResource resource(String resourceUrl) {
-		Client jerseyClient = JerseyClient.INSTANCE.getJerseyClient();
-		WebResource resource = jerseyClient.resource(resourceUrl);
-
+	public RequestBuilder resource(String resourceUrl) {
+		RequestBuilder request = createRequestBuilder(resourceUrl);
+		
 		if (isEnabled(Feature.VERBOSE)) {
-			resource.addFilter(new LoggingFilter(System.out));
+			request.setVerbose(true);
 		}
 
-		// It could be nice to just put the OpenstackSession into a property,
-		// and have a constant filterset. BUT head() doesn't use properties.
-		// resource.setProperty(OpenstackSession.class.getName(), this);
+		Token token = null;
+		if (access != null) {
+			token = access.getToken();
+		}
 
-		resource.addFilter(new OpenstackAuthenticationFilter(access));
+		String authTokenId = null;
+		if (token != null) {
+			authTokenId = token.getId();
+		}
 
-		resource.addFilter(new OpenstackExceptionClientFilter());
-
-		return resource;
+		if (authTokenId != null && !authTokenId.isEmpty()) {
+			request.putHeader("X-Auth-Token", authTokenId);
+		}
+		
+		return request;
 	}
+
+	protected abstract RequestBuilder createRequestBuilder(String resourceUrl);
 
 	public OpenstackImageClient getImageClient() {
 		return new OpenstackImageClient(this);
@@ -177,6 +187,13 @@ public class OpenstackSession implements Serializable {
 	}
 
 	public void authenticate(String authURL, OpenstackCredentials credentials) {
+		authenticate(authURL, credentials, false);
+	}
+	
+	public void authenticate(String authURL, OpenstackCredentials credentials, boolean storeCredentials) {
+		if (storeCredentials) {
+			this.credentials = credentials;
+		}
 		identityConfig.setAuthenticationURL(authURL);
 		Access access = getAuthenticationClient().authenticate(credentials);
 		this.access = access;
@@ -185,14 +202,17 @@ public class OpenstackSession implements Serializable {
 	public String getBestEndpoint(String serviceType) throws OpenstackException {
 		Access access = getAuthenticationToken();
 		List<Service> foundServices = Lists.newArrayList();
+		Set<String> serviceTypes = Sets.newHashSet();
 		for (Service service : access.getServiceCatalog()) {
+			serviceTypes.add(service.getType());
+			
 			if (serviceType.equals(service.getType())) {
 				foundServices.add(service);
 			}
 		}
 
 		if (foundServices.isEmpty()) {
-			throw new OpenstackException("Cannot find service");
+			throw new OpenstackException("Cannot find service: " + serviceType + ".  Available services: " + Joiner.on(",").join(serviceTypes));
 		}
 
 		if (foundServices.size() != 1) {
@@ -253,4 +273,20 @@ public class OpenstackSession implements Serializable {
 		return getLinkResolver().resolveFlavor(flavor.getId(), flavor.getLinks());
 	}
 
+	public static OpenstackSession create() {
+		return new JerseyOpenstackSession();
+	}
+
+	public boolean hasStoredCredentials() {
+		return credentials != null;
+	}
+
+	public void reauthenticate() {
+		if (credentials == null) {
+			throw new IllegalStateException("Credentials were not saved");
+		}
+		authenticate(identityConfig.getAuthenticationURL(), credentials, false);
+	}
+
+	
 }

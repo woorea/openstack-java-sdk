@@ -8,6 +8,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.OpenstackException;
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.SimplePagingList;
 import org.openstack.model.image.Image;
 import org.openstack.model.image.ImageList;
@@ -23,7 +24,7 @@ public class ImagesResource extends GlanceResourceBase {
     }
 
     public Iterable<Image> list(boolean details) {
-        Builder imagesResource = details ? resource("detail") : resource();
+        RequestBuilder imagesResource = details ? resource("detail") : resource();
 
          ImageList page = imagesResource.get(ImageList.class);
          return new SimplePagingList<Image>(session, page);
@@ -45,7 +46,7 @@ public class ImagesResource extends GlanceResourceBase {
 
 	public Image addImage(InputStream imageStream, long imageStreamLength, Image properties) throws OpenstackException,
 			IOException {
-		Builder builder = resource(null, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+		RequestBuilder builder = resource(null, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 
 		builder = GlanceHeaderUtils.setHeaders(builder, properties);
 

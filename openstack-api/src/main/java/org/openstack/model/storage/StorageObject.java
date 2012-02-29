@@ -18,8 +18,8 @@ public class StorageObject {
 	@XmlElement
 	private Long bytes;
 
-	@XmlElement
-	private String content_type;
+	@XmlElement(name="content_type")
+	private String contentType;
 
 	@XmlElement(name = "last_modified")
 	private Date lastModified;
@@ -48,12 +48,12 @@ public class StorageObject {
 		this.bytes = bytes;
 	}
 
-	public String getContent_type() {
-		return content_type;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setContent_type(String content_type) {
-		this.content_type = content_type;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	public Date getLastModified() {

@@ -1,5 +1,6 @@
 package org.openstack.client.compute;
 
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
 import org.openstack.client.common.SimplePagingList;
 import org.openstack.model.compute.Image;
@@ -10,7 +11,7 @@ import com.sun.jersey.api.client.WebResource.Builder;
 public class ImagesResource extends Resource {
 
     public Iterable<Image> list(boolean detail) {
-    	Builder r = detail ? resource("detail") : resource();
+    	RequestBuilder r = detail ? resource("detail") : resource();
     	ImageList page = r.get(ImageList.class);
     	
     	// Does this actually page?

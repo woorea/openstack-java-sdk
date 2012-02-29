@@ -8,6 +8,7 @@ import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.storage.OpenstackStorageClient;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.Server;
@@ -65,6 +66,10 @@ public class OpenstackCliContext extends CliContextBase {
 	public Iterable<org.openstack.model.image.Image> getGlanceImages() {
 		OpenstackImageClient client = buildImageClient();
 		return client.root().images().list();
+	}
+
+	public OpenstackStorageClient getStorageClient() {
+		return getOpenstackSession().getStorageClient();
 	}
 
 }

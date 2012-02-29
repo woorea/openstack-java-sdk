@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.openstack.client.OpenstackException;
 import org.openstack.client.OpenstackNotFoundException;
+import org.openstack.client.common.HeadResponse;
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.model.image.Image;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -12,13 +14,13 @@ import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ImageResource extends GlanceResourceBase {
     public void updateMetadata(Map<String, Object> metadata, boolean replace) {
-        Builder builder = resource();
+    	RequestBuilder builder = resource();
         builder = GlanceHeaderUtils.setHeadersForProperties(builder, metadata);
         builder.put();
     }
 
     public Image show() throws OpenstackException {
-        ClientResponse response = resource().head();
+        HeadResponse response = resource().head();
         int httpStatus = response.getStatus();
         if (httpStatus == 200) {
             Image image = GlanceHeaderUtils.unmarshalHeaders(response);

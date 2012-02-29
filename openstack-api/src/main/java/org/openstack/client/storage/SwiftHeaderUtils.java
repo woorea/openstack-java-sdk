@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import org.openstack.client.common.HeadResponse;
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.internals.SimpleClassInfo;
 import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
 import org.openstack.model.storage.ObjectProperties;
@@ -24,7 +26,7 @@ class SwiftHeaderUtils {
 		return classInfo;
 	}
 
-	public static ObjectProperties unmarshalHeaders(ClientResponse response) {
+	public static ObjectProperties unmarshalHeaders(HeadResponse response) {
 		ObjectProperties properties = new ObjectProperties();
 		Map<String, String> userProperties = properties.getCustomProperties();
 
@@ -58,9 +60,9 @@ class SwiftHeaderUtils {
 		return properties;
 	}
 
-	public static Builder setHeadersForProperties(Builder builder, ObjectProperties changeProperties) {
+	public static RequestBuilder setHeadersForProperties(RequestBuilder builder, ObjectProperties changeProperties) {
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {
-			builder = builder.header("x-object-meta-" + tag.getKey(), tag.getValue());
+			builder.putHeader("x-object-meta-" + tag.getKey(), tag.getValue());
 		}
 		return builder;
 	}

@@ -2,6 +2,7 @@ package org.openstack.client.compute;
 
 import javax.ws.rs.core.MediaType;
 
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.SimplePagingList;
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.model.compute.Server;
@@ -25,7 +26,7 @@ public class ServersResource extends ComputeResourceBase {
 	 * @return
 	 */
 	public Iterable<Server> list(boolean detail) {
-		Builder r = detail ? resource("detail") : resource();
+		RequestBuilder r = detail ? resource("detail") : resource();
 		ServerList page = r.get(ServerList.class);
 		return new SimplePagingList<Server>(session, page);
 	}
@@ -36,7 +37,7 @@ public class ServersResource extends ComputeResourceBase {
 
 	public Server create(ServerForCreate serverForCreate) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		Builder builder = resource(null, MediaType.APPLICATION_JSON_TYPE);
+		RequestBuilder builder = resource(null, MediaType.APPLICATION_JSON_TYPE);
 		return builder.post(Server.class, serverForCreate);
 
 		// return post(Server.class, serverForCreate);

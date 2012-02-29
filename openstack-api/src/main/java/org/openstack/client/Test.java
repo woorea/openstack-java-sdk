@@ -1,5 +1,6 @@
 package org.openstack.client;
 
+import org.openstack.client.common.JerseyOpenstackSession;
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.OpenstackSession.Feature;
 import org.openstack.client.compute.ServerResource;
@@ -13,7 +14,7 @@ import org.openstack.model.identity.Tenant;
 public class Test {
 
 	public static void main(String[] args) {
-		OpenstackSession session = new OpenstackSession().with(Feature.VERBOSE);
+		OpenstackSession session = OpenstackSession.create().with(Feature.VERBOSE);
 		OpenstackCredentials credentials = new OpenstackCredentials("admin", "woorea");
 		session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
 

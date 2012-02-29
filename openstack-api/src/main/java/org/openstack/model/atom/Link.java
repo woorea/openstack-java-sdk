@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.RequestBuilder;
 
 @XmlRootElement(name="link")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -48,10 +49,11 @@ public class Link implements Serializable {
 		this.type = type;
 	}
 	
-	public <T> T follow(OpenstackSession session, String method, Class<T> clazz) {
+	public <T> T follow(OpenstackSession session, String method, Class<T> c) {
 		// TODO: Handle method?
 		try {
-			return session.resource(href).accept(MediaType.APPLICATION_XML).type(MediaType.APPLICATION_XML).get(clazz);
+			RequestBuilder request = session.resource(href).addAcceptType(MediaType.APPLICATION_XML_TYPE).setContentType(MediaType.APPLICATION_XML_TYPE);
+			return request.get(c);
 		} catch (Exception e) {
 			throw new OpenstackException(e.getMessage(), e);
 		}

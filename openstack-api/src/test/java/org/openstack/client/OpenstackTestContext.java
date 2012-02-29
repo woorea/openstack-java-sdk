@@ -15,7 +15,7 @@ public class OpenstackTestContext {
 	private boolean swiftEnabled;
 
 	public OpenstackSession connect(String url, OpenstackCredentials credentials, String format, boolean verbose) {
-		session = new OpenstackSession();
+		session = OpenstackSession.create();
 		if (verbose) {
 			session.with(OpenstackSession.Feature.VERBOSE);
 		}
@@ -30,7 +30,7 @@ public class OpenstackTestContext {
 			}
 		}
 
-		session.authenticate(url, credentials);
+		session.authenticate(url, credentials, false);
 		return session;
 	}
 

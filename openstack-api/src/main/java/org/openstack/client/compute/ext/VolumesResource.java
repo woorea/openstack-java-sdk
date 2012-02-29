@@ -1,5 +1,6 @@
 package org.openstack.client.compute.ext;
 
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
 import org.openstack.model.compute.VolumeList;
 
@@ -19,7 +20,7 @@ public class VolumesResource extends Resource {
 	 * @return
 	 */
 	public VolumeList list(boolean detail) {
-		Builder r = detail ? resource("detail") : resource();
+		RequestBuilder r = detail ? resource("detail") : resource();
 		return r.get(VolumeList.class);
 	}
 

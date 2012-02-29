@@ -22,7 +22,7 @@ public class OpenstackSessionInfo {
 	}
 
 	public OpenstackSession buildSession() {
-		OpenstackSession session = new OpenstackSession();
+		OpenstackSession session = OpenstackSession.create();
 		if (debug) {
 			session = session.with(Feature.VERBOSE);
 		}
@@ -31,7 +31,7 @@ public class OpenstackSessionInfo {
 
 		if (!session.isAuthenticated()) {
 			OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
-			session.authenticate(authUrl, credentials);
+			session.authenticate(authUrl, credentials, true);
 		}
 
 		return session;

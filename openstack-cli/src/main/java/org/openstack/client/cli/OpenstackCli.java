@@ -1,11 +1,13 @@
 package org.openstack.client.cli;
 
 import org.kohsuke.args4j.CmdLineParser;
+import org.openstack.client.cli.model.ContainerName;
 import org.openstack.client.cli.model.FlavorName;
 import org.openstack.client.cli.model.GlanceImageName;
 import org.openstack.client.cli.model.ImageName;
 import org.openstack.client.cli.model.InstanceName;
 import org.openstack.client.cli.model.SecurityGroupName;
+import org.openstack.client.cli.model.StoragePath;
 
 import com.fathomdb.cli.CliBase;
 import com.fathomdb.cli.CliContext;
@@ -32,7 +34,11 @@ public class OpenstackCli extends CliBase {
 		CmdLineParser.registerHandler(ImageName.class, StringWrapperOptionHandler.class);
 		CmdLineParser.registerHandler(InstanceName.class, StringWrapperOptionHandler.class);
 		CmdLineParser.registerHandler(FlavorName.class, StringWrapperOptionHandler.class);
+
 		CmdLineParser.registerHandler(GlanceImageName.class, StringWrapperOptionHandler.class);
+
+		CmdLineParser.registerHandler(ContainerName.class, StringWrapperOptionHandler.class);
+		CmdLineParser.registerHandler(StoragePath.class, StringWrapperOptionHandler.class);
 
 		init(new OpenstackCliHandler());
 	}

@@ -13,31 +13,31 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.openstack.client.common.HeadResponse;
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.model.image.Image;
 
 import com.google.common.collect.Maps;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource.Builder;
 
 class GlanceHeaderUtils {
     static final Logger log = Logger.getLogger(GlanceHeaderUtils.class.getName());
 
-    static Builder setHeadersForProperties(Builder builder, Map<String, Object> metadata) {
+    static RequestBuilder setHeadersForProperties(RequestBuilder builder, Map<String, Object> metadata) {
         for (Map.Entry<String, Object> tag : metadata.entrySet()) {
-            builder = builder.header("x-image-meta-property-" + tag.getKey(), tag.getValue());
+            builder.putHeader("x-image-meta-property-" + tag.getKey(), tag.getValue().toString());
         }
         return builder;
     }
 
-    static Builder setHeaders(Builder builder, Image properties) {
+    static RequestBuilder setHeaders(RequestBuilder builder, Image properties) {
         if (properties.getName() != null) {
-            builder.header("x-image-meta-name", properties.getName());
+            builder.putHeader("x-image-meta-name", properties.getName());
         } else {
             // throw new IllegalArgumentException("Name is required");
         }
 
         if (properties.getId() != null) {
-            builder.header("x-image-meta-id", properties.getName());
+            builder.putHeader("x-image-meta-id", properties.getName());
         }
 
         // x-image-meta-store
@@ -47,34 +47,34 @@ class GlanceHeaderUtils {
         // When not present, Glance will store the disk image data in the backing store that is marked default. See the configuration option default_store for more information.
 
         if (properties.getDiskFormat() != null) {
-            builder.header("x-image-meta-disk-format", properties.getDiskFormat());
+            builder.putHeader("x-image-meta-disk-format", properties.getDiskFormat());
         }
         if (properties.getContainerFormat() != null) {
-            builder.header("x-image-meta-container-format", properties.getContainerFormat());
+            builder.putHeader("x-image-meta-container-format", properties.getContainerFormat());
         }
 
         if (properties.getSize() != null) {
-            builder.header("x-image-meta-size", properties.getSize());
+            builder.putHeader("x-image-meta-size", properties.getSize().toString());
         }
 
         if (properties.getChecksum() != null) {
-            builder.header("x-image-meta-checksum", properties.getChecksum());
+            builder.putHeader("x-image-meta-checksum", properties.getChecksum());
         }
 
         if (properties.isPublic() != null) {
-            builder.header("x-image-meta-is-public", properties.isPublic());
+            builder.putHeader("x-image-meta-is-public", properties.isPublic().toString());
         }
 
         if (properties.getMinRam() != null) {
-            builder.header("x-image-meta-min-ram", properties.getMinRam());
+            builder.putHeader("x-image-meta-min-ram", properties.getMinRam().toString());
         }
 
         if (properties.getMinDisk() != null) {
-            builder.header("x-image-meta-min-disk", properties.getMinDisk());
+            builder.putHeader("x-image-meta-min-disk", properties.getMinDisk().toString());
         }
 
         if (properties.getOwner() != null) {
-            builder.header("x-image-meta-owner", properties.getOwner());
+            builder.putHeader("x-image-meta-owner", properties.getOwner());
         }
 
         return setHeadersForProperties(builder, properties.getProperties().asMap());
@@ -106,7 +106,7 @@ class GlanceHeaderUtils {
         return imageFieldMap;
     }
 
-    public static Image unmarshalHeaders(ClientResponse response) {
+    public static Image unmarshalHeaders(HeadResponse response) {
         Image image = new Image();
         for (Entry<String, List<String>> entry : response.getHeaders().entrySet()) {
             String key = entry.getKey();

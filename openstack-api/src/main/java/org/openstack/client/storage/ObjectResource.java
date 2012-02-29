@@ -3,6 +3,8 @@ package org.openstack.client.storage;
 import java.io.InputStream;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.OpenstackNotFoundException;
+import org.openstack.client.common.HeadResponse;
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.model.storage.ObjectProperties;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource.Builder;
@@ -17,7 +19,7 @@ public class ObjectResource extends StorageResourceBase {
 	}
 
 	public ObjectProperties metadata() {
-		ClientResponse response = resource().head();
+		HeadResponse response = resource().head();
 		int httpStatus = response.getStatus();
 		if (httpStatus == 200) {
 			ObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response);
@@ -32,7 +34,7 @@ public class ObjectResource extends StorageResourceBase {
 	}
 
 	public void updateMetadata(ObjectProperties changeProperties) {
-		Builder builder = resource();
+		RequestBuilder builder = resource();
 		builder = SwiftHeaderUtils.setHeadersForProperties(builder, changeProperties);
 		builder.post();
 	}

@@ -1,5 +1,6 @@
 package org.openstack.client.storage;
 
+import org.openstack.client.common.RequestBuilder;
 import org.openstack.model.storage.Account;
 import org.openstack.model.storage.Container;
 
@@ -26,7 +27,7 @@ public class ContainersResource extends StorageResourceBase {
 	// POST /account/container/object Update object metadata
 
 	public Iterable<Container> list() {
-		Builder imagesResource = resource();
+		RequestBuilder imagesResource = resource();
 
 		Account account = imagesResource.get(Account.class);
 		return account.getContainers();
