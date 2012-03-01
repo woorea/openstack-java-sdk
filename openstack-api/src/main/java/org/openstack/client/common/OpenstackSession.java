@@ -2,6 +2,7 @@ package org.openstack.client.common;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import org.openstack.client.storage.OpenstackStorageClient;
 import org.openstack.model.atom.Link;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
+import org.openstack.model.compute.Server;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Access.Token;
@@ -20,11 +22,14 @@ import org.openstack.model.identity.Access.Token;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public abstract class OpenstackSession implements Serializable {
 	static final Logger log = Logger.getLogger(OpenstackSession.class.getName());
 
+	public final Map<Object, Object> extensions = Maps.newHashMap();
+	
 	public enum Feature {
 
 		VERBOSE(false), FORCE_JSON(false), FORCE_XML(false);
@@ -197,6 +202,7 @@ public abstract class OpenstackSession implements Serializable {
 		if (storeCredentials) {
 			this.credentials = credentials;
 		}
+		this.access = null;
 		identityConfig.setAuthenticationURL(authURL);
 		Access access = getAuthenticationClient().authenticate(credentials);
 		this.access = access;
@@ -215,12 +221,14 @@ public abstract class OpenstackSession implements Serializable {
 		}
 
 		if (foundServices.isEmpty()) {
-			throw new OpenstackException("Cannot find service: " + serviceType + ".  Available services: " + Joiner.on(",").join(serviceTypes));
+			throw new OpenstackException("Cannot find service: " + serviceType + ".  Available services: "
+					+ Joiner.on(",").join(serviceTypes));
 		}
 
 		Service service;
 		if (foundServices.size() != 1) {
-			log.fine("Found multiple services of type: " + serviceType + ".  Found: " + Joiner.on(',').join(foundServices));
+			log.fine("Found multiple services of type: " + serviceType + ".  Found: "
+					+ Joiner.on(',').join(foundServices));
 			service = pickBest(foundServices);
 		} else {
 			service = foundServices.get(0);
@@ -250,7 +258,7 @@ public abstract class OpenstackSession implements Serializable {
 				return score;
 			}
 		};
-		
+
 		Float bestScore = null;
 		Service best = null;
 		for (Service candidate : services) {
@@ -262,7 +270,7 @@ public abstract class OpenstackSession implements Serializable {
 				throw new IllegalArgumentException("Cannot choose between candidates: " + best + " vs " + candidate);
 			}
 		}
-		
+
 		return best;
 	}
 
@@ -319,5 +327,4 @@ public abstract class OpenstackSession implements Serializable {
 		}
 		authenticate(identityConfig.getAuthenticationURL(), credentials, false);
 	}
-
 }

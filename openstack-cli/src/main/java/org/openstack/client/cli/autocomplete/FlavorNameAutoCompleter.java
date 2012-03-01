@@ -4,25 +4,25 @@ import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.model.compute.Flavor;
+
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
-
 import com.google.common.collect.Lists;
 
 public class FlavorNameAutoCompleter extends SimpleArgumentAutoCompleter {
 
-    @Override
-    public List<String> doComplete(CliContext context, String prefix) throws Exception {
-        List<String> strings = Lists.newArrayList();
+	@Override
+	public List<String> doComplete(CliContext context, String prefix) throws Exception {
+		List<String> strings = Lists.newArrayList();
 
-        OpenstackCliContext osContext = (OpenstackCliContext) context;
-        for (Flavor image : osContext.getFlavors()) {
-            strings.add(image.getName());
-        }
+		OpenstackCliContext osContext = (OpenstackCliContext) context;
+		for (Flavor image : osContext.getCache().getFlavors(true)) {
+			strings.add(image.getName());
+		}
 
-        addSuffix(strings, " ");
+		addSuffix(strings, " ");
 
-        return strings;
-    }
+		return strings;
+	}
 
 }

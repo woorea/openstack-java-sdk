@@ -28,7 +28,10 @@ public class ImageFormatter extends SimpleFormatter<Image> {
 		for (Image.ImageMetadata.ImageMetadataItem item : o.getMetadata().getItems()) {
 			if (sb.length() != 0)
 				sb.append(", ");
-			sb.append(item.getKey() + "=" + item.getValue());
+			String value = item.getValue();
+			if (value != null)
+				value = value.trim();
+			sb.append(item.getKey() + "=" + value);
 		}
 
 		values.put("metadata", sb.toString());

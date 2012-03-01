@@ -1,5 +1,6 @@
 package org.openstack.client.cli.commands;
 
+import org.openstack.client.cli.OpenstackCache;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackSession;
@@ -34,4 +35,11 @@ public abstract class OpenstackCliCommandRunnerBase extends CommandRunnerBase {
 		return (OpenstackCliContext) super.getContext();
 	}
 
+	protected void invalidateCache(Class<?> modelClass) {
+		getCache().invalidateCache(modelClass);
+	}
+
+	protected OpenstackCache getCache() {
+		return getContext().getCache();
+	}
 }

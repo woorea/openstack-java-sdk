@@ -20,7 +20,7 @@ public class ImageName extends StringWrapper {
 
 	public String findImageId(OpenstackCliContext context) throws OpenstackException {
 		List<Image> matches = Lists.newArrayList();
-		for (Image image : context.getImages()) {
+		for (Image image : context.getCache().getImages(true)) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {
