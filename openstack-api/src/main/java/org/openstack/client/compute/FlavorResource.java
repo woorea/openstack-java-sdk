@@ -17,7 +17,7 @@ public class FlavorResource extends Resource {
 
 	}
 
-	public FlavorResource(OpenstackSession session, Flavor flavor) {
+	public FlavorResource(final OpenstackSession session, Flavor flavor) {
 		initialize(session, Iterables.find(flavor.getLinks(), new Predicate<Link>() {
 
 			@Override
@@ -25,7 +25,7 @@ public class FlavorResource extends Resource {
 				if ("bookmark".equals(link.getRel())) {
 					// This is the bookmark i get from trunk (wihout protocol version)
 					// http://192.168.1.49:8774/7da90d9067ab4890ae94779a1859db8a/servers/d87c6d44-8118-4c11-8259-b9c784965d59
-					SimpleLinkResolver.fixLinkHref(link);
+					SimpleLinkResolver.fixLinkHref(session, link);
 					return true;
 				} else {
 					return false;

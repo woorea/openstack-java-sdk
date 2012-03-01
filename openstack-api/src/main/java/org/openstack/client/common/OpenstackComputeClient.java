@@ -6,8 +6,6 @@ import org.openstack.client.compute.TenantResource;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerForCreate;
 
-import com.google.common.collect.Lists;
-
 public class OpenstackComputeClient {
 
 	OpenstackSession session;
@@ -34,5 +32,9 @@ public class OpenstackComputeClient {
 
 	public OpenstackSession getSession() {
 		return session;
+	}
+
+	public String getRootUrl() {
+		return root().resource;
 	}
 }

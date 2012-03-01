@@ -255,6 +255,9 @@ public abstract class OpenstackSession implements Serializable {
 				if (s.getName().endsWith("OpenStack")) {
 					score += 10;
 				}
+				if (s.getName().endsWith("CDN")) {
+					score -= 10;
+				}
 				return score;
 			}
 		};

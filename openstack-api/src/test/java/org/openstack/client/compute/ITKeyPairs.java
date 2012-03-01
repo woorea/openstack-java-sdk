@@ -10,6 +10,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testListKeypairs() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		OpenstackComputeClient nova = getComputeClient();
 		Iterable<KeyPair> keyPairs = nova.root().keyPairs().list();
 		for (KeyPair keyPair : keyPairs) {
@@ -63,6 +65,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testCreateAndDelete() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// OSAPI-BUG: I think an full-ascii name is often undeletable
 		// String name = random.randomAsciiString(1, 10).trim();
 		String name = random.randomAlphanumericString(1, 12).trim();
@@ -72,6 +76,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName1() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// Problems with difficult names reported as bug #937408
 		skipUntilBugFixed(937408);
 
@@ -82,6 +88,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName2() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// Problems with difficult names reported as bug #937408
 		skipUntilBugFixed(937408);
 
@@ -92,6 +100,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName3() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// Problems with difficult names reported as bug #937408
 		skipUntilBugFixed(937408);
 
@@ -102,6 +112,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName4() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// Problems with difficult names reported as bug #937408
 		skipUntilBugFixed(937408);
 
@@ -112,6 +124,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName5() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// Problems with difficult names reported as bug #937408
 		skipUntilBugFixed(937408);
 
@@ -122,6 +136,8 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	@Test
 	public void testHardName6() throws OpenstackException {
+		skipIfNoKeyPairs();
+
 		// Problems with difficult names reported as bug #937408
 		skipUntilBugFixed(937408);
 

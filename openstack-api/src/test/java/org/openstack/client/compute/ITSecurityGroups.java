@@ -10,6 +10,7 @@ import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.SecurityGroupRule;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Sets;
@@ -18,6 +19,8 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 	@Test
 	public void testListSecurityGroups() throws OpenstackException {
+		skipIfNoSecurityGroups();
+
 		OpenstackComputeClient nova = getComputeClient();
 		SecurityGroupList securityGroups = nova.root().securityGroups().list();
 		for (SecurityGroup securityGroup : securityGroups) {
@@ -34,8 +37,10 @@ public class ITSecurityGroups extends ComputeApiTest {
 		Assert.assertEquals(actual.getDescription(), expected.getDescription());
 	}
 
-	@Test(expectedExceptions = { OpenstackNotFoundException.class })
+	@Test(expectedExceptions = { OpenstackNotFoundException.class, SkipException.class })
 	public void testNonExistentSecurityGroup() throws OpenstackException {
+		skipIfNoSecurityGroups();
+
 		OpenstackComputeClient nova = getComputeClient();
 
 		Set<Integer> ids = Sets.newHashSet();
@@ -56,6 +61,8 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 	@Test
 	public void testCreateAndDelete() throws OpenstackException {
+		skipIfNoSecurityGroups();
+
 		OpenstackComputeClient nova = getComputeClient();
 
 		String groupName = random.randomAlphanumericString(1, 128).trim();
@@ -133,8 +140,10 @@ public class ITSecurityGroups extends ComputeApiTest {
 	/**
 	 * Description is limited to 255 chars
 	 */
-	@Test(expectedExceptions = { OpenstackException.class })
+	@Test(expectedExceptions = { OpenstackException.class, SkipException.class })
 	public void testBigDescriptionFails() throws OpenstackException {
+		skipIfNoSecurityGroups();
+
 		OpenstackComputeClient nova = getComputeClient();
 
 		String description = random.randomAlphanumericString(500);
@@ -151,6 +160,8 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 	@Test
 	public void testDuplicateNameFails() throws OpenstackException {
+		skipIfNoSecurityGroups();
+
 		OpenstackComputeClient nova = getComputeClient();
 
 		String groupName = random.randomAlphanumericString(1, 128).trim();

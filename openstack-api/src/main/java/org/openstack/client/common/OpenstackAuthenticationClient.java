@@ -6,6 +6,8 @@ import org.openstack.client.identity.IdentityResource;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
 
+import com.google.common.base.Strings;
+
 public class OpenstackAuthenticationClient {
 
 	private final OpenstackSession session;
@@ -24,7 +26,11 @@ public class OpenstackAuthenticationClient {
 		Authentication.PasswordCredentials passwordCredentials = new Authentication.PasswordCredentials();
 		passwordCredentials.setUsername(credentials.getUsername());
 		passwordCredentials.setPassword(credentials.getPassword());
-		authentication.tenantName = credentials.getTenant();
+		if (!Strings.isNullOrEmpty(credentials.getTenant())) {
+			authentication.tenantName = credentials.getTenant();
+		} else {
+			authentication.tenantName = null;
+		}
 		// authentication.tenantId = credentials.getTenant();
 		authentication.setPasswordCredentials(passwordCredentials);
 

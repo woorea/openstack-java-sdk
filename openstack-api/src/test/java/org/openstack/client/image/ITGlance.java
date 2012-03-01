@@ -19,6 +19,7 @@ import org.openstack.model.image.Image;
 import org.openstack.model.image.ImageProperties;
 import org.openstack.utils.Md5Hash;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -133,7 +134,7 @@ public class ITGlance extends GlanceIntegrationTest {
 		}
 	}
 
-	@Test(expectedExceptions=OpenstackException.class)
+	@Test(expectedExceptions= { OpenstackException.class, SkipException.class} )
 	public void testNullFormatsFails() throws Exception {
 		skipIfNoGlance();
 

@@ -18,14 +18,14 @@ public class ImageResource extends Resource {
 
 	}
 
-	public ImageResource(OpenstackSession session, Image image) {
+	public ImageResource(final OpenstackSession session, Image image) {
 		initialize(session, Iterables.find(image.getLinks(), new Predicate<Link>() {
 
 			@Override
 			public boolean apply(Link link) {
 				if ("bookmark".equals(link.getRel())) {
 					// This is the bookmark i get from trunk (wihout protocol version)
-					SimpleLinkResolver.fixLinkHref(link);
+					SimpleLinkResolver.fixLinkHref(session, link);
 					return true;
 				} else {
 					return false;

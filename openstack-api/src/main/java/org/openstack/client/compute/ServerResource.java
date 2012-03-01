@@ -61,7 +61,7 @@ public class ServerResource extends ComputeResourceBase {
 
 	}
 
-	public ServerResource(OpenstackSession session, Server server) {
+	public ServerResource(final OpenstackSession session, Server server) {
 		initialize(session, Iterables.find(server.getLinks(), new Predicate<Link>() {
 
 			@Override
@@ -69,7 +69,7 @@ public class ServerResource extends ComputeResourceBase {
 				if ("bookmark".equals(link.getRel())) {
 					// This is the bookmark i get from trunk (wihout protocol version)
 					// http://192.168.1.49:8774/7da90d9067ab4890ae94779a1859db8a/servers/d87c6d44-8118-4c11-8259-b9c784965d59
-					SimpleLinkResolver.fixLinkHref(link);
+					SimpleLinkResolver.fixLinkHref(session, link);
 					return true;
 				} else {
 					return false;

@@ -27,7 +27,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		Flavor flavor = null;
 		Link link = findLink(links, "bookmark");
 		if (link != null) {
-			fixLinkHref(link);
+			fixLinkHref(session, link);
 			flavor = link.follow(session, "GET", Flavor.class);
 		}
 
@@ -38,7 +38,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		return flavor;
 	}
 
-	public static void fixLinkHref(Link link) {
+	public static void fixLinkHref(OpenstackSession session, Link link) {
 		// dirty hack since urls are not correct in the XML
 		// may this is fixed in the current revision
 		// so simply comment this
@@ -49,8 +49,16 @@ public class SimpleLinkResolver implements LinkResolver {
 		try {
 			URI uri = URI.create(link.getHref());
 			String path = uri.getPath();
-			if (!path.startsWith("/v1.1")) {
-				path = "/v1.1" + path;
+
+			URI rootUri = URI.create(session.getComputeClient().getRootUrl());
+
+			String version = "/v1.1";
+			if (rootUri.getPath().startsWith("/v2/")) {
+				version = "/v2";
+			}
+
+			if (!path.startsWith(version + "/")) {
+				path = version + path;
 				uri = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), path, uri.getQuery(),
 						uri.getFragment());
 				link.setHref(uri.toString());
@@ -65,7 +73,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		Image image = null;
 		Link link = findLink(links, "bookmark");
 		if (link != null) {
-			fixLinkHref(link);
+			fixLinkHref(session, link);
 			image = link.follow(session, "GET", Image.class);
 		}
 
