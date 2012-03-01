@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.client.OpenstackNotAuthorizedException;
+import org.openstack.client.OpenstackAuthenticationException;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -84,7 +84,7 @@ public abstract class RequestBuilder {
 		if (session.hasStoredCredentials()) {
 			try {
 				return doRequest0(c);
-			} catch (OpenstackNotAuthorizedException e) {
+			} catch (OpenstackAuthenticationException e) {
 				log.log(Level.WARNING, "Caught not-authorized exception; trying to re-authenticate", e);
 				if (session.isAuthenticated()) {
 					session.reauthenticate();
