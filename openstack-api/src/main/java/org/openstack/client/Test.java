@@ -1,6 +1,5 @@
 package org.openstack.client;
 
-import org.openstack.client.common.JerseyOpenstackSession;
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.common.OpenstackSession.Feature;
 import org.openstack.client.compute.ServerResource;
@@ -14,48 +13,55 @@ import org.openstack.model.identity.Tenant;
 public class Test {
 
 	public static void main(String[] args) {
+		// X-Auth-Token (no tenant selected)
 		OpenstackSession session = OpenstackSession.create().with(Feature.VERBOSE);
+
 		OpenstackCredentials credentials = new OpenstackCredentials("admin", "woorea");
 		session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
 
-		// X-Auth-Token has been set on session object
-
+		// Let' show our available tenants
 		IdentityResource identity = session.getAuthenticationClient().root();
-
 		Iterable<Tenant> tenants = identity.tenants().list();
 		for (Tenant tenant : tenants) {
 			System.out.println(tenant);
 		}
 
-		// I will choose the first tenant
+		// Ok, I will choose the first available tenant (
 		for (Tenant tenant : tenants) {
 			credentials.setTenant(tenant.getName());
 			session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
 			break;
 		}
 
+		// Give me access to compute API on the selected tenant
 		TenantResource compute = session.getComputeClient().root();
 		for (Server s : compute.servers().list()) {
 			System.out.println(s);
 		}
 
+		// List the available images
 		Iterable<Image> images = compute.images().list();
 		Image image = null;
 		for (Image i : images) {
 			System.out.println(i);
+
+			// If it's the devstack default image, then i go to select it
 			if (i.getName().equals("cirros-0.3.0-x86_64-blank")) {
 				image = i;
 				break;
 			}
 		}
 
+		// Show me the image details
 		System.out.println(image);
 
+		// List the available flavors
 		Iterable<Flavor> flavors = compute.flavors().list();
 		for (Flavor f : flavors) {
 			System.out.println(f);
 		}
 
+		// List the servers
 		Iterable<Server> servers = compute.servers().list();
 		for (Server s : servers) {
 			ServerResource sr = new ServerResource(session, s);
