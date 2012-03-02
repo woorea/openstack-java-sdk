@@ -110,7 +110,12 @@ public class ITServers extends ComputeApiTest {
 		} catch (OpenstackNotFoundException e) {
 			// Good!
 		}
-		Assert.assertNull(stillHere);
+
+		if (stillHere == null) {
+			// Good!
+		} else {
+			Assert.assertEquals(stillHere.getStatus(), "DELETED");
+		}
 	}
 
 	private void checkLinkedItems(OpenstackSession session, Server ready) {
