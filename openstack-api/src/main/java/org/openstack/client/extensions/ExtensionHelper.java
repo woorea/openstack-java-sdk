@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.namespace.QName;
 
-import org.openstack.client.common.ExtensionData;
+import org.openstack.model.common.ExtensionData;
 
 public class ExtensionHelper<T> {
 

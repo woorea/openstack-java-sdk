@@ -28,7 +28,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		Link link = findLink(links, "bookmark");
 		if (link != null) {
 			fixLinkHref(session, link);
-			flavor = link.follow(session, "GET", Flavor.class);
+			flavor = session.followLink(link, Flavor.class);
 		}
 
 		if (flavor == null && flavorId != null) {
@@ -74,7 +74,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		Link link = findLink(links, "bookmark");
 		if (link != null) {
 			fixLinkHref(session, link);
-			image = link.follow(session, "GET", Image.class);
+			image = session.followLink(link, Image.class);
 		}
 
 		if (image == null && imageId != null) {

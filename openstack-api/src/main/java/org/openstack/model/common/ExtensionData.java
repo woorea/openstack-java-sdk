@@ -1,4 +1,4 @@
-package org.openstack.client.common;
+package org.openstack.model.common;
 
 import java.util.Map;
 

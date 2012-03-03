@@ -14,8 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.client.common.ExtensionData;
 import org.openstack.model.atom.Link;
+import org.openstack.model.common.ExtensionData;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)

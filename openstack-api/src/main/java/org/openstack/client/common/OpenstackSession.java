@@ -25,10 +25,11 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public abstract class OpenstackSession implements Serializable {
-	static final Logger log = Logger.getLogger(OpenstackSession.class.getName());
+	static final Logger log = Logger
+			.getLogger(OpenstackSession.class.getName());
 
 	public final Map<Object, Object> extensions = Maps.newHashMap();
-	
+
 	public enum Feature {
 
 		VERBOSE(false), FORCE_JSON(false), FORCE_XML(false);
@@ -134,18 +135,21 @@ public abstract class OpenstackSession implements Serializable {
 	//
 
 	/*
-	 * public OpenstackSession(String authURL) { this.authenticationUrl = authURL; }
+	 * public OpenstackSession(String authURL) { this.authenticationUrl =
+	 * authURL; }
 	 * 
-	 * public OpenstackSession(String authUrl, OpenstackCredentials credentials) { this(authUrl);
-	 * authenticate(credentials); }
+	 * public OpenstackSession(String authUrl, OpenstackCredentials credentials)
+	 * { this(authUrl); authenticate(credentials); }
 	 */
 
 	public boolean isAuthenticated() {
 		return access != null;
 	}
 
-	public synchronized Access getAuthenticationToken() throws OpenstackException {
-		// TODO: Allow saving credentials and automatically re-authenticate on timeout
+	public synchronized Access getAuthenticationToken()
+			throws OpenstackException {
+		// TODO: Allow saving credentials and automatically re-authenticate on
+		// timeout
 		// if (access == null)
 		// access = getAuthenticationClient().authenticate();
 		return access;
@@ -197,7 +201,8 @@ public abstract class OpenstackSession implements Serializable {
 		authenticate(authURL, credentials, false);
 	}
 
-	public void authenticate(String authURL, OpenstackCredentials credentials, boolean storeCredentials) {
+	public void authenticate(String authURL, OpenstackCredentials credentials,
+			boolean storeCredentials) {
 		if (storeCredentials) {
 			this.credentials = credentials;
 		}
@@ -220,14 +225,15 @@ public abstract class OpenstackSession implements Serializable {
 		}
 
 		if (foundServices.isEmpty()) {
-			throw new OpenstackException("Cannot find service: " + serviceType + ".  Available services: "
+			throw new OpenstackException("Cannot find service: " + serviceType
+					+ ".  Available services: "
 					+ Joiner.on(",").join(serviceTypes));
 		}
 
 		Service service;
 		if (foundServices.size() != 1) {
-			log.fine("Found multiple services of type: " + serviceType + ".  Found: "
-					+ Joiner.on(',').join(foundServices));
+			log.fine("Found multiple services of type: " + serviceType
+					+ ".  Found: " + Joiner.on(',').join(foundServices));
 			service = pickBest(foundServices);
 		} else {
 			service = foundServices.get(0);
@@ -240,7 +246,8 @@ public abstract class OpenstackSession implements Serializable {
 		String bestUrl = service.getEndpoints().get(0).getPublicURL();
 
 		if (bestUrl == null) {
-			throw new OpenstackException("Cannot find endpoint URL for image service");
+			throw new OpenstackException(
+					"Cannot find endpoint URL for image service");
 		}
 
 		return bestUrl;
@@ -265,11 +272,14 @@ public abstract class OpenstackSession implements Serializable {
 		Service best = null;
 		for (Service candidate : services) {
 			Float score = scoreFunction.apply(candidate);
-			if (bestScore == null || bestScore.floatValue() < score.floatValue()) {
+			if (bestScore == null
+					|| bestScore.floatValue() < score.floatValue()) {
 				bestScore = score;
 				best = candidate;
 			} else if (bestScore.floatValue() == score.floatValue()) {
-				throw new IllegalArgumentException("Cannot choose between candidates: " + best + " vs " + candidate);
+				throw new IllegalArgumentException(
+						"Cannot choose between candidates: " + best + " vs "
+								+ candidate);
 			}
 		}
 
@@ -277,7 +287,17 @@ public abstract class OpenstackSession implements Serializable {
 	}
 
 	public <T> T followLink(Link link, Class<T> clazz) {
-		return link.follow(this, null, clazz);
+
+		// TODO: Handle method?
+		try {
+			RequestBuilder request = resource(link.getHref()).addAcceptType(
+					MediaType.APPLICATION_XML_TYPE).setContentType(
+					MediaType.APPLICATION_XML_TYPE);
+			return request.get(clazz);
+		} catch (Exception e) {
+			throw new OpenstackException(e.getMessage(), e);
+		}
+
 	}
 
 	public LinkResolver getLinkResolver() {
@@ -312,7 +332,8 @@ public abstract class OpenstackSession implements Serializable {
 		if (flavor == null)
 			return null;
 
-		return getLinkResolver().resolveFlavor(flavor.getId(), flavor.getLinks());
+		return getLinkResolver().resolveFlavor(flavor.getId(),
+				flavor.getLinks());
 	}
 
 	public static OpenstackSession create() {

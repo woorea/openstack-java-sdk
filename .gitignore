@@ -6,3 +6,5 @@
 target/
 bin/logs/
 
+
+openstack-api/test-output/

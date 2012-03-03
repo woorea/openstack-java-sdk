@@ -49,7 +49,7 @@ public class Image implements Serializable {
 	private ImageMetadata metadata;
 	
 	@XmlAccessorType(XmlAccessType.NONE)
-	public static class ImageMetadata implements Iterable<ImageMetadata.ImageMetadataItem> {
+	public static class ImageMetadata implements Serializable, Iterable<ImageMetadata.ImageMetadataItem> {
 
 	    @XmlAccessorType(XmlAccessType.NONE)
 	    public static final class ImageMetadataItem  {

@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
 
-import org.openstack.client.common.ExtensionData;
+import org.openstack.model.common.ExtensionData;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
