@@ -1,6 +1,7 @@
 package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 
 /**
  * The volume types API controller for the Openstack API
@@ -8,7 +9,7 @@ import org.openstack.client.common.Resource;
  * @author sp
  * 
  */
-public class VolumeTypesResource extends Resource {
+public class VolumeTypesResource extends Resource implements ResourceExtension {
 
 	/**
 	 * Returns the list of volume types

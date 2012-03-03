@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Hex;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.keystone.KeyStoneAccess;
 
 import com.google.common.base.Charsets;
 
@@ -15,7 +16,7 @@ public class TokensResource extends IdentityResourceBase {
         // String password = authentication.getPasswordCredentials().getPassword();
         // authentication.getPasswordCredentials().setPassword(sha512(password));
         // .type(MediaType.APPLICATION_XML) ?
-    	return resource().post(Access.class, authentication);
+    	return resource().post(KeyStoneAccess.class, authentication);
     }
 
     private String sha512(String text) {

@@ -14,10 +14,9 @@ import org.openstack.client.storage.OpenstackStorageClient;
 import org.openstack.model.atom.Link;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Server;
 import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Access.Token;
+import org.openstack.model.identity.Service;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;

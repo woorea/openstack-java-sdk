@@ -9,12 +9,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.PagingListBase;
+import org.openstack.model.identity.keystone.KeyStoneTenant;
 
 @XmlRootElement(name = "tenants")
 @XmlAccessorType(XmlAccessType.NONE)
 public class TenantList extends PagingListBase<Tenant> {
 
-	@XmlElement(name = "tenant")
+	@XmlElement(name = "tenant", type = KeyStoneTenant.class)
 	private List<Tenant> list;
 
 	public List<Tenant> getList() {

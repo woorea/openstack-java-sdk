@@ -17,7 +17,7 @@ public class ServicesRepresentation {
 		this.model = model;
 	}
 	
-	public List<org.openstack.model.identity.Service> getList() {
+	public List<org.openstack.model.identity.keystone.KeyStoneService> getList() {
 		return model.getList();
 	}
 	

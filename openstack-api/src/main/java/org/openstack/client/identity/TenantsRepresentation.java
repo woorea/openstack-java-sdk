@@ -2,6 +2,7 @@ package org.openstack.client.identity;
 
 import java.util.List;
 
+import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
 
 import com.sun.jersey.api.client.Client;
@@ -17,7 +18,7 @@ public class TenantsRepresentation {
 		this.model = model;
 	}
 	
-	public List<org.openstack.model.identity.Tenant> getList() {
+	public List<Tenant> getList() {
 		return model.getList();
 	}
 	

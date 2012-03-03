@@ -3,83 +3,25 @@ package org.openstack.model.identity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+public interface Service extends Serializable {
 
-import com.google.common.collect.Lists;
+	String getId();
 
-@XmlRootElement()
-@XmlAccessorType(XmlAccessType.NONE)
-public class Service implements Serializable {
+	void setId(String id);
 
-	@JsonProperty("endpoints")
-	@XmlElement(nillable = true, name = "endpoint")
-	private List<ServiceEndpoint> endpoints;
+	String getName();
 
-	// Not sure what these are...
-	@JsonProperty("endpoints_links")
-	private List<String> endpointsLinks;
+	void setName(String name);
 
-    @XmlAttribute
-    private String id;
+	String getType();
 
-    @XmlAttribute
-    private String name;
+	void setType(String type);
 
-    @XmlAttribute
-    private String type;
+	String getDescription();
 
-    @XmlElement
-    private String description;
+	void setDescription(String description);
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Service [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", endpoints=" + endpoints + "]";
-    }
-
-    public List<ServiceEndpoint> getEndpoints() {
-        if (endpoints == null) {
-            endpoints = Lists.newArrayList();
-        }
-        return endpoints;
-    }
+	List<ServiceEndpoint> getEndpoints();
 
 }

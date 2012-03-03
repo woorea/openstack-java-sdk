@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 import org.openstack.model.compute.CreateKeyPairResponse;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairList;
@@ -15,7 +16,7 @@ import org.openstack.model.compute.KeyPairList;
  * @author sp
  * 
  */
-public class KeyPairsResource extends Resource {
+public class KeyPairsResource extends Resource implements ResourceExtension {
 
 	// KeyPairsResource seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?

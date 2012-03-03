@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.UUID;
 
 import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.client.compute.ext.KeyPairsResource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.KeyPair;
@@ -47,7 +48,7 @@ public class ITConfigDrive extends ComputeApiTest {
 		keyPair.setPublicKey(publicKey);
 		keyPair.setName(keyName);
 
-		nova.root().keyPairs().create(keyPair);
+		nova.root().extension(KeyPairsResource.class).create(keyPair);
 
 		serverForCreate.setKeyName(keyName);
 		serverForCreate.setConfigDrive(true);

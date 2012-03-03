@@ -6,6 +6,7 @@ import java.util.Map;
 import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.compute.TenantResource;
+import org.openstack.client.compute.ext.SecurityGroupsResource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.SecurityGroup;
@@ -48,7 +49,7 @@ public class OpenstackCache {
 			} else if (modelClass == org.openstack.model.image.Image.class) {
 				cached = (List<V>) Lists.newArrayList(session.getImageClient().root().images().list(true));
 			} else if (modelClass == SecurityGroup.class) {
-				cached = (List<V>) Lists.newArrayList(computeRoot().securityGroups().list().getList());
+				cached = (List<V>) Lists.newArrayList(computeRoot().extension(SecurityGroupsResource.class).list().getList());
 			} else {
 				throw new IllegalArgumentException();
 			}

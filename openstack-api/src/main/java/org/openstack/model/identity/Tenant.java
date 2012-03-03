@@ -1,66 +1,21 @@
 package org.openstack.model.identity;
 
-import java.io.Serializable;
+public interface Tenant {
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+	String getId();
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.NONE)
-public class Tenant implements Serializable {
-	
-	@XmlAttribute
-	private String id;
-	
-	@XmlAttribute
-	private String name;
-	
-	@XmlAttribute
-	private boolean enabled;
-	
-	@XmlElement
-	private String description;
+	void setId(String id);
 
-	public String getId() {
-		return id;
-	}
+	String getName();
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	void setName(String name);
 
-	public String getName() {
-		return name;
-	}
+	boolean isEnabled();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	void setEnabled(boolean enabled);
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+	String getDescription();
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+	void setDescription(String description);
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@Override
-	public String toString() {
-		return "Tenant [id=" + id + ", name=" + name + ", enabled=" + enabled
-				+ ", description=" + description + "]";
-	}
-	
 }
-

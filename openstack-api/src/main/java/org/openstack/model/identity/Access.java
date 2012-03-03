@@ -3,88 +3,32 @@ package org.openstack.model.identity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+public interface Access extends Serializable {
+	
+	public interface Token extends Serializable {
 
-import com.google.common.collect.Lists;
+		String getId();
 
-@XmlRootElement(name = "access")
-@XmlAccessorType(XmlAccessType.NONE)
-public class Access implements Serializable {
-    @XmlElement(nillable = true, name = "service")
-    @XmlElementWrapper(name = "serviceCatalog")
-    private List<Service> serviceCatalog;
+		void setId(String id);
 
-    @XmlAccessorType(XmlAccessType.NONE)
-    public static class Token implements Serializable {
+		String getExpires();
 
-        @XmlAttribute
-        private String id;
+		void setExpires(String expires);
 
-        @XmlAttribute
-        private String expires;
+		Tenant getTenant();
 
-        @XmlElement
-        private Tenant tenant;
+		void setTenant(Tenant tenant);
 
-        public String getId() {
-            return id;
-        }
+		List<Tenant> getTenants();
 
-        public void setId(String id) {
-            this.id = id;
-        }
+		void setTenants(List<Tenant> tenants);
 
-        public String getExpires() {
-            return expires;
-        }
+	}
 
-        public void setExpires(String expires) {
-            this.expires = expires;
-        }
+	Token getToken();
 
-		public Tenant getTenant() {
-			return tenant;
-		}
+	void setToken(Token token);
 
-		public void setTenant(Tenant tenant) {
-			this.tenant = tenant;
-		}
-
-        @Override
-        public String toString() {
-            return "Token [id=" + id + ", expires=" + expires + "]";
-        }
-    }
-
-    @XmlElement
-    private Token token;
-
-    @XmlElement
-    public User user;
-
-    public Token getToken() {
-        return token;
-    }
-
-    public void setToken(Token token) {
-        this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "Access [token=" + token + "]";
-    }
-
-    public List<Service> getServiceCatalog() {
-        if (serviceCatalog == null) {
-            serviceCatalog = Lists.newArrayList();
-        }
-        return serviceCatalog;
-    }
+	List<Service> getServiceCatalog();
 
 }

@@ -1,6 +1,7 @@
 package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 import org.openstack.model.compute.Zone;
 import org.openstack.model.compute.ZoneList;
 
@@ -12,7 +13,7 @@ import org.openstack.model.compute.ZoneList;
  * @author sp
  * 
  */
-public class ZonesResource extends Resource {
+public class ZonesResource extends Resource implements ResourceExtension {
 
 	/**
 	 * Return all zones in brief

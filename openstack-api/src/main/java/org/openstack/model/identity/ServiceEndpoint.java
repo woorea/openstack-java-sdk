@@ -2,78 +2,22 @@ package org.openstack.model.identity;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+public interface ServiceEndpoint extends Serializable {
 
-@XmlAccessorType(XmlAccessType.NONE)
-public class ServiceEndpoint implements Serializable {
+	String getRegion();
 
-    @XmlAttribute
-    private String region;
+	void setRegion(String region);
 
-    @XmlAttribute
-    private String tenantId;
+	String getTenantId();
 
-    @XmlAttribute
-    private String internalURL;
+	void setTenantId(String tenantId);
 
-    @XmlAttribute
-    private String publicURL;
+	String getInternalURL();
 
-    @XmlAttribute
-    private String publicURL2;
+	void setInternalURL(String internalURL);
 
-    @XmlAttribute
-    private String adminURL;
+	String getPublicURL();
 
-    @XmlAttribute
-    private String versionId;
+	void setPublicURL(String publicURL);
 
-    @XmlAttribute
-    private String versionList;
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getInternalURL() {
-        return internalURL;
-    }
-
-    public void setInternalURL(String internalURL) {
-        this.internalURL = internalURL;
-    }
-
-    public String getPublicURL() {
-        return publicURL;
-    }
-
-    public void setPublicURL(String publicURL) {
-        this.publicURL = publicURL;
-    }
-
-	@Override
-	public String toString() {
-		return "ServiceEndpoint [region=" + region + ", tenantId=" + tenantId + ", internalURL=" + internalURL
-				+ ", publicURL=" + publicURL + ", publicURL2=" + publicURL2 + ", adminURL=" + adminURL + ", versionId="
-				+ versionId + ", versionList=" + versionList + "]";
-	}
-
-    // @XmlElement
-    // private ServiceVersion version;
-
-    
 }

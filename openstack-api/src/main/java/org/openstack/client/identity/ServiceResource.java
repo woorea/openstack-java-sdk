@@ -2,11 +2,12 @@ package org.openstack.client.identity;
 
 import org.openstack.client.common.Resource;
 import org.openstack.model.identity.Service;
+import org.openstack.model.identity.keystone.KeyStoneService;
 
 public class ServiceResource extends Resource {
 
 	public Service show() {
-		return resource().get(Service.class);
+		return resource().get(KeyStoneService.class);
 	}
 
 	// ??

@@ -1,6 +1,7 @@
 package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
+import org.openstack.client.common.ResourceExtension;
 
 import com.sun.jersey.api.client.Client;
 
@@ -10,6 +11,6 @@ import com.sun.jersey.api.client.Client;
  * @author sp
  *
  */
-public class SimpleTenantUsageResource extends Resource {
+public class SimpleTenantUsageResource extends Resource implements ResourceExtension {
 
 }
