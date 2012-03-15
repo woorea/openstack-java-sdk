@@ -6,8 +6,6 @@ import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
 
-import org.openstack.model.common.ExtensionData;
-
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
@@ -20,10 +18,9 @@ public class ExtensionRegistry {
         return extensionsByNamespace.get(namespace);
     }
 
-    public ExtensionValues parseAllExtensions(ExtensionData extensionData) {
+    public ExtensionValues parseAllExtensions(Map<QName, String> extensionAttributes) {
     	ExtensionValues results = new ExtensionValues();
-
-        Map<QName, Object> extensionAttributes = extensionData.getExtensionAttributes();
+        
         if (extensionAttributes != null) {
 	        Set<String> namespaces = Sets.newHashSet();
 	        for (QName qname : extensionAttributes.keySet()) {
@@ -40,18 +37,17 @@ public class ExtensionRegistry {
 	            }
 	            Class<?> attributeClass = extension.getAttributeClass();
 	            if (attributeClass != null) {
-	            	Object o = parseExtensionAttributes(extensionData, attributeClass);
+	            	Object o = parseExtensionAttributes(extensionAttributes, attributeClass);
 	                results.add(o);
 	            }
 	        }
         }
-        
         return results;
     }
 
-    private <T> T parseExtensionAttributes(ExtensionData extensionData, Class<T> attributeClass) {
+    private <T> T parseExtensionAttributes(Map<QName, String> extensionAttributes, Class<T> attributeClass) {
         ExtensionHelper<T> helper = new ExtensionHelper<T>(attributeClass);
-        T o = helper.parse(extensionData);
+        T o = helper.parse(extensionAttributes);
         return o;
 	}
 

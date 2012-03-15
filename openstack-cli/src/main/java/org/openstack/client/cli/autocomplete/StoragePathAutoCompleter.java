@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.storage.OpenstackStorageClient;
-import org.openstack.model.storage.Container;
-import org.openstack.model.storage.StorageObject;
+import org.openstack.model.storage.SwiftContainer;
+import org.openstack.model.storage.SwiftStorageObject;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
@@ -21,8 +21,8 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		OpenstackStorageClient client = osContext.getStorageClient();
 
 		if (!prefix.contains("/")) {
-			Iterable<Container> items = client.root().containers().list();
-			for (Container item : items) {
+			Iterable<SwiftContainer> items = client.root().containers().list();
+			for (SwiftContainer item : items) {
 				strings.add(item.getName());
 			}
 			addSuffix(strings, "/");
@@ -30,8 +30,8 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		} else {
 			String[] pathTokens = prefix.split("/");
 			if (pathTokens.length == 1 || pathTokens.length == 2) {
-				Iterable<StorageObject> items = client.root().containers().id(pathTokens[0]).objects().list();
-				for (StorageObject item : items) {
+				Iterable<SwiftStorageObject> items = client.root().containers().id(pathTokens[0]).objects().list();
+				for (SwiftStorageObject item : items) {
 					strings.add(item.getName());
 				}
 

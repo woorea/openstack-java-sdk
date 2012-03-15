@@ -3,22 +3,22 @@ package org.openstack.client.compute;
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
 import org.openstack.client.common.SimplePagingList;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaImageList;
 
 import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ImagesResource extends Resource {
 
-    public Iterable<Image> list(boolean detail) {
+    public Iterable<NovaImage> list(boolean detail) {
     	RequestBuilder r = detail ? resource("detail") : resource();
-    	ImageList page = r.get(ImageList.class);
+    	NovaImageList page = r.get(NovaImageList.class);
     	
     	// Does this actually page?
-        return new SimplePagingList<Image>(session, page);
+        return new SimplePagingList<NovaImage>(session, page);
     }
 
-    public Iterable<Image> list() {
+    public Iterable<NovaImage> list() {
     	return list(true);
     }
 

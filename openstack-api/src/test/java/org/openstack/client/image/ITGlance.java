@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Hex;
-import org.openstack.client.OpenstackException;
-import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.client.common.OpenstackImageClient;
 import org.openstack.client.utils.RandomDataInputStream;
-import org.openstack.model.image.Image;
-import org.openstack.model.image.ImageProperties;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenstackNotFoundException;
+import org.openstack.model.image.GlanceImage;
+import org.openstack.model.image.GlanceImageProperties;
 import org.openstack.utils.Md5Hash;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -31,16 +31,16 @@ public class ITGlance extends GlanceIntegrationTest {
 		skipIfNoGlance();
 
 		OpenstackImageClient glance = getImageClient();
-		List<Image> images = Lists.newArrayList(glance.root().images().list());
+		List<GlanceImage> images = Lists.newArrayList(glance.root().images().list());
 
-		for (Image image : images) {
-			Image details = glance.root().images().image(image.getId()).show();
+		for (GlanceImage image : images) {
+			GlanceImage details = glance.root().images().image(image.getId()).show();
 
 			assertImageEquals(details, image);
 		}
 	}
 
-	private void assertImageEquals(Image actual, Image expected) {
+	private void assertImageEquals(GlanceImage actual, GlanceImage expected) {
 		assertEquals(actual.getId(), expected.getId());
 		assertEquals(actual.getChecksum(), expected.getChecksum());
 		assertEquals(actual.getContainerFormat(), expected.getContainerFormat());
@@ -74,12 +74,12 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
-		Image template = new Image();
+		GlanceImage template = new GlanceImage();
 		template.setName(random.randomAlphanumericString(1, 64).trim());
 		template.setDiskFormat(diskFormat );
 		template.setContainerFormat(containerFormat);
 
-		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
+		GlanceImage uploaded = glance.root().images().addImage(stream, imageLength, template);
 		assertEquals(uploaded.getSize(), Long.valueOf(imageLength));
 		assertEquals(uploaded.getName(), template.getName());
 		assertNull(uploaded.getDeletedAt());
@@ -98,13 +98,13 @@ public class ITGlance extends GlanceIntegrationTest {
 			assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
 		}
 
-		List<Image> allImages = Lists.newArrayList(glance.root().images().list());
+		List<GlanceImage> allImages = Lists.newArrayList(glance.root().images().list());
 
-		Image foundInAll = findImageById(allImages, uploaded.getId());
+		GlanceImage foundInAll = findImageById(allImages, uploaded.getId());
 		assertNotNull(foundInAll);
 		assertImageEquals(foundInAll, uploaded);
 
-		Image details = glance.root().images().image(uploaded.getId()).show();
+		GlanceImage details = glance.root().images().image(uploaded.getId()).show();
 		assertImageEquals(details, uploaded);
 
 		{
@@ -149,10 +149,10 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
-		Image template = new Image();
+		GlanceImage template = new GlanceImage();
 		template.setName(random.randomAlphanumericString(1, 64).trim());
 
-		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
+		GlanceImage uploaded = glance.root().images().addImage(stream, imageLength, template);
 		assertNull(uploaded.getDiskFormat());
 		assertNull(uploaded.getContainerFormat());
 	}
@@ -172,22 +172,22 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		RandomDataInputStream stream = new RandomDataInputStream(imageLength, seed);
 
-		Image template = new Image();
+		GlanceImage template = new GlanceImage();
 
-		Image uploaded = glance.root().images().addImage(stream, imageLength, template);
+		GlanceImage uploaded = glance.root().images().addImage(stream, imageLength, template);
 		System.out.println(uploaded);
 		Assert.fail("Image upload without a name should fail");
 	}
 
-	private Image findImageById(List<Image> images, String id) {
-		for (Image image : images) {
+	private GlanceImage findImageById(List<GlanceImage> images, String id) {
+		for (GlanceImage image : images) {
 			if (id.equals(image.getId()))
 				return image;
 		}
 		return null;
 	}
 
-	private void assertPropertiesEquals(ImageProperties actual, ImageProperties expected) {
+	private void assertPropertiesEquals(GlanceImageProperties actual, GlanceImageProperties expected) {
 		Map<String, Object> actualMap = actual.asMap();
 		Map<String, Object> expectedMap = expected.asMap();
 

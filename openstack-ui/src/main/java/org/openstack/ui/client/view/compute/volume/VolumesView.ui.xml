@@ -1,0 +1,50 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:cell="urn:import:com.google.gwt.user.cellview.client">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:SplitLayoutPanel>
+		<g:north size="360">
+			<g:HTMLPanel>
+				<div>
+					<g:HorizontalPanel width="100%">
+						<g:cell width="50%">
+							<g:HTMLPanel>
+								<g:Button styleName="btn btn-small" ui:field="create"><i class="icon-plus-sign" /> Create Volume</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="delete"><i class="icon-remove-sign" /> Delete Volume</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="attach" text="Attach volume" />
+								<g:Button styleName="btn btn-small" ui:field="detach" text="Detach volume" />
+								<g:Button styleName="btn btn-small" ui:field="forceDetach" text="Force Detach" />
+								<g:Button styleName="btn btn-small" ui:field="createSnapshot" text="Create Snapshot" />
+							</g:HTMLPanel>
+						</g:cell>
+						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">
+							<g:HTMLPanel>
+								<g:Button ui:field="refresh" styleName="btn btn-small"><i class="icon-refresh" /> Refresh</g:Button>
+							</g:HTMLPanel>
+						</g:cell>
+					</g:HorizontalPanel>
+				</div>
+				<div>
+					<g:HorizontalPanel width="100%">
+						<g:cell width="50%">
+							<g:HTMLPanel>
+								<g:Button styleName="btn btn-small" ui:field="filters" text="Filters" />
+							</g:HTMLPanel>
+						</g:cell>
+						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">
+							<cell:SimplePager location="CENTER" />
+						</g:cell>
+					</g:HorizontalPanel>
+				</div>
+				<cell:DataGrid ui:field="grid" height="300px" width="100%" />
+			</g:HTMLPanel>
+		</g:north>
+		<g:center>
+			<g:Label text="x" />
+		</g:center>
+	</g:SplitLayoutPanel>
+</ui:UiBinder> 

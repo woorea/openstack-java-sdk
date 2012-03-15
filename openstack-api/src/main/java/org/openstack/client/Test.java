@@ -1,69 +1,64 @@
 package org.openstack.client;
 
-import org.openstack.client.common.OpenstackSession;
-import org.openstack.client.common.OpenstackSession.Feature;
+import org.openstack.client.common.OpenStackSession;
+import org.openstack.client.common.OpenStackSession.Feature;
+import org.openstack.client.common.OpenstackCredentials;
 import org.openstack.client.compute.ServerResource;
 import org.openstack.client.compute.TenantResource;
 import org.openstack.client.identity.IdentityResource;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Server;
-import org.openstack.model.identity.Tenant;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.identity.KeyStoneTenant;
 
 public class Test {
 
 	public static void main(String[] args) {
-		// X-Auth-Token (no tenant selected)
-		OpenstackSession session = OpenstackSession.create().with(Feature.VERBOSE);
+		OpenStackSession session = OpenStackSession.create().with(Feature.VERBOSE);
+		String authUrl = "http://192.168.1.45:5000/v2.0";
+		OpenstackCredentials credentials = new OpenstackCredentials(authUrl, "demo", "secret0", "demo");
+		session.authenticate(credentials);
 
-		OpenstackCredentials credentials = new OpenstackCredentials("admin", "woorea");
-		session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
+		// X-Auth-Token has been set on session object
 
-		// Let' show our available tenants
 		IdentityResource identity = session.getAuthenticationClient().root();
-		Iterable<Tenant> tenants = identity.tenants().list();
-		for (Tenant tenant : tenants) {
+
+		Iterable<KeyStoneTenant> tenants = identity.tenants().list();
+		for (KeyStoneTenant tenant : tenants) {
 			System.out.println(tenant);
 		}
 
-		// Ok, I will choose the first available tenant (
-		for (Tenant tenant : tenants) {
-			credentials.setTenant(tenant.getName());
-			session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
+		// I will choose the first tenant
+		for (KeyStoneTenant tenant : tenants) {
+			OpenstackCredentials tenantCredentials = credentials.withTenant(tenant.getName());
+			session.authenticate(tenantCredentials);
 			break;
 		}
 
-		// Give me access to compute API on the selected tenant
 		TenantResource compute = session.getComputeClient().root();
-		for (Server s : compute.servers().list()) {
+		for (NovaServer s : compute.servers().list()) {
 			System.out.println(s);
 		}
 
-		// List the available images
-		Iterable<Image> images = compute.images().list();
-		Image image = null;
-		for (Image i : images) {
+		Iterable<NovaImage> images = compute.images().list();
+		NovaImage image = null;
+		for (NovaImage i : images) {
 			System.out.println(i);
-
-			// If it's the devstack default image, then i go to select it
 			if (i.getName().equals("cirros-0.3.0-x86_64-blank")) {
 				image = i;
 				break;
 			}
 		}
 
-		// Show me the image details
 		System.out.println(image);
 
-		// List the available flavors
-		Iterable<Flavor> flavors = compute.flavors().list();
-		for (Flavor f : flavors) {
+		Iterable<NovaFlavor> flavors = compute.flavors().list();
+		for (NovaFlavor f : flavors) {
 			System.out.println(f);
 		}
 
-		// List the servers
-		Iterable<Server> servers = compute.servers().list();
-		for (Server s : servers) {
+		Iterable<NovaServer> servers = compute.servers().list();
+		for (NovaServer s : servers) {
 			ServerResource sr = new ServerResource(session, s);
 			System.out.println(sr.get(true).show());
 		}

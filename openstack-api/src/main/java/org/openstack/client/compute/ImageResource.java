@@ -1,24 +1,24 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.OpenStackSession;
 import org.openstack.client.common.Resource;
 import org.openstack.client.common.SimpleLinkResolver;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Metadata;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaMetadata;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public class ImageResource extends Resource {
 
-	private Image representation;
+	private NovaImage representation;
 
 	public ImageResource() {
 
 	}
 
-	public ImageResource(final OpenstackSession session, Image image) {
+	public ImageResource(final OpenStackSession session, NovaImage image) {
 		initialize(session, Iterables.find(image.getLinks(), new Predicate<Link>() {
 
 			@Override
@@ -35,11 +35,11 @@ public class ImageResource extends Resource {
 	}
 
 	public ImageResource get() {
-		representation = resource().get(Image.class);
+		representation = resource().get(NovaImage.class);
 		return this;
 	}
 
-	public Image show() {
+	public NovaImage show() {
 		if (representation == null) {
 			get();
 		}
@@ -50,9 +50,9 @@ public class ImageResource extends Resource {
 		resource().delete();
 	}
 
-	public Metadata metadata() {
+	public NovaMetadata metadata() {
 		// /metadata
-		return new Metadata();
+		return new NovaMetadata();
 	}
 
 }

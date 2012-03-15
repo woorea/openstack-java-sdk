@@ -1,9 +1,9 @@
 package org.openstack.client.cli;
 
-import org.openstack.client.OpenstackCredentials;
 import org.openstack.client.common.CachingLinkResolver;
-import org.openstack.client.common.OpenstackSession;
-import org.openstack.client.common.OpenstackSession.Feature;
+import org.openstack.client.common.OpenStackSession;
+import org.openstack.client.common.OpenstackCredentials;
+import org.openstack.client.common.OpenStackSession.Feature;
 
 public class OpenstackSessionInfo {
 	final boolean debug;
@@ -21,17 +21,17 @@ public class OpenstackSessionInfo {
 		this.debug = debug;
 	}
 
-	public OpenstackSession buildSession() {
-		OpenstackSession session = OpenstackSession.create();
+	public OpenStackSession buildSession() {
+		OpenStackSession session = OpenStackSession.create();
 		if (debug) {
 			session = session.with(Feature.VERBOSE);
 		}
 
 		session.setLinkResolver(new CachingLinkResolver(session));
 
-		if (!session.isAuthenticated()) {
-			OpenstackCredentials credentials = new OpenstackCredentials(username, password, tenantId);
-			session.authenticate(authUrl, credentials, true);
+		if (!session.getData().isAuthenticated()) {
+			OpenstackCredentials credentials = new OpenstackCredentials(authUrl, username, password, tenantId);
+			session.authenticate(credentials, true);
 		}
 
 		return session;

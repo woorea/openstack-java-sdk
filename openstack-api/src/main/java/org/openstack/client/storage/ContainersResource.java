@@ -1,8 +1,8 @@
 package org.openstack.client.storage;
 
 import org.openstack.client.common.RequestBuilder;
-import org.openstack.model.storage.Account;
-import org.openstack.model.storage.Container;
+import org.openstack.model.storage.SwiftAccount;
+import org.openstack.model.storage.SwiftContainer;
 
 import com.sun.jersey.api.client.WebResource.Builder;
 
@@ -26,10 +26,10 @@ public class ContainersResource extends StorageResourceBase {
 	// HEAD /account/container/object Retrieve object metadata
 	// POST /account/container/object Update object metadata
 
-	public Iterable<Container> list() {
+	public Iterable<SwiftContainer> list() {
 		RequestBuilder imagesResource = resource();
 
-		Account account = imagesResource.get(Account.class);
+		SwiftAccount account = imagesResource.get(SwiftAccount.class);
 		return account.getContainers();
 	}
 

@@ -1,13 +1,12 @@
 package org.openstack.client.compute.ext;
 
-import org.openstack.client.common.ResourceExtension;
-import org.openstack.model.compute.CreateSecurityGroupRuleRequest;
-import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
+import org.openstack.model.compute.NovaSecurityGroupRule;
 
-public class SecurityGroupRulesResource extends ComputeResourceBase implements ResourceExtension {
+public class SecurityGroupRulesResource extends ComputeResourceBase {
 
-    public SecurityGroupRule create(CreateSecurityGroupRuleRequest securityGroupRule) {
-        return resource().post(SecurityGroupRule.class, securityGroupRule);
+    public NovaSecurityGroupRule create(NovaCreateSecurityGroupRuleRequest securityGroupRule) {
+        return resource().post(NovaSecurityGroupRule.class, securityGroupRule);
     }
 
     public SecurityGroupRuleResource securityGroupRule(String id) {

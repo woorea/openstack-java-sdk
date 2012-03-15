@@ -3,42 +3,42 @@ package org.openstack.client.cli.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.model.InstanceName;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.model.compute.Metadata;
-import org.openstack.model.compute.Metadata.Item;
-import org.openstack.model.compute.Server;
+import org.openstack.model.compute.NovaMetadata;
+import org.openstack.model.compute.NovaMetadata.Item;
+import org.openstack.model.compute.NovaServer;
 
 public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
-    @Argument(index = 0)
-    public InstanceName instanceName;
+	@Argument(index = 0)
+	public InstanceName instanceName;
 
-    @Argument(index = 1)
-    public String key;
-    
-    @Argument(index = 2)
-    public String value;
+	@Argument(index = 1)
+	public String key;
 
-    public AddInstanceMetadata() {
-        super("add", "instancemetadata");
-    }
+	@Argument(index = 2)
+	public String value;
 
-    @Override
-    public Object runCommand() throws Exception {
-        OpenstackComputeClient compute = getComputeClient();
+	public AddInstanceMetadata() {
+		super("add", "instancemetadata");
+	}
 
-        String instanceId = instanceName.findInstanceId(getContext());
+	@Override
+	public Object runCommand() throws Exception {
+		OpenstackComputeClient compute = getContext().getComputeClient();
 
-        Server server = new Server();
-        Metadata metadata = server.getMetadata();
-        if (metadata == null) {
-            metadata = new Metadata();
-            server.setMetadata(metadata);
-        }
-        Item item = new Item();
-        item.setKey(key);
-        item.setValue(value);
-        metadata.getItems().add(item);
+		String instanceId = instanceName.findInstanceId(getContext());
 
-        return compute.root().servers().server(instanceId).update(server);
-    }
+		NovaServer server = new NovaServer();
+		NovaMetadata metadata = server.getMetadata();
+		if (metadata == null) {
+			metadata = new NovaMetadata();
+			server.setMetadata(metadata);
+		}
+		Item item = new Item();
+		item.setKey(key);
+		item.setValue(value);
+		metadata.getItems().add(item);
+
+		return compute.root().servers().server(instanceId).update(server);
+	}
 
 }

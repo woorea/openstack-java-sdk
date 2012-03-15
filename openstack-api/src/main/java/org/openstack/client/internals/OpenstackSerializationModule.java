@@ -2,42 +2,28 @@ package org.openstack.client.internals;
 
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.openstack.model.compute.Addresses;
-import org.openstack.model.compute.BadRequest;
-import org.openstack.model.compute.SecurityGroup;
-import org.openstack.model.compute.SecurityGroupList;
-import org.openstack.model.compute.Server;
-import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Service;
-import org.openstack.model.identity.ServiceEndpoint;
-import org.openstack.model.identity.Tenant;
-import org.openstack.model.identity.User;
-import org.openstack.model.identity.keystone.KeyStoneAccess;
-import org.openstack.model.identity.keystone.KeyStoneService;
-import org.openstack.model.identity.keystone.KeyStoneServiceEndpoint;
-import org.openstack.model.identity.keystone.KeyStoneTenant;
-import org.openstack.model.identity.keystone.KeyStoneUser;
+import org.openstack.model.compute.NovaAddresses;
+import org.openstack.model.compute.NovaBadRequest;
+import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroupList;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.identity.KeyStoneAccess;
 
 public class OpenstackSerializationModule extends SimpleModule {
 
 	public OpenstackSerializationModule() {
 		super(OpenstackSerializationModule.class.getName(), new Version(1, 0, 0, null));
-		addSerializer(Addresses.class, new AddressesSerializer());
-		addDeserializer(Addresses.class, new AddressesDeserializer());
+		addSerializer(NovaAddresses.class, new AddressesSerializer());
+		addDeserializer(NovaAddresses.class, new AddressesDeserializer());
 
 		// Compute
-		installSmartDeserializer(SecurityGroup.class);
-		installSmartDeserializer(SecurityGroupList.class);
-		installSmartDeserializer(Server.class);
-		installSmartDeserializer(BadRequest.class);
+		installSmartDeserializer(NovaSecurityGroup.class);
+		installSmartDeserializer(NovaSecurityGroupList.class);
+		installSmartDeserializer(NovaServer.class);
+		installSmartDeserializer(NovaBadRequest.class);
 
 		// Keystone (Redux)
 		installSmartDeserializer(KeyStoneAccess.class);
-		addAbstractTypeMapping(Access.Token.class, KeyStoneAccess.Token.class);
-		addAbstractTypeMapping(Service.class, KeyStoneService.class);
-		addAbstractTypeMapping(ServiceEndpoint.class, KeyStoneServiceEndpoint.class);
-		addAbstractTypeMapping(User.class, KeyStoneUser.class);
-		addAbstractTypeMapping(Tenant.class, KeyStoneTenant.class);
 	}
 
 	private <T> void installSmartDeserializer(Class<T> c) {

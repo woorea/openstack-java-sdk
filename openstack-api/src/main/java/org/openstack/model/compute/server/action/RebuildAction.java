@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.compute.Metadata;
-import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.NovaMetadata;
+import org.openstack.model.compute.NovaServerForCreate;
 
 @XmlRootElement(name="rebuild")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -24,11 +24,11 @@ public class RebuildAction implements Serializable {
 	private String autoDiskConfig;
 	
 	@XmlElement
-	private Metadata metadata;
+	private NovaMetadata metadata;
 	
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name = "file")
-	private List<ServerForCreate.File> personality;
+	private List<NovaServerForCreate.File> personality;
 	
 	@XmlElement
 	private String imageRef;
@@ -49,19 +49,19 @@ public class RebuildAction implements Serializable {
 		this.autoDiskConfig = autoDiskConfig;
 	}
 
-	public Metadata getMetadata() {
+	public NovaMetadata getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
+	public void setMetadata(NovaMetadata metadata) {
 		this.metadata = metadata;
 	}
 
-	public List<ServerForCreate.File> getPersonality() {
+	public List<NovaServerForCreate.File> getPersonality() {
 		return personality;
 	}
 
-	public void setPersonality(List<ServerForCreate.File> personality) {
+	public void setPersonality(List<NovaServerForCreate.File> personality) {
 		this.personality = personality;
 	}
 

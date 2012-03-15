@@ -4,12 +4,11 @@ import java.io.File;
 import java.util.UUID;
 
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.compute.ext.KeyPairsResource;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.KeyPair;
-import org.openstack.model.compute.Server;
-import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.utils.Io;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -22,13 +21,13 @@ public class ITConfigDrive extends ComputeApiTest {
 		OpenstackComputeClient nova = getComputeClient();
 
 		//Image image = getUecImage();
-		Image image = findImageByName("DebianSqueeze_20120226");
+		NovaImage image = findImageByName("DebianSqueeze_20120226");
 		if (image == null) {
 			throw new SkipException("Cannot find image for test");
 		}
-		Flavor bestFlavor = findSmallestFlavor();
+		NovaFlavor bestFlavor = findSmallestFlavor();
 
-		ServerForCreate serverForCreate = new ServerForCreate();
+		NovaServerForCreate serverForCreate = new NovaServerForCreate();
 		serverForCreate.setName(random.randomAlphanumericString(10));
 		serverForCreate.setFlavorRef(bestFlavor.getId());
 		serverForCreate.setImageRef(image.getId());
@@ -44,20 +43,20 @@ public class ITConfigDrive extends ComputeApiTest {
 
 		String keyName = random.randomAlphanumericString(10);
 
-		KeyPair keyPair = new KeyPair();
+		NovaKeyPair keyPair = new NovaKeyPair();
 		keyPair.setPublicKey(publicKey);
 		keyPair.setName(keyName);
 
-		nova.root().extension(KeyPairsResource.class).create(keyPair);
+		nova.root().keyPairs().create(keyPair);
 
 		serverForCreate.setKeyName(keyName);
 		serverForCreate.setConfigDrive(true);
 
-		Server server = nova.root().servers().create(serverForCreate);
+		NovaServer server = nova.root().servers().create(serverForCreate);
 
 		// Wait for the server to be ready
 		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(nova, server);
-		Server ready = async.get();
+		NovaServer ready = async.get();
 
 		Assert.assertEquals("ACTIVE", ready.getStatus());
 

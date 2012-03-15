@@ -1,36 +1,36 @@
 package org.openstack.client.common;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.compute.AsyncServerOperation;
 import org.openstack.client.compute.TenantResource;
-import org.openstack.model.compute.Server;
-import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.exceptions.OpenstackException;
 
 public class OpenstackComputeClient {
 
-	OpenstackSession session;
+	OpenStackSession session;
 	TenantResource root;
 
-	public OpenstackComputeClient(OpenstackSession session) {
+	public OpenstackComputeClient(OpenStackSession session) {
 		this.session = session;
 		root();
 	}
 
 	public synchronized TenantResource root() throws OpenstackException {
 		if (root == null) {
-			String endpoint = session.getBestEndpoint("compute");
+			String endpoint = session.getData().getBestEndpoint("compute");
 			root = new TenantResource(session, endpoint);
 		}
 
 		return root;
 	}
 
-	public AsyncServerOperation createServer(ServerForCreate create) throws OpenstackException {
-		Server server = root().servers().create(create);
+	public AsyncServerOperation createServer(NovaServerForCreate create) throws OpenstackException {
+		NovaServer server = root().servers().create(create);
 		return AsyncServerOperation.wrapServerCreate(this, server);
 	}
 
-	public OpenstackSession getSession() {
+	public OpenStackSession getSession() {
 		return session;
 	}
 

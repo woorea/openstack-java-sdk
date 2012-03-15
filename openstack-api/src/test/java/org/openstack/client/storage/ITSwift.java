@@ -5,9 +5,9 @@ import java.io.InputStream;
 import java.util.Map;
 
 import org.openstack.client.utils.RandomDataInputStream;
-import org.openstack.model.storage.Container;
-import org.openstack.model.storage.ObjectProperties;
-import org.openstack.model.storage.StorageObject;
+import org.openstack.model.storage.SwiftContainer;
+import org.openstack.model.storage.SwiftObjectProperties;
+import org.openstack.model.storage.SwiftStorageObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,9 +17,9 @@ public class ITSwift extends StorageIntegrationTest {
 
 	@Test
 	public void testListContainers() throws Exception {
-		Map<String, Container> containers = findAllContainers();
+		Map<String, SwiftContainer> containers = findAllContainers();
 
-		for (Container container : containers.values()) {
+		for (SwiftContainer container : containers.values()) {
 			System.out.println(container);
 		}
 	}
@@ -30,7 +30,7 @@ public class ITSwift extends StorageIntegrationTest {
 
 		swift.root().containers().create(containerName);
 
-		Container container = findAllContainers().get(containerName);
+		SwiftContainer container = findAllContainers().get(containerName);
 		Assert.assertNotNull(container);
 		Assert.assertEquals(container.getName(), containerName);
 		Assert.assertEquals(container.getBytes(), 0);
@@ -53,12 +53,12 @@ public class ITSwift extends StorageIntegrationTest {
 
 		String objectName = random.randomAlphanumericString(4, 100);
 
-		ObjectProperties properties = new ObjectProperties();
+		SwiftObjectProperties properties = new SwiftObjectProperties();
 		properties.setName(objectName);
 
 		containerResource.objects().putObject(stream, stream.getStreamLength(), properties);
 
-		StorageObject storedObject = findAllObjects(containerName).get(objectName);
+		SwiftStorageObject storedObject = findAllObjects(containerName).get(objectName);
 
 		Assert.assertNotNull(storedObject);
 		Assert.assertEquals(storedObject.getName(), objectName);
@@ -69,7 +69,7 @@ public class ITSwift extends StorageIntegrationTest {
 			read.close();
 		}
 
-		ObjectProperties metadata = containerResource.objects().id(objectName).metadata();
+		SwiftObjectProperties metadata = containerResource.objects().id(objectName).metadata();
 		System.out.println(metadata);
 
 		containerResource.objects().id(objectName).delete();
@@ -86,7 +86,7 @@ public class ITSwift extends StorageIntegrationTest {
 		ContainerResource containerResource = swift.root().containers().id(containerName);
 		RandomDataInputStream stream = random.randomStream(MAX_LENGTH);
 
-		ObjectProperties expectedProperties = new ObjectProperties();
+		SwiftObjectProperties expectedProperties = new SwiftObjectProperties();
 		expectedProperties.setName(objectName);
 
 		for (int i = 0; i < random.uniform(0, 12); i++) {
@@ -101,10 +101,10 @@ public class ITSwift extends StorageIntegrationTest {
 		containerResource.objects().putObject(stream, stream.getStreamLength(), expectedProperties);
 
 		for (int i = 0; i < 5; i++) {
-			ObjectProperties actualProperties = containerResource.objects().id(objectName).metadata();
+			SwiftObjectProperties actualProperties = containerResource.objects().id(objectName).metadata();
 			assertPropertiesEqual(actualProperties, expectedProperties);
 
-			ObjectProperties changeProperties = containerResource.objects().id(objectName).metadata();
+			SwiftObjectProperties changeProperties = containerResource.objects().id(objectName).metadata();
 			for (int j = 0; j < random.uniform(0, 12); j++) {
 				String k = random.randomAlphanumericString(1, 32);
 				k = k.toLowerCase();
@@ -122,13 +122,13 @@ public class ITSwift extends StorageIntegrationTest {
 		containerResource.delete();
 	}
 
-	private void assertPropertiesEqual(ObjectProperties actualProperties, ObjectProperties expectedProperties) {
+	private void assertPropertiesEqual(SwiftObjectProperties actualProperties, SwiftObjectProperties expectedProperties) {
 		assertEquals(actualProperties.getCustomProperties(), expectedProperties.getCustomProperties());
 	}
 
-	private Map<String, Container> findAllContainers() {
-		Map<String, Container> containers = Maps.newHashMap();
-		for (Container container : swift.root().containers().list()) {
+	private Map<String, SwiftContainer> findAllContainers() {
+		Map<String, SwiftContainer> containers = Maps.newHashMap();
+		for (SwiftContainer container : swift.root().containers().list()) {
 			String name = container.getName();
 			Assert.assertNull(containers.get(name));
 			containers.put(name, container);
@@ -136,9 +136,9 @@ public class ITSwift extends StorageIntegrationTest {
 		return containers;
 	}
 
-	private Map<String, StorageObject> findAllObjects(String containerName) {
-		Map<String, StorageObject> objects = Maps.newHashMap();
-		for (StorageObject object : swift.root().containers().id(containerName).objects().list()) {
+	private Map<String, SwiftStorageObject> findAllObjects(String containerName) {
+		Map<String, SwiftStorageObject> objects = Maps.newHashMap();
+		for (SwiftStorageObject object : swift.root().containers().id(containerName).objects().list()) {
 			String name = object.getName();
 			Assert.assertNull(objects.get(name));
 			objects.put(name, object);

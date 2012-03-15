@@ -5,44 +5,45 @@ import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.FlavorName;
 import org.openstack.client.cli.model.ImageName;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaServerForCreate;
 
 public class CreateInstance extends OpenstackCliCommandRunnerBase {
-    @Argument(index = 0)
-    public String instanceName;
+	@Argument(index = 0)
+	public String instanceName;
 
-    @Argument(index = 1)
-    public ImageName imageName;
+	@Argument(index = 1)
+	public ImageName imageName;
 
-    @Argument(index = 2)
-    public FlavorName flavorName;
+	@Argument(index = 2)
+	public FlavorName flavorName;
 
-    public CreateInstance() {
-        super("create", "instance");
-    }
+	public CreateInstance() {
+		super("create", "instance");
+	}
 
-    @Override
-    public Object runCommand() throws Exception {
-        OpenstackCliContext context = getContext();
+	@Override
+	public Object runCommand() throws Exception {
+		OpenstackCliContext context = getContext();
 
-        String imageId = imageName.findImageId(context);
-        if (imageId == null) {
-            throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
-        }
+		NovaImage image = imageName.findImage(context);
+		if (image == null) {
+			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
+		}
 
-        String flavorId = flavorName.findImageId(context);
-        if (flavorId == null) {
-            throw new IllegalArgumentException("Cannot find flavor: " + flavorName.getKey());
-        }
+		String flavorId = flavorName.findImageId(context);
+		if (flavorId == null) {
+			throw new IllegalArgumentException("Cannot find flavor: " + flavorName.getKey());
+		}
 
-        OpenstackComputeClient tenant = context.getComputeClient();
-        ServerForCreate serverForCreate = new ServerForCreate();
-        serverForCreate.setName(instanceName);
+		OpenstackComputeClient tenant = context.getComputeClient();
+		NovaServerForCreate serverForCreate = new NovaServerForCreate();
+		serverForCreate.setName(instanceName);
 
-        serverForCreate.setImageRef(imageId);
-        serverForCreate.setFlavorRef(flavorId);
+		serverForCreate.setImageRef(image.getId());
+		serverForCreate.setFlavorRef(flavorId);
 
-        return tenant.root().servers().create(serverForCreate);
-    }
+		return tenant.root().servers().create(serverForCreate);
+	}
 
 }

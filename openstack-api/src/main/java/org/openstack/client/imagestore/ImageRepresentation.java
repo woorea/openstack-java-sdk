@@ -1,19 +1,19 @@
 package org.openstack.client.imagestore;
 
-import org.openstack.model.image.Image;
+import org.openstack.model.image.GlanceImage;
 
 import com.sun.jersey.api.client.Client;
 
 public class ImageRepresentation {
     private final Client client;
-    private final Image model;
+    private final GlanceImage model;
 
-    public ImageRepresentation(Client client, Image model) {
+    public ImageRepresentation(Client client, GlanceImage model) {
         this.client = client;
         this.model = model;
     }
 
-    public Image getModel() {
+    public GlanceImage getModel() {
         return model;
     }
 }

@@ -3,7 +3,7 @@ package org.openstack.client.cli.autocomplete;
 import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroup;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
@@ -16,7 +16,7 @@ public class SecurityGroupNameAutoCompleter extends SimpleArgumentAutoCompleter 
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext context = (OpenstackCliContext) contextObject;
-		for (SecurityGroup securityGroup : context.getCache().getSecurityGroups(true)) {
+		for (NovaSecurityGroup securityGroup : context.getCache().getSecurityGroups(true)) {
 			strings.add(securityGroup.getName());
 		}
 		addSuffix(strings, " ");

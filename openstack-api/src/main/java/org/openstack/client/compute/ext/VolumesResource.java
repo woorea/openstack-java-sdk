@@ -2,8 +2,7 @@ package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
-import org.openstack.client.common.ResourceExtension;
-import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.NovaVolumeList;
 
 import com.sun.jersey.api.client.WebResource.Builder;
 
@@ -13,16 +12,16 @@ import com.sun.jersey.api.client.WebResource.Builder;
  * @author sp
  * 
  */
-public class VolumesResource extends Resource implements ResourceExtension {
+public class VolumesResource extends Resource {
 	
 	/**
 	 * Returns the list of volume types
 	 * 
 	 * @return
 	 */
-	public VolumeList list(boolean detail) {
+	public NovaVolumeList list(boolean detail) {
 		RequestBuilder r = detail ? resource("detail") : resource();
-		return r.get(VolumeList.class);
+		return r.get(NovaVolumeList.class);
 	}
 
 	/**

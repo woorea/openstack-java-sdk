@@ -25,8 +25,6 @@ public class OpenStackIdentityConfig implements Serializable {
 
 	private int features;
 
-	private String authenticationURL;
-
 	public OpenStackIdentityConfig() {
 
 		// calculate the bitmap
@@ -56,12 +54,5 @@ public class OpenStackIdentityConfig implements Serializable {
 		return this;
 	}
 
-	public String getAuthenticationURL() {
-		return authenticationURL;
-	}
-
-	public void setAuthenticationURL(String authenticationURL) {
-		this.authenticationURL = authenticationURL;
-	}
 
 }

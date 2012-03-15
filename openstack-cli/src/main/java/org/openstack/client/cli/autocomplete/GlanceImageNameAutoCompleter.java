@@ -3,7 +3,7 @@ package org.openstack.client.cli.autocomplete;
 import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.model.image.Image;
+import org.openstack.model.image.GlanceImage;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
@@ -16,7 +16,7 @@ public class GlanceImageNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (Image image : osContext.getCache().getGlanceImages(true)) {
+		for (GlanceImage image : osContext.getCache().getGlanceImages(true)) {
 			strings.add(image.getName());
 		}
 

@@ -3,20 +3,20 @@ package org.openstack.client.cli.output;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-import org.openstack.model.storage.StorageObject;
+import org.openstack.model.storage.SwiftStorageObject;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
 import com.google.common.collect.Maps;
 
-public class StorageObjectFormatter extends SimpleFormatter<StorageObject> {
+public class StorageObjectFormatter extends SimpleFormatter<SwiftStorageObject> {
 
 	public StorageObjectFormatter() {
-		super(StorageObject.class);
+		super(SwiftStorageObject.class);
 	}
 
 	@Override
-	public void visit(StorageObject o, OutputSink sink) throws IOException {
+	public void visit(SwiftStorageObject o, OutputSink sink) throws IOException {
 		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
 		values.put("name", o.getName());

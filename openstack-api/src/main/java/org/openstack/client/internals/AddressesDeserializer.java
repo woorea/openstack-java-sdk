@@ -14,22 +14,22 @@ import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.deser.std.StdDeserializer;
 import org.codehaus.jackson.map.ser.std.SerializerBase;
 import org.codehaus.jackson.type.JavaType;
-import org.openstack.model.compute.Addresses;
-import org.openstack.model.compute.Addresses.Network;
-import org.openstack.model.compute.Addresses.Network.Ip;
+import org.openstack.model.compute.NovaAddresses;
+import org.openstack.model.compute.NovaAddresses.Network;
+import org.openstack.model.compute.NovaAddresses.Network.Ip;
 
 import com.google.common.collect.Lists;
 
-public class AddressesDeserializer extends StdDeserializer<Addresses> {
+public class AddressesDeserializer extends StdDeserializer<NovaAddresses> {
 
 	protected AddressesDeserializer() {
-		super(Addresses.class);
+		super(NovaAddresses.class);
 	}
 
 	@Override
-	public Addresses deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
+	public NovaAddresses deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
 			JsonProcessingException {
-		Addresses addresses = new Addresses();
+		NovaAddresses addresses = new NovaAddresses();
 
 		JsonToken token = jp.getCurrentToken();
 		if (token != JsonToken.START_OBJECT) {

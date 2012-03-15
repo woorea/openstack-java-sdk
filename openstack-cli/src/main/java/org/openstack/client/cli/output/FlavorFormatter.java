@@ -3,20 +3,20 @@ package org.openstack.client.cli.output;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.NovaFlavor;
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
 
 import com.google.common.collect.Maps;
 
-public class FlavorFormatter extends SimpleFormatter<Flavor> {
+public class FlavorFormatter extends SimpleFormatter<NovaFlavor> {
 
     public FlavorFormatter() {
-        super(Flavor.class);
+        super(NovaFlavor.class);
     }
 
     @Override
-    public void visit(Flavor o, OutputSink sink) throws IOException {
+    public void visit(NovaFlavor o, OutputSink sink) throws IOException {
         LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
         values.put("id", o.getId());

@@ -1,7 +1,6 @@
 package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
-import org.openstack.client.common.ResourceExtension;
 
 /**
  * The volume types API controller for the Openstack API
@@ -9,7 +8,7 @@ import org.openstack.client.common.ResourceExtension;
  * @author sp
  * 
  */
-public class VolumeTypesResource extends Resource implements ResourceExtension {
+public class VolumeTypesResource extends Resource {
 
 	/**
 	 * Returns the list of volume types
@@ -30,8 +29,5 @@ public class VolumeTypesResource extends Resource implements ResourceExtension {
 //		return null;
 //	}
 
-	public ZoneResource zone(String id) {
-		return buildChildResource(id, ZoneResource.class);
-	}
 
 }

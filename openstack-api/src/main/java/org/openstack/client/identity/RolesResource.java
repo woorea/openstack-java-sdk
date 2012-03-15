@@ -1,11 +1,11 @@
 package org.openstack.client.identity;
 import org.openstack.client.common.Resource;
-import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.KeyStoneRoleList;
 
 public class RolesResource extends Resource {
 
-	public RoleList list() {
-		return resource().get(RoleList.class);
+	public KeyStoneRoleList list() {
+		return resource().get(KeyStoneRoleList.class);
 	}
 	
 //	public RoleResource create(Role tenant) {

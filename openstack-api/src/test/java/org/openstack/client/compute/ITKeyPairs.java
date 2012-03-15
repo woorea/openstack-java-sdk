@@ -1,9 +1,8 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.compute.ext.KeyPairsResource;
-import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,8 +13,8 @@ public class ITKeyPairs extends ComputeApiTest {
 		skipIfNoKeyPairs();
 
 		OpenstackComputeClient nova = getComputeClient();
-		Iterable<KeyPair> keyPairs = nova.root().extension(KeyPairsResource.class).list();
-		for (KeyPair keyPair : keyPairs) {
+		Iterable<NovaKeyPair> keyPairs = nova.root().keyPairs().list();
+		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
 			Assert.assertNotNull(keyPair.getPublicKey());
@@ -37,7 +36,7 @@ public class ITKeyPairs extends ComputeApiTest {
 	}
 	*/
 
-	private void assertKeyPairEquals(KeyPair actual, KeyPair expected) {
+	private void assertKeyPairEquals(NovaKeyPair actual, NovaKeyPair expected) {
 		Assert.assertEquals(actual.getName(), expected.getName());
 		Assert.assertEquals(actual.getFingerprint(), expected.getFingerprint());
 		Assert.assertEquals(actual.getPublicKey(), expected.getPublicKey());
@@ -45,19 +44,19 @@ public class ITKeyPairs extends ComputeApiTest {
 
 	private void testCreateAndDelete(String name) {
 		OpenstackComputeClient nova = getComputeClient();
-		KeyPair createRequest = new KeyPair();
+		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		KeyPair created = nova.root().extension(KeyPairsResource.class).create(createRequest);
+		NovaKeyPair created = nova.root().keyPairs().create(createRequest);
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
 
-		KeyPair fetched = findKeyPair(nova, created.getName());
+		NovaKeyPair fetched = findKeyPair(nova, created.getName());
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
-		nova.root().extension(KeyPairsResource.class).keypair(created.getName()).delete();
+		nova.root().keyPairs().keypair(created.getName()).delete();
 
 		fetched = findKeyPair(nova, created.getName());
 
@@ -147,8 +146,8 @@ public class ITKeyPairs extends ComputeApiTest {
 		testCreateAndDelete(name);
 	}
 
-	private KeyPair findKeyPair(OpenstackComputeClient nova, String name) {
-		for (KeyPair keyPair : nova.root().extension(KeyPairsResource.class).list()) {
+	private NovaKeyPair findKeyPair(OpenstackComputeClient nova, String name) {
+		for (NovaKeyPair keyPair : nova.root().keyPairs().list()) {
 			if (keyPair.getName().equals(name))
 				return keyPair;
 		}

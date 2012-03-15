@@ -16,10 +16,10 @@ import com.google.common.collect.Lists;
  *            Model class
  */
 public class SimplePagingList<M> implements Iterable<M> {
-	protected final OpenstackSession session;
+	protected final OpenStackSession session;
 	private final PagingListBase<M> page;
 
-	public SimplePagingList(OpenstackSession session, PagingListBase<M> page) {
+	public SimplePagingList(OpenStackSession session, PagingListBase<M> page) {
 		this.session = session;
 		this.page = page;
 	}

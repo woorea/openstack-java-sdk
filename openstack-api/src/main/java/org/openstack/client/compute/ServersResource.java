@@ -5,9 +5,9 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.SimplePagingList;
 import org.openstack.client.compute.ext.ComputeResourceBase;
-import org.openstack.model.compute.Server;
-import org.openstack.model.compute.ServerForCreate;
-import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.compute.NovaServerList;
 
 import com.sun.jersey.api.client.WebResource.Builder;
 
@@ -25,20 +25,20 @@ public class ServersResource extends ComputeResourceBase {
 	 * @param detail
 	 * @return
 	 */
-	public Iterable<Server> list(boolean detail) {
+	public Iterable<NovaServer> list(boolean detail) {
 		RequestBuilder r = detail ? resource("detail") : resource();
-		ServerList page = r.get(ServerList.class);
-		return new SimplePagingList<Server>(session, page);
+		NovaServerList page = r.get(NovaServerList.class);
+		return new SimplePagingList<NovaServer>(session, page);
 	}
 
-	public Iterable<Server> list() {
+	public Iterable<NovaServer> list() {
 		return list(true);
 	}
 
-	public Server create(ServerForCreate serverForCreate) {
+	public NovaServer create(NovaServerForCreate serverForCreate) {
 		// OSAPI bug: Can't specify an SSH key in XML?
 		RequestBuilder builder = resource(null, MediaType.APPLICATION_JSON_TYPE);
-		return builder.post(Server.class, serverForCreate);
+		return builder.post(NovaServer.class, serverForCreate);
 
 		// return post(Server.class, serverForCreate);
 

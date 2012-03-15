@@ -7,34 +7,34 @@ import java.io.InputStream;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.SimplePagingList;
-import org.openstack.model.image.Image;
-import org.openstack.model.image.ImageList;
-import org.openstack.model.image.ImageUploadResponse;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.image.GlanceImage;
+import org.openstack.model.image.GlanceImageList;
+import org.openstack.model.image.GlanceImageUploadResponse;
 import org.openstack.utils.Io;
 
 import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ImagesResource extends GlanceResourceBase {
 
-    public Iterable<Image> list() {
+    public Iterable<GlanceImage> list() {
         return list(true);
     }
 
-    public Iterable<Image> list(boolean details) {
+    public Iterable<GlanceImage> list(boolean details) {
         RequestBuilder imagesResource = details ? resource("detail") : resource();
 
-         ImageList page = imagesResource.get(ImageList.class);
-         return new SimplePagingList<Image>(session, page);
+         GlanceImageList page = imagesResource.get(GlanceImageList.class);
+         return new SimplePagingList<GlanceImage>(session, page);
     }
 
 	public ImageResource image(String imageId) {
 		return buildChildResource(imageId, ImageResource.class);
 	}
 
-	public Image addImage(File imageFile, Image properties) throws IOException, OpenstackException {
+	public GlanceImage addImage(File imageFile, GlanceImage properties) throws IOException, OpenstackException {
 		FileInputStream fis = new FileInputStream(imageFile);
 		try {
 
@@ -44,7 +44,7 @@ public class ImagesResource extends GlanceResourceBase {
 		}
 	}
 
-	public Image addImage(InputStream imageStream, long imageStreamLength, Image properties) throws OpenstackException,
+	public GlanceImage addImage(InputStream imageStream, long imageStreamLength, GlanceImage properties) throws OpenstackException,
 			IOException {
 		RequestBuilder builder = resource(null, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 
@@ -56,8 +56,8 @@ public class ImagesResource extends GlanceResourceBase {
 			imageStream = new KnownLengthInputStream(imageStream, imageStreamLength);
 		}
 
-		ImageUploadResponse response = builder.post(ImageUploadResponse.class, imageStream);
-		Image image = response.getImage();
+		GlanceImageUploadResponse response = builder.post(GlanceImageUploadResponse.class, imageStream);
+		GlanceImage image = response.getImage();
 		return image;
 	}
 

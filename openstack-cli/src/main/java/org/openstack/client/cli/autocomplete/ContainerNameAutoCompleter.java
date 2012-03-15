@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.storage.OpenstackStorageClient;
-import org.openstack.model.storage.Container;
+import org.openstack.model.storage.SwiftContainer;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
@@ -18,8 +18,8 @@ public class ContainerNameAutoCompleter extends SimpleArgumentAutoCompleter {
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
 		OpenstackStorageClient client = osContext.getStorageClient();
-		Iterable<Container> items = client.root().containers().list();
-		for (Container item : items) {
+		Iterable<SwiftContainer> items = client.root().containers().list();
+		for (SwiftContainer item : items) {
 			strings.add(item.getName());
 		}
 		addSuffix(strings, " ");

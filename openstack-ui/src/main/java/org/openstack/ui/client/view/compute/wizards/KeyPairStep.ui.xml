@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:compute="urn:import:org.openstack.ui.client.view.compute.wizards">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<div>
+			<g:ListBox ui:field="keyNameListBox" />
+		</div>
+
+		<g:HorizontalPanel>
+			<g:FormPanel ui:field="formPanel" action="/ui/keypair-download"
+				method="POST">
+				<g:FlowPanel>
+					<g:TextBox ui:field="keyPairName" name="keyPairName" />
+					<g:Hidden ui:field="computeURL" name="computeURL" />
+					<g:Hidden ui:field="token" name="token" />
+				</g:FlowPanel>
+			</g:FormPanel>
+			<g:Anchor ui:field="createKeyPair">Create &amp; Download Key Pair</g:Anchor>
+		</g:HorizontalPanel>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

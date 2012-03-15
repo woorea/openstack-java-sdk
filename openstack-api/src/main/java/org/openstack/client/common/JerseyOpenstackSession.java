@@ -4,13 +4,15 @@ import java.util.Map.Entry;
 
 import javax.ws.rs.core.MediaType;
 
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.api.client.filter.LoggingFilter;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-public class JerseyOpenstackSession extends OpenstackSession {
+public class JerseyOpenstackSession extends OpenStackSession {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +30,7 @@ public class JerseyOpenstackSession extends OpenstackSession {
 		@Override
 		public <T> T doRequest0(Class<T> c) {
 			Builder builder = buildResource();
-
+			
 			if (c == Void.class) {
 				if (body != null) {
 					builder.method(method, body);
@@ -50,6 +52,15 @@ public class JerseyOpenstackSession extends OpenstackSession {
 			Builder builder;
 			{
 				WebResource resource = jerseyClient.resource(resourceUrl);
+				System.out.println(">>>>" + resourceUrl);
+
+				if (!queryParameters.isEmpty()) {
+					MultivaluedMapImpl queryParametersMap = new MultivaluedMapImpl();
+					for (Entry<String, String> entry : queryParameters.entries()) {
+						queryParametersMap.add(entry.getKey(), entry.getValue());
+					}
+					resource = resource.queryParams(queryParametersMap );
+				}
 
 				if (verbose) {
 					resource.addFilter(new LoggingFilter(System.out));

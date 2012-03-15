@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.openstack.client.common.OpenstackSession;
-import org.openstack.model.compute.Flavor;
+import org.openstack.client.common.OpenStackSession;
+import org.openstack.model.compute.NovaFlavor;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -22,8 +22,8 @@ public class ITAuthentication extends KeystoneIntegrationTest {
 	 */
 	@Test
 	public void testSerializable() throws Exception {
-		OpenstackSession session = context.session;
-		List<Flavor> flavors1 = Lists.newArrayList(session.getComputeClient().root().flavors().list());
+		OpenStackSession session = context.session;
+		List<NovaFlavor> flavors1 = Lists.newArrayList(session.getComputeClient().root().flavors().list());
 
 		// Serialize it
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -40,29 +40,29 @@ public class ITAuthentication extends KeystoneIntegrationTest {
 		// Deserialize it
 		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 		ObjectInputStream ois = new ObjectInputStream(bais);
-		OpenstackSession session2 = (OpenstackSession) ois.readObject();
+		OpenStackSession session2 = (OpenStackSession) ois.readObject();
 		ois.close();
 		bais.close();
 
 		// Check it still works
-		List<Flavor> flavors2 = Lists.newArrayList(session2.getComputeClient().root().flavors().list());
+		List<NovaFlavor> flavors2 = Lists.newArrayList(session2.getComputeClient().root().flavors().list());
 		
 		sortFlavors(flavors1);
 		sortFlavors(flavors2);
 		
 		Assert.assertEquals(flavors1.size(), flavors2.size());
 		for (int i = 0; i < flavors1.size(); i++) {
-			Flavor flavor1 = flavors1.get(i);
-			Flavor flavor2 = flavors2.get(i);
+			NovaFlavor flavor1 = flavors1.get(i);
+			NovaFlavor flavor2 = flavors2.get(i);
 			
 			Assert.assertEquals(flavor1.getId(), flavor2.getId());
 		}
 	}
 
-	private void sortFlavors(List<Flavor> list) {
-		Collections.sort(list, new Comparator<Flavor>() {
+	private void sortFlavors(List<NovaFlavor> list) {
+		Collections.sort(list, new Comparator<NovaFlavor>() {
 			@Override
-			public int compare(Flavor o1, Flavor o2) {
+			public int compare(NovaFlavor o1, NovaFlavor o2) {
 				return o1.getId().compareTo(o2.getId());
 			}
 		});

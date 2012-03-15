@@ -2,10 +2,10 @@ package org.openstack.client.cli.model;
 
 import java.util.List;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.InstanceNameAutoCompleter;
-import org.openstack.model.compute.Server;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.exceptions.OpenstackException;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;
@@ -18,8 +18,8 @@ public class InstanceName extends StringWrapper {
 	}
 
 	public String findInstanceId(OpenstackCliContext context) throws OpenstackException {
-		List<Server> matches = Lists.newArrayList();
-		for (Server instance : context.getCache().getInstances(true)) {
+		List<NovaServer> matches = Lists.newArrayList();
+		for (NovaServer instance : context.getCache().listItems(NovaServer.class, true)) {
 			if (instance.getName().equals(getKey())) {
 				matches.add(instance);
 			} else if (instance.getId().equals(getKey())) {

@@ -5,32 +5,33 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.OpenStackSession;
+import org.openstack.client.common.OpenstackCredentials;
 import org.openstack.utils.Io;
 
 public class OpenstackTestContext {
 
-	public OpenstackSession session;
+	public OpenStackSession session;
 	private boolean glanceEnabled;
 	private boolean swiftEnabled;
 
-	public OpenstackSession connect(String url, OpenstackCredentials credentials, String format, boolean verbose) {
-		session = OpenstackSession.create();
+	public OpenStackSession connect(OpenstackCredentials credentials, String format, boolean verbose) {
+		session = OpenStackSession.create();
 		if (verbose) {
-			session.with(OpenstackSession.Feature.VERBOSE);
+			session.with(OpenStackSession.Feature.VERBOSE);
 		}
 
 		if (format != null) {
 			if (format.equals("json")) {
-				session.with(OpenstackSession.Feature.FORCE_JSON);
+				session.with(OpenStackSession.Feature.FORCE_JSON);
 			} else if (format.equals("xml")) {
-				session.with(OpenstackSession.Feature.FORCE_XML);
+				session.with(OpenStackSession.Feature.FORCE_XML);
 			} else {
 				throw new IllegalArgumentException("Unknown format: " + format);
 			}
 		}
 
-		session.authenticate(url, credentials, false);
+		session.authenticate(credentials, false);
 		return session;
 	}
 
@@ -60,9 +61,9 @@ public class OpenstackTestContext {
 
 		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
 
-		String url = properties.getProperty("openstack.auth.url", "http://127.0.0.1:5000/v2.0");
+		String url = properties.getProperty("openstack.auth.url", "http://192.168.1.45:5000/v2.0");
 		String username = properties.getProperty("openstack.auth.user", "demo");
-		String secret = properties.getProperty("openstack.auth.secret", "supersecret");
+		String secret = properties.getProperty("openstack.auth.secret", "secret0");
 		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
 
 		String format = properties.getProperty("openstack.format", null);
@@ -74,8 +75,8 @@ public class OpenstackTestContext {
 		context.glanceEnabled = glanceEnabled;
 		context.swiftEnabled = swiftEnabled;
 
-		OpenstackCredentials credentials = new OpenstackCredentials(username, secret, tenant);
-		context.connect(url, credentials, format, verbose);
+		OpenstackCredentials credentials = new OpenstackCredentials(url, username, secret, tenant);
+		context.connect(credentials, format, verbose);
 		return context;
 	}
 

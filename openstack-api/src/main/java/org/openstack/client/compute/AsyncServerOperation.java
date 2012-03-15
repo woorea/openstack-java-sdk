@@ -7,19 +7,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
-import org.openstack.client.OpenstackException;
-import org.openstack.client.OpenstackNotFoundException;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.model.compute.Server;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenstackNotFoundException;
 
 import com.google.common.collect.Lists;
 
-public class AsyncServerOperation implements Future<Server> {
+public class AsyncServerOperation implements Future<NovaServer> {
 	static final Logger log = Logger.getLogger(AsyncServerOperation.class.getName());
 
 	private static final int POLL_INTERVAL_MILLISECONDS = 5000;
 
-	final Server returnValue;
+	final NovaServer returnValue;
 	final String serverId;
 
 	final Collection<String> acceptableTransitionStates;
@@ -30,7 +30,7 @@ public class AsyncServerOperation implements Future<Server> {
 	volatile boolean cancelled;
 	volatile boolean done;
 
-	public AsyncServerOperation(OpenstackComputeClient client, Server returnValue, String serverId,
+	public AsyncServerOperation(OpenstackComputeClient client, NovaServer returnValue, String serverId,
 			Collection<String> acceptableTransitionStates, Collection<String> finishStates) {
 		super();
 		this.client = client;
@@ -40,11 +40,11 @@ public class AsyncServerOperation implements Future<Server> {
 		this.finishStates = finishStates;
 	}
 
-	Server waitForState(long timeout, TimeUnit unit) throws OpenstackException {
+	NovaServer waitForState(long timeout, TimeUnit unit) throws OpenstackException {
 		try {
 			long timeoutAt = unit != null ? System.currentTimeMillis() + unit.toMillis(timeout) : Long.MAX_VALUE;
 			while (true) {
-				Server server = null;
+				NovaServer server = null;
 				String status;
 				try {
 					server = client.root().servers().server(serverId).show();
@@ -102,7 +102,7 @@ public class AsyncServerOperation implements Future<Server> {
 	}
 
 	@Override
-	public Server get() {
+	public NovaServer get() {
 		try {
 			return get(0, null);
 		} catch (Exception e) {
@@ -112,7 +112,7 @@ public class AsyncServerOperation implements Future<Server> {
 	}
 
 	@Override
-	public Server get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+	public NovaServer get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
 		try {
 			return waitComplete(timeout, unit);
 		} catch (OpenstackException e) {
@@ -125,7 +125,7 @@ public class AsyncServerOperation implements Future<Server> {
 	 * 
 	 * @throws OpenstackException
 	 */
-	public Server waitComplete(long timeout, TimeUnit unit) throws InterruptedException, TimeoutException,
+	public NovaServer waitComplete(long timeout, TimeUnit unit) throws InterruptedException, TimeoutException,
 			OpenstackException {
 		return this.waitForState(timeout, unit);
 	}
@@ -133,7 +133,7 @@ public class AsyncServerOperation implements Future<Server> {
 	/**
 	 * This method throws OpenStackComputeException instead of wrapping it in ExecutionException
 	 */
-	public Server waitComplete() throws InterruptedException, OpenstackException {
+	public NovaServer waitComplete() throws InterruptedException, OpenstackException {
 		try {
 			return waitComplete(0, null);
 		} catch (TimeoutException e) {
@@ -157,15 +157,15 @@ public class AsyncServerOperation implements Future<Server> {
 	 * 
 	 * @return
 	 */
-	public Server getReturnedServer() {
+	public NovaServer getReturnedServer() {
 		return returnValue;
 	}
 
-	public static AsyncServerOperation wrapServerCreate(OpenstackComputeClient client, Server server) {
+	public static AsyncServerOperation wrapServerCreate(OpenstackComputeClient client, NovaServer server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("BUILD"), Lists.newArrayList("ACTIVE"));
 	}
 
-	public static AsyncServerOperation wrapServerDelete(OpenstackComputeClient client, Server server) {
+	public static AsyncServerOperation wrapServerDelete(OpenstackComputeClient client, NovaServer server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("ACTIVE"), Lists.newArrayList("DELETED"));
 	}
 }

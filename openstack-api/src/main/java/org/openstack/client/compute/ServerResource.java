@@ -4,17 +4,17 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.OpenStackSession;
 import org.openstack.client.common.Resource;
 import org.openstack.client.common.SimpleLinkResolver;
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.client.compute.ext.FloatingIpsResource;
 import org.openstack.client.compute.ext.SecurityGroupsResource;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.SecurityGroupList;
-import org.openstack.model.compute.Server;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaSecurityGroupList;
+import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.server.action.AddFixedIpAction;
 import org.openstack.model.compute.server.action.AddFloatingIpAction;
 import org.openstack.model.compute.server.action.ChangePasswordAction;
@@ -47,7 +47,7 @@ import com.google.common.collect.Iterables;
 
 public class ServerResource extends ComputeResourceBase {
 
-	private Server representation;
+	private NovaServer representation;
 
 	public static class IpsResource extends Resource {
 
@@ -61,7 +61,7 @@ public class ServerResource extends ComputeResourceBase {
 
 	}
 
-	public ServerResource(final OpenstackSession session, Server server) {
+	public ServerResource(final OpenStackSession session, NovaServer server) {
 		initialize(session, Iterables.find(server.getLinks(), new Predicate<Link>() {
 
 			@Override
@@ -79,7 +79,7 @@ public class ServerResource extends ComputeResourceBase {
 	}
 
 	public ServerResource get(boolean eager) {
-		representation = resource().get(Server.class);
+		representation = resource().get(NovaServer.class);
 		if (eager) {
 			representation.setImage(getImage().get().show());
 			representation.setFlavor(getFlavor().get().show());
@@ -95,7 +95,7 @@ public class ServerResource extends ComputeResourceBase {
 		if (representation == null || representation.getImage() == null) {
 			get();
 		}
-		Image image = representation.getImage();
+		NovaImage image = representation.getImage();
 		return image != null ? new ImageResource(session, image) : null;
 	}
 
@@ -103,19 +103,19 @@ public class ServerResource extends ComputeResourceBase {
 		if (representation == null || representation.getFlavor() == null) {
 			get();
 		}
-		Flavor flavor = representation.getFlavor();
+		NovaFlavor flavor = representation.getFlavor();
 		return flavor != null ? new FlavorResource(session, flavor) : null;
 	}
 
-	public Server show() {
+	public NovaServer show() {
 		if (representation == null) {
 			get();
 		}
 		return representation;
 	}
 
-	public Server update(Server server) {
-		return put(Server.class, server);
+	public NovaServer update(NovaServer server) {
+		return put(NovaServer.class, server);
 	}
 
 	public void delete() {
@@ -382,7 +382,7 @@ public class ServerResource extends ComputeResourceBase {
 		return getChildResource("consoles", ConsolesResource.class);
 	}
 
-	public SecurityGroupList listSecurityGroups() {
+	public NovaSecurityGroupList listSecurityGroups() {
 		return getChildResource("os-security-groups", SecurityGroupsResource.class).list();
 	}
 

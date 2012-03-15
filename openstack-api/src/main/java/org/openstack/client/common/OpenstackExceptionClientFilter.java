@@ -1,15 +1,20 @@
 package org.openstack.client.common;
 
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.openstack.client.OpenstackException;
-import org.openstack.client.OpenstackAuthenticationException;
-import org.openstack.client.OpenstackForbiddenException;
-import org.openstack.client.OpenstackNotFoundException;
-import org.openstack.model.compute.BadRequest;
-import org.openstack.model.compute.ItemNotFound;
+import javax.ws.rs.core.MediaType;
 
+import org.openstack.model.compute.NovaBadRequest;
+import org.openstack.model.compute.NovaItemNotFound;
+import org.openstack.model.exceptions.OpenstackAuthenticationException;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenstackForbiddenException;
+import org.openstack.model.exceptions.OpenstackNotFoundException;
+import org.openstack.utils.Io;
+
+import com.google.common.base.Objects;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.ClientFilter;
@@ -23,15 +28,30 @@ class OpenstackExceptionClientFilter extends ClientFilter {
 		int httpStatus = response.getStatus();
 		if (httpStatus == 404) {
 			String message = "Not found";
-			try {
-				// TODO(justinsb): This is only valid on compute (I think!)
-				ItemNotFound itemNotFound = response.getEntity(ItemNotFound.class);
-				if (itemNotFound.getMessage() != null) {
-					message = itemNotFound.getMessage();
+			MediaType responseType = response.getType();
+			
+			if (responseType != null && responseType.isCompatible(MediaType.APPLICATION_XML_TYPE)) {
+				try {
+					// TODO(justinsb): This is only valid on compute (I think!)
+					NovaItemNotFound itemNotFound = response.getEntity(NovaItemNotFound.class);
+					if (itemNotFound.getMessage() != null) {
+						message = itemNotFound.getMessage();
+					}
+				} catch (Exception e) {
+					// Ignore
+					log.log(Level.FINE, "Ignoring error deserializing ItemNotFound on 404", e);
 				}
-			} catch (Exception e) {
-				// Ignore
-				log.log(Level.FINE, "Ignoring error deserializing ItemNotFound on 404", e);
+			} else if (responseType != null && responseType.isCompatible(MediaType.TEXT_HTML_TYPE)) {
+				InputStream inputStream = null;
+				try {
+					inputStream = response.getEntityInputStream();
+					message = Io.readAll(inputStream);
+				} catch (Exception e) {
+					// Ignore
+					log.log(Level.FINE, "Ignoring error reading 404 response body", e);
+				} finally {
+					Io.safeClose(inputStream);
+				}
 			}
 
 			throw new OpenstackNotFoundException(message);
@@ -53,7 +73,7 @@ class OpenstackExceptionClientFilter extends ClientFilter {
 			String message = "Bad request";
 			try {
 				// TODO(justinsb): This is only valid on compute (I think!)
-				BadRequest badRequest = response.getEntity(BadRequest.class);
+				NovaBadRequest badRequest = response.getEntity(NovaBadRequest.class);
 				if (badRequest.getMessage() != null) {
 					message = badRequest.getMessage();
 				}

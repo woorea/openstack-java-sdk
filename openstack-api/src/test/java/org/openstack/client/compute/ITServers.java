@@ -1,13 +1,13 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.OpenstackException;
-import org.openstack.client.OpenstackNotFoundException;
+import org.openstack.client.common.OpenStackSession;
 import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.common.OpenstackSession;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Server;
-import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -17,48 +17,30 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void listServers() {
 		OpenstackComputeClient nova = getComputeClient();
-		OpenstackSession session = nova.getSession();
+		OpenStackSession session = nova.getSession();
 
-		Iterable<Server> list = nova.root().servers().list();
+		Iterable<NovaServer> list = nova.root().servers().list();
 		// System.out.println(list);
 
-		for (Server server : list) {
-			Image image = new ServerResource(session, server).getImage().show();
+		for (NovaServer server : list) {
+			NovaImage image = new ServerResource(session, server).getImage().show();
 			System.out.println(image);
 			// System.out.println("DELETING");
 			// nova.root().servers().server(server.getId()).delete();
 		}
-	}
-	
-	@Test
-	public void showServer() {
-//		OpenstackComputeClient nova = getComputeClient();
-//		OpenstackSession session = nova.getSession();
-//		
-//		Iterator<Server> servers = nova.root().servers().list().iterator();
-//		
-//		if(servers.hasNext()) {
-//			Server server = servers.next();
-//			Server server2 = nova.root().servers().server(server.getId()).show();
-//			Assert.assertEquals(server.getId(), server2.getId());
-//		}
 	}
 
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {
 		OpenstackComputeClient nova = getComputeClient();
 
-		OpenstackSession session = nova.getSession();
+		OpenStackSession session = nova.getSession();
 
-		Iterable<Image> images = nova.root().images().list();
-		Image image = null;
-		for (Image i : images) {
+		Iterable<NovaImage> images = nova.root().images().list();
+		NovaImage image = null;
+		for (NovaImage i : images) {
 			System.out.println(i);
-			if (i.getId().equals("1a0772cd-066c-4de3-a395-b28913e8cfa4")) {
-				image = i;
-				break;
-			}
-
+			
 			// HP Cloud image
 			if (i.getName().equals("Ubuntu Lucid 10.04 LTS Server 64-bit")) {
 				image = i;
@@ -76,14 +58,14 @@ public class ITServers extends ComputeApiTest {
 			throw new SkipException("Skipping test because image not found");
 		}
 
-		Flavor bestFlavor = null;
-		for (Flavor flavor : nova.root().flavors().list()) {
+		NovaFlavor bestFlavor = null;
+		for (NovaFlavor flavor : nova.root().flavors().list()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
 		}
 
-		ServerForCreate serverForCreate = new ServerForCreate();
+		NovaServerForCreate serverForCreate = new NovaServerForCreate();
 		serverForCreate.setName(random.randomAlphanumericString(10));
 		serverForCreate.setFlavorRef(bestFlavor.getId());
 		serverForCreate.setImageRef(image.getId());
@@ -92,7 +74,7 @@ public class ITServers extends ComputeApiTest {
 		// }});
 		System.out.println(serverForCreate);
 
-		Server server = nova.root().servers().create(serverForCreate);
+		NovaServer server = nova.root().servers().create(serverForCreate);
 
 		// In trunk, the server returned from the create operation does not have image or flavor set
 		// In Diablo(?)/HP Cloud, the image id is returned
@@ -105,7 +87,7 @@ public class ITServers extends ComputeApiTest {
 
 		// Wait for the server to be ready
 		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(nova, server);
-		Server ready = async.get();
+		NovaServer ready = async.get();
 
 		Assert.assertEquals("ACTIVE", ready.getStatus());
 		checkLinkedItems(session, ready);
@@ -118,7 +100,7 @@ public class ITServers extends ComputeApiTest {
 		AsyncServerOperation asyncDelete = AsyncServerOperation.wrapServerDelete(nova, server);
 		asyncDelete.get();
 
-		Server stillHere = null;
+		NovaServer stillHere = null;
 		try {
 			stillHere = nova.root().servers().server(server.getId()).show();
 		} catch (OpenstackNotFoundException e) {
@@ -132,7 +114,7 @@ public class ITServers extends ComputeApiTest {
 		}
 	}
 
-	private void checkLinkedItems(OpenstackSession session, Server ready) {
+	private void checkLinkedItems(OpenStackSession session, NovaServer ready) {
 		Assert.assertNotNull(ready.getImage());
 		Assert.assertNotNull(ready.getImage().getId());
 		Assert.assertNotNull(ready.getFlavor());

@@ -13,10 +13,10 @@ import com.sun.jersey.api.client.WebResource.Builder;
 
 public class Resource {
 
-	protected OpenstackSession session;
+	protected OpenStackSession session;
 	protected String resource;
 
-	public Resource(OpenstackSession session, String resource) {
+	public Resource(OpenStackSession session, String resource) {
 		this.session = session;
 		this.resource = resource;
 	}
@@ -28,9 +28,10 @@ public class Resource {
 		return MediaType.APPLICATION_XML_TYPE;
 	}
 
-	protected void initialize(OpenstackSession session, String resource) {
+	protected void initialize(OpenStackSession session, String resource) {
 		if (this.session != null)
 			throw new IllegalStateException("Double initialization");
+		
 		this.session = session;
 		this.resource = resource;
 	}

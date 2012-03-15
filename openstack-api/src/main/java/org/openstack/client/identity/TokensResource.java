@@ -4,15 +4,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.binary.Hex;
-import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Authentication;
-import org.openstack.model.identity.keystone.KeyStoneAccess;
+import org.openstack.model.identity.KeyStoneAccess;
+import org.openstack.model.identity.KeyStoneAuthentication;
 
 import com.google.common.base.Charsets;
 
 public class TokensResource extends IdentityResourceBase {
 
-    public Access authenticate(Authentication authentication) {
+    public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
         // String password = authentication.getPasswordCredentials().getPassword();
         // authentication.getPasswordCredentials().setPassword(sha512(password));
         // .type(MediaType.APPLICATION_XML) ?

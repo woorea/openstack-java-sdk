@@ -1,23 +1,23 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.OpenStackSession;
 import org.openstack.client.common.Resource;
 import org.openstack.client.common.SimpleLinkResolver;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.NovaFlavor;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public class FlavorResource extends Resource {
 
-	private Flavor representation;
+	private NovaFlavor representation;
 
 	public FlavorResource() {
 
 	}
 
-	public FlavorResource(final OpenstackSession session, Flavor flavor) {
+	public FlavorResource(final OpenStackSession session, NovaFlavor flavor) {
 		initialize(session, Iterables.find(flavor.getLinks(), new Predicate<Link>() {
 
 			@Override
@@ -35,11 +35,11 @@ public class FlavorResource extends Resource {
 	}
 
 	public FlavorResource get() {
-		representation = resource().get(Flavor.class);
+		representation = resource().get(NovaFlavor.class);
 		return this;
 	}
 
-	public Flavor show() {
+	public NovaFlavor show() {
 		if (representation == null) {
 			get();
 		}

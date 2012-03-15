@@ -2,10 +2,10 @@ package org.openstack.client.common;
 
 import java.util.List;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
@@ -15,20 +15,20 @@ import com.google.common.collect.Lists;
  */
 public class CachingLinkResolver extends SimpleLinkResolver {
 
-	private List<Flavor> flavorCache;
-	private List<Image> imageCache;
+	private List<NovaFlavor> flavorCache;
+	private List<NovaImage> imageCache;
 
-	public CachingLinkResolver(OpenstackSession session) {
+	public CachingLinkResolver(OpenStackSession session) {
 		super(session);
 	}
 
 	@Override
-	public Flavor resolveFlavor(String flavorId, List<Link> links) {
+	public NovaFlavor resolveFlavor(String flavorId, List<Link> links) {
 		if (flavorCache == null) {
 			flavorCache = Lists.newArrayList(session.getComputeClient().root().flavors().list(true));
 		}
 
-		for (Flavor flavor : flavorCache) {
+		for (NovaFlavor flavor : flavorCache) {
 			if (Objects.equal(flavor.getId(), flavorId))
 				return flavor;
 		}
@@ -37,12 +37,12 @@ public class CachingLinkResolver extends SimpleLinkResolver {
 	}
 
 	@Override
-	public Image resolveImage(String imageId, List<Link> links) throws OpenstackException {
+	public NovaImage resolveImage(String imageId, List<Link> links) throws OpenstackException {
 		if (imageCache == null) {
 			imageCache = Lists.newArrayList(session.getComputeClient().root().images().list(true));
 		}
 
-		for (Image image : imageCache) {
+		for (NovaImage image : imageCache) {
 			if (Objects.equal(image.getId(), imageId))
 				return image;
 		}

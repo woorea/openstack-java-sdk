@@ -4,17 +4,17 @@ import org.openstack.client.imagestore.GlanceRootResource;
 
 public class OpenstackImageClient {
 	
-	final OpenstackSession session;
+	final OpenStackSession session;
 	GlanceRootResource root;
 
-    public OpenstackImageClient(OpenstackSession session) {
+    public OpenstackImageClient(OpenStackSession session) {
     	this.session = session;
         root();
     }
 
     public synchronized GlanceRootResource root() {
         if (root == null) {
-            String endpoint = session.getBestEndpoint("image");
+            String endpoint = session.getData().getBestEndpoint("image");
 
             root = new GlanceRootResource(session, endpoint);
         }
@@ -22,7 +22,7 @@ public class OpenstackImageClient {
         return root;
     }
 
-	public OpenstackSession getSession() {
+	public OpenStackSession getSession() {
 		return session;
 	}
 

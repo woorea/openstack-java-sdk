@@ -2,15 +2,16 @@ package org.openstack.client.cli;
 
 import java.util.Map;
 
-import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.OpenStackSession;
+
 import com.google.common.collect.Maps;
 
 public class SessionCache {
 
-	final Map<OpenstackSessionInfo, OpenstackSession> sessions = Maps.newHashMap();
+	final Map<OpenstackSessionInfo, OpenStackSession> sessions = Maps.newHashMap();
 
-	public OpenstackSession get(OpenstackSessionInfo key) {
-		OpenstackSession session = sessions.get(key);
+	public OpenStackSession get(OpenstackSessionInfo key) {
+		OpenStackSession session = sessions.get(key);
 		if (session == null) {
 			session = key.buildSession();
 			sessions.put(key, session);

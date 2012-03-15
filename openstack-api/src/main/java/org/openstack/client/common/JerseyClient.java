@@ -2,8 +2,8 @@ package org.openstack.client.common;
 
 import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
+import org.codehaus.jackson.map.module.SimpleModule;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 import org.openstack.client.imagestore.KnownLengthInputStreamProvider;
 import org.openstack.client.internals.OpenstackSerializationModule;
@@ -13,6 +13,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
+import org.codehaus.jackson.map.SerializationConfig;
 
 public final class JerseyClient {
 

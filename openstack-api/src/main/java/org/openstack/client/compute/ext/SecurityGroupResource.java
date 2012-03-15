@@ -2,7 +2,7 @@ package org.openstack.client.compute.ext;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroup;
 
 public class SecurityGroupResource extends ComputeResourceBase {
 	@Override
@@ -11,8 +11,8 @@ public class SecurityGroupResource extends ComputeResourceBase {
 		return MediaType.APPLICATION_JSON_TYPE;
 	}
 
-	public SecurityGroup show() {
-		return resource().get(SecurityGroup.class);
+	public NovaSecurityGroup show() {
+		return resource().get(NovaSecurityGroup.class);
 	}
 
 	public void delete() {

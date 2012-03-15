@@ -6,6 +6,7 @@ import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.GlanceImageName;
 import org.openstack.client.common.OpenstackImageClient;
+import org.openstack.model.image.GlanceImage;
 import org.openstack.utils.Io;
 
 public class DownloadImage extends OpenstackCliCommandRunnerBase {
@@ -20,13 +21,13 @@ public class DownloadImage extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		OpenstackCliContext context = getContext();
 
-		String imageId = imageName.findImageId(context);
-		if (imageId == null) {
+		GlanceImage image = imageName.resolve(context);
+		if (image == null) {
 			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
 		}
 
-		OpenstackImageClient client = context.buildImageClient();
-		InputStream is = client.root().images().image(imageId).openStream();
+		OpenstackImageClient client = context.getImageClient();
+		InputStream is = client.root().images().image(image.getId()).openStream();
 		try {
 			Io.copyStreams(is, System.out);
 		} finally {

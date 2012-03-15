@@ -2,7 +2,7 @@ package org.openstack.client.cli.output;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import org.openstack.model.compute.Metadata.Item;
+import org.openstack.model.compute.NovaMetadata.Item;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;

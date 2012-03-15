@@ -3,7 +3,7 @@ package org.openstack.client.cli.autocomplete;
 import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.NovaFlavor;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;
@@ -16,7 +16,7 @@ public class FlavorNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (Flavor image : osContext.getCache().getFlavors(true)) {
+		for (NovaFlavor image : osContext.getCache().listItems(NovaFlavor.class, true)) {
 			strings.add(image.getName());
 		}
 

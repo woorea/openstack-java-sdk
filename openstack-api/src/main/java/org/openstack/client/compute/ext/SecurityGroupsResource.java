@@ -2,11 +2,10 @@ package org.openstack.client.compute.ext;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.client.common.ResourceExtension;
-import org.openstack.model.compute.SecurityGroup;
-import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroupList;
 
-public class SecurityGroupsResource extends ComputeResourceBase implements ResourceExtension {
+public class SecurityGroupsResource extends ComputeResourceBase {
 
 	@Override
 	protected MediaType getDefaultContentType() {
@@ -14,12 +13,12 @@ public class SecurityGroupsResource extends ComputeResourceBase implements Resou
 		return MediaType.APPLICATION_JSON_TYPE;
 	}
 
-	public SecurityGroupList list() {
-		return resource().get(SecurityGroupList.class);
+	public NovaSecurityGroupList list() {
+		return resource().get(NovaSecurityGroupList.class);
 	}
 
-	public SecurityGroup create(SecurityGroup securityGroup) {
-		return resource().post(SecurityGroup.class, securityGroup);
+	public NovaSecurityGroup create(NovaSecurityGroup securityGroup) {
+		return resource().post(NovaSecurityGroup.class, securityGroup);
 	}
 
 	public SecurityGroupResource securityGroup(int id) {

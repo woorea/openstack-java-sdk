@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.namespace.QName;
 
-import org.openstack.model.common.ExtensionData;
-
 public class ExtensionHelper<T> {
 
     final Class<T> clazz;
@@ -17,11 +15,10 @@ public class ExtensionHelper<T> {
         this.clazz = clazz;
     }
 
-    public T parse(ExtensionData extensionData) {
+    public T parse(Map<QName, String> extensionAttributes) {
         // TODO: Can JAXB can do this for us?? We could try constructing a fake document...
         T o = newInstance();
-
-        Map<QName, Object> extensionAttributes = extensionData.getExtensionAttributes();
+         
 
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
@@ -39,7 +36,6 @@ public class ExtensionHelper<T> {
 
             setField(o, field, attributeValue);
         }
-
         return o;
     }
 

@@ -1,6 +1,6 @@
 package org.openstack.client.identity;
 
-import org.openstack.client.common.OpenstackSession;
+import org.openstack.client.common.OpenStackSession;
 import org.openstack.client.common.Resource;
 
 public class IdentityResource extends Resource {
@@ -8,7 +8,7 @@ public class IdentityResource extends Resource {
 	public IdentityResource() {
 	}
 
-	public IdentityResource(OpenstackSession session, String resource) {
+	public IdentityResource(OpenStackSession session, String resource) {
 		initialize(session, resource);
 	}
 

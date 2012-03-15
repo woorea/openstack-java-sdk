@@ -2,10 +2,10 @@ package org.openstack.client.cli.model;
 
 import java.util.List;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.ImageNameAutoCompleter;
-import org.openstack.model.compute.Image;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.exceptions.OpenstackException;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;
@@ -18,9 +18,9 @@ public class ImageName extends StringWrapper {
 		super(key);
 	}
 
-	public String findImageId(OpenstackCliContext context) throws OpenstackException {
-		List<Image> matches = Lists.newArrayList();
-		for (Image image : context.getCache().getImages(true)) {
+	public NovaImage findImage(OpenstackCliContext context) throws OpenstackException {
+		List<NovaImage> matches = Lists.newArrayList();
+		for (NovaImage image : context.getCache().getImages(true)) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {
@@ -35,6 +35,6 @@ public class ImageName extends StringWrapper {
 			throw new IllegalArgumentException("Image name is ambiguous");
 		}
 
-		return matches.get(0).getId();
+		return matches.get(0);
 	}
 }

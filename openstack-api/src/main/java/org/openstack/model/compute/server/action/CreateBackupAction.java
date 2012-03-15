@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.ws.Action;
 
-import org.openstack.model.compute.Metadata;
+import org.openstack.model.compute.NovaMetadata;
 
 @XmlRootElement(name="createBackup")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -25,7 +25,7 @@ public class CreateBackupAction implements Serializable {
 	private String rotation;
 	
 	@XmlElement
-	private Metadata metadata;
+	private NovaMetadata metadata;
 
 	public String getName() {
 		return name;
@@ -51,11 +51,11 @@ public class CreateBackupAction implements Serializable {
 		this.rotation = rotation;
 	}
 
-	public Metadata getMetadata() {
+	public NovaMetadata getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
+	public void setMetadata(NovaMetadata metadata) {
 		this.metadata = metadata;
 	}
 

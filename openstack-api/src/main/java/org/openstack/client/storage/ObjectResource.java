@@ -1,13 +1,12 @@
 package org.openstack.client.storage;
 
 import java.io.InputStream;
-import org.openstack.client.OpenstackException;
-import org.openstack.client.OpenstackNotFoundException;
+
 import org.openstack.client.common.HeadResponse;
 import org.openstack.client.common.RequestBuilder;
-import org.openstack.model.storage.ObjectProperties;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource.Builder;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenstackNotFoundException;
+import org.openstack.model.storage.SwiftObjectProperties;
 
 public class ObjectResource extends StorageResourceBase {
 	public void delete() {
@@ -15,14 +14,22 @@ public class ObjectResource extends StorageResourceBase {
 	}
 
 	public InputStream openStream() {
-		return resource().get(InputStream.class);
+		RequestBuilder request = buildDownloadRequest();
+
+		return request.get(InputStream.class);
 	}
 
-	public ObjectProperties metadata() {
+	public RequestBuilder buildDownloadRequest() {
+		RequestBuilder builder = resource();
+		builder.setMethod("GET");
+		return builder;
+	}
+
+	public SwiftObjectProperties metadata() {
 		HeadResponse response = resource().head();
 		int httpStatus = response.getStatus();
 		if (httpStatus == 200) {
-			ObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response);
+			SwiftObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response);
 			return properties;
 		}
 
@@ -33,7 +40,7 @@ public class ObjectResource extends StorageResourceBase {
 		throw new OpenstackException("Unexpected HTTP status code: " + httpStatus);
 	}
 
-	public void updateMetadata(ObjectProperties changeProperties) {
+	public void updateMetadata(SwiftObjectProperties changeProperties) {
 		RequestBuilder builder = resource();
 		builder = SwiftHeaderUtils.setHeadersForProperties(builder, changeProperties);
 		builder.post();

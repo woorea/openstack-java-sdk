@@ -1,16 +1,15 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.model.compute.NovaFlavor;
 
 public class ListFlavors extends OpenstackCliCommandRunnerBase {
-    public ListFlavors() {
-        super("list", "flavors");
-    }
+	public ListFlavors() {
+		super("list", "flavors");
+	}
 
-    @Override
-    public Object runCommand() throws Exception {
-        OpenstackComputeClient tenant = getComputeClient();
-        return tenant.root().flavors().list(true);
-    }
+	@Override
+	public Object runCommand() throws Exception {
+		return getCache().listItems(NovaFlavor.class, false);
+	}
 
 }

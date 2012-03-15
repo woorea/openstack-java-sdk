@@ -2,10 +2,10 @@ package org.openstack.client.cli.model;
 
 import java.util.List;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.FlavorNameAutoCompleter;
-import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.exceptions.OpenstackException;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;
@@ -18,8 +18,8 @@ public class FlavorName extends StringWrapper {
 	}
 
 	public String findImageId(OpenstackCliContext context) throws OpenstackException {
-		List<Flavor> matches = Lists.newArrayList();
-		for (Flavor flavor : context.getCache().getFlavors(true)) {
+		List<NovaFlavor> matches = Lists.newArrayList();
+		for (NovaFlavor flavor : context.getCache().listItems(NovaFlavor.class, true)) {
 			if (flavor.getName().equals(getKey())) {
 				matches.add(flavor);
 			} else if (flavor.getName().equals(getKey())) {

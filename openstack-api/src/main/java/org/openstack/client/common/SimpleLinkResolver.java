@@ -4,10 +4,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.openstack.client.OpenstackException;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.base.Objects;
 
@@ -16,19 +16,19 @@ import com.google.common.base.Objects;
  */
 public class SimpleLinkResolver implements LinkResolver {
 
-	protected final OpenstackSession session;
+	protected final OpenStackSession session;
 
-	public SimpleLinkResolver(OpenstackSession session) {
+	public SimpleLinkResolver(OpenStackSession session) {
 		this.session = session;
 	}
 
 	@Override
-	public Flavor resolveFlavor(String flavorId, List<Link> links) {
-		Flavor flavor = null;
+	public NovaFlavor resolveFlavor(String flavorId, List<Link> links) {
+		NovaFlavor flavor = null;
 		Link link = findLink(links, "bookmark");
 		if (link != null) {
 			fixLinkHref(session, link);
-			flavor = session.followLink(link, Flavor.class);
+			flavor = session.follow(link, "GET", NovaFlavor.class);
 		}
 
 		if (flavor == null && flavorId != null) {
@@ -38,7 +38,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		return flavor;
 	}
 
-	public static void fixLinkHref(OpenstackSession session, Link link) {
+	public static void fixLinkHref(OpenStackSession session, Link link) {
 		// dirty hack since urls are not correct in the XML
 		// may this is fixed in the current revision
 		// so simply comment this
@@ -69,12 +69,12 @@ public class SimpleLinkResolver implements LinkResolver {
 	}
 
 	@Override
-	public Image resolveImage(String imageId, List<Link> links) throws OpenstackException {
-		Image image = null;
+	public NovaImage resolveImage(String imageId, List<Link> links) throws OpenstackException {
+		NovaImage image = null;
 		Link link = findLink(links, "bookmark");
 		if (link != null) {
 			fixLinkHref(session, link);
-			image = session.followLink(link, Image.class);
+			image = session.follow(link, "GET", NovaImage.class);
 		}
 
 		if (image == null && imageId != null) {

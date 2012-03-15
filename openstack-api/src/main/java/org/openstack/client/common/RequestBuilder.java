@@ -1,6 +1,5 @@
 package org.openstack.client.common;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -8,10 +7,12 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.client.OpenstackAuthenticationException;
+import org.openstack.model.exceptions.OpenstackAuthenticationException;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 
 public abstract class RequestBuilder {
 	static final Logger log = Logger.getLogger(RequestBuilder.class.getName());
@@ -24,9 +25,11 @@ public abstract class RequestBuilder {
 	protected String method = "GET";
 	protected Object body;
 
-	private final OpenstackSession session;
+	protected Multimap<String, String> queryParameters = HashMultimap.create();
+	
+	private final OpenStackSession session;
 
-	public RequestBuilder(OpenstackSession session, String resourceUrl) {
+	public RequestBuilder(OpenStackSession session, String resourceUrl) {
 		this.session = session;
 		this.resourceUrl = resourceUrl;
 	}
@@ -86,7 +89,7 @@ public abstract class RequestBuilder {
 				return doRequest0(c);
 			} catch (OpenstackAuthenticationException e) {
 				log.log(Level.WARNING, "Caught not-authorized exception; trying to re-authenticate", e);
-				if (session.isAuthenticated()) {
+				if (session.getData().isAuthenticated()) {
 					session.reauthenticate();
 				}
 			}
@@ -134,6 +137,14 @@ public abstract class RequestBuilder {
 
 	public void post() {
 		post(Void.class, null);
+	}
+
+	public void addQueryParameter(String key, String value) {
+		queryParameters.put(key, value);
+	}
+
+	public void clearAcceptTypes() {
+		acceptTypes.clear();
 	}
 
 }

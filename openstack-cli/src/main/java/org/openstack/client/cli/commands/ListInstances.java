@@ -1,5 +1,6 @@
 package org.openstack.client.cli.commands;
 
+import org.openstack.model.compute.NovaServer;
 
 public class ListInstances extends OpenstackCliCommandRunnerBase {
 	public ListInstances() {
@@ -8,7 +9,7 @@ public class ListInstances extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().getInstances(false);
+		return getCache().listItems(NovaServer.class, false);
 	}
 
 }

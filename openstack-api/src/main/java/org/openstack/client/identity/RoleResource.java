@@ -1,12 +1,12 @@
 package org.openstack.client.identity;
 
 import org.openstack.client.common.Resource;
-import org.openstack.model.identity.Role;
+import org.openstack.model.identity.KeyStoneRole;
 
 public class RoleResource extends Resource {
 
-	public Role show() {
-		return resource().get(Role.class);
+	public KeyStoneRole show() {
+		return resource().get(KeyStoneRole.class);
 	}
 
 //	public Role update() {

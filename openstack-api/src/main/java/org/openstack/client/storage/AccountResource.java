@@ -1,16 +1,16 @@
 package org.openstack.client.storage;
 
-import org.openstack.client.common.OpenstackSession;
-import org.openstack.model.storage.Account;
+import org.openstack.client.common.OpenStackSession;
+import org.openstack.model.storage.SwiftAccount;
 
 public class AccountResource extends StorageResourceBase {
 
-	public AccountResource(OpenstackSession session, String resource) {
+	public AccountResource(OpenStackSession session, String resource) {
 		initialize(session, resource);
 	}
 
-	public Account show() {
-		return resource().get(Account.class);
+	public SwiftAccount show() {
+		return resource().get(SwiftAccount.class);
 	}
 
 	public ContainersResource containers() {

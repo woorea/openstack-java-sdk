@@ -5,10 +5,9 @@ import java.net.URLEncoder;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
-import org.openstack.client.common.ResourceExtension;
-import org.openstack.model.compute.CreateKeyPairResponse;
-import org.openstack.model.compute.KeyPair;
-import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.NovaCreateKeyPairResponse;
+import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.NovaKeyPairList;
 
 /**
  * Keypair Support
@@ -16,7 +15,7 @@ import org.openstack.model.compute.KeyPairList;
  * @author sp
  * 
  */
-public class KeyPairsResource extends Resource implements ResourceExtension {
+public class KeyPairsResource extends Resource {
 
 	// KeyPairsResource seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?
@@ -30,8 +29,8 @@ public class KeyPairsResource extends Resource implements ResourceExtension {
 	 * 
 	 * @return
 	 */
-	public KeyPairList list() {
-		return resource().get(KeyPairList.class);
+	public NovaKeyPairList list() {
+		return resource().get(NovaKeyPairList.class);
 	}
 
 	/**
@@ -44,8 +43,8 @@ public class KeyPairsResource extends Resource implements ResourceExtension {
 	 * @param keyPair
 	 * @return
 	 */
-	public KeyPair create(KeyPair keyPair) {
-		CreateKeyPairResponse response = resource().post(CreateKeyPairResponse.class, keyPair);
+	public NovaKeyPair create(NovaKeyPair keyPair) {
+		NovaCreateKeyPairResponse response = resource().post(NovaCreateKeyPairResponse.class, keyPair);
 		return response.getKeyPair();
 	}
 

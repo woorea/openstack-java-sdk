@@ -7,7 +7,7 @@ import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.model.StoragePath;
 import org.openstack.client.storage.ObjectsResource;
 import org.openstack.client.storage.OpenstackStorageClient;
-import org.openstack.model.storage.ObjectProperties;
+import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.utils.NoCloseInputStream;
 
 public class UploadFile extends OpenstackCliCommandRunnerBase {
@@ -31,7 +31,7 @@ public class UploadFile extends OpenstackCliCommandRunnerBase {
 		}
 		ObjectsResource objects = client.root().containers().id(tokens[0]).objects();
 
-		ObjectProperties objectProperties = new ObjectProperties();
+		SwiftObjectProperties objectProperties = new SwiftObjectProperties();
 		objectProperties.setName(tokens[1]);
 
 		if (properties != null) {

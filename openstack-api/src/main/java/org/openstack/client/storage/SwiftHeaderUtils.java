@@ -9,7 +9,7 @@ import org.openstack.client.common.HeadResponse;
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.internals.SimpleClassInfo;
 import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
-import org.openstack.model.storage.ObjectProperties;
+import org.openstack.model.storage.SwiftObjectProperties;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource.Builder;
@@ -21,13 +21,13 @@ class SwiftHeaderUtils {
 
 	static SimpleClassInfo getHeaderClassInfo() {
 		if (classInfo == null) {
-			classInfo = new SimpleClassInfo(ObjectProperties.class);
+			classInfo = new SimpleClassInfo(SwiftObjectProperties.class);
 		}
 		return classInfo;
 	}
 
-	public static ObjectProperties unmarshalHeaders(HeadResponse response) {
-		ObjectProperties properties = new ObjectProperties();
+	public static SwiftObjectProperties unmarshalHeaders(HeadResponse response) {
+		SwiftObjectProperties properties = new SwiftObjectProperties();
 		Map<String, String> userProperties = properties.getCustomProperties();
 
 		for (Entry<String, List<String>> entry : response.getHeaders().entrySet()) {
@@ -60,7 +60,7 @@ class SwiftHeaderUtils {
 		return properties;
 	}
 
-	public static RequestBuilder setHeadersForProperties(RequestBuilder builder, ObjectProperties changeProperties) {
+	public static RequestBuilder setHeadersForProperties(RequestBuilder builder, SwiftObjectProperties changeProperties) {
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {
 			builder.putHeader("x-object-meta-" + tag.getKey(), tag.getValue());
 		}

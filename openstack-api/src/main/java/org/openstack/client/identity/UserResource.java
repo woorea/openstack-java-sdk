@@ -3,12 +3,11 @@ package org.openstack.client.identity;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
-import org.openstack.model.identity.User;
-import org.openstack.model.identity.keystone.KeyStoneUser;
+import org.openstack.model.identity.KeyStoneUser;
 
 public class UserResource extends Resource {
 
-	public User show() {
+	public KeyStoneUser show() {
 		return resource().get(KeyStoneUser.class);
 	}
 

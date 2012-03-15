@@ -1,12 +1,12 @@
 package org.openstack.client.identity;
 
 import org.openstack.client.common.Resource;
-import org.openstack.model.identity.EndpointTemplate;
+import org.openstack.model.identity.KeyStoneEndpointTemplates;
 
 public class EndpointTemplateResource extends Resource {
 
-	public EndpointTemplate show() {
-		return resource().get(EndpointTemplate.class);
+	public KeyStoneEndpointTemplates show() {
+		return resource().get(KeyStoneEndpointTemplates.class);
 	}
 
 	// public EndpointTemplate update() {

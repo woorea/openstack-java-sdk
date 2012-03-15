@@ -2,8 +2,8 @@ package org.openstack.client.common;
 
 import java.util.logging.Logger;
 
-import org.openstack.model.identity.Access;
-import org.openstack.model.identity.keystone.KeyStoneAccess.Token;
+import org.openstack.model.identity.KeyStoneAccess;
+import org.openstack.model.identity.KeyStoneToken;
 
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
@@ -12,14 +12,14 @@ import com.sun.jersey.api.client.filter.ClientFilter;
 class OpenstackAuthenticationFilter extends ClientFilter {
 	static final Logger log = Logger.getLogger(OpenstackAuthenticationFilter.class.getName());
 
-	final Access access;
+	final KeyStoneAccess access;
 
-	public OpenstackAuthenticationFilter(Access access) {
+	public OpenstackAuthenticationFilter(KeyStoneAccess access) {
 		this.access = access;
 	}
 
 	public ClientResponse handle(ClientRequest request) {
-		Access.Token token = null;
+		KeyStoneToken token = null;
 		if (access != null) {
 			token = access.getToken();
 		}

@@ -1,12 +1,12 @@
 package org.openstack.client.identity;
 
 import org.openstack.client.common.Resource;
-import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.KeyStoneServiceList;
 
 public class ServicesResource extends Resource {
 
-	public ServiceList list() {
-		return resource().get(ServiceList.class);
+	public KeyStoneServiceList list() {
+		return resource().get(KeyStoneServiceList.class);
 	}
 	
 //	public ServiceResource create(Service tenant) {

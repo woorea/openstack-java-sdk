@@ -6,8 +6,8 @@ import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
 import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
 import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.client.common.OpenstackImageClient;
-import org.openstack.client.common.OpenstackSession;
 import org.openstack.client.storage.OpenstackStorageClient;
+import org.openstack.model.common.OpenstackService;
 
 import com.fathomdb.cli.CliContextBase;
 
@@ -20,16 +20,20 @@ public class OpenstackCliContext extends CliContextBase {
 		this.options = options;
 	}
 
-	public OpenstackSession getOpenstackSession() {
-		return options.getOpenstackSession();
+	// public OpenstackSession getOpenstackSession() {
+	// return options.getOpenstackSession();
+	// }
+
+	public OpenstackService getOpenstackService() {
+		return options.getOpenstackService();
 	}
 
 	public OpenstackComputeClient getComputeClient() {
-		return getOpenstackSession().getComputeClient();
+		return getOpenstackService().getComputeClient();
 	}
 
-	public OpenstackImageClient buildImageClient() {
-		return getOpenstackSession().getImageClient();
+	public OpenstackImageClient getImageClient() {
+		return getOpenstackService().getImageClient();
 	}
 
 	public ConfigurationOptions getOptions() {
@@ -44,18 +48,22 @@ public class OpenstackCliContext extends CliContextBase {
 		return (OpenstackCliContext) CliContextBase.get();
 	}
 
-	public OpenstackStorageClient getStorageClient() {
-		return getOpenstackSession().getStorageClient();
-	}
+	// public OpenstackStorageClient getStorageClient() {
+	// return getOpenstackSession().getStorageClient();
+	// }
 
 	public OpenstackCache getCache() {
-		OpenstackSession session = getOpenstackSession();
-		OpenstackCache cache = (OpenstackCache) session.extensions.get(OpenstackCache.class);
+		OpenstackService service = getOpenstackService();
+		OpenstackCache cache = (OpenstackCache) service.getExtensions().get(OpenstackCache.class);
 		if (cache == null) {
-			cache = new OpenstackCache(session);
-			session.extensions.put(OpenstackCache.class, cache);
+			cache = new OpenstackCache(service);
+			service.getExtensions().put(OpenstackCache.class, cache);
 		}
 		return cache;
+	}
+
+	public OpenstackStorageClient getStorageClient() {
+		return getOpenstackService().getStorageClient();
 	}
 
 }

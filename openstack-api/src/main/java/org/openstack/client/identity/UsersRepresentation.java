@@ -2,8 +2,8 @@ package org.openstack.client.identity;
 
 import java.util.List;
 
-import org.openstack.model.identity.UserList;
-import org.openstack.model.identity.keystone.KeyStoneUser;
+import org.openstack.model.identity.KeyStoneUser;
+import org.openstack.model.identity.KeyStoneUserList;
 
 import com.sun.jersey.api.client.Client;
 
@@ -11,9 +11,9 @@ public class UsersRepresentation {
 		
 	private Client client;
 	
-	private UserList model;
+	private KeyStoneUserList model;
 
-	public UsersRepresentation(Client client, UserList model) {
+	public UsersRepresentation(Client client, KeyStoneUserList model) {
 		this.client = client;
 		this.model = model;
 	}
@@ -23,7 +23,7 @@ public class UsersRepresentation {
 	}
 	
 	public UsersRepresentation next() {
-		UserList userList = client.resource(model.getLinks().get(0).getHref()).get(UserList.class);
+		KeyStoneUserList userList = client.resource(model.getLinks().get(0).getHref()).get(KeyStoneUserList.class);
 		return new UsersRepresentation(client, userList);
 	}
 	

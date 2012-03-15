@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:compute="urn:import:org.openstack.ui.client.view.compute.wizards">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<p>Configure the firewall here</p>
+		<hr />
+		<compute:ListBoxEditor ui:field="securityGroups" />
+		<g:Button styleName="btn btn-small" ui:field="add"><i class="icon-plus-sign" /> Add Security Group</g:Button>
+		<g:ScrollPanel ui:field="securityGroup" />
+		
+	</g:HTMLPanel>
+</ui:UiBinder>

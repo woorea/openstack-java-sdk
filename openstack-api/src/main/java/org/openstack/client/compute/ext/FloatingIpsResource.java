@@ -3,10 +3,9 @@ package org.openstack.client.compute.ext;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
-import org.openstack.client.common.ResourceExtension;
-import org.openstack.model.compute.CreateFloatingIpResponse;
-import org.openstack.model.compute.FloatingIp;
-import org.openstack.model.compute.FloatingIpList;
+import org.openstack.model.compute.NovaCreateFloatingIpResponse;
+import org.openstack.model.compute.NovaFloatingIp;
+import org.openstack.model.compute.NovaFloatingIpList;
 
 /**
  * Floating IPs support
@@ -14,7 +13,7 @@ import org.openstack.model.compute.FloatingIpList;
  * @author sp
  * 
  */
-public class FloatingIpsResource extends Resource implements ResourceExtension {
+public class FloatingIpsResource extends Resource {
 
 	// Floating IPs seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?
@@ -28,16 +27,16 @@ public class FloatingIpsResource extends Resource implements ResourceExtension {
 	 * 
 	 * @return
 	 */
-	public FloatingIpList list() {
-		return resource().get(FloatingIpList.class);
+	public NovaFloatingIpList list() {
+		return resource().get(NovaFloatingIpList.class);
 	}
 
-	public FloatingIp create(String pool) {
-		return resource().post(FloatingIp.class, pool);
+	public NovaFloatingIp create(String pool) {
+		return resource().post(NovaFloatingIp.class, pool);
 	}
 
-	public FloatingIp create() {
-		CreateFloatingIpResponse response = resource().post(CreateFloatingIpResponse.class, "{}");
+	public NovaFloatingIp create() {
+		NovaCreateFloatingIpResponse response = resource().post(NovaCreateFloatingIpResponse.class, "{}");
 		return response.getFloatingIp();
 	}
 

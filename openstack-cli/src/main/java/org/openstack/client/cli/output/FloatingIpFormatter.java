@@ -3,20 +3,20 @@ package org.openstack.client.cli.output;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.NovaFloatingIp;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
 import com.google.common.collect.Maps;
 
-public class FloatingIpFormatter extends SimpleFormatter<FloatingIp> {
+public class FloatingIpFormatter extends SimpleFormatter<NovaFloatingIp> {
 
 	public FloatingIpFormatter() {
-		super(FloatingIp.class);
+		super(NovaFloatingIp.class);
 	}
 
 	@Override
-	public void visit(FloatingIp o, OutputSink sink) throws IOException {
+	public void visit(NovaFloatingIp o, OutputSink sink) throws IOException {
 		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
 		values.put("id", o.getId());

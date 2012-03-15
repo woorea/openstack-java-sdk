@@ -15,9 +15,9 @@ import org.codehaus.jackson.map.DeserializerProvider;
 import org.codehaus.jackson.map.JsonDeserializer;
 import org.codehaus.jackson.map.deser.std.StdDeserializer;
 import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
-import org.openstack.model.compute.SecurityGroupList;
-import org.openstack.model.compute.Addresses.Network;
-import org.openstack.model.compute.Addresses.Network.Ip;
+import org.openstack.model.compute.NovaSecurityGroupList;
+import org.openstack.model.compute.NovaAddresses.Network;
+import org.openstack.model.compute.NovaAddresses.Network.Ip;
 
 import com.google.common.collect.Lists;
 

@@ -64,6 +64,14 @@ if [[ "$1" == "run-vnc" ]]; then
 	DEFAULT_FORMAT="action"
 fi
 
+if [[ "$1" == "create-image" ]]; then
+	USE_NAILGUN=0
+fi
+
+if [[ "${USE_NAILGUN}" == "" ]]; then
+	USE_NAILGUN=1
+fi
+
 if [[ "$DEFAULT_FORMAT" == "" ]]; then
 	DEFAULT_FORMAT="raw"
 fi
@@ -85,38 +93,37 @@ if [[ "$PROFILE" == "" ]]; then
 	PROFILE=openstack
 fi
 
-. ~/.credentials/${PROFILE}
-
 if [[ "$FORMAT" == "" ]]; then
 	FORMAT=${DEFAULT_FORMAT}
 fi
 
-args=(--format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --server "${OS_AUTH_URL}")
-
-if [[ "$OS_TENANT_NAME" != "" ]]; then
-args=("${args[@]}" --tenant "${OS_TENANT_NAME}" )
+if [[ "$CONFIG_FILE" == "" ]]; then
+	CONFIG_FILE=~/.credentials/${PROFILE}
 fi
+
 
 export NAILGUN_PORT=2102
-cmd=(${NAILGUN} org.openstack.client.cli.OpenstackCli)
 
-if [[ "${FORMAT}" == "action" ]]; then
-	action=`${cmd[@]} ${args[@]} "${@}"`
-	do_action ${action}
+if [[ "${USE_NAILGUN}" == "1" ]]; then
+	cmd=(${NAILGUN} org.openstack.client.cli.OpenstackCli)
+	args=(--format "${FORMAT}" --config -)
 else
-	${cmd[@]} ${args[@]} "${@}"
+	cmd=(java -jar ${BASEDIR}/openstack-cli-standalone.jar)
+	args=(--format "${FORMAT}" --config "${CONFIG_FILE}")
 fi
 
+if [[ "${FORMAT}" == "action" ]]; then
+	if [[ "${USE_NAILGUN}" == "1" ]]; then
+		action=`${cmd[@]} ${args[@]} "${@}" < ${CONFIG_FILE}`
+	else
+		action=`${cmd[@]} ${args[@]} "${@}"`
+	fi
+	do_action ${action}
+else
+	if [[ "${USE_NAILGUN}" == "1" ]]; then
+		${cmd[@]} ${args[@]} "${@}" < ${CONFIG_FILE}
+	else
+		${cmd[@]} ${args[@]} "${@}"
+	fi
+fi
 
-#USE_NAILGUN=1
-
-#if [[ "${1}" == "create-image" ]]; then
-#	USE_NAILGUN=0
-#fi
-
-
-#if [[ ${USE_NAILGUN} == "1" ]]; then
-#	NAILGUN_PORT=2102 ${NAILGUN} org.openstack.client.cli.OpenstackCli  "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}"
-#else
-#	java -jar ${BASEDIR}/openstack-cli-standalone.jar --format "${FORMAT}" --username "${OS_USERNAME}" --password "${OS_PASSWORD}" --tenant "${OS_TENANT_NAME}" --server "${OS_AUTH_URL}" "${1}" "${2}" "${3}" "${4}" "${5}" "${6}" "${7}"
-#fi

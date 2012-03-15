@@ -6,18 +6,18 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.ser.std.SerializerBase;
-import org.openstack.model.compute.Addresses;
-import org.openstack.model.compute.Addresses.Network;
-import org.openstack.model.compute.Addresses.Network.Ip;
+import org.openstack.model.compute.NovaAddresses;
+import org.openstack.model.compute.NovaAddresses.Network;
+import org.openstack.model.compute.NovaAddresses.Network.Ip;
 
-public class AddressesSerializer extends SerializerBase<Addresses> {
+public class AddressesSerializer extends SerializerBase<NovaAddresses> {
 
 	protected AddressesSerializer() {
-		super(Addresses.class);
+		super(NovaAddresses.class);
 	}
 
 	@Override
-	public void serialize(Addresses value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+	public void serialize(NovaAddresses value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
 			JsonGenerationException {
 		jgen.writeStartObject();
 		for (Network network : value.getNetworks()) {

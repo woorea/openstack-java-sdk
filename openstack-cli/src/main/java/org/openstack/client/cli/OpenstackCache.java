@@ -3,36 +3,28 @@ package org.openstack.client.cli;
 import java.util.List;
 import java.util.Map;
 
-import org.openstack.client.OpenstackException;
-import org.openstack.client.common.OpenstackSession;
-import org.openstack.client.compute.TenantResource;
-import org.openstack.client.compute.ext.SecurityGroupsResource;
-import org.openstack.model.compute.Flavor;
-import org.openstack.model.compute.Image;
-import org.openstack.model.compute.SecurityGroup;
-import org.openstack.model.compute.Server;
+import org.openstack.model.common.OpenstackService;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class OpenstackCache {
 
-	private final OpenstackSession session;
+	private final OpenstackService service;
 
-	public OpenstackCache(OpenstackSession session) {
-		this.session = session;
+	public OpenstackCache(OpenstackService service) {
+		this.service = service;
 	}
 
-	public Iterable<Image> getImages(boolean useCache) throws OpenstackException {
-		return getCachedList(Image.class, useCache);
+	public Iterable<NovaImage> getImages(boolean useCache) throws OpenstackException {
+		return getCachedList(NovaImage.class, useCache);
 	}
 
-	public Iterable<Server> getInstances(boolean useCache) throws OpenstackException {
-		return getCachedList(Server.class, useCache);
-	}
-
-	public Iterable<Flavor> getFlavors(boolean useCache) throws OpenstackException {
-		return getCachedList(Flavor.class, useCache);
+	public <V> Iterable<V> listItems(Class<V> modelClass, boolean useCache) throws OpenstackException {
+		return getCachedList(modelClass, useCache);
 	}
 
 	final Map<Class<?>, List<?>> cachedLists = Maps.newHashMap();
@@ -40,38 +32,22 @@ public class OpenstackCache {
 	private <V> Iterable<V> getCachedList(Class<V> modelClass, boolean useCache) throws OpenstackException {
 		List<V> cached = useCache ? (List<V>) cachedLists.get(modelClass) : null;
 		if (cached == null) {
-			if (modelClass == Image.class) {
-				cached = (List<V>) Lists.newArrayList(computeRoot().images().list());
-			} else if (modelClass == Flavor.class) {
-				cached = (List<V>) Lists.newArrayList(computeRoot().flavors().list(true));
-			} else if (modelClass == Server.class) {
-				cached = (List<V>) Lists.newArrayList(computeRoot().servers().list(true));
-			} else if (modelClass == org.openstack.model.image.Image.class) {
-				cached = (List<V>) Lists.newArrayList(session.getImageClient().root().images().list(true));
-			} else if (modelClass == SecurityGroup.class) {
-				cached = (List<V>) Lists.newArrayList(computeRoot().extension(SecurityGroupsResource.class).list().getList());
-			} else {
-				throw new IllegalArgumentException();
-			}
+			cached = (List<V>) Lists.newArrayList(service.listItems(modelClass, true));
 			cachedLists.put(modelClass, cached);
 		}
 		return cached;
 	}
 
-	private TenantResource computeRoot() {
-		return session.getComputeClient().root();
-	}
-
-	public Iterable<org.openstack.model.image.Image> getGlanceImages(boolean useCache) {
-		return getCachedList(org.openstack.model.image.Image.class, useCache);
+	public Iterable<org.openstack.model.image.GlanceImage> getGlanceImages(boolean useCache) {
+		return getCachedList(org.openstack.model.image.GlanceImage.class, useCache);
 	}
 
 	public void invalidateCache(Class<?> modelClass) {
 		cachedLists.remove(modelClass);
 	}
 
-	public Iterable<SecurityGroup> getSecurityGroups(boolean useCache) {
-		return getCachedList(SecurityGroup.class, useCache);
+	public Iterable<NovaSecurityGroup> getSecurityGroups(boolean useCache) {
+		return getCachedList(NovaSecurityGroup.class, useCache);
 	}
 
 }

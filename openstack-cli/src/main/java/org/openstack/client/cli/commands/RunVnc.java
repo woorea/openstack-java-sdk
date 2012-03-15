@@ -15,7 +15,7 @@ public class RunVnc extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenstackComputeClient compute = getComputeClient();
+		OpenstackComputeClient compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 

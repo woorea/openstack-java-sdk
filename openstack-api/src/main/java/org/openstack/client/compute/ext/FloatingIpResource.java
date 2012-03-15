@@ -1,7 +1,7 @@
 package org.openstack.client.compute.ext;
 
 import org.openstack.client.common.Resource;
-import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.NovaFloatingIp;
 
 /**
  * Keypair Support
@@ -11,8 +11,8 @@ import org.openstack.model.compute.FloatingIp;
  */
 public class FloatingIpResource extends Resource {
 
-	public FloatingIp show() {
-		return resource().get(FloatingIp.class);	
+	public NovaFloatingIp show() {
+		return resource().get(NovaFloatingIp.class);	
 	}
 	
 	public void delete() {
