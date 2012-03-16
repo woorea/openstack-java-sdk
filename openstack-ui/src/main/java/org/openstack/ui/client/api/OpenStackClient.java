@@ -31,10 +31,12 @@ public class OpenStackClient {
 	}
 	
 	public static String getComputeURL() {
-		return  "http://192.168.1.45:8774/v2/" + getTenant();
+		return session.getBestEndpoint("compute");
+		// return  "http://192.168.1.45:8774/v2/" + getTenant();
 	}
 
 	public static String getIdentityURL() {
-		return "http://192.168.1.45:5000/v2.0";
+		return session.getBestEndpoint("identity");
+		// return "http://192.168.1.45:5000/v2.0";
 	}
 }

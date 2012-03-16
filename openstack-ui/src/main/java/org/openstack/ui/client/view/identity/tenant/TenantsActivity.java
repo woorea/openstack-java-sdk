@@ -40,7 +40,7 @@ public class TenantsActivity extends AbstractActivity implements TenantsView.Pre
 
 			@Override
 			protected void onRangeChanged(HasData<KeyStoneTenant> display) {
-				OpenStackClient.IDENTITY.listTenants(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<KeyStoneTenantList>() {
+				OpenStackClient.IDENTITY.listTenants(OpenStackClient.getIdentityURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<KeyStoneTenantList>() {
 
 					@Override
 					public void onSuccess(KeyStoneTenantList result) {
