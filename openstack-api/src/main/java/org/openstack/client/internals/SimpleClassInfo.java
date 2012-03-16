@@ -1,15 +1,11 @@
 package org.openstack.client.internals;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.TypeVariable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -19,7 +15,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
@@ -67,7 +62,7 @@ public class SimpleClassInfo {
 		this.jsonName = jsonName;
 	}
 
-	private static String firstToLowerCase(String s) {
+	public static String firstToLowerCase(String s) {
 		if (s == null || s.isEmpty())
 			return s;
 

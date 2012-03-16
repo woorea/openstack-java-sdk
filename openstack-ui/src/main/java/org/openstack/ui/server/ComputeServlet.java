@@ -3,7 +3,9 @@ package org.openstack.ui.server;
 import java.util.Collection;
 import java.util.List;
 
+import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
+import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.compute.NovaSecurityGroup;
@@ -169,6 +171,16 @@ public class ComputeServlet extends RemoteServiceServlet implements ComputeServi
 	@Override
 	public NovaSnapshotList listSnapshots(String computeURL, String token) {
 		return service.listSnapshots(computeURL, token);
+	}
+
+	@Override
+	public NovaImage showImage() {
+		return service.showImage();
+	}
+
+	@Override
+	public NovaFlavor showFlavor() {
+		return service.showFlavor();
 	}
 
 }

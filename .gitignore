@@ -8,3 +8,9 @@ bin/logs/
 
 
 openstack-api/test-output/
+openstack-ui/src/main/webapp/META-INF/
+openstack-ui/src/main/webapp/WEB-INF/deploy/
+openstack-ui/src/main/webapp/WEB-INF/classes/
+openstack-ui/src/main/gwt-unitCache/
+openstack-ui/src/main/webapp/ui/
+openstack-ui/src/main/webapp/WEB-INF/lib/

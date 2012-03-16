@@ -1,6 +1,7 @@
 package org.openstack.client.common;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
@@ -13,9 +14,13 @@ import org.openstack.model.compute.NovaImage;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.KeyStoneToken;
 
+import com.google.common.collect.Maps;
+
 public abstract class OpenStackSession implements Serializable {
 	
 	static final Logger log = Logger.getLogger(OpenStackSession.class.getName());
+	
+	protected final Map<Object, Object> extensions = Maps.newHashMap();
 	
 	protected OpenStackSessionData data = new OpenStackSessionData();
 	
@@ -75,6 +80,10 @@ public abstract class OpenStackSession implements Serializable {
 	public OpenStackSession disable(Feature feature) {
 		features = features & ~feature.mask();
 		return this;
+	}
+	
+	public Map<Object, Object> getExtensions() {
+		return extensions;
 	}
 
 	public OpenStackIdentityConfig getIdentityConfig() {

@@ -3,7 +3,9 @@ package org.openstack.ui.client.api;
 import java.util.Collection;
 import java.util.List;
 
+import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
+import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.compute.NovaSecurityGroup;
@@ -68,7 +70,11 @@ public interface ComputeService extends RemoteService {
 	
 	NovaImageList listImages(String computeURL, String token);
 	
+	NovaImage showImage();
+	
 	NovaFlavorList listFlavors(String computeURL, String token);
+	
+	NovaFlavor showFlavor();
 	
 	List<NovaKeyPair> listKeyPairs(String computeURL, String token);
 	

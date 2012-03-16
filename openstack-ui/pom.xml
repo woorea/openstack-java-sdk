@@ -23,6 +23,12 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>2.4.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
 			<version>11.0.2</version>
@@ -53,9 +59,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<!--
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
-		-->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

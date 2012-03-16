@@ -3,7 +3,9 @@ package org.openstack.ui.client.api;
 import java.util.Collection;
 import java.util.List;
 
+import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
+import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.compute.NovaSecurityGroup;
@@ -92,6 +94,10 @@ public interface ComputeServiceAsync {
 	void saveServer(String computeURL, String token,
 			NovaServerForCreate serverForCreate,
 			AsyncCallback<NovaServer> callback);
+
+	void showFlavor(AsyncCallback<NovaFlavor> callback);
+
+	void showImage(AsyncCallback<NovaImage> callback);
 
 	void showSecurityGroup(String computeURL, String token, Integer id,
 			AsyncCallback<NovaSecurityGroup> callback);

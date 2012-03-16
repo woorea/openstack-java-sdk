@@ -2,12 +2,8 @@ package org.openstack.model.common;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
-import org.openstack.client.common.OpenStackSession;
-import org.openstack.client.common.OpenstackCredentials;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneService;
@@ -15,18 +11,16 @@ import org.openstack.model.identity.KeyStoneService;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class OpenStackSessionData implements Serializable {
 	
-	static final Logger log = Logger.getLogger(OpenStackSessionData.class.getName());
-
-	protected final Map<Object, Object> extensions = Maps.newHashMap();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	protected KeyStoneAccess access;
-	
-	
 	
 	public OpenStackSessionData() {
 		
@@ -50,10 +44,6 @@ public class OpenStackSessionData implements Serializable {
 		return access != null;
 	}
 	
-
-	public Map<Object, Object> getExtensions() {
-		return extensions;
-	}
 	
 	public String getBestEndpoint(String serviceType) throws OpenstackException {
 		List<KeyStoneService> foundServices = Lists.newArrayList();
@@ -73,7 +63,7 @@ public class OpenStackSessionData implements Serializable {
 
 		KeyStoneService service;
 		if (foundServices.size() != 1) {
-			log.fine("Found multiple services of type: " + serviceType + ".  Found: "
+			System.out.println("Found multiple services of type: " + serviceType + ".  Found: "
 					+ Joiner.on(',').join(foundServices));
 			service = pickBest(foundServices);
 		} else {

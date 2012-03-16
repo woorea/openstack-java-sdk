@@ -7,6 +7,7 @@ public abstract class DefaultAsyncCallback<T> implements AsyncCallback<T> {
 
 	@Override
 	public void onFailure(Throwable caught) {
+		caught.printStackTrace();
 		Window.alert(caught.getMessage());
 		
 	}

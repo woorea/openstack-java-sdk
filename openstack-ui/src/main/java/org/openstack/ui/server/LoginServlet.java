@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 		session = req.getSession();
 		session.setAttribute(Constants.OPENSTACK_SESSION, new OpenStackSessionData(access));
 		
-		resp.sendRedirect(String.format("%s/ui/openstack.html?gwt.codesvr=127.0.0.1:9997",session.getServletContext().getContextPath()));
+		resp.sendRedirect(String.format("%s/openstack.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
 	}
 
 }

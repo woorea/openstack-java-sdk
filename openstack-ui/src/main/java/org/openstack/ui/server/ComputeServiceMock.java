@@ -287,5 +287,17 @@ public class ComputeServiceMock implements ComputeService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public NovaImage showImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NovaFlavor showFlavor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

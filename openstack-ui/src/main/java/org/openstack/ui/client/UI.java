@@ -37,7 +37,7 @@ public class UI implements EntryPoint, UIView.Presenter {
 				
 				OpenStackClient.session = session;
 				
-				OpenStackClient.IDENTITY.listTenants(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<KeyStoneTenantList>() {
+				OpenStackClient.IDENTITY.listTenants(OpenStackClient.getIdentityURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<KeyStoneTenantList>() {
 
 					@Override
 					public void onSuccess(KeyStoneTenantList result) {

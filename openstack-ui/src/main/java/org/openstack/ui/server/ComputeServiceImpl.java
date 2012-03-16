@@ -94,6 +94,10 @@ public class ComputeServiceImpl implements ComputeService {
 			.header("X-Auth-Token", token)
 			.get(NovaImageList.class);
 	}
+	
+	public NovaImage showImage() {
+		return null;
+	}
 
 	@Override
 	public NovaFlavorList listFlavors(String computeURL, String token) {
@@ -112,6 +116,10 @@ public class ComputeServiceImpl implements ComputeService {
 			
 		});
 		return nfl;
+	}
+	
+	public NovaFlavor showFlavor() {
+		return null;
 	}
 
 	@Override

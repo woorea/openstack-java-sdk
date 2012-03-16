@@ -44,8 +44,6 @@ public class Link implements Serializable {
 		this.type = type;
 	}
 	
-	
-
 	@Override
 	public String toString() {
 		return "Link [rel=" + rel + ", href=" + href + ", type=" + type + "]";
