@@ -3,7 +3,6 @@ package org.openstack.client.compute;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.RequestBuilder;
-import org.openstack.client.common.SimplePagingList;
 import org.openstack.client.compute.ext.ComputeResourceBase;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
@@ -23,13 +22,12 @@ public class ServersResource extends ComputeResourceBase {
 	 * @param detail
 	 * @return
 	 */
-	public Iterable<NovaServer> list(boolean detail) {
+	public NovaServerList list(boolean detail) {
 		RequestBuilder r = detail ? resource("detail") : resource();
-		NovaServerList page = r.get(NovaServerList.class);
-		return new SimplePagingList<NovaServer>(session, page);
+		return r.get(NovaServerList.class);
 	}
 
-	public Iterable<NovaServer> list() {
+	public NovaServerList list() {
 		return list(true);
 	}
 

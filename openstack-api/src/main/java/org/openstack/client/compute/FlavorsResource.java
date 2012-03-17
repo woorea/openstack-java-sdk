@@ -2,20 +2,18 @@ package org.openstack.client.compute;
 
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
-import org.openstack.client.common.SimplePagingList;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
 
 public class FlavorsResource extends Resource {
 
-    public Iterable<NovaFlavor> list() {
+    public NovaFlavorList list() {
         return list(true);
     }
 
-    public Iterable<NovaFlavor> list(boolean details) {
+    public NovaFlavorList list(boolean details) {
 		RequestBuilder r = details ? resource("detail") : resource();
-		NovaFlavorList page = r.get(NovaFlavorList.class);
-		return new SimplePagingList<NovaFlavor>(session, page);
+		return r.get(NovaFlavorList.class);
     }
 
     public NovaFlavor create(NovaFlavor flavor) {

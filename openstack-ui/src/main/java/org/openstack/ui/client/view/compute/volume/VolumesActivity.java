@@ -40,7 +40,7 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 
 			@Override
 			protected void onRangeChanged(HasData<NovaVolume> display) {
-				OpenStackClient.COMPUTE.listVolumes(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaVolumeList>() {
+				OpenStackClient.COMPUTE.listVolumes(new DefaultAsyncCallback<NovaVolumeList>() {
 
 					@Override
 					public void onSuccess(NovaVolumeList result) {

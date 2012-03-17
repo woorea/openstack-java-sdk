@@ -21,7 +21,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 		OpenstackComputeClient nova = getComputeClient();
 
 		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : nova.root().flavors().list()) {
+		for (NovaFlavor flavor : nova.root().flavors().list().getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
@@ -32,7 +32,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	protected NovaImage findUecImage() {
 		OpenstackComputeClient nova = getComputeClient();
 
-		Iterable<NovaImage> images = nova.root().images().list();
+		Iterable<NovaImage> images = nova.root().images().list().getList();
 		for (NovaImage i : images) {
 			// Some UEC images
 			if (i.getName().equals("lucid-server-cloudimg-amd64") || i.getName().equals("natty-server-cloudimg-amd64")) {
@@ -45,7 +45,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	protected NovaImage findImageByName(String name) {
 		OpenstackComputeClient nova = getComputeClient();
 
-		Iterable<NovaImage> images = nova.root().images().list();
+		Iterable<NovaImage> images = nova.root().images().list().getList();
 		for (NovaImage i : images) {
 			if (i.getName().equals(name)) {
 				return i;

@@ -7,8 +7,9 @@ import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.NovaKeyPairList;
 import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.compute.NovaServerList;
@@ -19,166 +20,178 @@ import org.openstack.model.compute.server.action.GetConsoleOutputAction;
 import org.openstack.model.compute.server.action.GetVncConsoleAction;
 import org.openstack.ui.client.api.ComputeService;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 @SuppressWarnings("serial")
-public class ComputeServlet extends RemoteServiceServlet implements ComputeService {
-	
-	private ComputeService service = new ComputeServiceImpl();
+public class ComputeServlet extends OpenStackRemoteServiceServlet implements ComputeService {
 
-	public NovaSecurityGroup showSecurityGroup(String computeURL, String token,
-			Integer id) {
-		return service.showSecurityGroup(computeURL, token, id);
+	public NovaSecurityGroup showSecurityGroup(Integer id) {
+		return getSession().getComputeClient().root().securityGroups().securityGroup(id).show();
 	}
 
 	@Override
-	public NovaServerList listServers(String token, String tenantId) {
-		return service.listServers(token, tenantId);
+	public NovaServerList listServers() {
+		return getSession().getComputeClient().root().servers().list();
 	}
 	
 	@Override
-	public NovaServer showServer(String computeURL, String token, String id) {
-		return service.showServer(computeURL, token, id);
+	public NovaServer showServer(String id) {
+		return getSession().getComputeClient().root().servers().server(id).show();
 	}
 	
 	@Override
-	public NovaServer saveServer(String computeURL, String token, NovaServerForCreate serverForCreate) {
-		return service.saveServer(computeURL, token, serverForCreate);
+	public NovaServer saveServer(NovaServerForCreate serverForCreate) {
+		return getSession().getComputeClient().root().servers().create(serverForCreate);
 	}
 	
 	@Override
-	public void deleteServer(String computeURL, String token, String id) {
-		service.deleteServer(computeURL, token, id);
+	public void deleteServer(String id) {
+		getSession().getComputeClient().root().servers().server(id).delete();
 	}
 	
-	public void restoreServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.restoreServer(computeURL, token, servers);
+	public void restoreServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void forceDeleteServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.forceDeleteServer(computeURL, token, servers);
+	public void forceDeleteServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void changePasswordServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.changePasswordServer(computeURL, token, servers);
+	public void changePasswordServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void rebuildServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.rebuildServer(computeURL, token, servers);
+	public void rebuildServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void resizeServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.resizeServer(computeURL, token, servers);
+	public void resizeServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void revertResizeServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.revertResizeServer(computeURL, token, servers);
+	public void revertResizeServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void createImageServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.createImageServer(computeURL, token, servers);
+	public void createImageServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void pauseServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.pauseServer(computeURL, token, servers);
+	public void pauseServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void unpauseServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.unpauseServer(computeURL, token, servers);
+	public void unpauseServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void suspendServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.suspendServer(computeURL, token, servers);
+	public void suspendServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void resumeServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.resumeServer(computeURL, token, servers);
+	public void resumeServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void migrateServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.migrateServer(computeURL, token, servers);
+	public void migrateServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void resetNetworkServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.resetNetworkServer(computeURL, token, servers);
+	public void resetNetworkServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void injectNetworkInfoServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.injectNetworkInfoServer(computeURL, token, servers);
+	public void injectNetworkInfoServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void lockServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.lockServer(computeURL, token, servers);
+	public void lockServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public void unlockServer(String computeURL, String token,
-			Collection<NovaServer> servers) {
-		service.unlockServer(computeURL, token, servers);
+	public void unlockServer(Collection<NovaServer> servers) {
+		for(NovaServer s : servers) {
+			getSession().getComputeClient().root().servers().server("").restore();
+		}
 	}
 
-	public Console getVncConsole(String computeURL, String token,
-			String serverId, GetVncConsoleAction action) {
-		return service.getVncConsole(computeURL, token, serverId, action);
+	public Console getVncConsole(String serverId, GetVncConsoleAction action) {
+		
+		return getSession().getComputeClient().root().servers().server(serverId).executeAction(Console.class, action);
+		
 	}
 
-	public String getConsoleOutput(String computeURL, String token,
-			String serverId, GetConsoleOutputAction action) {
-		return service.getConsoleOutput(computeURL, token, serverId, action);
+	public String getConsoleOutput(String serverId, GetConsoleOutputAction action) {
+		
+		return getSession().getComputeClient().root().servers().server(serverId).executeAction(String.class, action);
+		
 	}
 
 
 	@Override
-	public NovaImageList listImages(String token, String tenantId) {
-		return service.listImages(token, tenantId);
+	public NovaImageList listImages() {
+		return getSession().getComputeClient().root().images().list();
 	}
 
 	@Override
-	public NovaFlavorList listFlavors(String token, String tenantId) {
-		return service.listFlavors(token, tenantId);
+	public NovaFlavorList listFlavors() {
+		return getSession().getComputeClient().root().flavors().list();
 	}
 
 	@Override
-	public List<NovaKeyPair> listKeyPairs(String token, String tenantId) {
-		return service.listKeyPairs(token, tenantId);
+	public NovaKeyPairList listKeyPairs() {
+		return getSession().getComputeClient().root().keyPairs().list();
 	}
 
 	@Override
-	public List<NovaSecurityGroup> listSecurityGroups(String token,
-			String tenantId) {
-		return service.listSecurityGroups(token, tenantId);
+	public NovaSecurityGroupList listSecurityGroups() {
+		return getSession().getComputeClient().root().securityGroups().list();
 	}
 
 	@Override
-	public NovaVolumeList listVolumes(String computeURL, String token) {
-		return service.listVolumes(computeURL, token);
+	public NovaVolumeList listVolumes() {
+		return getSession().getComputeClient().root().volumes().list(true);
 	}
 
 	@Override
-	public NovaSnapshotList listSnapshots(String computeURL, String token) {
-		return service.listSnapshots(computeURL, token);
+	public NovaSnapshotList listSnapshots() {
+		return new NovaSnapshotList();
 	}
 
-	public NovaImage showImage(String computeURL, String token, String id) {
-		return service.showImage(computeURL, token, id);
+	public NovaImage showImage(String id) {
+		return getSession().getComputeClient().root().images().image(id).show();
 	}
 
-	public NovaFlavor showFlavor(String computeURL, String token, String id) {
-		return service.showFlavor(computeURL, token, id);
+	public NovaFlavor showFlavor(String id) {
+		return getSession().getComputeClient().root().flavors().flavor(id).show();
 	}
 
 	

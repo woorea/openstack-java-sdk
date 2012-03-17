@@ -10,19 +10,16 @@ import org.openstack.ui.client.api.IdentityService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
-public class IdentityServlet extends RemoteServiceServlet implements IdentityService {
-
-	private IdentityServiceImpl service = new IdentityServiceImpl();
+public class IdentityServlet extends OpenStackRemoteServiceServlet implements IdentityService {
 
 	@Override
 	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
-		OpenStackSession session = getSession();
-		return session.getAuthenticationClient().root().tokens().authenticate(authentication);
+		return getSession().getAuthenticationClient().root().tokens().authenticate(authentication);
 	}
 
 	@Override
 	public KeyStoneTenantList listTenants() {
-		return service.listTenants(getSession());
+		return getSession().getAuthenticationClient().root().tenants().list();
 	}
 
 	@Override
@@ -30,9 +27,7 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 		return getSession().getData();
 	}
 	
-	private OpenStackSession getSession() {
-		return (OpenStackSession) perThreadRequest.get().getSession().getAttribute(Constants.OPENSTACK_SESSION);
-	}
+	
 	
 	
 

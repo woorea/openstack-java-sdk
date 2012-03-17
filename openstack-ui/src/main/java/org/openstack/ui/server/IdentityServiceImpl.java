@@ -7,7 +7,7 @@ import org.openstack.model.identity.KeyStoneTenantList;
 
 public class IdentityServiceImpl {
 
-	public KeyStoneAccess authenticate(String identityURL, KeyStoneAuthentication authentication) {
+	public KeyStoneAccess authenticate(OpenStackSession session, KeyStoneAuthentication authentication) {
 		
 		//IdentityResource identity = new IdentityResource(oss, identityURL);
 		

@@ -19,7 +19,7 @@ public class ITServers extends ComputeApiTest {
 		OpenstackComputeClient nova = getComputeClient();
 		OpenStackSession session = nova.getSession();
 
-		Iterable<NovaServer> list = nova.root().servers().list();
+		Iterable<NovaServer> list = nova.root().servers().list().getList();
 		// System.out.println(list);
 
 		for (NovaServer server : list) {

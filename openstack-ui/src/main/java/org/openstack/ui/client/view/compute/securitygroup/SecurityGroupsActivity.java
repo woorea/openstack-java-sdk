@@ -3,6 +3,7 @@ package org.openstack.ui.client.view.compute.securitygroup;
 import java.util.List;
 
 import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -42,12 +43,12 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 
 			@Override
 			protected void onRangeChanged(HasData<NovaSecurityGroup> display) {
-				OpenStackClient.COMPUTE.listSecurityGroups(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<List<NovaSecurityGroup>>() {
+				OpenStackClient.COMPUTE.listSecurityGroups(new DefaultAsyncCallback<NovaSecurityGroupList>() {
 
 					@Override
-					public void onSuccess(List<NovaSecurityGroup> result) {
-						updateRowCount(result.size(), true);
-						updateRowData(0, result);
+					public void onSuccess(NovaSecurityGroupList result) {
+						updateRowCount(result.getList().size(), true);
+						updateRowData(0, result.getList());
 
 					}
 				});
@@ -64,7 +65,7 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 
 	@Override
 	public void onShowSecurityGroup(Integer id) {
-		OpenStackClient.COMPUTE.showSecurityGroup(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), id, new DefaultAsyncCallback<NovaSecurityGroup>() {
+		OpenStackClient.COMPUTE.showSecurityGroup(id, new DefaultAsyncCallback<NovaSecurityGroup>() {
 
 			@Override
 			public void onSuccess(NovaSecurityGroup result) {

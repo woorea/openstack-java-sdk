@@ -40,7 +40,7 @@ public class FlavorsActivity extends AbstractActivity implements FlavorsView.Pre
 
 			@Override
 			protected void onRangeChanged(HasData<NovaFlavor> display) {
-				OpenStackClient.COMPUTE.listFlavors(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaFlavorList>() {
+				OpenStackClient.COMPUTE.listFlavors(new DefaultAsyncCallback<NovaFlavorList>() {
 
 					@Override
 					public void onSuccess(NovaFlavorList result) {

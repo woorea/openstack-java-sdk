@@ -3,11 +3,15 @@ package org.openstack.ui.client.view.compute.keypair;
 import java.util.List;
 
 import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.NovaKeyPairList;
+import org.openstack.model.compute.NovaKeyPairList.KeyPairListItem;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -41,12 +45,20 @@ public class KeyPairsActivity extends AbstractActivity implements KeyPairsView.P
 
 			@Override
 			protected void onRangeChanged(HasData<NovaKeyPair> display) {
-				OpenStackClient.COMPUTE.listKeyPairs(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<List<NovaKeyPair>>() {
+				OpenStackClient.COMPUTE.listKeyPairs(new DefaultAsyncCallback<NovaKeyPairList>() {
 
 					@Override
-					public void onSuccess(List<NovaKeyPair> result) {
-						updateRowCount(result.size(), true);
-						updateRowData(0, result);
+					public void onSuccess(NovaKeyPairList result) {
+						updateRowCount(result.getList().size(), true);
+						List<NovaKeyPair> kpl = Lists.transform(result.getList(), new Function<NovaKeyPairList.KeyPairListItem, NovaKeyPair>() {
+
+							@Override
+							public NovaKeyPair apply(KeyPairListItem item) {
+								return item.getKeypair();
+							}
+							
+						});
+						updateRowData(0, kpl);
 
 					}
 				});

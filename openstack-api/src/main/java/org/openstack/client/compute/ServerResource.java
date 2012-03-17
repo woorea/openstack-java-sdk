@@ -358,7 +358,7 @@ public class ServerResource extends ComputeResourceBase {
 		return output.getContent();
 	}
 
-	private <T> T executeAction(Class<T> c, Object action) {
+	public <T> T executeAction(Class<T> c, Object action) {
 		return executeAction(c, action, null);
 	}
 

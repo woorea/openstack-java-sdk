@@ -1,4 +1,4 @@
-package org.openstack.ui.server;
+package org.openstack.ui.server.mock;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +11,9 @@ import org.openstack.model.identity.KeyStoneTenantList;
 import org.openstack.model.identity.KeyStoneToken;
 import org.openstack.ui.client.api.IdentityService;
 
-public class IdentityServiceMock implements IdentityService {
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+public class IdentityServlet extends RemoteServiceServlet implements IdentityService {
 	
 	private OpenStackSessionData session;
 

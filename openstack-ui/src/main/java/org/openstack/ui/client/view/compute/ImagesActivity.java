@@ -42,7 +42,7 @@ public class ImagesActivity extends AbstractActivity implements ImagesView.Prese
 
 			@Override
 			protected void onRangeChanged(HasData<NovaImage> display) {
-				OpenStackClient.COMPUTE.listImages(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaImageList>() {
+				OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<NovaImageList>() {
 
 					@Override
 					public void onSuccess(NovaImageList result) {

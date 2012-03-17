@@ -37,11 +37,11 @@ public class Test {
 		}
 
 		TenantResource compute = session.getComputeClient().root();
-		for (NovaServer s : compute.servers().list()) {
+		for (NovaServer s : compute.servers().list().getList()) {
 			System.out.println(s);
 		}
 
-		Iterable<NovaImage> images = compute.images().list();
+		Iterable<NovaImage> images = compute.images().list().getList();
 		NovaImage image = null;
 		for (NovaImage i : images) {
 			System.out.println(i);
@@ -53,12 +53,12 @@ public class Test {
 
 		System.out.println(image);
 
-		Iterable<NovaFlavor> flavors = compute.flavors().list();
+		Iterable<NovaFlavor> flavors = compute.flavors().list().getList();
 		for (NovaFlavor f : flavors) {
 			System.out.println(f);
 		}
 
-		Iterable<NovaServer> servers = compute.servers().list();
+		Iterable<NovaServer> servers = compute.servers().list().getList();
 		for (NovaServer s : servers) {
 			ServerResource sr = new ServerResource(session, s);
 			System.out.println(sr.get(true).show());

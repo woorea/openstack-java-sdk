@@ -8,7 +8,9 @@ import org.openstack.model.compute.NovaFlavorList;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.NovaKeyPairList;
 import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.compute.NovaServerList;
@@ -22,98 +24,84 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ComputeServiceAsync {
 
-	void changePasswordServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
-
-	void createImageServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
-
-	void deleteServer(String computeURL, String token, String id,
+	void changePasswordServer(Collection<NovaServer> servers,
 			AsyncCallback<Void> callback);
 
-	void forceDeleteServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void createImageServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void getConsoleOutput(String computeURL, String token, String serverId,
-			GetConsoleOutputAction action, AsyncCallback<String> callback);
+	void deleteServer(String id, AsyncCallback<Void> callback);
 
-	void getVncConsole(String computeURL, String token, String serverId,
-			GetVncConsoleAction action, AsyncCallback<Console> callback);
+	void forceDeleteServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void injectNetworkInfoServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void getConsoleOutput(String serverId, GetConsoleOutputAction action,
+			AsyncCallback<String> callback);
 
-	void listFlavors(String computeURL, String token,
-			AsyncCallback<NovaFlavorList> callback);
+	void getVncConsole(String serverId, GetVncConsoleAction action,
+			AsyncCallback<Console> callback);
 
-	void listImages(String computeURL, String token,
-			AsyncCallback<NovaImageList> callback);
+	void injectNetworkInfoServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void listKeyPairs(String computeURL, String token,
-			AsyncCallback<List<NovaKeyPair>> callback);
+	void listFlavors(AsyncCallback<NovaFlavorList> callback);
 
-	void listSecurityGroups(String computeURL, String token,
-			AsyncCallback<List<NovaSecurityGroup>> callback);
+	void listImages(AsyncCallback<NovaImageList> callback);
 
-	void listServers(String computeURL, String token,
-			AsyncCallback<NovaServerList> callback);
+	void listKeyPairs(AsyncCallback<NovaKeyPairList> callback);
 
-	void listSnapshots(String computeURL, String token,
-			AsyncCallback<NovaSnapshotList> callback);
+	void listSecurityGroups(AsyncCallback<NovaSecurityGroupList> callback);
 
-	void listVolumes(String computeURL, String token,
-			AsyncCallback<NovaVolumeList> callback);
+	void listServers(AsyncCallback<NovaServerList> callback);
 
-	void lockServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void listSnapshots(AsyncCallback<NovaSnapshotList> callback);
 
-	void migrateServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void listVolumes(AsyncCallback<NovaVolumeList> callback);
 
-	void pauseServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void lockServer(Collection<NovaServer> servers, AsyncCallback<Void> callback);
 
-	void rebuildServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void migrateServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void resetNetworkServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void pauseServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void resizeServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void rebuildServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void restoreServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void resetNetworkServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void resumeServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void resizeServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void revertResizeServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void restoreServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void saveServer(String computeURL, String token,
-			NovaServerForCreate serverForCreate,
+	void resumeServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
+
+	void revertResizeServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
+
+	void saveServer(NovaServerForCreate serverForCreate,
 			AsyncCallback<NovaServer> callback);
 
-	void showFlavor(String computeURL, String token, String id,
-			AsyncCallback<NovaFlavor> callback);
+	void showFlavor(String id, AsyncCallback<NovaFlavor> callback);
 
-	void showImage(String computeURL, String token, String id,
-			AsyncCallback<NovaImage> callback);
+	void showImage(String id, AsyncCallback<NovaImage> callback);
 
-	void showSecurityGroup(String computeURL, String token, Integer id,
-			AsyncCallback<NovaSecurityGroup> callback);
+	void showSecurityGroup(Integer id, AsyncCallback<NovaSecurityGroup> callback);
 
-	void showServer(String computeURL, String token, String id,
-			AsyncCallback<NovaServer> callback);
+	void showServer(String id, AsyncCallback<NovaServer> callback);
 
-	void suspendServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void suspendServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void unlockServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void unlockServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
-	void unpauseServer(String computeURL, String token,
-			Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void unpauseServer(Collection<NovaServer> servers,
+			AsyncCallback<Void> callback);
 
 }

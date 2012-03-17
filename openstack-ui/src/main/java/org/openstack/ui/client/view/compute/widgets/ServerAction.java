@@ -17,7 +17,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.restoreServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.restoreServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -26,7 +26,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.forceDeleteServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.forceDeleteServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -35,7 +35,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.changePasswordServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.changePasswordServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -44,7 +44,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.rebuildServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.rebuildServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -53,7 +53,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.resizeServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.resizeServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -62,7 +62,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.forceDeleteServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.forceDeleteServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -71,7 +71,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.revertResizeServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.revertResizeServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -80,7 +80,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.createImageServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.createImageServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -89,7 +89,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.pauseServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.pauseServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -98,7 +98,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.unpauseServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.unpauseServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -107,7 +107,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.suspendServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.suspendServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -116,7 +116,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.resumeServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.resumeServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -125,7 +125,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.migrateServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.migrateServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -134,7 +134,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.resetNetworkServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.resetNetworkServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -143,7 +143,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.injectNetworkInfoServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.injectNetworkInfoServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -152,7 +152,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.lockServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.lockServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -161,7 +161,7 @@ public enum ServerAction {
 
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
-			OpenStackClient.COMPUTE.unlockServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers, (DefaultAsyncCallback<Void>) callback);
+			OpenStackClient.COMPUTE.unlockServer(servers, (DefaultAsyncCallback<Void>) callback);
 
 		}
 
@@ -171,7 +171,7 @@ public enum ServerAction {
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
 			if (servers.size() > 0) {
-				OpenStackClient.COMPUTE.getVncConsole(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers.iterator().next().getId(), new GetVncConsoleAction(), (AsyncCallback<Console>) callback);
+				OpenStackClient.COMPUTE.getVncConsole(servers.iterator().next().getId(), new GetVncConsoleAction(), (AsyncCallback<Console>) callback);
 			}
 		}
 
@@ -181,7 +181,7 @@ public enum ServerAction {
 		@Override
 		public void execute(Collection<NovaServer> servers, AsyncCallback<?> callback) {
 			if (servers.size() > 0) {
-				OpenStackClient.COMPUTE.getConsoleOutput(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), servers.iterator().next().getId(), new GetConsoleOutputAction(), (AsyncCallback<String>) callback);
+				OpenStackClient.COMPUTE.getConsoleOutput(servers.iterator().next().getId(), new GetConsoleOutputAction(), (AsyncCallback<String>) callback);
 			}
 		}
 

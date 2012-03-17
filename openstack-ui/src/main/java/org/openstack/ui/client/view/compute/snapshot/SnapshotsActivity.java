@@ -40,7 +40,7 @@ public class SnapshotsActivity extends AbstractActivity implements SnapshotsView
 
 			@Override
 			protected void onRangeChanged(HasData<NovaSnapshot> display) {
-				OpenStackClient.COMPUTE.listSnapshots(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaSnapshotList>() {
+				OpenStackClient.COMPUTE.listSnapshots(new DefaultAsyncCallback<NovaSnapshotList>() {
 
 					@Override
 					public void onSuccess(NovaSnapshotList result) {

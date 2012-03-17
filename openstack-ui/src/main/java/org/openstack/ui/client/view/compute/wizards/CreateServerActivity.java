@@ -5,7 +5,9 @@ import java.util.List;
 import org.openstack.model.compute.NovaFlavorList;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.NovaKeyPairList;
 import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.model.compute.NovaSecurityGroupRule;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
@@ -57,7 +59,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 	public void onStart() {
 		wizard.setPresenter(this);
 		updateImages();
-		OpenStackClient.COMPUTE.listFlavors(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaFlavorList>() {
+		OpenStackClient.COMPUTE.listFlavors(new DefaultAsyncCallback<NovaFlavorList>() {
 
 			@Override
 			public void onSuccess(NovaFlavorList result) {
@@ -66,15 +68,15 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 			}
 		});
-		OpenStackClient.COMPUTE.listKeyPairs(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<List<NovaKeyPair>>() {
+		OpenStackClient.COMPUTE.listKeyPairs(new DefaultAsyncCallback<NovaKeyPairList>() {
 
 			@Override
-			public void onSuccess(List<NovaKeyPair> result) {
-				List<String> names = Lists.transform(result, new Function<NovaKeyPair, String>() {
+			public void onSuccess(NovaKeyPairList result) {
+				List<String> names = Lists.transform(result.getList(), new Function<NovaKeyPairList.KeyPairListItem, String>() {
 
 					@Override
-					public String apply(NovaKeyPair input) {
-						return input.getName();
+					public String apply(NovaKeyPairList.KeyPairListItem input) {
+						return input.getKeypair().getName();
 					}
 				});
 				if(names != null) {
@@ -85,11 +87,11 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 				}
 			}
 		});
-		OpenStackClient.COMPUTE.listSecurityGroups(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<List<NovaSecurityGroup>>() {
+		OpenStackClient.COMPUTE.listSecurityGroups(new DefaultAsyncCallback<NovaSecurityGroupList>() {
 
 			@Override
-			public void onSuccess(List<NovaSecurityGroup> result) {
-				List<NovaServerForCreate.SecurityGroup> names = Lists.transform(result, new Function<NovaSecurityGroup, NovaServerForCreate.SecurityGroup>() {
+			public void onSuccess(NovaSecurityGroupList result) {
+				List<NovaServerForCreate.SecurityGroup> names = Lists.transform(result.getList(), new Function<NovaSecurityGroup, NovaServerForCreate.SecurityGroup>() {
 
 					@Override
 					public NovaServerForCreate.SecurityGroup apply(NovaSecurityGroup input) {
@@ -112,7 +114,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 	@Override
 	public void onFinish() {
 		NovaServerForCreate csr = createServerRequestDriver.flush();
-		OpenStackClient.COMPUTE.saveServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), csr, new DefaultAsyncCallback<NovaServer>() {
+		OpenStackClient.COMPUTE.saveServer(csr, new DefaultAsyncCallback<NovaServer>() {
 
 			@Override
 			public void onSuccess(NovaServer result) {
@@ -167,7 +169,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 	@Override
 	public void updateImages() {
-		OpenStackClient.COMPUTE.listImages(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaImageList>() {
+		OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<NovaImageList>() {
 
 			@Override
 			public void onSuccess(NovaImageList result) {

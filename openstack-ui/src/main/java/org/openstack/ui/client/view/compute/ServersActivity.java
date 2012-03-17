@@ -59,7 +59,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 			@Override
 			protected void onRangeChanged(HasData<NovaServer> display) {
-				OpenStackClient.COMPUTE.listServers(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<NovaServerList>() {
+				OpenStackClient.COMPUTE.listServers(new DefaultAsyncCallback<NovaServerList>() {
 
 					@Override
 					public void onSuccess(NovaServerList result) {
@@ -114,7 +114,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 			final PopupPanel popup = new PopupPanel(true, true);
 
-			OpenStackClient.COMPUTE.getVncConsole(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), server.getId(), new GetVncConsoleAction(), new AsyncCallback<Console>() {
+			OpenStackClient.COMPUTE.getVncConsole(server.getId(), new GetVncConsoleAction(), new AsyncCallback<Console>() {
 
 				@Override
 				public void onSuccess(Console console) {
@@ -141,7 +141,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 			final PopupPanel popup = new PopupPanel(true, true);
 
-			OpenStackClient.COMPUTE.getConsoleOutput(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), server.getId(), new GetConsoleOutputAction(), new DefaultAsyncCallback<String>() {
+			OpenStackClient.COMPUTE.getConsoleOutput(server.getId(), new GetConsoleOutputAction(), new DefaultAsyncCallback<String>() {
 
 				@Override
 				public void onSuccess(String result) {
@@ -165,7 +165,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 	@Override
 	public void onDeleteServers() {
 		for(NovaServer ns : selectionModel.getSelectedSet()) {
-			OpenStackClient.COMPUTE.deleteServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), ns.getId(), new DefaultAsyncCallback<Void>() {
+			OpenStackClient.COMPUTE.deleteServer(ns.getId(), new DefaultAsyncCallback<Void>() {
 
 				@Override
 				public void onSuccess(Void result) {
@@ -177,7 +177,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 	@Override
 	public void onShowServer(String id) {
-		OpenStackClient.COMPUTE.showServer(OpenStackClient.getComputeURL(), OpenStackClient.getToken(), id, new DefaultAsyncCallback<NovaServer>() {
+		OpenStackClient.COMPUTE.showServer(id, new DefaultAsyncCallback<NovaServer>() {
 
 			@Override
 			public void onSuccess(NovaServer result) {

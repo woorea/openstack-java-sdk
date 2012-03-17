@@ -23,7 +23,7 @@ public class ITAuthentication extends KeystoneIntegrationTest {
 	@Test
 	public void testSerializable() throws Exception {
 		OpenStackSession session = context.session;
-		List<NovaFlavor> flavors1 = Lists.newArrayList(session.getComputeClient().root().flavors().list());
+		List<NovaFlavor> flavors1 = Lists.newArrayList(session.getComputeClient().root().flavors().list().getList());
 
 		// Serialize it
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -45,7 +45,7 @@ public class ITAuthentication extends KeystoneIntegrationTest {
 		bais.close();
 
 		// Check it still works
-		List<NovaFlavor> flavors2 = Lists.newArrayList(session2.getComputeClient().root().flavors().list());
+		List<NovaFlavor> flavors2 = Lists.newArrayList(session2.getComputeClient().root().flavors().list().getList());
 		
 		sortFlavors(flavors1);
 		sortFlavors(flavors2);

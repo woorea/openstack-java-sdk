@@ -2,21 +2,16 @@ package org.openstack.client.compute;
 
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
-import org.openstack.client.common.SimplePagingList;
-import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
 
 public class ImagesResource extends Resource {
 
-    public Iterable<NovaImage> list(boolean detail) {
+    public NovaImageList list(boolean detail) {
     	RequestBuilder r = detail ? resource("detail") : resource();
-    	NovaImageList page = r.get(NovaImageList.class);
-    	
-    	// Does this actually page?
-        return new SimplePagingList<NovaImage>(session, page);
+    	return  r.get(NovaImageList.class);
     }
 
-    public Iterable<NovaImage> list() {
+    public NovaImageList list() {
     	return list(true);
     }
 
