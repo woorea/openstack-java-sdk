@@ -189,9 +189,7 @@ public abstract class OpenStackSession implements Serializable {
 		}
 		data.setAccess(getAuthenticationClient().authenticate(credentials));
 	}
-
 	
-
 	public <T> T followLink(Link link, Class<T> clazz) {
 		return follow(link, null, clazz);
 	}

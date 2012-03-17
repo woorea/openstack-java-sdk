@@ -9,14 +9,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface IdentityServiceAsync {
 	
-	void authenticate(String identityURL, KeyStoneAuthentication authentication, AsyncCallback<KeyStoneAccess> callback);
+	void listTenants(AsyncCallback<KeyStoneTenantList> callback);
 
-	void listTenants(String identityURL, String token, AsyncCallback<KeyStoneTenantList> callback);
+	void getSessionData(AsyncCallback<OpenStackSessionData> callback);
 
-	void getSession(AsyncCallback<OpenStackSessionData> callback);
-
-	
-
-	
+	void authenticate(KeyStoneAuthentication authentication, AsyncCallback<KeyStoneAccess> callback);
 
 }

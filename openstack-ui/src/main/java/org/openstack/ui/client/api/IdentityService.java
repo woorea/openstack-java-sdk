@@ -11,10 +11,10 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("identity")
 public interface IdentityService extends RemoteService {
 
-	OpenStackSessionData getSession();
+	OpenStackSessionData getSessionData();
 	
-	KeyStoneAccess authenticate(String identityURL, KeyStoneAuthentication authentication);
+	KeyStoneAccess authenticate(KeyStoneAuthentication authentication);
 	
-	KeyStoneTenantList listTenants(String identityURL, String token);
+	KeyStoneTenantList listTenants();
 	
 }

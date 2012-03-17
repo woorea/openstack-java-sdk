@@ -28,7 +28,7 @@ public class UI implements EntryPoint, UIView.Presenter {
 		final UIView ui = new UIView();
 		ui.setPresenter(UI.this);
 		
-		OpenStackClient.IDENTITY.getSession(new DefaultAsyncCallback<OpenStackSessionData>() {
+		OpenStackClient.IDENTITY.getSessionData(new DefaultAsyncCallback<OpenStackSessionData>() {
 
 			@Override
 			public void onSuccess(OpenStackSessionData session) {
@@ -37,7 +37,7 @@ public class UI implements EntryPoint, UIView.Presenter {
 				
 				OpenStackClient.session = session;
 				
-				OpenStackClient.IDENTITY.listTenants(OpenStackClient.getIdentityURL(), OpenStackClient.getToken(), new DefaultAsyncCallback<KeyStoneTenantList>() {
+				OpenStackClient.IDENTITY.listTenants(new DefaultAsyncCallback<KeyStoneTenantList>() {
 
 					@Override
 					public void onSuccess(KeyStoneTenantList result) {
@@ -70,7 +70,7 @@ public class UI implements EntryPoint, UIView.Presenter {
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication();
 		authentication.setToken(OpenStackClient.session.getAccess().getToken());
 		authentication.setTenantId(tenantId);
-		OpenStackClient.IDENTITY.authenticate(OpenStackClient.getIdentityURL(), authentication, new DefaultAsyncCallback<KeyStoneAccess>() {
+		OpenStackClient.IDENTITY.authenticate(authentication, new DefaultAsyncCallback<KeyStoneAccess>() {
 
 			@Override
 			public void onSuccess(KeyStoneAccess access) {

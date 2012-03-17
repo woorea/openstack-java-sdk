@@ -16,7 +16,7 @@ public class IdentityServiceMock implements IdentityService {
 	private OpenStackSessionData session;
 
 	@Override
-	public KeyStoneAccess authenticate(String authURL, KeyStoneAuthentication authentication) {
+	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
 		KeyStoneTenant tenant = new KeyStoneTenant(authentication.getTenantId() != null ? authentication.getTenantId() : "1","Tenant.1");
 		KeyStoneToken token = new KeyStoneToken();
 		token.setId("123");
@@ -28,7 +28,7 @@ public class IdentityServiceMock implements IdentityService {
 	}
 
 	@Override
-	public KeyStoneTenantList listTenants(String identityURL, String token) {
+	public KeyStoneTenantList listTenants() {
 		List<KeyStoneTenant> tenants =  Arrays.asList(new KeyStoneTenant("1","Tenant.1"), new KeyStoneTenant("2", "Tenant 2"));
 		KeyStoneTenantList list = new KeyStoneTenantList();
 		list.setList(tenants);
@@ -36,9 +36,9 @@ public class IdentityServiceMock implements IdentityService {
 	}
 
 	@Override
-	public OpenStackSessionData getSession() {
+	public OpenStackSessionData getSessionData() {
 		if(session == null) {
-			session = new OpenStackSessionData(authenticate("", new KeyStoneAuthentication()));
+			session = new OpenStackSessionData(authenticate(new KeyStoneAuthentication()));
 		}
 		return session;
 	}

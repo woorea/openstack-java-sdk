@@ -10,6 +10,7 @@ import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.identity.KeyStoneTenant;
+import org.openstack.model.identity.KeyStoneTenantList;
 
 public class Test {
 
@@ -23,13 +24,13 @@ public class Test {
 
 		IdentityResource identity = session.getAuthenticationClient().root();
 
-		Iterable<KeyStoneTenant> tenants = identity.tenants().list();
-		for (KeyStoneTenant tenant : tenants) {
+		KeyStoneTenantList tenants = identity.tenants().list();
+		for (KeyStoneTenant tenant : tenants.getList()) {
 			System.out.println(tenant);
 		}
 
 		// I will choose the first tenant
-		for (KeyStoneTenant tenant : tenants) {
+		for (KeyStoneTenant tenant : tenants.getList()) {
 			OpenstackCredentials tenantCredentials = credentials.withTenant(tenant.getName());
 			session.authenticate(tenantCredentials);
 			break;
