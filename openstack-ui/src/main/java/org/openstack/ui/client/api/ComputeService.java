@@ -70,11 +70,11 @@ public interface ComputeService extends RemoteService {
 	
 	NovaImageList listImages(String computeURL, String token);
 	
-	NovaImage showImage();
+	NovaImage showImage(String computeURL, String token, String id);
 	
 	NovaFlavorList listFlavors(String computeURL, String token);
 	
-	NovaFlavor showFlavor();
+	NovaFlavor showFlavor(String computeURL, String token, String id);
 	
 	List<NovaKeyPair> listKeyPairs(String computeURL, String token);
 	

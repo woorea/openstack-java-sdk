@@ -9,9 +9,6 @@ import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.image.GlanceImage;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource.Builder;
-
 public class ImageResource extends GlanceResourceBase {
     public void updateMetadata(Map<String, Object> metadata, boolean replace) {
     	RequestBuilder builder = resource();

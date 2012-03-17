@@ -95,9 +95,11 @@ public interface ComputeServiceAsync {
 			NovaServerForCreate serverForCreate,
 			AsyncCallback<NovaServer> callback);
 
-	void showFlavor(AsyncCallback<NovaFlavor> callback);
+	void showFlavor(String computeURL, String token, String id,
+			AsyncCallback<NovaFlavor> callback);
 
-	void showImage(AsyncCallback<NovaImage> callback);
+	void showImage(String computeURL, String token, String id,
+			AsyncCallback<NovaImage> callback);
 
 	void showSecurityGroup(String computeURL, String token, Integer id,
 			AsyncCallback<NovaSecurityGroup> callback);

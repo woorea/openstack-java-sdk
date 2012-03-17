@@ -15,8 +15,6 @@ import org.openstack.model.image.GlanceImageList;
 import org.openstack.model.image.GlanceImageUploadResponse;
 import org.openstack.utils.Io;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 public class ImagesResource extends GlanceResourceBase {
 
     public Iterable<GlanceImage> list() {

@@ -1,47 +1,44 @@
 package org.openstack.client.common;
 
+import javax.ws.rs.client.Client;
+
 import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
-import org.codehaus.jackson.map.module.SimpleModule;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
+import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.client.JerseyClientFactory;
+import org.glassfish.jersey.filter.LoggingFilter;
+import org.glassfish.jersey.media.json.JsonFeature;
 import org.openstack.client.imagestore.KnownLengthInputStreamProvider;
 import org.openstack.client.internals.OpenstackSerializationModule;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.LoggingFilter;
-import com.sun.jersey.api.json.JSONConfiguration;
-import org.codehaus.jackson.map.SerializationConfig;
+public final class RestClient {
 
-public final class JerseyClient {
-
-	public static final JerseyClient INSTANCE = new JerseyClient();
+	public static final RestClient INSTANCE = new RestClient();
 	
-	final Client client;
+	final JerseyClient client;
 	
-	private JerseyClient() {
-		ClientConfig config = new DefaultClientConfig();
-
-        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-
+	private RestClient() {
+		
+		client = (JerseyClient) JerseyClientFactory.newClient();
+		
+		client.configuration().enable(JsonFeature.getInstance());
+		
         ObjectMapper objectMapper = buildObjectMapper();
         if (objectMapper != null) {
-            config.getSingletons().add(new ObjectMapperProvider(objectMapper));
+        	OpenstackSerializationModule simpleModule = new OpenstackSerializationModule();
+            objectMapper.registerModule(simpleModule);
+        	client.configuration().register(new ObjectMapperProvider(objectMapper));
         }
-
-        OpenstackSerializationModule simpleModule = new OpenstackSerializationModule();
-        objectMapper.registerModule(simpleModule);
-
-        config.getClasses().add(KnownLengthInputStreamProvider.class);
-
-        client = Client.create(config);
+        
+        client.configuration().register(KnownLengthInputStreamProvider.class);
 	}
 	
-	public JerseyClient verbose(boolean verbose) {
+	public RestClient verbose(boolean verbose) {
 		if(verbose) {
-			client.addFilter(new LoggingFilter(System.out));
+			client.configuration().register(new LoggingFilter());
 		}
 		return this;
 	}

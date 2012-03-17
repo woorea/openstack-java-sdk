@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
+import javax.ws.rs.core.ResponseHeaders;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.openstack.client.common.HeadResponse;
@@ -108,7 +109,7 @@ class GlanceHeaderUtils {
 
     public static GlanceImage unmarshalHeaders(HeadResponse response) {
         GlanceImage image = new GlanceImage();
-        for (Entry<String, List<String>> entry : response.getHeaders().entrySet()) {
+        for (Entry<String, List<String>> entry : response.getHeaders().asMap().entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
             if (values.size() != 1) {

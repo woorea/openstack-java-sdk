@@ -173,14 +173,14 @@ public class ComputeServlet extends RemoteServiceServlet implements ComputeServi
 		return service.listSnapshots(computeURL, token);
 	}
 
-	@Override
-	public NovaImage showImage() {
-		return service.showImage();
+	public NovaImage showImage(String computeURL, String token, String id) {
+		return service.showImage(computeURL, token, id);
 	}
 
-	@Override
-	public NovaFlavor showFlavor() {
-		return service.showFlavor();
+	public NovaFlavor showFlavor(String computeURL, String token, String id) {
+		return service.showFlavor(computeURL, token, id);
 	}
+
+	
 
 }

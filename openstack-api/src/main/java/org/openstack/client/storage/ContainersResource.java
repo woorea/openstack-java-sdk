@@ -4,8 +4,6 @@ import org.openstack.client.common.RequestBuilder;
 import org.openstack.model.storage.SwiftAccount;
 import org.openstack.model.storage.SwiftContainer;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 public class ContainersResource extends StorageResourceBase {
 
 	// GET /account List containers

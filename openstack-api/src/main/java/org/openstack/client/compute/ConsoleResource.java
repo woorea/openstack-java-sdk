@@ -4,8 +4,6 @@ import org.openstack.client.common.OpenStackSession;
 import org.openstack.client.common.Resource;
 import org.openstack.model.compute.NovaConsole;
 
-import com.sun.jersey.api.client.Client;
-
 public class ConsoleResource extends Resource {
 	
 	public ConsoleResource(OpenStackSession session, String resource) {

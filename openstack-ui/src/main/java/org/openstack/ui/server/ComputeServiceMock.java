@@ -289,13 +289,13 @@ public class ComputeServiceMock implements ComputeService {
 	}
 
 	@Override
-	public NovaImage showImage() {
+	public NovaImage showImage(String computeURL, String token, String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public NovaFlavor showFlavor() {
+	public NovaFlavor showFlavor(String computeURL, String token, String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -7,7 +7,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
-    final ObjectMapper objectMapper;
+    
+	final ObjectMapper objectMapper;
 
     public ObjectMapperProvider(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;

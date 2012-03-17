@@ -1,10 +1,13 @@
 package org.openstack.client.common;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.ext.FilterContext;
+import javax.ws.rs.ext.ResponseFilter;
 
 import org.openstack.model.compute.NovaBadRequest;
 import org.openstack.model.compute.NovaItemNotFound;
@@ -14,26 +17,21 @@ import org.openstack.model.exceptions.OpenstackForbiddenException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.utils.Io;
 
-import com.google.common.base.Objects;
-import com.sun.jersey.api.client.ClientRequest;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.filter.ClientFilter;
-
-class OpenstackExceptionClientFilter extends ClientFilter {
+class OpenstackExceptionClientFilter implements ResponseFilter {
+	
 	static final Logger log = Logger.getLogger(OpenstackExceptionClientFilter.class.getName());
 
-	public ClientResponse handle(ClientRequest request) {
-		ClientResponse response = getNext().handle(request);
-
-		int httpStatus = response.getStatus();
+	@Override
+	public void postFilter(FilterContext context) throws IOException {
+		int httpStatus = context.getResponse().getStatus();
 		if (httpStatus == 404) {
 			String message = "Not found";
-			MediaType responseType = response.getType();
+			MediaType responseType = context.getResponse().getHeaders().getMediaType();
 			
 			if (responseType != null && responseType.isCompatible(MediaType.APPLICATION_XML_TYPE)) {
 				try {
 					// TODO(justinsb): This is only valid on compute (I think!)
-					NovaItemNotFound itemNotFound = response.getEntity(NovaItemNotFound.class);
+					NovaItemNotFound itemNotFound = (NovaItemNotFound) context.getResponse().getEntity();
 					if (itemNotFound.getMessage() != null) {
 						message = itemNotFound.getMessage();
 					}
@@ -44,7 +42,7 @@ class OpenstackExceptionClientFilter extends ClientFilter {
 			} else if (responseType != null && responseType.isCompatible(MediaType.TEXT_HTML_TYPE)) {
 				InputStream inputStream = null;
 				try {
-					inputStream = response.getEntityInputStream();
+					inputStream = context.getResponse().readEntity(InputStream.class);
 					message = Io.readAll(inputStream);
 				} catch (Exception e) {
 					// Ignore
@@ -73,7 +71,7 @@ class OpenstackExceptionClientFilter extends ClientFilter {
 			String message = "Bad request";
 			try {
 				// TODO(justinsb): This is only valid on compute (I think!)
-				NovaBadRequest badRequest = response.getEntity(NovaBadRequest.class);
+				NovaBadRequest badRequest = (NovaBadRequest) context.getResponse().getEntity();
 				if (badRequest.getMessage() != null) {
 					message = badRequest.getMessage();
 				}
@@ -84,6 +82,6 @@ class OpenstackExceptionClientFilter extends ClientFilter {
 
 			throw new OpenstackException(message);
 		}
-		return response;
+		
 	}
 }

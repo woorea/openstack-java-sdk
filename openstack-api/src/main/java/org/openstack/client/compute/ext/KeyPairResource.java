@@ -4,8 +4,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.client.common.Resource;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 /**
  * Keypair Support
  * 

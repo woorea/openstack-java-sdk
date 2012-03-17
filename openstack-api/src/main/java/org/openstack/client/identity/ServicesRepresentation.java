@@ -2,9 +2,10 @@ package org.openstack.client.identity;
 
 import java.util.List;
 
-import org.openstack.model.identity.KeyStoneServiceList;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.MediaType;
 
-import com.sun.jersey.api.client.Client;
+import org.openstack.model.identity.KeyStoneServiceList;
 
 public class ServicesRepresentation {
 		
@@ -22,7 +23,7 @@ public class ServicesRepresentation {
 	}
 	
 	public ServicesRepresentation next() {
-		KeyStoneServiceList tenantList = client.resource(model.getLinks().get(0).getHref()).get(KeyStoneServiceList.class);
+		KeyStoneServiceList tenantList = client.target(model.getLinks().get(0).getHref()).request(MediaType.APPLICATION_XML).get(KeyStoneServiceList.class);
 		return new ServicesRepresentation(client, tenantList);
 	}
 	

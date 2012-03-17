@@ -3,13 +3,14 @@ package org.openstack.client.common;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.ws.rs.client.Client;
+
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.PagingListBase;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import com.sun.jersey.api.client.Client;
 
 /**
  * 

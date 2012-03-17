@@ -11,9 +11,6 @@ import org.openstack.client.internals.SimpleClassInfo;
 import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
 import org.openstack.model.storage.SwiftObjectProperties;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource.Builder;
-
 class SwiftHeaderUtils {
 	static final Logger log = Logger.getLogger(SwiftHeaderUtils.class.getName());
 
@@ -30,7 +27,7 @@ class SwiftHeaderUtils {
 		SwiftObjectProperties properties = new SwiftObjectProperties();
 		Map<String, String> userProperties = properties.getCustomProperties();
 
-		for (Entry<String, List<String>> entry : response.getHeaders().entrySet()) {
+		for (Entry<String, List<String>> entry : response.getHeaders().asMap().entrySet()) {
 			String key = entry.getKey();
 			List<String> values = entry.getValue();
 			if (values.size() != 1) {

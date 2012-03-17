@@ -8,8 +8,6 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.client.imagestore.UrlUtils;
 
 import com.google.common.collect.Maps;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.WebResource.Builder;
 
 public class Resource {
 

@@ -2,10 +2,11 @@ package org.openstack.client.identity;
 
 import java.util.List;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.model.identity.KeyStoneUser;
 import org.openstack.model.identity.KeyStoneUserList;
-
-import com.sun.jersey.api.client.Client;
 
 public class UsersRepresentation {
 		
@@ -23,7 +24,7 @@ public class UsersRepresentation {
 	}
 	
 	public UsersRepresentation next() {
-		KeyStoneUserList userList = client.resource(model.getLinks().get(0).getHref()).get(KeyStoneUserList.class);
+		KeyStoneUserList userList = client.target(model.getLinks().get(0).getHref()).request(MediaType.APPLICATION_XML).get(KeyStoneUserList.class);
 		return new UsersRepresentation(client, userList);
 	}
 	

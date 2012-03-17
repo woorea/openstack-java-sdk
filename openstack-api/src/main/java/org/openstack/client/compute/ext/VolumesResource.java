@@ -4,8 +4,6 @@ import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.common.Resource;
 import org.openstack.model.compute.NovaVolumeList;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 /**
  * The volume types API controller for the Openstack API
  * 

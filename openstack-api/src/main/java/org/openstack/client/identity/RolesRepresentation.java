@@ -2,9 +2,10 @@ package org.openstack.client.identity;
 
 import java.util.List;
 
-import org.openstack.model.identity.KeyStoneRoleList;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.MediaType;
 
-import com.sun.jersey.api.client.Client;
+import org.openstack.model.identity.KeyStoneRoleList;
 
 public class RolesRepresentation {
 		
@@ -22,7 +23,7 @@ public class RolesRepresentation {
 	}
 	
 	public RolesRepresentation next() {
-		KeyStoneRoleList tenantList = client.resource(model.getLinks().get(0).getHref()).get(KeyStoneRoleList.class);
+		KeyStoneRoleList tenantList = client.target(model.getLinks().get(0).getHref()).request(MediaType.APPLICATION_XML).get(KeyStoneRoleList.class);
 		return new RolesRepresentation(client, tenantList);
 	}
 	

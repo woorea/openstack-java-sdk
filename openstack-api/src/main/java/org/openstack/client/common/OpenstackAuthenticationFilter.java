@@ -1,15 +1,16 @@
 package org.openstack.client.common;
 
+import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.ws.rs.ext.FilterContext;
+import javax.ws.rs.ext.RequestFilter;
 
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneToken;
 
-import com.sun.jersey.api.client.ClientRequest;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.filter.ClientFilter;
-
-class OpenstackAuthenticationFilter extends ClientFilter {
+class OpenstackAuthenticationFilter implements RequestFilter {
+	
 	static final Logger log = Logger.getLogger(OpenstackAuthenticationFilter.class.getName());
 
 	final KeyStoneAccess access;
@@ -18,7 +19,8 @@ class OpenstackAuthenticationFilter extends ClientFilter {
 		this.access = access;
 	}
 
-	public ClientResponse handle(ClientRequest request) {
+	@Override
+	public void preFilter(FilterContext context) throws IOException {
 		KeyStoneToken token = null;
 		if (access != null) {
 			token = access.getToken();
@@ -30,11 +32,8 @@ class OpenstackAuthenticationFilter extends ClientFilter {
 		}
 
 		if (authTokenId != null && !authTokenId.isEmpty()) {
-			request.getHeaders().putSingle("X-Auth-Token", authTokenId);
+			context.getRequest().getHeaders().asMap().putSingle("X-Auth-Token", authTokenId);
 		}
-
-		ClientResponse response = getNext().handle(request);
-
-		return response;
+		
 	}
 }

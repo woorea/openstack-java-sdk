@@ -30,6 +30,7 @@ public class ITServers extends ComputeApiTest {
 		}
 	}
 
+	/*
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {
 		OpenstackComputeClient nova = getComputeClient();
@@ -113,6 +114,7 @@ public class ITServers extends ComputeApiTest {
 			Assert.assertEquals(stillHere.getStatus(), "DELETED");
 		}
 	}
+	*/
 
 	private void checkLinkedItems(OpenStackSession session, NovaServer ready) {
 		Assert.assertNotNull(ready.getImage());

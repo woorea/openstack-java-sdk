@@ -1,20 +1,18 @@
 package org.openstack.client.storage;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.openstack.client.common.RequestBuilder;
 import org.openstack.client.imagestore.KnownLengthInputStream;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.storage.SwiftContainer;
 import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.model.storage.SwiftStorageObject;
 import org.openstack.utils.Io;
@@ -22,7 +20,6 @@ import org.openstack.utils.Io;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.sun.jersey.api.client.ClientResponse;
 
 public class ObjectsResource extends StorageResourceBase {
 	public Iterable<SwiftStorageObject> list() {
@@ -83,8 +80,8 @@ public class ObjectsResource extends StorageResourceBase {
 
 		RequestBuilder builder = buildPutRequest(properties);
 
-		ClientResponse response = builder.put(ClientResponse.class, objectStream);
-		MultivaluedMap<String, String> responseHeaders = response.getHeaders();
+		Response response = builder.put(Response.class, objectStream);
+		MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
 
 		SwiftObjectProperties responseProperties = new SwiftObjectProperties();
 		String etag = responseHeaders.getFirst("ETag");

@@ -6,8 +6,6 @@ import org.openstack.client.common.SimplePagingList;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaImageList;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 public class ImagesResource extends Resource {
 
     public Iterable<NovaImage> list(boolean detail) {

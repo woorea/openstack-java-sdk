@@ -1,7 +1,5 @@
 package org.openstack.client.identity;
 
-import javax.ws.rs.core.MediaType;
-
 import org.openstack.client.common.Resource;
 import org.openstack.model.identity.KeyStoneUser;
 

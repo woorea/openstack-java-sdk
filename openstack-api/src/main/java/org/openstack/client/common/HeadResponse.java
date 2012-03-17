@@ -1,13 +1,12 @@
 package org.openstack.client.common;
 
-import java.util.List;
-import java.util.Map;
+import javax.ws.rs.core.ResponseHeaders;
 
 public class HeadResponse {
 	final int httpStatus;
-	final Map<String, List<String>> headers;
+	final ResponseHeaders headers;
 
-	public HeadResponse(int httpStatus, Map<String, List<String>> headers) {
+	public HeadResponse(int httpStatus, ResponseHeaders headers) {
 		super();
 		this.httpStatus = httpStatus;
 		this.headers = headers;
@@ -17,7 +16,7 @@ public class HeadResponse {
 		return httpStatus;
 	}
 
-	public Map<String, List<String>> getHeaders() {
+	public ResponseHeaders getHeaders() {
 		return headers;
 	}
 

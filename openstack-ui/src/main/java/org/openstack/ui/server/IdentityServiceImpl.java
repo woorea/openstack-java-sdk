@@ -1,8 +1,10 @@
 package org.openstack.ui.server;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
+import org.glassfish.jersey.client.JerseyClientFactory;
 import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
@@ -15,27 +17,34 @@ public class IdentityServiceImpl implements IdentityService {
 	@Override
 	public KeyStoneAccess authenticate(String identityURL, KeyStoneAuthentication authentication) {
 		
-		System.out.println("AUTH : " + authentication);
-		
 		UriBuilder uriBuilder = UriBuilder.fromPath(identityURL).path("/tokens");
 		
-		System.out.println("AUTH : " + uriBuilder.toString());
+		KeyStoneAccess access = JerseyClientFactory.clientBuilder().build().target(uriBuilder)
+			.request(MediaType.APPLICATION_XML)
+			.post(Entity.xml(authentication), KeyStoneAccess.class);
 		
-		KeyStoneAccess access = Jersey.CLIENT.resource(uriBuilder.build())
+		/*
+		KeyStoneAccess access = JerseyClient.CLIENT.resource(uriBuilder.build())
 			.type(MediaType.APPLICATION_XML)
 			.accept(MediaType.APPLICATION_XML)
 			.post(KeyStoneAccess.class, authentication);
-		
+		*/
 		KeyStoneTenantList tenants = listTenants(identityURL, access.getToken().getId());
 		
 		KeyStoneTenant tenant = tenants.getList().get(0);
 		
 		authentication.setTenantId(tenant.getId());
 		
-		access = Jersey.CLIENT.resource(uriBuilder.build())
+		/*
+		access = JerseyClient.CLIENT.resource(uriBuilder.build())
 				.type(MediaType.APPLICATION_XML)
 				.accept(MediaType.APPLICATION_XML)
 				.post(KeyStoneAccess.class, authentication);
+		*/
+		
+		access = JerseyClientFactory.newClient().target(uriBuilder)
+				.request(MediaType.APPLICATION_XML)
+				.post(Entity.xml(authentication), KeyStoneAccess.class);
 	
 		return access;
 	}
@@ -43,10 +52,16 @@ public class IdentityServiceImpl implements IdentityService {
 	@Override
 	public KeyStoneTenantList listTenants(String identityURL, String token) {
 		UriBuilder uriBuilder = UriBuilder.fromPath(identityURL).path("/tenants");
-		return Jersey.CLIENT.resource(uriBuilder.build())
+		return JerseyClientFactory.newClient().target(uriBuilder)
+				.request(MediaType.APPLICATION_XML)
+				.get(KeyStoneTenantList.class);
+		
+		/*
+		return JerseyClient.CLIENT.resource(uriBuilder.build())
 			.accept(MediaType.APPLICATION_XML)
 			.header("X-Auth-Token", token)
 			.get(KeyStoneTenantList.class);
+		*/
 	}
 
 	@Override

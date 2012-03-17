@@ -9,8 +9,6 @@ import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.compute.NovaServerList;
 
-import com.sun.jersey.api.client.WebResource.Builder;
-
 public class ServersResource extends ComputeResourceBase {
 
 	/**

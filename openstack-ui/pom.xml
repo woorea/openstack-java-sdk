@@ -73,5 +73,9 @@
 			<id>oss.sonatype.org-snapshot</id>
 			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
+		<repository>
+            <id>maven.glassfish.org</id>
+            <url>http://maven.glassfish.org/content/groups/glassfish-group/</url> 
+        </repository>
 	</repositories>
 </project>

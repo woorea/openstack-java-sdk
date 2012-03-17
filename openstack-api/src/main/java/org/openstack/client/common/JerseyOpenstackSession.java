@@ -2,15 +2,16 @@ package org.openstack.client.common;
 
 import java.util.Map.Entry;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.WebResource.Builder;
-import com.sun.jersey.api.client.filter.LoggingFilter;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
+import org.glassfish.jersey.filter.LoggingFilter;
 
 public class JerseyOpenstackSession extends OpenStackSession {
 
@@ -30,59 +31,49 @@ public class JerseyOpenstackSession extends OpenStackSession {
 		@Override
 		public <T> T doRequest0(Class<T> c) {
 			Builder builder = buildResource();
-			
+
 			if (c == Void.class) {
 				if (body != null) {
-					builder.method(method, body);
+					builder.method(method, Entity.xml(body));
 				} else {
 					builder.method(method);
 				}
 				return null;
 			} else {
 				if (body != null) {
-					return builder.method(method, c, body);
+					return builder.method(method, Entity.xml(body), c);
 				} else {
 					return builder.method(method, c);
 				}
 			}
 		}
 
-		private Builder buildResource() {
-			Client jerseyClient = JerseyClient.INSTANCE.getJerseyClient();
-			Builder builder;
-			{
-				WebResource resource = jerseyClient.resource(resourceUrl);
-				System.out.println(">>>>" + resourceUrl);
-
-				if (!queryParameters.isEmpty()) {
-					MultivaluedMapImpl queryParametersMap = new MultivaluedMapImpl();
-					for (Entry<String, String> entry : queryParameters.entries()) {
-						queryParametersMap.add(entry.getKey(), entry.getValue());
-					}
-					resource = resource.queryParams(queryParametersMap );
-				}
-
-				if (verbose) {
-					resource.addFilter(new LoggingFilter(System.out));
-				}
-
-				resource.addFilter(new OpenstackExceptionClientFilter());
-
-				builder = resource.getRequestBuilder();
+		private Invocation.Builder buildResource() {
+			Invocation.Builder builder = null;
+			javax.ws.rs.client.Client jerseyClient = RestClient.INSTANCE
+					.getJerseyClient();
+			Target target = jerseyClient.target(resourceUrl);
+			target.configuration().register(
+					OpenstackExceptionClientFilter.class);
+			if (verbose) {
+				target.configuration().register(new LoggingFilter());
 			}
+			System.out.println(">>>>" + resourceUrl);
+
+			if (!queryParameters.isEmpty()) {
+				MultivaluedMap<String, Object> queryParametersMap = new MultivaluedHashMap<String, Object>();
+				for (Entry<String, String> entry : queryParameters.entries()) {
+					queryParametersMap.add(entry.getKey(), entry.getValue());
+				}
+				target = target.queryParams(queryParametersMap);
+			}
+
+			builder = target.request(acceptTypes.toArray(new MediaType[0]));
 
 			for (Entry<String, String> entry : headers.entrySet()) {
 				builder = builder.header(entry.getKey(), entry.getValue());
 			}
-
-			for (MediaType accept : acceptTypes) {
-				builder = builder.accept(accept);
-			}
-
-			if (contentType != null) {
-				builder = builder.type(contentType);
-			}
-
+			
 			return builder;
 		}
 
@@ -90,7 +81,7 @@ public class JerseyOpenstackSession extends OpenStackSession {
 		public HeadResponse head() {
 			Builder builder = buildResource();
 
-			ClientResponse head = builder.head();
+			Response head = builder.head();
 			return new HeadResponse(head.getStatus(), head.getHeaders());
 		}
 
