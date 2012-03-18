@@ -47,13 +47,14 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.openstack</groupId>
 			<artifactId>openstack-api</artifactId>
 		</dependency>
+		
 	</dependencies>
 	<build>
-		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

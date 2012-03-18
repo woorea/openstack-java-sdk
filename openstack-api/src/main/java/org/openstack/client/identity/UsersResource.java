@@ -7,9 +7,8 @@ import org.openstack.model.identity.KeyStoneUserList;
 
 public class UsersResource extends Resource {
 
-	public Iterable<KeyStoneUser> list() {
-		KeyStoneUserList list = resource().get(KeyStoneUserList.class);
-		return new SimplePagingList<KeyStoneUser>(session, list);
+	public KeyStoneUserList list() {
+		return resource().get(KeyStoneUserList.class);
 	}
 
 	// public User create(Tenant tenant) {

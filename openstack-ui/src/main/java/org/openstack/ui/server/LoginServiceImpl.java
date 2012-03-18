@@ -14,7 +14,7 @@ public class LoginServiceImpl implements LoginService {
 	public OpenStackSession login(String identityURL, String username, String password) {
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, password);
 		
-		OpenStackSession oss = OpenStackSession.create().with(Feature.VERBOSE);
+		OpenStackSession oss = OpenStackSession.create().with(org.openstack.client.common.OpenStackSession.Feature.VERBOSE);
 		
 		IdentityResource identity = new IdentityResource(oss, identityURL);
 		

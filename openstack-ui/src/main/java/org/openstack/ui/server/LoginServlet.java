@@ -12,7 +12,7 @@ import org.openstack.ui.server.mock.LoginServiceMock;
 
 public class LoginServlet extends HttpServlet {
 	
-	private LoginService service = new LoginServiceMock();
+	private LoginService service = new LoginServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

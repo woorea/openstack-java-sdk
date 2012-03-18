@@ -11,4 +11,6 @@
 	<entry-point class="org.openstack.ui.client.UI" />
 	<source path="client" />
 	
+	<add-linker name="xsiframe" />
+	
 </module>

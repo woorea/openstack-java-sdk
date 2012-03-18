@@ -4,8 +4,11 @@ import org.openstack.client.identity.IdentityResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeyStoneService;
 
+import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 
 public class OpenstackAuthenticationClient {
 
@@ -42,10 +45,25 @@ public class OpenstackAuthenticationClient {
 	}
 
 	public synchronized IdentityResource root() throws OpenstackException {
-		if (root == null) {
-			String endpoint = session.getData().getBestEndpoint("identity");
-			root = new IdentityResource(session, endpoint);
-		}
+		String endpoint = session.getData().getBestEndpoint("identity");
+		root = new IdentityResource(session, endpoint);
+		return root;
+	}
+
+	public IdentityResource admin() {
+		/*
+		KeyStoneService service = Iterables.find(session.getData().getAccess().getServiceCatalog(), new Predicate<KeyStoneService>() {
+
+			@Override
+			public boolean apply(KeyStoneService service) {
+				return "identity".equals(service.getType().equals("identity"));
+			}
+		
+		});
+		//String endpoint = service.getEndpoints().get(0).getAdminURL();
+		*/
+		String endpoint = "http://192.168.1.45:35357/v2.0";
+		root = new IdentityResource(session, endpoint);
 		return root;
 	}
 

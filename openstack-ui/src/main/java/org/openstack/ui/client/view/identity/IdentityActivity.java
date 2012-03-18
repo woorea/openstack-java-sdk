@@ -1,7 +1,11 @@
 package org.openstack.ui.client.view.identity;
 
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.view.identity.tenant.EndpointTemplatesActivity;
+import org.openstack.ui.client.view.identity.tenant.RolesActivity;
+import org.openstack.ui.client.view.identity.tenant.ServicesActivity;
 import org.openstack.ui.client.view.identity.tenant.TenantsActivity;
+import org.openstack.ui.client.view.identity.tenant.UsersActivity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -25,16 +29,16 @@ public class IdentityActivity extends AbstractActivity implements
 			TenantsActivity activity = new TenantsActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else if ("users".equals(place.getPlace())) {
-			TenantsActivity activity = new TenantsActivity(place);
+			UsersActivity activity = new UsersActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else if ("roles".equals(place.getPlace())) {
-			TenantsActivity activity = new TenantsActivity(place);
+			RolesActivity activity = new RolesActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else if ("services".equals(place.getPlace())) {
-			TenantsActivity activity = new TenantsActivity(place);
+			ServicesActivity activity = new ServicesActivity(place);
 			activity.start(VIEW.content, eventBus);
-		} else if ("endpointTemplates".equals(place.getPlace())) {
-			TenantsActivity activity = new TenantsActivity(place);
+		} else if ("endpoint-templates".equals(place.getPlace())) {
+			EndpointTemplatesActivity activity = new EndpointTemplatesActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else {
 			VIEW.content.setWidget(new Label(place.getPlace()));

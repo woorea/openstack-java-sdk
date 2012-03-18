@@ -6,9 +6,13 @@ import java.util.List;
 import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
+import org.openstack.model.identity.KeyStoneRoleList;
+import org.openstack.model.identity.KeyStoneServiceList;
 import org.openstack.model.identity.KeyStoneTenant;
 import org.openstack.model.identity.KeyStoneTenantList;
 import org.openstack.model.identity.KeyStoneToken;
+import org.openstack.model.identity.KeyStoneUserList;
 import org.openstack.ui.client.api.IdentityService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -43,6 +47,30 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 			session = new OpenStackSessionData(authenticate(new KeyStoneAuthentication()));
 		}
 		return session;
+	}
+
+	@Override
+	public KeyStoneServiceList listServices() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KeyStoneEndpointTemplatesList listEndpontTemplates() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KeyStoneUserList listUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KeyStoneRoleList listRoles() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

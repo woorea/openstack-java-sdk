@@ -1,6 +1,11 @@
 package org.openstack.client.common;
 
+import java.util.logging.Logger;
+
 import javax.ws.rs.client.Client;
+import javax.ws.rs.ext.ContextResolver;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -26,6 +31,8 @@ public final class RestClient {
 		
 		client.configuration().enable(JsonFeature.getInstance());
 		
+		client.configuration().register(OpenstackJaxbContext.class);
+		
         ObjectMapper objectMapper = buildObjectMapper();
         if (objectMapper != null) {
         	OpenstackSerializationModule simpleModule = new OpenstackSerializationModule();
@@ -33,12 +40,14 @@ public final class RestClient {
         	client.configuration().register(new ObjectMapperProvider(objectMapper));
         }
         
+        
+        
         client.configuration().register(KnownLengthInputStreamProvider.class);
 	}
 	
 	public RestClient verbose(boolean verbose) {
 		if(verbose) {
-			client.configuration().register(new LoggingFilter());
+			client.configuration().register(new LoggingFilter(Logger.getLogger("org.openstack.model"),true));
 		}
 		return this;
 	}
@@ -92,6 +101,25 @@ public final class RestClient {
         }
 
         return objectMapper;
+    }
+    
+    public static final class OpenstackJaxbContext implements ContextResolver<JAXBContext> {
+    	
+    	private JAXBContext ctx;
+    	
+    	public OpenstackJaxbContext() {
+    		try {
+				ctx = JAXBContext.newInstance("org.openstack.model.identity:org.openstack.model.compute");
+			} catch (JAXBException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
+    	}
+
+		@Override
+		public JAXBContext getContext(Class<?> type) {
+			return ctx;
+		}
+    	
     }
 	
 }

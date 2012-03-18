@@ -1,7 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneTenant;
-import org.openstack.ui.client.view.compute.LogoCell;
+import org.openstack.model.identity.KeyStoneEndpointTemplates;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -15,11 +14,11 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TenantsView extends Composite {
+public class EndpointTemplatesView extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface Binder extends UiBinder<Widget, TenantsView> {
+	interface Binder extends UiBinder<Widget, EndpointTemplatesView> {
 	}
 
 	public interface Presenter {
@@ -28,49 +27,49 @@ public class TenantsView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeyStoneTenant> grid = new DataGrid<KeyStoneTenant>();
+	DataGrid<KeyStoneEndpointTemplates> grid = new DataGrid<KeyStoneEndpointTemplates>();
 
 	private Presenter presenter;
 
-	public TenantsView() {
+	public EndpointTemplatesView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initGrid();
 	}
 
 	private void initGrid() {
-		Column<KeyStoneTenant, Boolean> checkboxColumn = new Column<KeyStoneTenant, Boolean>(new CheckboxCell()) {
+		Column<KeyStoneEndpointTemplates, Boolean> checkboxColumn = new Column<KeyStoneEndpointTemplates, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeyStoneTenant object) {
+			public Boolean getValue(KeyStoneEndpointTemplates object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeyStoneTenant> nameColumn = new TextColumn<KeyStoneTenant>() {
+		TextColumn<KeyStoneEndpointTemplates> typeColumn = new TextColumn<KeyStoneEndpointTemplates>() {
 			@Override
-			public String getValue(KeyStoneTenant object) {
+			public String getValue(KeyStoneEndpointTemplates object) {
+				return object.getType();
+			}
+		};
+		grid.setColumnWidth(typeColumn, "120px");
+		grid.addColumn(typeColumn, "Type");
+		TextColumn<KeyStoneEndpointTemplates> nameColumn = new TextColumn<KeyStoneEndpointTemplates>() {
+			@Override
+			public String getValue(KeyStoneEndpointTemplates object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeyStoneTenant> descriptionColumn = new TextColumn<KeyStoneTenant>() {
+		TextColumn<KeyStoneEndpointTemplates> descriptionColumn = new TextColumn<KeyStoneEndpointTemplates>() {
 			@Override
-			public String getValue(KeyStoneTenant object) {
+			public String getValue(KeyStoneEndpointTemplates object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(descriptionColumn, "120px");
 		grid.addColumn(descriptionColumn, "Description");
-		TextColumn<KeyStoneTenant> enabledColumn = new TextColumn<KeyStoneTenant>() {
-			@Override
-			public String getValue(KeyStoneTenant object) {
-				return object.isEnabled() ? "ENABLED" : "DISABLED";
-			}
-		};
-		grid.setColumnWidth(enabledColumn, "120px");
-		grid.addColumn(enabledColumn, "STATUS");
 	}
 
 	public void setPresenter(Presenter presenter) {

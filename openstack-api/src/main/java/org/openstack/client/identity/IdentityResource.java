@@ -33,7 +33,7 @@ public class IdentityResource extends Resource {
 	}
 
 	public EndpointTemplatesResource endpointTemplates() {
-		return getChildResource("OS-KSCATALOG/endpointTemplates", EndpointTemplatesResource.class);
+		return getChildResource("/endpoints", EndpointTemplatesResource.class);
 	}
 
 }

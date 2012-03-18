@@ -22,9 +22,6 @@ public class KeyStoneServiceEndpoint implements Serializable {
     private String publicURL;
 
     @XmlAttribute
-    private String publicURL2;
-
-    @XmlAttribute
     private String adminURL;
 
     @XmlAttribute
@@ -65,11 +62,12 @@ public class KeyStoneServiceEndpoint implements Serializable {
         this.publicURL = publicURL;
     }
 
-	@Override
-	public String toString() {
-		return "ServiceEndpoint [region=" + region + ", tenantId=" + tenantId + ", internalURL=" + internalURL
-				+ ", publicURL=" + publicURL + ", publicURL2=" + publicURL2 + ", adminURL=" + adminURL + ", versionId="
-				+ versionId + ", versionList=" + versionList + "]";
+	public String getAdminURL() {
+		return adminURL;
+	}
+
+	public void setAdminURL(String adminURL) {
+		this.adminURL = adminURL;
 	}
 
     // @XmlElement

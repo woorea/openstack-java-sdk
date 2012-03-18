@@ -1,13 +1,14 @@
 package org.openstack.ui.server;
 
-import org.openstack.client.common.OpenStackSession;
 import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
+import org.openstack.model.identity.KeyStoneRoleList;
+import org.openstack.model.identity.KeyStoneServiceList;
 import org.openstack.model.identity.KeyStoneTenantList;
+import org.openstack.model.identity.KeyStoneUserList;
 import org.openstack.ui.client.api.IdentityService;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
 public class IdentityServlet extends OpenStackRemoteServiceServlet implements IdentityService {
@@ -25,6 +26,26 @@ public class IdentityServlet extends OpenStackRemoteServiceServlet implements Id
 	@Override
 	public OpenStackSessionData getSessionData() {
 		return getSession().getData();
+	}
+
+	@Override
+	public KeyStoneServiceList listServices() {
+		return getSession().getAuthenticationClient().admin().services().list();
+	}
+
+	@Override
+	public KeyStoneEndpointTemplatesList listEndpontTemplates() {
+		return getSession().getAuthenticationClient().admin().endpointTemplates().list();
+	}
+
+	@Override
+	public KeyStoneUserList listUsers() {
+		return getSession().getAuthenticationClient().admin().users().list();
+	}
+
+	@Override
+	public KeyStoneRoleList listRoles() {
+		return getSession().getAuthenticationClient().admin().roles().list();
 	}
 	
 	

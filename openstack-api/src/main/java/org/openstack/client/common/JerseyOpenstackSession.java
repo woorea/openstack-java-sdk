@@ -1,6 +1,7 @@
 package org.openstack.client.common;
 
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -50,13 +51,12 @@ public class JerseyOpenstackSession extends OpenStackSession {
 
 		private Invocation.Builder buildResource() {
 			Invocation.Builder builder = null;
-			javax.ws.rs.client.Client jerseyClient = RestClient.INSTANCE
+			javax.ws.rs.client.Client jerseyClient = RestClient.INSTANCE.verbose(false)
 					.getJerseyClient();
 			Target target = jerseyClient.target(resourceUrl);
-			target.configuration().register(
-					OpenstackExceptionClientFilter.class);
+			target.configuration().register(OpenstackExceptionClientFilter.class);
 			if (verbose) {
-				target.configuration().register(new LoggingFilter());
+				target.configuration().register(new LoggingFilter(Logger.getAnonymousLogger(), true));
 			}
 			System.out.println(">>>>" + resourceUrl);
 
