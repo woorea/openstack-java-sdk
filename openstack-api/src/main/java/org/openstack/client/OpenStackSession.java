@@ -166,8 +166,8 @@ public abstract class OpenStackSession implements Serializable {
 		return new OpenstackImageClient(this);
 	}
 
-	public OpenstackComputeClient getComputeClient() {
-		return new OpenstackComputeClient(this);
+	public OpenStackComputeClient getComputeClient() {
+		return new OpenStackComputeClient(this);
 	}
 
 	public OpenstackAuthenticationClient getAuthenticationClient() {

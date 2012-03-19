@@ -6,7 +6,7 @@ import java.util.HashMap;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.AsyncServerOperation;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaKeyPair;
@@ -21,7 +21,7 @@ public class ITConfigDrive extends ComputeApiTest {
 
 	@Test
 	public void testCreateAndDeleteServer() throws Exception {
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		//Image image = getUecImage();
 		NovaImage image = findImageByName("DebianSqueeze_20120226");

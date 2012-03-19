@@ -2,7 +2,7 @@ package org.openstack.client.compute;
 
 import java.util.HashMap;
 
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.common.Extension;
 import org.openstack.model.common.ExtensionList;
 import org.openstack.model.exceptions.OpenstackException;
@@ -13,7 +13,7 @@ public class ITExtensions extends ComputeApiTest {
 
     @Test
     public void testListExtensions() throws OpenstackException {
-        OpenstackComputeClient nova = getComputeClient();
+        OpenStackComputeClient nova = getComputeClient();
         ExtensionList extensions = nova.root().extensions().get(new HashMap<String, Object>());
         for (Extension extension : extensions) {
             Extension details = nova.root().extensions().extension(extension.getAlias()).get(new HashMap<String, Object>());

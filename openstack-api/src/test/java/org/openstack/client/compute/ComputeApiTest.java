@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.common.Extension;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
@@ -14,12 +14,13 @@ import org.testng.annotations.Test;
 
 @Test
 public class ComputeApiTest extends AbstractOpenStackTest {
-	public OpenstackComputeClient getComputeClient() throws OpenstackException {
+	
+	public OpenStackComputeClient getComputeClient() throws OpenstackException {
 		return context.session.getComputeClient();
 	}
 
 	protected NovaFlavor findSmallestFlavor() {
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		NovaFlavor bestFlavor = null;
 		for (NovaFlavor flavor : nova.root().flavors().get(new HashMap<String, Object>()).getList()) {
@@ -31,7 +32,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	}
 
 	protected NovaImage findUecImage() {
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		Iterable<NovaImage> images = nova.root().images().get(new HashMap<String, Object>()).getList();
 		for (NovaImage i : images) {
@@ -44,7 +45,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	}
 
 	protected NovaImage findImageByName(String name) {
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		Iterable<NovaImage> images = nova.root().images().get(new HashMap<String, Object>()).getList();
 		for (NovaImage i : images) {

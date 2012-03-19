@@ -2,24 +2,16 @@ package org.openstack.client.compute;
 
 import java.util.HashMap;
 
-import org.openstack.api.compute.ServerResource;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.OpenStackSession;
-import org.openstack.client.OpenstackComputeClient;
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
-import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class ITServers extends ComputeApiTest {
 
 	@Test
 	public void listServers() {
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 		OpenStackSession session = nova.getSession();
 
 		Iterable<NovaServer> list = nova.root().servers().get(new HashMap<String, Object>()).getList();

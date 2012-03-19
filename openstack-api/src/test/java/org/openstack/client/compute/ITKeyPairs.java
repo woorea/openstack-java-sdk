@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
@@ -16,7 +16,7 @@ public class ITKeyPairs extends ComputeApiTest {
 	public void testListKeypairs() throws OpenstackException {
 		skipIfNoKeyPairs();
 
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 		Iterable<NovaKeyPair> keyPairs = nova.root().keyPairs().get(new HashMap<String, Object>());
 		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
@@ -47,7 +47,7 @@ public class ITKeyPairs extends ComputeApiTest {
 	}
 
 	private void testCreateAndDelete(String name) {
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
@@ -150,7 +150,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		testCreateAndDelete(name);
 	}
 
-	private NovaKeyPair findKeyPair(OpenstackComputeClient nova, String name) {
+	private NovaKeyPair findKeyPair(OpenStackComputeClient nova, String name) {
 		for (NovaKeyPair keyPair : nova.root().keyPairs().get(new HashMap<String, Object>())) {
 			if (keyPair.getName().equals(name))
 				return keyPair;

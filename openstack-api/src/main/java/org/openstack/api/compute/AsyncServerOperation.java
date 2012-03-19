@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
@@ -26,12 +26,12 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	final Collection<String> acceptableTransitionStates;
 	final Collection<String> finishStates;
 
-	final OpenstackComputeClient client;
+	final OpenStackComputeClient client;
 
 	volatile boolean cancelled;
 	volatile boolean done;
 
-	public AsyncServerOperation(OpenstackComputeClient client, NovaServer returnValue, String serverId,
+	public AsyncServerOperation(OpenStackComputeClient client, NovaServer returnValue, String serverId,
 			Collection<String> acceptableTransitionStates, Collection<String> finishStates) {
 		super();
 		this.client = client;
@@ -162,11 +162,11 @@ public class AsyncServerOperation implements Future<NovaServer> {
 		return returnValue;
 	}
 
-	public static AsyncServerOperation wrapServerCreate(OpenstackComputeClient client, NovaServer server) {
+	public static AsyncServerOperation wrapServerCreate(OpenStackComputeClient client, NovaServer server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("BUILD"), Lists.newArrayList("ACTIVE"));
 	}
 
-	public static AsyncServerOperation wrapServerDelete(OpenstackComputeClient client, NovaServer server) {
+	public static AsyncServerOperation wrapServerDelete(OpenStackComputeClient client, NovaServer server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("ACTIVE"), Lists.newArrayList("DELETED"));
 	}
 }

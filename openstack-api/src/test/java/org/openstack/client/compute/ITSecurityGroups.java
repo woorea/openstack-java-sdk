@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.NovaSecurityGroup;
 import org.openstack.model.compute.NovaSecurityGroupList;
@@ -24,7 +24,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 	public void testListSecurityGroups() throws OpenstackException {
 		skipIfNoSecurityGroups();
 
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 		NovaSecurityGroupList securityGroups = nova.root().securityGroups().get(new HashMap<String, Object>());
 		for (NovaSecurityGroup securityGroup : securityGroups) {
 			NovaSecurityGroup details = nova.root().securityGroups().securityGroup(securityGroup.getId()).get(new HashMap<String, Object>());
@@ -44,7 +44,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 	public void testNonExistentSecurityGroup() throws OpenstackException {
 		skipIfNoSecurityGroups();
 
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		Set<Integer> ids = Sets.newHashSet();
 		for (NovaSecurityGroup securityGroup : nova.root().securityGroups().get(new HashMap<String, Object>())) {
@@ -66,7 +66,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 	public void testCreateAndDelete() throws OpenstackException {
 		skipIfNoSecurityGroups();
 
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		String groupName = random.randomAlphanumericString(1, 128).trim();
 		String description = random.randomAlphanumericString(1, 255).trim();
@@ -147,7 +147,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 	public void testBigDescriptionFails() throws OpenstackException {
 		skipIfNoSecurityGroups();
 
-		OpenstackComputeClient nova = getComputeClient();
+		OpenStackComputeClient nova = getComputeClient();
 
 		String description = random.randomAlphanumericString(500);
 		String groupName = random.randomAlphanumericString(1, 128);
