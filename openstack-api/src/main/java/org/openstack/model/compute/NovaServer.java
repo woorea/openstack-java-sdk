@@ -13,8 +13,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.atom.Link;
+
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -39,11 +40,11 @@ public class NovaServer implements Serializable {
 	private String hostId;
 
 	@XmlAttribute
-	@JsonProperty("user_id")
+	@SerializedName("user_id")
 	private String userId;
 
 	@XmlAttribute
-	@JsonProperty("tenant_id")
+	@SerializedName("tenant_id")
 	private String tenantId;
 
 	@XmlAttribute(name = "accessIPv4")
@@ -83,7 +84,6 @@ public class NovaServer implements Serializable {
 	private NovaAddresses addresses;
 
 	@XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
-	@JsonProperty("links")
 	private List<Link> links;
 
 	@XmlAttribute

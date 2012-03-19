@@ -9,8 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.atom.Link;
+
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name="flavor")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -32,13 +33,13 @@ public class NovaFlavor implements Serializable {
     public Integer swap;
 
     @XmlAttribute(name = "rxtx_factor")
+    @SerializedName("rxtx_factor")
     private float rxTxFactor;
 
     @XmlAttribute
     private int disk;
 
     @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
-    @JsonProperty("links")
 	private List<Link> links;
     
     public NovaFlavor() {

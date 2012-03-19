@@ -1,19 +1,16 @@
 package org.openstack.api.storage;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.openstack.api.common.HeadResponse;
-import org.openstack.api.internals.SimpleClassInfo;
-import org.openstack.api.internals.SimpleClassInfo.FieldInfo;
 import org.openstack.client.RequestBuilder;
 import org.openstack.model.storage.SwiftObjectProperties;
 
 class SwiftHeaderUtils {
+	
 	static final Logger log = Logger.getLogger(SwiftHeaderUtils.class.getName());
-
+/*
 	static SimpleClassInfo classInfo;
 
 	static SimpleClassInfo getHeaderClassInfo() {
@@ -22,9 +19,11 @@ class SwiftHeaderUtils {
 		}
 		return classInfo;
 	}
-
+*/
 	public static SwiftObjectProperties unmarshalHeaders(HeadResponse response) {
+		
 		SwiftObjectProperties properties = new SwiftObjectProperties();
+		/*
 		Map<String, String> userProperties = properties.getCustomProperties();
 
 		for (Entry<String, List<String>> entry : response.getHeaders().asMap().entrySet()) {
@@ -54,6 +53,7 @@ class SwiftHeaderUtils {
 				field.setValue(properties, converted);
 			}
 		}
+		*/
 		return properties;
 	}
 

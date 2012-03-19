@@ -366,7 +366,7 @@ public class ServerResource extends Resource {
 
 		// XML output is not escaped correctly.  Bug #939386
 		Output output = executeAction(Output.class, action, MediaType.APPLICATION_JSON_TYPE);
-		return output.getContent();
+		return output.getOutput();
 	}
 
 	public <T> T executeAction(Class<T> c, Object action) {

@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
-import org.codehaus.jackson.annotate.JsonAnySetter;
-
 import com.google.common.collect.Maps;
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -17,7 +15,8 @@ public class GlanceImageProperties implements Serializable {
     /**
      * This gets mapped to any unrecognized elements (i.e. all the key/value pairs)
      */
-    @JsonAnySetter
+    //@JsonAnySetter
+    //GSON?
     public void addProperty(String key, Object value) {
         properties.put(key, value);
     }

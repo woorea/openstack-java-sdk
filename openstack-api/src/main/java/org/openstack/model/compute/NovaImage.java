@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.atom.Link;
 
 @XmlRootElement(name="image")
@@ -45,7 +44,6 @@ public class NovaImage implements Serializable {
 	//RAX-DCF="http://docs.rackspacecloud.com/servers/api/ext/diskConfig/v1.0"
 	
 	@XmlElement(name="link", namespace="http://www.w3.org/2005/Atom")
-	@JsonProperty("links")
 	private List<Link> links;
 	
 	public NovaImage() {

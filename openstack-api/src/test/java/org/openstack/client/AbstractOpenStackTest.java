@@ -12,6 +12,7 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
 public class AbstractOpenStackTest {
+	
 	protected OpenstackTestContext context;
 	protected RandomUtil random = new RandomUtil();
 

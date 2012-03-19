@@ -1,29 +1,26 @@
 package org.openstack.model.storage;
 
-import java.io.File;
 import java.util.Date;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 public class SwiftObjectProperties {
 	private String name;
 
-	@JsonProperty("date")
 	private Date date;
 
-	@JsonProperty("last-modified")
+	@SerializedName("last-modified")
 	private Date lastModified;
 
-	@JsonProperty("content-length")
+	@SerializedName("content-length")
 	private Long contentLength;
 
-	@JsonProperty("etag")
+	@SerializedName("etag")
 	private String eTag;
 
-	@JsonProperty("content-type")
+	@SerializedName("content-type")
 	private String contentType;
 
 	private Map<String, String> customProperties;

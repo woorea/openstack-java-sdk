@@ -12,9 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
-import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 
 
@@ -60,7 +57,6 @@ public class NovaServerForCreate implements Serializable {
 		public String path;
 
 		@XmlValue
-		@JsonProperty("contents")
 		public String contents;
 
 	}

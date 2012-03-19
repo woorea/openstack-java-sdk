@@ -9,9 +9,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.api.internals.SimpleClassInfo;
-import org.openstack.api.internals.SimpleClassInfo.FieldInfo;
-
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "image")
 public class GlanceImage implements Serializable {
@@ -207,16 +204,5 @@ public class GlanceImage implements Serializable {
                 + owner + ", deleted=" + deleted + ", isProtected=" + isProtected + ", id=" + id + ", properties=" + properties + "]";
     }
 
-	static final SimpleClassInfo CLASS_INFO = new SimpleClassInfo(GlanceImage.class);
-
-	public void put(String key, String value) {
-		FieldInfo field = CLASS_INFO.getField(key);
-		if (field == null) {
-			getProperties().addProperty(key, value);
-		} else {
-			Object setValue = field.convertToValue(value);
-			field.setValue(this, setValue);
-		}
-	}
 
 }

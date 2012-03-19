@@ -7,22 +7,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 @XmlRootElement(name="output", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Output implements Serializable {
 
 	@XmlValue
-	@JsonProperty("output")
-	private String content;
+	private String output;
 
-	public String getContent() {
-		return content;
+	public String getOutput() {
+		return output;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setOutput(String output) {
+		this.output = output;
 	}
 	
 }

@@ -9,8 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.common.JsonRootElement;
+
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -35,7 +36,7 @@ public class KeyStoneUser implements Serializable {
     @XmlAttribute
     private boolean enabled;
 
-    @JsonProperty("roles_links")
+    @SerializedName("roles_links")
     private List<String> rolesLinks;
 
     @XmlElement(name = "roles")

@@ -7,11 +7,6 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.codehaus.jackson.map.AnnotationIntrospector;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
-import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
 import org.glassfish.jersey.filter.LoggingFilter;
@@ -58,53 +53,6 @@ public final class RestClient {
 	public Client getJerseyClient() {
 		return client;
 	}
-	
-	/**
-     * Build a custom JSON ObjectMapper, or null if we should use default.
-     * 
-     * @return
-     */
-    private ObjectMapper buildObjectMapper() {
-        // WRAP_ROOT_VALUE puts a top-level element in the JSON, and avoids having to use dummy objects
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        {
-            // If we want to put a top-level element in the JSON
-            objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-//            objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-        }
-
-        {
-            // If we wanted to use a module for further customization...
-            // SimpleModule module = new SimpleModule();
-            // objectMapper.registerModule(module);
-        }
-
-        {
-            // If we wanted to force UTC...
-            // SerializationConfig serConfig = mapper.getSerializationConfig();
-            // SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-            // dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-            //
-            // serConfig.setDateFormat(dateFormat);
-            //
-            // DeserializationConfig deserializationConfig = mapper.getDeserializationConfig();
-            // deserializationConfig.setDateFormat(dateFormat);
-            //
-            // mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
-        }
-
-        {
-            // Use Jackson annotations if they're present, otherwise use JAXB
-            AnnotationIntrospector primary = new JacksonAnnotationIntrospector();
-            AnnotationIntrospector secondary = new JaxbAnnotationIntrospector();
-            AnnotationIntrospector introspector = new AnnotationIntrospector.Pair(primary, secondary);
-
-            objectMapper.setAnnotationIntrospector(introspector);
-        }
-
-        return objectMapper;
-    }
     
     public static final class OpenstackJaxbContext implements ContextResolver<JAXBContext> {
     	
