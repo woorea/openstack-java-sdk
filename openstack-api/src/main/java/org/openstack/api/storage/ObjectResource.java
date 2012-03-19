@@ -3,7 +3,7 @@ package org.openstack.api.storage;
 import java.io.InputStream;
 
 import org.openstack.api.common.HeadResponse;
-import org.openstack.api.common.RequestBuilder;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.storage.SwiftObjectProperties;

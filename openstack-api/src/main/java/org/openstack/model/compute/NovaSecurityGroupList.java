@@ -1,6 +1,7 @@
 package org.openstack.model.compute;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Lists;
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "security_groups")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -18,7 +20,8 @@ public class NovaSecurityGroupList implements Serializable, Iterable<NovaSecurit
 
 	@XmlElementWrapper(name = "security_groups")
 	@XmlElement(name = "security_group")
-	private List<NovaSecurityGroup> list;
+	@SerializedName("security_groups")
+	private List<NovaSecurityGroup> list = new ArrayList<NovaSecurityGroup>();
 
 	public List<NovaSecurityGroup> getList() {
 		if (list == null) {
@@ -30,6 +33,11 @@ public class NovaSecurityGroupList implements Serializable, Iterable<NovaSecurit
 	@Override
 	public Iterator<NovaSecurityGroup> iterator() {
 		return list.iterator();
+	}
+
+	@Override
+	public String toString() {
+		return "NovaSecurityGroupList [list=" + list + "]";
 	}
 
 }

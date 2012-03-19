@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.api.common.Namespaces;
+import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
 
 import com.google.common.collect.Lists;
@@ -26,7 +26,7 @@ public class KeyStoneService implements Serializable {
 	private List<KeyStoneServiceEndpoint> endpoints;
 
 	// Not sure what these are...
-	@JsonProperty("endpoints_links")
+	@SerializedName("endpoints_links")
 	private List<String> endpointsLinks;
 
     @XmlAttribute
@@ -73,16 +73,20 @@ public class KeyStoneService implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Service [id=" + id + ", name=" + name + ", type=" + type + ", description=" + description + ", endpoints=" + endpoints + "]";
-    }
-
     public List<KeyStoneServiceEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = Lists.newArrayList();
         }
         return endpoints;
     }
+
+	@Override
+	public String toString() {
+		return "KeyStoneService [endpoints=" + endpoints + ", endpointsLinks="
+				+ endpointsLinks + ", id=" + id + ", name=" + name + ", type="
+				+ type + ", description=" + description + "]";
+	}
+    
+    
 
 }

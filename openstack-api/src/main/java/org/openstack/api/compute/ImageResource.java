@@ -1,21 +1,25 @@
 package org.openstack.api.compute;
 
-import org.openstack.api.common.OpenStackSession;
+import java.util.HashMap;
+
+import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.api.common.Resource;
-import org.openstack.api.common.SimpleLinkResolver;
+import org.openstack.client.OpenStackSession;
+import org.openstack.client.SimpleLinkResolver;
 import org.openstack.model.atom.Link;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaMetadata;
+import org.openstack.model.identity.KeyStoneRole;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public class ImageResource extends Resource {
 
-	private NovaImage representation;
-
-	public ImageResource() {
-
+	public ImageResource(Target target) {
+		super(target);
 	}
 
 	public ImageResource(final OpenStackSession session, NovaImage image) {
@@ -34,20 +38,12 @@ public class ImageResource extends Resource {
 		}).getHref());
 	}
 
-	public ImageResource get() {
-		representation = resource().get(NovaImage.class);
-		return this;
+	public NovaImage get(HashMap<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaImage.class);
 	}
 
-	public NovaImage show() {
-		if (representation == null) {
-			get();
-		}
-		return representation;
-	}
-
-	public void delete() {
-		resource().delete();
+	public void delete(HashMap<String, Object> properties) {
+		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
 	}
 
 	public NovaMetadata metadata() {

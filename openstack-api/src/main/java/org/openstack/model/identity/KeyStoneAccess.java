@@ -1,16 +1,20 @@
 package org.openstack.model.identity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
-import org.openstack.api.common.Namespaces;
+import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
+
+import com.google.gson.annotations.SerializedName;
 
 @XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
 @XmlRootElement(name = "access")
@@ -21,8 +25,10 @@ public class KeyStoneAccess implements Serializable {
     @XmlElement
     private KeyStoneToken token;
     
-    @XmlElement
-    private KeyStoneServiceCatalog serviceCatalog;
+    @XmlElementWrapper(name = "serviceCatalog")
+    @XmlElement(name = "service")
+    @SerializedName("serviceCatalog")
+	private List<KeyStoneService> services = new ArrayList<KeyStoneService>();
 
     @XmlElement
     private KeyStoneUser user;
@@ -35,12 +41,12 @@ public class KeyStoneAccess implements Serializable {
         this.token = token;
     }
 
-	public KeyStoneServiceCatalog getServiceCatalog() {
-		return serviceCatalog;
+	public List<KeyStoneService> getServices() {
+		return services;
 	}
 
-	public void setServiceCatalog(KeyStoneServiceCatalog serviceCatalog) {
-		this.serviceCatalog = serviceCatalog;
+	public void setServices(List<KeyStoneService> services) {
+		this.services = services;
 	}
 
 	public KeyStoneUser getUser() {
@@ -53,8 +59,8 @@ public class KeyStoneAccess implements Serializable {
 
 	@Override
 	public String toString() {
-		return "KeyStoneAccess [token=" + token + ", serviceCatalog="
-				+ serviceCatalog + ", user=" + user + "]";
+		return "KeyStoneAccess [token=" + token + ", services=" + services
+				+ ", user=" + user + "]";
 	}
 
 }

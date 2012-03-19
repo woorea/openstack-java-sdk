@@ -2,9 +2,9 @@ package org.openstack.client.cli;
 
 import java.io.IOException;
 
-import org.openstack.api.common.OpenstackComputeClient;
-import org.openstack.api.common.OpenstackImageClient;
 import org.openstack.api.storage.OpenstackStorageClient;
+import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenstackImageClient;
 import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
 import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
 import org.openstack.model.common.OpenstackService;

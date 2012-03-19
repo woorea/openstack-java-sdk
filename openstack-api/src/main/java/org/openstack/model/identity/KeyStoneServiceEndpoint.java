@@ -70,8 +70,18 @@ public class KeyStoneServiceEndpoint implements Serializable {
 		this.adminURL = adminURL;
 	}
 
+	@Override
+	public String toString() {
+		return "KeyStoneServiceEndpoint [region=" + region + ", tenantId="
+				+ tenantId + ", internalURL=" + internalURL + ", publicURL="
+				+ publicURL + ", adminURL=" + adminURL + ", versionId="
+				+ versionId + ", versionList=" + versionList + "]";
+	}
+
     // @XmlElement
     // private ServiceVersion version;
+	
+	
 
     
 }

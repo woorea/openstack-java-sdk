@@ -1,4 +1,4 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import java.util.Map.Entry;
 import java.util.logging.Logger;
@@ -13,6 +13,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.filter.LoggingFilter;
+import org.openstack.api.common.HeadResponse;
+import org.openstack.api.common.OpenstackExceptionClientFilter;
+import org.openstack.api.common.RestClient;
 
 public class JerseyOpenstackSession extends OpenStackSession {
 

@@ -10,8 +10,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
-import org.openstack.api.common.RequestBuilder;
 import org.openstack.api.imagestore.KnownLengthInputStream;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.model.storage.SwiftStorageObject;

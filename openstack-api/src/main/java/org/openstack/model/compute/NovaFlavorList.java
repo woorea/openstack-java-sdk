@@ -8,11 +8,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement(name = "flavors")
 @XmlAccessorType(XmlAccessType.NONE)
 public class NovaFlavorList {
 
     @XmlElement(name = "flavor")
+    @SerializedName("flavors")
     private List<NovaFlavor> list = new ArrayList<NovaFlavor>();
     
     public List<NovaFlavor> getList() {
@@ -22,5 +25,10 @@ public class NovaFlavorList {
 	public void setList(List<NovaFlavor> list) {
 		this.list = list;
 		
+	}
+
+	@Override
+	public String toString() {
+		return "NovaFlavorList [list=" + list + "]";
 	}
 }

@@ -1,7 +1,7 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import org.openstack.api.compute.AsyncServerOperation;
-import org.openstack.api.compute.TenantResource;
+import org.openstack.api.compute.ComputeResource;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.exceptions.OpenstackException;
@@ -9,20 +9,23 @@ import org.openstack.model.exceptions.OpenstackException;
 public class OpenstackComputeClient {
 
 	OpenStackSession session;
-	TenantResource root;
+	ComputeResource root;
 
 	public OpenstackComputeClient(OpenStackSession session) {
 		this.session = session;
 		root();
 	}
 
-	public synchronized TenantResource root() throws OpenstackException {
+	public synchronized ComputeResource root() throws OpenstackException {
+		/*
 		if (root == null) {
 			String endpoint = session.getData().getBestEndpoint("compute");
 			root = new TenantResource(session, endpoint);
 		}
 
 		return root;
+		*/
+		return null;
 	}
 
 	public AsyncServerOperation createServer(NovaServerForCreate create) throws OpenstackException {
@@ -35,6 +38,6 @@ public class OpenstackComputeClient {
 	}
 
 	public String getRootUrl() {
-		return root().resource;
+		return null; //root().resource;
 	}
 }

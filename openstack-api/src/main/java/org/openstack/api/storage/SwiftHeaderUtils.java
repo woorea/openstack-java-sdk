@@ -6,9 +6,9 @@ import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.openstack.api.common.HeadResponse;
-import org.openstack.api.common.RequestBuilder;
 import org.openstack.api.internals.SimpleClassInfo;
 import org.openstack.api.internals.SimpleClassInfo.FieldInfo;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.storage.SwiftObjectProperties;
 
 class SwiftHeaderUtils {

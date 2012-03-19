@@ -3,7 +3,7 @@ package org.openstack.client.cli.commands;
 import java.io.InputStream;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.api.common.OpenstackImageClient;
+import org.openstack.client.OpenstackImageClient;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.GlanceImageName;
 import org.openstack.model.image.GlanceImage;

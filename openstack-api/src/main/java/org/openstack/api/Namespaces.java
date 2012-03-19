@@ -1,4 +1,4 @@
-package org.openstack.api.common;
+package org.openstack.api;
 
 public class Namespaces {
     public static final String NS_OPENSTACK_API_1_1 = "http://docs.openstack.org/compute/api/v1.1";

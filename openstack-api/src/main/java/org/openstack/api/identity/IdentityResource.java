@@ -3,9 +3,9 @@ package org.openstack.api.identity;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
-import org.openstack.api.common.OpenStackSession;
 import org.openstack.api.common.Resource;
 import org.openstack.api.common.RestClient;
+import org.openstack.client.OpenStackSession;
 
 public class IdentityResource extends Resource {
 
@@ -20,8 +20,7 @@ public class IdentityResource extends Resource {
 		super(target);
 	}
 	
-	public static IdentityResource endpoint(String endpoint) {
-		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
+	public static IdentityResource endpoint(Client client, String endpoint) {
 		return new IdentityResource(client.target(endpoint));
 	}
 

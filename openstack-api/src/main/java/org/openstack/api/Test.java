@@ -1,15 +1,83 @@
 package org.openstack.api;
 
+import java.util.HashMap;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.MediaType;
+
+import org.openstack.api.common.RestClient;
+import org.openstack.api.compute.ComputeResource;
 import org.openstack.api.identity.IdentityResource;
+import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.NovaFlavorList;
+import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaImageList;
+import org.openstack.model.compute.NovaKeyPairList;
+import org.openstack.model.compute.NovaSecurityGroupList;
+import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerList;
+import org.openstack.model.compute.NovaSnapshotList;
+import org.openstack.model.compute.NovaVolumeList;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeyStoneTenantList;
 
 public class Test {
 
 	public static void main(String[] args) {
+		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials("admin", "secret0");
-		KeyStoneAccess access = IdentityResource.endpoint("http://192.168.1.52:5000/v2.0").tokens().authenticate(authentication);
-		IdentityResource identity = IdentityResource.endpoint("http://192.168.1.52:35357/v2.0");
+		IdentityResource identity = IdentityResource.endpoint(client, "http://192.168.1.52:5000/v2.0");
+		final KeyStoneAccess access = identity.tokens().authenticate(authentication);
+		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>() {{
+			put("Accept", MediaType.APPLICATION_XML);
+			put("X-Auth-Token", access.getToken().getId());
+		}});
+		
+		authentication = new KeyStoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenants.getList().get(0).getId());
+		final KeyStoneAccess access2 = identity.tokens().authenticate(authentication);
+		
+		ComputeResource compute = ComputeResource.endpoint(client, "http://192.168.1.52:8774/v2/" + tenants.getList().get(0).getId());
+		
+//		NovaServerList servers = compute.servers().get(new HashMap<String, Object>(){{
+//			put("detail",true);
+//			put("X-Auth-Token", access2.getToken().getId());
+//		}});
+//		
+//		for (NovaServer s :servers.getList()) {
+//			System.out.println(s);
+//		}
+//
+//		NovaImageList images = compute.images().get(new HashMap<String, Object>(){{
+//			put("X-Auth-Token", access2.getToken().getId());
+//		}});
+//		//"cirros-0.3.0-x86_64-blank"
+//		
+//		NovaFlavorList flavors = compute.flavors().get(new HashMap<String, Object>(){{
+//			put("X-Auth-Token", access2.getToken().getId());
+//		}});
+//		
+//		NovaKeyPairList keypairs = compute.keyPairs().get(new HashMap<String, Object>(){{
+//			put("X-Auth-Token", access2.getToken().getId());
+//		}});
+		
+		NovaSecurityGroupList securityGroups = compute.securityGroups().get(new HashMap<String, Object>(){{
+			put("X-Auth-Token", access2.getToken().getId());
+		}});
+		
+		NovaVolumeList volumes = compute.volumes().get(new HashMap<String, Object>(){{
+			put("X-Auth-Token", access2.getToken().getId());
+		}});
+		
+//		NovaSnapshotList snapshots = compute.snapshots().get(new HashMap<String, Object>(){{
+//			put("X-Auth-Token", access2.getToken().getId());
+//		}});
+		
+		
+
+		
+		
+//		IdentityResource identity = IdentityResource.endpoint(client, "http://192.168.1.52:35357/v2.0");
 		
 //		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>() {{
 //			put("Accept", MediaType.APPLICATION_XML);

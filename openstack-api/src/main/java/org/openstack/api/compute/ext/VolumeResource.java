@@ -1,8 +1,14 @@
 package org.openstack.api.compute.ext;
 
+import javax.ws.rs.client.Target;
+
 import org.openstack.api.common.Resource;
 
 public class VolumeResource extends Resource {
+
+	public VolumeResource(Target target) {
+		super(target);
+	}
 
 	/**
 	 * Return a single volume type item.

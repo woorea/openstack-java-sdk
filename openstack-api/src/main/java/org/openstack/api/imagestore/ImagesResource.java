@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.api.common.RequestBuilder;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.image.GlanceImage;
 import org.openstack.model.image.GlanceImageList;

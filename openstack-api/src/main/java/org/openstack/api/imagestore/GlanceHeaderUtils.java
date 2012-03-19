@@ -15,7 +15,7 @@ import javax.ws.rs.core.ResponseHeaders;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.openstack.api.common.HeadResponse;
-import org.openstack.api.common.RequestBuilder;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.image.GlanceImage;
 
 import com.google.common.collect.Maps;

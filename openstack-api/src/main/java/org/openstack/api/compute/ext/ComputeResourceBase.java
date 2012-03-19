@@ -1,7 +1,7 @@
 package org.openstack.api.compute.ext;
 
-import org.openstack.api.common.RequestBuilder;
 import org.openstack.api.common.Resource;
+import org.openstack.client.RequestBuilder;
 
 public abstract class ComputeResourceBase extends Resource {
     public ComputeResourceBase() {

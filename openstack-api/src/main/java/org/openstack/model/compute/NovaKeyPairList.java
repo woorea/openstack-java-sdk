@@ -1,6 +1,7 @@
 package org.openstack.model.compute;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class NovaKeyPairList implements Serializable, Iterable<NovaKeyPair> {
 
 	@XmlElement(name = "keypair", namespace = "")
 	@JsonProperty("keypairs")
-	private List<KeyPairListItem> list;
+	private List<KeyPairListItem> list = new ArrayList<NovaKeyPairList.KeyPairListItem>();
 
 	@XmlAccessorType(XmlAccessType.NONE)
 	public static class KeyPairListItem implements Serializable {
@@ -52,5 +53,10 @@ public class NovaKeyPairList implements Serializable, Iterable<NovaKeyPair> {
 				return input.getKeypair();
 			}
 		});
+	}
+
+	@Override
+	public String toString() {
+		return "NovaKeyPairList [list=" + list + "]";
 	}
 }

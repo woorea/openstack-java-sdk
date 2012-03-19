@@ -1,8 +1,13 @@
 package org.openstack.api.compute;
 
-import org.openstack.api.common.OpenStackSession;
+import java.util.HashMap;
+
+import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.api.common.Resource;
-import org.openstack.api.common.SimpleLinkResolver;
+import org.openstack.client.OpenStackSession;
+import org.openstack.client.SimpleLinkResolver;
 import org.openstack.model.atom.Link;
 import org.openstack.model.compute.NovaFlavor;
 
@@ -11,10 +16,8 @@ import com.google.common.collect.Iterables;
 
 public class FlavorResource extends Resource {
 
-	private NovaFlavor representation;
-
-	public FlavorResource() {
-
+	public FlavorResource(Target target) {
+		super(target);
 	}
 
 	public FlavorResource(final OpenStackSession session, NovaFlavor flavor) {
@@ -34,16 +37,10 @@ public class FlavorResource extends Resource {
 		}).getHref());
 	}
 
-	public FlavorResource get() {
-		representation = resource().get(NovaFlavor.class);
-		return this;
+	public NovaFlavor get(HashMap<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFlavor.class);
 	}
 
-	public NovaFlavor show() {
-		if (representation == null) {
-			get();
-		}
-		return representation;
-	}
+	
 
 }

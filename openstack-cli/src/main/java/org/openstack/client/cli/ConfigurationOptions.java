@@ -8,8 +8,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.kohsuke.args4j.Option;
-import org.openstack.api.common.DirectOpenstackService;
-import org.openstack.api.common.OpenStackSession;
+import org.openstack.client.DirectOpenstackService;
+import org.openstack.client.OpenStackSession;
 import org.openstack.model.common.OpenstackService;
 import org.openstack.utils.Io;
 import org.openstack.utils.NoCloseInputStream;

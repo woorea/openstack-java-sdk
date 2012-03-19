@@ -1,4 +1,4 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import java.io.Serializable;
 import java.util.Map;

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.api.common.OpenstackImageClient;
+import org.openstack.client.OpenstackImageClient;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.model.image.GlanceImage;
 import org.openstack.utils.NoCloseInputStream;

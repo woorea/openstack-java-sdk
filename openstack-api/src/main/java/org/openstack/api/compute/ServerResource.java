@@ -1,15 +1,17 @@
 package org.openstack.api.compute;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.api.common.OpenStackSession;
 import org.openstack.api.common.Resource;
-import org.openstack.api.common.SimpleLinkResolver;
 import org.openstack.api.compute.ext.ComputeResourceBase;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.SecurityGroupsResource;
+import org.openstack.client.OpenStackSession;
+import org.openstack.client.SimpleLinkResolver;
 import org.openstack.model.atom.Link;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
@@ -45,9 +47,7 @@ import org.openstack.model.compute.server.action.UnpauseAction;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class ServerResource extends ComputeResourceBase {
-
-	private NovaServer representation;
+public class ServerResource extends Resource {
 
 	public static class IpsResource extends Resource {
 
@@ -78,48 +78,16 @@ public class ServerResource extends ComputeResourceBase {
 		}).getHref());
 	}
 
-	public ServerResource get(boolean eager) {
-		representation = resource().get(NovaServer.class);
-		if (eager) {
-			representation.setImage(getImage().get().show());
-			representation.setFlavor(getFlavor().get().show());
-		}
-		return this;
+	public ServerResource(Target target) {
+		super(target);
 	}
 
-	public ServerResource get() {
-		return get(false);
+	public NovaServer get(HashMap<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaServer.class);
 	}
 
-	public ImageResource getImage() {
-		if (representation == null || representation.getImage() == null) {
-			get();
-		}
-		NovaImage image = representation.getImage();
-		return image != null ? new ImageResource(session, image) : null;
-	}
-
-	public FlavorResource getFlavor() {
-		if (representation == null || representation.getFlavor() == null) {
-			get();
-		}
-		NovaFlavor flavor = representation.getFlavor();
-		return flavor != null ? new FlavorResource(session, flavor) : null;
-	}
-
-	public NovaServer show() {
-		if (representation == null) {
-			get();
-		}
-		return representation;
-	}
-
-	public NovaServer update(NovaServer server) {
-		return put(NovaServer.class, server);
-	}
-
-	public void delete() {
-		resource().delete();
+	public void delete(HashMap<String, Object> properties) {
+		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
 	}
 
 	/**
@@ -202,18 +170,37 @@ public class ServerResource extends ComputeResourceBase {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
 
+	/**
+	 * Permit Admins to pause the server
+	 * 
+	 * @return
+	 */
 	public void pause() {
 		executeAction(String.class, new PauseAction());
 	}
 
+	/**
+	 * Permit Admins to unpause the server
+	 * 
+	 * @return
+	 */
 	public void unpause() {
 		executeAction(String.class, new UnpauseAction());
 	}
 
+	/**
+	 * Permit Admins to suspend the server
+	 * 
+	 * @return
+	 */
 	public void suspend() {
 		executeAction(String.class, new SuspendAction());
 	}
-
+	/**
+	 * Permit admins to resume the server from suspend
+	 * 
+	 * @return
+	 */
 	public void resume() {
 		executeAction(String.class, new ResumeAction());
 	}
@@ -236,24 +223,46 @@ public class ServerResource extends ComputeResourceBase {
 
 	/**
 	 * Migrate a server to a new host in the same zone.
+	 * Permit admins to migrate a server to a new host
 	 * 
 	 */
+	
 	public void migrate() {
 		executeAction(String.class, new MigrateAction());
 	}
 
+	/**
+	 * Permit admins to reset networking on an server
+	 * 
+	 * @return
+	 */
 	public void resetNetwork() {
 		executeAction(String.class, new ResetNetworkAction());
 	}
 
+	/**
+	 * Permit admins to inject network info into a server
+	 * 
+	 * @return
+	 */
 	public void injectNetworkInfo() {
 		executeAction(String.class, new InjectNetworkInfoAction());
 	}
 
+	/**
+	 * Permit admins to lock a server
+	 * 
+	 * @
+	 */
 	public void lock() {
 		executeAction(String.class, new LockAction());
 	}
 
+	/**
+	 * Permit admins to unlock a server
+	 * 
+	 * @return
+	 */
 	public void unlock() {
 		executeAction(String.class, new UnlockAction());
 	}
@@ -383,7 +392,40 @@ public class ServerResource extends ComputeResourceBase {
 	}
 
 	public NovaSecurityGroupList listSecurityGroups() {
-		return getChildResource("os-security-groups", SecurityGroupsResource.class).list();
+		return getChildResource("os-security-groups", SecurityGroupsResource.class).get(new HashMap<String, Object>());
+	}
+	
+	/**
+	 * Rescue an instance.
+	 * 
+	 * @return
+	 */
+	public String rescue() {
+		return null;
+	}
+
+	/**
+	 * Rescue an instance.
+	 * 
+	 * @return
+	 */
+	public String unrescue() {
+		return null;
+	}
+
+	/**
+	 * Backup a server instance.
+	 * 
+	 * Images now have an `image_type` associated with them, which can be 'snapshot' or the backup type, like 'daily' or
+	 * 'weekly'.
+	 * 
+	 * If the image_type is backup-like, then the rotation factor can be included and that will cause the oldest backups
+	 * that exceed the rotation factor to be deleted.
+	 * 
+	 * @return
+	 */
+	public String backup() {
+		return null;
 	}
 
 }

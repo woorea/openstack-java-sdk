@@ -10,13 +10,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.model.common.JsonRootElement;
+
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "servers")
 @XmlAccessorType(XmlAccessType.NONE)
 public class NovaServerList implements Serializable {
 
 	@XmlElement(name = "server")
-	@JsonProperty("servers")
+	@SerializedName("servers")
 	private List<NovaServer> list = new ArrayList<NovaServer>();
 
 	@Override

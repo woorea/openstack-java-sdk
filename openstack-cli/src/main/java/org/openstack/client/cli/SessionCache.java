@@ -2,7 +2,7 @@ package org.openstack.client.cli;
 
 import java.util.Map;
 
-import org.openstack.api.common.OpenStackSession;
+import org.openstack.client.OpenStackSession;
 
 import com.google.common.collect.Maps;
 

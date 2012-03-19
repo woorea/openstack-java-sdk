@@ -6,9 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
-import org.openstack.api.common.OpenStackSession;
+import org.openstack.client.OpenStackSession;
 import org.openstack.model.compute.NovaFlavor;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -23,7 +24,7 @@ public class ITAuthentication extends KeystoneIntegrationTest {
 	@Test
 	public void testSerializable() throws Exception {
 		OpenStackSession session = context.session;
-		List<NovaFlavor> flavors1 = Lists.newArrayList(session.getComputeClient().root().flavors().list().getList());
+		List<NovaFlavor> flavors1 = Lists.newArrayList(session.getComputeClient().root().flavors().get(new HashMap<String, Object>()).getList());
 
 		// Serialize it
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -45,7 +46,7 @@ public class ITAuthentication extends KeystoneIntegrationTest {
 		bais.close();
 
 		// Check it still works
-		List<NovaFlavor> flavors2 = Lists.newArrayList(session2.getComputeClient().root().flavors().list().getList());
+		List<NovaFlavor> flavors2 = Lists.newArrayList(session2.getComputeClient().root().flavors().get(new HashMap<String, Object>()).getList());
 		
 		sortFlavors(flavors1);
 		sortFlavors(flavors2);

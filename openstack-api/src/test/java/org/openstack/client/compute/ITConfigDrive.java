@@ -1,10 +1,11 @@
 package org.openstack.client.compute;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.UUID;
 
-import org.openstack.api.common.OpenstackComputeClient;
 import org.openstack.api.compute.AsyncServerOperation;
+import org.openstack.client.OpenstackComputeClient;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaKeyPair;
@@ -63,7 +64,7 @@ public class ITConfigDrive extends ComputeApiTest {
 
 		// Delete the server
 		System.out.println("Deleting server: " + server);
-		nova.root().servers().server(server.getId()).delete();
+		nova.root().servers().server(server.getId()).delete(new HashMap<String, Object>());
 	}
 
 }

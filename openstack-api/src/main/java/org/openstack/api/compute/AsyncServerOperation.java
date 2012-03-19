@@ -1,13 +1,14 @@
 package org.openstack.api.compute;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
-import org.openstack.api.common.OpenstackComputeClient;
+import org.openstack.client.OpenstackComputeClient;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
@@ -47,7 +48,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 				NovaServer server = null;
 				String status;
 				try {
-					server = client.root().servers().server(serverId).show();
+					server = client.root().servers().server(serverId).get(new HashMap<String, Object>());
 					status = server.getStatus();
 				} catch (OpenstackNotFoundException e) {
 					// Treat as DELETED

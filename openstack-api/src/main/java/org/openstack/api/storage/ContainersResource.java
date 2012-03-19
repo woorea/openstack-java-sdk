@@ -1,6 +1,6 @@
 package org.openstack.api.storage;
 
-import org.openstack.api.common.RequestBuilder;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.storage.SwiftAccount;
 import org.openstack.model.storage.SwiftContainer;
 

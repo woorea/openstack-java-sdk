@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Map;
 
 import org.openstack.api.common.HeadResponse;
-import org.openstack.api.common.RequestBuilder;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.image.GlanceImage;

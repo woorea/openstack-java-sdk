@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Hex;
-import org.openstack.api.common.OpenstackImageClient;
+import org.openstack.client.OpenstackImageClient;
 import org.openstack.client.utils.RandomDataInputStream;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;

@@ -7,6 +7,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.imagestore.UrlUtils;
+import org.openstack.client.OpenStackSession;
+import org.openstack.client.RequestBuilder;
 
 import com.google.common.collect.Maps;
 

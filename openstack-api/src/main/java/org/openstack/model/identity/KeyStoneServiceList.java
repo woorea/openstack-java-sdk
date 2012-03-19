@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.api.common.Namespaces;
+import org.openstack.api.Namespaces;
 import org.openstack.model.common.ListWithAtomLinks;
 
 import com.google.gson.annotations.SerializedName;

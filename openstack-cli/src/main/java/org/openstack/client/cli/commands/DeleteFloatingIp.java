@@ -1,7 +1,7 @@
 package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.api.common.OpenstackComputeClient;
+import org.openstack.client.OpenstackComputeClient;
 
 public class DeleteFloatingIp extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)

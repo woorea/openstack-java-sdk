@@ -1,4 +1,4 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import org.openstack.api.identity.IdentityResource;
 import org.openstack.model.exceptions.OpenstackException;
@@ -26,7 +26,7 @@ public class OpenstackAuthenticationClient {
 		if (Strings.isNullOrEmpty(authUrl)) {
 			throw new IllegalArgumentException("AuthUrl is required");
 		}
-		identity.initialize(session, authUrl);
+		//identity.initialize(session, authUrl);
 
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication();
 		KeyStoneAuthentication.PasswordCredentials passwordCredentials = new KeyStoneAuthentication.PasswordCredentials();

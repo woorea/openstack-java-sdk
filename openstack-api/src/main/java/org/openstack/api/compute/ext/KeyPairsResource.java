@@ -1,7 +1,8 @@
 package org.openstack.api.compute.ext;
 
-import java.net.URLEncoder;
+import java.util.Map;
 
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
@@ -16,6 +17,10 @@ import org.openstack.model.compute.NovaKeyPairList;
  * 
  */
 public class KeyPairsResource extends Resource {
+	
+	public KeyPairsResource(Target target) {
+		super(target);
+	}
 
 	// KeyPairsResource seems to be JSON only
 	// TODO: Is this an OpenStack bug or an HP bug?
@@ -29,8 +34,8 @@ public class KeyPairsResource extends Resource {
 	 * 
 	 * @return
 	 */
-	public NovaKeyPairList list() {
-		return resource().get(NovaKeyPairList.class);
+	public NovaKeyPairList get(Map<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaKeyPairList.class);
 	}
 
 	/**

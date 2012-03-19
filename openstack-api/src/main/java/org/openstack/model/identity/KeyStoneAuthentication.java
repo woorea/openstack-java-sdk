@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.openstack.api.common.Namespaces;
+import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
 
 @XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
@@ -95,6 +95,14 @@ public class KeyStoneAuthentication implements Serializable {
 		passwordCredentials.password = password;
 		return this;
 	}
+	
+	public KeyStoneAuthentication withTokenAndTenant(String tokenId, String tenantId) {
+		KeyStoneToken token = new KeyStoneToken();
+		token.setId(tokenId);
+		this.token = token;
+		this.tenantId = tenantId;
+		return this;
+	}
 
 	@Override
 	public String toString() {
@@ -102,5 +110,7 @@ public class KeyStoneAuthentication implements Serializable {
 				+ ", passwordCredentials=" + passwordCredentials
 				+ ", tenantId=" + tenantId + ", tenantName=" + tenantName + "]";
 	}
+
+	
 
 }

@@ -1,8 +1,11 @@
 package org.openstack.client.compute;
 
+import java.util.HashMap;
 import java.util.Set;
 
-import org.openstack.api.common.OpenstackComputeClient;
+import javax.ws.rs.client.Entity;
+
+import org.openstack.client.OpenstackComputeClient;
 import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.NovaSecurityGroup;
 import org.openstack.model.compute.NovaSecurityGroupList;
@@ -22,7 +25,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		skipIfNoSecurityGroups();
 
 		OpenstackComputeClient nova = getComputeClient();
-		NovaSecurityGroupList securityGroups = nova.root().securityGroups().list();
+		NovaSecurityGroupList securityGroups = nova.root().securityGroups().get(new HashMap<String, Object>());
 		for (NovaSecurityGroup securityGroup : securityGroups) {
 			NovaSecurityGroup details = nova.root().securityGroups().securityGroup(securityGroup.getId()).show();
 
@@ -44,7 +47,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		OpenstackComputeClient nova = getComputeClient();
 
 		Set<Integer> ids = Sets.newHashSet();
-		for (NovaSecurityGroup securityGroup : nova.root().securityGroups().list()) {
+		for (NovaSecurityGroup securityGroup : nova.root().securityGroups().get(new HashMap<String, Object>())) {
 			ids.add(securityGroup.getId());
 		}
 
@@ -72,7 +75,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
-		NovaSecurityGroup created = nova.root().securityGroups().create(createRequest);
+		NovaSecurityGroup created = nova.root().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
 		Assert.assertEquals(created.getName(), groupName);
 		Assert.assertEquals(created.getDescription(), description);
 		Assert.assertNotNull(created.getId());
@@ -155,7 +158,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 		// Should fail because description is too long
 		Assert.assertTrue(description.length() > 255);
-		nova.root().securityGroups().create(createRequest);
+		nova.root().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
 	}
 
 	@Test

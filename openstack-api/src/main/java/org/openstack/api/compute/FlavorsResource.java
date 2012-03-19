@@ -1,27 +1,28 @@
 package org.openstack.api.compute;
 
-import org.openstack.api.common.RequestBuilder;
+import java.util.Map;
+
+import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
 
 public class FlavorsResource extends Resource {
+	
+	public FlavorsResource(Target target) {
+		super(target);
+	}
 
-    public NovaFlavorList list() {
-        return list(true);
-    }
-
-    public NovaFlavorList list(boolean details) {
-		RequestBuilder r = details ? resource("detail") : resource();
-		return r.get(NovaFlavorList.class);
-    }
-
-    public NovaFlavor create(NovaFlavor flavor) {
-        return null;
+    public NovaFlavorList get(Map<String, Object> properties) {
+    	if(properties.get("detail") != null) {
+			target =  target.path("/detail");
+		} 
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFlavorList.class);
     }
 
     public FlavorResource flavor(String id) {
-        return buildChildResource(id, FlavorResource.class);
+    	return new FlavorResource(target.path("/{id}").pathParam("id", id));
     }
 
 }

@@ -1,6 +1,8 @@
 package org.openstack.client.compute;
 
-import org.openstack.api.common.OpenstackComputeClient;
+import java.util.HashMap;
+
+import org.openstack.client.OpenstackComputeClient;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
@@ -13,7 +15,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		skipIfNoKeyPairs();
 
 		OpenstackComputeClient nova = getComputeClient();
-		Iterable<NovaKeyPair> keyPairs = nova.root().keyPairs().list();
+		Iterable<NovaKeyPair> keyPairs = nova.root().keyPairs().get(new HashMap<String, Object>());
 		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
@@ -147,7 +149,7 @@ public class ITKeyPairs extends ComputeApiTest {
 	}
 
 	private NovaKeyPair findKeyPair(OpenstackComputeClient nova, String name) {
-		for (NovaKeyPair keyPair : nova.root().keyPairs().list()) {
+		for (NovaKeyPair keyPair : nova.root().keyPairs().get(new HashMap<String, Object>())) {
 			if (keyPair.getName().equals(name))
 				return keyPair;
 		}

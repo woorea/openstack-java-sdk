@@ -17,7 +17,7 @@ public class RoleResource extends Resource {
 	}
 
 	public KeyStoneRole get() {
-		return target.request(MediaType.APPLICATION_XML).header("X-Auth-Token", "secret0").get(KeyStoneRole.class);
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneRole.class);
 	}
 
 	public KeyStoneRole update(Entity<KeyStoneRole> entity) {

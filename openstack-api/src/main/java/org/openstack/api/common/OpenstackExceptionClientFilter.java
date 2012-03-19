@@ -17,7 +17,7 @@ import org.openstack.model.exceptions.OpenstackForbiddenException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.utils.Io;
 
-class OpenstackExceptionClientFilter implements ResponseFilter {
+public class OpenstackExceptionClientFilter implements ResponseFilter {
 	
 	static final Logger log = Logger.getLogger(OpenstackExceptionClientFilter.class.getName());
 

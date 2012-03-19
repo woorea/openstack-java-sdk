@@ -1,8 +1,10 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import java.io.Serializable;
 
-public class OpenStackImageConfig implements Serializable {
+import javax.ws.rs.core.MediaType;
+
+public class OpenStackComputeConfig implements Serializable {
 
 	public enum Feature {
 
@@ -25,7 +27,7 @@ public class OpenStackImageConfig implements Serializable {
 
 	private int features;
 
-	public OpenStackImageConfig() {
+	public OpenStackComputeConfig() {
 
 		// calculate the bitmap
 		for (Feature f : Feature.class.getEnumConstants()) {
@@ -39,14 +41,14 @@ public class OpenStackImageConfig implements Serializable {
 		return (features & feature.mask()) == 1;
 	}
 
-	public OpenStackImageConfig with(Feature... features) {
+	public OpenStackComputeConfig with(Feature... features) {
 		for (Feature feature : features) {
 			this.features = this.features | feature.mask();
 		}
 		return this;
 	}
 
-	public OpenStackImageConfig without(Feature... features) {
+	public OpenStackComputeConfig without(Feature... features) {
 		for (Feature feature : features) {
 			this.features = this.features & ~feature.mask();
 		}

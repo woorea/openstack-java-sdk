@@ -1,4 +1,4 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
+import org.openstack.api.common.HeadResponse;
 import org.openstack.model.exceptions.OpenstackAuthenticationException;
 
 import com.google.common.collect.HashMultimap;

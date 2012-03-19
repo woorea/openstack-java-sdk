@@ -26,6 +26,7 @@ import org.openstack.model.common.JsonRootElement;
 
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -38,35 +39,15 @@ import com.google.gson.JsonObject;
 @Consumes(MediaType.APPLICATION_JSON)
 public final class GsonProvider implements MessageBodyWriter<Object>, MessageBodyReader<Object> {
 
-    private Gson gson = new Gson();
+    private Gson gson;
 
     @Context
     public Providers providers;
-
-
-    /*
-    private Gson getGson() {
-        if (gson == null) {
-            final GsonBuilder gsonBuilder = new GsonBuilder();
-
-            // additional step: configure gson builder if needed
-            // the configuration info is fetched from the particular instance of ContextResolver<GsonAware> class.
-            final ContextResolver<GsonAware> configContextResolver = providers.getContextResolver(GsonAware.class, null);
-            if (configContextResolver != null) {
-                final GsonAware gsonAware = configContextResolver.getContext(GsonAware.class);
-                if (gsonAware != null) {
-                    gsonAware.setGsonBuilder(gsonBuilder);
-                }
-            }
-
-            gson = gsonBuilder.create();
-        }
-
-        return gson;
+    
+    public GsonProvider() {
+    	final GsonBuilder gsonBuilder = new GsonBuilder();
+    	gson = gsonBuilder.create();
     }
-    */
-
-
 
     // message body reader implementation
 
@@ -92,10 +73,16 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
         	Object result = null;
         	JsonRootElement jsonRootElement = type.getAnnotation(JsonRootElement.class);
         	if(jsonRootElement != null) {
-        		JsonElement je = gson.fromJson(json, JsonElement.class);
-            	JsonObject jo = je.getAsJsonObject();
-            	Set<Entry<String, JsonElement>> els = jo.entrySet();
-            	je = els.iterator().next().getValue();
+        		JsonElement je = gson.fromJson(json, JsonElement.class).getAsJsonObject().get(jsonRootElement.value());
+        		if("access".equals(jsonRootElement.value())) {
+        			if(!je.getAsJsonObject().get("serviceCatalog").isJsonArray()) {
+        				//dirty hack since when no services keystone does not return an array it returns an object!
+        				je.getAsJsonObject().remove("serviceCatalog");
+        			}
+        		}
+            	//JsonObject jo = je.getAsJsonObject();
+            	//Set<Entry<String, JsonElement>> els = jo.entrySet();
+            	//je = els.iterator().next().getValue();
             	result = gson.fromJson(je, genericType);
         	} else {
         		result = gson.fromJson(json, genericType);

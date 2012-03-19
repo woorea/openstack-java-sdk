@@ -1,7 +1,7 @@
 package org.openstack.api.compute;
 
-import org.openstack.api.common.OpenStackSession;
 import org.openstack.api.common.Resource;
+import org.openstack.client.OpenStackSession;
 import org.openstack.model.compute.NovaConsole;
 
 public class ConsoleResource extends Resource {

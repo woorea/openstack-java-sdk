@@ -1,14 +1,21 @@
 package org.openstack.api.compute;
 
+import java.util.Map;
+
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.api.common.RequestBuilder;
-import org.openstack.api.compute.ext.ComputeResourceBase;
+import org.openstack.api.common.Resource;
+import org.openstack.client.RequestBuilder;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.compute.NovaServerList;
 
-public class ServersResource extends ComputeResourceBase {
+public class ServersResource extends Resource {
+	
+	public ServersResource(Target target) {
+		super(target);
+	}
 
 	/**
 	 * Returns a list of server names and ids for a given user
@@ -22,13 +29,11 @@ public class ServersResource extends ComputeResourceBase {
 	 * @param detail
 	 * @return
 	 */
-	public NovaServerList list(boolean detail) {
-		RequestBuilder r = detail ? resource("detail") : resource();
-		return r.get(NovaServerList.class);
-	}
-
-	public NovaServerList list() {
-		return list(true);
+	public NovaServerList get(Map<String,Object> properties) {
+		if(properties.get("detail") != null) {
+			target =  target.path("/detail");
+		} 
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaServerList.class);
 	}
 
 	public NovaServer create(NovaServerForCreate serverForCreate) {
@@ -46,121 +51,9 @@ public class ServersResource extends ComputeResourceBase {
 	}
 
 	public ServerResource server(String id) {
-		return buildChildResource(id, ServerResource.class);
+		return new ServerResource(target.path("/{id}").pathParam("id", id));
 	}
 
-	/**
-	 * Rescue an instance.
-	 * 
-	 * @return
-	 */
-	public String rescue() {
-		return null;
-	}
-
-	/**
-	 * Rescue an instance.
-	 * 
-	 * @return
-	 */
-	public String unrescue() {
-		return null;
-	}
-
-	/**
-	 * Permit Admins to pause the server
-	 * 
-	 * @return
-	 */
-	public String pause() {
-		return null;
-	}
-
-	/**
-	 * Permit Admins to unpause the server
-	 * 
-	 * @return
-	 */
-	public String unpause() {
-		return null;
-	}
-
-	/**
-	 * Permit Admins to suspend the server
-	 * 
-	 * @return
-	 */
-	public String suspend() {
-		return null;
-	}
-
-	/**
-	 * Permit admins to resume the server from suspend
-	 * 
-	 * @return
-	 */
-	public String resume() {
-		return null;
-	}
-
-	/**
-	 * Permit admins to migrate a server to a new host
-	 * 
-	 * @return
-	 */
-	public String migrate() {
-		return null;
-	}
-
-	/**
-	 * Permit admins to reset networking on an server
-	 * 
-	 * @return
-	 */
-	public String resetNetwork() {
-		return null;
-	}
-
-	/**
-	 * Permit admins to inject network info into a server
-	 * 
-	 * @return
-	 */
-	public String injectNetworkInfo() {
-		return null;
-	}
-
-	/**
-	 * Permit admins to lock a server
-	 * 
-	 * @return
-	 */
-	public String lock() {
-		return null;
-	}
-
-	/**
-	 * Permit admins to unlock a server
-	 * 
-	 * @return
-	 */
-	public String unlock() {
-		return null;
-	}
-
-	/**
-	 * Backup a server instance.
-	 * 
-	 * Images now have an `image_type` associated with them, which can be 'snapshot' or the backup type, like 'daily' or
-	 * 'weekly'.
-	 * 
-	 * If the image_type is backup-like, then the rotation factor can be included and that will cause the oldest backups
-	 * that exceed the rotation factor to be deleted.
-	 * 
-	 * @return
-	 */
-	public String backup() {
-		return null;
-	}
+	
 
 }

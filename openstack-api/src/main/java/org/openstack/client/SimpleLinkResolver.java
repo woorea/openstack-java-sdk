@@ -1,7 +1,8 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.openstack.model.atom.Link;
@@ -32,7 +33,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		}
 
 		if (flavor == null && flavorId != null) {
-			flavor = session.getComputeClient().root().flavors().flavor(flavorId).show();
+			flavor = session.getComputeClient().root().flavors().flavor(flavorId).get(new HashMap<String, Object>());
 		}
 
 		return flavor;
@@ -78,7 +79,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		}
 
 		if (image == null && imageId != null) {
-			image = session.getComputeClient().root().images().image(imageId).show();
+			image = session.getComputeClient().root().images().image(imageId).get(new HashMap<String, Object>());
 		}
 
 		return image;

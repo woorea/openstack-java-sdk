@@ -1,7 +1,12 @@
 package org.openstack.api.compute.ext;
 
-import org.openstack.api.common.RequestBuilder;
+import java.util.Map;
+
+import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
+
 import org.openstack.api.common.Resource;
+import org.openstack.api.compute.ImageResource;
 import org.openstack.model.compute.NovaVolumeList;
 
 /**
@@ -12,14 +17,20 @@ import org.openstack.model.compute.NovaVolumeList;
  */
 public class VolumesResource extends Resource {
 	
+	public VolumesResource(Target target) {
+		super(target);
+	}
+	
 	/**
 	 * Returns the list of volume types
 	 * 
 	 * @return
 	 */
-	public NovaVolumeList list(boolean detail) {
-		RequestBuilder r = detail ? resource("detail") : resource();
-		return r.get(NovaVolumeList.class);
+	public NovaVolumeList get(Map<String, Object> properties) {
+		if(properties.get("detail") != null) {
+			target =  target.path("/detail");
+		} 
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaVolumeList.class);
 	}
 
 	/**
@@ -28,12 +39,12 @@ public class VolumesResource extends Resource {
 	 * @param flavor
 	 * @return
 	 */
-//	public Volume create(Volume volume) {
-//		return null;
-//	}
+	//	public Volume create(Volume volume) {
+	//		return null;
+	//	}
 
 	public VolumeResource volume(String id) {
-		return buildChildResource(id, VolumeResource.class);
+		return new VolumeResource(target.path("/{id}").pathParam("id", id));
 	}
 
 }

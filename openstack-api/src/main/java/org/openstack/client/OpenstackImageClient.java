@@ -1,4 +1,4 @@
-package org.openstack.api.common;
+package org.openstack.client;
 
 import org.openstack.api.imagestore.GlanceRootResource;
 

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.openstack.api.common.OpenStackSession;
+import org.openstack.client.OpenStackSession;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.model.storage.SwiftStorageObject;

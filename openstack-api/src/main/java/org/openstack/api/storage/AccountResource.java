@@ -1,6 +1,6 @@
 package org.openstack.api.storage;
 
-import org.openstack.api.common.OpenStackSession;
+import org.openstack.client.OpenStackSession;
 import org.openstack.model.storage.SwiftAccount;
 
 public class AccountResource extends StorageResourceBase {

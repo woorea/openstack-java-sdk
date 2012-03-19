@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.openstack.api.common.OpenStackSession;
-import org.openstack.api.common.OpenstackCredentials;
 import org.openstack.utils.Io;
 
 public class OpenstackTestContext {
