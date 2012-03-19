@@ -7,9 +7,9 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
 
-import org.openstack.api.OpenStackSession2;
 import org.openstack.api.common.Resource;
 import org.openstack.client.OpenStackSession;
+import org.openstack.model.common.OpenStackSession2;
 import org.openstack.model.storage.SwiftAccount;
 
 public class AccountResource extends Resource {
@@ -27,7 +27,7 @@ public class AccountResource extends Resource {
 	}
 
 	public ContainersResource containers() {
-		return target("/containers",ContainersResource.class);
+		return path("/containers",ContainersResource.class);
 	}
 
 	public String getBaseUrl() {

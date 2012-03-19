@@ -11,6 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.atom.Link;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 @XmlRootElement(name="image")
 @XmlAccessorType(XmlAccessType.NONE)
 public class NovaImage implements Serializable {
@@ -133,6 +136,16 @@ public class NovaImage implements Serializable {
 				+ ", updated=" + updated + ", created=" + created
 				+ ", minDisk=" + minDisk + ", progress=" + progress
 				+ ", metadata=" + metadata + ", links=" + links + "]";
+	}
+	
+	public Link getLink(final String rel) {
+		return Iterables.find(links, new Predicate<Link>() {
+
+			@Override
+			public boolean apply(Link link) {
+				return rel.equals(link.getRel());
+			}
+		});
 	}
 	
 }

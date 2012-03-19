@@ -10,6 +10,7 @@ import org.openstack.api.compute.ComputeResource;
 import org.openstack.api.identity.IdentityResource;
 import org.openstack.api.imagestore.ImageResource;
 import org.openstack.api.storage.AccountResource;
+import org.openstack.model.common.OpenStackSession2;
 import org.openstack.model.compute.NovaFlavorList;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPairList;

@@ -296,11 +296,11 @@ public class ServerResource extends Resource {
 	}
 
 	public IpsResource ips() {
-		return target("ips", IpsResource.class);
+		return path("ips", IpsResource.class);
 	}
 
 	public MetadataResource metadata() {
-		return target("metadata", MetadataResource.class);
+		return path("metadata", MetadataResource.class);
 	}
 
 	/**
@@ -386,15 +386,15 @@ public class ServerResource extends Resource {
 	}
 
 	public FloatingIpsResource floatingIps() {
-		return target("os-floating-ips", FloatingIpsResource.class);
+		return path("os-floating-ips", FloatingIpsResource.class);
 	}
 
 	public ConsolesResource consoles() {
-		return target("consoles", ConsolesResource.class);
+		return path("consoles", ConsolesResource.class);
 	}
 
 	public NovaSecurityGroupList listSecurityGroups() {
-		return target("os-security-groups", SecurityGroupsResource.class).get(new HashMap<String, Object>());
+		return path("os-security-groups", SecurityGroupsResource.class).get(new HashMap<String, Object>());
 	}
 	
 	/**

@@ -7,10 +7,10 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
 
-import org.openstack.api.OpenStackSession2;
 import org.openstack.api.common.Resource;
 import org.openstack.api.common.RestClient;
 import org.openstack.client.OpenStackSession;
+import org.openstack.model.common.OpenStackSession2;
 
 public class IdentityResource extends Resource {
 
@@ -30,28 +30,28 @@ public class IdentityResource extends Resource {
 	}
 
 	public TokensResource tokens() {
-		return target("/tokens", TokensResource.class);
+		return path("/tokens", TokensResource.class);
 	}
 
 	public TenantsResource tenants() {
-		return target("/tenants", TenantsResource.class);
+		return path("/tenants", TenantsResource.class);
 	}
 
 	public UsersResource users() {
-		return target("/users", UsersResource.class);
+		return path("/users", UsersResource.class);
 	}
 
 	public RolesResource roles() {
-		return target("/OS-KSADM/roles", RolesResource.class);
+		return path("/OS-KSADM/roles", RolesResource.class);
 	}
 
 	public ServicesResource services() {
-		return target("/OS-KSADM/services", ServicesResource.class);
+		return path("/OS-KSADM/services", ServicesResource.class);
 	}
 
 	public EndpointTemplatesResource endpoints() {
 		//throw new UnsupportedOperationException("This is not implemented yet in the api (19 mar 2012)");
-		return target("/endpoints", EndpointTemplatesResource.class);
+		return path("/endpoints", EndpointTemplatesResource.class);
 	}
 
 	public void setSession(final OpenStackSession2 session) {

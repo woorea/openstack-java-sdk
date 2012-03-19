@@ -1,4 +1,4 @@
-package org.openstack.api;
+package org.openstack.model.common;
 
 import org.openstack.model.identity.KeyStoneAccess;
 

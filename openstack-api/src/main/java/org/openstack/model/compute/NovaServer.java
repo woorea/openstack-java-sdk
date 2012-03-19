@@ -15,6 +15,8 @@ import javax.xml.namespace.QName;
 
 import org.openstack.model.atom.Link;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "server")
@@ -307,6 +309,16 @@ public class NovaServer implements Serializable {
 				+ accessIpV4 + ", accessIpV6=" + accessIpV6 + ", adminPass=" + adminPass + ", progress=" + progress
 				+ ", configDrive=" + configDrive + ", keyName=" + keyName + ", image=" + image + ", flavor=" + flavor
 				+ ", fault=" + fault + ", metadata=" + metadata + ", addresses=" + addresses + ", links=" + links + "]";
+	}
+	
+	public Link getLink(final String rel) {
+		return Iterables.find(links, new Predicate<Link>() {
+
+			@Override
+			public boolean apply(Link link) {
+				return rel.equals(link.getRel());
+			}
+		});
 	}
 
 }

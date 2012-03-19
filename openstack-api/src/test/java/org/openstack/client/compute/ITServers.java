@@ -2,9 +2,13 @@ package org.openstack.client.compute;
 
 import java.util.HashMap;
 
+import org.openstack.api.compute.ImageResource;
+import org.openstack.api.compute.ServerResource;
 import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.OpenStackSession;
+import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerList;
 import org.testng.annotations.Test;
 
 public class ITServers extends ComputeApiTest {
@@ -14,14 +18,12 @@ public class ITServers extends ComputeApiTest {
 		OpenStackComputeClient nova = getComputeClient();
 		OpenStackSession session = nova.getSession();
 
-		Iterable<NovaServer> list = nova.root().servers().get(new HashMap<String, Object>()).getList();
+		NovaServerList servers = compute.servers().get(new HashMap<String, Object>());
 		// System.out.println(list);
 
-		for (NovaServer server : list) {
-			//NovaImage image = new ServerResource(session, server).getImage().get(new HashMap<String, Object>());
-			//System.out.println(image);
-			// System.out.println("DELETING");
-			// nova.root().servers().server(server.getId()).delete();
+		for (NovaServer server : servers.getList()) {
+			NovaImage image = compute.path(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
+			compute.path(server.getLink("bookmark").getHref(), ServerResource.class).delete(new HashMap<String, Object>());
 		}
 	}
 

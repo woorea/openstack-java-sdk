@@ -16,7 +16,7 @@ public class GlanceRootResource extends Resource {
     }
 
     public ImagesResource images() {
-        return target("/images", ImagesResource.class);
+        return path("/images", ImagesResource.class);
     }
 
     public String getBaseUrl() {

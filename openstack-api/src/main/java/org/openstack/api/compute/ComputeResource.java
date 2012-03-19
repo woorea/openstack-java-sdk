@@ -7,7 +7,6 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
 
-import org.openstack.api.OpenStackSession2;
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.KeyPairsResource;
@@ -23,6 +22,7 @@ import org.openstack.api.compute.notavailable.FloatingIpDnsResource;
 import org.openstack.api.compute.notavailable.FloatingIpPoolsResource;
 import org.openstack.api.compute.notavailable.NetworksResource;
 import org.openstack.api.compute.notavailable.VirtualStorageArraysResource;
+import org.openstack.model.common.OpenStackSession2;
 
 public class ComputeResource extends Resource {
 	
@@ -35,75 +35,75 @@ public class ComputeResource extends Resource {
 	}
 
 	public ServersResource servers() {
-        return target("/servers", ServersResource.class);
+        return path("/servers", ServersResource.class);
     }
 
     public FlavorsResource flavors() {
-    	return target("/flavors", FlavorsResource.class);
+    	return path("/flavors", FlavorsResource.class);
     }
 
     public ImagesResource images() {
-    	return target("/images", ImagesResource.class);
+    	return path("/images", ImagesResource.class);
     }
 
     public VolumeTypesResource volumeTypes() {
-    	return target("/os-volume-types", VolumeTypesResource.class);
+    	return path("/os-volume-types", VolumeTypesResource.class);
     }
 
     public VolumesResource volumes() {
-    	return target("/os-volumes", VolumesResource.class);
+    	return path("/os-volumes", VolumesResource.class);
     }
 
     public VirtualStorageArraysResource virtualStorageArrays() {
-    	return target("/vsa", VirtualStorageArraysResource.class);
+    	return path("/vsa", VirtualStorageArraysResource.class);
     }
 
     public SimpleTenantUsageResource usage() {
-    	return target("/os-simple-tenant-usage", SimpleTenantUsageResource.class);
+    	return path("/os-simple-tenant-usage", SimpleTenantUsageResource.class);
     }
 
     public QuotasResource quotas() {
-    	return target("/os-quota-sets", QuotasResource.class);
+    	return path("/os-quota-sets", QuotasResource.class);
     }
 
     public NetworksResource networks() {
-    	return target("/os-networks", NetworksResource.class);
+    	return path("/os-networks", NetworksResource.class);
     }
 
     public FloatingIpsResource floatingIps() {
-    	return target("/os-floating-ips", FloatingIpsResource.class);
+    	return path("/os-floating-ips", FloatingIpsResource.class);
     }
     
 	public FloatingIpPoolsResource floatingIpPools() {
-		return target("/os-floating-ip-pools", FloatingIpPoolsResource.class);
+		return path("/os-floating-ip-pools", FloatingIpPoolsResource.class);
 	}
 
 	public FloatingIpDnsResource floatingIpDns() {
-		return target("/os-floating-ip-dns", FloatingIpDnsResource.class);
+		return path("/os-floating-ip-dns", FloatingIpDnsResource.class);
 	}
 
 	public CloudPipeResource cloudPipe() {
-		return target("/os-cloudpipe", CloudPipeResource.class);
+		return path("/os-cloudpipe", CloudPipeResource.class);
 	}
 
 	public AccountsResource accounts() {
-		return target("/accounts", AccountsResource.class);
+		return path("/accounts", AccountsResource.class);
 	}
 
     public KeyPairsResource keyPairs() {
-    	return target("/os-keypairs", KeyPairsResource.class);
+    	return path("/os-keypairs", KeyPairsResource.class);
     }
 
     public SecurityGroupsResource securityGroups() {
-    	return target("/os-security-groups", SecurityGroupsResource.class);
+    	return path("/os-security-groups", SecurityGroupsResource.class);
     }
 
     public SecurityGroupRulesResource securityGroupRules() {
-    	return target("/os-security-group-rules", SecurityGroupRulesResource.class);
+    	return path("/os-security-group-rules", SecurityGroupRulesResource.class);
     }
 
     public ExtensionsResource extensions() {
-    	return target("/extensions", ExtensionsResource.class);
+    	return path("/extensions", ExtensionsResource.class);
     }
 
     public void setSession(final OpenStackSession2 session) {

@@ -3,6 +3,7 @@ package org.openstack.client.compute;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openstack.api.compute.ComputeResource;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.common.Extension;
@@ -14,6 +15,8 @@ import org.testng.annotations.Test;
 
 @Test
 public class ComputeApiTest extends AbstractOpenStackTest {
+	
+	protected ComputeResource compute;
 	
 	public OpenStackComputeClient getComputeClient() throws OpenstackException {
 		return context.session.getComputeClient();
@@ -79,13 +82,11 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	}
 
 	public boolean supportsPublicKeys() {
-		return supportsExtension("http://docs.openstack.org/ext/keypairs/api/v1.1")
-				|| supportsExtension("http://docs.openstack.org/compute/ext/keypairs/api/v1.1");
+		return supportsExtension("http://docs.openstack.org/ext/keypairs/api/v1.1") || supportsExtension("http://docs.openstack.org/compute/ext/keypairs/api/v1.1");
 	}
 
 	public boolean supportsSecurityGroups() {
-		return supportsExtension("http://docs.openstack.org/ext/securitygroups/api/v1.1")
-				|| supportsExtension("http://docs.openstack.org/compute/ext/securitygroups/api/v1.1");
+		return supportsExtension("http://docs.openstack.org/ext/securitygroups/api/v1.1") || supportsExtension("http://docs.openstack.org/compute/ext/securitygroups/api/v1.1");
 	}
 
 	List<Extension> extensions;

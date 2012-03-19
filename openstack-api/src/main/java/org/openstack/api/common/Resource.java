@@ -89,7 +89,13 @@ public class Resource {
 		return instance;
 	}
 */	
-	protected <T extends Resource> T target(String relativePath, Class<T> clazz) {
+	
+	public <T extends Resource> T target(String absoluteURL, Class<T> clazz) {
+		//T instance = (T) clazz.getConstructor(Target.class).newInstance(target.path(absoluteURL));
+		return null;
+	}
+	
+	public <T extends Resource> T path(String relativePath, Class<T> clazz) {
 		T instance = clazz.cast(resources.get(relativePath));
 		if (instance == null) {
 			try {
@@ -100,6 +106,7 @@ public class Resource {
 		}
 		return instance;
 	}
+	
 /*
 	protected <T extends Resource> T buildChildResource(String relativePath, Class<T> clazz) {
 		T instance = (T) resources.get(relativePath);

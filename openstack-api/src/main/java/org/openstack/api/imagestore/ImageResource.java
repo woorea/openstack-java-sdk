@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
 
-import org.openstack.api.OpenStackSession2;
 import org.openstack.api.common.Resource;
+import org.openstack.model.common.OpenStackSession2;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.image.GlanceImage;

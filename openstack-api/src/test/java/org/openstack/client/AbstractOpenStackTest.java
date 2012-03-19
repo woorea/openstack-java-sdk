@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.DigestException;
 
+import javax.ws.rs.client.Client;
+
 import org.openstack.client.utils.RandomUtil;
 import org.openstack.utils.Md5Hash;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
-public class AbstractOpenStackTest {
+public abstract class AbstractOpenStackTest {
+	
+	protected Client client;
 	
 	protected OpenstackTestContext context;
 	protected RandomUtil random = new RandomUtil();
@@ -31,4 +35,5 @@ public class AbstractOpenStackTest {
 
 		assertEquals(actualHash, expectedHash);
 	}
+
 }
