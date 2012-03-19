@@ -21,7 +21,7 @@ public class ITConfigDrive extends ComputeApiTest {
 
 	@Test
 	public void testCreateAndDeleteServer() throws Exception {
-		OpenStackComputeClient nova = getComputeClient();
+		
 
 		//Image image = getUecImage();
 		NovaImage image = findImageByName("DebianSqueeze_20120226");
@@ -50,22 +50,22 @@ public class ITConfigDrive extends ComputeApiTest {
 		keyPair.setPublicKey(publicKey);
 		keyPair.setName(keyName);
 
-		nova.root().keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
+		client.publicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
 
 		serverForCreate.setKeyName(keyName);
 		serverForCreate.setConfigDrive(true);
 
-		NovaServer server = nova.root().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
+		NovaServer server = client.publicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
 
 		// Wait for the server to be ready
-		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(nova, server);
+		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(client, server);
 		NovaServer ready = async.get();
 
 		Assert.assertEquals("ACTIVE", ready.getStatus());
 
 		// Delete the server
 		System.out.println("Deleting server: " + server);
-		nova.root().servers().server(server.getId()).delete(new HashMap<String, Object>());
+		client.publicEndpoint().servers().server(server.getId()).delete(new HashMap<String, Object>());
 	}
 
 }

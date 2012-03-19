@@ -24,14 +24,14 @@ import org.openstack.api.compute.notavailable.NetworksResource;
 import org.openstack.api.compute.notavailable.VirtualStorageArraysResource;
 import org.openstack.model.common.OpenStackSession2;
 
-public class ComputeResource extends Resource {
+public class TenantResource extends Resource {
 	
-	private ComputeResource(Target target) {
+	private TenantResource(Target target) {
 		super(target);
 	}
 	
-	public static ComputeResource endpoint(Client client, String tenantEndpoint) {
-		return new ComputeResource(client.target(tenantEndpoint));
+	public static TenantResource endpoint(Client client, String tenantEndpoint) {
+		return new TenantResource(client.target(tenantEndpoint));
 	}
 
 	public ServersResource servers() {

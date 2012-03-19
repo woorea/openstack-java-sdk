@@ -16,8 +16,8 @@ public class ITKeyPairs extends ComputeApiTest {
 	public void testListKeypairs() throws OpenstackException {
 		skipIfNoKeyPairs();
 
-		OpenStackComputeClient nova = getComputeClient();
-		Iterable<NovaKeyPair> keyPairs = nova.root().keyPairs().get(new HashMap<String, Object>());
+		
+		Iterable<NovaKeyPair> keyPairs = client.publicEndpoint().keyPairs().get(new HashMap<String, Object>());
 		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
@@ -47,22 +47,22 @@ public class ITKeyPairs extends ComputeApiTest {
 	}
 
 	private void testCreateAndDelete(String name) {
-		OpenStackComputeClient nova = getComputeClient();
+		
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		NovaKeyPair created = nova.root().keyPairs().post(new HashMap<String, Object>(), Entity.xml(createRequest));
+		NovaKeyPair created = client.publicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.xml(createRequest));
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
 
-		NovaKeyPair fetched = findKeyPair(nova, created.getName());
+		NovaKeyPair fetched = findKeyPair(client, created.getName());
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
-		nova.root().keyPairs().keypair(created.getName()).delete();
+		client.publicEndpoint().keyPairs().keypair(created.getName()).delete();
 
-		fetched = findKeyPair(nova, created.getName());
+		fetched = findKeyPair(client, created.getName());
 
 		Assert.assertNull(fetched);
 	}
@@ -151,7 +151,7 @@ public class ITKeyPairs extends ComputeApiTest {
 	}
 
 	private NovaKeyPair findKeyPair(OpenStackComputeClient nova, String name) {
-		for (NovaKeyPair keyPair : nova.root().keyPairs().get(new HashMap<String, Object>())) {
+		for (NovaKeyPair keyPair : nova.publicEndpoint().keyPairs().get(new HashMap<String, Object>())) {
 			if (keyPair.getName().equals(name))
 				return keyPair;
 		}

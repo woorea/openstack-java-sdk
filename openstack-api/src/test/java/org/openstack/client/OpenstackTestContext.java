@@ -5,15 +5,29 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.ws.rs.client.Client;
+
+import org.openstack.api.common.RestClient;
+import org.openstack.api.identity.IdentityResource;
+import org.openstack.model.identity.KeyStoneAccess;
+import org.openstack.model.identity.KeyStoneAuthentication;
 import org.openstack.utils.Io;
 
 public class OpenstackTestContext {
 
-	public OpenStackSession session;
+	private KeyStoneAccess access;
+	
+	private boolean verbose;
+	
 	private boolean glanceEnabled;
 	private boolean swiftEnabled;
-
-	public OpenStackSession connect(OpenstackCredentials credentials, String format, boolean verbose) {
+	
+	private String format;
+/*
+	public KeyStoneAccess connect(OpenstackCredentials credentials, String format, boolean verbose) {
+		
+		
+		
 		session = OpenStackSession.create();
 		if (verbose) {
 			session.with(OpenStackSession.Feature.VERBOSE);
@@ -32,7 +46,7 @@ public class OpenstackTestContext {
 		session.authenticate(credentials, false);
 		return session;
 	}
-
+*/
 	public static OpenstackTestContext buildFromProperties() {
 		Properties properties = new Properties();
 
@@ -56,26 +70,27 @@ public class OpenstackTestContext {
 
 		// Command line properties should take precedence
 		properties.putAll(System.getProperties());
+		
+		OpenstackTestContext context = new OpenstackTestContext();
 
-		boolean verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
+		context.verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
+		context.glanceEnabled = Boolean.parseBoolean(properties.getProperty("openstack.glance", "false"));
+		context.swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "false"));
+		context.format = properties.getProperty("openstack.format", null);
 
 		String url = properties.getProperty("openstack.auth.url", "http://192.168.1.45:5000/v2.0");
 		String username = properties.getProperty("openstack.auth.user", "demo");
 		String secret = properties.getProperty("openstack.auth.secret", "secret0");
 		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
 
-		String format = properties.getProperty("openstack.format", null);
+		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
+		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, secret);
+		IdentityResource identity = IdentityResource.endpoint(client,url);
+		
+		context.access = identity.tokens().authenticate(authentication);
 
-		boolean glanceEnabled = Boolean.parseBoolean(properties.getProperty("openstack.glance", "false"));
-		boolean swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "false"));
-
-		OpenstackTestContext context = new OpenstackTestContext();
-		context.glanceEnabled = glanceEnabled;
-		context.swiftEnabled = swiftEnabled;
-
-		OpenstackCredentials credentials = new OpenstackCredentials(url, username, secret, tenant);
-		context.connect(credentials, format, verbose);
 		return context;
+		
 	}
 
 	public boolean isGlanceEnabled() {

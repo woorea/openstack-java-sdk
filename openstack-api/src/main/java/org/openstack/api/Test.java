@@ -6,7 +6,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.common.RestClient;
-import org.openstack.api.compute.ComputeResource;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.api.identity.IdentityResource;
 import org.openstack.api.imagestore.ImageResource;
 import org.openstack.api.storage.AccountResource;
@@ -104,7 +104,7 @@ public class Test {
 		session.setAccess(access);
 		identity.setSession(session);
 
-		ComputeResource compute = ComputeResource.endpoint(client, "http://192.168.1.52:8774/v2/" + tenants.getList().get(0).getId());
+		TenantResource compute = TenantResource.endpoint(client, "http://192.168.1.52:8774/v2/" + tenants.getList().get(0).getId());
 		compute.setSession(session);
 		NovaServerList servers = compute.servers().get(new HashMap<String, Object>(){{
 			put("detail",true);

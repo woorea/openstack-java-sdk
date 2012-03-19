@@ -48,7 +48,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 				NovaServer server = null;
 				String status;
 				try {
-					server = client.root().servers().server(serverId).get(new HashMap<String, Object>());
+					server = client.publicEndpoint().servers().server(serverId).get(new HashMap<String, Object>());
 					status = server.getStatus();
 				} catch (OpenstackNotFoundException e) {
 					// Treat as DELETED

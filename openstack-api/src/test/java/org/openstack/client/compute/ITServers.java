@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.openstack.api.compute.ImageResource;
 import org.openstack.api.compute.ServerResource;
-import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.OpenStackSession;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;
@@ -15,15 +14,12 @@ public class ITServers extends ComputeApiTest {
 
 	@Test
 	public void listServers() {
-		OpenStackComputeClient nova = getComputeClient();
-		OpenStackSession session = nova.getSession();
-
-		NovaServerList servers = compute.servers().get(new HashMap<String, Object>());
-		// System.out.println(list);
+		
+		NovaServerList servers = client.publicEndpoint().servers().get(new HashMap<String, Object>());
 
 		for (NovaServer server : servers.getList()) {
-			NovaImage image = compute.path(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
-			compute.path(server.getLink("bookmark").getHref(), ServerResource.class).delete(new HashMap<String, Object>());
+			NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
+			client.target(server.getLink("bookmark").getHref(), ServerResource.class).delete(new HashMap<String, Object>());
 		}
 	}
 

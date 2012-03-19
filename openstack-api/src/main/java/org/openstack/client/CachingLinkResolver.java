@@ -23,7 +23,7 @@ public class CachingLinkResolver extends SimpleLinkResolver {
 	@Override
 	public NovaFlavor resolveFlavor(String flavorId, List<Link> links) {
 		if (flavorCache == null) {
-			flavorCache = Lists.newArrayList(session.getComputeClient().root().flavors().get(new HashMap<String, Object>()).getList());
+			//flavorCache = Lists.newArrayList(session.getComputeClient().root().flavors().get(new HashMap<String, Object>()).getList());
 		}
  
 		for (NovaFlavor flavor : flavorCache) {
@@ -37,7 +37,7 @@ public class CachingLinkResolver extends SimpleLinkResolver {
 	@Override
 	public NovaImage resolveImage(String imageId, List<Link> links) throws OpenstackException {
 		if (imageCache == null) {
-			imageCache = Lists.newArrayList(session.getComputeClient().root().images().get(new HashMap<String, Object>()).getList());
+			//imageCache = Lists.newArrayList(session.getComputeClient().root().images().get(new HashMap<String, Object>()).getList());
 		}
  
 		for (NovaImage image : imageCache) {

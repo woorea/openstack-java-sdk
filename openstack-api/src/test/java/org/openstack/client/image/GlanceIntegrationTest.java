@@ -5,9 +5,8 @@ import org.openstack.client.OpenstackImageClient;
 import org.testng.SkipException;
 
 public abstract class GlanceIntegrationTest extends AbstractOpenStackTest {
-	protected OpenstackImageClient getImageClient() {
-		return context.session.getImageClient();
-	}
+	
+	protected OpenstackImageClient client;
 
 	protected void skipIfNoGlance() {
 		if (!context.isGlanceEnabled()) {

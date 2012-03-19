@@ -90,10 +90,7 @@ public class Resource {
 	}
 */	
 	
-	public <T extends Resource> T target(String absoluteURL, Class<T> clazz) {
-		//T instance = (T) clazz.getConstructor(Target.class).newInstance(target.path(absoluteURL));
-		return null;
-	}
+	
 	
 	public <T extends Resource> T path(String relativePath, Class<T> clazz) {
 		T instance = clazz.cast(resources.get(relativePath));

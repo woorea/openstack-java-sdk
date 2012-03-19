@@ -33,7 +33,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		}
 
 		if (flavor == null && flavorId != null) {
-			flavor = session.getComputeClient().root().flavors().flavor(flavorId).get(new HashMap<String, Object>());
+			//flavor = session.getComputeClient().root().flavors().flavor(flavorId).get(new HashMap<String, Object>());
 		}
 
 		return flavor;
@@ -51,7 +51,7 @@ public class SimpleLinkResolver implements LinkResolver {
 			URI uri = URI.create(link.getHref());
 			String path = uri.getPath();
 
-			URI rootUri = URI.create(session.getComputeClient().getRootUrl());
+			URI rootUri = null; //URI.create(session.getComputeClient().getRootUrl());
 
 			String version = "/v1.1";
 			if (rootUri.getPath().startsWith("/v2/")) {
@@ -79,7 +79,7 @@ public class SimpleLinkResolver implements LinkResolver {
 		}
 
 		if (image == null && imageId != null) {
-			image = session.getComputeClient().root().images().image(imageId).get(new HashMap<String, Object>());
+			//image = session.getComputeClient().root().images().image(imageId).get(new HashMap<String, Object>());
 		}
 
 		return image;
