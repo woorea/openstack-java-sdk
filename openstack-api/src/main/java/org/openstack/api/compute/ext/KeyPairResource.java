@@ -1,5 +1,6 @@
 package org.openstack.api.compute.ext;
 
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
@@ -11,6 +12,10 @@ import org.openstack.api.common.Resource;
  * 
  */
 public class KeyPairResource extends Resource {
+	
+	public KeyPairResource(Target target) {
+		super(target);
+	}
 
 	// JSON Only?
 	// TODO: Is this an OpenStack bug or an HP bug?
@@ -21,7 +26,7 @@ public class KeyPairResource extends Resource {
 
 
 	public void delete() {
-		resource().delete();
+		target.request().delete();
 	}
 
 	// OSAPI-BUG: This function is missing from the OS API

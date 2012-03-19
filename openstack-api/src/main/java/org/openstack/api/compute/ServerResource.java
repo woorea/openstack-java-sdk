@@ -3,18 +3,16 @@ package org.openstack.api.compute;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.api.compute.ext.ComputeResourceBase;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.SecurityGroupsResource;
 import org.openstack.client.OpenStackSession;
 import org.openstack.client.SimpleLinkResolver;
 import org.openstack.model.atom.Link;
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.server.action.AddFixedIpAction;
@@ -50,9 +48,13 @@ import com.google.common.collect.Iterables;
 public class ServerResource extends Resource {
 
 	public static class IpsResource extends Resource {
+		
+		public IpsResource(Target target) {
+			super(target);
+		}
 
-		public String list(String networkId) {
-			return resource("ips").get(String.class);
+		public String get(Map<String, Object> properties, String networkId) {
+			return target.path("/ips").request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(String.class);
 		}
 
 	}
@@ -60,7 +62,7 @@ public class ServerResource extends Resource {
 	public ServerResource() {
 
 	}
-
+/*
 	public ServerResource(final OpenStackSession session, NovaServer server) {
 		initialize(session, Iterables.find(server.getLinks(), new Predicate<Link>() {
 
@@ -77,7 +79,7 @@ public class ServerResource extends Resource {
 			}
 		}).getHref());
 	}
-
+*/
 	public ServerResource(Target target) {
 		super(target);
 	}
@@ -273,11 +275,11 @@ public class ServerResource extends Resource {
 	 * @return
 	 */
 	public String pendingActions() {
-		return resource("actions").get(String.class);
+		return target.path("actions").request().get(String.class);
 	}
 
 	public String virtualInterfaces() {
-		return resource("os-virtual-interfaces").get(String.class);
+		return target.path("os-virtual-interfaces").request().get(String.class);
 	}
 
 	public void createBackup(CreateBackupAction createBackupAction) {
@@ -290,15 +292,15 @@ public class ServerResource extends Resource {
 	 * @return
 	 */
 	public String diagnostics() {
-		return resource("diagnostics").get(String.class);
+		return target.path("diagnostics").request().get(String.class);
 	}
 
 	public IpsResource ips() {
-		return getChildResource("ips", IpsResource.class);
+		return target("ips", IpsResource.class);
 	}
 
 	public MetadataResource metadata() {
-		return getChildResource("metadata", MetadataResource.class);
+		return target("metadata", MetadataResource.class);
 	}
 
 	/**
@@ -372,7 +374,7 @@ public class ServerResource extends Resource {
 	}
 
 	private <T> T executeAction(Class<T> c, Object action, MediaType forceType) {
-		return resource("action", forceType).post(c, action);
+		return target.path("action").request(forceType).post(Entity.xml(action), c);
 	}
 
 	public void createAttachment() {
@@ -384,15 +386,15 @@ public class ServerResource extends Resource {
 	}
 
 	public FloatingIpsResource floatingIps() {
-		return getChildResource("os-floating-ips", FloatingIpsResource.class);
+		return target("os-floating-ips", FloatingIpsResource.class);
 	}
 
 	public ConsolesResource consoles() {
-		return getChildResource("consoles", ConsolesResource.class);
+		return target("consoles", ConsolesResource.class);
 	}
 
 	public NovaSecurityGroupList listSecurityGroups() {
-		return getChildResource("os-security-groups", SecurityGroupsResource.class).get(new HashMap<String, Object>());
+		return target("os-security-groups", SecurityGroupsResource.class).get(new HashMap<String, Object>());
 	}
 	
 	/**

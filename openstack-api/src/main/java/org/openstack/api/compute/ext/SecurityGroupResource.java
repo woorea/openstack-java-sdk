@@ -1,11 +1,14 @@
 package org.openstack.api.compute.ext;
 
 
+import java.util.HashMap;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaServer;
 
 public class SecurityGroupResource extends Resource  {
 	
@@ -18,11 +21,11 @@ public class SecurityGroupResource extends Resource  {
 		return MediaType.APPLICATION_JSON_TYPE;
 	}
 
-	public NovaSecurityGroup show() {
-		return resource().get(NovaSecurityGroup.class);
+	public NovaSecurityGroup get(HashMap<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaSecurityGroup.class);
 	}
 
-	public void delete() {
-		resource().delete();
+	public void delete(HashMap<String, Object> properties) {
+		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
 	}
 }

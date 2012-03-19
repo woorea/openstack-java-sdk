@@ -1,9 +1,12 @@
 package org.openstack.api.identity;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.identity.KeyStoneEndpointTemplates;
+import org.openstack.model.identity.KeyStoneUser;
 
 public class EndpointTemplateResource extends Resource {
 	
@@ -14,16 +17,16 @@ public class EndpointTemplateResource extends Resource {
 		super(target);
 	}
 
-	public KeyStoneEndpointTemplates show() {
-		return resource().get(KeyStoneEndpointTemplates.class);
+	public KeyStoneEndpointTemplates get() {
+		return target.request(MediaType.APPLICATION_XML).header("X-Auth-Token", "secret0").get(KeyStoneEndpointTemplates.class);
 	}
 
-	// public EndpointTemplate update() {
-	// return resource().put(EndpointTemplate.class);
-	// }
-
+	public KeyStoneEndpointTemplates update(Entity<KeyStoneEndpointTemplates> entity) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").put(entity, KeyStoneEndpointTemplates.class);
+	}
+	
 	public void delete() {
-		resource().delete();
+		target.request().header("X-Auth-Token", "secret0").delete();
 	}
 
 }

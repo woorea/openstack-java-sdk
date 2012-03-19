@@ -1,5 +1,7 @@
 package org.openstack.client;
 
+import javax.swing.text.html.parser.Entity;
+
 import org.openstack.api.compute.AsyncServerOperation;
 import org.openstack.api.compute.ComputeResource;
 import org.openstack.model.compute.NovaServer;
@@ -29,8 +31,9 @@ public class OpenstackComputeClient {
 	}
 
 	public AsyncServerOperation createServer(NovaServerForCreate create) throws OpenstackException {
-		NovaServer server = root().servers().create(create);
-		return AsyncServerOperation.wrapServerCreate(this, server);
+		//NovaServer server = root().servers().post(create);
+		//return AsyncServerOperation.wrapServerCreate(Entity.xml(this), server);
+		return null;
 	}
 
 	public OpenStackSession getSession() {

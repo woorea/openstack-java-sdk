@@ -4,9 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Target;
+import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.MediaType;
 
+import org.openstack.api.common.Resource;
+import org.openstack.api.compute.ImageResource;
 import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.image.GlanceImage;
@@ -14,44 +20,48 @@ import org.openstack.model.image.GlanceImageList;
 import org.openstack.model.image.GlanceImageUploadResponse;
 import org.openstack.utils.Io;
 
-public class ImagesResource extends GlanceResourceBase {
-
-    public GlanceImageList list() {
-        return list(true);
-    }
-
-    public GlanceImageList list(boolean details) {
-        RequestBuilder imagesResource = details ? resource("detail") : resource();
-        return imagesResource.get(GlanceImageList.class);
-    }
-
-	public ImageResource image(String imageId) {
-		return buildChildResource(imageId, ImageResource.class);
+public class ImagesResource extends Resource {
+	
+	public ImagesResource(Target target) {
+		super(target);
+	}
+	
+	public GlanceImageList get(Map<String,Object> properties) {
+		if(properties.get("detail") != null) {
+			target =  target.path("/detail");
+		} 
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(GlanceImageList.class);
 	}
 
-	public GlanceImage addImage(File imageFile, GlanceImage properties) throws IOException, OpenstackException {
+    public ImageResource image(String id) {
+    	return new ImageResource(target.path("/{id}").pathParam("id", id));
+    }
+
+	public GlanceImage post(Map<String, Object> properties, File imageFile, GlanceImage imageProperties) throws IOException, OpenstackException {
 		FileInputStream fis = new FileInputStream(imageFile);
 		try {
 
-			return addImage(fis, imageFile.length(), properties);
+			return post(properties, fis, imageFile.length(), imageProperties);
 		} finally {
 			Io.safeClose(fis);
 		}
 	}
 
-	public GlanceImage addImage(InputStream imageStream, long imageStreamLength, GlanceImage properties) throws OpenstackException,
+	public GlanceImage post(Map<String, Object> properties, InputStream imageStream, long imageStreamLength, GlanceImage imageProperties) throws OpenstackException,
 			IOException {
-		RequestBuilder builder = resource(null, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+		
 
-		builder = GlanceHeaderUtils.setHeaders(builder, properties);
+		Builder b = target.request();
+		
+		GlanceHeaderUtils.setHeaders(b, imageProperties);
 
 		if (imageStreamLength != -1) {
-			properties.setSize(imageStreamLength);
+			imageProperties.setSize(imageStreamLength);
 
 			imageStream = new KnownLengthInputStream(imageStream, imageStreamLength);
 		}
 
-		GlanceImageUploadResponse response = builder.post(GlanceImageUploadResponse.class, imageStream);
+		GlanceImageUploadResponse response = b.post(Entity.entity(imageStream, MediaType.APPLICATION_OCTET_STREAM_TYPE), GlanceImageUploadResponse.class);
 		GlanceImage image = response.getImage();
 		return image;
 	}

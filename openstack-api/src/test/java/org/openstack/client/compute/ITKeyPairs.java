@@ -2,6 +2,8 @@ package org.openstack.client.compute;
 
 import java.util.HashMap;
 
+import javax.ws.rs.client.Entity;
+
 import org.openstack.client.OpenstackComputeClient;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
@@ -49,7 +51,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		NovaKeyPair created = nova.root().keyPairs().create(createRequest);
+		NovaKeyPair created = nova.root().keyPairs().post(new HashMap<String, Object>(), Entity.xml(createRequest));
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());

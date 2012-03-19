@@ -1,8 +1,13 @@
 package org.openstack.api.compute.ext;
 
+import java.util.HashMap;
+
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
+import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.NovaVolume;
 
 public class VolumeResource extends Resource {
 
@@ -15,12 +20,12 @@ public class VolumeResource extends Resource {
 	 * 
 	 * @return
 	 */
-	public String show() {
-		return resource().get(String.class);
+	public NovaVolume get(HashMap<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaVolume.class);
 	}
 
-	public void delete() {
-		 resource().delete();
+	public void delete(HashMap<String, Object> properties) {
+		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
 	}
 	
 }

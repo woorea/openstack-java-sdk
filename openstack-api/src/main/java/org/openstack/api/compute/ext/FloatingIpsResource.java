@@ -1,10 +1,11 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Map;
+
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.NovaCreateFloatingIpResponse;
-import org.openstack.model.compute.NovaFloatingIp;
 import org.openstack.model.compute.NovaFloatingIpList;
 
 /**
@@ -27,21 +28,19 @@ public class FloatingIpsResource extends Resource {
 	 * 
 	 * @return
 	 */
-	public NovaFloatingIpList list() {
-		return resource().get(NovaFloatingIpList.class);
+	public NovaFloatingIpList get(Map<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFloatingIpList.class);
 	}
-
-	public NovaFloatingIp create(String pool) {
-		return resource().post(NovaFloatingIp.class, pool);
+	
+	public NovaCreateFloatingIpResponse post(Map<String,Object> properties, String pool) {
+		throw new UnsupportedOperationException();
+		//return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(rule, NovaCreateFloatingIpResponse.class);
 	}
-
-	public NovaFloatingIp create() {
-		NovaCreateFloatingIpResponse response = resource().post(NovaCreateFloatingIpResponse.class, "{}");
-		return response.getFloatingIp();
-	}
+	
+	
 
 	public FloatingIpResource floatingIp(String id) {
-		return buildChildResource(id, FloatingIpResource.class);
+		return new FloatingIpResource(target.path("/{id}").pathParam("id", id));
 	}
 
 }

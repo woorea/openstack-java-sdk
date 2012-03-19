@@ -2,7 +2,8 @@ package org.openstack.client.compute;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.UUID;
+
+import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.AsyncServerOperation;
 import org.openstack.client.OpenstackComputeClient;
@@ -49,12 +50,12 @@ public class ITConfigDrive extends ComputeApiTest {
 		keyPair.setPublicKey(publicKey);
 		keyPair.setName(keyName);
 
-		nova.root().keyPairs().create(keyPair);
+		nova.root().keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
 
 		serverForCreate.setKeyName(keyName);
 		serverForCreate.setConfigDrive(true);
 
-		NovaServer server = nova.root().servers().create(serverForCreate);
+		NovaServer server = nova.root().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
 
 		// Wait for the server to be ready
 		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(nova, server);

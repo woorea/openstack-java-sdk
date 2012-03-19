@@ -2,6 +2,7 @@ package org.openstack.api.compute;
 
 import java.util.Map;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -36,18 +37,9 @@ public class ServersResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaServerList.class);
 	}
 
-	public NovaServer create(NovaServerForCreate serverForCreate) {
+	public NovaServer post(Map<String,Object> properties, Entity<NovaServerForCreate> serverForCreate) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		RequestBuilder builder = resource(null, MediaType.APPLICATION_JSON_TYPE);
-		return builder.post(NovaServer.class, serverForCreate);
-
-		// return post(Server.class, serverForCreate);
-
-		// Server server = client.resource(resource)
-		// .accept(MediaType.APPLICATION_XML)
-		// .type(MediaType.APPLICATION_XML)
-		// .post(Server.class, serverForCreate);
-		// return new ServerRepresentation(client, server);
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(serverForCreate, NovaServer.class);
 	}
 
 	public ServerResource server(String id) {

@@ -1,9 +1,19 @@
 package org.openstack.api.compute.ext;
 
-public class SecurityGroupRuleResource extends ComputeResourceBase {
+import java.util.Map;
 
-	public void delete() {
-		resource().delete();
+import javax.ws.rs.client.Target;
+
+import org.openstack.api.common.Resource;
+
+public class SecurityGroupRuleResource extends Resource {
+
+	public SecurityGroupRuleResource(Target target) {
+		super(target);
+	}
+
+	public void delete(Map<String, Object> properties) {
+		 target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
 	}
 
 	// This function is "missing" from the OpenStack API

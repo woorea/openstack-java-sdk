@@ -91,7 +91,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 
 	private boolean supportsExtension(String namespace) {
 		if (extensions == null) {
-			extensions = getComputeClient().root().extensions().list().getList();
+			extensions = getComputeClient().root().extensions().get(new HashMap<String, Object>()).getList();
 		}
 		for (Extension extension : extensions) {
 			if (namespace.equals(extension.getNamespace()))

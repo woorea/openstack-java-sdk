@@ -27,7 +27,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		OpenstackComputeClient nova = getComputeClient();
 		NovaSecurityGroupList securityGroups = nova.root().securityGroups().get(new HashMap<String, Object>());
 		for (NovaSecurityGroup securityGroup : securityGroups) {
-			NovaSecurityGroup details = nova.root().securityGroups().securityGroup(securityGroup.getId()).show();
+			NovaSecurityGroup details = nova.root().securityGroups().securityGroup(securityGroup.getId()).get(new HashMap<String, Object>());
 
 			assertSecurityGroupEquals(securityGroup, details);
 		}
@@ -59,7 +59,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 			}
 		}
 
-		nova.root().securityGroups().securityGroup(unused).show();
+		nova.root().securityGroups().securityGroup(unused).get(new HashMap<String, Object>());
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		Assert.assertNotNull(created.getId());
 		Assert.assertNotEquals(created.getId(), 0);
 
-		NovaSecurityGroup fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
+		NovaSecurityGroup fetched = nova.root().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 		assertSecurityGroupEquals(fetched, created);
 
 		Assert.assertEquals(fetched.getRules().size(), 0);
@@ -95,10 +95,10 @@ public class ITSecurityGroups extends ComputeApiTest {
 			newRule.setIpProtocol("tcp");
 			newRule.setParentGroupId(created.getId());
 
-			NovaSecurityGroupRule createdRule = nova.root().securityGroupRules().create(newRule);
+			NovaSecurityGroupRule createdRule = nova.root().securityGroupRules().post(new HashMap<String, Object>(), Entity.xml(newRule));
 			Assert.assertNotEquals(createdRule.id, "");
 
-			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
+			fetched = nova.root().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 			assertSecurityGroupEquals(fetched, created);
 
 			Assert.assertEquals(fetched.getRules().size(), 1);
@@ -115,17 +115,17 @@ public class ITSecurityGroups extends ComputeApiTest {
 		// Drop the rule
 		{
 			NovaSecurityGroupRule rule = fetched.getRules().get(0);
-			nova.root().securityGroupRules().securityGroupRule(rule.id).delete();
+			nova.root().securityGroupRules().securityGroupRule(rule.id).delete(new HashMap<String, Object>());
 
-			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
+			fetched = nova.root().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 			Assert.assertEquals(fetched.getRules().size(), 0);
 		}
 
-		nova.root().securityGroups().securityGroup(created.getId()).delete();
+		nova.root().securityGroups().securityGroup(created.getId()).delete(new HashMap<String, Object>());
 
 		fetched = null;
 		try {
-			fetched = nova.root().securityGroups().securityGroup(created.getId()).show();
+			fetched = nova.root().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 		} catch (OpenstackNotFoundException e) {
 			// Expected; leave fetched as null
 		}

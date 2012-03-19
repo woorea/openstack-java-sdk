@@ -3,25 +3,37 @@ package org.openstack.api.imagestore;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.openstack.api.common.HeadResponse;
-import org.openstack.client.RequestBuilder;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.openstack.api.common.Resource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.image.GlanceImage;
 
-public class ImageResource extends GlanceResourceBase {
-    public void updateMetadata(Map<String, Object> metadata, boolean replace) {
-    	RequestBuilder builder = resource();
-        builder = GlanceHeaderUtils.setHeadersForProperties(builder, metadata);
-        builder.put();
+public class ImageResource extends Resource {
+	
+	public ImageResource(Target target) {
+		super(target);
+	}
+	
+    public void put(Map<String, Object> properties, Map<String, Object> metadata) {
+    	Builder b = target.request(MediaType.APPLICATION_JSON);
+        b = GlanceHeaderUtils.setHeadersForProperties(b, metadata);
+        b = b.header("X-Auth-Token", properties.get("X-Auth-Token"));
+        b.method("PUT");
     }
 
-    public GlanceImage show() throws OpenstackException {
-        HeadResponse response = resource().head();
+    public GlanceImage head(Map<String, Object> p) throws OpenstackException {
+        Response response = target.request().header("X-Auth-Token", p.get("X-Auth-Token")).head();
         int httpStatus = response.getStatus();
         if (httpStatus == 200) {
-            GlanceImage image = GlanceHeaderUtils.unmarshalHeaders(response);
-            return image;
+            //GlanceImage image = GlanceHeaderUtils.unmarshalHeaders(response);
+            //return image;
+        	return null;
         }
 
         if (httpStatus == 404) {
@@ -32,10 +44,14 @@ public class ImageResource extends GlanceResourceBase {
     }
 
 	public InputStream openStream() {
-        return resource().get(InputStream.class);
+        return target.request().get(InputStream.class);
     }
 
-    public void delete() {
-        resource().delete();
+    public void delete(Map<String, Object> properties) {
+        target.request().header("X-Auth-Token", properties.get("X-Auth-Token"));
     }
+
+	public static ImageResource endpoint(Client client, String endpoint) {
+		return new ImageResource(client. target(endpoint));
+	}
 }

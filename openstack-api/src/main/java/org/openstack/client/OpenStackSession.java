@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.compute.NovaFlavor;
@@ -174,11 +173,12 @@ public abstract class OpenStackSession implements Serializable {
 	public OpenstackAuthenticationClient getAuthenticationClient() {
 		return new OpenstackAuthenticationClient(this);
 	}
-
+/*
 	public OpenstackStorageClient getStorageClient() {
 		return new OpenstackStorageClient(this);
+		return null;
 	}
-
+*/
 	public void authenticate(OpenstackCredentials credentials) throws OpenstackException {
 		authenticate(credentials, false);
 	}

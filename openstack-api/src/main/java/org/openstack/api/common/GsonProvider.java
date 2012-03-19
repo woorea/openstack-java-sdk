@@ -45,7 +45,8 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
     public Providers providers;
     
     public GsonProvider() {
-    	final GsonBuilder gsonBuilder = new GsonBuilder();
+    	final GsonBuilder gsonBuilder = new GsonBuilder()
+    		.setPrettyPrinting();
     	gson = gsonBuilder.create();
     }
 

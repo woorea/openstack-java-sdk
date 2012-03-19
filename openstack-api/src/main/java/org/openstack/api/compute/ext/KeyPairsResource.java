@@ -2,11 +2,11 @@ package org.openstack.api.compute.ext;
 
 import java.util.Map;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaCreateKeyPairResponse;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.compute.NovaKeyPairList;
 
@@ -48,13 +48,13 @@ public class KeyPairsResource extends Resource {
 	 * @param keyPair
 	 * @return
 	 */
-	public NovaKeyPair create(NovaKeyPair keyPair) {
-		NovaCreateKeyPairResponse response = resource().post(NovaCreateKeyPairResponse.class, keyPair);
-		return response.getKeyPair();
+	public NovaKeyPair post(Map<String,Object> properties, Entity<NovaKeyPair> serverForCreate) {
+		// OSAPI bug: Can't specify an SSH key in XML?
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(serverForCreate, NovaKeyPair.class);
 	}
 
 	public KeyPairResource keypair(String name) {
-		return buildChildResource(name, KeyPairResource.class);
+		return new KeyPairResource(target.path("/{name}").pathParam("name", name));
 	}
 
 }

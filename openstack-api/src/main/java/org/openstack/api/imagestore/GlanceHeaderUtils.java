@@ -11,11 +11,10 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.ResponseHeaders;
+import javax.ws.rs.client.Invocation;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.openstack.api.common.HeadResponse;
-import org.openstack.client.RequestBuilder;
 import org.openstack.model.image.GlanceImage;
 
 import com.google.common.collect.Maps;
@@ -23,22 +22,22 @@ import com.google.common.collect.Maps;
 class GlanceHeaderUtils {
     static final Logger log = Logger.getLogger(GlanceHeaderUtils.class.getName());
 
-    static RequestBuilder setHeadersForProperties(RequestBuilder builder, Map<String, Object> metadata) {
+    static Invocation.Builder setHeadersForProperties(Invocation.Builder builder, Map<String, Object> metadata) {
         for (Map.Entry<String, Object> tag : metadata.entrySet()) {
-            builder.putHeader("x-image-meta-property-" + tag.getKey(), tag.getValue().toString());
+            builder = builder.header("x-image-meta-property-" + tag.getKey(), tag.getValue().toString());
         }
         return builder;
     }
 
-    static RequestBuilder setHeaders(RequestBuilder builder, GlanceImage properties) {
+    static Invocation.Builder setHeaders(Invocation.Builder builder, GlanceImage properties) {
         if (properties.getName() != null) {
-            builder.putHeader("x-image-meta-name", properties.getName());
+            builder = builder.header("x-image-meta-name", properties.getName());
         } else {
             // throw new IllegalArgumentException("Name is required");
         }
 
         if (properties.getId() != null) {
-            builder.putHeader("x-image-meta-id", properties.getName());
+            builder = builder.header("x-image-meta-id", properties.getName());
         }
 
         // x-image-meta-store
@@ -48,34 +47,34 @@ class GlanceHeaderUtils {
         // When not present, Glance will store the disk image data in the backing store that is marked default. See the configuration option default_store for more information.
 
         if (properties.getDiskFormat() != null) {
-            builder.putHeader("x-image-meta-disk-format", properties.getDiskFormat());
+            builder = builder.header("x-image-meta-disk-format", properties.getDiskFormat());
         }
         if (properties.getContainerFormat() != null) {
-            builder.putHeader("x-image-meta-container-format", properties.getContainerFormat());
+            builder = builder.header("x-image-meta-container-format", properties.getContainerFormat());
         }
 
         if (properties.getSize() != null) {
-            builder.putHeader("x-image-meta-size", properties.getSize().toString());
+            builder = builder.header("x-image-meta-size", properties.getSize().toString());
         }
 
         if (properties.getChecksum() != null) {
-            builder.putHeader("x-image-meta-checksum", properties.getChecksum());
+            builder = builder.header("x-image-meta-checksum", properties.getChecksum());
         }
 
         if (properties.isPublic() != null) {
-            builder.putHeader("x-image-meta-is-public", properties.isPublic().toString());
+            builder = builder.header("x-image-meta-is-public", properties.isPublic().toString());
         }
 
         if (properties.getMinRam() != null) {
-            builder.putHeader("x-image-meta-min-ram", properties.getMinRam().toString());
+            builder = builder.header("x-image-meta-min-ram", properties.getMinRam().toString());
         }
 
         if (properties.getMinDisk() != null) {
-            builder.putHeader("x-image-meta-min-disk", properties.getMinDisk().toString());
+            builder = builder.header("x-image-meta-min-disk", properties.getMinDisk().toString());
         }
 
         if (properties.getOwner() != null) {
-            builder.putHeader("x-image-meta-owner", properties.getOwner());
+            builder = builder.header("x-image-meta-owner", properties.getOwner());
         }
 
         return setHeadersForProperties(builder, properties.getProperties().asMap());

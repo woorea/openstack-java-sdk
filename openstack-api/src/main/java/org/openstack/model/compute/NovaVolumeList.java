@@ -23,5 +23,10 @@ public class NovaVolumeList implements Serializable {
 	public void setList(List<NovaVolume> list) {
 		this.list = list;
 	}
+
+	@Override
+	public String toString() {
+		return "NovaVolumeList [list=" + list + "]";
+	}
 	
 }

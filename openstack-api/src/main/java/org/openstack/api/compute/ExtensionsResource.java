@@ -1,15 +1,19 @@
 package org.openstack.api.compute;
 
-import org.openstack.api.compute.ext.ComputeResourceBase;
+import java.util.Map;
+
+import javax.ws.rs.core.MediaType;
+
+import org.openstack.api.common.Resource;
 import org.openstack.model.common.ExtensionList;
 
-public class ExtensionsResource extends ComputeResourceBase {
+public class ExtensionsResource extends Resource {
 
-    public ExtensionList list() {
-        return resource().get(ExtensionList.class);
-    }
+	public ExtensionList get(Map<String, Object> properties) {
+		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(ExtensionList.class);
+	}
 
-    public ExtensionResource extension(String extensionAlias) {
-        return buildChildResource(extensionAlias, ExtensionResource.class);
+    public ExtensionResource extension(String alias) {
+    	return new ExtensionResource(target.path("/{alias}").pathParam("alias", alias));
     }
 }

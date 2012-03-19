@@ -1,14 +1,11 @@
 package org.openstack.api.common;
 
-import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.api.imagestore.UrlUtils;
 import org.openstack.client.OpenStackSession;
-import org.openstack.client.RequestBuilder;
 
 import com.google.common.collect.Maps;
 
@@ -45,7 +42,7 @@ public class Resource {
 		this.session = session;
 		this.resource = resource;
 	}
-
+/*
 	protected RequestBuilder resource() {
 		return resource(null, null);
 	}
@@ -91,7 +88,7 @@ public class Resource {
 		}
 		return instance;
 	}
-	
+*/	
 	protected <T extends Resource> T target(String relativePath, Class<T> clazz) {
 		T instance = clazz.cast(resources.get(relativePath));
 		if (instance == null) {
@@ -103,7 +100,7 @@ public class Resource {
 		}
 		return instance;
 	}
-
+/*
 	protected <T extends Resource> T buildChildResource(String relativePath, Class<T> clazz) {
 		T instance = (T) resources.get(relativePath);
 		try {
@@ -128,5 +125,5 @@ public class Resource {
 	protected <T extends Resource> T resource(Map<String, Object> properties, Class<T> resourceClass) {
 		return resourceClass.cast(this);
 	}
-
+*/
 }
