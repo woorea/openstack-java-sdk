@@ -34,12 +34,12 @@ public class ServersResource extends Resource {
 		if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaServerList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaServerList.class);
 	}
 
 	public NovaServer post(Map<String,Object> properties, Entity<NovaServerForCreate> serverForCreate) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(serverForCreate, NovaServer.class);
+		return target.request(MediaType.APPLICATION_JSON).post(serverForCreate, NovaServer.class);
 	}
 
 	public ServerResource server(String id) {

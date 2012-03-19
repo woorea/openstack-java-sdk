@@ -22,10 +22,10 @@ public class SecurityGroupResource extends Resource  {
 	}
 
 	public NovaSecurityGroup get(HashMap<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaSecurityGroup.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroup.class);
 	}
 
 	public void delete(HashMap<String, Object> properties) {
-		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
+		target.request().delete();
 	}
 }

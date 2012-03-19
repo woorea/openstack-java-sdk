@@ -19,15 +19,15 @@ public class ServiceResource extends Resource {
 
 
 	public KeyStoneService get() {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneService.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneService.class);
 	}
 
 	public KeyStoneService update(Entity<KeyStoneService> entity) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").put(entity, KeyStoneService.class);
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneService.class);
 	}
 	
 	public void delete() {
-		target.request().header("X-Auth-Token", "secret0").delete();
+		target.request().delete();
 	}
 
 }

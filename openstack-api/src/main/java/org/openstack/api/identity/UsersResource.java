@@ -21,11 +21,11 @@ public class UsersResource extends Resource {
 	}
 	
 	public KeyStoneUserList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneUserList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneUserList.class);
 	}
 	
 	public KeyStoneUser post(Entity<KeyStoneUser> user) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").post(user, KeyStoneUser.class);
+		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneUser.class);
 	}
 
 	public UserResource user(String id) {

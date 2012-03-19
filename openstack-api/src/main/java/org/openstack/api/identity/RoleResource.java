@@ -17,15 +17,15 @@ public class RoleResource extends Resource {
 	}
 
 	public KeyStoneRole get() {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneRole.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneRole.class);
 	}
 
 	public KeyStoneRole update(Entity<KeyStoneRole> entity) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").put(entity, KeyStoneRole.class);
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneRole.class);
 	}
 
 	public void delete() {
-		target.request().header("X-Auth-Token", "secret0").delete();
+		target.request().delete();
 	}
 
 }

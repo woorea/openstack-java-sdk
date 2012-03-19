@@ -21,11 +21,11 @@ public class ServicesResource extends Resource {
 	}
 	
 	public KeyStoneServiceList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneServiceList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneServiceList.class);
 	}
 	
 	public KeyStoneService post(Entity<KeyStoneService> user) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").post(user, KeyStoneService.class);
+		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneService.class);
 	}
 	
 	public ServiceResource service(String id) {

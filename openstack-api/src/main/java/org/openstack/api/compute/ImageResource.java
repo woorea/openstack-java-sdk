@@ -39,11 +39,11 @@ public class ImageResource extends Resource {
 	}
 
 	public NovaImage get(HashMap<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaImage.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaImage.class);
 	}
 
 	public void delete(HashMap<String, Object> properties) {
-		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
+		target.request().delete();
 	}
 
 	public NovaMetadata metadata() {

@@ -30,7 +30,7 @@ public class VolumesResource extends Resource {
 		if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaVolumeList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaVolumeList.class);
 	}
 
 	/**

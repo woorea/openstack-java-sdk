@@ -18,15 +18,15 @@ public class UserResource extends Resource {
 
 
 	public KeyStoneUser get() {
-		return target.request(MediaType.APPLICATION_XML).header("X-Auth-Token", "secret0").get(KeyStoneUser.class);
+		return target.request(MediaType.APPLICATION_XML).get(KeyStoneUser.class);
 	}
 
 	public KeyStoneUser update(Entity<KeyStoneUser> entity) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").put(entity, KeyStoneUser.class);
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneUser.class);
 	}
 	
 	public void delete() {
-		target.request().header("X-Auth-Token", "secret0").delete();
+		target.request().delete();
 	}
 
 }

@@ -21,11 +21,11 @@ public class RolesResource extends Resource {
 	}
 	
 	public KeyStoneRoleList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneRoleList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneRoleList.class);
 	}
 	
 	public KeyStoneRole post(Entity<KeyStoneRole> user) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").post(user, KeyStoneRole.class);
+		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneRole.class);
 	}
 	
 	public RoleResource role(String id) {

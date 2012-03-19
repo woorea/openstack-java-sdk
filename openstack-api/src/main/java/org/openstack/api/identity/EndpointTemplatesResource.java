@@ -20,11 +20,11 @@ public class EndpointTemplatesResource extends Resource {
 	}
 	
 	public KeyStoneEndpointTemplatesList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").get(KeyStoneEndpointTemplatesList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneEndpointTemplatesList.class);
 	}
 
 	public KeyStoneEndpointTemplates post(Entity<KeyStoneEndpointTemplates> user) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").post(user, KeyStoneEndpointTemplates.class);
+		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneEndpointTemplates.class);
 	}
 
 	public EndpointTemplateResource endpointTemplate(String id) {

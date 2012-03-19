@@ -1,8 +1,13 @@
 package org.openstack.api.compute;
 
+import java.io.IOException;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.ext.FilterContext;
+import javax.ws.rs.ext.RequestFilter;
 
+import org.openstack.api.OpenStackSession2;
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.KeyPairsResource;
@@ -100,5 +105,16 @@ public class ComputeResource extends Resource {
     public ExtensionsResource extensions() {
     	return target("/extensions", ExtensionsResource.class);
     }
+
+    public void setSession(final OpenStackSession2 session) {
+		target.configuration().register(new RequestFilter() {
+			
+			@Override
+			public void preFilter(FilterContext context) throws IOException {
+				context.getRequestBuilder().header("X-Auth-Token", session.getAccess().getToken().getId());
+				
+			}
+		});
+	}
 
 }

@@ -21,11 +21,11 @@ public class TenantsResource extends Resource {
 	}
 	
 	public KeyStoneTenantList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(KeyStoneTenantList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneTenantList.class);
 	}
 
 	public KeyStoneTenant post(Entity<KeyStoneTenant> tenant) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").post(tenant, KeyStoneTenant.class);
+		return target.request(MediaType.APPLICATION_JSON).post(tenant, KeyStoneTenant.class);
 	}
 	
 	public TenantResource tenant(String id) {

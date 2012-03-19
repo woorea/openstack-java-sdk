@@ -38,7 +38,7 @@ public class FlavorResource extends Resource {
 	}
 
 	public NovaFlavor get(HashMap<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFlavor.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaFlavor.class);
 	}
 
 	

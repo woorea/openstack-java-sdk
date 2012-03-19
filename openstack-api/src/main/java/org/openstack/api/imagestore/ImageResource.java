@@ -1,5 +1,6 @@
 package org.openstack.api.imagestore;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -8,7 +9,10 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.FilterContext;
+import javax.ws.rs.ext.RequestFilter;
 
+import org.openstack.api.OpenStackSession2;
 import org.openstack.api.common.Resource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
@@ -53,5 +57,16 @@ public class ImageResource extends Resource {
 
 	public static ImageResource endpoint(Client client, String endpoint) {
 		return new ImageResource(client. target(endpoint));
+	}
+	
+	public void setSession(final OpenStackSession2 session) {
+		target.configuration().register(new RequestFilter() {
+			
+			@Override
+			public void preFilter(FilterContext context) throws IOException {
+				context.getRequestBuilder().header("X-Auth-Token", session.getAccess().getToken().getId());
+				
+			}
+		});
 	}
 }

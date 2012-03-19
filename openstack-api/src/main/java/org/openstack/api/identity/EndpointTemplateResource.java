@@ -18,15 +18,15 @@ public class EndpointTemplateResource extends Resource {
 	}
 
 	public KeyStoneEndpointTemplates get() {
-		return target.request(MediaType.APPLICATION_XML).header("X-Auth-Token", "secret0").get(KeyStoneEndpointTemplates.class);
+		return target.request(MediaType.APPLICATION_XML).get(KeyStoneEndpointTemplates.class);
 	}
 
 	public KeyStoneEndpointTemplates update(Entity<KeyStoneEndpointTemplates> entity) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").put(entity, KeyStoneEndpointTemplates.class);
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneEndpointTemplates.class);
 	}
 	
 	public void delete() {
-		target.request().header("X-Auth-Token", "secret0").delete();
+		target.request().delete();
 	}
 
 }

@@ -18,7 +18,7 @@ public class FlavorsResource extends Resource {
     	if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFlavorList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaFlavorList.class);
     }
 
     public FlavorResource flavor(String id) {

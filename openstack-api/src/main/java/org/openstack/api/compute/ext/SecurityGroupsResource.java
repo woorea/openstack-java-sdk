@@ -24,11 +24,11 @@ public class SecurityGroupsResource extends Resource {
 	}
 
 	public NovaSecurityGroupList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaSecurityGroupList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
 	}
 	
 	public NovaSecurityGroup post(Entity<NovaSecurityGroup> securityGroup, HashMap<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(securityGroup, NovaSecurityGroup.class);
+		return target.request(MediaType.APPLICATION_JSON).post(securityGroup, NovaSecurityGroup.class);
 		
 	}
 	

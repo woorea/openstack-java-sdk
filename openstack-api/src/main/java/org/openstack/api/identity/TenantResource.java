@@ -18,15 +18,15 @@ public class TenantResource extends Resource {
 	}
 
 	public KeyStoneTenant get() {
-		return target.request(MediaType.APPLICATION_XML).header("X-Auth-Token", "secret0").get(KeyStoneTenant.class);
+		return target.request(MediaType.APPLICATION_XML).get(KeyStoneTenant.class);
 	}
 
 	public KeyStoneTenant update(Entity<KeyStoneTenant> entity) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", "secret0").put(entity, KeyStoneTenant.class);
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneTenant.class);
 	}
 
 	public void delete() {
-		target.request().header("X-Auth-Token", "secret0").delete();
+		target.request().delete();
 	}
 
 }
