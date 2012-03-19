@@ -1,6 +1,6 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.api.common.OpenstackComputeClient;
 import org.openstack.model.common.Extension;
 import org.openstack.model.common.ExtensionList;
 import org.openstack.model.exceptions.OpenstackException;

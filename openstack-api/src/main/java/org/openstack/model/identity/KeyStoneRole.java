@@ -7,8 +7,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+import org.openstack.model.common.JsonRootElement;
+
+@XmlRootElement(name="role")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("role")
 public class KeyStoneRole implements Serializable {
 	
 	@XmlAttribute

@@ -4,9 +4,9 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.api.storage.ObjectsResource;
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.client.cli.model.StoragePath;
-import org.openstack.client.storage.ObjectsResource;
-import org.openstack.client.storage.OpenstackStorageClient;
 import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.utils.NoCloseInputStream;
 

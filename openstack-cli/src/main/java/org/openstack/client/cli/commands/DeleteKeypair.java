@@ -1,7 +1,7 @@
 package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.api.common.OpenstackComputeClient;
 
 public class DeleteKeypair extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)

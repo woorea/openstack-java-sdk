@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.client.internals.SimpleClassInfo;
-import org.openstack.client.internals.SimpleClassInfo.FieldInfo;
+import org.openstack.api.internals.SimpleClassInfo;
+import org.openstack.api.internals.SimpleClassInfo.FieldInfo;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "image")

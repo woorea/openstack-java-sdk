@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.openstack.client.common.OpenStackSession;
+import org.openstack.api.common.OpenStackSession;
 import org.openstack.model.compute.NovaFlavor;
 import org.testng.Assert;
 import org.testng.annotations.Test;

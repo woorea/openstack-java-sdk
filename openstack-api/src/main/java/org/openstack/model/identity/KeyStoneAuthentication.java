@@ -7,9 +7,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "auth")
+import org.openstack.api.common.Namespaces;
+import org.openstack.model.common.JsonRootElement;
+
+@XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
+@XmlRootElement(name = "auth", namespace= "")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("auth")
 public class KeyStoneAuthentication implements Serializable {
 
     @XmlAccessorType(XmlAccessType.NONE)
@@ -42,7 +48,7 @@ public class KeyStoneAuthentication implements Serializable {
     @XmlElement
     private KeyStoneToken token;
 
-    @XmlElement
+    @XmlElement(namespace= "")
     private PasswordCredentials passwordCredentials;
 
     @XmlAttribute
@@ -88,6 +94,13 @@ public class KeyStoneAuthentication implements Serializable {
 		passwordCredentials.username = username;
 		passwordCredentials.password = password;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "KeyStoneAuthentication [token=" + token
+				+ ", passwordCredentials=" + passwordCredentials
+				+ ", tenantId=" + tenantId + ", tenantName=" + tenantName + "]";
 	}
 
 }

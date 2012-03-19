@@ -1,6 +1,6 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.client.storage.OpenstackStorageClient;
+import org.openstack.api.storage.OpenstackStorageClient;
 
 public class ListContainers extends OpenstackCliCommandRunnerBase {
 	public ListContainers() {

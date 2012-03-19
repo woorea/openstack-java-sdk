@@ -10,9 +10,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.model.common.JsonRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("user")
 public class KeyStoneUser implements Serializable {
 
     @XmlAttribute

@@ -2,8 +2,8 @@ package org.openstack.client.cli.autocomplete;
 
 import java.util.List;
 
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.client.storage.OpenstackStorageClient;
 import org.openstack.model.storage.SwiftContainer;
 
 import com.fathomdb.cli.CliContext;

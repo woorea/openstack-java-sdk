@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.openstack.api.storage.ContainerResource;
 import org.openstack.client.utils.RandomDataInputStream;
 import org.openstack.model.storage.SwiftContainer;
 import org.openstack.model.storage.SwiftObjectProperties;

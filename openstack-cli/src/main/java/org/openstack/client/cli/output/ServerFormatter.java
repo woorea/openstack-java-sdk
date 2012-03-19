@@ -3,10 +3,10 @@ package org.openstack.client.cli.output;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
+import org.openstack.api.extensions.Extension;
+import org.openstack.api.extensions.ExtensionRegistry;
+import org.openstack.api.extensions.ExtensionValues;
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.client.extensions.Extension;
-import org.openstack.client.extensions.ExtensionRegistry;
-import org.openstack.client.extensions.ExtensionValues;
 import org.openstack.model.common.OpenstackService;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;

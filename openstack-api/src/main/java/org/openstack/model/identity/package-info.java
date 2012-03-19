@@ -1,3 +1,9 @@
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://docs.openstack.org/identity/api/v2.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(
+	xmlns = { 
+		@javax.xml.bind.annotation.XmlNs(prefix = "identity", namespaceURI = org.openstack.api.common.Namespaces.NS_OPENSTACK_IDENTITY_2_0),
+		@javax.xml.bind.annotation.XmlNs(prefix = "OS-KSADM", namespaceURI = org.openstack.api.common.Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
+	},
+	namespace = org.openstack.api.common.Namespaces.NS_OPENSTACK_IDENTITY_2_0,
+	elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.openstack.model.identity;
 

@@ -2,9 +2,9 @@ package org.openstack.model.common;
 
 import java.util.Map;
 
-import org.openstack.client.common.OpenstackComputeClient;
-import org.openstack.client.common.OpenstackImageClient;
-import org.openstack.client.storage.OpenstackStorageClient;
+import org.openstack.api.common.OpenstackComputeClient;
+import org.openstack.api.common.OpenstackImageClient;
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 

@@ -2,8 +2,8 @@ package org.openstack.client.compute;
 
 import java.util.List;
 
+import org.openstack.api.common.OpenstackComputeClient;
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.client.common.OpenstackComputeClient;
 import org.openstack.model.common.Extension;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;

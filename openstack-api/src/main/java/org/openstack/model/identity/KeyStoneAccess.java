@@ -1,29 +1,31 @@
 package org.openstack.model.identity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.collect.Lists;
+import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.openstack.api.common.Namespaces;
+import org.openstack.model.common.JsonRootElement;
 
+@XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
 @XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("access")
 public class KeyStoneAccess implements Serializable {
-    @XmlElement(nillable = true, name = "service")
-    @XmlElementWrapper(name = "serviceCatalog")
-    private List<KeyStoneService> serviceCatalog;
-
     
     @XmlElement
     private KeyStoneToken token;
+    
+    @XmlElement
+    private KeyStoneServiceCatalog serviceCatalog;
 
     @XmlElement
-    public KeyStoneUser user;
+    private KeyStoneUser user;
 
     public KeyStoneToken getToken() {
         return token;
@@ -33,16 +35,26 @@ public class KeyStoneAccess implements Serializable {
         this.token = token;
     }
 
-    @Override
-    public String toString() {
-        return "Access [token=" + token + "]";
-    }
+	public KeyStoneServiceCatalog getServiceCatalog() {
+		return serviceCatalog;
+	}
 
-    public List<KeyStoneService> getServiceCatalog() {
-        if (serviceCatalog == null) {
-            serviceCatalog = Lists.newArrayList();
-        }
-        return serviceCatalog;
-    }
+	public void setServiceCatalog(KeyStoneServiceCatalog serviceCatalog) {
+		this.serviceCatalog = serviceCatalog;
+	}
+
+	public KeyStoneUser getUser() {
+		return user;
+	}
+
+	public void setUser(KeyStoneUser user) {
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "KeyStoneAccess [token=" + token + ", serviceCatalog="
+				+ serviceCatalog + ", user=" + user + "]";
+	}
 
 }

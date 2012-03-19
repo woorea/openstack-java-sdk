@@ -1,7 +1,7 @@
 package org.openstack.client.identity;
 
+import org.openstack.api.common.OpenstackAuthenticationClient;
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.client.common.OpenstackAuthenticationClient;
 
 public abstract class KeystoneIntegrationTest extends AbstractOpenStackTest {
 

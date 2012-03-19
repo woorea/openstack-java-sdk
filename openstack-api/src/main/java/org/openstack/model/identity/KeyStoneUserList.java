@@ -1,6 +1,6 @@
 package org.openstack.model.identity;
 
-import java.util.Iterator;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,26 +8,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.PagingListBase;
-
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneUserList extends PagingListBase<KeyStoneUser> {
+public class KeyStoneUserList implements Serializable {
 
 	@XmlElement(name = "user")
-	private List<KeyStoneUser> list;
+	private List<KeyStoneUser> users;
 
 	public List<KeyStoneUser> getList() {
-		return list;
+		return users;
 	}
 
 	public void setList(List<KeyStoneUser> list) {
-		this.list = list;
+		this.users = list;
 	}
 
 	@Override
-	public Iterator<KeyStoneUser> iterateItemsOnPage() {
-		return list.iterator();
+	public String toString() {
+		return "KeyStoneUserList [users=" + users + "]";
 	}
 
 }

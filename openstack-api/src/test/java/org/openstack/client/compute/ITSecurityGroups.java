@@ -2,7 +2,7 @@ package org.openstack.client.compute;
 
 import java.util.Set;
 
-import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.api.common.OpenstackComputeClient;
 import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.NovaSecurityGroup;
 import org.openstack.model.compute.NovaSecurityGroupList;

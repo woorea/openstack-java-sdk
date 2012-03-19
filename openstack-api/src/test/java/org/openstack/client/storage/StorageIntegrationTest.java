@@ -1,5 +1,6 @@
 package org.openstack.client.storage;
 
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.client.AbstractOpenStackTest;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;

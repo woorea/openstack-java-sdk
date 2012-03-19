@@ -43,9 +43,12 @@ public class KeyStoneToken implements Serializable {
 		this.tenant = tenant;
 	}
 
-    @Override
-    public String toString() {
-        return "Token [id=" + id + ", expires=" + expires + "]";
-    }
+	@Override
+	public String toString() {
+		return "KeyStoneToken [id=" + id + ", expires=" + expires + ", tenant="
+				+ tenant + "]";
+	}
+
+    
 }
 

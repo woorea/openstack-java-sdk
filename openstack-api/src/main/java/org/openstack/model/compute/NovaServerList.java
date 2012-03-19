@@ -1,7 +1,7 @@
 package org.openstack.model.compute;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,20 +10,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.model.common.PagingListBase;
 
 @XmlRootElement(name = "servers")
 @XmlAccessorType(XmlAccessType.NONE)
-public class NovaServerList extends PagingListBase<NovaServer> {
+public class NovaServerList implements Serializable {
 
 	@XmlElement(name = "server")
 	@JsonProperty("servers")
 	private List<NovaServer> list = new ArrayList<NovaServer>();
-
-	@Override
-	public Iterator<NovaServer> iterateItemsOnPage() {
-		return list.iterator();
-	}
 
 	@Override
 	public String toString() {

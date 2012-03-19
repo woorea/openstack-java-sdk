@@ -3,8 +3,8 @@ package org.openstack.client.cli.commands;
 import java.io.InputStream;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.client.cli.model.StoragePath;
-import org.openstack.client.storage.OpenstackStorageClient;
 import org.openstack.utils.Io;
 
 public class DownloadFile extends OpenstackCliCommandRunnerBase {

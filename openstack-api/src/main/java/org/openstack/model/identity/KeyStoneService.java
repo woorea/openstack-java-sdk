@@ -10,14 +10,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.api.common.Namespaces;
+import org.openstack.model.common.JsonRootElement;
 
 import com.google.common.collect.Lists;
+import com.google.gson.annotations.SerializedName;
 
-@XmlRootElement()
+@XmlRootElement(name="service", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("OS-KSADM:service")
 public class KeyStoneService implements Serializable {
 
-	@JsonProperty("endpoints")
+	@SerializedName("endpoints")
 	@XmlElement(nillable = true, name = "endpoint")
 	private List<KeyStoneServiceEndpoint> endpoints;
 

@@ -48,7 +48,7 @@ public class OpenStackSessionData implements Serializable {
 	public String getBestEndpoint(String serviceType) throws OpenstackException {
 		List<KeyStoneService> foundServices = Lists.newArrayList();
 		Set<String> serviceTypes = Sets.newHashSet();
-		for (KeyStoneService service : access.getServiceCatalog()) {
+		for (KeyStoneService service : access.getServiceCatalog().getServices()) {
 			serviceTypes.add(service.getType());
 
 			if (serviceType.equals(service.getType())) {

@@ -1,8 +1,8 @@
 package org.openstack.client.cli.model;
 
+import org.openstack.api.storage.ObjectResource;
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.client.cli.autocomplete.StoragePathAutoCompleter;
-import org.openstack.client.storage.ObjectResource;
-import org.openstack.client.storage.OpenstackStorageClient;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;

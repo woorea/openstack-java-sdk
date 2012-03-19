@@ -1,0 +1,14 @@
+package org.openstack.api.compute.notavailable;
+
+import org.openstack.api.common.Resource;
+
+/**
+ * Admin-only host administration
+ * 
+ * @author sp
+ *
+ */
+public class HostResource extends Resource {
+
+
+}

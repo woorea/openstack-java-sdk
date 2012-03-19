@@ -1,8 +1,8 @@
 package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.api.storage.OpenstackStorageClient;
 import org.openstack.client.cli.model.StoragePath;
-import org.openstack.client.storage.OpenstackStorageClient;
 
 public class ListFiles extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)

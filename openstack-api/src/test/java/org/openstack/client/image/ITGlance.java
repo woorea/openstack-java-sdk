@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Hex;
-import org.openstack.client.common.OpenstackImageClient;
+import org.openstack.api.common.OpenstackImageClient;
 import org.openstack.client.utils.RandomDataInputStream;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
@@ -31,7 +31,7 @@ public class ITGlance extends GlanceIntegrationTest {
 		skipIfNoGlance();
 
 		OpenstackImageClient glance = getImageClient();
-		List<GlanceImage> images = Lists.newArrayList(glance.root().images().list());
+		List<GlanceImage> images = Lists.newArrayList(glance.root().images().list().getList());
 
 		for (GlanceImage image : images) {
 			GlanceImage details = glance.root().images().image(image.getId()).show();
@@ -98,7 +98,7 @@ public class ITGlance extends GlanceIntegrationTest {
 			assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
 		}
 
-		List<GlanceImage> allImages = Lists.newArrayList(glance.root().images().list());
+		List<GlanceImage> allImages = Lists.newArrayList(glance.root().images().list().getList());
 
 		GlanceImage foundInAll = findImageById(allImages, uploaded.getId());
 		assertNotNull(foundInAll);
@@ -117,7 +117,7 @@ public class ITGlance extends GlanceIntegrationTest {
 
 		for (int i = 0; i < 60; i++) {
 			// Wait for up to 60 seconds for the image to be deleted
-			allImages = Lists.newArrayList(glance.root().images().list());
+			allImages = Lists.newArrayList(glance.root().images().list().getList());
 			foundInAll = findImageById(allImages, uploaded.getId());
 			if (foundInAll == null)
 				break;

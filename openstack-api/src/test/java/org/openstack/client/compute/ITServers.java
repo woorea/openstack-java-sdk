@@ -1,7 +1,8 @@
 package org.openstack.client.compute;
 
-import org.openstack.client.common.OpenStackSession;
-import org.openstack.client.common.OpenstackComputeClient;
+import org.openstack.api.common.OpenStackSession;
+import org.openstack.api.common.OpenstackComputeClient;
+import org.openstack.api.compute.ServerResource;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;

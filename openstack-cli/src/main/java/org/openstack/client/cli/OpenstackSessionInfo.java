@@ -1,9 +1,9 @@
 package org.openstack.client.cli;
 
-import org.openstack.client.common.CachingLinkResolver;
-import org.openstack.client.common.OpenStackSession;
-import org.openstack.client.common.OpenstackCredentials;
-import org.openstack.client.common.OpenStackSession.Feature;
+import org.openstack.api.common.CachingLinkResolver;
+import org.openstack.api.common.OpenStackSession;
+import org.openstack.api.common.OpenstackCredentials;
+import org.openstack.api.common.OpenStackSession.Feature;
 
 public class OpenstackSessionInfo {
 	final boolean debug;
