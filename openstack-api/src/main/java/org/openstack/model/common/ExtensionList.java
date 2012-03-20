@@ -9,12 +9,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Lists;
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "extensions")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ExtensionList implements Iterable<Extension> {
 
     @XmlElement(name = "extension")
+    @SerializedName("extensions")
     private List<Extension> list;
 
     public List<Extension> getList() {
@@ -28,4 +30,9 @@ public class ExtensionList implements Iterable<Extension> {
     public Iterator<Extension> iterator() {
         return list.iterator();
     }
+
+	@Override
+	public String toString() {
+		return "ExtensionList [list=" + list + "]";
+	}
 }

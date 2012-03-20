@@ -74,7 +74,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
-		NovaSecurityGroup created = client.compute().publicEndpoint().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
+		NovaSecurityGroup created = client.compute().publicEndpoint().securityGroups().post(new HashMap<String, Object>(), Entity.json(createRequest));
 		Assert.assertEquals(created.getName(), groupName);
 		Assert.assertEquals(created.getDescription(), description);
 		Assert.assertNotNull(created.getId());
@@ -104,11 +104,11 @@ public class ITSecurityGroups extends ComputeApiTest {
 			NovaSecurityGroupRule rule = fetched.getRules().get(0);
 			assertSecurityGroupRuleEquals(newRule, rule);
 
-			// // List the rules directly
-			// {
-			// SecurityGroupRule found = nova.root().securityGroupRules().securityGroupRule(createdRule.id).fetch();
-			// assertSecurityGroupRuleEquals(newRule, found);
-			// }
+			// List the rules directly
+			{
+			//NovaSecurityGroupRule found = client.compute().publicEndpoint().securityGroupRules().securityGroupRule(createdRule.id).get(new HashMap<String, Object>());
+			//assertSecurityGroupRuleEquals(newRule, found);
+			}
 		}
 
 		// Drop the rule
@@ -157,15 +157,15 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 		// Should fail because description is too long
 		Assert.assertTrue(description.length() > 255);
-		client.compute().publicEndpoint().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
+		client.compute().publicEndpoint().securityGroups().post(new HashMap<String, Object>(), Entity.json(createRequest));
 	}
 
 	@Test
 	public void testDuplicateNameFails() throws OpenstackException {
-		/*
+		
 		skipIfNoSecurityGroups();
 
-		OpenstackComputeClient nova = getComputeClient();
+		
 
 		String groupName = random.randomAlphanumericString(1, 128).trim();
 		String description = random.randomAlphanumericString(1, 255).trim();
@@ -174,17 +174,16 @@ public class ITSecurityGroups extends ComputeApiTest {
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
-		NovaSecurityGroup created1 = nova.root().securityGroups().create(createRequest);
+		NovaSecurityGroup created1 = client.compute().publicEndpoint().securityGroups().post(new HashMap<String,Object>(), Entity.json(createRequest));
 		Assert.assertNotNull(created1);
 
 		try {
-			NovaSecurityGroup created2 = nova.root().securityGroups().create(createRequest);
+			NovaSecurityGroup created2 = client.compute().publicEndpoint().securityGroups().post(new HashMap<String,Object>(), Entity.json(createRequest));
 			Assert.fail();
 		} catch (OpenstackException e) {
 			// This would ideally be a better exception (different error code), but we can cope...
 			Assert.assertTrue(e.getMessage().contains("already exists"), "Unexpected message: " + e.getMessage());
 		}
-		*/
 	}
 
 }

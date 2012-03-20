@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Map;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -25,7 +27,7 @@ public class KeyPairResource extends Resource {
 	}
 
 
-	public void delete() {
+	public void delete(Map<String, Object> properties) {
 		target.request().delete();
 	}
 

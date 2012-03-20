@@ -6,7 +6,6 @@ import java.util.HashMap;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.AsyncServerOperation;
-import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaKeyPair;

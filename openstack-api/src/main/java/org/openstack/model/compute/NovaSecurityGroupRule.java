@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement(name = "security_group_rule")
 @XmlAccessorType(XmlAccessType.NONE)
 public class NovaSecurityGroupRule implements Serializable {
@@ -72,21 +74,26 @@ public class NovaSecurityGroupRule implements Serializable {
     public String name;
 
     @XmlElement(name = "parent_group_id", required = true)
+    @SerializedName("parent_group_id")
     private Integer parentGroupId;
 
     @XmlElement(name = "from_port")
+    @SerializedName("from_port")
     public Integer fromPort;
 
     @XmlElement(name = "to_port")
+    @SerializedName("to_port")
     public Integer toPort;
 
     @XmlElement(name = "ip_protocol")
+    @SerializedName("ip_protocol")
     public String ipProtocol;
 
     @XmlElement(name = "ip_range")
+    @SerializedName("ip_range")
     public IpRange ipRange;
 
-    @XmlElement(name = "group")
+    @XmlElement
     private Group group;
 
     public Integer getParentGroupId() {

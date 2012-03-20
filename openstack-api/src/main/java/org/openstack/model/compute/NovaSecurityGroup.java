@@ -10,8 +10,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
+
 @XmlRootElement(name = "security_group")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("security_group")
 public class NovaSecurityGroup implements Serializable {
 
     @XmlAttribute

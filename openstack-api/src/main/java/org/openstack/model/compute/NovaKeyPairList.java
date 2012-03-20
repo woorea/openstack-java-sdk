@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
@@ -34,6 +36,11 @@ public class NovaKeyPairList implements Serializable, Iterable<NovaKeyPair> {
 
 		public void setKeypair(NovaKeyPair keypair) {
 			this.keypair = keypair;
+		}
+
+		@Override
+		public String toString() {
+			return "KeyPairListItem [keypair=" + keypair + "]";
 		}
 	}
 

@@ -10,7 +10,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("extension")
 public class Extension implements Serializable {
+
     @XmlAttribute
     private String alias;
 
