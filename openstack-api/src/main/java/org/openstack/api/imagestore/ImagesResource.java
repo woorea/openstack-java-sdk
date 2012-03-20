@@ -12,7 +12,6 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.api.compute.ImageResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.image.GlanceImage;
 import org.openstack.model.image.GlanceImageList;

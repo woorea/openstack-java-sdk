@@ -5,12 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.Request.RequestBuilder;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
@@ -72,35 +71,35 @@ public class ObjectResource  extends Resource {
 		return target.request(MediaType.APPLICATION_OCTET_STREAM).get(InputStream.class);	
 	}
 
-
-	public void addObject(File imageFile, SwiftObjectProperties properties) throws IOException, OpenstackException {
-		FileInputStream fis = new FileInputStream(imageFile);
-		try {
-			putObject(fis, imageFile.length(), properties);
-		} finally {
-			Io.safeClose(fis);
-		}
-	}
-
-	public SwiftObjectProperties putObject(File srcFile, SwiftObjectProperties properties) throws OpenstackException, IOException {
+	public SwiftObjectProperties put(File srcFile, SwiftObjectProperties properties) throws OpenstackException, IOException {
 		FileInputStream fis = new FileInputStream(srcFile);
 		try {
-			return putObject(fis, srcFile.length(), properties);
+			return put(fis, srcFile.length(), properties);
 		} finally {
 			Io.safeClose(fis);
 		}
 	}
 
-	public SwiftObjectProperties putObject(InputStream objectStream, long objectStreamLength, SwiftObjectProperties properties)
+	public SwiftObjectProperties put(InputStream objectStream, long objectStreamLength, SwiftObjectProperties properties)
 			throws OpenstackException, IOException {
+		Preconditions.checkNotNull(properties, "You have to supply object propeties");
+		Preconditions.checkNotNull(properties, "You have to supply object name");
 
 		if (objectStreamLength != -1) {
 			objectStream = new KnownLengthInputStream(objectStream, objectStreamLength);
 		}
 
-		Invocation.Builder builder = buildPutRequest(properties);
-
-		Response response = null; //builder.put(Response.class, objectStream);
+		Invocation.Builder builder = target.request();
+		
+		SwiftHeaderUtils.setHeadersForProperties(builder, properties);
+		
+		Response response = null;
+		if (properties.getContentType() != null) {
+			MediaType contentType = MediaType.valueOf(properties.getContentType());
+			response = builder.put(Entity.entity(objectStream, contentType), Response.class);
+		} else {
+			response = builder.put(Entity.entity(objectStream, MediaType.APPLICATION_OCTET_STREAM), Response.class);
+		}
 		MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
 
 		SwiftObjectProperties responseProperties = new SwiftObjectProperties();
@@ -110,21 +109,6 @@ public class ObjectResource  extends Resource {
 			responseProperties.setETag(etag);
 		}
 		return responseProperties;
-	}
-
-	public Invocation.Builder buildPutRequest(SwiftObjectProperties properties) {
-		Preconditions.checkNotNull(properties, "You have to supply object propeties");
-		Preconditions.checkNotNull(properties, "You have to supply object name");
-		
-		Invocation.Builder builder = target.request();
-		
-		SwiftHeaderUtils.setHeadersForProperties(builder, properties);
-		
-		if (properties.getContentType() != null) {
-			MediaType contentType = MediaType.valueOf(properties.getContentType());
-			//builder.put(, contentType);
-		}
-		return builder;
 	}
 
 }
