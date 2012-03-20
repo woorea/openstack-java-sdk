@@ -77,7 +77,7 @@ class GlanceHeaderUtils {
             builder = builder.header("x-image-meta-owner", properties.getOwner());
         }
 
-        return setHeadersForProperties(builder, properties.getProperties().asMap());
+        return setHeadersForProperties(builder, properties.getProperties());
     }
 
     static Map<String, Field> imageFieldMap;
@@ -123,7 +123,7 @@ class GlanceHeaderUtils {
             String SYSTEM_PROPERTY_PREFIX = "x-image-meta-";
             if (key.startsWith(USER_PROPERTY_PREFIX)) {
                 String name = key.substring(USER_PROPERTY_PREFIX.length());
-                image.getProperties().addProperty(name, value);
+                image.getProperties().put(name, value);
             } else if (key.startsWith(SYSTEM_PROPERTY_PREFIX)) {
                 String name = key.substring(SYSTEM_PROPERTY_PREFIX.length());
                 Field field = imageFieldMap.get(name);

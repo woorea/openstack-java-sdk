@@ -2,12 +2,16 @@ package org.openstack.model.image;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "image")
@@ -17,38 +21,48 @@ public class GlanceImage implements Serializable {
     @XmlAttribute
     private String name;
     @XmlAttribute(name = "disk_format")
+    @SerializedName("disk_format")
     private String diskFormat;
     @XmlAttribute(name = "container_format")
+    @SerializedName("container_format")
     private String containerFormat;
     @XmlAttribute
     private Long size;
     @XmlAttribute
     private String checksum;
     @XmlAttribute(name = "created_at")
+    @SerializedName("created_at")
     private Date createdAt;
     @XmlAttribute(name = "updated_at")
+    @SerializedName("updated_at")
     private Date updatedAt;
     @XmlAttribute(name = "deleted_at")
+    @SerializedName("deleted_at")
     private Date deletedAt;
     @XmlAttribute
     private String status;
     @XmlAttribute(name = "is_public")
+    @SerializedName("is_public")
     private Boolean isPublic;
     @XmlAttribute(name = "min_ram")
+    @SerializedName("min_ram")
     private Integer minRam;
     @XmlAttribute(name = "min_disk")
+    @SerializedName("min_disk")
     private Integer minDisk;
     @XmlAttribute
     private String owner;
     @XmlAttribute
     private Boolean deleted;
     @XmlAttribute(name = "protected")
+    @SerializedName("protected")
     private Boolean isProtected;
     @XmlAttribute
     private String id;
 
-    @XmlElement
-    private GlanceImageProperties properties;
+    //@XmlElement
+    //private GlanceImageProperties properties;
+    final Map<String, Object> properties = Maps.newHashMap();
 
     public String getUri() {
         return uri;
@@ -186,18 +200,11 @@ public class GlanceImage implements Serializable {
         this.id = id;
     }
 
-    public GlanceImageProperties getProperties() {
-        if (properties == null) {
-            properties = new GlanceImageProperties();
-        }
-        return properties;
-    }
+    public Map<String, Object> getProperties() {
+		return properties;
+	}
 
-    public void setProperties(GlanceImageProperties properties) {
-        this.properties = properties;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return "Image [uri=" + uri + ", name=" + name + ", diskFormat=" + diskFormat + ", containerFormat=" + containerFormat + ", size=" + size + ", checksum=" + checksum + ", createdAt="
                 + createdAt + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", status=" + status + ", isPublic=" + isPublic + ", minRam=" + minRam + ", minDisk=" + minDisk + ", owner="

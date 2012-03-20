@@ -32,7 +32,7 @@ public class OpenStackImagesClient {
 	}
 	
 	public ImagesResource publicEndpoint(String region) {
-		return client.target(regions.get(region).getPublicURL(), ImagesResource.class);
+		return client.target(regions.get(region).getPublicURL().concat("/images"), ImagesResource.class);
 	}
 	
 	public ImagesResource internalEndpoint() throws OpenstackException {
@@ -41,7 +41,7 @@ public class OpenStackImagesClient {
 	}
 	
 	public ImagesResource internalEndpoint(String region) {
-		return client.target(regions.get(region).getInternalURL(), ImagesResource.class);
+		return client.target(regions.get(region).getInternalURL().concat("/images"), ImagesResource.class);
 	}
 	
 	public ImagesResource administrationEndpoint() throws OpenstackException {
@@ -50,7 +50,7 @@ public class OpenStackImagesClient {
 	}
 	
 	public ImagesResource administrationEndpoint(String region) {
-		return client.target(regions.get(region).getAdminURL(), ImagesResource.class);
+		return client.target(regions.get(region).getAdminURL().concat("/images"), ImagesResource.class);
 	}
 	
 }

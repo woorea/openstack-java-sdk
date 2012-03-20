@@ -17,7 +17,6 @@ import org.openstack.api.compute.notavailable.CloudPipeResource;
 import org.openstack.api.compute.notavailable.FloatingIpDnsResource;
 import org.openstack.api.compute.notavailable.FloatingIpPoolsResource;
 import org.openstack.api.compute.notavailable.NetworksResource;
-import org.openstack.api.compute.notavailable.VirtualStorageArraysResource;
 
 public class TenantResource extends Resource {
 	
@@ -47,10 +46,6 @@ public class TenantResource extends Resource {
 
     public VolumesResource volumes() {
     	return path("/os-volumes", VolumesResource.class);
-    }
-
-    public VirtualStorageArraysResource virtualStorageArrays() {
-    	return path("/vsa", VirtualStorageArraysResource.class);
     }
 
     public SimpleTenantUsageResource usage() {

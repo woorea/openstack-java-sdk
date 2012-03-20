@@ -21,5 +21,10 @@ public class GlanceImageList implements Serializable {
     public List<GlanceImage> getList() {
     	return images;
     }
+
+	@Override
+	public String toString() {
+		return "GlanceImageList [images=" + images + "]";
+	}
     
 }

@@ -21,63 +21,65 @@ import org.openstack.model.identity.KeyStoneTenant;
 import org.openstack.model.identity.KeyStoneTenantList;
 import org.openstack.model.identity.KeyStoneUser;
 import org.openstack.model.identity.KeyStoneUserList;
+import org.openstack.model.image.GlanceImageList;
+import org.openstack.model.storage.SwiftAccount;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
 		OpenStackClient openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:35357/v2.0", "admin", "secret0");
-		//We use here the admintoken (set on installation process)
-		openstack.getAccess().getToken().setId("secret0");
-		
-		IdentityResource identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
-		
-		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>());
-
-		KeyStoneTenant tenant = new KeyStoneTenant();
-		tenant.setName("test");
-		tenant.setDescription("desc");
-		tenant.setEnabled(true);
-		tenant = identity.tenants().post(Entity.json(tenant));
-
-		tenant = identity.tenants().tenant(tenant.getId()).get();
-
-		identity.tenants().tenant(tenant.getId()).delete();
-
-		KeyStoneUserList users = identity.users().get(new HashMap<String, Object>());
-
-		KeyStoneUser user = new KeyStoneUser();
-		user.setName("test");
-		user.setPassword("secret0");
-		user.setEmail("test@test.com");
-		user.setEnabled(true);
-		user = identity.users().post(Entity.json(user));
-
-		user = identity.users().user(user.getId()).get();
-
-		identity.users().user(user.getId()).delete();
-
-		KeyStoneRoleList roles = identity.roles().get(new HashMap<String, Object>());
-
-		KeyStoneRole role = new KeyStoneRole();
-		role.setName("test");
-		role = identity.roles().post(Entity.json(role));
-
-		role = identity.roles().role(role.getId()).get();
-
-		identity.roles().role(role.getId()).delete();
-
-		KeyStoneServiceList services = identity.services().get(new HashMap<String, Object>());
-
-		KeyStoneService service = new KeyStoneService();
-		service.setName("test");
-		service.setType("compute");
-		service.setDescription("Nova 3");
-		service = identity.services().post(Entity.json(service));
-
-		service = identity.services().service(service.getId()).get();
-
-		identity.services().service(service.getId()).delete();
+//		//We use here the admintoken (set on installation process)
+//		openstack.getAccess().getToken().setId("secret0");
+//		
+//		IdentityResource identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
+//		
+//		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>());
+//
+//		KeyStoneTenant tenant = new KeyStoneTenant();
+//		tenant.setName("test");
+//		tenant.setDescription("desc");
+//		tenant.setEnabled(true);
+//		tenant = identity.tenants().post(Entity.json(tenant));
+//
+//		tenant = identity.tenants().tenant(tenant.getId()).get();
+//
+//		identity.tenants().tenant(tenant.getId()).delete();
+//
+//		KeyStoneUserList users = identity.users().get(new HashMap<String, Object>());
+//
+//		KeyStoneUser user = new KeyStoneUser();
+//		user.setName("test");
+//		user.setPassword("secret0");
+//		user.setEmail("test@test.com");
+//		user.setEnabled(true);
+//		user = identity.users().post(Entity.json(user));
+//
+//		user = identity.users().user(user.getId()).get();
+//
+//		identity.users().user(user.getId()).delete();
+//
+//		KeyStoneRoleList roles = identity.roles().get(new HashMap<String, Object>());
+//
+//		KeyStoneRole role = new KeyStoneRole();
+//		role.setName("test");
+//		role = identity.roles().post(Entity.json(role));
+//
+//		role = identity.roles().role(role.getId()).get();
+//
+//		identity.roles().role(role.getId()).delete();
+//
+//		KeyStoneServiceList services = identity.services().get(new HashMap<String, Object>());
+//
+//		KeyStoneService service = new KeyStoneService();
+//		service.setName("test");
+//		service.setType("compute");
+//		service.setDescription("Nova 3");
+//		service = identity.services().post(Entity.json(service));
+//
+//		service = identity.services().service(service.getId()).get();
+//
+//		identity.services().service(service.getId()).delete();
 
 //		This is not implemented on keystone server api yet
 //		KeyStoneEndpointTemplatesList endpointTemplates = identity.endpoints().get(new HashMap<String, Object>() {{
@@ -86,27 +88,30 @@ public class Test {
 		
 		openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0");
 		
-		identity = openstack.target("http://192.168.1.52:5000/v2.0", IdentityResource.class);
+		IdentityResource identity = openstack.target("http://192.168.1.52:5000/v2.0", IdentityResource.class);
 		
-		tenants = identity.tenants().get(new HashMap<String, Object>());
+		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>());
 		
 		openstack.exchangeTokenForTenant(tenants.getList().get(0).getId());
 		
+//		NovaServerList servers = openstack.compute().publicEndpoint().servers().get(new HashMap<String, Object>(){{
+//			put("detail",true);
+//		}});
+//		
+//		NovaImageList images = openstack.compute().publicEndpoint().images().get(new HashMap<String,Object>());
+//		// "cirros-0.3.0-x86_64-blank"
+//		
+//		NovaFlavorList flavors = openstack.compute().publicEndpoint().flavors().get(new HashMap<String, Object>());
+//		
+//		NovaKeyPairList keypairs = openstack.compute().publicEndpoint().keyPairs().get(new HashMap<String, Object>());
+//		
+//		NovaSecurityGroupList securityGroups = openstack.compute().publicEndpoint().securityGroups().get(new HashMap<String, Object>());
+//		
+//		NovaVolumeList volumes = openstack.compute().publicEndpoint().volumes().get(new HashMap<String, Object>());
 		
-		NovaServerList servers = openstack.compute().publicEndpoint().servers().get(new HashMap<String, Object>(){{
-			put("detail",true);
-		}});
+		GlanceImageList gImages = openstack.images().publicEndpoint().get(new HashMap<String, Object>());
 		
-		NovaImageList images = openstack.compute().publicEndpoint().images().get(new HashMap<String,Object>());
-		// "cirros-0.3.0-x86_64-blank"
-		
-		NovaFlavorList flavors = openstack.compute().publicEndpoint().flavors().get(new HashMap<String, Object>());
-		
-		NovaKeyPairList keypairs = openstack.compute().publicEndpoint().keyPairs().get(new HashMap<String, Object>());
-		
-		NovaSecurityGroupList securityGroups = openstack.compute().publicEndpoint().securityGroups().get(new HashMap<String, Object>());
-		
-		NovaVolumeList volumes = openstack.compute().publicEndpoint().volumes().get(new HashMap<String, Object>());
+		SwiftAccount sAccount = openstack.storage().publicEndpoint().get();
 
 		// NovaSnapshotList snapshots = compute.snapshots().get(new
 		// HashMap<String, Object>(){{
