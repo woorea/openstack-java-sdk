@@ -1,5 +1,7 @@
 package org.openstack.api.compute.notavailable;
 
+import javax.ws.rs.client.Target;
+
 import org.openstack.api.common.Resource;
 
 public class VolumeTypeResource extends Resource {
@@ -15,7 +17,12 @@ public class VolumeTypeResource extends Resource {
     // return new FlavorsRepresentation(client, list);
     // }
 
-    public void delete() {
+    protected VolumeTypeResource(Target target) {
+		super(target);
+		// TODO Auto-generated constructor stub
+	}
+
+	public void delete() {
     }
 
 }

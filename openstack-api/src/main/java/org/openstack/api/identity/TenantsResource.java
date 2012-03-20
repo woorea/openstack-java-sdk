@@ -11,11 +11,7 @@ import org.openstack.model.identity.KeyStoneTenant;
 import org.openstack.model.identity.KeyStoneTenantList;
 
 public class TenantsResource extends Resource {
-	
-	public TenantsResource() {
-		
-	}
-	
+
 	public TenantsResource(Target target) {
 		super(target);
 	}

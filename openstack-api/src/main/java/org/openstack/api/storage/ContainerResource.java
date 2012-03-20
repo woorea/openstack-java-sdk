@@ -11,11 +11,11 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Request.RequestBuilder;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.api.imagestore.KnownLengthInputStream;
-import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.model.storage.SwiftStorageObject;
@@ -97,7 +97,7 @@ public class ContainerResource extends Resource {
 
 		RequestBuilder builder = buildPutRequest(properties);
 
-		Response response = builder.put(Response.class, objectStream);
+		Response response = null; //builder.put(Response.class, objectStream);
 		MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
 
 		SwiftObjectProperties responseProperties = new SwiftObjectProperties();

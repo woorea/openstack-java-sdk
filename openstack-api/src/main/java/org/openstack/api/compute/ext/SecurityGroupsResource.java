@@ -17,12 +17,6 @@ public class SecurityGroupsResource extends Resource {
 		super(target);
 	}
 
-	@Override
-	protected MediaType getDefaultContentType() {
-		// Whitespace problems when using XML
-		return MediaType.APPLICATION_JSON_TYPE;
-	}
-
 	public NovaSecurityGroupList get(Map<String, Object> properties) {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
 	}

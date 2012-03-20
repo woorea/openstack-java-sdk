@@ -22,13 +22,6 @@ public class KeyPairsResource extends Resource {
 		super(target);
 	}
 
-	// KeyPairsResource seems to be JSON only
-	// TODO: Is this an OpenStack bug or an HP bug?
-	@Override
-	protected MediaType getDefaultContentType() {
-		return MediaType.APPLICATION_JSON_TYPE;
-	}
-
 	/**
 	 * List of keypairs for a user
 	 * 

@@ -3,18 +3,15 @@ package org.openstack.api.storage;
 import java.io.InputStream;
 
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.Request.RequestBuilder;
 
-import org.openstack.api.common.HeadResponse;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.TenantResource;
-import org.openstack.client.RequestBuilder;
-import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.storage.SwiftObjectProperties;
 
 public class ObjectResource  extends Resource {
 	
-	private TenantResource t = new TenantResource();
+	private TenantResource t = null; //new TenantResource();
 	
 	
 	public ObjectResource(Target target) {
@@ -29,7 +26,7 @@ public class ObjectResource  extends Resource {
 	public InputStream openStream() {
 		RequestBuilder request = buildDownloadRequest();
 
-		return request.get(InputStream.class);
+		return null;//request.get(InputStream.class);
 	}
 
 	public RequestBuilder buildDownloadRequest() {

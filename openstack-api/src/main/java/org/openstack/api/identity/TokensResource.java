@@ -10,10 +10,6 @@ import org.openstack.model.identity.KeyStoneAuthentication;
 
 public class TokensResource extends Resource {
 	
-	public TokensResource() {
-	
-	}
-	
 	public TokensResource(Target target) {
 		super(target);
 	}

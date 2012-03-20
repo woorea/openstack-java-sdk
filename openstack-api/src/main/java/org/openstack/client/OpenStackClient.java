@@ -31,6 +31,10 @@ public class OpenStackClient {
 	
 	private OpenStackComputeClient compute;
 	
+	private OpenStackImagesClient images;
+	
+	private OpenStackStorageClient storage;
+	
 	OpenStackClient(Client client, String authURL, KeyStoneAccess access) {
 		this.client = client;
 		this.authURL = authURL;
@@ -92,6 +96,46 @@ public class OpenStackClient {
 			}
 		}
 		return this.compute;
+	}
+	
+	public OpenStackImagesClient images() {
+		if(images == null) {
+			Preconditions.checkNotNull(access, "You must be authenticated before get a compute client");
+			Preconditions.checkNotNull(access.getServices(), "Identity does not provide information about services, you can try openstack.target(<computeTenantURL>, TenantResource.class) method instead");
+			try {
+				this.images = new OpenStackImagesClient(this, Iterables.find(access.getServices(), new Predicate<KeyStoneService>() {
+
+					@Override
+					public boolean apply(KeyStoneService service) {
+						return "image".equals(service.getType());
+					}
+					
+				}));
+			} catch (NoSuchElementException e) {
+				throw new OpenstackException("Compute service not found, you can try openstack.target(<computeTenantURL>, TenantResource.class) method instead", e);
+			}
+		}
+		return this.images;
+	}
+	
+	public OpenStackStorageClient storage() {
+		if(storage == null) {
+			Preconditions.checkNotNull(access, "You must be authenticated before get a compute client");
+			Preconditions.checkNotNull(access.getServices(), "Identity does not provide information about services, you can try openstack.target(<computeTenantURL>, TenantResource.class) method instead");
+			try {
+				this.storage = new OpenStackStorageClient(this, Iterables.find(access.getServices(), new Predicate<KeyStoneService>() {
+
+					@Override
+					public boolean apply(KeyStoneService service) {
+						return "object-store".equals(service.getType());
+					}
+					
+				}));
+			} catch (NoSuchElementException e) {
+				throw new OpenstackException("Compute service not found, you can try openstack.target(<computeTenantURL>, TenantResource.class) method instead", e);
+			}
+		}
+		return this.storage;
 	}
 	
 	public <T extends Resource> T target(String absoluteURL, Class<T> clazz) {

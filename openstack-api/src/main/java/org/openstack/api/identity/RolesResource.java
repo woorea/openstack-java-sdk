@@ -12,10 +12,6 @@ import org.openstack.model.identity.KeyStoneRoleList;
 
 public class RolesResource extends Resource {
 	
-	public RolesResource() {
-	
-	}
-	
 	public RolesResource(Target target) {
 		super(target);
 	}

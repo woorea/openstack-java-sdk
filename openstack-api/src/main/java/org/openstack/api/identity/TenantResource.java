@@ -8,11 +8,7 @@ import org.openstack.api.common.Resource;
 import org.openstack.model.identity.KeyStoneTenant;
 
 public class TenantResource extends Resource {
-	
-	public TenantResource() {
-		
-	}
-	
+
 	public TenantResource(Target target) {
 		super(target);
 	}

@@ -12,9 +12,6 @@ import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
 
 public class EndpointTemplatesResource extends Resource {
 	
-	public EndpointTemplatesResource() {
-	}
-	
 	public EndpointTemplatesResource(Target target) {
 		super(target);
 	}

@@ -8,7 +8,6 @@ import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
 
 import org.openstack.api.common.Resource;
-import org.openstack.client.OpenStackSession;
 import org.openstack.model.common.OpenStackSession2;
 import org.openstack.model.storage.SwiftAccount;
 
@@ -18,20 +17,12 @@ public class AccountResource extends Resource {
 		super(target);
 	}
 
-	public AccountResource(OpenStackSession session, String resource) {
-		initialize(session, resource);
-	}
-
 	public SwiftAccount get() {
 		return target.request().get(SwiftAccount.class);
 	}
 
 	public ContainersResource containers() {
 		return path("/containers",ContainersResource.class);
-	}
-
-	public String getBaseUrl() {
-		return resource;
 	}
 
 	public static AccountResource endpoint(Client client, String endpoint) {

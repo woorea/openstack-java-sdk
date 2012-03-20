@@ -6,14 +6,9 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.client.OpenStackSession;
 import org.openstack.model.compute.NovaConsole;
 
 public class ConsoleResource extends Resource {
-	
-	public ConsoleResource(OpenStackSession session, String resource) {
-		super(session, resource);
-	}
 
 	public ConsoleResource(Target target) {
 		super(target);

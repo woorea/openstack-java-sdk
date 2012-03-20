@@ -9,10 +9,7 @@ import org.openstack.model.identity.KeyStoneService;
 import org.openstack.model.identity.KeyStoneService;
 
 public class ServiceResource extends Resource {
-	
-	public ServiceResource() {
-	}
-	
+
 	public ServiceResource(Target target) {
 		super(target);
 	}

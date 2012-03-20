@@ -7,13 +7,12 @@ import java.io.InputStream;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Target;
 import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ImageResource;
-import org.openstack.client.RequestBuilder;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.image.GlanceImage;
 import org.openstack.model.image.GlanceImageList;

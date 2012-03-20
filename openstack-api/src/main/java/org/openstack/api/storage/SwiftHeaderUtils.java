@@ -3,8 +3,9 @@ package org.openstack.api.storage;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.ws.rs.core.Request.RequestBuilder;
+
 import org.openstack.api.common.HeadResponse;
-import org.openstack.client.RequestBuilder;
 import org.openstack.model.storage.SwiftObjectProperties;
 
 class SwiftHeaderUtils {
@@ -58,10 +59,13 @@ class SwiftHeaderUtils {
 	}
 
 	public static RequestBuilder setHeadersForProperties(RequestBuilder builder, SwiftObjectProperties changeProperties) {
+		/*
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {
 			builder.putHeader("x-object-meta-" + tag.getKey(), tag.getValue());
 		}
 		return builder;
+		*/
+		return null;
 	}
 
 }

@@ -1,8 +1,8 @@
 package org.openstack.api.storage;
 
+import javax.ws.rs.client.Target;
+
 import org.openstack.api.common.Resource;
-import org.openstack.client.RequestBuilder;
-import org.openstack.model.storage.SwiftAccount;
 import org.openstack.model.storage.SwiftContainer;
 
 public class ContainersResource extends Resource {
@@ -24,6 +24,11 @@ public class ContainersResource extends Resource {
 	// DELETE /account/container/object Delete container
 	// HEAD /account/container/object Retrieve object metadata
 	// POST /account/container/object Update object metadata
+
+	protected ContainersResource(Target target) {
+		super(target);
+		// TODO Auto-generated constructor stub
+	}
 
 	public Iterable<SwiftContainer> list() {
 //		RequestBuilder imagesResource = resource();

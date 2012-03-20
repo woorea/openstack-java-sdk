@@ -2,6 +2,7 @@ package org.openstack.api.compute.ext;
 
 import java.util.Map;
 
+import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
@@ -14,13 +15,12 @@ import org.openstack.model.compute.NovaFloatingIpList;
  * @author sp
  * 
  */
+//Floating IPs seems to be JSON only
+// TODO: Is this an OpenStack bug or an HP bug?
 public class FloatingIpsResource extends Resource {
 
-	// Floating IPs seems to be JSON only
-	// TODO: Is this an OpenStack bug or an HP bug?
-	@Override
-	protected MediaType getDefaultContentType() {
-		return MediaType.APPLICATION_JSON_TYPE;
+	protected FloatingIpsResource(Target target) {
+		super(target);
 	}
 
 	/**

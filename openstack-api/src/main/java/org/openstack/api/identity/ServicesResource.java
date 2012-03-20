@@ -12,9 +12,7 @@ import org.openstack.model.identity.KeyStoneService;
 import org.openstack.model.identity.KeyStoneServiceList;
 
 public class ServicesResource extends Resource {
-	
-	public ServicesResource() {
-	}
+
 	
 	public ServicesResource(Target target) {
 		super(target);

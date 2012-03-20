@@ -6,12 +6,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.identity.KeyStoneEndpointTemplates;
-import org.openstack.model.identity.KeyStoneUser;
 
 public class EndpointTemplateResource extends Resource {
-	
-	public EndpointTemplateResource() {
-	}
 	
 	public EndpointTemplateResource(Target target) {
 		super(target);

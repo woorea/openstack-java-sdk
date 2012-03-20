@@ -12,10 +12,7 @@ import org.openstack.model.identity.KeyStoneUser;
 import org.openstack.model.identity.KeyStoneUserList;
 
 public class UsersResource extends Resource {
-	
-	public UsersResource() {
-	}
-	
+
 	public UsersResource(Target target) {
 		super(target);
 	}

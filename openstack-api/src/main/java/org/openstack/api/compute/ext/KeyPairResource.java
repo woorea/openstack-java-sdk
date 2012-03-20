@@ -19,13 +19,6 @@ public class KeyPairResource extends Resource {
 		super(target);
 	}
 
-	// JSON Only?
-	// TODO: Is this an OpenStack bug or an HP bug?
-	@Override
-	protected MediaType getDefaultContentType() {
-		return MediaType.APPLICATION_JSON_TYPE;
-	}
-
 
 	public void delete(Map<String, Object> properties) {
 		target.request().delete();

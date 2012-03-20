@@ -8,17 +8,12 @@ import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
 
 import org.openstack.api.common.Resource;
-import org.openstack.client.OpenStackSession;
 import org.openstack.model.common.OpenStackSession2;
 
 public class IdentityResource extends Resource {
 
 	public IdentityResource(Target target) {
 		super(target);
-	}
-
-	public IdentityResource(OpenStackSession session, String resource) {
-		initialize(session, resource);
 	}
 	
 	public static IdentityResource endpoint(Client client, String endpoint) {

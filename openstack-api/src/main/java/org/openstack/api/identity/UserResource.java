@@ -8,14 +8,10 @@ import org.openstack.api.common.Resource;
 import org.openstack.model.identity.KeyStoneUser;
 
 public class UserResource extends Resource {
-	
-	public UserResource() {
-	}
-	
+
 	public UserResource(Target target) {
 		super(target);
 	}
-
 
 	public KeyStoneUser get() {
 		return target.request(MediaType.APPLICATION_XML).get(KeyStoneUser.class);
