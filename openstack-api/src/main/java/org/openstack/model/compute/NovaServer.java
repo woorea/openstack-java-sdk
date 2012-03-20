@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import org.openstack.model.atom.Link;
+import org.openstack.model.common.JsonRootElement;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -21,6 +22,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("server")
 public class NovaServer implements Serializable {
 
 	@XmlAttribute

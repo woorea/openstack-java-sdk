@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
-
 import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "images")

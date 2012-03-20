@@ -2,12 +2,22 @@ package org.openstack.client.compute;
 
 import java.util.HashMap;
 
+import javax.ws.rs.client.Entity;
+
+import org.openstack.api.compute.AsyncServerOperation;
+import org.openstack.api.compute.FlavorResource;
 import org.openstack.api.compute.ImageResource;
 import org.openstack.api.compute.ServerResource;
-import org.openstack.client.OpenStackSession;
+import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.compute.NovaServerList;
+import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenstackNotFoundException;
+import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class ITServers extends ComputeApiTest {
@@ -15,24 +25,26 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void listServers() {
 		
-		NovaServerList servers = client.compute().publicEndpoint().servers().get(new HashMap<String, Object>());
+		NovaServerList servers = client.compute().publicEndpoint().servers().get(new HashMap<String, Object>() {{ 
+			put("detail", true);
+		}});
 
 		for (NovaServer server : servers.getList()) {
-			NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
-			client.target(server.getLink("bookmark").getHref(), ServerResource.class).delete(new HashMap<String, Object>());
+			//Until this is resolved? on compute server api we access throught id
+			//NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
+			NovaImage image = client.compute().publicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
+			//rel=self carries the version but rel=bookmark ¿clarify from openstack team?
+			client.target(server.getLink("self").getHref(), ServerResource.class).delete(new HashMap<String, Object>());
 		}
 	}
 
-	/*
+	
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {
-		OpenstackComputeClient nova = getComputeClient();
-
-		OpenStackSession session = nova.getSession();
-
-		Iterable<NovaImage> images = nova.root().images().list();
+		
+		NovaImageList images = client.compute().publicEndpoint().images().get(new HashMap<String, Object>());
 		NovaImage image = null;
-		for (NovaImage i : images) {
+		for (NovaImage i : images.getList()) {
 			System.out.println(i);
 			
 			// HP Cloud image
@@ -53,7 +65,7 @@ public class ITServers extends ComputeApiTest {
 		}
 
 		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : nova.root().flavors().list()) {
+		for (NovaFlavor flavor : client.compute().publicEndpoint().flavors().get(new HashMap<String, Object>()).getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
@@ -61,43 +73,44 @@ public class ITServers extends ComputeApiTest {
 
 		NovaServerForCreate serverForCreate = new NovaServerForCreate();
 		serverForCreate.setName(random.randomAlphanumericString(10));
-		serverForCreate.setFlavorRef(bestFlavor.getId());
+		serverForCreate.setFlavorRef(findSmallestFlavor().getId());
 		serverForCreate.setImageRef(image.getId());
 		// serverForCreate.setSecurityGroups(new ArrayList<ServerForCreate.SecurityGroup>() {{
 		// add(new ServerForCreate.SecurityGroup("test"));
 		// }});
 		System.out.println(serverForCreate);
 
-		NovaServer server = nova.root().servers().create(serverForCreate);
+		NovaServer server = client.compute().publicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
 
 		// In trunk, the server returned from the create operation does not have image or flavor set
 		// In Diablo(?)/HP Cloud, the image id is returned
 		if (server.getImageId() != null) {
-			checkLinkedItems(session, server);
+			checkLinkedItems(server);
 		} else {
 			// Not great, but nothing we can do about it
 			System.out.println("No image returned from server create");
 		}
 
 		// Wait for the server to be ready
-		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(nova, server);
+		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(client.compute(), server);
 		NovaServer ready = async.get();
 
 		Assert.assertEquals("ACTIVE", ready.getStatus());
-		checkLinkedItems(session, ready);
+		checkLinkedItems(ready);
 
 		// Delete the server
 		System.out.println(server);
 		System.out.println("DELETING");
-		nova.root().servers().server(server.getId()).delete();
-
-		AsyncServerOperation asyncDelete = AsyncServerOperation.wrapServerDelete(nova, server);
-		asyncDelete.get();
-
+		client.compute().publicEndpoint().servers().server(server.getId()).delete(new HashMap<String, Object>());
+		
 		NovaServer stillHere = null;
 		try {
-			stillHere = nova.root().servers().server(server.getId()).show();
-		} catch (OpenstackNotFoundException e) {
+			AsyncServerOperation asyncDelete = AsyncServerOperation.wrapServerDelete(client.compute(), server);
+			asyncDelete.get();
+
+			stillHere = client.compute().publicEndpoint().servers().server(server.getId()).get(new HashMap<String, Object>());
+		} catch (Exception /*OpenstackNotFoundException*/ e) {
+			//Jersey 2.0 doesn't work fine with exceptions yet
 			// Good!
 		}
 
@@ -107,18 +120,17 @@ public class ITServers extends ComputeApiTest {
 			Assert.assertEquals(stillHere.getStatus(), "DELETED");
 		}
 	}
-	*/
+	
 
-	private void checkLinkedItems(OpenStackSession session, NovaServer ready) {
-		/*
+	private void checkLinkedItems(NovaServer ready) {
 		Assert.assertNotNull(ready.getImage());
 		Assert.assertNotNull(ready.getImage().getId());
 		Assert.assertNotNull(ready.getFlavor());
 		Assert.assertNotNull(ready.getFlavor().getId());
 
-		System.out.println("XXX " + new ServerResource(context.session, ready).getImage().show());
-
-		ready.setImage(new ServerResource(context.session, ready).getImage().show());
+		//bookmark link issue, so link through id
+		NovaImage image = client.compute().publicEndpoint().images().image(ready.getImage().getId()).get(new HashMap<String, Object>());
+		ready.setImage(image);
 
 		Assert.assertNotNull(ready.getImage());
 		Assert.assertNotNull(ready.getImage().getId());
@@ -126,13 +138,14 @@ public class ITServers extends ComputeApiTest {
 		Assert.assertNotNull(ready.getImage().getMinDisk());
 		System.out.println(ready.getImage().getMinDisk());
 
-		ready.setFlavor(new ServerResource(context.session, ready).getFlavor().show());
+		//bookmark link issue, so link through id
+		NovaFlavor flavor = client.compute().publicEndpoint().flavors().flavor(ready.getFlavor().getId()).get(new HashMap<String, Object>());
+		ready.setFlavor(flavor);
 
 		Assert.assertNotNull(ready.getFlavor());
 		Assert.assertNotNull(ready.getFlavor().getId());
 		Assert.assertNotNull(ready.getFlavor().getName());
 		Assert.assertNotNull(ready.getFlavor().getRam());
-		*/
 	}
 
 }

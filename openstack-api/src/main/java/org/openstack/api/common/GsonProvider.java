@@ -121,12 +121,17 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
     	JsonRootElement jsonRootElement = object.getClass().getAnnotation(JsonRootElement.class);
     	final OutputStreamWriter writer = new OutputStreamWriter(entityStream, Charsets.UTF_8);
     	try {
-    		System.out.println(">>> " + object);
-	        JsonElement element = gson.toJsonTree(object);
-	        JsonObject json = new JsonObject();
-	        json.add(jsonRootElement.value(), element);
-	        System.out.println(">>> " + json);
-	        writer.write(json.toString());
+    		if(jsonRootElement != null) {
+    			System.out.println(">>> " + object);
+    	        JsonElement element = gson.toJsonTree(object);
+    	        JsonObject json = new JsonObject();
+    	        json.add(jsonRootElement.value(), element);
+    	        System.out.println(">>> " + json);
+    	        writer.write(json.toString());
+    		} else {
+    			gson.toJson(object, genericType, System.out);
+    			gson.toJson(object, genericType, writer);
+    		}
     	} finally {
             writer.close();
         }

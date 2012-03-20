@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.common.Extension;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
@@ -16,7 +15,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 
 	protected NovaFlavor findSmallestFlavor() {
 		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : client.compute().publicEndpoint().flavors().get(new HashMap<String, Object>()).getList()) {
+		for (NovaFlavor flavor : client.compute().publicEndpoint().flavors().get(new HashMap<String, Object>(){{put("detail",true);}}).getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}

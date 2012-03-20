@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.NovaSecurityGroup;
 import org.openstack.model.compute.NovaSecurityGroupList;

@@ -2,19 +2,26 @@ package org.openstack.model.compute;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
 
 import org.openstack.model.atom.Link;
+import org.openstack.model.common.JsonRootElement;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name="flavor")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("flavor")
 public class NovaFlavor implements Serializable {
 
     @XmlAttribute
@@ -30,7 +37,7 @@ public class NovaFlavor implements Serializable {
     private int vcpus;
 
     @XmlAttribute
-    public Integer swap;
+    private String swap;
 
     @XmlAttribute(name = "rxtx_factor")
     @SerializedName("rxtx_factor")
@@ -38,6 +45,9 @@ public class NovaFlavor implements Serializable {
 
     @XmlAttribute
     private int disk;
+    
+    @XmlAnyAttribute
+    private Map<QName, Object> extensionAttributes;
 
     @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
 	private List<Link> links;
@@ -99,17 +109,37 @@ public class NovaFlavor implements Serializable {
         this.disk = disk;
     }
 
-    public List<Link> getLinks() {
+    public String getSwap() {
+		return swap;
+	}
+
+	public void setSwap(String swap) {
+		this.swap = swap;
+	}
+
+	public List<Link> getLinks() {
         return links;
     }
 
     public void setLinks(List<Link> links) {
         this.links = links;
     }
-
+    
     @Override
-    public String toString() {
-        return "Flavor [id=" + id + ", name=" + name + ", ram=" + ram + ", vcpus=" + vcpus + ", rxtxFactor=" + rxTxFactor + ", disk=" + disk + ", links=" + links + "]";
-    }
+	public String toString() {
+		return "NovaFlavor [id=" + id + ", name=" + name + ", ram=" + ram
+				+ ", vcpus=" + vcpus + ", swap=" + swap + ", rxTxFactor="
+				+ rxTxFactor + ", disk=" + disk + ", links=" + links + "]";
+	}
+
+	public Link getLink(final String rel) {
+		return Iterables.find(links, new Predicate<Link>() {
+
+			@Override
+			public boolean apply(Link link) {
+				return rel.equals(link.getRel());
+			}
+		});
+	}
 
 }
