@@ -2,14 +2,14 @@ package org.openstack.client;
 
 import java.util.Map;
 
-import org.openstack.api.compute.TenantResource;
+import org.openstack.api.identity.IdentityResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.KeyStoneService;
 import org.openstack.model.identity.KeyStoneServiceEndpoint;
 
 import com.google.common.collect.Maps;
 
-public class OpenStackComputeClient {
+public class OpenStackIdentityClient {
 	
 	private OpenStackClient client;
 	
@@ -17,7 +17,7 @@ public class OpenStackComputeClient {
 	
 	private Map<String, KeyStoneServiceEndpoint> regions = Maps.newHashMap();
 
-	public OpenStackComputeClient(OpenStackClient client, KeyStoneService service) {
+	public OpenStackIdentityClient(OpenStackClient client, KeyStoneService service) {
 		this.client = client;
 		this.service = service;
 		for(KeyStoneServiceEndpoint region : service.getEndpoints()) {
@@ -25,31 +25,31 @@ public class OpenStackComputeClient {
 		}
 	}
 
-	public TenantResource publicEndpoint() throws OpenstackException {
+	public IdentityResource publicEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return publicEndpoint(defaultRegion);
 	}
 	
-	public TenantResource publicEndpoint(String region) {
-		return client.target(regions.get(region).getPublicURL(), TenantResource.class);
+	public IdentityResource publicEndpoint(String region) {
+		return client.target(regions.get(region).getPublicURL(), IdentityResource.class);
 	}
 	
-	public TenantResource internalEndpoint() throws OpenstackException {
+	public IdentityResource internalEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return internalEndpoint(defaultRegion);
 	}
 	
-	public TenantResource internalEndpoint(String region) {
-		return client.target(regions.get(region).getInternalURL(), TenantResource.class);
+	public IdentityResource internalEndpoint(String region) {
+		return client.target(regions.get(region).getInternalURL(), IdentityResource.class);
 	}
 	
-	public TenantResource administrationEndpoint() throws OpenstackException {
+	public IdentityResource administrationEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return administrationEndpoint(defaultRegion);
 	}
 	
-	public TenantResource administrationEndpoint(String region) {
-		return client.target(regions.get(region).getAdminURL(), TenantResource.class);
+	public IdentityResource administrationEndpoint(String region) {
+		return client.target(regions.get(region).getAdminURL(), IdentityResource.class);
 	}
 	
 }

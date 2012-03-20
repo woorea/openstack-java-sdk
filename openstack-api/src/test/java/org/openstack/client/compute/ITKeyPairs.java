@@ -17,7 +17,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		skipIfNoKeyPairs();
 
 		
-		Iterable<NovaKeyPair> keyPairs = client.publicEndpoint().keyPairs().get(new HashMap<String, Object>());
+		Iterable<NovaKeyPair> keyPairs = client.compute().publicEndpoint().keyPairs().get(new HashMap<String, Object>());
 		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
@@ -51,18 +51,18 @@ public class ITKeyPairs extends ComputeApiTest {
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		NovaKeyPair created = client.publicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.xml(createRequest));
+		NovaKeyPair created = client.compute().publicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.xml(createRequest));
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
 
-		NovaKeyPair fetched = findKeyPair(client, created.getName());
+		NovaKeyPair fetched = findKeyPair(client.compute(), created.getName());
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
-		client.publicEndpoint().keyPairs().keypair(created.getName()).delete();
+		client.compute().publicEndpoint().keyPairs().keypair(created.getName()).delete();
 
-		fetched = findKeyPair(client, created.getName());
+		fetched = findKeyPair(client.compute(), created.getName());
 
 		Assert.assertNull(fetched);
 	}

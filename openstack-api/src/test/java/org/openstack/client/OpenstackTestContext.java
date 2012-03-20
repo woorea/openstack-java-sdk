@@ -14,8 +14,8 @@ import org.openstack.model.identity.KeyStoneAuthentication;
 import org.openstack.utils.Io;
 
 public class OpenstackTestContext {
-
-	private KeyStoneAccess access;
+	
+	private OpenStackClient client;
 	
 	private boolean verbose;
 	
@@ -87,8 +87,10 @@ public class OpenstackTestContext {
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, secret);
 		IdentityResource identity = IdentityResource.endpoint(client,url);
 		
-		context.access = identity.tokens().authenticate(authentication);
-
+		KeyStoneAccess access = identity.tokens().authenticate(authentication);
+		
+		context.client = new OpenStackClient(client, access);
+		
 		return context;
 		
 	}

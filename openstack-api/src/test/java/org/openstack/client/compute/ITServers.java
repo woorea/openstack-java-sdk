@@ -15,7 +15,7 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void listServers() {
 		
-		NovaServerList servers = client.publicEndpoint().servers().get(new HashMap<String, Object>());
+		NovaServerList servers = client.compute().publicEndpoint().servers().get(new HashMap<String, Object>());
 
 		for (NovaServer server : servers.getList()) {
 			NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());

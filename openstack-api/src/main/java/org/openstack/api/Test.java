@@ -6,10 +6,12 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.common.RestClient;
-import org.openstack.api.compute.TenantResource;
 import org.openstack.api.identity.IdentityResource;
 import org.openstack.api.imagestore.ImageResource;
 import org.openstack.api.storage.AccountResource;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.OpenStackIdentityClient;
 import org.openstack.model.common.OpenStackSession2;
 import org.openstack.model.compute.NovaFlavorList;
 import org.openstack.model.compute.NovaImageList;
@@ -28,18 +30,24 @@ import org.openstack.model.identity.KeyStoneTenantList;
 import org.openstack.model.identity.KeyStoneUser;
 import org.openstack.model.identity.KeyStoneUserList;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 public class Test {
 
 	public static void main(String[] args) {
+		
 		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials("admin", "secret0");
-		IdentityResource identity = IdentityResource.endpoint(client,"http://192.168.1.52:35357/v2.0");
-		KeyStoneAccess access = identity.tokens().authenticate(authentication);
+		IdentityResource auth = IdentityResource.endpoint(client,"http://192.168.1.52:35357/v2.0");
+		KeyStoneAccess access = auth.tokens().authenticate(authentication);
+		//We use here the admintoken (set on installation process)
 		access.getToken().setId("secret0");
-		OpenStackSession2 session = new OpenStackSession2();
-		session.setAccess(access);
-		identity.setSession(session);
-
+		
+		OpenStackClient openstack = new OpenStackClient(client, access);
+		
+		IdentityResource identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
+		
 		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>());
 
 		KeyStoneTenant tenant = new KeyStoneTenant();
@@ -87,39 +95,40 @@ public class Test {
 
 		identity.services().service(service.getId()).delete();
 
+//		This is not implemented on keystone server api yet
 //		KeyStoneEndpointTemplatesList endpointTemplates = identity.endpoints().get(new HashMap<String, Object>() {{
 //			put("Accept", MediaType.APPLICATION_XML);
 //		}});
 		
 		authentication = new KeyStoneAuthentication().withPasswordCredentials("admin", "secret0");
-		identity = IdentityResource.endpoint(client,"http://192.168.1.52:5000/v2.0");
-		access = identity.tokens().authenticate(authentication);
-		session.setAccess(access);
-		identity.setSession(session);
+		auth = IdentityResource.endpoint(client,"http://192.168.1.52:5000/v2.0");
+		access = auth.tokens().authenticate(authentication);
+		openstack.setAccess(access);
+		
+		
+		identity = openstack.target("http://192.168.1.52:5000/v2.0", IdentityResource.class);
 		
 		tenants = identity.tenants().get(new HashMap<String, Object>());
 		
 		authentication = new KeyStoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenants.getList().get(0).getId());
-		access = identity.tokens().authenticate(authentication);
-		session.setAccess(access);
-		identity.setSession(session);
-
-		TenantResource compute = TenantResource.endpoint(client, "http://192.168.1.52:8774/v2/" + tenants.getList().get(0).getId());
-		compute.setSession(session);
-		NovaServerList servers = compute.servers().get(new HashMap<String, Object>(){{
+		access = auth.tokens().authenticate(authentication);
+		openstack.setAccess(access);
+		
+		
+		NovaServerList servers = openstack.compute().publicEndpoint().servers().get(new HashMap<String, Object>(){{
 			put("detail",true);
 		}});
 		
-		NovaImageList images = compute.images().get(new HashMap<String,Object>());
+		NovaImageList images = openstack.compute().publicEndpoint().images().get(new HashMap<String,Object>());
 		// "cirros-0.3.0-x86_64-blank"
 		
-		NovaFlavorList flavors = compute.flavors().get(new HashMap<String, Object>());
+		NovaFlavorList flavors = openstack.compute().publicEndpoint().flavors().get(new HashMap<String, Object>());
 		
-		NovaKeyPairList keypairs = compute.keyPairs().get(new HashMap<String, Object>());
+		NovaKeyPairList keypairs = openstack.compute().publicEndpoint().keyPairs().get(new HashMap<String, Object>());
 		
-		NovaSecurityGroupList securityGroups = compute.securityGroups().get(new HashMap<String, Object>());
+		NovaSecurityGroupList securityGroups = openstack.compute().publicEndpoint().securityGroups().get(new HashMap<String, Object>());
 		
-		NovaVolumeList volumes = compute.volumes().get(new HashMap<String, Object>());
+		NovaVolumeList volumes = openstack.compute().publicEndpoint().volumes().get(new HashMap<String, Object>());
 
 		// NovaSnapshotList snapshots = compute.snapshots().get(new
 		// HashMap<String, Object>(){{
@@ -127,10 +136,10 @@ public class Test {
 		// }});
 
 		ImageResource image = ImageResource.endpoint(client, "http://192.168.1.52:9292/v1");
-		image.setSession(session);
+		//image.setSession(session);
 
 		AccountResource storage = AccountResource.endpoint(client, "http://192.168.1.52:3333");
-		storage.setSession(session);
+		//storage.setSession(session);
 
 		// IdentityResource identity = IdentityResource.endpoint(client,
 		// "http://192.168.1.52:35357/v2.0");

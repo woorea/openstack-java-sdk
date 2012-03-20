@@ -25,9 +25,9 @@ public class ITSecurityGroups extends ComputeApiTest {
 		skipIfNoSecurityGroups();
 
 		
-		NovaSecurityGroupList securityGroups = client.publicEndpoint().securityGroups().get(new HashMap<String, Object>());
+		NovaSecurityGroupList securityGroups = client.compute().publicEndpoint().securityGroups().get(new HashMap<String, Object>());
 		for (NovaSecurityGroup securityGroup : securityGroups) {
-			NovaSecurityGroup details = client.publicEndpoint().securityGroups().securityGroup(securityGroup.getId()).get(new HashMap<String, Object>());
+			NovaSecurityGroup details = client.compute().publicEndpoint().securityGroups().securityGroup(securityGroup.getId()).get(new HashMap<String, Object>());
 
 			assertSecurityGroupEquals(securityGroup, details);
 		}
@@ -47,7 +47,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 		
 
 		Set<Integer> ids = Sets.newHashSet();
-		for (NovaSecurityGroup securityGroup : client.publicEndpoint().securityGroups().get(new HashMap<String, Object>())) {
+		for (NovaSecurityGroup securityGroup : client.compute().publicEndpoint().securityGroups().get(new HashMap<String, Object>())) {
 			ids.add(securityGroup.getId());
 		}
 
@@ -59,7 +59,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 			}
 		}
 
-		client.publicEndpoint().securityGroups().securityGroup(unused).get(new HashMap<String, Object>());
+		client.compute().publicEndpoint().securityGroups().securityGroup(unused).get(new HashMap<String, Object>());
 	}
 
 	@Test
@@ -75,13 +75,13 @@ public class ITSecurityGroups extends ComputeApiTest {
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
-		NovaSecurityGroup created = client.publicEndpoint().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
+		NovaSecurityGroup created = client.compute().publicEndpoint().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
 		Assert.assertEquals(created.getName(), groupName);
 		Assert.assertEquals(created.getDescription(), description);
 		Assert.assertNotNull(created.getId());
 		Assert.assertNotEquals(created.getId(), 0);
 
-		NovaSecurityGroup fetched = client.publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
+		NovaSecurityGroup fetched = client.compute().publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 		assertSecurityGroupEquals(fetched, created);
 
 		Assert.assertEquals(fetched.getRules().size(), 0);
@@ -95,10 +95,10 @@ public class ITSecurityGroups extends ComputeApiTest {
 			newRule.setIpProtocol("tcp");
 			newRule.setParentGroupId(created.getId());
 
-			NovaSecurityGroupRule createdRule = client.publicEndpoint().securityGroupRules().post(new HashMap<String, Object>(), Entity.xml(newRule));
+			NovaSecurityGroupRule createdRule = client.compute().publicEndpoint().securityGroupRules().post(new HashMap<String, Object>(), Entity.xml(newRule));
 			Assert.assertNotEquals(createdRule.id, "");
 
-			fetched = client.publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
+			fetched = client.compute().publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 			assertSecurityGroupEquals(fetched, created);
 
 			Assert.assertEquals(fetched.getRules().size(), 1);
@@ -115,17 +115,17 @@ public class ITSecurityGroups extends ComputeApiTest {
 		// Drop the rule
 		{
 			NovaSecurityGroupRule rule = fetched.getRules().get(0);
-			client.publicEndpoint().securityGroupRules().securityGroupRule(rule.id).delete(new HashMap<String, Object>());
+			client.compute().publicEndpoint().securityGroupRules().securityGroupRule(rule.id).delete(new HashMap<String, Object>());
 
-			fetched = client.publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
+			fetched = client.compute().publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 			Assert.assertEquals(fetched.getRules().size(), 0);
 		}
 
-		client.publicEndpoint().securityGroups().securityGroup(created.getId()).delete(new HashMap<String, Object>());
+		client.compute().publicEndpoint().securityGroups().securityGroup(created.getId()).delete(new HashMap<String, Object>());
 
 		fetched = null;
 		try {
-			fetched = client.publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
+			fetched = client.compute().publicEndpoint().securityGroups().securityGroup(created.getId()).get(new HashMap<String, Object>());
 		} catch (OpenstackNotFoundException e) {
 			// Expected; leave fetched as null
 		}
@@ -158,7 +158,7 @@ public class ITSecurityGroups extends ComputeApiTest {
 
 		// Should fail because description is too long
 		Assert.assertTrue(description.length() > 255);
-		client.publicEndpoint().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
+		client.compute().publicEndpoint().securityGroups().post(Entity.json(createRequest), new HashMap<String, Object>());
 	}
 
 	@Test

@@ -13,20 +13,10 @@ import org.testng.annotations.Test;
 
 @Test
 public class ComputeApiTest extends AbstractOpenStackTest {
-	
-	protected OpenStackComputeClient client;
 
 	protected NovaFlavor findSmallestFlavor() {
-//		KeyStoneService service = Iterables.find(session.getAccess().getServices(), new Predicate<KeyStoneService>() {
-//
-//			@Override
-//			public boolean apply(KeyStoneService service) {
-//				return "compute".equals(service.getType());
-//			}
-//		});
-
 		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : client.publicEndpoint().flavors().get(new HashMap<String, Object>()).getList()) {
+		for (NovaFlavor flavor : client.compute().publicEndpoint().flavors().get(new HashMap<String, Object>()).getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
@@ -37,7 +27,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	protected NovaImage findUecImage() {
 		
 
-		Iterable<NovaImage> images = client.publicEndpoint().images().get(new HashMap<String, Object>()).getList();
+		Iterable<NovaImage> images = client.compute().publicEndpoint().images().get(new HashMap<String, Object>()).getList();
 		for (NovaImage i : images) {
 			// Some UEC images
 			if (i.getName().equals("lucid-server-cloudimg-amd64") || i.getName().equals("natty-server-cloudimg-amd64")) {
@@ -50,7 +40,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	protected NovaImage findImageByName(String name) {
 		
 
-		Iterable<NovaImage> images = client.publicEndpoint().images().get(new HashMap<String, Object>()).getList();
+		Iterable<NovaImage> images = client.compute().publicEndpoint().images().get(new HashMap<String, Object>()).getList();
 		for (NovaImage i : images) {
 			if (i.getName().equals(name)) {
 				return i;
@@ -93,7 +83,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 
 	private boolean supportsExtension(String namespace) {
 		if (extensions == null) {
-			extensions = client.publicEndpoint().extensions().get(new HashMap<String, Object>()).getList();
+			extensions = client.compute().publicEndpoint().extensions().get(new HashMap<String, Object>()).getList();
 		}
 		for (Extension extension : extensions) {
 			if (namespace.equals(extension.getNamespace()))

@@ -15,7 +15,7 @@ import org.testng.annotations.BeforeMethod;
 
 public abstract class AbstractOpenStackTest {
 	
-	protected Client client;
+	protected OpenStackClient client;
 	
 	protected OpenstackTestContext context;
 	protected RandomUtil random = new RandomUtil();

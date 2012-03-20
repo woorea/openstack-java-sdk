@@ -166,9 +166,6 @@ public abstract class OpenStackSession implements Serializable {
 		return new OpenstackImageClient(this);
 	}
 
-	public OpenstackAuthenticationClient getAuthenticationClient() {
-		return new OpenstackAuthenticationClient(this);
-	}
 /*
 	public OpenstackStorageClient getStorageClient() {
 		return new OpenstackStorageClient(this);
@@ -183,7 +180,7 @@ public abstract class OpenStackSession implements Serializable {
 		if (storeCredentials) {
 			this.credentials = credentials;
 		}
-		data.setAccess(getAuthenticationClient().authenticate(credentials));
+		//data.setAccess(getAuthenticationClient().authenticate(credentials));
 	}
 	
 	public <T> T followLink(Link link, Class<T> clazz) {

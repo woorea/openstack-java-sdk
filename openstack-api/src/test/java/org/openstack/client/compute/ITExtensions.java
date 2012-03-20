@@ -13,9 +13,9 @@ public class ITExtensions extends ComputeApiTest {
     @Test
     public void testListExtensions() throws OpenstackException {
         
-        ExtensionList extensions = client.publicEndpoint().extensions().get(new HashMap<String, Object>());
+        ExtensionList extensions = client.compute().publicEndpoint().extensions().get(new HashMap<String, Object>());
         for (Extension extension : extensions) {
-            Extension details = client.publicEndpoint().extensions().extension(extension.getAlias()).get(new HashMap<String, Object>());
+            Extension details = client.compute().publicEndpoint().extensions().extension(extension.getAlias()).get(new HashMap<String, Object>());
 
             Assert.assertEquals(details.getAlias(), extension.getAlias());
             Assert.assertEquals(details.getDescription(), extension.getDescription());
