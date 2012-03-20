@@ -1,5 +1,6 @@
 package org.openstack.api.compute.ext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Target;
@@ -19,6 +20,12 @@ public class VolumesResource extends Resource {
 	
 	public VolumesResource(Target target) {
 		super(target);
+	}
+	
+	public NovaVolumeList get() {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("detail",true);
+		return get();
 	}
 	
 	/**

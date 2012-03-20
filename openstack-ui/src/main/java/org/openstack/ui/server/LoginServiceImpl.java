@@ -1,8 +1,8 @@
 package org.openstack.ui.server;
 
-import org.openstack.client.common.OpenStackSession;
-import org.openstack.client.common.OpenStackSession.Feature;
-import org.openstack.client.identity.IdentityResource;
+import org.openstack.api.identity.IdentityResource;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
 import org.openstack.model.identity.KeyStoneTenant;
@@ -11,18 +11,18 @@ import org.openstack.model.identity.KeyStoneTenantList;
 public class LoginServiceImpl implements LoginService {
 
 	@Override
-	public OpenStackSession login(String identityURL, String username, String password) {
+	public KeyStoneAccess login(String identityURL, String username, String password) {
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, password);
 		
-		OpenStackSession oss = OpenStackSession.create().with(org.openstack.client.common.OpenStackSession.Feature.VERBOSE);
+		OpenStackClient oss = OpenStackClientFactory.authenticate(identityURL, username, password);
 		
-		IdentityResource identity = new IdentityResource(oss, identityURL);
+		IdentityResource identity = oss.identity().publicEndpoint();
 		
 		KeyStoneAccess access = identity.tokens().authenticate(authentication);
 		
-		oss.getData().setAccess(access);
+		//oss.getData().setAccess(access);
 		
-		KeyStoneTenantList tenants = identity.tenants().list();
+		KeyStoneTenantList tenants = identity.tenants().get();
 		
 		KeyStoneTenant tenant = tenants.getList().get(0);
 		
@@ -30,9 +30,9 @@ public class LoginServiceImpl implements LoginService {
 		
 		access = identity.tokens().authenticate(authentication);
 		
-		oss.getData().setAccess(access);
+		//oss.getData().setAccess(access);
 		
-		return oss;
+		return access;
 	}
 
 }

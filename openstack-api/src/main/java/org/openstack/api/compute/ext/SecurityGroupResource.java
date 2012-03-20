@@ -16,9 +16,8 @@ public class SecurityGroupResource extends Resource  {
 		super(target);
 	}
 
-	protected MediaType getDefaultContentType() {
-		// Whitespace problems when using XML
-		return MediaType.APPLICATION_JSON_TYPE;
+	public NovaSecurityGroup get() {
+		return get(new HashMap<String, Object>());
 	}
 
 	public NovaSecurityGroup get(HashMap<String, Object> properties) {
@@ -28,4 +27,6 @@ public class SecurityGroupResource extends Resource  {
 	public void delete(HashMap<String, Object> properties) {
 		target.request().delete();
 	}
+
+	
 }

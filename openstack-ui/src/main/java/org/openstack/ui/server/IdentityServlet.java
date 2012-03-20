@@ -15,37 +15,37 @@ public class IdentityServlet extends OpenStackRemoteServiceServlet implements Id
 
 	@Override
 	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
-		return getSession().getAuthenticationClient().root().tokens().authenticate(authentication);
+		return getClient().identity().administrationEndpoint().tokens().authenticate(authentication);
 	}
 
 	@Override
 	public KeyStoneTenantList listTenants() {
-		return getSession().getAuthenticationClient().root().tenants().list();
+		return getClient().identity().administrationEndpoint().tenants().get();
 	}
 
 	@Override
 	public OpenStackSessionData getSessionData() {
-		return getSession().getData();
+		return null; // getSession().getData();
 	}
 
 	@Override
 	public KeyStoneServiceList listServices() {
-		return getSession().getAuthenticationClient().admin().services().list();
+		return getClient().identity().administrationEndpoint().services().get();
 	}
 
 	@Override
 	public KeyStoneEndpointTemplatesList listEndpontTemplates() {
-		return getSession().getAuthenticationClient().admin().endpointTemplates().list();
+		return getClient().identity().administrationEndpoint().endpoints().get();
 	}
 
 	@Override
 	public KeyStoneUserList listUsers() {
-		return getSession().getAuthenticationClient().admin().users().list();
+		return getClient().identity().administrationEndpoint().users().get();
 	}
 
 	@Override
 	public KeyStoneRoleList listRoles() {
-		return getSession().getAuthenticationClient().admin().roles().list();
+		return getClient().identity().administrationEndpoint().roles().get();
 	}
 	
 	

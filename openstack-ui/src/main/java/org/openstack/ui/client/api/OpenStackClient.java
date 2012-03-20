@@ -2,7 +2,6 @@ package org.openstack.ui.client.api;
 
 import java.util.List;
 
-import org.openstack.client.common.OpenStackSession;
 import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.identity.KeyStoneTenant;
 

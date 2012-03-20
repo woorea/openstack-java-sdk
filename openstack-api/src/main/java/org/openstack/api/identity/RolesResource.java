@@ -1,4 +1,5 @@
 package org.openstack.api.identity;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -26,6 +27,10 @@ public class RolesResource extends Resource {
 	
 	public RoleResource role(String id) {
 		return new RoleResource(target.path("/{id}").pathParam("id", id));
+	}
+
+	public KeyStoneRoleList get() {
+		return get(new HashMap<String, Object>());
 	}
 	
 }

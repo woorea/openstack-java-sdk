@@ -34,7 +34,7 @@ public class ITServers extends ComputeApiTest {
 			//NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
 			NovaImage image = client.compute().publicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
 			//rel=self carries the version but rel=bookmark ¿clarify from openstack team?
-			client.target(server.getLink("self").getHref(), ServerResource.class).delete(new HashMap<String, Object>());
+			client.target(server.getLink("self").getHref(), ServerResource.class).delete();
 		}
 	}
 
@@ -101,14 +101,14 @@ public class ITServers extends ComputeApiTest {
 		// Delete the server
 		System.out.println(server);
 		System.out.println("DELETING");
-		client.compute().publicEndpoint().servers().server(server.getId()).delete(new HashMap<String, Object>());
+		client.compute().publicEndpoint().servers().server(server.getId()).delete();
 		
 		NovaServer stillHere = null;
 		try {
 			AsyncServerOperation asyncDelete = AsyncServerOperation.wrapServerDelete(client.compute(), server);
 			asyncDelete.get();
 
-			stillHere = client.compute().publicEndpoint().servers().server(server.getId()).get(new HashMap<String, Object>());
+			stillHere = client.compute().publicEndpoint().servers().server(server.getId()).get();
 		} catch (Exception /*OpenstackNotFoundException*/ e) {
 			//Jersey 2.0 doesn't work fine with exceptions yet
 			// Good!

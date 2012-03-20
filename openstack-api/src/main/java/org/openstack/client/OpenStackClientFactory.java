@@ -24,5 +24,9 @@ public class OpenStackClientFactory {
 		return authenticate(authURL, username, password, null);
 		
 	}
+
+	public static OpenStackClient create(KeyStoneAccess access) {
+		return new OpenStackClient(client, null, access);
+	}
 	
 }

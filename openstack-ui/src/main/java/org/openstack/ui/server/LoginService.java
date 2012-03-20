@@ -1,9 +1,9 @@
 package org.openstack.ui.server;
 
-import org.openstack.client.common.OpenStackSession;
+import org.openstack.model.identity.KeyStoneAccess;
 
 public interface LoginService {
 
-	OpenStackSession login(String identityURL, String username, String password);
+	KeyStoneAccess login(String identityURL, String username, String password);
 
 }

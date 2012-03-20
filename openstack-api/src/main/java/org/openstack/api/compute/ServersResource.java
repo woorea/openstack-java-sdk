@@ -52,6 +52,10 @@ public class ServersResource extends Resource {
 		return new ServerResource(target.path("/{id}").pathParam("id", id));
 	}
 
+	public NovaServer post(NovaServerForCreate serverForCreate) {
+		return post(new HashMap<String, Object>(), Entity.json(serverForCreate));
+	}
+
 	
 
 	

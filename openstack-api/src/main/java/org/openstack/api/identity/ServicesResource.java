@@ -19,7 +19,7 @@ public class ServicesResource extends Resource {
 		super(target);
 	}
 	
-	public Object get() {
+	public KeyStoneServiceList get() {
 		return get(new HashMap<String, Object>());
 	}
 	

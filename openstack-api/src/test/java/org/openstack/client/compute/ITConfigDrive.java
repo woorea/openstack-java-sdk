@@ -64,7 +64,7 @@ public class ITConfigDrive extends ComputeApiTest {
 
 		// Delete the server
 		System.out.println("Deleting server: " + server);
-		client.compute().publicEndpoint().servers().server(server.getId()).delete(new HashMap<String, Object>());
+		client.compute().publicEndpoint().servers().server(server.getId()).delete();
 	}
 
 }

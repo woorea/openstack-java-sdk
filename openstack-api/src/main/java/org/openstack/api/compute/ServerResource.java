@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
@@ -56,6 +57,10 @@ public class ServerResource extends Resource {
 	public ServerResource(Target target) {
 		super(target);
 	}
+	
+	public NovaServer get() {
+		return get(new HashMap<String, Object>());
+	}
 
 	public NovaServer get(HashMap<String, Object> properties) {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaServer.class);
@@ -65,8 +70,8 @@ public class ServerResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).put(server, NovaServer.class);
 	}
 
-	public void delete(HashMap<String, Object> properties) {
-		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
+	public Response delete() {
+		return target.request().delete();
 	}
 
 	/**
@@ -406,5 +411,7 @@ public class ServerResource extends Resource {
 	public String backup() {
 		return null;
 	}
+
+	
 
 }

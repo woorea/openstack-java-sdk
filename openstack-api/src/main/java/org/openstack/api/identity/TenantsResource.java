@@ -1,5 +1,6 @@
 package org.openstack.api.identity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -14,6 +15,10 @@ public class TenantsResource extends Resource {
 
 	public TenantsResource(Target target) {
 		super(target);
+	}
+	
+	public KeyStoneTenantList get() {
+		return get(new HashMap<String, Object>());
 	}
 	
 	public KeyStoneTenantList get(Map<String, Object> properties) {

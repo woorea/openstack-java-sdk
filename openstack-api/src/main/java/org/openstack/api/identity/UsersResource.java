@@ -1,5 +1,6 @@
 package org.openstack.api.identity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -27,6 +28,10 @@ public class UsersResource extends Resource {
 
 	public UserResource user(String id) {
 		return new UserResource(target.path("/{id}").pathParam("id", id));
+	}
+
+	public KeyStoneUserList get() {
+		return get(new HashMap<String, Object>());
 	}
 	
 	

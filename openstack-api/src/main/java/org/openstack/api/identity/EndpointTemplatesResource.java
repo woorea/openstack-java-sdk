@@ -1,5 +1,6 @@
 package org.openstack.api.identity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -26,6 +27,10 @@ public class EndpointTemplatesResource extends Resource {
 
 	public EndpointTemplateResource endpointTemplate(String id) {
 		return new EndpointTemplateResource(target.path("/{id}").pathParam("id", id));
+	}
+
+	public KeyStoneEndpointTemplatesList get() {
+		return get(new HashMap<String, Object>());
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.openstack.api.compute;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -27,6 +28,12 @@ public class ImageResource extends Resource {
 	public NovaMetadata metadata() {
 		// /metadata
 		return new NovaMetadata();
+	}
+
+	public NovaImage get() {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("detail",true);
+		return get();
 	}
 
 }

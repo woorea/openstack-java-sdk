@@ -54,19 +54,5 @@ public class ImageResource extends Resource {
     public void delete(Map<String, Object> properties) {
         target.request().header("X-Auth-Token", properties.get("X-Auth-Token"));
     }
-
-	public static ImageResource endpoint(Client client, String endpoint) {
-		return new ImageResource(client. target(endpoint));
-	}
 	
-	public void setSession(final OpenStackSession2 session) {
-		target.configuration().register(new RequestFilter() {
-			
-			@Override
-			public void preFilter(FilterContext context) throws IOException {
-				context.getRequestBuilder().header("X-Auth-Token", session.getAccess().getToken().getId());
-				
-			}
-		});
-	}
 }
