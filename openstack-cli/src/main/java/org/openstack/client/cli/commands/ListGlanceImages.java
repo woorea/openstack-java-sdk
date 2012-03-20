@@ -9,7 +9,7 @@ public class ListGlanceImages extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().getGlanceImages(false);
+		return getOpenstackService().images().publicEndpoint().get();
 	}
 
 }

@@ -73,8 +73,6 @@ public class ConfigurationOptions extends CliOptions {
 					String password = properties.getProperty("openstack.password");
 					String tenantId = properties.getProperty("openstack.tenant");
 
-					
-
 					service = OpenStackClientFactory.authenticate(server, username, password, tenantId);
 				} catch (IOException e) {
 					throw new IllegalArgumentException("Error reading configuration file", e);
@@ -87,6 +85,5 @@ public class ConfigurationOptions extends CliOptions {
 		return service;
 	}
 
-	static final SessionCache sessionCache = new SessionCache();
 
 }

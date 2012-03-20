@@ -16,6 +16,10 @@ public class SecurityGroupsResource extends Resource {
 	public SecurityGroupsResource(Target target) {
 		super(target);
 	}
+	
+	public NovaSecurityGroupList get() {
+		return get(new HashMap<String, Object>());
+	}
 
 	public NovaSecurityGroupList get(Map<String, Object> properties) {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
@@ -29,4 +33,6 @@ public class SecurityGroupsResource extends Resource {
 	public SecurityGroupResource securityGroup(int id) {
 		return new SecurityGroupResource(target.path("/{id}").pathParam("id", id));
 	}
+
+	
 }

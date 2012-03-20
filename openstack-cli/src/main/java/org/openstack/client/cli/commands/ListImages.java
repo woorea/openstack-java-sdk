@@ -7,6 +7,6 @@ public class ListImages extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().getImages(false);
+		return getOpenstackService().compute().publicEndpoint().images().get();
 	}
 }

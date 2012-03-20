@@ -1,5 +1,6 @@
 package org.openstack.api.compute;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Target;
@@ -13,6 +14,10 @@ public class FlavorsResource extends Resource {
 	public FlavorsResource(Target target) {
 		super(target);
 	}
+	
+	public NovaFlavorList get() {
+		return get(new HashMap<String, Object>());
+	}
 
     public NovaFlavorList get(Map<String, Object> properties) {
     	if(properties.get("detail") != null) {
@@ -24,5 +29,7 @@ public class FlavorsResource extends Resource {
     public FlavorResource flavor(String id) {
     	return new FlavorResource(target.path("/{id}").pathParam("id", id));
     }
+
+	
 
 }

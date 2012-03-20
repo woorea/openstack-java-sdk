@@ -28,8 +28,6 @@ public class DeleteInstance extends OpenstackCliCommandRunnerBase {
 		OpenStackComputeClient tenant = context.getComputeClient();
 		tenant.publicEndpoint().servers().server(serverId).delete(new HashMap<String, Object>());
 
-		invalidateCache(NovaServer.class);
-
 		return serverId;
 	}
 

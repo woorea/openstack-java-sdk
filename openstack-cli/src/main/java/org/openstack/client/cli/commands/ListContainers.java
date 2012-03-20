@@ -1,7 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import java.util.HashMap;
-
 import org.openstack.client.OpenStackStorageClient;
 
 public class ListContainers extends OpenstackCliCommandRunnerBase {
@@ -13,7 +11,7 @@ public class ListContainers extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		OpenStackStorageClient client = getStorageClient();
 
-		return client.publicEndpoint().containers().get(new HashMap<String, Object>());
+		return client.publicEndpoint().get();
 	}
 
 }

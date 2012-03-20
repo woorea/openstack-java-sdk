@@ -1,5 +1,6 @@
 package org.openstack.api.compute;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Target;
@@ -13,6 +14,10 @@ public class ImagesResource extends Resource {
 	public ImagesResource(Target target) {
 		super(target);
 	}
+	
+	public NovaImageList get() {
+		return get(new HashMap<String, Object>());
+	}
 
     public NovaImageList get(Map<String,Object> properties) {
 		if(properties.get("detail") != null) {
@@ -24,5 +29,7 @@ public class ImagesResource extends Resource {
     public ImageResource image(String id) {
     	return new ImageResource(target.path("/{id}").pathParam("id", id));
     }
+
+	
 
 }

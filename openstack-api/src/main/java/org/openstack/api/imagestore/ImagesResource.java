@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -22,6 +23,12 @@ public class ImagesResource extends Resource {
 	
 	public ImagesResource(Target target) {
 		super(target);
+	}
+	
+	public GlanceImageList get() {
+		HashMap<String, Object> properties = new HashMap<String, Object>();
+		properties.put("detail", true);
+		return get(properties);
 	}
 	
 	public GlanceImageList get(Map<String,Object> properties) {
@@ -63,5 +70,7 @@ public class ImagesResource extends Resource {
 		GlanceImage image = response.getImage();
 		return image;
 	}
+
+	
 
 }

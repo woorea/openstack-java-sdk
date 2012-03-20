@@ -20,7 +20,7 @@ public class SecurityGroupName extends StringWrapper {
 
 	public NovaSecurityGroup resolve(OpenstackCliContext context) {
 		List<NovaSecurityGroup> matches = Lists.newArrayList();
-		for (NovaSecurityGroup candidate : context.getCache().listItems(NovaSecurityGroup.class, true)) {
+		for (NovaSecurityGroup candidate : context.getComputeClient().publicEndpoint().securityGroups().get().getList()) {
 			if (Objects.equal(candidate.getName(), getKey())) {
 				matches.add(candidate);
 			} else if (Objects.equal(candidate.getId(), getKey())) {

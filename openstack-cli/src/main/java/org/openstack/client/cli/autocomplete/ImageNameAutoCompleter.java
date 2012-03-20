@@ -16,7 +16,7 @@ public class ImageNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (NovaImage image : osContext.getCache().getImages(true)) {
+		for (NovaImage image : osContext.getComputeClient().publicEndpoint().images().get().getList()) {
 			strings.add(image.getName());
 			strings.add(image.getId());
 		}

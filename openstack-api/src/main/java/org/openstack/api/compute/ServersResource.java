@@ -1,5 +1,6 @@
 package org.openstack.api.compute;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -15,6 +16,12 @@ public class ServersResource extends Resource {
 	
 	public ServersResource(Target target) {
 		super(target);
+	}
+	
+	public NovaServerList get() {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("detail",true);
+		return get();
 	}
 
 	/**
@@ -44,6 +51,8 @@ public class ServersResource extends Resource {
 	public ServerResource server(String id) {
 		return new ServerResource(target.path("/{id}").pathParam("id", id));
 	}
+
+	
 
 	
 

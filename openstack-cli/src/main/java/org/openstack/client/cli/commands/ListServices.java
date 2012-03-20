@@ -9,6 +9,6 @@ public class ListServices extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().listItems(KeyStoneService.class, false);
+		return getOpenstackService().identity().publicEndpoint().services().get();
 	}
 }

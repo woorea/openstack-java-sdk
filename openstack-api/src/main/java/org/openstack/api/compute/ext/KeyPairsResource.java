@@ -1,5 +1,6 @@
 package org.openstack.api.compute.ext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -20,6 +21,10 @@ public class KeyPairsResource extends Resource {
 	
 	public KeyPairsResource(Target target) {
 		super(target);
+	}
+	
+	public NovaKeyPairList get() {
+		return get(new HashMap<String, Object>());
 	}
 
 	/**
@@ -49,5 +54,7 @@ public class KeyPairsResource extends Resource {
 	public KeyPairResource keypair(String name) {
 		return new KeyPairResource(target.path("/{name}").pathParam("name", name));
 	}
+
+	
 
 }

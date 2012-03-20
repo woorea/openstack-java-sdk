@@ -32,7 +32,7 @@ public class ContainerResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftStorageObject>>() {});
 	}
 	
-	public List<SwiftStorageObject> list(String prefix, String delimiter) {
+	public List<SwiftStorageObject> get(String prefix, String delimiter) {
 		
 		Builder b = target.request();
 		

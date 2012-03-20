@@ -9,7 +9,7 @@ public class ListInstances extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().listItems(NovaServer.class, false);
+		return getOpenstackService().compute().publicEndpoint().servers().get();
 	}
 
 }

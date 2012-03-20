@@ -1,6 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.model.common.Extension;
 
 public class ListExtensions extends OpenstackCliCommandRunnerBase {
 	public ListExtensions() {
@@ -9,6 +8,6 @@ public class ListExtensions extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().listItems(Extension.class, false);
+		return getOpenstackService().compute().publicEndpoint().extensions().get();
 	}
 }

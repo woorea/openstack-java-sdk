@@ -1,9 +1,11 @@
 package org.openstack.client.cli.commands;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.api.storage.ContainerResource;
 import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.model.StoragePath;
 import org.openstack.model.storage.SwiftObjectProperties;
@@ -28,7 +30,7 @@ public class UploadFile extends OpenstackCliCommandRunnerBase {
 		if (tokens.length != 2) {
 			throw new IllegalArgumentException("Cannot parse: " + path.getKey());
 		}
-		ObjectsResource objects = client.publicEndpoint().containers().id(tokens[0]).objects();
+		ContainerResource container = client.publicEndpoint().container(tokens[0]);
 
 		SwiftObjectProperties objectProperties = new SwiftObjectProperties();
 		objectProperties.setName(tokens[1]);
@@ -49,7 +51,7 @@ public class UploadFile extends OpenstackCliCommandRunnerBase {
 
 		// This command will probably be faster _not_ in nailgun mode
 		InputStream stream = new NoCloseInputStream(System.in);
-		objects.putObject(stream, -1, objectProperties);
+		container.object(tokens[1]).put(stream, -1, objectProperties);
 
 		return path.getKey();
 	}

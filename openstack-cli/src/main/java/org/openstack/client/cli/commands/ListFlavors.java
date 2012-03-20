@@ -1,6 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.model.compute.NovaFlavor;
 
 public class ListFlavors extends OpenstackCliCommandRunnerBase {
 	public ListFlavors() {
@@ -9,7 +8,7 @@ public class ListFlavors extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().listItems(NovaFlavor.class, false);
+		return getOpenstackService().compute().publicEndpoint().flavors().get();
 	}
 
 }

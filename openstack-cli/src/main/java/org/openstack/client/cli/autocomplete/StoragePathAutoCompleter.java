@@ -21,7 +21,7 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		OpenStackStorageClient client = osContext.getStorageClient();
 
 		if (!prefix.contains("/")) {
-			Iterable<SwiftContainer> items = client.publicEndpoint().containers().list();
+			Iterable<SwiftContainer> items = client.publicEndpoint().get();
 			for (SwiftContainer item : items) {
 				strings.add(item.getName());
 			}
@@ -30,7 +30,7 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		} else {
 			String[] pathTokens = prefix.split("/");
 			if (pathTokens.length == 1 || pathTokens.length == 2) {
-				Iterable<SwiftStorageObject> items = client.publicEndpoint().containers().id(pathTokens[0]).objects().list();
+				Iterable<SwiftStorageObject> items = client.publicEndpoint().container(pathTokens[0]).get();
 				for (SwiftStorageObject item : items) {
 					strings.add(item.getName());
 				}

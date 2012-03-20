@@ -15,7 +15,7 @@ public class CreateContainer extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		OpenStackStorageClient client = getStorageClient();
 
-		client.publicEndpoint().containers().post(name);
+		client.publicEndpoint().container(name).put();
 		return name;
 	}
 

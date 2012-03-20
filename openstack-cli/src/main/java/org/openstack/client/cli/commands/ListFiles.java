@@ -20,7 +20,7 @@ public class ListFiles extends OpenstackCliCommandRunnerBase {
 		String objectPath = path.getObjectPath();
 
 		String delimiter = null;
-		return client.publicEndpoint().containers().id(containerName).objects().list(objectPath, delimiter);
+		return client.publicEndpoint().container(containerName).get(objectPath, delimiter);
 	}
 
 }

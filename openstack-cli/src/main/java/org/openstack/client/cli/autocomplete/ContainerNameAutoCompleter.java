@@ -18,7 +18,7 @@ public class ContainerNameAutoCompleter extends SimpleArgumentAutoCompleter {
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
 		OpenStackStorageClient client = osContext.getStorageClient();
-		Iterable<SwiftContainer> items = client.publicEndpoint().containers().list();
+		Iterable<SwiftContainer> items = client.publicEndpoint().get();
 		for (SwiftContainer item : items) {
 			strings.add(item.getName());
 		}

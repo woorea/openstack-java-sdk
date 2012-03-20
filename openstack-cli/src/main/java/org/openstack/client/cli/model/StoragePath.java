@@ -19,7 +19,7 @@ public class StoragePath extends StringWrapper {
 		if (containerName == null || objectPath == null) {
 			throw new IllegalArgumentException("Cannot parse: " + getKey());
 		}
-		return client.publicEndpoint().containers().id(containerName).objects().id(objectPath);
+		return client.publicEndpoint().container(containerName).object(objectPath);
 	}
 
 	public String getContainer() {

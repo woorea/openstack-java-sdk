@@ -1,5 +1,6 @@
 package org.openstack.api.compute.ext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Target;
@@ -22,6 +23,10 @@ public class FloatingIpsResource extends Resource {
 	protected FloatingIpsResource(Target target) {
 		super(target);
 	}
+	
+	public NovaFloatingIpList get() {
+		return get(new HashMap<String, Object>());
+	}
 
 	/**
 	 * Return a list of floating ips allocated to a project.
@@ -30,6 +35,10 @@ public class FloatingIpsResource extends Resource {
 	 */
 	public NovaFloatingIpList get(Map<String, Object> properties) {
 		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFloatingIpList.class);
+	}
+	
+	public NovaCreateFloatingIpResponse post() {
+		throw new UnsupportedOperationException();
 	}
 	
 	public NovaCreateFloatingIpResponse post(Map<String,Object> properties, String pool) {
@@ -42,5 +51,9 @@ public class FloatingIpsResource extends Resource {
 	public FloatingIpResource floatingIp(String id) {
 		return new FloatingIpResource(target.path("/{id}").pathParam("id", id));
 	}
+
+	
+
+	
 
 }

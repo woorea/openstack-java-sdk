@@ -16,7 +16,7 @@ public class InstanceNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext context = (OpenstackCliContext) contextObject;
-		for (NovaServer server : context.getCache().listItems(NovaServer.class, true)) {
+		for (NovaServer server : context.getComputeClient().publicEndpoint().servers().get().getList()) {
 			strings.add(server.getId());
 			strings.add(server.getName());
 		}

@@ -21,10 +21,6 @@ public class OpenstackCliContext extends CliContextBase {
 		this.options = options;
 	}
 
-	// public OpenstackSession getOpenstackSession() {
-	// return options.getOpenstackSession();
-	// }
-
 	public OpenStackClient getOpenstackService() {
 		return options.getOpenstackService();
 	}
@@ -41,26 +37,8 @@ public class OpenstackCliContext extends CliContextBase {
 		return options;
 	}
 
-	public void connect() {
-		// getComputeClient();
-	}
-
 	public static OpenstackCliContext get() {
 		return (OpenstackCliContext) CliContextBase.get();
-	}
-
-	// public OpenstackStorageClient getStorageClient() {
-	// return getOpenstackSession().getStorageClient();
-	// }
-
-	public OpenstackCache getCache() {
-		OpenStackClient service = getOpenstackService();
-		OpenstackCache cache = (OpenstackCache) service.getExtensions().get(OpenstackCache.class);
-		if (cache == null) {
-			cache = new OpenstackCache(service);
-			service.getExtensions().put(OpenstackCache.class, cache);
-		}
-		return cache;
 	}
 
 	public OpenStackStorageClient getStorageClient() {

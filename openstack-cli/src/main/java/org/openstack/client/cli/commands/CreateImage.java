@@ -46,7 +46,7 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 				String key = property.substring(0, equalsIndex);
 				String value = property.substring(equalsIndex + 1);
 
-				imageTemplate.put(key, value);
+				imageTemplate.getProperties().put(key, value);
 			}
 		}
 
@@ -57,8 +57,6 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 		InputStream imageStream = new NoCloseInputStream(System.in);
 
 		GlanceImage image = imageClient.publicEndpoint().post(new HashMap<String, Object>(), imageStream, -1, imageTemplate);
-
-		getCache().invalidateCache(GlanceImage.class);
 
 		return image;
 	}

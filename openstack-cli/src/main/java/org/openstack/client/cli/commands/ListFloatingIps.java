@@ -1,6 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.model.compute.NovaFloatingIp;
 
 public class ListFloatingIps extends OpenstackCliCommandRunnerBase {
 	public ListFloatingIps() {
@@ -9,7 +8,7 @@ public class ListFloatingIps extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getCache().listItems(NovaFloatingIp.class, false);
+		return getOpenstackService().compute().publicEndpoint().floatingIps().get();
 	}
 
 }

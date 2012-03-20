@@ -1,5 +1,6 @@
 package org.openstack.api.identity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -18,6 +19,10 @@ public class ServicesResource extends Resource {
 		super(target);
 	}
 	
+	public Object get() {
+		return get(new HashMap<String, Object>());
+	}
+	
 	public KeyStoneServiceList get(Map<String, Object> properties) {
 		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneServiceList.class);
 	}
@@ -29,5 +34,7 @@ public class ServicesResource extends Resource {
 	public ServiceResource service(String id) {
 		return new ServiceResource(target.path("/{id}").pathParam("id", id));
 	}
+
+	
 	
 }

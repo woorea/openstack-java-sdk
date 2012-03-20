@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.NovaImage;
@@ -19,8 +20,8 @@ public class ImageResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaImage.class);
 	}
 
-	public void delete(HashMap<String, Object> properties) {
-		target.request().delete();
+	public Response delete() {
+		return target.request().delete();
 	}
 
 	public NovaMetadata metadata() {
