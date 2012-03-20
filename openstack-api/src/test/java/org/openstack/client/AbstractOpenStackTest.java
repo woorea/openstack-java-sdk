@@ -58,7 +58,7 @@ public abstract class AbstractOpenStackTest {
 
 		this.verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
 		this.glanceEnabled = Boolean.parseBoolean(properties.getProperty("openstack.glance", "true"));
-		this.swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "false"));
+		this.swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "true"));
 		this.format = properties.getProperty("openstack.format", null);
 
 		String url = properties.getProperty("openstack.auth.url", "http://192.168.1.52:35357/v2.0");
