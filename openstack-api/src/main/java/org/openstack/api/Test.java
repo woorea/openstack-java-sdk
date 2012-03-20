@@ -1,28 +1,14 @@
 package org.openstack.api;
 
 import java.util.HashMap;
-
-import javax.ws.rs.client.Entity;
+import java.util.List;
 
 import org.openstack.api.identity.IdentityResource;
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
-import org.openstack.model.compute.NovaFlavorList;
-import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPairList;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaServerList;
-import org.openstack.model.compute.NovaVolumeList;
-import org.openstack.model.identity.KeyStoneRole;
-import org.openstack.model.identity.KeyStoneRoleList;
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneServiceList;
-import org.openstack.model.identity.KeyStoneTenant;
 import org.openstack.model.identity.KeyStoneTenantList;
-import org.openstack.model.identity.KeyStoneUser;
-import org.openstack.model.identity.KeyStoneUserList;
 import org.openstack.model.image.GlanceImageList;
-import org.openstack.model.storage.SwiftAccount;
+import org.openstack.model.storage.SwiftContainer;
 
 public class Test {
 
@@ -111,7 +97,7 @@ public class Test {
 		
 		GlanceImageList gImages = openstack.images().publicEndpoint().get(new HashMap<String, Object>());
 		
-		SwiftAccount sAccount = openstack.storage().publicEndpoint().get();
+		List<SwiftContainer> sAccount = openstack.storage().publicEndpoint().get();
 
 		// NovaSnapshotList snapshots = compute.snapshots().get(new
 		// HashMap<String, Object>(){{

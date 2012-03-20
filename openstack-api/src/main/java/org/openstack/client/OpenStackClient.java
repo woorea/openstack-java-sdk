@@ -127,7 +127,7 @@ public class OpenStackClient {
 
 					@Override
 					public boolean apply(KeyStoneService service) {
-						return "volume".equals(service.getType());
+						return "object-store".equals(service.getType());
 					}
 					
 				}));

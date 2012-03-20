@@ -3,9 +3,9 @@ package org.openstack.api.storage;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.Request.RequestBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.core.ResponseHeaders;
 
-import org.openstack.api.common.HeadResponse;
 import org.openstack.model.storage.SwiftObjectProperties;
 
 class SwiftHeaderUtils {
@@ -21,7 +21,7 @@ class SwiftHeaderUtils {
 		return classInfo;
 	}
 */
-	public static SwiftObjectProperties unmarshalHeaders(HeadResponse response) {
+	public static SwiftObjectProperties unmarshalHeaders(ResponseHeaders response) {
 		
 		SwiftObjectProperties properties = new SwiftObjectProperties();
 		/*
@@ -58,14 +58,12 @@ class SwiftHeaderUtils {
 		return properties;
 	}
 
-	public static RequestBuilder setHeadersForProperties(RequestBuilder builder, SwiftObjectProperties changeProperties) {
-		/*
+	public static Invocation.Builder setHeadersForProperties(Invocation.Builder builder, SwiftObjectProperties changeProperties) {
+		
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {
-			builder.putHeader("x-object-meta-" + tag.getKey(), tag.getValue());
+			builder.header("x-object-meta-" + tag.getKey(), tag.getValue());
 		}
 		return builder;
-		*/
-		return null;
 	}
 
 }

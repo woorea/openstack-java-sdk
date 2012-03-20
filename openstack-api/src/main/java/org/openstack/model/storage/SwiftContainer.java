@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Lists;
 
-@XmlRootElement
+@XmlRootElement(name = "container")
 @XmlAccessorType(XmlAccessType.NONE)
 public class SwiftContainer {
 	@XmlElement

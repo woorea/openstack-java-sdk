@@ -1,28 +1,35 @@
 package org.openstack.api.storage;
 
-import javax.ws.rs.client.Client;
+import java.util.List;
+
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.storage.SwiftAccount;
+import org.openstack.model.storage.SwiftContainer;
 
 public class AccountResource extends Resource {
+	
+	// GET /account List containers
+	// HEAD account Retrieve account metadata
+
 	
 	public AccountResource(Target target) {
 		super(target);
 	}
 
-	public SwiftAccount get() {
-		return target.request(MediaType.APPLICATION_JSON).get(SwiftAccount.class);
+	public List<SwiftContainer> get() {
+		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftContainer>>() {});
+	}
+	
+	public Response head() {
+		return target.request(MediaType.APPLICATION_JSON).head();
 	}
 
-	public ContainersResource containers() {
-		return path("/containers",ContainersResource.class);
-	}
-
-	public static AccountResource endpoint(Client client, String endpoint) {
-		return new AccountResource(client.target(endpoint));
+	public ContainerResource container(String id) {
+		return new ContainerResource(target.path("/{id}").pathParam("id", id));
 	}
 
 }

@@ -12,9 +12,9 @@ import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Invocation;
+import javax.ws.rs.core.ResponseHeaders;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.openstack.api.common.HeadResponse;
 import org.openstack.model.image.GlanceImage;
 
 import com.google.common.collect.Maps;
@@ -106,9 +106,9 @@ class GlanceHeaderUtils {
         return imageFieldMap;
     }
 
-    public static GlanceImage unmarshalHeaders(HeadResponse response) {
+    public static GlanceImage unmarshalHeaders(ResponseHeaders response) {
         GlanceImage image = new GlanceImage();
-        for (Entry<String, List<String>> entry : response.getHeaders().asMap().entrySet()) {
+        for (Entry<String, List<String>> entry : response.asMap().entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
             if (values.size() != 1) {
