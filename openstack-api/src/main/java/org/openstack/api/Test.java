@@ -2,25 +2,17 @@ package org.openstack.api;
 
 import java.util.HashMap;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 
-import org.openstack.api.common.RestClient;
 import org.openstack.api.identity.IdentityResource;
-import org.openstack.api.imagestore.ImageResource;
-import org.openstack.api.storage.AccountResource;
 import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackComputeClient;
-import org.openstack.client.OpenStackIdentityClient;
-import org.openstack.model.common.OpenStackSession2;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.model.compute.NovaFlavorList;
 import org.openstack.model.compute.NovaImageList;
 import org.openstack.model.compute.NovaKeyPairList;
 import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.model.compute.NovaServerList;
 import org.openstack.model.compute.NovaVolumeList;
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneAuthentication;
 import org.openstack.model.identity.KeyStoneRole;
 import org.openstack.model.identity.KeyStoneRoleList;
 import org.openstack.model.identity.KeyStoneService;
@@ -30,21 +22,13 @@ import org.openstack.model.identity.KeyStoneTenantList;
 import org.openstack.model.identity.KeyStoneUser;
 import org.openstack.model.identity.KeyStoneUserList;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
 public class Test {
 
 	public static void main(String[] args) {
 		
-		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
-		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials("admin", "secret0");
-		IdentityResource auth = IdentityResource.endpoint(client,"http://192.168.1.52:35357/v2.0");
-		KeyStoneAccess access = auth.tokens().authenticate(authentication);
+		OpenStackClient openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:35357/v2.0", "admin", "secret0");
 		//We use here the admintoken (set on installation process)
-		access.getToken().setId("secret0");
-		
-		OpenStackClient openstack = new OpenStackClient(client, access);
+		openstack.getAccess().getToken().setId("secret0");
 		
 		IdentityResource identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
 		
@@ -100,19 +84,13 @@ public class Test {
 //			put("Accept", MediaType.APPLICATION_XML);
 //		}});
 		
-		authentication = new KeyStoneAuthentication().withPasswordCredentials("admin", "secret0");
-		auth = IdentityResource.endpoint(client,"http://192.168.1.52:5000/v2.0");
-		access = auth.tokens().authenticate(authentication);
-		openstack.setAccess(access);
-		
+		openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0");
 		
 		identity = openstack.target("http://192.168.1.52:5000/v2.0", IdentityResource.class);
 		
 		tenants = identity.tenants().get(new HashMap<String, Object>());
 		
-		authentication = new KeyStoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenants.getList().get(0).getId());
-		access = auth.tokens().authenticate(authentication);
-		openstack.setAccess(access);
+		openstack.exchangeTokenForTenant(tenants.getList().get(0).getId());
 		
 		
 		NovaServerList servers = openstack.compute().publicEndpoint().servers().get(new HashMap<String, Object>(){{
@@ -135,10 +113,10 @@ public class Test {
 		// put("X-Auth-Token", access2.getToken().getId());
 		// }});
 
-		ImageResource image = ImageResource.endpoint(client, "http://192.168.1.52:9292/v1");
+		//ImageResource image = ImageResource.endpoint(client, "http://192.168.1.52:9292/v1");
 		//image.setSession(session);
 
-		AccountResource storage = AccountResource.endpoint(client, "http://192.168.1.52:3333");
+		//AccountResource storage = AccountResource.endpoint(client, "http://192.168.1.52:3333");
 		//storage.setSession(session);
 
 		// IdentityResource identity = IdentityResource.endpoint(client,

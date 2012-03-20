@@ -83,13 +83,7 @@ public class OpenstackTestContext {
 		String secret = properties.getProperty("openstack.auth.secret", "secret0");
 		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
 
-		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
-		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, secret);
-		IdentityResource identity = IdentityResource.endpoint(client,url);
-		
-		KeyStoneAccess access = identity.tokens().authenticate(authentication);
-		
-		context.client = new OpenStackClient(client, access);
+		context.client = OpenStackClientFactory.authenticate(url, username, secret);
 		
 		return context;
 		
