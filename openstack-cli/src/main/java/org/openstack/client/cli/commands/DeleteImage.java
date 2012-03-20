@@ -1,5 +1,9 @@
 package org.openstack.client.cli.commands;
 
+import java.util.HashMap;
+
+import javax.ws.rs.client.Entity;
+
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.ImageName;
@@ -22,7 +26,7 @@ public class DeleteImage extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
 		}
 
-		getOpenstackService().delete(image);
+		getOpenstackService().delete(new HashMap<String, Object>(), Entity.json(image));
 
 		return image.getId();
 	}

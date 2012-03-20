@@ -1,7 +1,11 @@
 package org.openstack.client.cli.commands;
 
+import java.util.HashMap;
+
+import javax.ws.rs.client.Entity;
+
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.cli.model.InstanceName;
 import org.openstack.model.compute.NovaMetadata;
 import org.openstack.model.compute.NovaMetadata.Item;
@@ -23,7 +27,7 @@ public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenstackComputeClient compute = getContext().getComputeClient();
+		OpenStackComputeClient compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
@@ -38,7 +42,7 @@ public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
 		item.setValue(value);
 		metadata.getItems().add(item);
 
-		return compute.root().servers().server(instanceId).update(server);
+		return compute.publicEndpoint().servers().server(instanceId).put(new HashMap<String, Object>(), Entity.json(server));
 	}
 
 }

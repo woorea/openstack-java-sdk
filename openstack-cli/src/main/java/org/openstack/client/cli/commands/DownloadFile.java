@@ -3,7 +3,7 @@ package org.openstack.client.cli.commands;
 import java.io.InputStream;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.api.storage.OpenstackStorageClient;
+import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.model.StoragePath;
 import org.openstack.utils.Io;
 
@@ -17,7 +17,7 @@ public class DownloadFile extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenstackStorageClient client = getStorageClient();
+		OpenStackStorageClient client = getStorageClient();
 
 		InputStream is = path.getResource(client).openStream();
 		try {

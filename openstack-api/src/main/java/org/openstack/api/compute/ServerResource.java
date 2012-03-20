@@ -58,7 +58,11 @@ public class ServerResource extends Resource {
 	}
 
 	public NovaServer get(HashMap<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaServer.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaServer.class);
+	}
+	
+	public NovaServer put(HashMap<String, Object> properties, Entity<NovaServer> server) {
+		return target.request(MediaType.APPLICATION_JSON).put(server, NovaServer.class);
 	}
 
 	public void delete(HashMap<String, Object> properties) {

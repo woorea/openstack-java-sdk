@@ -1,7 +1,9 @@
 package org.openstack.client.cli.commands;
 
+import java.util.HashMap;
+
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 
 public class DeleteKeypair extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -13,8 +15,8 @@ public class DeleteKeypair extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenstackComputeClient tenant = getContext().getComputeClient();
-		tenant.root().keyPairs().keypair(id).delete();
+		OpenStackComputeClient tenant = getContext().getComputeClient();
+		tenant.publicEndpoint().keyPairs().keypair(id).delete(new HashMap<String, Object>());
 		return id;
 	}
 }

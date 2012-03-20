@@ -1,13 +1,14 @@
 package org.openstack.client.cli.output;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.openstack.api.extensions.Extension;
 import org.openstack.api.extensions.ExtensionRegistry;
 import org.openstack.api.extensions.ExtensionValues;
+import org.openstack.client.OpenStackClient;
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.model.common.OpenstackService;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;
@@ -28,15 +29,15 @@ public class ServerFormatter extends SimpleFormatter<NovaServer> {
 	public void visit(NovaServer server, OutputSink sink) throws IOException {
 		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
-		OpenstackService service = OpenstackCliContext.get().getOpenstackService();
+		OpenStackClient service = OpenstackCliContext.get().getOpenstackService();
 
-		NovaFlavor flavor = service.resolveFlavor(server.getFlavor());
+		NovaFlavor flavor = service.compute().publicEndpoint().flavors().flavor(server.getFlavor().getId()).get(new HashMap<String, Object>());
 		String flavorName = null;
 		if (flavor != null) {
 			flavorName = flavor.getName();
 		}
 
-		NovaImage image = service.resolveImage(server.getImage());
+		NovaImage image = service.compute().publicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
 		String imageName = null;
 		if (image != null) {
 			imageName = image.getName();

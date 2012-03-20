@@ -2,7 +2,7 @@ package org.openstack.client.cli.autocomplete;
 
 import java.util.List;
 
-import org.openstack.api.storage.OpenstackStorageClient;
+import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.model.storage.SwiftContainer;
 
@@ -17,8 +17,8 @@ public class ContainerNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		OpenstackStorageClient client = osContext.getStorageClient();
-		Iterable<SwiftContainer> items = client.root().containers().list();
+		OpenStackStorageClient client = osContext.getStorageClient();
+		Iterable<SwiftContainer> items = client.publicEndpoint().containers().list();
 		for (SwiftContainer item : items) {
 			strings.add(item.getName());
 		}

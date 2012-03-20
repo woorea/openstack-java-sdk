@@ -1,9 +1,9 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.api.storage.OpenstackStorageClient;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.OpenstackCache;
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.model.common.OpenstackService;
 
 import com.fathomdb.cli.commands.CommandRunnerBase;
 import com.fathomdb.cli.commands.CommandSpecifier;
@@ -18,7 +18,7 @@ public abstract class OpenstackCliCommandRunnerBase extends CommandRunnerBase {
 		super(commandSpecifier);
 	}
 
-	protected OpenstackStorageClient getStorageClient() {
+	protected OpenStackStorageClient getStorageClient() {
 		return getContext().getStorageClient();
 	}
 
@@ -38,7 +38,7 @@ public abstract class OpenstackCliCommandRunnerBase extends CommandRunnerBase {
 		return getContext().getCache();
 	}
 
-	protected OpenstackService getOpenstackService() {
+	protected OpenStackClient getOpenstackService() {
 		return getContext().getOpenstackService();
 	}
 }

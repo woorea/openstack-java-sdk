@@ -1,7 +1,7 @@
 package org.openstack.client.cli.model;
 
 import org.openstack.api.storage.ObjectResource;
-import org.openstack.api.storage.OpenstackStorageClient;
+import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.autocomplete.StoragePathAutoCompleter;
 
 import com.fathomdb.cli.StringWrapper;
@@ -13,13 +13,13 @@ public class StoragePath extends StringWrapper {
 		super(key);
 	}
 
-	public ObjectResource getResource(OpenstackStorageClient client) {
+	public ObjectResource getResource(OpenStackStorageClient client) {
 		String containerName = getContainer();
 		String objectPath = getObjectPath();
 		if (containerName == null || objectPath == null) {
 			throw new IllegalArgumentException("Cannot parse: " + getKey());
 		}
-		return client.root().containers().id(containerName).objects().id(objectPath);
+		return client.publicEndpoint().containers().id(containerName).objects().id(objectPath);
 	}
 
 	public String getContainer() {

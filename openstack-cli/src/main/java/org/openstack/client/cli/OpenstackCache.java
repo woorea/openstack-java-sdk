@@ -3,7 +3,7 @@ package org.openstack.client.cli;
 import java.util.List;
 import java.util.Map;
 
-import org.openstack.model.common.OpenstackService;
+import org.openstack.client.OpenStackClient;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaSecurityGroup;
 import org.openstack.model.exceptions.OpenstackException;
@@ -13,9 +13,9 @@ import com.google.common.collect.Maps;
 
 public class OpenstackCache {
 
-	private final OpenstackService service;
+	private final OpenStackClient service;
 
-	public OpenstackCache(OpenstackService service) {
+	public OpenstackCache(OpenStackClient service) {
 		this.service = service;
 	}
 

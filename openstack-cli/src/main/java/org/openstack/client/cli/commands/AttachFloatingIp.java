@@ -1,7 +1,7 @@
 package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.cli.model.InstanceName;
 
 public class AttachFloatingIp extends OpenstackCliCommandRunnerBase {
@@ -17,11 +17,11 @@ public class AttachFloatingIp extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenstackComputeClient compute = getContext().getComputeClient();
+		OpenStackComputeClient compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
-		compute.root().servers().server(instanceId).addFloatingIp(ip);
+		compute.publicEndpoint().servers().server(instanceId).addFloatingIp(ip);
 		return ip;
 	}
 }

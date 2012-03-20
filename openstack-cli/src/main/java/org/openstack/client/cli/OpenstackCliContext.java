@@ -2,16 +2,17 @@ package org.openstack.client.cli;
 
 import java.io.IOException;
 
-import org.openstack.api.storage.OpenstackStorageClient;
-import org.openstack.client.OpenstackComputeClient;
-import org.openstack.client.OpenstackImageClient;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.OpenStackImagesClient;
+import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
 import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
-import org.openstack.model.common.OpenstackService;
 
 import com.fathomdb.cli.CliContextBase;
 
 public class OpenstackCliContext extends CliContextBase {
+	
 	final ConfigurationOptions options;
 
 	public OpenstackCliContext(ConfigurationOptions options) throws IOException {
@@ -24,16 +25,16 @@ public class OpenstackCliContext extends CliContextBase {
 	// return options.getOpenstackSession();
 	// }
 
-	public OpenstackService getOpenstackService() {
+	public OpenStackClient getOpenstackService() {
 		return options.getOpenstackService();
 	}
 
-	public OpenstackComputeClient getComputeClient() {
-		return getOpenstackService().getComputeClient();
+	public OpenStackComputeClient getComputeClient() {
+		return getOpenstackService().compute();
 	}
 
-	public OpenstackImageClient getImageClient() {
-		return getOpenstackService().getImageClient();
+	public OpenStackImagesClient getImageClient() {
+		return getOpenstackService().images();
 	}
 
 	public ConfigurationOptions getOptions() {
@@ -53,7 +54,7 @@ public class OpenstackCliContext extends CliContextBase {
 	// }
 
 	public OpenstackCache getCache() {
-		OpenstackService service = getOpenstackService();
+		OpenStackClient service = getOpenstackService();
 		OpenstackCache cache = (OpenstackCache) service.getExtensions().get(OpenstackCache.class);
 		if (cache == null) {
 			cache = new OpenstackCache(service);
@@ -62,8 +63,8 @@ public class OpenstackCliContext extends CliContextBase {
 		return cache;
 	}
 
-	public OpenstackStorageClient getStorageClient() {
-		return getOpenstackService().getStorageClient();
+	public OpenStackStorageClient getStorageClient() {
+		return getOpenstackService().storage();
 	}
 
 }

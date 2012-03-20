@@ -1,7 +1,11 @@
 package org.openstack.client.cli.commands;
 
+import java.util.HashMap;
+
+import javax.ws.rs.client.Entity;
+
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.NovaSecurityGroupRule;
 
@@ -26,7 +30,7 @@ public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenstackComputeClient compute = getContext().getComputeClient();
+		OpenStackComputeClient compute = getContext().getComputeClient();
 
 		NovaCreateSecurityGroupRuleRequest newRule = new NovaCreateSecurityGroupRuleRequest();
 		newRule.setCidr(cidr);
@@ -39,7 +43,7 @@ public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 		newRule.setIpProtocol(protocol);
 		newRule.setParentGroupId(securityGroupId);
 
-		NovaSecurityGroupRule createdRule = compute.root().securityGroupRules().create(newRule);
+		NovaSecurityGroupRule createdRule = compute.publicEndpoint().securityGroupRules().post(new HashMap<String, Object>(), Entity.json(newRule));
 
 		return createdRule;
 	}

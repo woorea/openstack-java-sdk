@@ -8,9 +8,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.kohsuke.args4j.Option;
-import org.openstack.client.DirectOpenstackService;
-import org.openstack.client.OpenStackSession;
-import org.openstack.model.common.OpenstackService;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.utils.Io;
 import org.openstack.utils.NoCloseInputStream;
 
@@ -39,14 +38,12 @@ public class ConfigurationOptions extends CliOptions {
 	// return getOpenstackSession().getImageClient();
 	// }
 
-	OpenstackService service = null;
+	OpenStackClient service = null;
 
-	public OpenstackService getOpenstackService() {
+	public OpenStackClient getOpenstackService() {
 		if (service == null) {
 			if (configFile == null) {
-				OpenstackSessionInfo sessionInfo = new OpenstackSessionInfo(server, username, password, tenantId, debug);
-
-				service = buildService(sessionInfo);
+				service = OpenStackClientFactory.authenticate(server, username, password, tenantId);
 			} else {
 				InputStream is = null;
 				try {
@@ -76,10 +73,9 @@ public class ConfigurationOptions extends CliOptions {
 					String password = properties.getProperty("openstack.password");
 					String tenantId = properties.getProperty("openstack.tenant");
 
-					OpenstackSessionInfo sessionInfo = new OpenstackSessionInfo(server, username, password, tenantId,
-							debug);
+					
 
-					service = buildService(sessionInfo);
+					service = OpenStackClientFactory.authenticate(server, username, password, tenantId);
 				} catch (IOException e) {
 					throw new IllegalArgumentException("Error reading configuration file", e);
 				} finally {
@@ -93,8 +89,4 @@ public class ConfigurationOptions extends CliOptions {
 
 	static final SessionCache sessionCache = new SessionCache();
 
-	private OpenstackService buildService(OpenstackSessionInfo sessionInfo) {
-		OpenStackSession session = sessionCache.get(sessionInfo);
-		return new DirectOpenstackService(session);
-	}
 }

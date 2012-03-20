@@ -1,7 +1,9 @@
 package org.openstack.client.cli.commands;
 
+import java.util.HashMap;
+
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenstackComputeClient;
+import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.InstanceName;
 import org.openstack.model.compute.NovaServer;
@@ -23,8 +25,8 @@ public class DeleteInstance extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find instance: " + instanceName.getKey());
 		}
 
-		OpenstackComputeClient tenant = context.getComputeClient();
-		tenant.root().servers().server(serverId).delete();
+		OpenStackComputeClient tenant = context.getComputeClient();
+		tenant.publicEndpoint().servers().server(serverId).delete(new HashMap<String, Object>());
 
 		invalidateCache(NovaServer.class);
 

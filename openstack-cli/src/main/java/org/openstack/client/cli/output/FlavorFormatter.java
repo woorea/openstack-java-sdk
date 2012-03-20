@@ -22,7 +22,7 @@ public class FlavorFormatter extends SimpleFormatter<NovaFlavor> {
         values.put("id", o.getId());
         values.put("name", o.getName());
         values.put("memory_mb", o.getRam());
-        values.put("swap", o.swap);
+        values.put("swap", o.getSwap());
         values.put("local_gb", o.getDisk());
         values.put("vcpus", o.getVcpus());
         values.put("rxtx_factor", o.getRxTxFactor());
