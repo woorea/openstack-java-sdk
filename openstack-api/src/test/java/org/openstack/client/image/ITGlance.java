@@ -28,10 +28,10 @@ public class ITGlance extends GlanceIntegrationTest {
 		skipIfNoGlance();
 
 		OpenStackImagesClient glance = client.images();
-		List<GlanceImage> images = Lists.newArrayList(glance.publicEndpoint().get(new HashMap<String, Object>()).getList());
+		List<GlanceImage> images = Lists.newArrayList(glance.publicEndpoint().get().getList());
 
 		for (GlanceImage image : images) {
-			GlanceImage details = glance.publicEndpoint().image(image.getId()).head(new HashMap<String, Object>());
+			GlanceImage details = glance.publicEndpoint().image(image.getId()).head();
 
 			assertImageEquals(details, image);
 		}
@@ -94,13 +94,13 @@ public class ITGlance extends GlanceIntegrationTest {
 			assertEquals(uploaded.getChecksum(), Hex.encodeHexString(hash));
 		}
 
-		List<GlanceImage> allImages = Lists.newArrayList(glance.publicEndpoint().get(new HashMap<String, Object>()).images);
+		List<GlanceImage> allImages = Lists.newArrayList(glance.publicEndpoint().get().images);
 
 		GlanceImage foundInAll = findImageById(allImages, uploaded.getId());
 		assertNotNull(foundInAll);
 		assertImageEquals(foundInAll, uploaded);
 
-		GlanceImage details = glance.publicEndpoint().image(uploaded.getId()).head(new HashMap<String, Object>());
+		GlanceImage details = glance.publicEndpoint().image(uploaded.getId()).head();
 		assertImageEquals(details, uploaded);
 
 		{
@@ -123,7 +123,7 @@ public class ITGlance extends GlanceIntegrationTest {
 		assertNull(foundInAll);
 
 		try {
-			glance.publicEndpoint().image(uploaded.getId()).head(new HashMap<String, Object>());
+			glance.publicEndpoint().image(uploaded.getId()).head();
 			Assert.fail();
 		} catch (OpenstackNotFoundException e) {
 			// Expected!

@@ -19,4 +19,9 @@ public class GlanceImageUploadResponse {
         this.image = image;
     }
 
+	@Override
+	public String toString() {
+		return "GlanceImageUploadResponse [image=" + image + "]";
+	}
+
 }

@@ -32,10 +32,10 @@ public class GlanceImage implements Serializable {
     private String checksum;
     @XmlAttribute(name = "created_at")
     @SerializedName("created_at")
-    private Date createdAt;
+    private String createdAt;
     @XmlAttribute(name = "updated_at")
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private String updatedAt;
     @XmlAttribute(name = "deleted_at")
     @SerializedName("deleted_at")
     private Date deletedAt;
@@ -112,19 +112,19 @@ public class GlanceImage implements Serializable {
         this.checksum = checksum;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 

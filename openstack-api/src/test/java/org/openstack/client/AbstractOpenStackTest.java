@@ -57,7 +57,7 @@ public abstract class AbstractOpenStackTest {
 		
 
 		this.verbose = Boolean.parseBoolean(properties.getProperty("openstack.debug", "true"));
-		this.glanceEnabled = Boolean.parseBoolean(properties.getProperty("openstack.glance", "false"));
+		this.glanceEnabled = Boolean.parseBoolean(properties.getProperty("openstack.glance", "true"));
 		this.swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "false"));
 		this.format = properties.getProperty("openstack.format", null);
 
