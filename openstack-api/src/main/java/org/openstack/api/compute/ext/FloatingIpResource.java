@@ -22,7 +22,7 @@ public class FloatingIpResource extends Resource {
 	}
 	
 	public NovaFloatingIp get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFloatingIp.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaFloatingIp.class);
 	}
 	
 	public void delete() {

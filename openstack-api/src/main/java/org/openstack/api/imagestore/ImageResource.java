@@ -45,7 +45,7 @@ public class ImageResource extends Resource {
     }
 
     public void delete(Map<String, Object> properties) {
-        target.request().header("X-Auth-Token", properties.get("X-Auth-Token"));
+        target.request();
     }
 	
 }

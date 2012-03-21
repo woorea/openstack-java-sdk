@@ -34,7 +34,7 @@ public class FloatingIpsResource extends Resource {
 	 * @return
 	 */
 	public NovaFloatingIpList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaFloatingIpList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaFloatingIpList.class);
 	}
 	
 	public NovaCreateFloatingIpResponse post() {
@@ -43,7 +43,7 @@ public class FloatingIpsResource extends Resource {
 	
 	public NovaCreateFloatingIpResponse post(Map<String,Object> properties, String pool) {
 		throw new UnsupportedOperationException();
-		//return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(rule, NovaCreateFloatingIpResponse.class);
+		//return target.request(MediaType.APPLICATION_JSON).post(rule, NovaCreateFloatingIpResponse.class);
 	}
 	
 	

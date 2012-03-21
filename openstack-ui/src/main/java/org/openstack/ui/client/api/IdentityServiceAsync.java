@@ -1,9 +1,7 @@
 package org.openstack.ui.client.api;
 
-import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
-import org.openstack.model.identity.KeyStoneEndpointTemplates;
 import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
 import org.openstack.model.identity.KeyStoneRoleList;
 import org.openstack.model.identity.KeyStoneServiceList;
@@ -14,7 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface IdentityServiceAsync {
 
-	void getSessionData(AsyncCallback<OpenStackSessionData> callback);
+	void getSessionData(AsyncCallback<KeyStoneAccess> callback);
 
 	void authenticate(KeyStoneAuthentication authentication, AsyncCallback<KeyStoneAccess> callback);
 	

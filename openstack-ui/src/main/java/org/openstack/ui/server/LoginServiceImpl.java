@@ -14,13 +14,11 @@ public class LoginServiceImpl implements LoginService {
 	public KeyStoneAccess login(String identityURL, String username, String password) {
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, password);
 		
-		OpenStackClient oss = OpenStackClientFactory.authenticate(identityURL, username, password);
-		
-		IdentityResource identity = oss.identity().publicEndpoint();
+		OpenStackClient openstack = OpenStackClientFactory.authenticate(identityURL, username, password);
+		//no services when login without tenant
+		IdentityResource identity = openstack.target(identityURL, IdentityResource.class);
 		
 		KeyStoneAccess access = identity.tokens().authenticate(authentication);
-		
-		//oss.getData().setAccess(access);
 		
 		KeyStoneTenantList tenants = identity.tenants().get();
 		
@@ -29,8 +27,6 @@ public class LoginServiceImpl implements LoginService {
 		authentication.setTenantId(tenant.getId());
 		
 		access = identity.tokens().authenticate(authentication);
-		
-		//oss.getData().setAccess(access);
 		
 		return access;
 	}

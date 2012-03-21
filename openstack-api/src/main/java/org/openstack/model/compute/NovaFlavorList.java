@@ -1,5 +1,6 @@
 package org.openstack.model.compute;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "flavors")
 @XmlAccessorType(XmlAccessType.NONE)
-public class NovaFlavorList {
+public class NovaFlavorList implements Serializable {
 
     @XmlElement(name = "flavor")
     @SerializedName("flavors")

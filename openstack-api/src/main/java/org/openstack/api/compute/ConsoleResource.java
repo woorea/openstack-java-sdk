@@ -15,7 +15,7 @@ public class ConsoleResource extends Resource {
 	}
 
 	public NovaConsole get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaConsole.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaConsole.class);
 	}
 	
 //	public void delete() {

@@ -21,7 +21,7 @@ public class ServersResource extends Resource {
 	public NovaServerList get() {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("detail",true);
-		return get();
+		return get(properties);
 	}
 
 	/**

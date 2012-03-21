@@ -37,7 +37,7 @@ public class ImagesResource extends Resource {
 		if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(GlanceImageList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(GlanceImageList.class);
 	}
 
     public ImageResource image(String id) {

@@ -49,7 +49,7 @@ public class ServerResource extends Resource {
 		}
 
 		public String get(Map<String, Object> properties, String networkId) {
-			return target.path("/ips").request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(String.class);
+			return target.path("/ips").request(MediaType.APPLICATION_JSON).get(String.class);
 		}
 
 	}

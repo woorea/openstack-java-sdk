@@ -17,12 +17,12 @@ public class ConsolesResource extends Resource {
 	}
 
 	public NovaConsoleList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaConsoleList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaConsoleList.class);
 	}
 	
 	public NovaConsole post(Map<String,Object> properties, Entity<NovaConsole> rule) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).post(rule, NovaConsole.class);
+		return target.request(MediaType.APPLICATION_JSON).post(rule, NovaConsole.class);
 	}
 	
 	public ConsoleResource console(String id) {

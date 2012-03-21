@@ -25,7 +25,7 @@ public class VolumesResource extends Resource {
 	public NovaVolumeList get() {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("detail",true);
-		return get();
+		return get(properties);
 	}
 	
 	/**

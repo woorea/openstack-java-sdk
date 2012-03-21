@@ -28,14 +28,12 @@ public class UI implements EntryPoint, UIView.Presenter {
 		final UIView ui = new UIView();
 		ui.setPresenter(UI.this);
 		
-		OpenStackClient.IDENTITY.getSessionData(new DefaultAsyncCallback<OpenStackSessionData>() {
+		OpenStackClient.IDENTITY.getSessionData(new DefaultAsyncCallback<KeyStoneAccess>() {
 
 			@Override
-			public void onSuccess(OpenStackSessionData session) {
+			public void onSuccess(KeyStoneAccess access) {
 				
-				GWT.log("SESSION :" + session.getAccess());
-				
-				OpenStackClient.session = session;
+				OpenStackClient.access = access;
 				
 				OpenStackClient.IDENTITY.listTenants(new DefaultAsyncCallback<KeyStoneTenantList>() {
 
@@ -68,14 +66,14 @@ public class UI implements EntryPoint, UIView.Presenter {
 	@Override
 	public void onChangeTenant(String tenantId) {
 		KeyStoneAuthentication authentication = new KeyStoneAuthentication();
-		authentication.setToken(OpenStackClient.session.getAccess().getToken());
+		authentication.setToken(OpenStackClient.access.getToken());
 		authentication.setTenantId(tenantId);
 		OpenStackClient.IDENTITY.authenticate(authentication, new DefaultAsyncCallback<KeyStoneAccess>() {
 
 			@Override
 			public void onSuccess(KeyStoneAccess access) {
 				GWT.log(access.toString());
-				OpenStackClient.session.setAccess(access);
+				OpenStackClient.access = access;
 				GWT.log(OpenStackClient.getTenant());
 				UI.PLACE_CONTROLLER.goTo(new OpenStackPlace("compute",OpenStackClient.getTenant(), "servers"));
 			}

@@ -9,8 +9,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public abstract class OpenStackRemoteServiceServlet extends RemoteServiceServlet {
 
 	protected OpenStackClient getClient() {
-		//return (OpenStackSession) perThreadRequest.get().getSession().getAttribute(Constants.OPENSTACK_SESSION);
-		KeyStoneAccess access = new KeyStoneAccess();
+		KeyStoneAccess access = (KeyStoneAccess) perThreadRequest.get().getSession().getAttribute(Constants.OPENSTACK_ACCESS);
 		return OpenStackClientFactory.create(access);
 		
 	}

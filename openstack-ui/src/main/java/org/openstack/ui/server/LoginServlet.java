@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		
-		req.getSession().setAttribute(Constants.OPENSTACK_SESSION, service.login(identityURL, username, password));
+		req.getSession().setAttribute(Constants.OPENSTACK_ACCESS, service.login(identityURL, username, password));
 		
 		resp.sendRedirect(String.format("%s/openstack.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
 	}

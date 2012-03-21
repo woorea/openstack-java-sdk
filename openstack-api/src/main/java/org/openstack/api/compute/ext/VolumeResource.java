@@ -21,11 +21,11 @@ public class VolumeResource extends Resource {
 	 * @return
 	 */
 	public NovaVolume get(HashMap<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(NovaVolume.class);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaVolume.class);
 	}
 
 	public void delete(HashMap<String, Object> properties) {
-		target.request().header("X-Auth-Token", properties.get("X-Auth-Token")).delete();
+		target.request().delete();
 	}
 	
 }

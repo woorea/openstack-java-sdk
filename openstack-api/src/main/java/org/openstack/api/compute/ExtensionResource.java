@@ -15,6 +15,6 @@ public class ExtensionResource extends Resource {
 	}
 
     public Extension get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).header("X-Auth-Token", properties.get("X-Auth-Token")).get(Extension.class);
+		return target.request(MediaType.APPLICATION_JSON).get(Extension.class);
 	}
 }

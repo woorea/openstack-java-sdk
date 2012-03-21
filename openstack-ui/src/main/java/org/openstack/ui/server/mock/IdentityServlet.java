@@ -19,7 +19,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class IdentityServlet extends RemoteServiceServlet implements IdentityService {
 	
-	private OpenStackSessionData session;
+	private KeyStoneAccess session;
 
 	@Override
 	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
@@ -42,9 +42,9 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 	}
 
 	@Override
-	public OpenStackSessionData getSessionData() {
+	public KeyStoneAccess getSessionData() {
 		if(session == null) {
-			session = new OpenStackSessionData(authenticate(new KeyStoneAuthentication()));
+			session = authenticate(new KeyStoneAuthentication());
 		}
 		return session;
 	}

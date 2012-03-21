@@ -1,6 +1,5 @@
 package org.openstack.ui.server;
 
-import org.openstack.model.common.OpenStackSessionData;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
 import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
@@ -15,17 +14,17 @@ public class IdentityServlet extends OpenStackRemoteServiceServlet implements Id
 
 	@Override
 	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
-		return getClient().identity().administrationEndpoint().tokens().authenticate(authentication);
+		return getClient().identity().publicEndpoint().tokens().authenticate(authentication);
 	}
 
 	@Override
 	public KeyStoneTenantList listTenants() {
-		return getClient().identity().administrationEndpoint().tenants().get();
+		return getClient().identity().publicEndpoint().tenants().get();
 	}
 
 	@Override
-	public OpenStackSessionData getSessionData() {
-		return null; // getSession().getData();
+	public KeyStoneAccess getSessionData() {
+		return getClient().getAccess();
 	}
 
 	@Override
