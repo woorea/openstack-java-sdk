@@ -2,7 +2,6 @@ package org.openstack.client;
 
 import java.util.Map;
 
-import org.openstack.api.compute.TenantResource;
 import org.openstack.api.storage.AccountResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.KeyStoneService;
