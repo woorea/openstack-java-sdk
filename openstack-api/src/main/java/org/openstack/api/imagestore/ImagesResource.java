@@ -14,9 +14,11 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.image.GlanceImage;
-import org.openstack.model.image.GlanceImageList;
-import org.openstack.model.image.GlanceImageUploadResponse;
+import org.openstack.model.image.Image;
+import org.openstack.model.image.ImageList;
+import org.openstack.model.image.ImageUploadResponse;
+import org.openstack.model.image.glance.GlanceImageList;
+import org.openstack.model.image.glance.GlanceImageUploadResponse;
 import org.openstack.utils.Io;
 
 public class ImagesResource extends Resource {
@@ -25,13 +27,13 @@ public class ImagesResource extends Resource {
 		super(target);
 	}
 	
-	public GlanceImageList get() {
+	public ImageList get() {
 		HashMap<String, Object> properties = new HashMap<String, Object>();
 		properties.put("detail", true);
 		return get(properties);
 	}
 	
-	public GlanceImageList get(Map<String,Object> properties) {
+	public ImageList get(Map<String,Object> properties) {
 		if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 
@@ -42,7 +44,7 @@ public class ImagesResource extends Resource {
     	return new ImageResource(target.path("/{id}").pathParam("id", id));
     }
 
-	public GlanceImage post(Map<String, Object> properties, File imageFile, GlanceImage imageProperties) throws IOException, OpenstackException {
+	public Image post(Map<String, Object> properties, File imageFile, Image imageProperties) throws IOException, OpenstackException {
 		FileInputStream fis = new FileInputStream(imageFile);
 		try {
 
@@ -52,7 +54,7 @@ public class ImagesResource extends Resource {
 		}
 	}
 
-	public GlanceImage post(Map<String, Object> properties, InputStream imageStream, long imageStreamLength, GlanceImage imageProperties) throws OpenstackException,
+	public Image post(Map<String, Object> properties, InputStream imageStream, long imageStreamLength, Image imageProperties) throws OpenstackException,
 			IOException {
 		
 
@@ -66,8 +68,8 @@ public class ImagesResource extends Resource {
 			imageStream = new KnownLengthInputStream(imageStream, imageStreamLength);
 		}
 
-		GlanceImageUploadResponse response = b.post(Entity.entity(imageStream, MediaType.APPLICATION_OCTET_STREAM_TYPE), GlanceImageUploadResponse.class);
-		GlanceImage image = response.getImage();
+		ImageUploadResponse response = b.post(Entity.entity(imageStream, MediaType.APPLICATION_OCTET_STREAM_TYPE), GlanceImageUploadResponse.class);
+		Image image = response.getImage();
 		return image;
 	}
 

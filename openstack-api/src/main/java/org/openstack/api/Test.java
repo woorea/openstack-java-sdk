@@ -7,7 +7,7 @@ import org.openstack.api.identity.IdentityResource;
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
 import org.openstack.model.identity.KeyStoneTenantList;
-import org.openstack.model.image.GlanceImageList;
+import org.openstack.model.image.ImageList;
 import org.openstack.model.storage.SwiftContainer;
 
 public class Test {
@@ -95,7 +95,7 @@ public class Test {
 //		
 //		NovaVolumeList volumes = openstack.compute().publicEndpoint().volumes().get(new HashMap<String, Object>());
 		
-		GlanceImageList gImages = openstack.images().publicEndpoint().get(new HashMap<String, Object>());
+		ImageList gImages = openstack.images().publicEndpoint().get(new HashMap<String, Object>());
 		
 		List<SwiftContainer> sAccount = openstack.storage().publicEndpoint().get();
 

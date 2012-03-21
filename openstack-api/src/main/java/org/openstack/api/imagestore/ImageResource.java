@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import org.openstack.api.common.Resource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
-import org.openstack.model.image.GlanceImage;
+import org.openstack.model.image.Image;
 
 public class ImageResource extends Resource {
 	
@@ -25,11 +25,11 @@ public class ImageResource extends Resource {
         b.method("PUT");
     }
 
-    public GlanceImage head() throws OpenstackException {
+    public Image head() throws OpenstackException {
         Response response = target.request().head();
         int httpStatus = response.getStatus();
         if (httpStatus == 200) {
-            GlanceImage image = GlanceHeaderUtils.unmarshalHeaders(response.getHeaders());
+            Image image = GlanceHeaderUtils.unmarshalHeaders(response.getHeaders());
             return image;
         }
 

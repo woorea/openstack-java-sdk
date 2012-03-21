@@ -15,7 +15,8 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.ResponseHeaders;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.openstack.model.image.GlanceImage;
+import org.openstack.model.image.Image;
+import org.openstack.model.image.glance.GlanceImage;
 
 import com.google.common.collect.Maps;
 
@@ -29,7 +30,7 @@ class GlanceHeaderUtils {
         return builder;
     }
 
-    static Invocation.Builder setHeaders(Invocation.Builder builder, GlanceImage properties) {
+    static Invocation.Builder setHeaders(Invocation.Builder builder, Image properties) {
         if (properties.getName() != null) {
             builder = builder.header("x-image-meta-name", properties.getName());
         } else {
@@ -106,8 +107,8 @@ class GlanceHeaderUtils {
         return imageFieldMap;
     }
 
-    public static GlanceImage unmarshalHeaders(ResponseHeaders response) {
-        GlanceImage image = new GlanceImage();
+    public static Image unmarshalHeaders(ResponseHeaders response) {
+        Image image = new GlanceImage();
         for (Entry<String, List<String>> entry : response.asMap().entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
