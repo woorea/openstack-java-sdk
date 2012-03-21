@@ -1,10 +1,8 @@
-package org.openstack.client;
+package org.openstack.client.jersey2;
 
 import java.io.Serializable;
 
-import javax.ws.rs.core.MediaType;
-
-public class OpenStackComputeConfig implements Serializable {
+public class OpenStackImageConfig implements Serializable {
 
 	public enum Feature {
 
@@ -27,7 +25,7 @@ public class OpenStackComputeConfig implements Serializable {
 
 	private int features;
 
-	public OpenStackComputeConfig() {
+	public OpenStackImageConfig() {
 
 		// calculate the bitmap
 		for (Feature f : Feature.class.getEnumConstants()) {
@@ -41,14 +39,14 @@ public class OpenStackComputeConfig implements Serializable {
 		return (features & feature.mask()) == 1;
 	}
 
-	public OpenStackComputeConfig with(Feature... features) {
+	public OpenStackImageConfig with(Feature... features) {
 		for (Feature feature : features) {
 			this.features = this.features | feature.mask();
 		}
 		return this;
 	}
 
-	public OpenStackComputeConfig without(Feature... features) {
+	public OpenStackImageConfig without(Feature... features) {
 		for (Feature feature : features) {
 			this.features = this.features & ~feature.mask();
 		}

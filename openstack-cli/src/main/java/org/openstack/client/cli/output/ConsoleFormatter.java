@@ -7,9 +7,9 @@ import org.openstack.model.compute.server.action.Console;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.ClientAction;
+import com.fathomdb.cli.output.ClientAction.ClientActionType;
 import com.fathomdb.cli.output.ClientActionFormatter;
 import com.fathomdb.cli.output.OutputSink;
-import com.fathomdb.cli.output.ClientAction.ClientActionType;
 import com.google.common.collect.Maps;
 
 public class ConsoleFormatter extends SimpleFormatter<Console> implements ClientActionFormatter<Console> {

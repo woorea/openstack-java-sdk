@@ -3,7 +3,7 @@ package org.openstack.client.cli.commands;
 import java.util.HashMap;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 
 public class DeleteKeypair extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)

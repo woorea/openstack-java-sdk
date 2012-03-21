@@ -1,8 +1,8 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.OpenstackCliContext;
+import org.openstack.client.jersey2.OpenStackClient;
+import org.openstack.client.jersey2.OpenStackStorageClient;
 
 import com.fathomdb.cli.commands.CommandRunnerBase;
 import com.fathomdb.cli.commands.CommandSpecifier;

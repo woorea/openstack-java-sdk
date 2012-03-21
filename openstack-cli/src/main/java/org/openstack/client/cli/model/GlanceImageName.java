@@ -5,7 +5,7 @@ import java.util.List;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.GlanceImageNameAutoCompleter;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.image.GlanceImage;
+import org.openstack.model.image.glance.GlanceImage;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;

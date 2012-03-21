@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;

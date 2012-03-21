@@ -3,10 +3,10 @@ package org.openstack.client.cli.commands;
 import java.io.InputStream;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenStackImagesClient;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.GlanceImageName;
-import org.openstack.model.image.GlanceImage;
+import org.openstack.client.jersey2.OpenStackImagesClient;
+import org.openstack.model.image.glance.GlanceImage;
 import org.openstack.utils.Io;
 
 public class DownloadImage extends OpenstackCliCommandRunnerBase {

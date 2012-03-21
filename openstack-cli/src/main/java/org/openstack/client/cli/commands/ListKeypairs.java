@@ -1,6 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.model.compute.NovaKeyPair;
 
 public class ListKeypairs extends OpenstackCliCommandRunnerBase {
 	public ListKeypairs() {

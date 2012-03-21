@@ -1,16 +1,15 @@
-package org.openstack.client;
+package org.openstack.client.jersey2;
 
 import java.util.Map;
 
 import org.openstack.api.compute.TenantResource;
-import org.openstack.api.imagestore.ImagesResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.KeyStoneService;
 import org.openstack.model.identity.KeyStoneServiceEndpoint;
 
 import com.google.common.collect.Maps;
 
-public class OpenStackImagesClient {
+public class OpenStackComputeClient {
 	
 	private OpenStackClient client;
 	
@@ -18,7 +17,7 @@ public class OpenStackImagesClient {
 	
 	private Map<String, KeyStoneServiceEndpoint> regions = Maps.newHashMap();
 
-	public OpenStackImagesClient(OpenStackClient client, KeyStoneService service) {
+	public OpenStackComputeClient(OpenStackClient client, KeyStoneService service) {
 		this.client = client;
 		this.service = service;
 		for(KeyStoneServiceEndpoint region : service.getEndpoints()) {
@@ -26,31 +25,31 @@ public class OpenStackImagesClient {
 		}
 	}
 
-	public ImagesResource publicEndpoint() throws OpenstackException {
+	public TenantResource publicEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return publicEndpoint(defaultRegion);
 	}
 	
-	public ImagesResource publicEndpoint(String region) {
-		return client.target(regions.get(region).getPublicURL().concat("/images"), ImagesResource.class);
+	public TenantResource publicEndpoint(String region) {
+		return client.target(regions.get(region).getPublicURL(), TenantResource.class);
 	}
 	
-	public ImagesResource internalEndpoint() throws OpenstackException {
+	public TenantResource internalEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return internalEndpoint(defaultRegion);
 	}
 	
-	public ImagesResource internalEndpoint(String region) {
-		return client.target(regions.get(region).getInternalURL().concat("/images"), ImagesResource.class);
+	public TenantResource internalEndpoint(String region) {
+		return client.target(regions.get(region).getInternalURL(), TenantResource.class);
 	}
 	
-	public ImagesResource administrationEndpoint() throws OpenstackException {
+	public TenantResource administrationEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return administrationEndpoint(defaultRegion);
 	}
 	
-	public ImagesResource administrationEndpoint(String region) {
-		return client.target(regions.get(region).getAdminURL().concat("/images"), ImagesResource.class);
+	public TenantResource administrationEndpoint(String region) {
+		return client.target(regions.get(region).getAdminURL(), TenantResource.class);
 	}
 	
 }

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import org.openstack.model.compute.NovaFlavor;
+
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
-
 import com.google.common.collect.Maps;
 
 public class FlavorFormatter extends SimpleFormatter<NovaFlavor> {

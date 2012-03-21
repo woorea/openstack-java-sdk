@@ -1,7 +1,7 @@
 package org.openstack.ui.server.mock;
 
-import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackClientFactory;
+import org.openstack.client.jersey2.OpenStackClient;
+import org.openstack.client.jersey2.OpenStackClientFactory;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneTenant;
 import org.openstack.model.identity.KeyStoneToken;

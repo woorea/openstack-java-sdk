@@ -2,12 +2,12 @@ package org.openstack.client.cli;
 
 import java.io.IOException;
 
-import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackComputeClient;
-import org.openstack.client.OpenStackImagesClient;
-import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.commands.OpenstackCliCommandRegistry;
 import org.openstack.client.cli.output.OpenstackCliFormatterRegistry;
+import org.openstack.client.jersey2.OpenStackClient;
+import org.openstack.client.jersey2.OpenStackComputeClient;
+import org.openstack.client.jersey2.OpenStackImagesClient;
+import org.openstack.client.jersey2.OpenStackStorageClient;
 
 import com.fathomdb.cli.CliContextBase;
 

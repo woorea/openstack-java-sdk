@@ -1,4 +1,4 @@
-package org.openstack.client;
+package org.openstack.client.jersey2;
 
 import java.util.Map;
 

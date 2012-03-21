@@ -1,8 +1,8 @@
 package org.openstack.client.cli.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.cli.model.InstanceName;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 import org.openstack.model.compute.server.action.Console;
 
 public class RunVnc extends OpenstackCliCommandRunnerBase {

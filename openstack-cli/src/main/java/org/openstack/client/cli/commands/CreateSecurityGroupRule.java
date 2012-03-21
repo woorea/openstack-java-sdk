@@ -5,7 +5,7 @@ import java.util.HashMap;
 import javax.ws.rs.client.Entity;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
 import org.openstack.model.compute.NovaSecurityGroupRule;
 

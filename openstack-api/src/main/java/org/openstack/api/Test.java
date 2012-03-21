@@ -6,8 +6,8 @@ import java.util.List;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.identity.IdentityResource;
-import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackClientFactory;
+import org.openstack.client.jersey2.OpenStackClient;
+import org.openstack.client.jersey2.OpenStackClientFactory;
 import org.openstack.model.identity.KeyStoneRole;
 import org.openstack.model.identity.KeyStoneRoleList;
 import org.openstack.model.identity.KeyStoneService;

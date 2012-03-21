@@ -1,6 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.model.identity.KeyStoneService;
 
 public class ListServices extends OpenstackCliCommandRunnerBase {
 	public ListServices() {

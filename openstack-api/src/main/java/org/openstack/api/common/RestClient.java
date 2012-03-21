@@ -11,13 +11,15 @@ import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
 import org.glassfish.jersey.filter.LoggingFilter;
 
-public final class RestClient {
+public enum RestClient {
 
-	public static final RestClient INSTANCE = new RestClient();
+	INSTANCE;
 	
-	final JerseyClient client;
+	private JerseyClient client;
 	
 	private RestClient() {
+		
+		//
 		
 		client = (JerseyClient) JerseyClientFactory.newClient();
 		

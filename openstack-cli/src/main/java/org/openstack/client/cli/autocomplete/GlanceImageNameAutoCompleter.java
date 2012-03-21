@@ -3,7 +3,7 @@ package org.openstack.client.cli.autocomplete;
 import java.util.List;
 
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.model.image.GlanceImage;
+import org.openstack.model.image.glance.GlanceImage;
 
 import com.fathomdb.cli.CliContext;
 import com.fathomdb.cli.autocomplete.SimpleArgumentAutoCompleter;

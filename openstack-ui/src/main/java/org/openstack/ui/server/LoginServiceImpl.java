@@ -1,8 +1,8 @@
 package org.openstack.ui.server;
 
 import org.openstack.api.identity.IdentityResource;
-import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackClientFactory;
+import org.openstack.client.jersey2.OpenStackClient;
+import org.openstack.client.jersey2.OpenStackClientFactory;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
 import org.openstack.model.identity.KeyStoneTenant;

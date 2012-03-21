@@ -2,11 +2,11 @@ package org.openstack.client.cli.output;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+
 import org.openstack.model.compute.NovaMetadata.Item;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
-
 import com.google.common.collect.Maps;
 
 public class ItemFormatter extends SimpleFormatter<Item> {

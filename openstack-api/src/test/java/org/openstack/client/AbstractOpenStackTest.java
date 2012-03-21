@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.security.DigestException;
 import java.util.Properties;
 
+import org.openstack.client.jersey2.OpenStackClient;
+import org.openstack.client.jersey2.OpenStackClientFactory;
 import org.openstack.client.utils.RandomUtil;
 import org.openstack.utils.Io;
 import org.openstack.utils.Md5Hash;

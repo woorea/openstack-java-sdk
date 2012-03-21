@@ -1,13 +1,12 @@
 package org.openstack.client.cli.commands;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.storage.ContainerResource;
-import org.openstack.client.OpenStackStorageClient;
 import org.openstack.client.cli.model.StoragePath;
+import org.openstack.client.jersey2.OpenStackStorageClient;
 import org.openstack.model.storage.SwiftObjectProperties;
 import org.openstack.utils.NoCloseInputStream;
 

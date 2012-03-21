@@ -1,12 +1,9 @@
 package org.openstack.client.cli.commands;
 
-import java.util.HashMap;
-
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.OpenStackComputeClient;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.InstanceName;
-import org.openstack.model.compute.NovaServer;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 
 public class DeleteInstance extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)

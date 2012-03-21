@@ -1,6 +1,6 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 
 public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 

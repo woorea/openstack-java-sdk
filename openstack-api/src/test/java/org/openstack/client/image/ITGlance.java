@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Hex;
-import org.openstack.client.OpenStackImagesClient;
+import org.openstack.client.jersey2.OpenStackImagesClient;
 import org.openstack.client.utils.RandomDataInputStream;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
-import org.openstack.client.OpenStackComputeClient;
+import org.openstack.client.jersey2.OpenStackComputeClient;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
