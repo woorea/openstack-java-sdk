@@ -20,9 +20,9 @@
 				<div class="control-group">
 					<label class="control-label" for="authURL">Auth URL</label>
 					<div class="controls">
-						<input class="input-xlarge" id="identityURL" name="identityURL"
-							value="http://192.168.1.52:5000/v2.0" />
-						<p class="help-block">Identity server URL (all your deployment should be accessible over Internet)</p>
+						<input class="input-xlarge" id="wan" name="identityURL"
+							value="83.45.186.94" />
+						<p class="help-block">Single Node WAN IP</p>
 					</div>
 				</div>
 				<div class="control-group">
