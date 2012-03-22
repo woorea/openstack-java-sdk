@@ -5,6 +5,8 @@ import org.openstack.client.jersey2.OpenStackClient;
 import org.openstack.client.jersey2.OpenStackClientFactory;
 import org.openstack.model.identity.KeyStoneAccess;
 import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeyStoneService;
+import org.openstack.model.identity.KeyStoneServiceEndpoint;
 import org.openstack.model.identity.KeyStoneTenant;
 import org.openstack.model.identity.KeyStoneTenantList;
 
@@ -27,6 +29,14 @@ public class LoginServiceImpl implements LoginService {
 		authentication.setTenantId(tenant.getId());
 		
 		access = identity.tokens().authenticate(authentication);
+		
+		for(KeyStoneService svc : access.getServices()) {
+			for(KeyStoneServiceEndpoint endpoint : svc.getEndpoints()) {
+				endpoint.setPublicURL(endpoint.getPublicURL().replace("192.168.1.52", "83.45.186.94"));
+				endpoint.setInternalURL(endpoint.getInternalURL().replace("192.168.1.52", "83.45.186.94"));
+				endpoint.setAdminURL(endpoint.getAdminURL().replace("192.168.1.52", "83.45.186.94"));
+			}
+		}
 		
 		return access;
 	}
