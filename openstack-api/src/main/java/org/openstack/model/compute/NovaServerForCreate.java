@@ -1,6 +1,7 @@
 package org.openstack.model.compute;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -56,15 +57,37 @@ public class NovaServerForCreate implements Serializable {
 	public static final class File implements Serializable {
 
 		@XmlAttribute
-		public String path;
+		private String path;
 
 		@XmlValue
-		public String contents;
+		private String contents;
+
+		public String getPath() {
+			return path;
+		}
+
+		public void setPath(String path) {
+			this.path = path;
+		}
+
+		public String getContents() {
+			return contents;
+		}
+
+		public void setContents(String contents) {
+			this.contents = contents;
+		}
 
 	}
 
 	@XmlAttribute
 	private String name;
+	
+	@XmlAttribute
+	private Integer min;
+	
+	@XmlAttribute
+	private Integer max;
 
 	@XmlAttribute
 	private String imageRef;
@@ -90,8 +113,9 @@ public class NovaServerForCreate implements Serializable {
 	@XmlAttribute(name="config_drive")
 	private boolean configDrive;
 
-	@XmlElement
-	private NovaMetadata metadata;
+	@XmlElementWrapper(name="metatadata")
+	@XmlElement(name="meta")
+	private List<NovaMetadata.Item> metadata;
 
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name="file")
@@ -111,6 +135,22 @@ public class NovaServerForCreate implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Integer getMin() {
+		return min;
+	}
+
+	public void setMin(Integer min) {
+		this.min = min;
+	}
+
+	public Integer getMax() {
+		return max;
+	}
+
+	public void setMax(Integer max) {
+		this.max = max;
 	}
 
 	public String getImageRef() {
@@ -161,14 +201,14 @@ public class NovaServerForCreate implements Serializable {
 		this.accessIpV6 = accessIpV6;
 	}
 
-	public NovaMetadata getMetadata() {
+	public List<NovaMetadata.Item> getMetadata() {
 		if (metadata == null) {
-			metadata = new NovaMetadata();
+			metadata = new ArrayList<NovaMetadata.Item>();
 		}
 		return metadata;
 	}
 
-	public void setMetadata(NovaMetadata metadata) {
+	public void setMetadata(List<NovaMetadata.Item> metadata) {
 		this.metadata = metadata;
 	}
 
@@ -205,15 +245,9 @@ public class NovaServerForCreate implements Serializable {
 	//	addUploadFile(path, contents.getBytes(Charsets.UTF_8));
 	//}
 
-	@Override
-	public String toString() {
-		return "ServerForCreate [name=" + name + ", imageRef=" + imageRef
-				+ ", flavorRef=" + flavorRef + ", accessIpV4=" + accessIpV4
-				+ ", accessIpV6=" + accessIpV6 + ", zone=" + zone
-				+ ", keyName=" + keyName + ", metadata=" + metadata
-				+ ", personality=" + personality + ", securityGroups="
-				+ securityGroups + "]";
-	}
+	
+
+	
 
 	public boolean getConfigDrive() {
 		return configDrive;

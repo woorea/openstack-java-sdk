@@ -21,9 +21,8 @@
 					<label class="control-label" for="authURL">Auth URL</label>
 					<div class="controls">
 						<input class="input-xlarge" id="identityURL" name="identityURL"
-							value="http://192.168.1.45:5000/v2.0" />
-						<p class="help-block">Identity server URL (only Keystone is
-							supported)</p>
+							value="http://192.168.1.52:5000/v2.0" />
+						<p class="help-block">Identity server URL (all your deployment should be accessible over Internet)</p>
 					</div>
 				</div>
 				<div class="control-group">
