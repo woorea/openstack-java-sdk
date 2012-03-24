@@ -13,8 +13,8 @@
 					<g:HorizontalPanel width="100%">
 						<g:cell width="50%">
 							<g:HTMLPanel>
-								<g:Button styleName="btn btn-small" ui:field="create"><i class="icon-plus-sign" /> Create Tenant</g:Button>
-								<g:Button styleName="btn btn-small" ui:field="delete"><i class="icon-remove-sign" /> Delete Tenant</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="create"><i class="icon-plus-sign" /> Create User</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="delete"><i class="icon-remove-sign" /> Delete User</g:Button>
 							</g:HTMLPanel>
 						</g:cell>
 						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">

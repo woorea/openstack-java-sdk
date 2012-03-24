@@ -2,11 +2,10 @@ package org.openstack.api.identity;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneService;
+import org.openstack.model.identity.KeystoneService;
 
 public class ServiceResource extends Resource {
 
@@ -15,16 +14,16 @@ public class ServiceResource extends Resource {
 	}
 
 
-	public KeyStoneService get() {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneService.class);
+	public KeystoneService get() {
+		return target.request().get(KeystoneService.class);
 	}
 
-	public KeyStoneService update(Entity<KeyStoneService> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneService.class);
+	public KeystoneService update(Entity<KeystoneService> entity) {
+		return target.request().put(entity, KeystoneService.class);
 	}
 	
-	public void delete() {
-		target.request().delete();
+	public Response delete() {
+		return target.request().delete();
 	}
 
 }

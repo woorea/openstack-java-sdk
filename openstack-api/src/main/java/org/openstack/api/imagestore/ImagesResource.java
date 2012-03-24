@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -12,6 +11,7 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.io.IOUtils;
 import org.openstack.api.common.Resource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.image.Image;
@@ -19,7 +19,6 @@ import org.openstack.model.image.ImageList;
 import org.openstack.model.image.ImageUploadResponse;
 import org.openstack.model.image.glance.GlanceImageList;
 import org.openstack.model.image.glance.GlanceImageUploadResponse;
-import org.openstack.utils.Io;
 
 public class ImagesResource extends Resource {
 	
@@ -28,47 +27,36 @@ public class ImagesResource extends Resource {
 	}
 	
 	public ImageList get() {
-		HashMap<String, Object> properties = new HashMap<String, Object>();
-		properties.put("detail", true);
-		return get(properties);
-	}
-	
-	public ImageList get(Map<String,Object> properties) {
-		if(properties.get("detail") != null) {
-			target =  target.path("/detail");
-		} 
-		return target.request(MediaType.APPLICATION_JSON).get(GlanceImageList.class);
+		return target.path("/detail").request(MediaType.APPLICATION_JSON).get(GlanceImageList.class);
 	}
 
     public ImageResource image(String id) {
     	return new ImageResource(target.path("/{id}").pathParam("id", id));
     }
 
-	public Image post(Map<String, Object> properties, File imageFile, Image imageProperties) throws IOException, OpenstackException {
+	public Image post(File imageFile, Image imageProperties) throws IOException, OpenstackException {
 		FileInputStream fis = new FileInputStream(imageFile);
 		try {
 
-			return post(properties, fis, imageFile.length(), imageProperties);
+			return post(fis, imageFile.length(), imageProperties);
 		} finally {
-			Io.safeClose(fis);
+			IOUtils.closeQuietly(fis);
 		}
 	}
 
-	public Image post(Map<String, Object> properties, InputStream imageStream, long imageStreamLength, Image imageProperties) throws OpenstackException,
+	public Image post(InputStream imageStream, long imageStreamLength, Image imageProperties) throws OpenstackException,
 			IOException {
 		
 
 		Builder b = target.request();
 		
 		GlanceHeaderUtils.setHeaders(b, imageProperties);
+		System.out.println("up to");
+		byte[] bytes = IOUtils.toByteArray(imageStream);
+		imageProperties.setSize((long) bytes.length);
+		System.out.println(bytes.length);
 
-		if (imageStreamLength != -1) {
-			imageProperties.setSize(imageStreamLength);
-
-			imageStream = new KnownLengthInputStream(imageStream, imageStreamLength);
-		}
-
-		ImageUploadResponse response = b.post(Entity.entity(imageStream, MediaType.APPLICATION_OCTET_STREAM_TYPE), GlanceImageUploadResponse.class);
+		ImageUploadResponse response = b.post(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM_TYPE), GlanceImageUploadResponse.class);
 		Image image = response.getImage();
 		return image;
 	}

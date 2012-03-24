@@ -5,8 +5,6 @@ import java.util.HashMap;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.AsyncServerOperation;
-import org.openstack.api.compute.FlavorResource;
-import org.openstack.api.compute.ImageResource;
 import org.openstack.api.compute.ServerResource;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
@@ -15,7 +13,6 @@ import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
 import org.openstack.model.compute.NovaServerList;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -25,9 +22,7 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void listServers() {
 		
-		NovaServerList servers = client.compute().publicEndpoint().servers().get(new HashMap<String, Object>() {{ 
-			put("detail", true);
-		}});
+		NovaServerList servers = client.compute().publicEndpoint().servers().detail();
 
 		for (NovaServer server : servers.getList()) {
 			//Until this is resolved? on compute server api we access throught id
@@ -42,7 +37,7 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {
 		
-		NovaImageList images = client.compute().publicEndpoint().images().get(new HashMap<String, Object>());
+		NovaImageList images = client.compute().publicEndpoint().images().get();
 		NovaImage image = null;
 		for (NovaImage i : images.getList()) {
 			System.out.println(i);

@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.openstack.model.common.Extension;
-import org.openstack.model.identity.KeyStoneServiceEndpoint;
+import org.openstack.model.identity.KeystoneServiceEndpoint;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;
@@ -29,13 +29,13 @@ public class ExtensionFormatter extends SimpleFormatter<Extension> {
         sink.outputRow(values);
     }
 
-    public static String formatEndpoints(List<KeyStoneServiceEndpoint> endpoints) {
+    public static String formatEndpoints(List<KeystoneServiceEndpoint> endpoints) {
         StringBuilder sb = new StringBuilder();
         formatEndpoints(sb, endpoints);
         return sb.toString();
     }
 
-    public static void formatEndpoints(StringBuilder sb, List<KeyStoneServiceEndpoint> endpoints) {
+    public static void formatEndpoints(StringBuilder sb, List<KeystoneServiceEndpoint> endpoints) {
         for (int i = 0; i < endpoints.size(); i++) {
             if (i != 0)
                 sb.append(",");
@@ -43,7 +43,7 @@ public class ExtensionFormatter extends SimpleFormatter<Extension> {
         }
     }
 
-    public static void formatEndpoint(StringBuilder sb, KeyStoneServiceEndpoint serviceEndpoint) {
+    public static void formatEndpoint(StringBuilder sb, KeystoneServiceEndpoint serviceEndpoint) {
         sb.append("publicUrl=" + serviceEndpoint.getPublicURL());
         sb.append(" internalUrl=" + serviceEndpoint.getInternalURL());
         sb.append(" region=" + serviceEndpoint.getRegion());

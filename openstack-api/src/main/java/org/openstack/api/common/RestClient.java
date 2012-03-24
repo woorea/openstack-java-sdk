@@ -1,5 +1,6 @@
 package org.openstack.api.common;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
@@ -14,6 +15,8 @@ import org.glassfish.jersey.filter.LoggingFilter;
 public enum RestClient {
 
 	INSTANCE;
+	
+	private static final Logger LOGGER = Logger.getLogger("org.glassfish");
 	
 	private JerseyClient client;
 	
@@ -47,7 +50,8 @@ public enum RestClient {
 	
 	public RestClient verbose(boolean verbose) {
 		if(verbose) {
-			client.configuration().register(new LoggingFilter(Logger.getLogger("org.openstack.model"),false));
+			LOGGER.setLevel(Level.FINEST);
+			client.configuration().register(new LoggingFilter(LOGGER,false));
 		}
 		return this;
 	}

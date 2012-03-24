@@ -6,10 +6,11 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class CreateServiceActivity extends AbstractActivity {
 
+	private static final CreateServiceView VIEW = new CreateServiceView();
+
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		// TODO Auto-generated method stub
-		
+		panel.setWidget(VIEW);
 	}
 
 }

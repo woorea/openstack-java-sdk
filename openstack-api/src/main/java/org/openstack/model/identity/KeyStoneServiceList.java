@@ -15,17 +15,17 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name="services", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneServiceList extends ListWithAtomLinks {
+public class KeystoneServiceList extends ListWithAtomLinks {
 
 	@XmlElement(name="service", namespace="http://docs.openstack.org/identity/api/ext/OS-KSADM/v1.0")
 	@SerializedName("OS-KSADM:services")
-	private List<KeyStoneService> list = new ArrayList<KeyStoneService>();
+	private List<KeystoneService> list = new ArrayList<KeystoneService>();
 
-	public List<KeyStoneService> getList() {
+	public List<KeystoneService> getList() {
 		return list;
 	}
 
-	public void setList(List<KeyStoneService> list) {
+	public void setList(List<KeystoneService> list) {
 		this.list = list;
 	}
 

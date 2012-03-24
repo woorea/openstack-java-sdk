@@ -5,13 +5,13 @@ import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
 
+import org.apache.commons.io.FileUtils;
 import org.openstack.api.compute.AsyncServerOperation;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.utils.Io;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -38,7 +38,7 @@ public class ITConfigDrive extends ComputeApiTest {
 
 		File homeDir = new File(System.getProperty("user.home"));
 		File publicKeyFile = new File(homeDir, ".ssh" + File.separator + "id_rsa.pub");
-		String publicKey = Io.readAll(publicKeyFile);
+		String publicKey = FileUtils.readFileToString(publicKeyFile);
 		publicKey = publicKey.replace("\r", "");
 		publicKey = publicKey.replace("\n", "");
 		publicKey = publicKey.replace("\t", " ");

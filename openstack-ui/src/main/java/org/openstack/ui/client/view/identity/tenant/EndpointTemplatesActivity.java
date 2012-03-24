@@ -1,9 +1,10 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneEndpointTemplates;
-import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
-import org.openstack.model.identity.KeyStoneService;
+import org.openstack.model.identity.KeystoneEndpointTemplates;
+import org.openstack.model.identity.KeystoneEndpointTemplatesList;
+import org.openstack.model.identity.KeystoneService;
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
@@ -21,12 +22,12 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeyStoneEndpointTemplates> dataProvider;
+	private RefreshableDataProvider<KeystoneEndpointTemplates> dataProvider;
 
-	private MultiSelectionModel<KeyStoneEndpointTemplates> selectionModel = new MultiSelectionModel<KeyStoneEndpointTemplates>();
+	private MultiSelectionModel<KeystoneEndpointTemplates> selectionModel = new MultiSelectionModel<KeystoneEndpointTemplates>();
 
-	private DefaultSelectionEventManager<KeyStoneEndpointTemplates> selectionManager = DefaultSelectionEventManager
-			.<KeyStoneEndpointTemplates> createCheckboxManager(0);
+	private DefaultSelectionEventManager<KeystoneEndpointTemplates> selectionManager = DefaultSelectionEventManager
+			.<KeystoneEndpointTemplates> createCheckboxManager(0);
 
 	public EndpointTemplatesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -37,14 +38,14 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeyStoneEndpointTemplates>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<KeystoneEndpointTemplates>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeyStoneEndpointTemplates> display) {
-				OpenStackClient.IDENTITY.listEndpontTemplates(new DefaultAsyncCallback<KeyStoneEndpointTemplatesList>() {
+			protected void onRangeChanged(HasData<KeystoneEndpointTemplates> display) {
+				OpenStackClient.IDENTITY.listEndpontTemplates(new DefaultAsyncCallback<KeystoneEndpointTemplatesList>() {
 
 					@Override
-					public void onSuccess(KeyStoneEndpointTemplatesList result) {
+					public void onSuccess(KeystoneEndpointTemplatesList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
@@ -57,6 +58,20 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 
 	@Override
 	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreateEndpointTemplates() {
+		CreateEndpointTemplatesActivity activity = new CreateEndpointTemplatesActivity();
+		activity.start(UI.MODAL, null);
+		UI.MODAL.center();
+		
+	}
+
+	@Override
+	public void onDeleteEndpointTemplates() {
 		// TODO Auto-generated method stub
 		
 	}

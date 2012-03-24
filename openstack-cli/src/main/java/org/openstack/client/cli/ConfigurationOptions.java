@@ -7,11 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.Option;
 import org.openstack.client.jersey2.OpenStackClient;
 import org.openstack.client.jersey2.OpenStackClientFactory;
-import org.openstack.utils.Io;
-import org.openstack.utils.NoCloseInputStream;
 
 import com.fathomdb.cli.CliOptions;
 
@@ -50,7 +49,8 @@ public class ConfigurationOptions extends CliOptions {
 					if (configFile.equals("-")) {
 						// Read from stdin
 						// Don't auto-close it, and that terminates nailgun
-						is = new NoCloseInputStream(System.in);
+						// is = new NoCloseInputStream(System.in);
+						is = System.in;
 					} else {
 						if (isServerMode()) {
 							throw new IllegalArgumentException("Must pass config file over stdin in server mode");
@@ -77,7 +77,7 @@ public class ConfigurationOptions extends CliOptions {
 				} catch (IOException e) {
 					throw new IllegalArgumentException("Error reading configuration file", e);
 				} finally {
-					Io.safeClose(is);
+					IOUtils.closeQuietly(is);
 				}
 			}
 		}

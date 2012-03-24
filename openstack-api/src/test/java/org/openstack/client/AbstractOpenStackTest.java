@@ -1,23 +1,21 @@
 package org.openstack.client;
 
-import static org.testng.Assert.assertEquals;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.DigestException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.apache.commons.io.IOUtils;
 import org.openstack.client.jersey2.OpenStackClient;
 import org.openstack.client.jersey2.OpenStackClientFactory;
 import org.openstack.client.utils.RandomUtil;
-import org.openstack.utils.Io;
-import org.openstack.utils.Md5Hash;
 import org.testng.SkipException;
-import org.testng.annotations.BeforeMethod;
 
 public abstract class AbstractOpenStackTest {
+	
+	private static final Logger LOGGER = Logger.getLogger(AbstractOpenStackTest.class.getName());
 	
 	protected OpenStackClient client;
 	
@@ -30,8 +28,7 @@ public abstract class AbstractOpenStackTest {
 	
 	protected RandomUtil random = new RandomUtil();
 
-	@BeforeMethod
-	public void beforeMethod() {
+	public void init() {
 		
 		Properties properties = new Properties();
 
@@ -49,7 +46,7 @@ public abstract class AbstractOpenStackTest {
 			} catch (IOException e) {
 				throw new IllegalArgumentException("Error loading config file: " + configPath, e);
 			} finally {
-				Io.safeClose(fis);
+				IOUtils.closeQuietly(fis);
 			}
 		}
 
@@ -63,10 +60,10 @@ public abstract class AbstractOpenStackTest {
 		this.swiftEnabled = Boolean.parseBoolean(properties.getProperty("openstack.swift", "true"));
 		this.format = properties.getProperty("openstack.format", null);
 
-		String url = properties.getProperty("openstack.auth.url", "http://192.168.1.52:35357/v2.0");
-		String username = properties.getProperty("openstack.auth.user", "demo");
+		String url = properties.getProperty("openstack.auth.url", "http://192.168.1.52:5000/v2.0");
+		String username = properties.getProperty("openstack.auth.user", "admin");
 		String secret = properties.getProperty("openstack.auth.secret", "secret0");
-		String tenant = properties.getProperty("openstack.auth.tenant", "demo");
+		String tenant = properties.getProperty("openstack.auth.tenant", "admin");
 
 		this.client = OpenStackClientFactory.authenticate(url, username, secret, tenant);
 
@@ -74,13 +71,6 @@ public abstract class AbstractOpenStackTest {
 
 	protected void skipUntilBugFixed(int bugNumber) {
 		throw new SkipException("Skipping because of bug #" + bugNumber);
-	}
-
-	protected void assertStreamsTheSame(InputStream actual, InputStream expected) throws DigestException, IOException {
-		byte[] actualHash = new Md5Hash().hash(actual);
-		byte[] expectedHash = new Md5Hash().hash(expected);
-
-		assertEquals(actualHash, expectedHash);
 	}
 
 }

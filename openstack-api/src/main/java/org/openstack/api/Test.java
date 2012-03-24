@@ -1,93 +1,82 @@
 package org.openstack.api;
 
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
 
-import javax.ws.rs.client.Entity;
-
-import org.openstack.api.identity.IdentityResource;
 import org.openstack.client.jersey2.OpenStackClient;
 import org.openstack.client.jersey2.OpenStackClientFactory;
-import org.openstack.model.identity.KeyStoneRole;
-import org.openstack.model.identity.KeyStoneRoleList;
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneServiceList;
-import org.openstack.model.identity.KeyStoneTenant;
-import org.openstack.model.identity.KeyStoneTenantList;
-import org.openstack.model.identity.KeyStoneUser;
-import org.openstack.model.identity.KeyStoneUserList;
-import org.openstack.model.image.ImageList;
 import org.openstack.model.storage.SwiftContainer;
+import org.openstack.model.storage.SwiftObjectProperties;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
-		OpenStackClient openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:35357/v2.0", "admin", "secret0");
+		OpenStackClient openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0", "admin");
 //		//We use here the admintoken (set on installation process)
-		openstack.getAccess().getToken().setId("secret0");
+//		openstack.getAccess().getToken().setId("secret0");
 		
-		IdentityResource identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
+//		IdentityResource identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
 		
-		KeyStoneTenantList tenants = identity.tenants().get(new HashMap<String, Object>());
+//		KeyStoneTenantList tenants = identity.tenants().get();
 
-		KeyStoneTenant tenant = new KeyStoneTenant();
-		tenant.setName("test");
-		tenant.setDescription("desc");
-		tenant.setEnabled(true);
-		tenant = identity.tenants().post(Entity.json(tenant));
+//		KeyStoneTenant tenant = new KeyStoneTenant();
+//		tenant.setName("test");
+//		tenant.setDescription("desc");
+//		tenant.setEnabled(true);
+//		tenant = identity.tenants().post(Entity.json(tenant));
+//
+//		tenant = identity.tenants().tenant(tenant.getId()).get();
+//
+//		identity.tenants().tenant(tenant.getId()).delete();
+//
+//		KeyStoneUserList users = identity.users().get();
+//
+//		KeyStoneUser user = new KeyStoneUser();
+//		user.setName("test");
+//		user.setPassword("secret0");
+//		user.setEmail("test@test.com");
+//		user.setEnabled(true);
+//		user = identity.users().post(Entity.json(user));
+//
+//		user = identity.users().user(user.getId()).get();
+//
+//		identity.users().user(user.getId()).delete();
+//
+//		KeyStoneRoleList roles = identity.roles().get();
+//
+//		KeyStoneRole role = new KeyStoneRole();
+//		role.setName("test");
+//		role = identity.roles().post(Entity.json(role));
+//
+//		role = identity.roles().role(role.getId()).get();
+//
+//		identity.roles().role(role.getId()).delete();
+//
+//		KeyStoneServiceList services = identity.services().get();
+//
+//		KeyStoneService service = new KeyStoneService();
+//		service.setName("test");
+//		service.setType("compute");
+//		service.setDescription("Nova 3");
+//		service = identity.services().post(Entity.json(service));
+//
+//		service = identity.services().service(service.getId()).get();
 
-		tenant = identity.tenants().tenant(tenant.getId()).get();
-
-		identity.tenants().tenant(tenant.getId()).delete();
-
-		KeyStoneUserList users = identity.users().get(new HashMap<String, Object>());
-
-		KeyStoneUser user = new KeyStoneUser();
-		user.setName("test");
-		user.setPassword("secret0");
-		user.setEmail("test@test.com");
-		user.setEnabled(true);
-		user = identity.users().post(Entity.json(user));
-
-		user = identity.users().user(user.getId()).get();
-
-		identity.users().user(user.getId()).delete();
-
-		KeyStoneRoleList roles = identity.roles().get(new HashMap<String, Object>());
-
-		KeyStoneRole role = new KeyStoneRole();
-		role.setName("test");
-		role = identity.roles().post(Entity.json(role));
-
-		role = identity.roles().role(role.getId()).get();
-
-		identity.roles().role(role.getId()).delete();
-
-		KeyStoneServiceList services = identity.services().get(new HashMap<String, Object>());
-
-		KeyStoneService service = new KeyStoneService();
-		service.setName("test");
-		service.setType("compute");
-		service.setDescription("Nova 3");
-		service = identity.services().post(Entity.json(service));
-
-		service = identity.services().service(service.getId()).get();
-
-		identity.services().service(service.getId()).delete();
+		//identity.services().service(service.getId()).delete();
 
 //		This is not implemented on keystone server api yet
 //		KeyStoneEndpointTemplatesList endpointTemplates = identity.endpoints().get(new HashMap<String, Object>() {{
 //			put("Accept", MediaType.APPLICATION_XML);
 //		}});
 		
-		openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0");
-		
-		identity = openstack.target("http://192.168.1.52:5000/v2.0", IdentityResource.class);
-		
-		tenants = identity.tenants().get(new HashMap<String, Object>());
-		
-		openstack.exchangeTokenForTenant(tenants.getList().get(0).getId());
+//		openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0");
+//		
+//		identity = openstack.target("http://192.168.1.52:5000/v2.0", IdentityResource.class);
+//		
+//		tenants = identity.tenants().get();
+//		
+//		openstack.exchangeTokenForTenant(tenants.getList().get(0).getId());
 		
 //		NovaServerList servers = openstack.compute().publicEndpoint().servers().get(new HashMap<String, Object>(){{
 //			put("detail",true);
@@ -104,9 +93,12 @@ public class Test {
 //		
 //		NovaVolumeList volumes = openstack.compute().publicEndpoint().volumes().get(new HashMap<String, Object>());
 		
-		ImageList gImages = openstack.images().publicEndpoint().get(new HashMap<String, Object>());
+//		ImageList gImages = openstack.images().publicEndpoint().get();
 		
 		List<SwiftContainer> sAccount = openstack.storage().publicEndpoint().get();
+		
+		SwiftObjectProperties p = new SwiftObjectProperties();
+		openstack.storage().publicEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);
 
 		// NovaSnapshotList snapshots = compute.snapshots().get(new
 		// HashMap<String, Object>(){{

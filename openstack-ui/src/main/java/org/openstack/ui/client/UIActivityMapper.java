@@ -17,7 +17,7 @@ public class UIActivityMapper implements ActivityMapper {
 			return new ComputeActivity(cPlace);
 		} else if("identity".equals(cPlace.getService())) {
 			return new IdentityActivity(cPlace);
-		} else if("image".equals(cPlace.getService())) {
+		} else if("images".equals(cPlace.getService())) {
 			return new GlanceActivity(cPlace);
 		} else if("storage".equals(cPlace.getService())) {
 			

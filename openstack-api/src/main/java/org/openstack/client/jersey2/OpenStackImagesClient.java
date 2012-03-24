@@ -5,8 +5,8 @@ import java.util.Map;
 import org.openstack.api.compute.TenantResource;
 import org.openstack.api.imagestore.ImagesResource;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneServiceEndpoint;
+import org.openstack.model.identity.KeystoneService;
+import org.openstack.model.identity.KeystoneServiceEndpoint;
 
 import com.google.common.collect.Maps;
 
@@ -14,14 +14,14 @@ public class OpenStackImagesClient {
 	
 	private OpenStackClient client;
 	
-	private KeyStoneService service;
+	private KeystoneService service;
 	
-	private Map<String, KeyStoneServiceEndpoint> regions = Maps.newHashMap();
+	private Map<String, KeystoneServiceEndpoint> regions = Maps.newHashMap();
 
-	public OpenStackImagesClient(OpenStackClient client, KeyStoneService service) {
+	public OpenStackImagesClient(OpenStackClient client, KeystoneService service) {
 		this.client = client;
 		this.service = service;
-		for(KeyStoneServiceEndpoint region : service.getEndpoints()) {
+		for(KeystoneServiceEndpoint region : service.getEndpoints()) {
 			this.regions.put(region.getRegion(), region);
 		}
 	}

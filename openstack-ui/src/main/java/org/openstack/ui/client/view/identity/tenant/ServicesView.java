@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneService;
+import org.openstack.model.identity.KeystoneService;
 import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.CheckboxCell;
@@ -25,10 +25,14 @@ public class ServicesView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void onCreateService();
+
+		void onDeleteService();
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeyStoneService> grid = new DataGrid<KeyStoneService>();
+	DataGrid<KeystoneService> grid = new DataGrid<KeystoneService>();
 
 	private Presenter presenter;
 
@@ -38,34 +42,34 @@ public class ServicesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeyStoneService, Boolean> checkboxColumn = new Column<KeyStoneService, Boolean>(new CheckboxCell()) {
+		Column<KeystoneService, Boolean> checkboxColumn = new Column<KeystoneService, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeyStoneService object) {
+			public Boolean getValue(KeystoneService object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeyStoneService> typeColumn = new TextColumn<KeyStoneService>() {
+		TextColumn<KeystoneService> typeColumn = new TextColumn<KeystoneService>() {
 			@Override
-			public String getValue(KeyStoneService object) {
+			public String getValue(KeystoneService object) {
 				return object.getType();
 			}
 		};
 		grid.setColumnWidth(typeColumn, "120px");
 		grid.addColumn(typeColumn, "Type");
-		TextColumn<KeyStoneService> nameColumn = new TextColumn<KeyStoneService>() {
+		TextColumn<KeystoneService> nameColumn = new TextColumn<KeystoneService>() {
 			@Override
-			public String getValue(KeyStoneService object) {
+			public String getValue(KeystoneService object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeyStoneService> descriptionColumn = new TextColumn<KeyStoneService>() {
+		TextColumn<KeystoneService> descriptionColumn = new TextColumn<KeystoneService>() {
 			@Override
-			public String getValue(KeyStoneService object) {
+			public String getValue(KeystoneService object) {
 				return object.getName();
 			}
 		};
@@ -80,6 +84,16 @@ public class ServicesView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateServer(ClickEvent event) {
+		presenter.onCreateService();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteTenant(ClickEvent event) {
+		presenter.onDeleteService();
 	}
 
 }

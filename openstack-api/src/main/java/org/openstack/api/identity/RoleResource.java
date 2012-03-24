@@ -2,10 +2,10 @@ package org.openstack.api.identity;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneRole;
+import org.openstack.model.identity.KeystoneRole;
 
 public class RoleResource extends Resource {
 	
@@ -13,16 +13,16 @@ public class RoleResource extends Resource {
 		super(target);
 	}
 
-	public KeyStoneRole get() {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneRole.class);
+	public KeystoneRole get() {
+		return target.request().get(KeystoneRole.class);
 	}
 
-	public KeyStoneRole update(Entity<KeyStoneRole> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneRole.class);
+	public KeystoneRole update(Entity<KeystoneRole> entity) {
+		return target.request().put(entity, KeystoneRole.class);
 	}
 
-	public void delete() {
-		target.request().delete();
+	public Response delete() {
+		return target.request().delete();
 	}
 
 }

@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneTenant;
+import org.openstack.model.identity.KeystoneTenant;
 import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.CheckboxCell;
@@ -12,6 +12,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,10 +26,14 @@ public class TenantsView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void onCreateTenant();
+
+		void onDeleteTenant();
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeyStoneTenant> grid = new DataGrid<KeyStoneTenant>();
+	DataGrid<KeystoneTenant> grid = new DataGrid<KeystoneTenant>();
 
 	private Presenter presenter;
 
@@ -38,34 +43,34 @@ public class TenantsView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeyStoneTenant, Boolean> checkboxColumn = new Column<KeyStoneTenant, Boolean>(new CheckboxCell()) {
+		Column<KeystoneTenant, Boolean> checkboxColumn = new Column<KeystoneTenant, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeyStoneTenant object) {
+			public Boolean getValue(KeystoneTenant object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeyStoneTenant> nameColumn = new TextColumn<KeyStoneTenant>() {
+		TextColumn<KeystoneTenant> nameColumn = new TextColumn<KeystoneTenant>() {
 			@Override
-			public String getValue(KeyStoneTenant object) {
+			public String getValue(KeystoneTenant object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeyStoneTenant> descriptionColumn = new TextColumn<KeyStoneTenant>() {
+		TextColumn<KeystoneTenant> descriptionColumn = new TextColumn<KeystoneTenant>() {
 			@Override
-			public String getValue(KeyStoneTenant object) {
+			public String getValue(KeystoneTenant object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(descriptionColumn, "120px");
 		grid.addColumn(descriptionColumn, "Description");
-		TextColumn<KeyStoneTenant> enabledColumn = new TextColumn<KeyStoneTenant>() {
+		TextColumn<KeystoneTenant> enabledColumn = new TextColumn<KeystoneTenant>() {
 			@Override
-			public String getValue(KeyStoneTenant object) {
+			public String getValue(KeystoneTenant object) {
 				return object.isEnabled() ? "ENABLED" : "DISABLED";
 			}
 		};
@@ -75,6 +80,16 @@ public class TenantsView extends Composite {
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+
+	@UiHandler("create")
+	void onCreateServer(ClickEvent event) {
+		presenter.onCreateTenant();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteTenant(ClickEvent event) {
+		presenter.onDeleteTenant();
 	}
 
 	@UiHandler("refresh")

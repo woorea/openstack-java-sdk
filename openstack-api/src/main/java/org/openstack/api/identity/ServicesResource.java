@@ -1,34 +1,24 @@
 package org.openstack.api.identity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneRole;
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneServiceList;
+import org.openstack.model.identity.KeystoneService;
+import org.openstack.model.identity.KeystoneServiceList;
 
 public class ServicesResource extends Resource {
 
-	
 	public ServicesResource(Target target) {
 		super(target);
 	}
 	
-	public KeyStoneServiceList get() {
-		return get(new HashMap<String, Object>());
+	public KeystoneServiceList get() {
+		return target.request().get(KeystoneServiceList.class);
 	}
 	
-	public KeyStoneServiceList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneServiceList.class);
-	}
-	
-	public KeyStoneService post(Entity<KeyStoneService> user) {
-		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneService.class);
+	public KeystoneService post(Entity<KeystoneService> user) {
+		return target.request().post(user, KeystoneService.class);
 	}
 	
 	public ServiceResource service(String id) {

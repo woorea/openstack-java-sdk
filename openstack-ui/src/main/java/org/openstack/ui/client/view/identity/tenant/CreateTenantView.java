@@ -1,5 +1,7 @@
 package org.openstack.ui.client.view.identity.tenant;
 
+import org.openstack.ui.client.UI;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,7 +13,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateTenantView extends Composite implements HasText {
+public class CreateTenantView extends Composite {
 
 	private static CreateTenantViewUiBinder uiBinder = GWT
 			.create(CreateTenantViewUiBinder.class);
@@ -19,30 +21,26 @@ public class CreateTenantView extends Composite implements HasText {
 	interface CreateTenantViewUiBinder extends
 			UiBinder<Widget, CreateTenantView> {
 	}
+	
+	public interface Presenter {
+		
+	}
+	
+	private Presenter presenter;
 
 	public CreateTenantView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-
-	@UiField
-	Button button;
-
-	public CreateTenantView(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
+	
+	
+	
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
 
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		Window.alert("Hello!");
-	}
-
-	public void setText(String text) {
-		button.setText(text);
-	}
-
-	public String getText() {
-		return button.getText();
+	@UiHandler({ "cancel", "close" })
+	public void onCancel(ClickEvent event) {
+		UI.MODAL.hide(true);
 	}
 
 }

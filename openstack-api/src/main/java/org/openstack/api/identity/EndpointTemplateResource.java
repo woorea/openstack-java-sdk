@@ -2,10 +2,10 @@ package org.openstack.api.identity;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneEndpointTemplates;
+import org.openstack.model.identity.KeystoneEndpointTemplates;
 
 public class EndpointTemplateResource extends Resource {
 	
@@ -13,16 +13,16 @@ public class EndpointTemplateResource extends Resource {
 		super(target);
 	}
 
-	public KeyStoneEndpointTemplates get() {
-		return target.request(MediaType.APPLICATION_XML).get(KeyStoneEndpointTemplates.class);
+	public KeystoneEndpointTemplates get() {
+		return target.request().get(KeystoneEndpointTemplates.class);
 	}
 
-	public KeyStoneEndpointTemplates update(Entity<KeyStoneEndpointTemplates> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneEndpointTemplates.class);
+	public KeystoneEndpointTemplates update(Entity<KeystoneEndpointTemplates> entity) {
+		return target.request().put(entity, KeystoneEndpointTemplates.class);
 	}
 	
-	public void delete() {
-		target.request().delete();
+	public Response delete() {
+		return target.request().delete();
 	}
 
 }

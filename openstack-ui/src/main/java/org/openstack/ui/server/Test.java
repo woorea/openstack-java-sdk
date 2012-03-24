@@ -14,7 +14,7 @@ import javax.xml.bind.JAXBException;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
 import org.glassfish.jersey.filter.LoggingFilter;
-import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeystoneAuthentication;
 
 public class Test {
 
@@ -25,7 +25,7 @@ public class Test {
 		
 		Logger log = Logger.getLogger(LoggingFilter.class.getName());
 		
-		KeyStoneAuthentication authentication = new KeyStoneAuthentication();
+		KeystoneAuthentication authentication = new KeystoneAuthentication();
 		authentication.withPasswordCredentials("demo", "secret0");
 		
 		JerseyClient client = (JerseyClient) JerseyClientFactory.newClient();
@@ -44,7 +44,7 @@ public class Test {
 		
 		public JAXBContextResolver() {
 			try {
-				ctx = JAXBContext.newInstance(KeyStoneAuthentication.class);
+				ctx = JAXBContext.newInstance(KeystoneAuthentication.class);
 			} catch (JAXBException e) {
 				throw new RuntimeException(e.getMessage(),e);
 			}

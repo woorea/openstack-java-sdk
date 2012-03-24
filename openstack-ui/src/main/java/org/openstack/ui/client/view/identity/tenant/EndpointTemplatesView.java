@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneEndpointTemplates;
+import org.openstack.model.identity.KeystoneEndpointTemplates;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -24,10 +24,14 @@ public class EndpointTemplatesView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void onCreateEndpointTemplates();
+
+		void onDeleteEndpointTemplates();
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeyStoneEndpointTemplates> grid = new DataGrid<KeyStoneEndpointTemplates>();
+	DataGrid<KeystoneEndpointTemplates> grid = new DataGrid<KeystoneEndpointTemplates>();
 
 	private Presenter presenter;
 
@@ -37,34 +41,34 @@ public class EndpointTemplatesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeyStoneEndpointTemplates, Boolean> checkboxColumn = new Column<KeyStoneEndpointTemplates, Boolean>(new CheckboxCell()) {
+		Column<KeystoneEndpointTemplates, Boolean> checkboxColumn = new Column<KeystoneEndpointTemplates, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeyStoneEndpointTemplates object) {
+			public Boolean getValue(KeystoneEndpointTemplates object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeyStoneEndpointTemplates> typeColumn = new TextColumn<KeyStoneEndpointTemplates>() {
+		TextColumn<KeystoneEndpointTemplates> typeColumn = new TextColumn<KeystoneEndpointTemplates>() {
 			@Override
-			public String getValue(KeyStoneEndpointTemplates object) {
+			public String getValue(KeystoneEndpointTemplates object) {
 				return object.getType();
 			}
 		};
 		grid.setColumnWidth(typeColumn, "120px");
 		grid.addColumn(typeColumn, "Type");
-		TextColumn<KeyStoneEndpointTemplates> nameColumn = new TextColumn<KeyStoneEndpointTemplates>() {
+		TextColumn<KeystoneEndpointTemplates> nameColumn = new TextColumn<KeystoneEndpointTemplates>() {
 			@Override
-			public String getValue(KeyStoneEndpointTemplates object) {
+			public String getValue(KeystoneEndpointTemplates object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeyStoneEndpointTemplates> descriptionColumn = new TextColumn<KeyStoneEndpointTemplates>() {
+		TextColumn<KeystoneEndpointTemplates> descriptionColumn = new TextColumn<KeystoneEndpointTemplates>() {
 			@Override
-			public String getValue(KeyStoneEndpointTemplates object) {
+			public String getValue(KeystoneEndpointTemplates object) {
 				return object.getName();
 			}
 		};
@@ -79,6 +83,16 @@ public class EndpointTemplatesView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateServer(ClickEvent event) {
+		presenter.onCreateEndpointTemplates();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteTenant(ClickEvent event) {
+		presenter.onDeleteEndpointTemplates();
 	}
 
 }

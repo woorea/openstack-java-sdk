@@ -5,11 +5,10 @@ import java.util.Map;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneEndpointTemplates;
-import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
+import org.openstack.model.identity.KeystoneEndpointTemplates;
+import org.openstack.model.identity.KeystoneEndpointTemplatesList;
 
 public class EndpointTemplatesResource extends Resource {
 	
@@ -17,19 +16,19 @@ public class EndpointTemplatesResource extends Resource {
 		super(target);
 	}
 	
-	public KeyStoneEndpointTemplatesList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneEndpointTemplatesList.class);
+	public KeystoneEndpointTemplatesList get(Map<String, Object> properties) {
+		return target.request().get(KeystoneEndpointTemplatesList.class);
 	}
 
-	public KeyStoneEndpointTemplates post(Entity<KeyStoneEndpointTemplates> user) {
-		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneEndpointTemplates.class);
+	public KeystoneEndpointTemplates post(Entity<KeystoneEndpointTemplates> user) {
+		return target.request().post(user, KeystoneEndpointTemplates.class);
 	}
 
 	public EndpointTemplateResource endpointTemplate(String id) {
 		return new EndpointTemplateResource(target.path("/{id}").pathParam("id", id));
 	}
 
-	public KeyStoneEndpointTemplatesList get() {
+	public KeystoneEndpointTemplatesList get() {
 		return get(new HashMap<String, Object>());
 	}
 

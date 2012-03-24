@@ -12,7 +12,7 @@ import org.openstack.model.image.ImageUploadResponse;
 @XmlRootElement()
 public class GlanceImageUploadResponse implements ImageUploadResponse {
     @XmlElement(name = "image")
-    private Image image;
+    private GlanceImage image;
 
     /* (non-Javadoc)
 	 * @see org.openstack.model.image.glance.ImageUploadResponse#getImage()
@@ -27,7 +27,7 @@ public class GlanceImageUploadResponse implements ImageUploadResponse {
 	 */
     @Override
 	public void setImage(Image image) {
-        this.image = image;
+        this.image = (GlanceImage) image;
     }
 
 	@Override

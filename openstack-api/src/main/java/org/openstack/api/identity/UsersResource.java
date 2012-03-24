@@ -1,16 +1,12 @@
 package org.openstack.api.identity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneTenant;
-import org.openstack.model.identity.KeyStoneUser;
-import org.openstack.model.identity.KeyStoneUserList;
+import org.openstack.model.identity.KeystoneUser;
+import org.openstack.model.identity.KeystoneUserList;
 
 public class UsersResource extends Resource {
 
@@ -18,22 +14,16 @@ public class UsersResource extends Resource {
 		super(target);
 	}
 	
-	public KeyStoneUserList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneUserList.class);
+	public KeystoneUserList get() {
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneUserList.class);
 	}
 	
-	public KeyStoneUser post(Entity<KeyStoneUser> user) {
-		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneUser.class);
+	public KeystoneUser post(Entity<KeystoneUser> user) {
+		return target.request(MediaType.APPLICATION_JSON).post(user, KeystoneUser.class);
 	}
 
 	public UserResource user(String id) {
 		return new UserResource(target.path("/{id}").pathParam("id", id));
 	}
-
-	public KeyStoneUserList get() {
-		return get(new HashMap<String, Object>());
-	}
-	
-	
 
 }

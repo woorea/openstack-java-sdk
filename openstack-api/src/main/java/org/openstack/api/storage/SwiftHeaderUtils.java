@@ -1,6 +1,8 @@
 package org.openstack.api.storage;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Invocation;
@@ -24,10 +26,10 @@ class SwiftHeaderUtils {
 	public static SwiftObjectProperties unmarshalHeaders(ResponseHeaders response) {
 		
 		SwiftObjectProperties properties = new SwiftObjectProperties();
-		/*
+		
 		Map<String, String> userProperties = properties.getCustomProperties();
 
-		for (Entry<String, List<String>> entry : response.getHeaders().asMap().entrySet()) {
+		for (Entry<String, List<String>> entry : response.asMap().entrySet()) {
 			String key = entry.getKey();
 			List<String> values = entry.getValue();
 			if (values.size() != 1) {
@@ -36,25 +38,26 @@ class SwiftHeaderUtils {
 			String value = values.get(0);
 			key = key.toLowerCase();
 
-			SimpleClassInfo headerClassInfo = getHeaderClassInfo();
+			//SimpleClassInfo headerClassInfo = getHeaderClassInfo();
 
 			String USER_PROPERTY_PREFIX = "x-object-meta-";
 			if (key.startsWith(USER_PROPERTY_PREFIX)) {
 				String name = key.substring(USER_PROPERTY_PREFIX.length());
 				userProperties.put(name, value);
 			} else {
+				/*
 				FieldInfo field = headerClassInfo.getField(key);
 
 				if (field == null) {
 					log.fine("Ignoring unknown header " + key);
 					continue;
 				}
-
 				Object converted = field.convertToValue(value);
 				field.setValue(properties, converted);
+				*/
 			}
 		}
-		*/
+		
 		return properties;
 	}
 

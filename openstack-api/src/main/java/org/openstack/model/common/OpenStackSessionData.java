@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneService;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneService;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -20,21 +20,21 @@ public class OpenStackSessionData implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	protected KeyStoneAccess access;
+	protected KeystoneAccess access;
 	
 	public OpenStackSessionData() {
 		
 	}
 	
-	public OpenStackSessionData(KeyStoneAccess access) {
+	public OpenStackSessionData(KeystoneAccess access) {
 		this.access = access;
 	}
 	
-	public KeyStoneAccess getAccess() {
+	public KeystoneAccess getAccess() {
 		return access;
 	}
 	
-	public void setAccess(KeyStoneAccess access) {
+	public void setAccess(KeystoneAccess access) {
 		this.access = access;
 	}
 
@@ -46,9 +46,9 @@ public class OpenStackSessionData implements Serializable {
 	
 	
 	public String getBestEndpoint(String serviceType) throws OpenstackException {
-		List<KeyStoneService> foundServices = Lists.newArrayList();
+		List<KeystoneService> foundServices = Lists.newArrayList();
 		Set<String> serviceTypes = Sets.newHashSet();
-		for (KeyStoneService service : access.getServices()) {
+		for (KeystoneService service : access.getServices()) {
 			serviceTypes.add(service.getType());
 
 			if (serviceType.equals(service.getType())) {
@@ -61,7 +61,7 @@ public class OpenStackSessionData implements Serializable {
 					+ Joiner.on(",").join(serviceTypes));
 		}
 
-		KeyStoneService service;
+		KeystoneService service;
 		if (foundServices.size() != 1) {
 			System.out.println("Found multiple services of type: " + serviceType + ".  Found: "
 					+ Joiner.on(',').join(foundServices));
@@ -83,10 +83,10 @@ public class OpenStackSessionData implements Serializable {
 		return bestUrl;
 	}
 
-	private KeyStoneService pickBest(List<KeyStoneService> services) {
-		Function<KeyStoneService, Float> scoreFunction = new Function<KeyStoneService, Float>() {
+	private KeystoneService pickBest(List<KeystoneService> services) {
+		Function<KeystoneService, Float> scoreFunction = new Function<KeystoneService, Float>() {
 			@Override
-			public Float apply(KeyStoneService s) {
+			public Float apply(KeystoneService s) {
 				float score = 0;
 				if (s.getName().endsWith("OpenStack")) {
 					score += 10;
@@ -99,8 +99,8 @@ public class OpenStackSessionData implements Serializable {
 		};
 
 		Float bestScore = null;
-		KeyStoneService best = null;
-		for (KeyStoneService candidate : services) {
+		KeystoneService best = null;
+		for (KeystoneService candidate : services) {
 			Float score = scoreFunction.apply(candidate);
 			if (bestScore == null || bestScore.floatValue() < score.floatValue()) {
 				bestScore = score;

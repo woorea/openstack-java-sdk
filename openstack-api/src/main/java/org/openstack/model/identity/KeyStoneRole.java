@@ -12,7 +12,7 @@ import org.openstack.model.common.JsonRootElement;
 @XmlRootElement(name="role")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("role")
-public class KeyStoneRole implements Serializable {
+public class KeystoneRole implements Serializable {
 	
 	@XmlAttribute
 	private String id;

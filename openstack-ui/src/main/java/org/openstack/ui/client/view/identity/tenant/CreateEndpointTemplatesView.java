@@ -1,17 +1,15 @@
 package org.openstack.ui.client.view.identity.tenant;
 
+import org.openstack.ui.client.UI;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateEndpointTemplatesView extends Composite implements HasText {
+public class CreateEndpointTemplatesView extends Composite {
 
 	private static CreateEndpointTemplatesViewUiBinder uiBinder = GWT
 			.create(CreateEndpointTemplatesViewUiBinder.class);
@@ -20,29 +18,22 @@ public class CreateEndpointTemplatesView extends Composite implements HasText {
 			UiBinder<Widget, CreateEndpointTemplatesView> {
 	}
 
+	public interface Presenter {
+
+	}
+
+	private Presenter presenter;
+
 	public CreateEndpointTemplatesView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	@UiField
-	Button button;
-
-	public CreateEndpointTemplatesView(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
 
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		Window.alert("Hello!");
+	@UiHandler({ "cancel", "close" })
+	public void onCancel(ClickEvent event) {
+		UI.MODAL.hide(true);
 	}
-
-	public void setText(String text) {
-		button.setText(text);
-	}
-
-	public String getText() {
-		return button.getText();
-	}
-
 }

@@ -4,20 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 
 import jline.ConsoleReader;
 
-import org.openstack.utils.Io;
-import org.openstack.utils.Utf8;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
 
 import com.fathomdb.cli.commands.CommandRunner;
-import com.fathomdb.cli.output.ActionOutputSink;
 import com.fathomdb.cli.output.OutputSink;
 import com.fathomdb.cli.output.RawOutputSink;
-import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
@@ -183,9 +180,9 @@ class CliSimpleRepl implements Repl {
 
     public boolean runScripts(List<File> scriptFiles) throws IOException {
         for (File scriptFile : scriptFiles) {
-            BufferedReader reader = new BufferedReader(Utf8.openFile(scriptFile));
+        	LineIterator lines = IOUtils.lineIterator(new FileInputStream(scriptFile), "UTF-8");
             try {
-                while (true) {
+                while (lines.hasNext()) {
                     String line = reader.readLine();
                     if (line == null)
                         continue;
@@ -199,7 +196,7 @@ class CliSimpleRepl implements Repl {
                         return false;
                 }
             } finally {
-                Io.safeClose(reader);
+                LineIterator.closeQuietly(lines);
             }
         }
         return true;

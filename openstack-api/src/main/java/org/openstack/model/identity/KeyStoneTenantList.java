@@ -14,20 +14,20 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "tenants")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneTenantList implements Serializable {
+public class KeystoneTenantList implements Serializable {
 	
 	@SerializedName("tenants")
 	@XmlElement(name = "tenant")
-	private List<KeyStoneTenant> tenants;
+	private List<KeystoneTenant> tenants;
 	
 	@SerializedName("tenants_links")
 	private List<Link> links;
 
-	public List<KeyStoneTenant> getList() {
+	public List<KeystoneTenant> getList() {
 		return tenants;
 	}
 
-	public void setList(List<KeyStoneTenant> list) {
+	public void setList(List<KeystoneTenant> list) {
 		this.tenants = list;
 	}
 	

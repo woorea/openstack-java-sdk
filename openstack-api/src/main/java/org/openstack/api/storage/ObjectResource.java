@@ -12,13 +12,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
+import org.glassfish.jersey.message.internal.MutableEntity;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.TenantResource;
-import org.openstack.api.imagestore.KnownLengthInputStream;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.storage.SwiftObjectProperties;
-import org.openstack.utils.Io;
 
 import com.google.common.base.Preconditions;
 
@@ -76,7 +76,7 @@ public class ObjectResource  extends Resource {
 		try {
 			return put(fis, srcFile.length(), properties);
 		} finally {
-			Io.safeClose(fis);
+			IOUtils.closeQuietly(fis);
 		}
 	}
 
@@ -85,20 +85,20 @@ public class ObjectResource  extends Resource {
 		Preconditions.checkNotNull(properties, "You have to supply object propeties");
 		Preconditions.checkNotNull(properties, "You have to supply object name");
 
-		if (objectStreamLength != -1) {
-			objectStream = new KnownLengthInputStream(objectStream, objectStreamLength);
-		}
-
 		Invocation.Builder builder = target.request();
+		
+		byte[] bytes = IOUtils.toByteArray(objectStream);
+		
+		builder = builder.header("Content-Length", bytes.length);
 		
 		SwiftHeaderUtils.setHeadersForProperties(builder, properties);
 		
 		Response response = null;
 		if (properties.getContentType() != null) {
 			MediaType contentType = MediaType.valueOf(properties.getContentType());
-			response = builder.put(Entity.entity(objectStream, contentType), Response.class);
+			response = builder.put(Entity.entity(bytes, contentType), Response.class);
 		} else {
-			response = builder.put(Entity.entity(objectStream, MediaType.APPLICATION_OCTET_STREAM), Response.class);
+			response = builder.put(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM_TYPE), Response.class);
 		}
 		MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
 

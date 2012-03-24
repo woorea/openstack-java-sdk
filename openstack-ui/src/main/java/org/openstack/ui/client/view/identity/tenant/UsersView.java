@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneUser;
+import org.openstack.model.identity.KeystoneUser;
 import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.CheckboxCell;
@@ -25,10 +25,14 @@ public class UsersView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void onCreateUser();
+
+		void onDeleteUser();
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeyStoneUser> grid = new DataGrid<KeyStoneUser>();
+	DataGrid<KeystoneUser> grid = new DataGrid<KeystoneUser>();
 
 	private Presenter presenter;
 
@@ -38,26 +42,26 @@ public class UsersView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeyStoneUser, Boolean> checkboxColumn = new Column<KeyStoneUser, Boolean>(new CheckboxCell()) {
+		Column<KeystoneUser, Boolean> checkboxColumn = new Column<KeystoneUser, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeyStoneUser object) {
+			public Boolean getValue(KeystoneUser object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeyStoneUser> nameColumn = new TextColumn<KeyStoneUser>() {
+		TextColumn<KeystoneUser> nameColumn = new TextColumn<KeystoneUser>() {
 			@Override
-			public String getValue(KeyStoneUser object) {
+			public String getValue(KeystoneUser object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeyStoneUser> descriptionColumn = new TextColumn<KeyStoneUser>() {
+		TextColumn<KeystoneUser> descriptionColumn = new TextColumn<KeystoneUser>() {
 			@Override
-			public String getValue(KeyStoneUser object) {
+			public String getValue(KeystoneUser object) {
 				return object.getName();
 			}
 		};
@@ -72,6 +76,16 @@ public class UsersView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateServer(ClickEvent event) {
+		presenter.onCreateUser();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteTenant(ClickEvent event) {
+		presenter.onDeleteUser();
 	}
 
 }

@@ -1,8 +1,9 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneRole;
-import org.openstack.model.identity.KeyStoneRoleList;
+import org.openstack.model.identity.KeystoneRole;
+import org.openstack.model.identity.KeystoneRoleList;
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
@@ -20,12 +21,12 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeyStoneRole> dataProvider;
+	private RefreshableDataProvider<KeystoneRole> dataProvider;
 
-	private MultiSelectionModel<KeyStoneRole> selectionModel = new MultiSelectionModel<KeyStoneRole>();
+	private MultiSelectionModel<KeystoneRole> selectionModel = new MultiSelectionModel<KeystoneRole>();
 
-	private DefaultSelectionEventManager<KeyStoneRole> selectionManager = DefaultSelectionEventManager
-			.<KeyStoneRole> createCheckboxManager(0);
+	private DefaultSelectionEventManager<KeystoneRole> selectionManager = DefaultSelectionEventManager
+			.<KeystoneRole> createCheckboxManager(0);
 
 	public RolesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,14 +37,14 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeyStoneRole>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<KeystoneRole>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeyStoneRole> display) {
-				OpenStackClient.IDENTITY.listRoles(new DefaultAsyncCallback<KeyStoneRoleList>() {
+			protected void onRangeChanged(HasData<KeystoneRole> display) {
+				OpenStackClient.IDENTITY.listRoles(new DefaultAsyncCallback<KeystoneRoleList>() {
 
 					@Override
-					public void onSuccess(KeyStoneRoleList result) {
+					public void onSuccess(KeystoneRoleList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
@@ -56,6 +57,20 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 
 	@Override
 	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreateRole() {
+		CreateRoleActivity activity = new CreateRoleActivity();
+		activity.start(UI.MODAL, null);
+		UI.MODAL.center();
+		
+	}
+
+	@Override
+	public void onDeleteRole() {
 		// TODO Auto-generated method stub
 		
 	}

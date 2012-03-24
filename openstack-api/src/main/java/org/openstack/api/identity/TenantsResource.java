@@ -1,15 +1,11 @@
 package org.openstack.api.identity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneTenant;
-import org.openstack.model.identity.KeyStoneTenantList;
+import org.openstack.model.identity.KeystoneTenant;
+import org.openstack.model.identity.KeystoneTenantList;
 
 public class TenantsResource extends Resource {
 
@@ -17,16 +13,12 @@ public class TenantsResource extends Resource {
 		super(target);
 	}
 	
-	public KeyStoneTenantList get() {
-		return get(new HashMap<String, Object>());
-	}
-	
-	public KeyStoneTenantList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneTenantList.class);
+	public KeystoneTenantList get() {
+		return target.request().get(KeystoneTenantList.class);
 	}
 
-	public KeyStoneTenant post(Entity<KeyStoneTenant> tenant) {
-		return target.request(MediaType.APPLICATION_JSON).post(tenant, KeyStoneTenant.class);
+	public KeystoneTenant post(Entity<KeystoneTenant> tenant) {
+		return target.request().post(tenant, KeystoneTenant.class);
 	}
 	
 	public TenantResource tenant(String id) {

@@ -1,30 +1,30 @@
 package org.openstack.ui.client.api;
 
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneAuthentication;
-import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
-import org.openstack.model.identity.KeyStoneRoleList;
-import org.openstack.model.identity.KeyStoneServiceList;
-import org.openstack.model.identity.KeyStoneTenantList;
-import org.openstack.model.identity.KeyStoneUserList;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneAuthentication;
+import org.openstack.model.identity.KeystoneEndpointTemplatesList;
+import org.openstack.model.identity.KeystoneRoleList;
+import org.openstack.model.identity.KeystoneServiceList;
+import org.openstack.model.identity.KeystoneTenantList;
+import org.openstack.model.identity.KeystoneUserList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface IdentityServiceAsync {
 
-	void getSessionData(AsyncCallback<KeyStoneAccess> callback);
+	void getSessionData(AsyncCallback<KeystoneAccess> callback);
 
-	void authenticate(KeyStoneAuthentication authentication, AsyncCallback<KeyStoneAccess> callback);
+	void authenticate(KeystoneAuthentication authentication, AsyncCallback<KeystoneAccess> callback);
 	
-	void listTenants(AsyncCallback<KeyStoneTenantList> callback);
+	void listTenants(AsyncCallback<KeystoneTenantList> callback);
 	
-	void listUsers(AsyncCallback<KeyStoneUserList> callback);
+	void listUsers(AsyncCallback<KeystoneUserList> callback);
 	
-	void listRoles(AsyncCallback<KeyStoneRoleList> callback);
+	void listRoles(AsyncCallback<KeystoneRoleList> callback);
 	
-	void listServices(AsyncCallback<KeyStoneServiceList> callback);
+	void listServices(AsyncCallback<KeystoneServiceList> callback);
 
 	void listEndpontTemplates(
-			AsyncCallback<KeyStoneEndpointTemplatesList> callback);
+			AsyncCallback<KeystoneEndpointTemplatesList> callback);
 
 }

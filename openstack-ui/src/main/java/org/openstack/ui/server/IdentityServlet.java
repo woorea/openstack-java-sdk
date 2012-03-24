@@ -1,49 +1,49 @@
 package org.openstack.ui.server;
 
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneAuthentication;
-import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
-import org.openstack.model.identity.KeyStoneRoleList;
-import org.openstack.model.identity.KeyStoneServiceList;
-import org.openstack.model.identity.KeyStoneTenantList;
-import org.openstack.model.identity.KeyStoneUserList;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneAuthentication;
+import org.openstack.model.identity.KeystoneEndpointTemplatesList;
+import org.openstack.model.identity.KeystoneRoleList;
+import org.openstack.model.identity.KeystoneServiceList;
+import org.openstack.model.identity.KeystoneTenantList;
+import org.openstack.model.identity.KeystoneUserList;
 import org.openstack.ui.client.api.IdentityService;
 
 @SuppressWarnings("serial")
 public class IdentityServlet extends OpenStackRemoteServiceServlet implements IdentityService {
 
 	@Override
-	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
-		return getClient().identity().publicEndpoint().tokens().authenticate(authentication);
+	public KeystoneAccess authenticate(KeystoneAuthentication authentication) {
+		return getClient().identity().publicEndpoint().tokens().post(authentication);
 	}
 
 	@Override
-	public KeyStoneTenantList listTenants() {
+	public KeystoneTenantList listTenants() {
 		return getClient().identity().publicEndpoint().tenants().get();
 	}
 
 	@Override
-	public KeyStoneAccess getSessionData() {
+	public KeystoneAccess getSessionData() {
 		return getClient().getAccess();
 	}
 
 	@Override
-	public KeyStoneServiceList listServices() {
+	public KeystoneServiceList listServices() {
 		return getClient().identity().administrationEndpoint().services().get();
 	}
 
 	@Override
-	public KeyStoneEndpointTemplatesList listEndpontTemplates() {
+	public KeystoneEndpointTemplatesList listEndpontTemplates() {
 		return getClient().identity().administrationEndpoint().endpoints().get();
 	}
 
 	@Override
-	public KeyStoneUserList listUsers() {
+	public KeystoneUserList listUsers() {
 		return getClient().identity().administrationEndpoint().users().get();
 	}
 
 	@Override
-	public KeyStoneRoleList listRoles() {
+	public KeystoneRoleList listRoles() {
 		return getClient().identity().administrationEndpoint().roles().get();
 	}
 	

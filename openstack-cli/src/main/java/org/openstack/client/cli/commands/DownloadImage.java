@@ -2,12 +2,12 @@ package org.openstack.client.cli.commands;
 
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.GlanceImageName;
 import org.openstack.client.jersey2.OpenStackImagesClient;
 import org.openstack.model.image.glance.GlanceImage;
-import org.openstack.utils.Io;
 
 public class DownloadImage extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -29,9 +29,9 @@ public class DownloadImage extends OpenstackCliCommandRunnerBase {
 		OpenStackImagesClient client = context.getImageClient();
 		InputStream is = client.publicEndpoint().image(image.getId()).openStream();
 		try {
-			Io.copyStreams(is, System.out);
+			IOUtils.copy(is, System.out);
 		} finally {
-			Io.safeClose(is);
+			IOUtils.closeQuietly(is);
 		}
 
 		return null;

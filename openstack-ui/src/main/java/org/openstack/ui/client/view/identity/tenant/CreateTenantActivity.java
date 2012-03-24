@@ -5,11 +5,12 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class CreateTenantActivity extends AbstractActivity {
+	
+	private static final CreateTenantView VIEW = new CreateTenantView();
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		// TODO Auto-generated method stub
-		
+		panel.setWidget(VIEW);
 	}
 
 }

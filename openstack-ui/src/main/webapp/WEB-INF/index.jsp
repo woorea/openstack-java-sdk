@@ -20,8 +20,8 @@
 				<div class="control-group">
 					<label class="control-label" for="authURL">Auth URL</label>
 					<div class="controls">
-						<input class="input-xlarge" id="wan" name="identityURL"
-							value="83.45.186.94" />
+						<input class="input-xlarge" id="wan" name="wan"
+							value="192.168.1.52" />
 						<p class="help-block">Single Node WAN IP</p>
 					</div>
 				</div>

@@ -2,8 +2,8 @@ package org.openstack.ui.client.api;
 
 import java.util.List;
 
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneTenant;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneTenant;
 
 import com.google.gwt.core.client.GWT;
 
@@ -13,9 +13,9 @@ public class OpenStackClient {
 	
 	public static final ComputeServiceAsync COMPUTE = GWT.create(ComputeService.class);
 	
-	public static KeyStoneAccess access;
+	public static KeystoneAccess access;
 	
-	public static List<KeyStoneTenant> tenants;
+	public static List<KeystoneTenant> tenants;
 	
 	public static String getToken() {
 		return access.getToken().getId();
@@ -26,7 +26,7 @@ public class OpenStackClient {
 		return access.getToken().getTenant().getId();
 	}
 	
-	public static List<KeyStoneTenant> getTenants() {
+	public static List<KeystoneTenant> getTenants() {
 		return tenants;
 	}
 	

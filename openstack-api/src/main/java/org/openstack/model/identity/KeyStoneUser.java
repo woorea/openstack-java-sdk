@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("user")
-public class KeyStoneUser implements Serializable {
+public class KeystoneUser implements Serializable {
 
     @XmlAttribute
     private String id;
@@ -40,7 +40,7 @@ public class KeyStoneUser implements Serializable {
     private List<String> rolesLinks;
 
     @XmlElement(name = "roles")
-    private List<KeyStoneRole> roles;
+    private List<KeystoneRole> roles;
 
     public String getId() {
         return id;

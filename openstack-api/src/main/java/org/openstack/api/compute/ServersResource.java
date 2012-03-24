@@ -19,9 +19,11 @@ public class ServersResource extends Resource {
 	}
 	
 	public NovaServerList get() {
-		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("detail",true);
-		return get(properties);
+		return target.request(MediaType.APPLICATION_JSON).get(NovaServerList.class);
+	}
+	
+	public NovaServerList detail() {
+		return target.path("detail").request(MediaType.APPLICATION_JSON).get(NovaServerList.class);
 	}
 
 	/**
@@ -36,7 +38,7 @@ public class ServersResource extends Resource {
 	 * @param detail
 	 * @return
 	 */
-	public NovaServerList get(Map<String,Object> properties) {
+	private NovaServerList get(Map<String,Object> properties) {
 		if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 

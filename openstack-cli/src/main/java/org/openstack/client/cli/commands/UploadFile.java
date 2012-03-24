@@ -8,7 +8,6 @@ import org.openstack.api.storage.ContainerResource;
 import org.openstack.client.cli.model.StoragePath;
 import org.openstack.client.jersey2.OpenStackStorageClient;
 import org.openstack.model.storage.SwiftObjectProperties;
-import org.openstack.utils.NoCloseInputStream;
 
 public class UploadFile extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -49,8 +48,8 @@ public class UploadFile extends OpenstackCliCommandRunnerBase {
 		}
 
 		// This command will probably be faster _not_ in nailgun mode
-		InputStream stream = new NoCloseInputStream(System.in);
-		container.object(tokens[1]).put(stream, -1, objectProperties);
+		// InputStream stream = new NoCloseInputStream(System.in);
+		container.object(tokens[1]).put(System.in, -1, objectProperties);
 
 		return path.getKey();
 	}

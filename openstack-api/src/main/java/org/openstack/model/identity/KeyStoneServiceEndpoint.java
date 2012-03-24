@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneServiceEndpoint implements Serializable {
+public class KeystoneServiceEndpoint implements Serializable {
 
     @XmlAttribute
     private String region;

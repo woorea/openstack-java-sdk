@@ -1,8 +1,9 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneServiceList;
+import org.openstack.model.identity.KeystoneService;
+import org.openstack.model.identity.KeystoneServiceList;
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
@@ -20,12 +21,12 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeyStoneService> dataProvider;
+	private RefreshableDataProvider<KeystoneService> dataProvider;
 
-	private MultiSelectionModel<KeyStoneService> selectionModel = new MultiSelectionModel<KeyStoneService>();
+	private MultiSelectionModel<KeystoneService> selectionModel = new MultiSelectionModel<KeystoneService>();
 
-	private DefaultSelectionEventManager<KeyStoneService> selectionManager = DefaultSelectionEventManager
-			.<KeyStoneService> createCheckboxManager(0);
+	private DefaultSelectionEventManager<KeystoneService> selectionManager = DefaultSelectionEventManager
+			.<KeystoneService> createCheckboxManager(0);
 
 	public ServicesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,14 +37,14 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeyStoneService>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<KeystoneService>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeyStoneService> display) {
-				OpenStackClient.IDENTITY.listServices(new DefaultAsyncCallback<KeyStoneServiceList>() {
+			protected void onRangeChanged(HasData<KeystoneService> display) {
+				OpenStackClient.IDENTITY.listServices(new DefaultAsyncCallback<KeystoneServiceList>() {
 
 					@Override
-					public void onSuccess(KeyStoneServiceList result) {
+					public void onSuccess(KeystoneServiceList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
@@ -56,6 +57,20 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 
 	@Override
 	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreateService() {
+		CreateServiceActivity activity = new CreateServiceActivity();
+		activity.start(UI.MODAL, null);
+		UI.MODAL.center();
+		
+	}
+
+	@Override
+	public void onDeleteService() {
 		// TODO Auto-generated method stub
 		
 	}

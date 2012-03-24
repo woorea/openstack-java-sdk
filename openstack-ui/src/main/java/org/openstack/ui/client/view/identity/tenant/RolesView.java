@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneRole;
+import org.openstack.model.identity.KeystoneRole;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -24,10 +24,14 @@ public class RolesView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void onCreateRole();
+
+		void onDeleteRole();
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeyStoneRole> grid = new DataGrid<KeyStoneRole>();
+	DataGrid<KeystoneRole> grid = new DataGrid<KeystoneRole>();
 
 	private Presenter presenter;
 
@@ -37,26 +41,26 @@ public class RolesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeyStoneRole, Boolean> checkboxColumn = new Column<KeyStoneRole, Boolean>(new CheckboxCell()) {
+		Column<KeystoneRole, Boolean> checkboxColumn = new Column<KeystoneRole, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeyStoneRole object) {
+			public Boolean getValue(KeystoneRole object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeyStoneRole> nameColumn = new TextColumn<KeyStoneRole>() {
+		TextColumn<KeystoneRole> nameColumn = new TextColumn<KeystoneRole>() {
 			@Override
-			public String getValue(KeyStoneRole object) {
+			public String getValue(KeystoneRole object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeyStoneRole> descriptionColumn = new TextColumn<KeyStoneRole>() {
+		TextColumn<KeystoneRole> descriptionColumn = new TextColumn<KeystoneRole>() {
 			@Override
-			public String getValue(KeyStoneRole object) {
+			public String getValue(KeystoneRole object) {
 				return object.getName();
 			}
 		};
@@ -71,6 +75,16 @@ public class RolesView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateServer(ClickEvent event) {
+		presenter.onCreateRole();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteTenant(ClickEvent event) {
+		presenter.onDeleteRole();
 	}
 
 }

@@ -45,7 +45,6 @@
 		<module>shared-cli</module>
 		<module>openstack-cli</module>
 		<module>nailgun</module>
-		<module>openstack-commons</module>
 		<module>openstack-ui</module>
 	</modules>
 

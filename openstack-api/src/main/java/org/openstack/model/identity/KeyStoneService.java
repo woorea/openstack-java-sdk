@@ -18,11 +18,11 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name="service", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("OS-KSADM:service")
-public class KeyStoneService implements Serializable {
+public class KeystoneService implements Serializable {
 
 	@SerializedName("endpoints")
 	@XmlElement(nillable = true, name = "endpoint")
-	private List<KeyStoneServiceEndpoint> endpoints;
+	private List<KeystoneServiceEndpoint> endpoints;
 
 	// Not sure what these are...
 	@SerializedName("endpoints_links")
@@ -72,7 +72,7 @@ public class KeyStoneService implements Serializable {
         this.description = description;
     }
 
-    public List<KeyStoneServiceEndpoint> getEndpoints() {
+    public List<KeystoneServiceEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = Lists.newArrayList();
         }

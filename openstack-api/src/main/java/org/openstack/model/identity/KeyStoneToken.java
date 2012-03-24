@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneToken implements Serializable {
+public class KeystoneToken implements Serializable {
 
     @XmlAttribute
     private String id;
@@ -17,7 +17,7 @@ public class KeyStoneToken implements Serializable {
     private String expires;
 
     @XmlElement
-    private KeyStoneTenant tenant;
+    private KeystoneTenant tenant;
 
     public String getId() {
         return id;
@@ -35,11 +35,11 @@ public class KeyStoneToken implements Serializable {
         this.expires = expires;
     }
 
-	public KeyStoneTenant getTenant() {
+	public KeystoneTenant getTenant() {
 		return tenant;
 	}
 
-	public void setTenant(KeyStoneTenant tenant) {
+	public void setTenant(KeystoneTenant tenant) {
 		this.tenant = tenant;
 	}
 

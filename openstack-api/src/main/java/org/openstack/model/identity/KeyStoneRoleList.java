@@ -11,16 +11,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="roles")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneRoleList implements Serializable {
+public class KeystoneRoleList implements Serializable {
 
 	@XmlElement(name="role")
-	private List<KeyStoneRole> roles = new ArrayList<KeyStoneRole>();
+	private List<KeystoneRole> roles = new ArrayList<KeystoneRole>();
 
-	public List<KeyStoneRole> getList() {
+	public List<KeystoneRole> getList() {
 		return roles;
 	}
 
-	public void setList(List<KeyStoneRole> list) {
+	public void setList(List<KeystoneRole> list) {
 		this.roles = list;
 	}
 

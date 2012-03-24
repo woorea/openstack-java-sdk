@@ -16,7 +16,7 @@ import org.openstack.model.common.JsonRootElement;
 @XmlRootElement(name = "auth", namespace= "")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("auth")
-public class KeyStoneAuthentication implements Serializable {
+public class KeystoneAuthentication implements Serializable {
 
     @XmlAccessorType(XmlAccessType.NONE)
     public static class PasswordCredentials implements Serializable {
@@ -46,7 +46,7 @@ public class KeyStoneAuthentication implements Serializable {
     }
     
     @XmlElement
-    private KeyStoneToken token;
+    private KeystoneToken token;
 
     @XmlElement(namespace= "")
     private PasswordCredentials passwordCredentials;
@@ -57,11 +57,11 @@ public class KeyStoneAuthentication implements Serializable {
     @XmlAttribute
     private String tenantName;
 
-    public KeyStoneToken getToken() {
+    public KeystoneToken getToken() {
 		return token;
 	}
 
-	public void setToken(KeyStoneToken token) {
+	public void setToken(KeystoneToken token) {
 		this.token = token;
 	}
 
@@ -89,15 +89,15 @@ public class KeyStoneAuthentication implements Serializable {
 		this.tenantName = tenantName;
 	}
 	
-	public KeyStoneAuthentication withPasswordCredentials(String username, String password) {
+	public KeystoneAuthentication withPasswordCredentials(String username, String password) {
 		passwordCredentials = new PasswordCredentials();
 		passwordCredentials.username = username;
 		passwordCredentials.password = password;
 		return this;
 	}
 	
-	public KeyStoneAuthentication withTokenAndTenant(String tokenId, String tenantId) {
-		KeyStoneToken token = new KeyStoneToken();
+	public KeystoneAuthentication withTokenAndTenant(String tokenId, String tenantId) {
+		KeystoneToken token = new KeystoneToken();
 		token.setId(tokenId);
 		this.token = token;
 		this.tenantId = tenantId;

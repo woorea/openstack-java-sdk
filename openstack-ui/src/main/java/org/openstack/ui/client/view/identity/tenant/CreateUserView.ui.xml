@@ -6,8 +6,42 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		Hello,
-		<g:Button styleName="{style.important}" ui:field="button" />
-	</g:HTMLPanel>
+	<g:HeaderPanel width="600px" height="400px">
+		<g:HTMLPanel>
+			<div class="modal-header" style="margin-bottom: 15px">
+				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
+				<h3>Create User</h3>
+			</div>
+		</g:HTMLPanel>
+		<g:ResizeLayoutPanel height="100%">
+			<g:HTMLPanel>
+				<table>
+					<tbody>
+						<tr>
+							<td colspan="2">Name</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:TextBox ui:field="name" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Description</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:TextArea ui:field="description" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</g:HTMLPanel>
+		</g:ResizeLayoutPanel>
+		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
+			<g:Button ui:field="finish" styleName="btn">Save</g:Button>
+			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
+		</g:HTMLPanel>
+	</g:HeaderPanel>
 </ui:UiBinder> 

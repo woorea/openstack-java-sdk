@@ -13,7 +13,7 @@ import org.openstack.model.common.JsonRootElement;
 @XmlRootElement(name="tenant")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("tenant")
-public class KeyStoneTenant implements Serializable {
+public class KeystoneTenant implements Serializable {
 	
 	@XmlAttribute
 	private String id;
@@ -27,12 +27,12 @@ public class KeyStoneTenant implements Serializable {
 	@XmlElement
 	private String description;
 
-	public KeyStoneTenant() {
+	public KeystoneTenant() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public KeyStoneTenant(String id, String name) {
+	public KeystoneTenant(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}

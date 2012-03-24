@@ -44,8 +44,8 @@ public class ImageResource extends Resource {
         return target.request().get(InputStream.class);
     }
 
-    public void delete(Map<String, Object> properties) {
-        target.request();
+    public Response delete() {
+        return target.request().delete();
     }
 	
 }

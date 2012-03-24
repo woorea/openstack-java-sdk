@@ -6,10 +6,11 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class CreateEndpointTemplatesActivity extends AbstractActivity {
 
+	private static final CreateEndpointTemplatesView VIEW = new CreateEndpointTemplatesView();
+
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		// TODO Auto-generated method stub
-		
+		panel.setWidget(VIEW);
 	}
 
 }

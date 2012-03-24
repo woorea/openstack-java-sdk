@@ -6,9 +6,9 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
-import org.openstack.utils.Io;
 
 import com.fathomdb.cli.output.OutputSink;
 import com.google.common.base.Charsets;
@@ -144,7 +144,7 @@ public class CliBase {
             printError("Unexpected error", e);
             return 2;
         } finally {
-            Io.safeClose(repl);
+            IOUtils.closeQuietly(repl);
 
             CliContextBase.setThreadLocal(null);
         }

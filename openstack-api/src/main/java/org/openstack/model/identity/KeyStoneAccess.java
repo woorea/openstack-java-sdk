@@ -20,40 +20,40 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("access")
-public class KeyStoneAccess implements Serializable {
+public class KeystoneAccess implements Serializable {
     
     @XmlElement
-    private KeyStoneToken token;
+    private KeystoneToken token;
     
     @XmlElementWrapper(name = "serviceCatalog")
     @XmlElement(name = "service")
     @SerializedName("serviceCatalog")
-	private List<KeyStoneService> services = new ArrayList<KeyStoneService>();
+	private List<KeystoneService> services = new ArrayList<KeystoneService>();
 
     @XmlElement
-    private KeyStoneUser user;
+    private KeystoneUser user;
 
-    public KeyStoneToken getToken() {
+    public KeystoneToken getToken() {
         return token;
     }
 
-    public void setToken(KeyStoneToken token) {
+    public void setToken(KeystoneToken token) {
         this.token = token;
     }
 
-	public List<KeyStoneService> getServices() {
+	public List<KeystoneService> getServices() {
 		return services;
 	}
 
-	public void setServices(List<KeyStoneService> services) {
+	public void setServices(List<KeystoneService> services) {
 		this.services = services;
 	}
 
-	public KeyStoneUser getUser() {
+	public KeystoneUser getUser() {
 		return user;
 	}
 
-	public void setUser(KeyStoneUser user) {
+	public void setUser(KeystoneUser user) {
 		this.user = user;
 	}
 

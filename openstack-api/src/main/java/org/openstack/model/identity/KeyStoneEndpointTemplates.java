@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(namespace="http://docs.openstack.org/identity/api/ext/OS-KSCATALOG/v1.0")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneEndpointTemplates implements Serializable {
+public class KeystoneEndpointTemplates implements Serializable {
 	
 	@XmlAttribute
 	private String id;

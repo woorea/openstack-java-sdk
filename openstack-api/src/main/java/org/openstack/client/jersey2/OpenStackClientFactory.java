@@ -4,17 +4,17 @@ import javax.ws.rs.client.Client;
 
 import org.openstack.api.common.RestClient;
 import org.openstack.api.identity.IdentityResource;
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneAuthentication;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneAuthentication;
 
 public class OpenStackClientFactory {
 
 	public static OpenStackClient authenticate(String authURL, String username, String password, String tenantName) {
 		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
-		KeyStoneAuthentication authentication = new KeyStoneAuthentication().withPasswordCredentials(username, password);
+		KeystoneAuthentication authentication = new KeystoneAuthentication().withPasswordCredentials(username, password);
 		authentication.setTenantName(tenantName);
 		IdentityResource auth = new IdentityResource(client.target(authURL));
-		KeyStoneAccess access = auth.tokens().authenticate(authentication);
+		KeystoneAccess access = auth.tokens().post(authentication);
 		OpenStackClient openstack = new OpenStackClient(client, authURL, access);
 		return openstack;
 	}
@@ -24,7 +24,7 @@ public class OpenStackClientFactory {
 		
 	}
 
-	public static OpenStackClient create(KeyStoneAccess access) {
+	public static OpenStackClient create(KeystoneAccess access) {
 		Client client = RestClient.INSTANCE.verbose(true).getJerseyClient();
 		return new OpenStackClient(client, null, access);
 	}

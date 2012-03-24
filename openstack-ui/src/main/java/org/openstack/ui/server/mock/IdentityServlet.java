@@ -4,71 +4,71 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openstack.model.common.OpenStackSessionData;
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneAuthentication;
-import org.openstack.model.identity.KeyStoneEndpointTemplatesList;
-import org.openstack.model.identity.KeyStoneRoleList;
-import org.openstack.model.identity.KeyStoneServiceList;
-import org.openstack.model.identity.KeyStoneTenant;
-import org.openstack.model.identity.KeyStoneTenantList;
-import org.openstack.model.identity.KeyStoneToken;
-import org.openstack.model.identity.KeyStoneUserList;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneAuthentication;
+import org.openstack.model.identity.KeystoneEndpointTemplatesList;
+import org.openstack.model.identity.KeystoneRoleList;
+import org.openstack.model.identity.KeystoneServiceList;
+import org.openstack.model.identity.KeystoneTenant;
+import org.openstack.model.identity.KeystoneTenantList;
+import org.openstack.model.identity.KeystoneToken;
+import org.openstack.model.identity.KeystoneUserList;
 import org.openstack.ui.client.api.IdentityService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class IdentityServlet extends RemoteServiceServlet implements IdentityService {
 	
-	private KeyStoneAccess session;
+	private KeystoneAccess session;
 
 	@Override
-	public KeyStoneAccess authenticate(KeyStoneAuthentication authentication) {
-		KeyStoneTenant tenant = new KeyStoneTenant(authentication.getTenantId() != null ? authentication.getTenantId() : "1","Tenant.1");
-		KeyStoneToken token = new KeyStoneToken();
+	public KeystoneAccess authenticate(KeystoneAuthentication authentication) {
+		KeystoneTenant tenant = new KeystoneTenant(authentication.getTenantId() != null ? authentication.getTenantId() : "1","Tenant.1");
+		KeystoneToken token = new KeystoneToken();
 		token.setId("123");
 		token.setExpires("unlimited");
 		token.setTenant(tenant);
-		KeyStoneAccess access = new KeyStoneAccess();
+		KeystoneAccess access = new KeystoneAccess();
 		access.setToken(token);
 		return access;
 	}
 
 	@Override
-	public KeyStoneTenantList listTenants() {
-		List<KeyStoneTenant> tenants =  Arrays.asList(new KeyStoneTenant("1","Tenant.1"), new KeyStoneTenant("2", "Tenant 2"));
-		KeyStoneTenantList list = new KeyStoneTenantList();
+	public KeystoneTenantList listTenants() {
+		List<KeystoneTenant> tenants =  Arrays.asList(new KeystoneTenant("1","Tenant.1"), new KeystoneTenant("2", "Tenant 2"));
+		KeystoneTenantList list = new KeystoneTenantList();
 		list.setList(tenants);
 		return list;
 	}
 
 	@Override
-	public KeyStoneAccess getSessionData() {
+	public KeystoneAccess getSessionData() {
 		if(session == null) {
-			session = authenticate(new KeyStoneAuthentication());
+			session = authenticate(new KeystoneAuthentication());
 		}
 		return session;
 	}
 
 	@Override
-	public KeyStoneServiceList listServices() {
+	public KeystoneServiceList listServices() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KeyStoneEndpointTemplatesList listEndpontTemplates() {
+	public KeystoneEndpointTemplatesList listEndpontTemplates() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KeyStoneUserList listUsers() {
+	public KeystoneUserList listUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KeyStoneRoleList listRoles() {
+	public KeystoneRoleList listRoles() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,16 +1,16 @@
 package org.openstack.model.common;
 
-import org.openstack.model.identity.KeyStoneAccess;
+import org.openstack.model.identity.KeystoneAccess;
 
 public class OpenStackSession2 {
 	
-	private KeyStoneAccess access;
+	private KeystoneAccess access;
 
-	public KeyStoneAccess getAccess() {
+	public KeystoneAccess getAccess() {
 		return access;
 	}
 
-	public void setAccess(KeyStoneAccess access) {
+	public void setAccess(KeystoneAccess access) {
 		this.access = access;
 	}
 	

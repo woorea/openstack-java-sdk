@@ -1,23 +1,23 @@
 package org.openstack.ui.server.mock;
 
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneTenant;
-import org.openstack.model.identity.KeyStoneToken;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneTenant;
+import org.openstack.model.identity.KeystoneToken;
 import org.openstack.ui.server.LoginService;
 
 public class LoginServiceMock implements LoginService {
 
 	@Override
-	public KeyStoneAccess login(String identityURL, String username, String password) {
+	public KeystoneAccess login(String identityURL, String username, String password) {
 	
-		KeyStoneTenant tenant = new KeyStoneTenant();
+		KeystoneTenant tenant = new KeystoneTenant();
 		tenant.setId("123");
 		
-		KeyStoneToken token = new KeyStoneToken();
+		KeystoneToken token = new KeystoneToken();
 		token.setId("123");
 		token.setTenant(tenant);
 		
-		KeyStoneAccess access = new KeyStoneAccess();
+		KeystoneAccess access = new KeystoneAccess();
 		access.setToken(token);
 		
 		return access;

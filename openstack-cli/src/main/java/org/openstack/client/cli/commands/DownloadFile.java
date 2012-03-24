@@ -2,10 +2,10 @@ package org.openstack.client.cli.commands;
 
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.Argument;
 import org.openstack.client.cli.model.StoragePath;
 import org.openstack.client.jersey2.OpenStackStorageClient;
-import org.openstack.utils.Io;
 
 public class DownloadFile extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -21,9 +21,9 @@ public class DownloadFile extends OpenstackCliCommandRunnerBase {
 
 		InputStream is = path.getResource(client).openStream();
 		try {
-			Io.copyStreams(is, System.out);
+			IOUtils.copy(is, System.out);
 		} finally {
-			Io.safeClose(is);
+			IOUtils.closeQuietly(is);
 		}
 
 		return null;

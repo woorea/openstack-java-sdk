@@ -1,6 +1,5 @@
 package org.openstack.client.cli.commands;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.jersey2.OpenStackImagesClient;
 import org.openstack.model.image.Image;
 import org.openstack.model.image.glance.GlanceImage;
-import org.openstack.utils.NoCloseInputStream;
 
 import com.google.common.base.Strings;
 
@@ -55,9 +53,9 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 		// system_id="http://org.platformlayer/service/imagefactory/v1.0:bootstrap" container_format=bare < disk.qcow2
 
 		// This command will probably be faster _not_ in nailgun mode
-		InputStream imageStream = new NoCloseInputStream(System.in);
+		// InputStream imageStream = new NoCloseInputStream(System.in);
 
-		Image image = imageClient.publicEndpoint().post(new HashMap<String, Object>(), imageStream, -1, imageTemplate);
+		Image image = imageClient.publicEndpoint().post(System.in, -1, imageTemplate);
 
 		return image;
 	}

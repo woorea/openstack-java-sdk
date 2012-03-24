@@ -7,9 +7,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneEndpointTemplates;
-import org.openstack.model.identity.KeyStoneRole;
-import org.openstack.model.identity.KeyStoneRoleList;
+import org.openstack.model.identity.KeystoneRole;
+import org.openstack.model.identity.KeystoneRoleList;
 
 public class RolesResource extends Resource {
 	
@@ -17,20 +16,16 @@ public class RolesResource extends Resource {
 		super(target);
 	}
 	
-	public KeyStoneRoleList get(Map<String, Object> properties) {
-		return target.request(MediaType.APPLICATION_JSON).get(KeyStoneRoleList.class);
+	public KeystoneRoleList get() {
+		return target.request().get(KeystoneRoleList.class);
 	}
 	
-	public KeyStoneRole post(Entity<KeyStoneRole> user) {
-		return target.request(MediaType.APPLICATION_JSON).post(user, KeyStoneRole.class);
+	public KeystoneRole post(Entity<KeystoneRole> user) {
+		return target.request().post(user, KeystoneRole.class);
 	}
 	
 	public RoleResource role(String id) {
 		return new RoleResource(target.path("/{id}").pathParam("id", id));
-	}
-
-	public KeyStoneRoleList get() {
-		return get(new HashMap<String, Object>());
 	}
 	
 }

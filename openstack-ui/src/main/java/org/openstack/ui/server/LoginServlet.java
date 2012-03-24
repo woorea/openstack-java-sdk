@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.openstack.model.identity.KeyStoneAccess;
-import org.openstack.model.identity.KeyStoneService;
-import org.openstack.model.identity.KeyStoneServiceEndpoint;
+import org.openstack.model.identity.KeystoneAccess;
+import org.openstack.model.identity.KeystoneService;
+import org.openstack.model.identity.KeystoneServiceEndpoint;
 import org.openstack.ui.server.mock.LoginServiceMock;
 
 public class LoginServlet extends HttpServlet {
@@ -35,20 +35,23 @@ public class LoginServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		
-		KeyStoneAccess access = service.login(String.format("http://%s:5000/v2.0", wan), username, password);
+		KeystoneAccess access = service.login(String.format("http://%s:5000/v2.0", wan), username, password);
 		
-		for(KeyStoneService svc : access.getServices()) {
-			for(KeyStoneServiceEndpoint endpoint : svc.getEndpoints()) {
+		
+		for(KeystoneService svc : access.getServices()) {
+			for(KeystoneServiceEndpoint endpoint : svc.getEndpoints()) {
 				endpoint.setPublicURL(endpoint.getPublicURL().replace(URI.create(endpoint.getPublicURL()).getHost(), wan));
 				endpoint.setInternalURL(endpoint.getInternalURL().replace(URI.create(endpoint.getPublicURL()).getHost(), wan));
 				endpoint.setAdminURL(endpoint.getAdminURL().replace(URI.create(endpoint.getPublicURL()).getHost(), wan));
 			}
 		}
-		
 		req.getSession().setAttribute(Constants.OPENSTACK_ACCESS, access);
 		
-		//resp.sendRedirect(String.format("%s/openstack.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
-		resp.sendRedirect(String.format("%s/openstack.html",req.getContextPath()));
+		if("192.168.1.52".equals(wan)) {
+			resp.sendRedirect(String.format("%s/openstack.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
+		} else {
+			resp.sendRedirect(String.format("%s/openstack.html",req.getContextPath()));
+		}
 	}
 
 }

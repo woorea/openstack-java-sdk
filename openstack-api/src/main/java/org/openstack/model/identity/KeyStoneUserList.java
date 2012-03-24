@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeyStoneUserList implements Serializable {
+public class KeystoneUserList implements Serializable {
 
 	@XmlElement(name = "user")
-	private List<KeyStoneUser> users;
+	private List<KeystoneUser> users;
 
-	public List<KeyStoneUser> getList() {
+	public List<KeystoneUser> getList() {
 		return users;
 	}
 
-	public void setList(List<KeyStoneUser> list) {
+	public void setList(List<KeystoneUser> list) {
 		this.users = list;
 	}
 

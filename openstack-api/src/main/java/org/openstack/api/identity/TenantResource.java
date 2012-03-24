@@ -3,9 +3,10 @@ package org.openstack.api.identity;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeyStoneTenant;
+import org.openstack.model.identity.KeystoneTenant;
 
 public class TenantResource extends Resource {
 
@@ -13,16 +14,20 @@ public class TenantResource extends Resource {
 		super(target);
 	}
 
-	public KeyStoneTenant get() {
-		return target.request(MediaType.APPLICATION_XML).get(KeyStoneTenant.class);
+	public KeystoneTenant get() {
+		return target.request(MediaType.APPLICATION_XML).get(KeystoneTenant.class);
 	}
 
-	public KeyStoneTenant update(Entity<KeyStoneTenant> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeyStoneTenant.class);
+	public KeystoneTenant update(Entity<KeystoneTenant> entity) {
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneTenant.class);
 	}
 
-	public void delete() {
-		target.request().delete();
+	public Response delete() {
+		return target.request().delete();
+	}
+	
+	public TenantUsersResource users() {
+		return path("users", TenantUsersResource.class);
 	}
 
 }

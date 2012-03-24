@@ -1,8 +1,9 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeyStoneUser;
-import org.openstack.model.identity.KeyStoneUserList;
+import org.openstack.model.identity.KeystoneUser;
+import org.openstack.model.identity.KeystoneUserList;
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
@@ -20,12 +21,12 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeyStoneUser> dataProvider;
+	private RefreshableDataProvider<KeystoneUser> dataProvider;
 
-	private MultiSelectionModel<KeyStoneUser> selectionModel = new MultiSelectionModel<KeyStoneUser>();
+	private MultiSelectionModel<KeystoneUser> selectionModel = new MultiSelectionModel<KeystoneUser>();
 
-	private DefaultSelectionEventManager<KeyStoneUser> selectionManager = DefaultSelectionEventManager
-			.<KeyStoneUser> createCheckboxManager(0);
+	private DefaultSelectionEventManager<KeystoneUser> selectionManager = DefaultSelectionEventManager
+			.<KeystoneUser> createCheckboxManager(0);
 
 	public UsersActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,14 +37,14 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeyStoneUser>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<KeystoneUser>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeyStoneUser> display) {
-				OpenStackClient.IDENTITY.listUsers(new DefaultAsyncCallback<KeyStoneUserList>() {
+			protected void onRangeChanged(HasData<KeystoneUser> display) {
+				OpenStackClient.IDENTITY.listUsers(new DefaultAsyncCallback<KeystoneUserList>() {
 
 					@Override
-					public void onSuccess(KeyStoneUserList result) {
+					public void onSuccess(KeystoneUserList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
@@ -56,6 +57,20 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 
 	@Override
 	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreateUser() {
+		CreateUserActivity activity = new CreateUserActivity();
+		activity.start(UI.MODAL, null);
+		UI.MODAL.center();
+		
+	}
+
+	@Override
+	public void onDeleteUser() {
 		// TODO Auto-generated method stub
 		
 	}
