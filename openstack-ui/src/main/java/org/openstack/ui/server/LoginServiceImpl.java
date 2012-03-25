@@ -1,8 +1,8 @@
 package org.openstack.ui.server;
 
-import org.openstack.api.identity.IdentityResource;
-import org.openstack.client.jersey2.OpenStackClient;
-import org.openstack.client.jersey2.OpenStackClientFactory;
+import org.openstack.api.identity.IdentityAdministrationEndpoint;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.model.identity.KeystoneAccess;
 import org.openstack.model.identity.KeystoneAuthentication;
 import org.openstack.model.identity.KeystoneService;
@@ -18,7 +18,7 @@ public class LoginServiceImpl implements LoginService {
 		
 		OpenStackClient openstack = OpenStackClientFactory.authenticate(identityURL, username, password);
 		//no services when login without tenant
-		IdentityResource identity = openstack.target(identityURL, IdentityResource.class);
+		IdentityAdministrationEndpoint identity = openstack.target(identityURL, IdentityAdministrationEndpoint.class);
 		
 		KeystoneAccess access = identity.tokens().post(authentication);
 		

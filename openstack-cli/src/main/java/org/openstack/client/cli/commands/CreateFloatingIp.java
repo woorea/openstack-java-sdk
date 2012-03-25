@@ -1,6 +1,6 @@
 package org.openstack.client.cli.commands;
 
-import org.openstack.client.jersey2.OpenStackComputeClient;
+import org.openstack.client.ComputeService;
 
 public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 
@@ -10,9 +10,9 @@ public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		OpenStackComputeClient compute = getContext().getComputeClient();
+		ComputeService compute = getContext().getComputeClient();
 
-		return compute.publicEndpoint().floatingIps().post();
+		return compute.getPublicEndpoint().floatingIps().post();
 	}
 
 }

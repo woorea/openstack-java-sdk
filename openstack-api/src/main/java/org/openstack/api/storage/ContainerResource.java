@@ -73,9 +73,16 @@ public class ContainerResource extends Resource {
 	public Response delete() {
 		return target.request().method("DELETE");
 	}
+	
+	public void post() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public ObjectResource object(String name) {
 		return new ObjectResource(target.path("/{name}").pathParam("name", name));
 	}
+
+	
 	
 }

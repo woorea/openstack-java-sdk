@@ -22,12 +22,12 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void listServers() {
 		
-		NovaServerList servers = client.compute().publicEndpoint().servers().detail();
+		NovaServerList servers = client.compute().getPublicEndpoint().servers().detail();
 
 		for (NovaServer server : servers.getList()) {
 			//Until this is resolved? on compute server api we access throught id
 			//NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
-			NovaImage image = client.compute().publicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
+			NovaImage image = client.compute().getPublicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
 			//rel=self carries the version but rel=bookmark ¿clarify from openstack team?
 			client.target(server.getLink("self").getHref(), ServerResource.class).delete();
 		}
@@ -37,7 +37,7 @@ public class ITServers extends ComputeApiTest {
 	@Test
 	public void testCreateAndDeleteServer() throws OpenstackException {
 		
-		NovaImageList images = client.compute().publicEndpoint().images().get();
+		NovaImageList images = client.compute().getPublicEndpoint().images().get();
 		NovaImage image = null;
 		for (NovaImage i : images.getList()) {
 			System.out.println(i);
@@ -60,7 +60,7 @@ public class ITServers extends ComputeApiTest {
 		}
 
 		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : client.compute().publicEndpoint().flavors().get(new HashMap<String, Object>()).getList()) {
+		for (NovaFlavor flavor : client.compute().getPublicEndpoint().flavors().get(new HashMap<String, Object>()).getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
@@ -75,7 +75,7 @@ public class ITServers extends ComputeApiTest {
 		// }});
 		System.out.println(serverForCreate);
 
-		NovaServer server = client.compute().publicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
+		NovaServer server = client.compute().getPublicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
 
 		// In trunk, the server returned from the create operation does not have image or flavor set
 		// In Diablo(?)/HP Cloud, the image id is returned
@@ -96,14 +96,14 @@ public class ITServers extends ComputeApiTest {
 		// Delete the server
 		System.out.println(server);
 		System.out.println("DELETING");
-		client.compute().publicEndpoint().servers().server(server.getId()).delete();
+		client.compute().getPublicEndpoint().servers().server(server.getId()).delete();
 		
 		NovaServer stillHere = null;
 		try {
 			AsyncServerOperation asyncDelete = AsyncServerOperation.wrapServerDelete(client.compute(), server);
 			asyncDelete.get();
 
-			stillHere = client.compute().publicEndpoint().servers().server(server.getId()).get();
+			stillHere = client.compute().getPublicEndpoint().servers().server(server.getId()).get();
 		} catch (Exception /*OpenstackNotFoundException*/ e) {
 			//Jersey 2.0 doesn't work fine with exceptions yet
 			// Good!
@@ -124,7 +124,7 @@ public class ITServers extends ComputeApiTest {
 		Assert.assertNotNull(ready.getFlavor().getId());
 
 		//bookmark link issue, so link through id
-		NovaImage image = client.compute().publicEndpoint().images().image(ready.getImage().getId()).get(new HashMap<String, Object>());
+		NovaImage image = client.compute().getPublicEndpoint().images().image(ready.getImage().getId()).get(new HashMap<String, Object>());
 		ready.setImage(image);
 
 		Assert.assertNotNull(ready.getImage());
@@ -134,7 +134,7 @@ public class ITServers extends ComputeApiTest {
 		System.out.println(ready.getImage().getMinDisk());
 
 		//bookmark link issue, so link through id
-		NovaFlavor flavor = client.compute().publicEndpoint().flavors().flavor(ready.getFlavor().getId()).get(new HashMap<String, Object>());
+		NovaFlavor flavor = client.compute().getPublicEndpoint().flavors().flavor(ready.getFlavor().getId()).get(new HashMap<String, Object>());
 		ready.setFlavor(flavor);
 
 		Assert.assertNotNull(ready.getFlavor());

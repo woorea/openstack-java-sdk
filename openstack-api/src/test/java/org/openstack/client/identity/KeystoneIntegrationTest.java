@@ -4,7 +4,7 @@ import static javax.ws.rs.client.Entity.json;
 
 import javax.ws.rs.core.Response;
 
-import org.openstack.api.identity.IdentityResource;
+import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.identity.KeystoneEndpointTemplates;
 import org.openstack.model.identity.KeystoneEndpointTemplatesList;
@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 @Test
 public class KeystoneIntegrationTest extends AbstractOpenStackTest {
 	
-	private IdentityResource identity;
+	private IdentityAdministrationEndpoint identity;
 	
 	private KeystoneTenant tenant;
 	private KeystoneUser user;
@@ -34,7 +34,7 @@ public class KeystoneIntegrationTest extends AbstractOpenStackTest {
 	public void init() {
 		super.init();
 		client.getAccess().getToken().setId("secret0");
-		identity = client.target("http://192.168.1.52:35357/v2.0", IdentityResource.class);
+		identity = client.target("http://192.168.1.52:35357/v2.0", IdentityAdministrationEndpoint.class);
 	}
 	
 	@Test(priority = 1)

@@ -3,8 +3,9 @@ package org.openstack.api;
 import java.io.File;
 import java.util.List;
 
-import org.openstack.client.jersey2.OpenStackClient;
-import org.openstack.client.jersey2.OpenStackClientFactory;
+import org.openstack.api.identity.IdentityAdministrationEndpoint;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.model.storage.SwiftContainer;
 import org.openstack.model.storage.SwiftObjectProperties;
 
@@ -95,10 +96,10 @@ public class Test {
 		
 //		ImageList gImages = openstack.images().publicEndpoint().get();
 		
-		List<SwiftContainer> sAccount = openstack.storage().publicEndpoint().get();
+		List<SwiftContainer> sAccount = openstack.storage().getPublicEndpoint().get();
 		
 		SwiftObjectProperties p = new SwiftObjectProperties();
-		openstack.storage().publicEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);
+		openstack.storage().getPublicEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);
 
 		// NovaSnapshotList snapshots = compute.snapshots().get(new
 		// HashMap<String, Object>(){{

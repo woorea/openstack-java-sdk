@@ -49,12 +49,12 @@ public class ITConfigDrive extends ComputeApiTest {
 		keyPair.setPublicKey(publicKey);
 		keyPair.setName(keyName);
 
-		client.compute().publicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
+		client.compute().getPublicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
 
 		serverForCreate.setKeyName(keyName);
 		serverForCreate.setConfigDrive(true);
 
-		NovaServer server = client.compute().publicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
+		NovaServer server = client.compute().getPublicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
 
 		// Wait for the server to be ready
 		AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(client.compute(), server);
@@ -64,7 +64,7 @@ public class ITConfigDrive extends ComputeApiTest {
 
 		// Delete the server
 		System.out.println("Deleting server: " + server);
-		client.compute().publicEndpoint().servers().server(server.getId()).delete();
+		client.compute().getPublicEndpoint().servers().server(server.getId()).delete();
 	}
 
 }

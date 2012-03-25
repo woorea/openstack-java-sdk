@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.client.ImagesService;
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.client.jersey2.OpenStackImagesClient;
-import org.openstack.model.image.Image;
-import org.openstack.model.image.glance.GlanceImage;
+import org.openstack.model.images.Image;
+import org.openstack.model.images.glance.GlanceImage;
 
 import com.google.common.base.Strings;
 
@@ -30,7 +30,7 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 
 		OpenstackCliContext context = getContext();
 
-		OpenStackImagesClient imageClient = context.getImageClient();
+		ImagesService imageClient = context.getImageClient();
 
 		GlanceImage imageTemplate = new GlanceImage();
 		imageTemplate.setName(name);
@@ -55,7 +55,7 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 		// This command will probably be faster _not_ in nailgun mode
 		// InputStream imageStream = new NoCloseInputStream(System.in);
 
-		Image image = imageClient.publicEndpoint().post(System.in, -1, imageTemplate);
+		Image image = imageClient.getPublicEndpoint().post(System.in, -1, imageTemplate);
 
 		return image;
 	}

@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.message.internal.MutableEntity;
 import org.openstack.api.common.Resource;
-import org.openstack.api.identity.TenantResource;
+import org.openstack.api.identity.resources.TenantResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.storage.SwiftObjectProperties;

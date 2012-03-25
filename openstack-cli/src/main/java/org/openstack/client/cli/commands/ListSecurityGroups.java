@@ -7,7 +7,7 @@ public class ListSecurityGroups extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getOpenstackService().compute().publicEndpoint().securityGroups().get();
+		return getOpenstackService().compute().getPublicEndpoint().securityGroups().get();
 	}
 
 }

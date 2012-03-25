@@ -22,7 +22,7 @@ public class DeleteImage extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
 		}
 
-		getOpenstackService().compute().publicEndpoint().images().image(image.getId()).delete();
+		getOpenstackService().compute().getPublicEndpoint().images().image(image.getId()).delete();
 
 		return image.getId();
 	}

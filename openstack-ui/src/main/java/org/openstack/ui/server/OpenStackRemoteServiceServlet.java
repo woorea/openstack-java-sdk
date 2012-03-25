@@ -1,7 +1,7 @@
 package org.openstack.ui.server;
 
-import org.openstack.client.jersey2.OpenStackClient;
-import org.openstack.client.jersey2.OpenStackClientFactory;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.model.identity.KeystoneAccess;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

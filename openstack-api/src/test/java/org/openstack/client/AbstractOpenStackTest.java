@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
-import org.openstack.client.jersey2.OpenStackClient;
-import org.openstack.client.jersey2.OpenStackClientFactory;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 import org.openstack.client.utils.RandomUtil;
 import org.testng.SkipException;
 

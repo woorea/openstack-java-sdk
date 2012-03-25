@@ -16,7 +16,7 @@ public class SecurityGroupNameAutoCompleter extends SimpleArgumentAutoCompleter 
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext context = (OpenstackCliContext) contextObject;
-		for (NovaSecurityGroup securityGroup : context.getComputeClient().publicEndpoint().securityGroups().get().getList()) {
+		for (NovaSecurityGroup securityGroup : context.getComputeClient().getPublicEndpoint().securityGroups().get().getList()) {
 			strings.add(securityGroup.getName());
 		}
 		addSuffix(strings, " ");

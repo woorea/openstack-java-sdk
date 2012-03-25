@@ -20,7 +20,7 @@ public class ImageName extends StringWrapper {
 
 	public NovaImage findImage(OpenstackCliContext context) throws OpenstackException {
 		List<NovaImage> matches = Lists.newArrayList();
-		for (NovaImage image : context.getComputeClient().publicEndpoint().images().get().getList()) {
+		for (NovaImage image : context.getComputeClient().getPublicEndpoint().images().get().getList()) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {

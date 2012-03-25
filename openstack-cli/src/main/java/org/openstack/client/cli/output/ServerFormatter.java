@@ -7,8 +7,8 @@ import java.util.LinkedHashMap;
 import org.openstack.api.extensions.Extension;
 import org.openstack.api.extensions.ExtensionRegistry;
 import org.openstack.api.extensions.ExtensionValues;
+import org.openstack.client.OpenStackClient;
 import org.openstack.client.cli.OpenstackCliContext;
-import org.openstack.client.jersey2.OpenStackClient;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServer;
@@ -31,13 +31,13 @@ public class ServerFormatter extends SimpleFormatter<NovaServer> {
 
 		OpenStackClient service = OpenstackCliContext.get().getOpenstackService();
 
-		NovaFlavor flavor = service.compute().publicEndpoint().flavors().flavor(server.getFlavor().getId()).get(new HashMap<String, Object>());
+		NovaFlavor flavor = service.compute().getPublicEndpoint().flavors().flavor(server.getFlavor().getId()).get(new HashMap<String, Object>());
 		String flavorName = null;
 		if (flavor != null) {
 			flavorName = flavor.getName();
 		}
 
-		NovaImage image = service.compute().publicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
+		NovaImage image = service.compute().getPublicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
 		String imageName = null;
 		if (image != null) {
 			imageName = image.getName();

@@ -9,8 +9,8 @@ import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.Option;
-import org.openstack.client.jersey2.OpenStackClient;
-import org.openstack.client.jersey2.OpenStackClientFactory;
+import org.openstack.client.OpenStackClient;
+import org.openstack.client.OpenStackClientFactory;
 
 import com.fathomdb.cli.CliOptions;
 

@@ -3,7 +3,7 @@ package org.openstack.client.cli.output;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-import org.openstack.model.image.glance.GlanceImage;
+import org.openstack.model.images.glance.GlanceImage;
 
 import com.fathomdb.cli.formatter.SimpleFormatter;
 import com.fathomdb.cli.output.OutputSink;

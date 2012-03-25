@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.client.jersey2.OpenStackComputeClient;
+import org.openstack.client.ComputeService;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
@@ -17,7 +17,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		skipIfNoKeyPairs();
 
 		
-		Iterable<NovaKeyPair> keyPairs = client.compute().publicEndpoint().keyPairs().get(new HashMap<String, Object>());
+		Iterable<NovaKeyPair> keyPairs = client.compute().getPublicEndpoint().keyPairs().get(new HashMap<String, Object>());
 		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
@@ -28,10 +28,10 @@ public class ITKeyPairs extends ComputeApiTest {
 	@Test
 	public void deleteAllKeypairs() throws OpenstackException {
 		
-		Iterable<NovaKeyPair> keyPairs = client.compute().publicEndpoint().keyPairs().get(new HashMap<String, Object>());
+		Iterable<NovaKeyPair> keyPairs = client.compute().getPublicEndpoint().keyPairs().get(new HashMap<String, Object>());
 		for (NovaKeyPair keyPair : keyPairs) {
 			try {
-				client.compute().publicEndpoint().keyPairs().keypair(keyPair.getName()).delete(new HashMap<String, Object>());
+				client.compute().getPublicEndpoint().keyPairs().keypair(keyPair.getName()).delete(new HashMap<String, Object>());
 			} catch (Exception e) {
 
 			}
@@ -49,7 +49,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		NovaKeyPair created = client.compute().publicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.json(createRequest));
+		NovaKeyPair created = client.compute().getPublicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.json(createRequest));
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
@@ -58,7 +58,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
-		client.compute().publicEndpoint().keyPairs().keypair(created.getName()).delete(new HashMap<String, Object>());
+		client.compute().getPublicEndpoint().keyPairs().keypair(created.getName()).delete(new HashMap<String, Object>());
 
 		fetched = findKeyPair(client.compute(), created.getName());
 
@@ -148,8 +148,8 @@ public class ITKeyPairs extends ComputeApiTest {
 		testCreateAndDelete(name);
 	}
 
-	private NovaKeyPair findKeyPair(OpenStackComputeClient nova, String name) {
-		for (NovaKeyPair keyPair : nova.publicEndpoint().keyPairs().get(new HashMap<String, Object>())) {
+	private NovaKeyPair findKeyPair(ComputeService nova, String name) {
+		for (NovaKeyPair keyPair : nova.getPublicEndpoint().keyPairs().get(new HashMap<String, Object>())) {
 			if (keyPair.getName().equals(name))
 				return keyPair;
 		}

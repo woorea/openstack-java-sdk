@@ -21,15 +21,19 @@ public class AccountResource extends Resource {
 	}
 
 	public List<SwiftContainer> get() {
-		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftContainer>>() {});
+		return target.request().get(new GenericType<List<SwiftContainer>>() {});
 	}
 	
 	public Response head() {
-		return target.request(MediaType.APPLICATION_JSON).head();
+		return target.request().head();
 	}
 
 	public ContainerResource container(String id) {
 		return new ContainerResource(target.path("/{id}").pathParam("id", id));
+	}
+
+	public Response post() {
+		return target.request().post(null);
 	}
 
 }

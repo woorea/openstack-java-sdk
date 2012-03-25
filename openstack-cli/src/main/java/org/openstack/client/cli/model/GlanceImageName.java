@@ -5,7 +5,7 @@ import java.util.List;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.autocomplete.GlanceImageNameAutoCompleter;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.image.glance.GlanceImage;
+import org.openstack.model.images.glance.GlanceImage;
 
 import com.fathomdb.cli.StringWrapper;
 import com.fathomdb.cli.autocomplete.HasAutoCompletor;
@@ -20,7 +20,7 @@ public class GlanceImageName extends StringWrapper {
 
 	public GlanceImage resolve(OpenstackCliContext context) throws OpenstackException {
 		List<GlanceImage> matches = Lists.newArrayList();
-		for (GlanceImage image : context.getImageClient().publicEndpoint().get().getList()) {
+		for (GlanceImage image : context.getImageClient().getPublicEndpoint().get().getList()) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {

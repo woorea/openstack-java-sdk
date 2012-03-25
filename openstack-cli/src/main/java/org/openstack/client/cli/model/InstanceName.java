@@ -19,7 +19,7 @@ public class InstanceName extends StringWrapper {
 
 	public String findInstanceId(OpenstackCliContext context) throws OpenstackException {
 		List<NovaServer> matches = Lists.newArrayList();
-		for (NovaServer instance : context.getComputeClient().publicEndpoint().servers().get().getList()) {
+		for (NovaServer instance : context.getComputeClient().getPublicEndpoint().servers().get().getList()) {
 			if (instance.getName().equals(getKey())) {
 				matches.add(instance);
 			} else if (instance.getId().equals(getKey())) {

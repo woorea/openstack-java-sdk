@@ -5,10 +5,10 @@ import java.util.HashMap;
 import javax.ws.rs.client.Entity;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.client.ComputeService;
 import org.openstack.client.cli.OpenstackCliContext;
 import org.openstack.client.cli.model.FlavorName;
 import org.openstack.client.cli.model.ImageName;
-import org.openstack.client.jersey2.OpenStackComputeClient;
 import org.openstack.model.compute.NovaImage;
 import org.openstack.model.compute.NovaServerForCreate;
 
@@ -40,14 +40,14 @@ public class CreateInstance extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find flavor: " + flavorName.getKey());
 		}
 
-		OpenStackComputeClient tenant = context.getComputeClient();
+		ComputeService tenant = context.getComputeClient();
 		NovaServerForCreate serverForCreate = new NovaServerForCreate();
 		serverForCreate.setName(instanceName);
 
 		serverForCreate.setImageRef(image.getId());
 		serverForCreate.setFlavorRef(flavorId);
 
-		return tenant.publicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
+		return tenant.getPublicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
 	}
 
 }
