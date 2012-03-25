@@ -21,7 +21,7 @@ public class AccountResource extends Resource {
 	}
 
 	public List<SwiftContainer> get() {
-		return target.request().get(new GenericType<List<SwiftContainer>>() {});
+		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftContainer>>() {});
 	}
 	
 	public Response head() {

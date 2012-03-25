@@ -71,44 +71,52 @@ public class ObjectResource  extends Resource {
 		return target.request(MediaType.APPLICATION_OCTET_STREAM).get(InputStream.class);	
 	}
 
-	public SwiftObjectProperties put(File srcFile, SwiftObjectProperties properties) throws OpenstackException, IOException {
-		FileInputStream fis = new FileInputStream(srcFile);
+	public Response put(File srcFile, SwiftObjectProperties properties) throws OpenstackException {
+		FileInputStream fis = null;
 		try {
+			fis = new FileInputStream(srcFile);
 			return put(fis, srcFile.length(), properties);
+		} catch(IOException e) {
+			throw new OpenstackException(e.getMessage(), e);
 		} finally {
 			IOUtils.closeQuietly(fis);
 		}
 	}
 
-	public SwiftObjectProperties put(InputStream objectStream, long objectStreamLength, SwiftObjectProperties properties)
-			throws OpenstackException, IOException {
+	public Response put(InputStream objectStream, long objectStreamLength, SwiftObjectProperties properties) throws OpenstackException {
 		Preconditions.checkNotNull(properties, "You have to supply object propeties");
 		Preconditions.checkNotNull(properties, "You have to supply object name");
+		try {
+			Invocation.Builder builder = target.request();
+			
+			byte[] bytes = IOUtils.toByteArray(objectStream);
+			
+			builder = builder.header("Content-Length", bytes.length);
+			
+			SwiftHeaderUtils.setHeadersForProperties(builder, properties);
+			
+			Response response = null;
+			if (properties.getContentType() != null) {
+				MediaType contentType = MediaType.valueOf(properties.getContentType());
+				response = builder.put(Entity.entity(bytes, contentType), Response.class);
+			} else {
+				response = builder.put(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM_TYPE), Response.class);
+			}
+			/*
+			MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
 
-		Invocation.Builder builder = target.request();
-		
-		byte[] bytes = IOUtils.toByteArray(objectStream);
-		
-		builder = builder.header("Content-Length", bytes.length);
-		
-		SwiftHeaderUtils.setHeadersForProperties(builder, properties);
-		
-		Response response = null;
-		if (properties.getContentType() != null) {
-			MediaType contentType = MediaType.valueOf(properties.getContentType());
-			response = builder.put(Entity.entity(bytes, contentType), Response.class);
-		} else {
-			response = builder.put(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM_TYPE), Response.class);
+			SwiftObjectProperties responseProperties = new SwiftObjectProperties();
+			String etag = responseHeaders.getFirst("ETag");
+
+			if (etag != null) {
+				responseProperties.setETag(etag);
+			}
+			return responseProperties;
+			*/
+			return response;
+		} catch(IOException e) {
+			throw new OpenstackException(e.getMessage(), e);
 		}
-		MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
-
-		SwiftObjectProperties responseProperties = new SwiftObjectProperties();
-		String etag = responseHeaders.getFirst("ETag");
-
-		if (etag != null) {
-			responseProperties.setETag(etag);
-		}
-		return responseProperties;
 	}
 
 }

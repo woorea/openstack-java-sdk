@@ -79,7 +79,7 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 	
 	@Test(dependsOnMethods="createImage", priority=3)
 	public void deleteImage() {
-		images.image(uploaded.getId()).head();
+		images.image(uploaded.getId()).delete();
 	}
 	
 	private void assertImageEquals(Image actual, Image expected) {

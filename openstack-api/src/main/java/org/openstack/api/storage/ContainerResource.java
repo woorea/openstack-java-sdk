@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
+import org.openstack.model.storage.SwiftContainer;
 import org.openstack.model.storage.SwiftStorageObject;
 
 import com.google.common.base.Splitter;
