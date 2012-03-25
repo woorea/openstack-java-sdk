@@ -4,7 +4,7 @@
 
 	<parent>
 		<groupId>org.openstack</groupId>
-		<artifactId>openstack-java-sdk-parent</artifactId>
+		<artifactId>openstack-java-sdk</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 

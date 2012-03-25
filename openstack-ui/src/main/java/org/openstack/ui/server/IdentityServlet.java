@@ -29,22 +29,22 @@ public class IdentityServlet extends OpenStackRemoteServiceServlet implements Id
 
 	@Override
 	public KeystoneServiceList listServices() {
-		return getClient().identity().getRegionAdministationEndpoint().services().get();
+		return getClient().identity().getAdministationEndpoint().services().get();
 	}
 
 	@Override
 	public KeystoneEndpointTemplatesList listEndpontTemplates() {
-		return getClient().identity().getRegionAdministationEndpoint().endpoints().get();
+		return getClient().identity().getAdministationEndpoint().endpoints().get();
 	}
 
 	@Override
 	public KeystoneUserList listUsers() {
-		return getClient().identity().getRegionAdministationEndpoint().users().get();
+		return getClient().identity().getAdministationEndpoint().users().get();
 	}
 
 	@Override
 	public KeystoneRoleList listRoles() {
-		return getClient().identity().getRegionAdministationEndpoint().roles().get();
+		return getClient().identity().getAdministationEndpoint().roles().get();
 	}
 	
 	

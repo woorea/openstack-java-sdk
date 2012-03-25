@@ -45,7 +45,7 @@ public class IdentityService {
 		return client.target(regions.get(region).getInternalURL(), IdentityInternalEndpoint.class);
 	}
 	
-	public IdentityAdministrationEndpoint getRegionAdministationEndpoint() throws OpenstackException {
+	public IdentityAdministrationEndpoint getAdministationEndpoint() throws OpenstackException {
 		String defaultRegion = regions.keySet().iterator().next();
 		return getAdministationEndpoint(defaultRegion);
 	}

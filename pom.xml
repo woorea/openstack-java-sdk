@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<groupId>org.openstack</groupId>
-	<artifactId>openstack-java-sdk-parent</artifactId>
+	<artifactId>openstack-java-sdk</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>OpenStack Java SDK</name>
 	<url>http://github.com/woorea/openstack-java-sdk</url>
@@ -42,9 +42,7 @@
 
 	<modules>
 		<module>openstack-api</module>
-		<module>shared-cli</module>
-		<module>openstack-cli</module>
-		<module>nailgun</module>
+		<module>openstack-console</module>
 		<module>openstack-ui</module>
 	</modules>
 
