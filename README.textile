@@ -8,83 +8,88 @@ h4. Access
 
 <pre>
 // X-Auth-Token (no tenant selected)
-OpenstackSession session = new OpenstackSession().with(Feature.VERBOSE);
-OpenstackCredentials credentials = new OpenstackCredentials("admin", "woorea");
-session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
+OpenStackClient openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0");
+
+//Here we use the admintoken (set on installation process. It may be different from admin password setted before)
+openstack.getAccess().getToken().setId("secret0");
+
+//Since Keystone does not give us information about services
+//when we do not choose a tenant, we have to know the identity
+//admin endpoint and create the administration endpoint from it.
+IdentityAdministrationEndpoint identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityAdministrationEndpoint.class);
 </pre>
 
 h4. Tenants
 
 <pre>
-// Let' show our available tenants
-IdentityResource identity = session.getAuthenticationClient().root();
-Iterable<Tenant> tenants = identity.tenants().list();
-for (Tenant tenant : tenants) {
-	System.out.println(tenant);
-}
+//GET tenants available
+KeystoneTenantList tenants = identity.tenants().get();
 
-// Ok, I will choose the first available tenant (
-for (Tenant tenant : tenants) {
-	credentials.setTenant(tenant.getName());
-	session.authenticate("http://192.168.1.49:5000/v2.0", credentials);
-	break;
-}
+//POST tenant
+KeystoneTenant tenant = new KeystoneTenant();
+tenant.setName("test");
+tenant.setDescription("desc");
+tenant.setEnabled(true);
+tenant = identity.tenants().post(Entity.json(tenant));
+
+//GET tenant
+tenant = identity.tenants().tenant(tenant.getId()).get();
+
+//DELETE tenant
+identity.tenants().tenant(tenant.getId()).delete();
 </pre>
 
-h4. Users (this is from previous revision)
+h4. Users
 
 <pre>
-UsersResource usersResource = identity.users();
-UsersRepresentation usersRepresentation = usersResource.list();
-List<User> users = usersRepresentation.getList();
-for(User user : users) {
-	System.out.println(user);
-}
+KeystoneUserList users = identity.users().get();
 
-UserResource userResource = usersResource.user(users.get(0).getId());
-System.out.println(userResource.show());
+KeystoneUser user = new KeystoneUser();
+user.setName("test");
+user.setPassword("secret0");
+user.setEmail("test@test.com");
+user.setEnabled(true);
+user = identity.users().post(Entity.json(user));
+
+user = identity.users().user(user.getId()).get();
+
+identity.users().user(user.getId()).delete();
 </pre>
 
-h4. Roles (this is from previous revision)
+h4. Roles
 
 <pre>
-RolesResource rolesResource = identity.roles();
-RolesRepresentation rolesRepresentation = rolesResource.list();
-List<Role> roles = rolesRepresentation.getList();
-for(Role role : roles) {
-	System.out.println(role);
-}
+KeystoneRoleList roles = identity.roles().get();
 
-RoleResource roleResource = rolesResource.role(roles.get(0).getId());
-System.out.println(roleResource.show());
+KeystoneRole role = new KeystoneRole();
+role.setName("test");
+role = identity.roles().post(Entity.json(role));
+
+role = identity.roles().role(role.getId()).get();
+
+identity.roles().role(role.getId()).delete();
 </pre>
 
 h4. Services (this is from previous revision)
 
 <pre>
-ServicesResource servicesResource = identity.services();
-ServicesRepresentation servicesRepresentation = servicesResource.list();
-List<Service> services = servicesRepresentation.getList();
-for(Service service : services) {
-	System.out.println(service);
-}
+KeystoneServiceList services = identity.services().get();
 
-ServiceResource serviceResource = servicesResource.service(services.get(0).getId());
-System.out.println(serviceResource.show());
+KeystoneService service = new KeystoneService();
+service.setName("test");
+service.setType("compute");
+service.setDescription("Nova 3");
+service = identity.services().post(Entity.json(service));
+
+service = identity.services().service(service.getId()).get();
+
+identity.services().service(service.getId()).delete();
 </pre>
 
-h4. EndpointTemplates (this is from previous revision)
+h4. Endpoints (Not implemented yet)
 
 <pre>
-EndpointTemplatesResource endpointTemplatesResource = identity.endpointTemplates();
-EndpointTemplatesRepresentation endpointTemplatesRepresentation = identity.endpointTemplates().list();
-List<EndpointTemplate> endpointTemplates = endpointTemplatesRepresentation.getList();
-for(EndpointTemplate endEndpointTemplate : endpointTemplates) {
-	System.out.println(endEndpointTemplate);
-}
-
-EndpointTemplateResource endpointTemplateResource = endpointTemplatesResource.endpointTemplate(services.get(0).getId());
-System.out.println(endpointTemplateResource.show());
+501 HTTP Error from Keystone Server API
 </pre>
 
 h3. Compute API (nova)
@@ -92,64 +97,56 @@ h3. Compute API (nova)
 h4. Select a Tenant
 
 <pre>
-// Give me access to compute API on the selected tenant
-TenantResource compute = session.getComputeClient().root();
-for (Server s : compute.servers().list()) {
-	System.out.println(s);
-}
-</pre>
-
-h4. Images
-
-<pre>
-// List the available images
-Iterable<Image> images = compute.images().list();
-Image image = null;
-for (Image i : images) {
-	System.out.println(i);
-
-	//If it's the devstack default image, then i go to select it
-	if (i.getName().equals("cirros-0.3.0-x86_64-blank")) {
-		image = i;
-		break;
-	}
-}
-
-// Show me the image details
-System.out.println(image);
-</pre>
-
-h4. Flavors
-
-<pre>
-// List the available flavors
-Iterable<Flavor> flavors = compute.flavors().list();
-for (Flavor f : flavors) {
-	System.out.println(f);
-}
+// Authenticate on admin tenant
+openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0", "admin");
+TenantResource compute = openstack.compute().getPublicEndpoint();
 </pre>
 
 h4. Servers
 
 <pre>
-// List the servers
-Iterable<Server> servers = compute.servers().list();
-for (Server s : servers) {
-	ServerResource sr = new ServerResource(session, s);
-	System.out.println(sr.get(true).show());
-}
+NovaServerList servers = compute.servers().get();
 </pre>
 
-h4. Server Actions
+h5. Server Actions
 
 <pre>
-System.out.println(compute.servers().server(servers.get(0).getId()).getConsoleOutput(20));
-System.out.println(compute.servers().server(servers.get(0).getId()).getVncConsole("novnc"));
+TODO
+</pre>
+
+h4. Images
+
+<pre>
+NovaImageList images = compute.images().get();
+</pre>
+
+h4. Flavors
+
+<pre>
+NovaFlavorList flavors = compute.flavors().get();
+</pre>
+
+h4. Key Pairs
+
+<pre>
+NovaKeyPairList keypairs = compute.keyPairs().get();
+</pre>
+
+h4. Security Groups
+
+<pre>
+NovaSecurityGroupList securityGroups = compute.securityGroups().get();
+</pre>
+
+h4. Volumes
+
+<pre>
+NovaVolumeList volumes = compute.volumes().get();
 </pre>
 
 h1. Maven
 
-We use maven to build the project.  Some helpful maven commands:
+We use maven to build the project. Some helpful maven commands:
 
 @mvn eclipse:eclipse@ _Create the eclipse projects_
 @mvn install@ _Builds everything, runs unit & integration tests, installs into your maven repo_
@@ -168,12 +165,12 @@ Useful properties:
 | openstack.debug | false | Set to true for lots of debug output |
 | openstack.auth.url | http://127.0.0.1:5000/v2.0 | Location of Keystone service |
 | openstack.auth.user | demo | Authentication info: username |
-| openstack.auth.secret | supersecret | Authentication info: password |
+| openstack.auth.secret | secret0 | Authentication info: password |
 | openstack.auth.tenant | demo | Authentication info: tenant |
 
 The defaults should work with a local devstack installation.  Otherwise do something like this:
 
-@mvn verify -Dopenstack.auth.url=http://192.168.71.1:5000/v2.0@
+@mvn verify -Dopenstack.auth.url=http://192.168.2.10:5000/v2.0@
 
 
 h1. License

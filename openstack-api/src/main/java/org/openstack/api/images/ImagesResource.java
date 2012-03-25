@@ -44,7 +44,7 @@ public class ImagesResource extends Resource {
 		}
 	}
 
-	public Image post(InputStream imageStream, long imageStreamLength, Image imageProperties) throws OpenstackException, IOException {
+	public Image post(InputStream imageStream, long size, Image imageProperties) throws OpenstackException, IOException {
 	
 		Builder b = target.request(MediaType.APPLICATION_JSON);
 		

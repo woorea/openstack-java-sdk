@@ -1,14 +1,18 @@
 package org.openstack.client.images;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 
-import org.apache.commons.io.IOUtils;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import org.openstack.api.images.ImagesResource;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 import org.openstack.model.images.glance.GlanceImage;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -17,7 +21,7 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 	private ImagesResource images;
 	
 	
-	private Image image;
+	private Image uploaded;
 	
 	@BeforeClass
 	public void init() {
@@ -25,35 +29,48 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 		//if (!glanceEnabled) {
 			//	throw new SkipException("Skipping because glance not present / accessible");
 		//}
-		
-		
 		images = client.target("http://192.168.1.52:9292/v1/images", ImagesResource.class);
 	}
 	
 	@Test
 	public void createImage() {
 		try {
-			image = new GlanceImage();
-			Image template = new GlanceImage();
-			template.setName(random.randomAlphanumericString(1, 16).trim());
-			template.setDiskFormat("raw");
-			template.setContainerFormat("bare");
+			Image image = new GlanceImage();
+			image.setName(random.randomAlphanumericString(1, 16).trim());
+			image.setDiskFormat("raw");
+			image.setContainerFormat("bare");
 			
-			image = images.post(new ByteArrayInputStream(new byte[1024]), 1024, image);
+			int size = 1024;
+			InputStream is = new ByteArrayInputStream(new byte[size]);
+			
+			uploaded = images.post(is, size, image);
+			assertEquals(uploaded.getSize(), Long.valueOf(size));
+			assertEquals(uploaded.getName(), image.getName());
+			assertNull(uploaded.getDeletedAt());
+			assertNotNull(uploaded.getCreatedAt());
+			assertNotNull(uploaded.getUpdatedAt());
+			assertNotNull(uploaded.getId());
+			assertEquals(uploaded.isDeleted(), Boolean.FALSE);
+			assertEquals(uploaded.getDiskFormat(), image.getDiskFormat());
+			assertEquals(uploaded.getContainerFormat(), image.getContainerFormat());
+			assertNotNull(uploaded.getOwner());
+			assertEquals(uploaded.getStatus(), "active");		
 		} catch(Exception e) {
-			
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 	
 	@Test(dependsOnMethods="createImage", priority=1)
 	public void listImages() {
 		ImageList list = images.get();
+		Assert.assertNotNull(list);
 	}
 	
 	
 	@Test(dependsOnMethods="createImage", priority=2)
 	public void showImage() {
-		images.image(image.getId()).head();
+		Image image = images.image(uploaded.getId()).head();
+		assertImageEquals(image, uploaded);
 	}
 	
 	public void updateImage() {
@@ -62,7 +79,23 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 	
 	@Test(dependsOnMethods="createImage", priority=3)
 	public void deleteImage() {
-		images.image(image.getId()).head();
+		images.image(uploaded.getId()).head();
+	}
+	
+	private void assertImageEquals(Image actual, Image expected) {
+		assertEquals(actual.getId(), expected.getId());
+		assertEquals(actual.getChecksum(), expected.getChecksum());
+		assertEquals(actual.getContainerFormat(), expected.getContainerFormat());
+		assertEquals(actual.getCreatedAt(), expected.getCreatedAt());
+		assertEquals(actual.getDeletedAt(), expected.getDeletedAt());
+		assertEquals(actual.getDiskFormat(), expected.getDiskFormat());
+		assertEquals(actual.getMinDisk(), expected.getMinDisk());
+		assertEquals(actual.getMinRam(), expected.getMinRam());
+		assertEquals(actual.getName(), expected.getName());
+		assertEquals(actual.getOwner(), expected.getOwner());
+		assertEquals(actual.getSize(), expected.getSize());
+		assertEquals(actual.getStatus(), expected.getStatus());
+		assertEquals(actual.getProperties(), expected.getProperties());
 	}
 
 }
