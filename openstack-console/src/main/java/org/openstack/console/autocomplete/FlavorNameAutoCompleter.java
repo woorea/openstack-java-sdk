@@ -16,7 +16,7 @@ public class FlavorNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (NovaFlavor image : osContext.getComputeClient().getPublicEndpoint().flavors().get().getList()) {
+		for (NovaFlavor image : osContext.getComputeClient().flavors().get().getList()) {
 			strings.add(image.getName());
 		}
 

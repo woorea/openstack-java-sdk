@@ -8,7 +8,7 @@ public class ListFlavors extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getOpenstackService().compute().getPublicEndpoint().flavors().get();
+		return getOpenstackService().getComputeEndpoint().flavors().get();
 	}
 
 }

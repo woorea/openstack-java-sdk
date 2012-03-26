@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.InstanceName;
 
@@ -22,8 +22,8 @@ public class DeleteInstance extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find instance: " + instanceName.getKey());
 		}
 
-		ComputeService tenant = context.getComputeClient();
-		tenant.getPublicEndpoint().servers().server(serverId).delete();
+		TenantResource tenant = context.getComputeClient();
+		tenant.servers().server(serverId).delete();
 
 		return serverId;
 	}

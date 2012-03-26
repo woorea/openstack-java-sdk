@@ -8,10 +8,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
-import org.openstack.client.ComputeService;
 import org.openstack.model.compute.NovaServer;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
 
 import com.google.common.collect.Lists;
 
@@ -26,12 +24,12 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	final Collection<String> acceptableTransitionStates;
 	final Collection<String> finishStates;
 
-	final ComputeService client;
+	final TenantResource client;
 
 	volatile boolean cancelled;
 	volatile boolean done;
 
-	public AsyncServerOperation(ComputeService client, NovaServer returnValue, String serverId,
+	public AsyncServerOperation(TenantResource client, NovaServer returnValue, String serverId,
 			Collection<String> acceptableTransitionStates, Collection<String> finishStates) {
 		super();
 		this.client = client;
@@ -48,7 +46,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 				NovaServer server = null;
 				String status;
 				try {
-					server = client.getPublicEndpoint().servers().server(serverId).get(new HashMap<String, Object>());
+					server = client.servers().server(serverId).get(new HashMap<String, Object>());
 					status = server.getStatus();
 				} catch (Exception /*OpenstackNotFoundException*/ e) {
 					// Treat as DELETED
@@ -162,11 +160,11 @@ public class AsyncServerOperation implements Future<NovaServer> {
 		return returnValue;
 	}
 
-	public static AsyncServerOperation wrapServerCreate(ComputeService client, NovaServer server) {
+	public static AsyncServerOperation wrapServerCreate(TenantResource client, NovaServer server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("BUILD"), Lists.newArrayList("ACTIVE"));
 	}
 
-	public static AsyncServerOperation wrapServerDelete(ComputeService client, NovaServer server) {
+	public static AsyncServerOperation wrapServerDelete(TenantResource client, NovaServer server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("ACTIVE"), Lists.newArrayList("DELETED"));
 	}
 }

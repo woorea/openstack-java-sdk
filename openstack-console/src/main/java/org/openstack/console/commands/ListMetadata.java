@@ -3,7 +3,7 @@ package org.openstack.console.commands;
 import java.util.HashMap;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
 import org.openstack.model.compute.NovaServer;
 
@@ -17,11 +17,11 @@ public class ListMetadata extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService compute = getContext().getComputeClient();
+		TenantResource compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
-		NovaServer server = compute.getPublicEndpoint().servers().server(instanceId).get(new HashMap<String, Object>());
+		NovaServer server = compute.servers().server(instanceId).get(new HashMap<String, Object>());
 		return server.getMetadata().getItems();
 	}
 

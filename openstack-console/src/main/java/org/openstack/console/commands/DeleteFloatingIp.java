@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 
 public class DeleteFloatingIp extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -13,9 +13,9 @@ public class DeleteFloatingIp extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService compute = getContext().getComputeClient();
+		TenantResource compute = getContext().getComputeClient();
 
-		compute.getPublicEndpoint().floatingIps().floatingIp(id).delete();
+		compute.floatingIps().floatingIp(id).delete();
 
 		return id;
 	}

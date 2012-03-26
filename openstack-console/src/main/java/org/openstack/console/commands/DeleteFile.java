@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.StorageService;
+import org.openstack.api.storage.AccountResource;
 import org.openstack.console.model.StoragePath;
 
 public class DeleteFile extends OpenstackCliCommandRunnerBase {
@@ -14,7 +14,7 @@ public class DeleteFile extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		StorageService client = getStorageClient();
+		AccountResource client = getStorageClient();
 
 		path.getResource(client).delete();
 

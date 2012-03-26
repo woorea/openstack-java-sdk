@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
 import org.openstack.model.compute.server.action.Console;
 
@@ -15,12 +15,12 @@ public class RunVnc extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService compute = getContext().getComputeClient();
+		TenantResource compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
 		String type = "novnc";
-		Console console = compute.getPublicEndpoint().servers().server(instanceId).getVncConsole(type);
+		Console console = compute.servers().server(instanceId).getVncConsole(type);
 
 		return console;
 	}

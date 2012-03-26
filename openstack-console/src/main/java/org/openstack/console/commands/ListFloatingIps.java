@@ -8,7 +8,7 @@ public class ListFloatingIps extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getOpenstackService().compute().getPublicEndpoint().floatingIps().get();
+		return getOpenstackService().getComputeEndpoint().floatingIps().get();
 	}
 
 }

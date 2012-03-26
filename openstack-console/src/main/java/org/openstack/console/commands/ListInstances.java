@@ -8,7 +8,7 @@ public class ListInstances extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getOpenstackService().compute().getPublicEndpoint().servers().get();
+		return getOpenstackService().getComputeEndpoint().servers().get();
 	}
 
 }

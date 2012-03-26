@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ImagesService;
+import org.openstack.api.images.ImagesResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.GlanceImageName;
 import org.openstack.model.images.glance.GlanceImage;
@@ -26,8 +26,8 @@ public class DownloadImage extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
 		}
 
-		ImagesService client = context.getImageClient();
-		InputStream is = client.getPublicEndpoint().image(image.getId()).openStream();
+		ImagesResource client = context.getImageClient();
+		InputStream is = client.image(image.getId()).openStream();
 		try {
 			IOUtils.copy(is, System.out);
 		} finally {

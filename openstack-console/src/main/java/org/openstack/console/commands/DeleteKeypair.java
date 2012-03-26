@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 
 public class DeleteKeypair extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -13,8 +13,8 @@ public class DeleteKeypair extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService tenant = getContext().getComputeClient();
-		tenant.getPublicEndpoint().keyPairs().keypair(id).delete();
+		TenantResource tenant = getContext().getComputeClient();
+		tenant.keyPairs().keypair(id).delete();
 		return id;
 	}
 }

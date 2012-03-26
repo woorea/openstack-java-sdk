@@ -20,7 +20,7 @@ public class GlanceImageName extends StringWrapper {
 
 	public GlanceImage resolve(OpenstackCliContext context) throws OpenstackException {
 		List<GlanceImage> matches = Lists.newArrayList();
-		for (GlanceImage image : context.getImageClient().getPublicEndpoint().get().getList()) {
+		for (GlanceImage image : context.getImageClient().get().getList()) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {

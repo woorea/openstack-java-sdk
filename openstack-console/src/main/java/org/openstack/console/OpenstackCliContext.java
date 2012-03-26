@@ -2,10 +2,10 @@ package org.openstack.console;
 
 import java.io.IOException;
 
+import org.openstack.api.compute.TenantResource;
+import org.openstack.api.images.ImagesResource;
+import org.openstack.api.storage.AccountResource;
 import org.openstack.client.OpenStackClient;
-import org.openstack.client.ComputeService;
-import org.openstack.client.ImagesService;
-import org.openstack.client.StorageService;
 import org.openstack.console.commands.OpenstackCliCommandRegistry;
 import org.openstack.console.common.CliContextBase;
 import org.openstack.console.output.OpenstackCliFormatterRegistry;
@@ -25,12 +25,12 @@ public class OpenstackCliContext extends CliContextBase {
 		return options.getOpenstackService();
 	}
 
-	public ComputeService getComputeClient() {
-		return getOpenstackService().compute();
+	public TenantResource getComputeClient() {
+		return getOpenstackService().getComputeEndpoint();
 	}
 
-	public ImagesService getImageClient() {
-		return getOpenstackService().images();
+	public ImagesResource getImageClient() {
+		return getOpenstackService().getImagesEndpoint();
 	}
 
 	public ConfigurationOptions getOptions() {
@@ -41,8 +41,8 @@ public class OpenstackCliContext extends CliContextBase {
 		return (OpenstackCliContext) CliContextBase.get();
 	}
 
-	public StorageService getStorageClient() {
-		return getOpenstackService().storage();
+	public AccountResource getStorageClient() {
+		return getOpenstackService().getStorageEndpoint();
 	}
 
 }

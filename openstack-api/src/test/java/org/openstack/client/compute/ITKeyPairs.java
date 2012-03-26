@@ -1,10 +1,8 @@
 package org.openstack.client.compute;
 
-import java.util.HashMap;
-
 import javax.ws.rs.client.Entity;
 
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.model.compute.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
@@ -54,13 +52,13 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
 
-		NovaKeyPair fetched = findKeyPair(client.compute(), created.getName());
+		NovaKeyPair fetched = findKeyPair(compute, created.getName());
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
 		compute.keyPairs().keypair(created.getName()).delete();
 
-		fetched = findKeyPair(client.compute(), created.getName());
+		fetched = findKeyPair(compute, created.getName());
 
 		Assert.assertNull(fetched);
 	}
@@ -76,8 +74,8 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 		testCreateAndDelete(name);
 	}
 
-	private NovaKeyPair findKeyPair(ComputeService nova, String name) {
-		for (NovaKeyPair keyPair : nova.getPublicEndpoint().keyPairs().get()) {
+	private NovaKeyPair findKeyPair(TenantResource nova, String name) {
+		for (NovaKeyPair keyPair : nova.keyPairs().get()) {
 			if (keyPair.getName().equals(name))
 				return keyPair;
 		}

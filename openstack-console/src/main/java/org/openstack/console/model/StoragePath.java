@@ -1,7 +1,7 @@
 package org.openstack.console.model;
 
+import org.openstack.api.storage.AccountResource;
 import org.openstack.api.storage.ObjectResource;
-import org.openstack.client.StorageService;
 import org.openstack.console.autocomplete.StoragePathAutoCompleter;
 import org.openstack.console.common.StringWrapper;
 import org.openstack.console.common.autocomplete.HasAutoCompletor;
@@ -13,13 +13,13 @@ public class StoragePath extends StringWrapper {
 		super(key);
 	}
 
-	public ObjectResource getResource(StorageService client) {
+	public ObjectResource getResource(AccountResource client) {
 		String containerName = getContainer();
 		String objectPath = getObjectPath();
 		if (containerName == null || objectPath == null) {
 			throw new IllegalArgumentException("Cannot parse: " + getKey());
 		}
-		return client.getPublicEndpoint().container(containerName).object(objectPath);
+		return client.container(containerName).object(objectPath);
 	}
 
 	public String getContainer() {

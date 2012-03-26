@@ -1,7 +1,5 @@
 package org.openstack.console.commands;
 
-import java.util.HashMap;
-
 import org.kohsuke.args4j.Argument;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.SecurityGroupName;
@@ -24,7 +22,7 @@ public class DeleteSecurityGroup extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find security group: " + name.getKey());
 		}
 
-		getOpenstackService().compute().getPublicEndpoint().securityGroups().securityGroup(securityGroup.getId()).delete();
+		getOpenstackService().getComputeEndpoint().securityGroups().securityGroup(securityGroup.getId()).delete();
 
 		return "" + securityGroup.getId();
 	}

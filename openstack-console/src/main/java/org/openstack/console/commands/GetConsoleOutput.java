@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
 
 public class GetConsoleOutput extends OpenstackCliCommandRunnerBase {
@@ -14,11 +14,11 @@ public class GetConsoleOutput extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService compute = getContext().getComputeClient();
+		TenantResource compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
-		String output = compute.getPublicEndpoint().servers().server(instanceId).getConsoleOutput(null);
+		String output = compute.servers().server(instanceId).getConsoleOutput(null);
 
 		return output;
 	}

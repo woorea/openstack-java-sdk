@@ -1,11 +1,10 @@
 package org.openstack.console.commands;
 
-import java.io.InputStream;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
+import org.openstack.api.storage.AccountResource;
 import org.openstack.api.storage.ContainerResource;
-import org.openstack.client.StorageService;
 import org.openstack.console.model.StoragePath;
 import org.openstack.model.storage.SwiftObjectProperties;
 
@@ -22,13 +21,13 @@ public class UploadFile extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		StorageService client = getStorageClient();
+		AccountResource client = getStorageClient();
 
 		String[] tokens = path.getKey().split("/");
 		if (tokens.length != 2) {
 			throw new IllegalArgumentException("Cannot parse: " + path.getKey());
 		}
-		ContainerResource container = client.getPublicEndpoint().container(tokens[0]);
+		ContainerResource container = client.container(tokens[0]);
 
 		SwiftObjectProperties objectProperties = new SwiftObjectProperties();
 		objectProperties.setName(tokens[1]);

@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
+import org.openstack.api.storage.AccountResource;
 import org.openstack.client.OpenStackClient;
-import org.openstack.client.StorageService;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.common.commands.CommandRunnerBase;
 import org.openstack.console.common.commands.CommandSpecifier;
@@ -17,7 +17,7 @@ public abstract class OpenstackCliCommandRunnerBase extends CommandRunnerBase {
 		super(commandSpecifier);
 	}
 
-	protected StorageService getStorageClient() {
+	protected AccountResource getStorageClient() {
 		return getContext().getStorageClient();
 	}
 

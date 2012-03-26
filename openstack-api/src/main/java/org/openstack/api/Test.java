@@ -114,10 +114,10 @@ public class Test {
 		
 //		ImageList gImages = openstack.images().publicEndpoint().get();
 		
-		List<SwiftContainer> sAccount = openstack.storage().getPublicEndpoint().get();
+		List<SwiftContainer> sAccount = openstack.getStorageEndpoint().get();
 		
 		SwiftObjectProperties p = new SwiftObjectProperties();
-		openstack.storage().getPublicEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);
+		openstack.getStorageEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);
 
 	}
 

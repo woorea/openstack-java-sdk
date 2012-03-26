@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
 
 public class DetachFloatingIp extends OpenstackCliCommandRunnerBase {
@@ -17,11 +17,11 @@ public class DetachFloatingIp extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService compute = getContext().getComputeClient();
+		TenantResource compute = getContext().getComputeClient();
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
-		compute.getPublicEndpoint().servers().server(instanceId).removeFloatingIp(ip);
+		compute.servers().server(instanceId).removeFloatingIp(ip);
 
 		return ip;
 	}

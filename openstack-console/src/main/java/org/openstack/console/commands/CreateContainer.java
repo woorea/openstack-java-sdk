@@ -1,7 +1,7 @@
 package org.openstack.console.commands;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.StorageService;
+import org.openstack.api.storage.AccountResource;
 
 public class CreateContainer extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -13,9 +13,9 @@ public class CreateContainer extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		StorageService client = getStorageClient();
+		AccountResource client = getStorageClient();
 
-		client.getPublicEndpoint().container(name).put();
+		client.container(name).put();
 		return name;
 	}
 

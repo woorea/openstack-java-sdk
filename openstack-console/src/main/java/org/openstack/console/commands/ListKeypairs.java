@@ -8,6 +8,6 @@ public class ListKeypairs extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getOpenstackService().compute().getPublicEndpoint().keyPairs().get();
+		return getOpenstackService().getComputeEndpoint().keyPairs().get();
 	}
 }

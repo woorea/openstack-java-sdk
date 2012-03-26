@@ -2,7 +2,7 @@ package org.openstack.console.autocomplete;
 
 import java.util.List;
 
-import org.openstack.client.StorageService;
+import org.openstack.api.storage.AccountResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.common.CliContext;
 import org.openstack.console.common.autocomplete.SimpleArgumentAutoCompleter;
@@ -18,10 +18,10 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		StorageService client = osContext.getStorageClient();
+		AccountResource client = osContext.getStorageClient();
 
 		if (!prefix.contains("/")) {
-			Iterable<SwiftContainer> items = client.getPublicEndpoint().get();
+			Iterable<SwiftContainer> items = client.get();
 			for (SwiftContainer item : items) {
 				strings.add(item.getName());
 			}
@@ -30,7 +30,7 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		} else {
 			String[] pathTokens = prefix.split("/");
 			if (pathTokens.length == 1 || pathTokens.length == 2) {
-				Iterable<SwiftStorageObject> items = client.getPublicEndpoint().container(pathTokens[0]).get();
+				Iterable<SwiftStorageObject> items = client.container(pathTokens[0]).get();
 				for (SwiftStorageObject item : items) {
 					strings.add(item.getName());
 				}

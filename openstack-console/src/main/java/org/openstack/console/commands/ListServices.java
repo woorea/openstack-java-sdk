@@ -8,6 +8,6 @@ public class ListServices extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		return getOpenstackService().identity().getAdministationEndpoint().services().get();
+		return getOpenstackService().getIdentityAdministationEndpoint().services().get();
 	}
 }

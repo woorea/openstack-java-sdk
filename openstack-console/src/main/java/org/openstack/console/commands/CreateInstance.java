@@ -3,7 +3,7 @@ package org.openstack.console.commands;
 import javax.ws.rs.client.Entity;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.FlavorName;
 import org.openstack.console.model.ImageName;
@@ -38,14 +38,14 @@ public class CreateInstance extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find flavor: " + flavorName.getKey());
 		}
 
-		ComputeService tenant = context.getComputeClient();
+		TenantResource tenant = context.getComputeClient();
 		NovaServerForCreate serverForCreate = new NovaServerForCreate();
 		serverForCreate.setName(instanceName);
 
 		serverForCreate.setImageRef(image.getId());
 		serverForCreate.setFlavorRef(flavorId);
 
-		return tenant.getPublicEndpoint().servers().post(Entity.json(serverForCreate));
+		return tenant.servers().post(Entity.json(serverForCreate));
 	}
 
 }

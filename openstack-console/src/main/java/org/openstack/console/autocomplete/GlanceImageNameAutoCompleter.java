@@ -16,7 +16,7 @@ public class GlanceImageNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (GlanceImage image : osContext.getImageClient().getPublicEndpoint().get().getList()) {
+		for (GlanceImage image : osContext.getImageClient().get().getList()) {
 			strings.add(image.getName());
 		}
 

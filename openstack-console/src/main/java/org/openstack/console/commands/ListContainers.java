@@ -1,6 +1,7 @@
 package org.openstack.console.commands;
 
-import org.openstack.client.StorageService;
+import org.openstack.api.storage.AccountResource;
+
 
 public class ListContainers extends OpenstackCliCommandRunnerBase {
 	public ListContainers() {
@@ -9,9 +10,9 @@ public class ListContainers extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		StorageService client = getStorageClient();
+		AccountResource client = getStorageClient();
 
-		return client.getPublicEndpoint().get();
+		return client.get();
 	}
 
 }

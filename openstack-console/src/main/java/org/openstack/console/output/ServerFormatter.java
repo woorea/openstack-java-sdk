@@ -30,13 +30,13 @@ public class ServerFormatter extends SimpleFormatter<NovaServer> {
 
 		OpenStackClient service = OpenstackCliContext.get().getOpenstackService();
 
-		NovaFlavor flavor = service.compute().getPublicEndpoint().flavors().flavor(server.getFlavor().getId()).get();
+		NovaFlavor flavor = service.getComputeEndpoint().flavors().flavor(server.getFlavor().getId()).get();
 		String flavorName = null;
 		if (flavor != null) {
 			flavorName = flavor.getName();
 		}
 
-		NovaImage image = service.compute().getPublicEndpoint().images().image(server.getImage().getId()).get();
+		NovaImage image = service.getComputeEndpoint().images().image(server.getImage().getId()).get();
 		String imageName = null;
 		if (image != null) {
 			imageName = image.getName();

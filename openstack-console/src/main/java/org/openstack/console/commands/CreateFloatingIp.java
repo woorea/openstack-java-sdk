@@ -1,6 +1,7 @@
 package org.openstack.console.commands;
 
-import org.openstack.client.ComputeService;
+import org.openstack.api.compute.TenantResource;
+
 
 public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 
@@ -10,9 +11,9 @@ public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 
 	@Override
 	public Object runCommand() throws Exception {
-		ComputeService compute = getContext().getComputeClient();
+		TenantResource compute = getContext().getComputeClient();
 
-		return compute.getPublicEndpoint().floatingIps().post();
+		return compute.floatingIps().post();
 	}
 
 }

@@ -1,10 +1,9 @@
 package org.openstack.console.commands;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.kohsuke.args4j.Argument;
-import org.openstack.client.ImagesService;
+import org.openstack.api.images.ImagesResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.glance.GlanceImage;
@@ -30,7 +29,7 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 
 		OpenstackCliContext context = getContext();
 
-		ImagesService imageClient = context.getImageClient();
+		ImagesResource imageClient = context.getImageClient();
 
 		GlanceImage imageTemplate = new GlanceImage();
 		imageTemplate.setName(name);
@@ -55,7 +54,7 @@ public class CreateImage extends OpenstackCliCommandRunnerBase {
 		// This command will probably be faster _not_ in nailgun mode
 		// InputStream imageStream = new NoCloseInputStream(System.in);
 
-		Image image = imageClient.getPublicEndpoint().post(System.in, -1, imageTemplate);
+		Image image = imageClient.post(System.in, -1, imageTemplate);
 
 		return image;
 	}
