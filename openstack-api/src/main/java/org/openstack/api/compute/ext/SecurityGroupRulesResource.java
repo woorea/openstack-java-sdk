@@ -16,7 +16,7 @@ public class SecurityGroupRulesResource extends Resource {
 		super(target);
 	}
 
-    public NovaSecurityGroupRule post(Map<String,Object> properties, Entity<NovaCreateSecurityGroupRuleRequest> rule) {
+    public NovaSecurityGroupRule post(Entity<NovaCreateSecurityGroupRuleRequest> rule) {
 		// OSAPI bug: Can't specify an SSH key in XML?
 		return target.request(MediaType.APPLICATION_JSON).post(rule, NovaSecurityGroupRule.class);
 	}

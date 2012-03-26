@@ -1,7 +1,5 @@
 package org.openstack.console.commands;
 
-import java.util.HashMap;
-
 import javax.ws.rs.client.Entity;
 
 import org.kohsuke.args4j.Argument;
@@ -43,7 +41,7 @@ public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 		newRule.setIpProtocol(protocol);
 		newRule.setParentGroupId(securityGroupId);
 
-		NovaSecurityGroupRule createdRule = compute.getPublicEndpoint().securityGroupRules().post(new HashMap<String, Object>(), Entity.json(newRule));
+		NovaSecurityGroupRule createdRule = compute.getPublicEndpoint().securityGroupRules().post(Entity.json(newRule));
 
 		return createdRule;
 	}

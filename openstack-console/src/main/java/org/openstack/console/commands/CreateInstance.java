@@ -1,7 +1,5 @@
 package org.openstack.console.commands;
 
-import java.util.HashMap;
-
 import javax.ws.rs.client.Entity;
 
 import org.kohsuke.args4j.Argument;
@@ -47,7 +45,7 @@ public class CreateInstance extends OpenstackCliCommandRunnerBase {
 		serverForCreate.setImageRef(image.getId());
 		serverForCreate.setFlavorRef(flavorId);
 
-		return tenant.getPublicEndpoint().servers().post(new HashMap<String, Object>(), Entity.json(serverForCreate));
+		return tenant.getPublicEndpoint().servers().post(Entity.json(serverForCreate));
 	}
 
 }

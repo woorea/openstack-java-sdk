@@ -1,8 +1,5 @@
 package org.openstack.api.common;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.ext.ContextResolver;
 import javax.xml.bind.JAXBContext;
@@ -10,13 +7,10 @@ import javax.xml.bind.JAXBException;
 
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
-import org.glassfish.jersey.filter.LoggingFilter;
 
 public enum RestClient {
 
 	INSTANCE;
-	
-	private static final Logger LOGGER = Logger.getLogger("org.glassfish");
 	
 	private JerseyClient client;
 	
@@ -46,14 +40,6 @@ public enum RestClient {
         
         client.configuration().register(KnownLengthInputStreamProvider.class);
          */
-	}
-	
-	public RestClient verbose(boolean verbose) {
-		if(verbose) {
-			LOGGER.setLevel(Level.FINEST);
-			client.configuration().register(new LoggingFilter(LOGGER,false));
-		}
-		return this;
 	}
 	
 	public Client getJerseyClient() {

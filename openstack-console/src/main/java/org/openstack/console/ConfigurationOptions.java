@@ -42,7 +42,7 @@ public class ConfigurationOptions extends CliOptions {
 	public OpenStackClient getOpenstackService() {
 		if (service == null) {
 			if (configFile == null) {
-				service = OpenStackClientFactory.authenticate(server, username, password, tenantId);
+				service = OpenStackClientFactory.authenticate();
 			} else {
 				InputStream is = null;
 				try {
@@ -73,7 +73,7 @@ public class ConfigurationOptions extends CliOptions {
 					String password = properties.getProperty("openstack.password");
 					String tenantId = properties.getProperty("openstack.tenant");
 
-					service = OpenStackClientFactory.authenticate(server, username, password, tenantId);
+					service = OpenStackClientFactory.authenticate();
 				} catch (IOException e) {
 					throw new IllegalArgumentException("Error reading configuration file", e);
 				} finally {

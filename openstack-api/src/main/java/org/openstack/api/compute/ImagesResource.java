@@ -1,8 +1,5 @@
 package org.openstack.api.compute;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -14,16 +11,9 @@ public class ImagesResource extends Resource {
 	public ImagesResource(Target target) {
 		super(target);
 	}
-	
-	public NovaImageList get() {
-		return get(new HashMap<String, Object>());
-	}
 
-    public NovaImageList get(Map<String,Object> properties) {
-		if(properties.get("detail") != null) {
-			target =  target.path("/detail");
-		} 
-		return target.request(MediaType.APPLICATION_JSON).get(NovaImageList.class);
+    public NovaImageList get() { 
+		return target.path("/detail").request(MediaType.APPLICATION_JSON).get(NovaImageList.class);
 	}
 
     public ImageResource image(String id) {

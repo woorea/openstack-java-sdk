@@ -19,7 +19,6 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	
 	private AccountResource storage;
 	
-	private SwiftAccount account;
 	private String container = "test-container";
 	private String object = "test-object";
 
@@ -29,7 +28,8 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 //		if (!swiftEnabled) {
 //			throw new SkipException("Skipping because swift not present / accessible");
 //		}
-		storage = client.target("http://192.168.1.52:8080/v1/AUTH_"+client.getAccess().getToken().getTenant().getId(), AccountResource.class);
+		client = client.reauthenticateOnTenant("admin");
+		storage = client.getStorageEndpoint();
 	}
 	
 	public void showAccount() {

@@ -10,14 +10,14 @@ import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ITKeyPairs extends ComputeApiTest {
+public class ITKeyPairs extends ComputeIntegrationTest {
 
 	@Test
 	public void testListKeypairs() throws OpenstackException {
 		skipIfNoKeyPairs();
 
 		
-		Iterable<NovaKeyPair> keyPairs = client.compute().getPublicEndpoint().keyPairs().get(new HashMap<String, Object>());
+		Iterable<NovaKeyPair> keyPairs = compute.keyPairs().get();
 		for (NovaKeyPair keyPair : keyPairs) {
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
@@ -28,10 +28,10 @@ public class ITKeyPairs extends ComputeApiTest {
 	@Test
 	public void deleteAllKeypairs() throws OpenstackException {
 		
-		Iterable<NovaKeyPair> keyPairs = client.compute().getPublicEndpoint().keyPairs().get(new HashMap<String, Object>());
+		Iterable<NovaKeyPair> keyPairs = compute.keyPairs().get();
 		for (NovaKeyPair keyPair : keyPairs) {
 			try {
-				client.compute().getPublicEndpoint().keyPairs().keypair(keyPair.getName()).delete(new HashMap<String, Object>());
+				compute.keyPairs().keypair(keyPair.getName()).delete();
 			} catch (Exception e) {
 
 			}
@@ -49,7 +49,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		NovaKeyPair created = client.compute().getPublicEndpoint().keyPairs().post(new HashMap<String, Object>(), Entity.json(createRequest));
+		NovaKeyPair created = compute.keyPairs().post(Entity.json(createRequest));
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
@@ -58,7 +58,7 @@ public class ITKeyPairs extends ComputeApiTest {
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
-		client.compute().getPublicEndpoint().keyPairs().keypair(created.getName()).delete(new HashMap<String, Object>());
+		compute.keyPairs().keypair(created.getName()).delete();
 
 		fetched = findKeyPair(client.compute(), created.getName());
 
@@ -76,80 +76,8 @@ public class ITKeyPairs extends ComputeApiTest {
 		testCreateAndDelete(name);
 	}
 
-	@Test
-	public void testHardName1() throws OpenstackException {
-		skipIfNoKeyPairs();
-
-		// Problems with difficult names reported as bug #937408
-		skipUntilBugFixed(937408);
-
-		String name = "{JSB";
-
-		testCreateAndDelete(name);
-	}
-
-	@Test
-	public void testHardName2() throws OpenstackException {
-		skipIfNoKeyPairs();
-
-		// Problems with difficult names reported as bug #937408
-		skipUntilBugFixed(937408);
-
-		String name = "'JSB";
-
-		testCreateAndDelete(name);
-	}
-
-	@Test
-	public void testHardName3() throws OpenstackException {
-		skipIfNoKeyPairs();
-
-		// Problems with difficult names reported as bug #937408
-		skipUntilBugFixed(937408);
-
-		String name = "F ZZ";
-
-		testCreateAndDelete(name);
-	}
-
-	@Test
-	public void testHardName4() throws OpenstackException {
-		skipIfNoKeyPairs();
-
-		// Problems with difficult names reported as bug #937408
-		skipUntilBugFixed(937408);
-
-		String name = ">JSB";
-
-		testCreateAndDelete(name);
-	}
-
-	@Test
-	public void testHardName5() throws OpenstackException {
-		skipIfNoKeyPairs();
-
-		// Problems with difficult names reported as bug #937408
-		skipUntilBugFixed(937408);
-
-		String name = "J/SB";
-
-		testCreateAndDelete(name);
-	}
-
-	@Test
-	public void testHardName6() throws OpenstackException {
-		skipIfNoKeyPairs();
-
-		// Problems with difficult names reported as bug #937408
-		skipUntilBugFixed(937408);
-
-		String name = "J~SB";
-
-		testCreateAndDelete(name);
-	}
-
 	private NovaKeyPair findKeyPair(ComputeService nova, String name) {
-		for (NovaKeyPair keyPair : nova.getPublicEndpoint().keyPairs().get(new HashMap<String, Object>())) {
+		for (NovaKeyPair keyPair : nova.getPublicEndpoint().keyPairs().get()) {
 			if (keyPair.getName().equals(name))
 				return keyPair;
 		}

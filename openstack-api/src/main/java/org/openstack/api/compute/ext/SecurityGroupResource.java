@@ -24,7 +24,7 @@ public class SecurityGroupResource extends Resource  {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroup.class);
 	}
 
-	public void delete(HashMap<String, Object> properties) {
+	public void delete() {
 		target.request().delete();
 	}
 

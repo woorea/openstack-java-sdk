@@ -1,8 +1,5 @@
 package org.openstack.api.compute;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -15,16 +12,8 @@ public class FlavorResource extends Resource {
 		super(target);
 	}
 
-	public NovaFlavor get(HashMap<String, Object> properties) {
+	public NovaFlavor get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaFlavor.class);
 	}
-
-	public NovaFlavor get() {
-		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("detail",true);
-		return get();
-	}
-
-	
 
 }

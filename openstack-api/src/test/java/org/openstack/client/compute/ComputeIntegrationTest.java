@@ -3,19 +3,29 @@ package org.openstack.client.compute;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openstack.api.compute.TenantResource;
+import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.common.Extension;
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaImage;
 import org.testng.SkipException;
-import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
 
-@Test
-public class ComputeApiTest extends AbstractOpenStackTest {
+public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
+	
+	protected TenantResource compute;
+	
+	@BeforeClass
+	public void init() {
+		super.init();
+		client = client.reauthenticateOnTenant("admin");
+		compute = client.getComputeEndpoint();
+	}
 
 	protected NovaFlavor findSmallestFlavor() {
 		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : client.compute().getPublicEndpoint().flavors().get(new HashMap<String, Object>(){{put("detail",true);}}).getList()) {
+		for (NovaFlavor flavor : compute.flavors().get().getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
@@ -26,7 +36,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 	protected NovaImage findUecImage() {
 		
 
-		Iterable<NovaImage> images = client.compute().getPublicEndpoint().images().get(new HashMap<String, Object>()).getList();
+		Iterable<NovaImage> images = compute.images().get().getList();
 		for (NovaImage i : images) {
 			// Some UEC images
 			if (i.getName().equals("lucid-server-cloudimg-amd64") || i.getName().equals("natty-server-cloudimg-amd64")) {
@@ -36,17 +46,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 		return null;
 	}
 
-	protected NovaImage findImageByName(String name) {
-		
-
-		Iterable<NovaImage> images = client.compute().getPublicEndpoint().images().get(new HashMap<String, Object>()).getList();
-		for (NovaImage i : images) {
-			if (i.getName().equals(name)) {
-				return i;
-			}
-		}
-		return null;
-	}
+	
 
 	protected NovaImage getUecImage() {
 		NovaImage image = findUecImage();
@@ -82,7 +82,7 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 
 	private boolean supportsExtension(String namespace) {
 		if (extensions == null) {
-			extensions = client.compute().getPublicEndpoint().extensions().get(new HashMap<String, Object>()).getList();
+			extensions = compute.extensions().get(new HashMap<String, Object>()).getList();
 		}
 		for (Extension extension : extensions) {
 			if (namespace.equals(extension.getNamespace()))
@@ -90,4 +90,5 @@ public class ComputeApiTest extends AbstractOpenStackTest {
 		}
 		return false;
 	}
+	
 }

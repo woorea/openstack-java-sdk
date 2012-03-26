@@ -1,7 +1,8 @@
 package org.openstack.ui.server;
 
 import java.util.Collection;
-import java.util.List;
+
+import javax.ws.rs.client.Entity;
 
 import org.openstack.model.compute.NovaFlavor;
 import org.openstack.model.compute.NovaFlavorList;
@@ -39,7 +40,7 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 	
 	@Override
 	public NovaServer saveServer(NovaServerForCreate serverForCreate) {
-		return getClient().compute().getPublicEndpoint().servers().post(serverForCreate);
+		return getClient().compute().getPublicEndpoint().servers().post(Entity.json(serverForCreate));
 	}
 	
 	@Override

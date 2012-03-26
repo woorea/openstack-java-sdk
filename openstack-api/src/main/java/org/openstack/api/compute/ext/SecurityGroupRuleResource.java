@@ -12,7 +12,7 @@ public class SecurityGroupRuleResource extends Resource {
 		super(target);
 	}
 
-	public void delete(Map<String, Object> properties) {
+	public void delete() {
 		 target.request().delete();
 	}
 

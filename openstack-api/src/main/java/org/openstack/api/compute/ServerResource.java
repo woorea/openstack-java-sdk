@@ -376,7 +376,7 @@ public class ServerResource extends Resource {
 	}
 
 	public NovaSecurityGroupList listSecurityGroups() {
-		return path("os-security-groups", SecurityGroupsResource.class).get(new HashMap<String, Object>());
+		return path("os-security-groups", SecurityGroupsResource.class).get();
 	}
 	
 	/**

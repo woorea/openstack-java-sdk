@@ -22,17 +22,13 @@ public class KeyPairsResource extends Resource {
 	public KeyPairsResource(Target target) {
 		super(target);
 	}
-	
-	public NovaKeyPairList get() {
-		return get(new HashMap<String, Object>());
-	}
 
 	/**
 	 * List of keypairs for a user
 	 * 
 	 * @return
 	 */
-	public NovaKeyPairList get(Map<String, Object> properties) {
+	public NovaKeyPairList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaKeyPairList.class);
 	}
 
@@ -46,9 +42,9 @@ public class KeyPairsResource extends Resource {
 	 * @param keyPair
 	 * @return
 	 */
-	public NovaKeyPair post(Map<String,Object> properties, Entity<NovaKeyPair> serverForCreate) {
+	public NovaKeyPair post(Entity<NovaKeyPair> keyPair) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		return target.request(MediaType.APPLICATION_JSON).post(serverForCreate, NovaKeyPair.class);
+		return target.request(MediaType.APPLICATION_JSON).post(keyPair, NovaKeyPair.class);
 	}
 
 	public KeyPairResource keypair(String name) {

@@ -1,7 +1,6 @@
 package org.openstack.console.output;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.openstack.api.extensions.Extension;
@@ -31,13 +30,13 @@ public class ServerFormatter extends SimpleFormatter<NovaServer> {
 
 		OpenStackClient service = OpenstackCliContext.get().getOpenstackService();
 
-		NovaFlavor flavor = service.compute().getPublicEndpoint().flavors().flavor(server.getFlavor().getId()).get(new HashMap<String, Object>());
+		NovaFlavor flavor = service.compute().getPublicEndpoint().flavors().flavor(server.getFlavor().getId()).get();
 		String flavorName = null;
 		if (flavor != null) {
 			flavorName = flavor.getName();
 		}
 
-		NovaImage image = service.compute().getPublicEndpoint().images().image(server.getImage().getId()).get(new HashMap<String, Object>());
+		NovaImage image = service.compute().getPublicEndpoint().images().image(server.getImage().getId()).get();
 		String imageName = null;
 		if (image != null) {
 			imageName = image.getName();

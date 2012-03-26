@@ -24,7 +24,7 @@ public class DeleteSecurityGroup extends OpenstackCliCommandRunnerBase {
 			throw new IllegalArgumentException("Cannot find security group: " + name.getKey());
 		}
 
-		getOpenstackService().compute().getPublicEndpoint().securityGroups().securityGroup(securityGroup.getId()).delete(new HashMap<String, Object>());
+		getOpenstackService().compute().getPublicEndpoint().securityGroups().securityGroup(securityGroup.getId()).delete();
 
 		return "" + securityGroup.getId();
 	}

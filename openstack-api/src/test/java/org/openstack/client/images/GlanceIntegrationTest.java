@@ -29,7 +29,8 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 		//if (!glanceEnabled) {
 			//	throw new SkipException("Skipping because glance not present / accessible");
 		//}
-		images = client.target("http://192.168.1.52:9292/v1/images", ImagesResource.class);
+		client = client.reauthenticateOnTenant("admin");
+		images = client.getImagesEndpoint();
 	}
 	
 	@Test
@@ -60,7 +61,7 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 		}
 	}
 	
-	@Test(dependsOnMethods="createImage", priority=1)
+	@Test(priority=1)
 	public void listImages() {
 		ImageList list = images.get();
 		Assert.assertNotNull(list);

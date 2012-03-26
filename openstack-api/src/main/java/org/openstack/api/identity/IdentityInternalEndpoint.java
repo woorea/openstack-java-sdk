@@ -7,6 +7,7 @@ public class IdentityInternalEndpoint extends IdentityPublicEndpoint {
 
 	public IdentityInternalEndpoint(Target target) {
 		super(target);
+		
 	}
 	
 	public static IdentityInternalEndpoint endpoint(Client client, String endpoint) {

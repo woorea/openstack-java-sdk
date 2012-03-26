@@ -1,8 +1,5 @@
 package org.openstack.api.compute.ext;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -16,16 +13,12 @@ public class SecurityGroupsResource extends Resource {
 	public SecurityGroupsResource(Target target) {
 		super(target);
 	}
-	
-	public NovaSecurityGroupList get() {
-		return get(new HashMap<String, Object>());
-	}
 
-	public NovaSecurityGroupList get(Map<String, Object> properties) {
+	public NovaSecurityGroupList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
 	}
 	
-	public NovaSecurityGroup post(HashMap<String, Object> properties, Entity<NovaSecurityGroup> securityGroup) {
+	public NovaSecurityGroup post(Entity<NovaSecurityGroup> securityGroup) {
 		return target.request(MediaType.APPLICATION_JSON).post(securityGroup, NovaSecurityGroup.class);
 		
 	}

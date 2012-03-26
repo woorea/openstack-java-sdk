@@ -17,7 +17,7 @@ public class ImageResource extends Resource {
 		super(target);
 	}
 
-	public NovaImage get(HashMap<String, Object> properties) {
+	public NovaImage get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaImage.class);
 	}
 
@@ -28,12 +28,6 @@ public class ImageResource extends Resource {
 	public NovaMetadata metadata() {
 		// /metadata
 		return new NovaMetadata();
-	}
-
-	public NovaImage get() {
-		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("detail",true);
-		return get();
 	}
 
 }

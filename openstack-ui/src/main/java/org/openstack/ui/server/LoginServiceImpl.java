@@ -1,5 +1,7 @@
 package org.openstack.ui.server;
 
+import java.util.Properties;
+
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
@@ -16,7 +18,17 @@ public class LoginServiceImpl implements LoginService {
 	public KeystoneAccess login(String identityURL, String username, String password) {
 		KeystoneAuthentication authentication = new KeystoneAuthentication().withPasswordCredentials(username, password);
 		
-		OpenStackClient openstack = OpenStackClientFactory.authenticate(identityURL, username, password);
+		Properties properties = new Properties(); 
+		
+		properties.setProperty("auth.endpoint", identityURL);
+		properties.setProperty("auth.username", username);
+		properties.setProperty("auth.password", password);
+		
+		//properties.setProperty("identity.default.endpoint.adminURL","http://192.168.1.52:35357/v2.0");
+		//The admintoken (setted on keystone config file)
+		//properties.setProperty("identity.admin.token", "secret0");
+		
+		OpenStackClient openstack = OpenStackClientFactory.authenticate(properties);
 		//no services when login without tenant
 		IdentityAdministrationEndpoint identity = openstack.target(identityURL, IdentityAdministrationEndpoint.class);
 		
