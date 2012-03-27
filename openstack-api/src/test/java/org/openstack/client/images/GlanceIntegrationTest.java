@@ -13,6 +13,7 @@ import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 import org.openstack.model.images.glance.GlanceImage;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -25,12 +26,14 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 	
 	@BeforeClass
 	public void init() {
-		super.init();
-		//if (!glanceEnabled) {
-			//	throw new SkipException("Skipping because glance not present / accessible");
-		//}
-		client = client.reauthenticateOnTenant("admin");
-		images = client.getImagesEndpoint();
+		if (!glanceEnabled) {
+			init("/openstack.properties");
+			client = client.reauthenticateOnTenant("admin");
+			images = client.getImagesEndpoint();			
+		} else {
+			throw new SkipException("Skipping because glance not present / accessible");
+		}
+		
 	}
 	
 	@Test

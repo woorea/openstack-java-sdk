@@ -21,7 +21,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Test
-public class KeystoneIntegrationTest extends AbstractOpenStackTest {
+public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	
 	private IdentityAdministrationEndpoint identity;
 	
@@ -32,9 +32,8 @@ public class KeystoneIntegrationTest extends AbstractOpenStackTest {
 	
 	@BeforeClass
 	public void init() {
-		super.init();
-		client.getAccess().getToken().setId("secret0");
-		identity = client.target("http://192.168.1.52:35357/v2.0", IdentityAdministrationEndpoint.class);
+		init("/openstack.admin.properties");
+		identity = client.getIdentityAdministationEndpoint();
 	}
 	
 	@Test(priority = 1)

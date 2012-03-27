@@ -22,13 +22,18 @@ public abstract class AbstractOpenStackTest {
 	
 	protected RandomUtil random = new RandomUtil();
 
-	public void init() {
+	public void init(String configuration) {
 		
 		try {
 			Properties properties = new Properties();
-			properties.load(AbstractOpenStackTest.class.getResourceAsStream("/openstack.properties"));
+			properties.load(AbstractOpenStackTest.class.getResourceAsStream(configuration));
+			
+			glanceEnabled = Boolean.parseBoolean(properties.getProperty("test.glance"));
+			swiftEnabled = Boolean.parseBoolean(properties.getProperty("test.swift"));
+			
 			// Command line properties should take precedence
 			//properties.putAll(System.getProperties());
+			
 			client = OpenStackClientFactory.authenticate();
 		} catch (Exception e) {
 			throw new OpenstackException(e.getMessage(), e);

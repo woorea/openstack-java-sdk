@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
+import org.openstack.api.identity.JaxbContextResolver;
 
 public enum RestClient {
 
@@ -23,6 +24,8 @@ public enum RestClient {
 		//client.configuration().enable(JsonFeature.getInstance());
 		
 		client.configuration().register(GsonProvider.class);
+		
+		client.configuration().register(JaxbContextResolver.class);
 		
 		//client.configuration().register(ObjectMapperProvider.class);
 		

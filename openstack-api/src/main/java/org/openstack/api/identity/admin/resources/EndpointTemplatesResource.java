@@ -1,4 +1,4 @@
-package org.openstack.api.identity.resources;
+package org.openstack.api.identity.admin.resources;
 
 import java.util.HashMap;
 import java.util.Map;

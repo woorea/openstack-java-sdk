@@ -1,10 +1,10 @@
 package org.openstack.client;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
@@ -34,8 +34,10 @@ public class OpenStackClient {
 
 	private Client client;
 	
-	private LoggingFilter loggingFilter = new LoggingFilter();
+	//private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(OpenStackClient.class.getPackage().getName()),true);
 
+	private LoggingFilter loggingFilter = new LoggingFilter();
+	
 	private Properties properties;
 
 	private KeystoneAccess access;
@@ -69,6 +71,10 @@ public class OpenStackClient {
 	public KeystoneAccess getAccess() {
 		return access;
 	}
+	
+	public Properties getProperties() {
+		return this.properties;
+	}
 
 	public void setAccess(KeystoneAccess access) {
 		this.access = access;
@@ -95,7 +101,7 @@ public class OpenStackClient {
 
 	public IdentityAdministrationEndpoint getIdentityAdministationEndpoint() {
 		String url = properties.getProperty("identity.endpoint.adminURL");
-		Preconditions.checkNotNull(url, "'identity.endpoint.internalURL' property not found");
+		Preconditions.checkNotNull(url, "'identity.endpoint.adminURL' property not found");
 		return target(url, IdentityAdministrationEndpoint.class, true);
 	}
 	
@@ -194,5 +200,7 @@ public class OpenStackClient {
 		properties.setProperty("auth.tenant.name", tenantName);
 		return OpenStackClientFactory.authenticate(properties);
 	}
+
+	
 
 }

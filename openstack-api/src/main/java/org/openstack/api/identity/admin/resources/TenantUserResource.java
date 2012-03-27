@@ -1,4 +1,4 @@
-package org.openstack.api.identity.resources;
+package org.openstack.api.identity.admin.resources;
 
 import javax.ws.rs.client.Target;
 

@@ -18,7 +18,7 @@ public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
 	
 	@BeforeClass
 	public void init() {
-		super.init();
+		init("/openstack.properties");
 		client = client.reauthenticateOnTenant("admin");
 		compute = client.getComputeEndpoint();
 	}

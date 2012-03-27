@@ -1,10 +1,9 @@
 package org.openstack.api.identity.resources;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneTenant;
 import org.openstack.model.identity.KeystoneTenantList;
 
 public class TenantsResource extends Resource {
@@ -14,15 +13,7 @@ public class TenantsResource extends Resource {
 	}
 	
 	public KeystoneTenantList get() {
-		return target.request().get(KeystoneTenantList.class);
-	}
-
-	public KeystoneTenant post(Entity<KeystoneTenant> tenant) {
-		return target.request().post(tenant, KeystoneTenant.class);
-	}
-	
-	public TenantResource tenant(String id) {
-		return new TenantResource(target.path("/{id}").pathParam("id", id));
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneTenantList.class);
 	}
 
 }

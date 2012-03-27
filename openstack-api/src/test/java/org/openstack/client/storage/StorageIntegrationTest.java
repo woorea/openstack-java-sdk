@@ -1,7 +1,6 @@
 package org.openstack.client.storage;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -9,9 +8,9 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.storage.AccountResource;
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.model.storage.SwiftAccount;
 import org.openstack.model.storage.SwiftContainer;
 import org.openstack.model.storage.SwiftObjectProperties;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -24,12 +23,14 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 
 	@BeforeClass
 	public void init() {
-		super.init();
-//		if (!swiftEnabled) {
-//			throw new SkipException("Skipping because swift not present / accessible");
-//		}
-		client = client.reauthenticateOnTenant("admin");
-		storage = client.getStorageEndpoint();
+		if(swiftEnabled) {
+			init("/openstack.properties");
+			client = client.reauthenticateOnTenant("admin");
+			storage = client.getStorageEndpoint();
+		} else {
+			throw new SkipException("Skipping because swift not present / accessible");
+		}
+		
 	}
 	
 	public void showAccount() {

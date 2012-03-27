@@ -4,12 +4,12 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
-import org.openstack.api.identity.resources.EndpointTemplatesResource;
-import org.openstack.api.identity.resources.RolesResource;
-import org.openstack.api.identity.resources.ServicesResource;
-import org.openstack.api.identity.resources.TenantsResource;
-import org.openstack.api.identity.resources.TokensResource;
-import org.openstack.api.identity.resources.UsersResource;
+import org.openstack.api.identity.admin.resources.EndpointTemplatesResource;
+import org.openstack.api.identity.admin.resources.RolesResource;
+import org.openstack.api.identity.admin.resources.ServicesResource;
+import org.openstack.api.identity.admin.resources.TenantsResource;
+import org.openstack.api.identity.admin.resources.TokensResource;
+import org.openstack.api.identity.admin.resources.UsersResource;
 
 public class IdentityAdministrationEndpoint extends Resource {
 

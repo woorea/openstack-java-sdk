@@ -12,6 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.web.bindery.event.shared.EventBus;
@@ -59,6 +60,11 @@ public class UI implements EntryPoint, UIView.Presenter {
 						historyHandler.handleCurrentHistory();
 					}
 				});
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.Location.replace("/login");
 			}
 		});
 		

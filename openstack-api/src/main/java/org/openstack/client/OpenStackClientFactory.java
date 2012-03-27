@@ -39,8 +39,8 @@ public class OpenStackClientFactory {
 		return openstack;
 	}
 
-	public static OpenStackClient create(KeystoneAccess access) {
-		return new OpenStackClient(new Properties(), access);
+	public static OpenStackClient create(Properties properties, KeystoneAccess access) {
+		return new OpenStackClient(properties, access);
 	}
 
 }
