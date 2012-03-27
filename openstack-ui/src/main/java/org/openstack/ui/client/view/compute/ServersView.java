@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute;
 
-import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.Server;
 import org.openstack.ui.client.view.compute.widgets.ServerActionPicker;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -35,7 +35,7 @@ public class ServersView extends Composite {
 
 		void onShowServer(String id);
 
-		boolean isSelected(NovaServer object);
+		boolean isSelected(Server object);
 	}
 
 	@UiField
@@ -43,7 +43,7 @@ public class ServersView extends Composite {
 	@UiField
 	ServerActionPicker actions;
 	@UiField(provided = true)
-	DataGrid<NovaServer> grid = new DataGrid<NovaServer>();
+	DataGrid<Server> grid = new DataGrid<Server>();
 	@UiField
 	SimpleLayoutPanel detail;
 
@@ -55,65 +55,65 @@ public class ServersView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<NovaServer, Boolean> checkboxColumn = new Column<NovaServer, Boolean>(new CheckboxCell()) {
+		Column<Server, Boolean> checkboxColumn = new Column<Server, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(NovaServer object) {
+			public Boolean getValue(Server object) {
 				return presenter.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		Column<NovaServer, String> logoColumn = new Column<NovaServer, String>(new LogoCell()) {
+		Column<Server, String> logoColumn = new Column<Server, String>(new LogoCell()) {
 
 			@Override
-			public String getValue(NovaServer object) {
+			public String getValue(Server object) {
 				return "";
 			}
 		};
 		grid.setColumnWidth(logoColumn, "60px");
 		grid.addColumn(logoColumn);
-		TextColumn<NovaServer> statusColumn = new TextColumn<NovaServer>() {
+		TextColumn<Server> statusColumn = new TextColumn<Server>() {
 			@Override
-			public String getValue(NovaServer object) {
+			public String getValue(Server object) {
 				return object.getStatus();
 			}
 		};
 		grid.setColumnWidth(statusColumn, "100px");
 		grid.addColumn(statusColumn, "Name");
-		TextColumn<NovaServer> nameColumn = new TextColumn<NovaServer>() {
+		TextColumn<Server> nameColumn = new TextColumn<Server>() {
 			@Override
-			public String getValue(NovaServer object) {
+			public String getValue(Server object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<NovaServer> imageColumn = new TextColumn<NovaServer>() {
+		TextColumn<Server> imageColumn = new TextColumn<Server>() {
 			@Override
-			public String getValue(NovaServer object) {
+			public String getValue(Server object) {
 				return object.getImage().getName();
 			}
 		};
 		// grid.setColumnWidth(imageColumn, "120px");
 		grid.addColumn(imageColumn, "Image");
-		TextColumn<NovaServer> flavorColumn = new TextColumn<NovaServer>() {
+		TextColumn<Server> flavorColumn = new TextColumn<Server>() {
 			@Override
-			public String getValue(NovaServer object) {
+			public String getValue(Server object) {
 				return object.getFlavor().getName();
 			}
 		};
 		grid.setColumnWidth(flavorColumn, "120px");
 		grid.addColumn(flavorColumn, "Flavor");
 		ButtonCell previewButton = new ButtonCell();
-		Column<NovaServer,String> preview = new Column<NovaServer,String>(previewButton) {
-		  public String getValue(NovaServer object) {
+		Column<Server,String> preview = new Column<Server,String>(previewButton) {
+		  public String getValue(Server object) {
 		    return "Preview";
 		  }
 		};
-		preview.setFieldUpdater(new FieldUpdater<NovaServer, String>() {
+		preview.setFieldUpdater(new FieldUpdater<Server, String>() {
 		  @Override
-		  public void update(int index, NovaServer server, String value) {
+		  public void update(int index, Server server, String value) {
 		    presenter.onShowServer(server.getId());
 		  }
 		});

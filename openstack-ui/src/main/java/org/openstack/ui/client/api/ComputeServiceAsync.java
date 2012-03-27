@@ -1,38 +1,36 @@
 package org.openstack.ui.client.api;
 
 import java.util.Collection;
-import java.util.List;
 
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaFlavorList;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPair;
-import org.openstack.model.compute.NovaKeyPairList;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.compute.NovaServerList;
-import org.openstack.model.compute.NovaSnapshotList;
-import org.openstack.model.compute.NovaVolumeList;
-import org.openstack.model.compute.server.action.Console;
-import org.openstack.model.compute.server.action.GetConsoleOutputAction;
-import org.openstack.model.compute.server.action.GetVncConsoleAction;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.server.actions.Console;
+import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
+import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ComputeServiceAsync {
 
-	void changePasswordServer(Collection<NovaServer> servers,
+	void changePasswordServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
-	void createImageServer(Collection<NovaServer> servers,
+	void createImageServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
 	void deleteServer(String id, AsyncCallback<Void> callback);
 
-	void forceDeleteServer(Collection<NovaServer> servers,
+	void forceDeleteServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
 	void getConsoleOutput(String serverId, GetConsoleOutputAction action,
@@ -41,67 +39,58 @@ public interface ComputeServiceAsync {
 	void getVncConsole(String serverId, GetVncConsoleAction action,
 			AsyncCallback<Console> callback);
 
-	void injectNetworkInfoServer(Collection<NovaServer> servers,
+	void injectNetworkInfoServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
-	void listFlavors(AsyncCallback<NovaFlavorList> callback);
+	void listFlavors(AsyncCallback<FlavorList> callback);
 
-	void listImages(AsyncCallback<NovaImageList> callback);
+	void listImages(AsyncCallback<ImageList> callback);
 
-	void listKeyPairs(AsyncCallback<NovaKeyPairList> callback);
+	void listKeyPairs(AsyncCallback<KeyPairList> callback);
 
-	void listSecurityGroups(AsyncCallback<NovaSecurityGroupList> callback);
+	void listSecurityGroups(AsyncCallback<SecurityGroupList> callback);
 
-	void listServers(AsyncCallback<NovaServerList> callback);
+	void listServers(AsyncCallback<ServerList> callback);
 
-	void listSnapshots(AsyncCallback<NovaSnapshotList> callback);
+	void listSnapshots(AsyncCallback<SnapshotList> callback);
 
-	void listVolumes(AsyncCallback<NovaVolumeList> callback);
+	void listVolumes(AsyncCallback<VolumeList> callback);
 
-	void lockServer(Collection<NovaServer> servers, AsyncCallback<Void> callback);
+	void lockServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
-	void migrateServer(Collection<NovaServer> servers,
+	void migrateServer(Collection<Server> servers, AsyncCallback<Void> callback);
+
+	void pauseServer(Collection<Server> servers, AsyncCallback<Void> callback);
+
+	void rebuildServer(Collection<Server> servers, AsyncCallback<Void> callback);
+
+	void resetNetworkServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
-	void pauseServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
+	void resizeServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
-	void rebuildServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
+	void restoreServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
-	void resetNetworkServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
+	void resumeServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
-	void resizeServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
-
-	void restoreServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
-
-	void resumeServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
-
-	void revertResizeServer(Collection<NovaServer> servers,
+	void revertResizeServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
 	void saveServer(NovaServerForCreate serverForCreate,
-			AsyncCallback<NovaServer> callback);
+			AsyncCallback<Server> callback);
 
-	void showFlavor(String id, AsyncCallback<NovaFlavor> callback);
+	void showFlavor(String id, AsyncCallback<Flavor> callback);
 
-	void showImage(String id, AsyncCallback<NovaImage> callback);
+	void showImage(String id, AsyncCallback<Image> callback);
 
-	void showSecurityGroup(Integer id, AsyncCallback<NovaSecurityGroup> callback);
+	void showSecurityGroup(Integer id, AsyncCallback<SecurityGroup> callback);
 
-	void showServer(String id, AsyncCallback<NovaServer> callback);
+	void showServer(String id, AsyncCallback<Server> callback);
 
-	void suspendServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
+	void suspendServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
-	void unlockServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
+	void unlockServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
-	void unpauseServer(Collection<NovaServer> servers,
-			AsyncCallback<Void> callback);
+	void unpauseServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
 }

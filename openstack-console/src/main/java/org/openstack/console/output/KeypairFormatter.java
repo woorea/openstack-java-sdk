@@ -5,18 +5,19 @@ import java.util.LinkedHashMap;
 
 import org.openstack.console.common.formatter.SimpleFormatter;
 import org.openstack.console.common.output.OutputSink;
-import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 
 import com.google.common.collect.Maps;
 
-public class KeypairFormatter extends SimpleFormatter<NovaKeyPair> {
+public class KeypairFormatter extends SimpleFormatter<KeyPair> {
 
     public KeypairFormatter() {
         super(NovaKeyPair.class);
     }
 
     @Override
-    public void visit(NovaKeyPair o, OutputSink sink) throws IOException {
+    public void visit(KeyPair o, OutputSink sink) throws IOException {
         LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
         values.put("name", o.getName());

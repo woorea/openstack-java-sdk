@@ -7,8 +7,8 @@ import org.openstack.api.compute.TenantResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.FlavorName;
 import org.openstack.console.model.ImageName;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.nova.NovaServerForCreate;
 
 public class CreateInstance extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -28,7 +28,7 @@ public class CreateInstance extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		OpenstackCliContext context = getContext();
 
-		NovaImage image = imageName.findImage(context);
+		Image image = imageName.findImage(context);
 		if (image == null) {
 			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
 		}
@@ -45,7 +45,7 @@ public class CreateInstance extends OpenstackCliCommandRunnerBase {
 		serverForCreate.setImageRef(image.getId());
 		serverForCreate.setFlavorRef(flavorId);
 
-		return tenant.servers().post(Entity.json(serverForCreate));
+		return tenant.servers().post(serverForCreate);
 	}
 
 }

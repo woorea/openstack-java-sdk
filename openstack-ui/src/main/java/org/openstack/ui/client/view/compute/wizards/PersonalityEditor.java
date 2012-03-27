@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.compute.wizards;
 
 
-import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.ui.client.view.compute.wizards.PersonalityEditor.PersonalityItemEditor;
 
 import com.google.gwt.dom.client.Style.VerticalAlign;

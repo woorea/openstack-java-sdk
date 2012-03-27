@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute.keypair;
 
-import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.KeyPair;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -27,7 +27,7 @@ public class KeyPairsView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<NovaKeyPair> grid = new DataGrid<NovaKeyPair>();
+	DataGrid<KeyPair> grid = new DataGrid<KeyPair>();
 
 	private Presenter presenter;
 
@@ -37,34 +37,34 @@ public class KeyPairsView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<NovaKeyPair, Boolean> checkboxColumn = new Column<NovaKeyPair, Boolean>(new CheckboxCell()) {
+		Column<KeyPair, Boolean> checkboxColumn = new Column<KeyPair, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(NovaKeyPair object) {
+			public Boolean getValue(KeyPair object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<NovaKeyPair> nameColumn = new TextColumn<NovaKeyPair>() {
+		TextColumn<KeyPair> nameColumn = new TextColumn<KeyPair>() {
 			@Override
-			public String getValue(NovaKeyPair object) {
+			public String getValue(KeyPair object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<NovaKeyPair> userColumn = new TextColumn<NovaKeyPair>() {
+		TextColumn<KeyPair> userColumn = new TextColumn<KeyPair>() {
 			@Override
-			public String getValue(NovaKeyPair object) {
+			public String getValue(KeyPair object) {
 				return object.getUserId();
 			}
 		};
 		grid.setColumnWidth(userColumn, "120px");
 		grid.addColumn(userColumn, "User");
-		TextColumn<NovaKeyPair> fingerprintColumn = new TextColumn<NovaKeyPair>() {
+		TextColumn<KeyPair> fingerprintColumn = new TextColumn<KeyPair>() {
 			@Override
-			public String getValue(NovaKeyPair object) {
+			public String getValue(KeyPair object) {
 				return object.getFingerprint();
 			}
 		};

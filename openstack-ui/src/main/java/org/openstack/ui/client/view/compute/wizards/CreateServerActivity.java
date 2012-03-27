@@ -2,15 +2,16 @@ package org.openstack.ui.client.view.compute.wizards;
 
 import java.util.List;
 
-import org.openstack.model.compute.NovaFlavorList;
-import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPair;
-import org.openstack.model.compute.NovaKeyPairList;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaSecurityGroupRule;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.KeyPairListItem;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 
@@ -28,7 +29,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 	}
 
-	interface SecurityGroupDriver extends SimpleBeanEditorDriver<NovaSecurityGroup, SecurityGroupEditor> {
+	interface SecurityGroupDriver extends SimpleBeanEditorDriver<SecurityGroup, SecurityGroupEditor> {
 
 	}
 
@@ -49,7 +50,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 		SecurityGroupEditor securityGroupEditor = new SecurityGroupEditor();
 		securityGroupEditor.setPresenter(this);
 		securityGroupDriver.initialize(securityGroupEditor);
-		NovaSecurityGroup securityGroup = new NovaSecurityGroup();
+		SecurityGroup securityGroup = new NovaSecurityGroup();
 		securityGroup.getRules().add(new NovaSecurityGroupRule());
 		securityGroupDriver.edit(securityGroup);
 		return securityGroupEditor;
@@ -59,23 +60,23 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 	public void onStart() {
 		wizard.setPresenter(this);
 		updateImages();
-		OpenStackClient.COMPUTE.listFlavors(new DefaultAsyncCallback<NovaFlavorList>() {
+		OpenStackClient.COMPUTE.listFlavors(new DefaultAsyncCallback<FlavorList>() {
 
 			@Override
-			public void onSuccess(NovaFlavorList result) {
+			public void onSuccess(FlavorList result) {
 				GWT.log(""+result.getList().size());
 				wizard.server.flavorRef.setOptions(result.getList());
 
 			}
 		});
-		OpenStackClient.COMPUTE.listKeyPairs(new DefaultAsyncCallback<NovaKeyPairList>() {
+		OpenStackClient.COMPUTE.listKeyPairs(new DefaultAsyncCallback<KeyPairList>() {
 
 			@Override
-			public void onSuccess(NovaKeyPairList result) {
-				List<String> names = Lists.transform(result.getList(), new Function<NovaKeyPairList.KeyPairListItem, String>() {
+			public void onSuccess(KeyPairList result) {
+				List<String> names = Lists.transform(result.getList(), new Function<KeyPairListItem, String>() {
 
 					@Override
-					public String apply(NovaKeyPairList.KeyPairListItem input) {
+					public String apply(KeyPairListItem input) {
 						return input.getKeypair().getName();
 					}
 				});
@@ -87,14 +88,14 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 				}
 			}
 		});
-		OpenStackClient.COMPUTE.listSecurityGroups(new DefaultAsyncCallback<NovaSecurityGroupList>() {
+		OpenStackClient.COMPUTE.listSecurityGroups(new DefaultAsyncCallback<SecurityGroupList>() {
 
 			@Override
-			public void onSuccess(NovaSecurityGroupList result) {
-				List<NovaServerForCreate.SecurityGroup> names = Lists.transform(result.getList(), new Function<NovaSecurityGroup, NovaServerForCreate.SecurityGroup>() {
+			public void onSuccess(SecurityGroupList result) {
+				List<NovaServerForCreate.SecurityGroup> names = Lists.transform(result.getList(), new Function<SecurityGroup, NovaServerForCreate.SecurityGroup>() {
 
 					@Override
-					public NovaServerForCreate.SecurityGroup apply(NovaSecurityGroup input) {
+					public NovaServerForCreate.SecurityGroup apply(SecurityGroup input) {
 						return new NovaServerForCreate.SecurityGroup(input.getName());
 					}
 				});
@@ -114,10 +115,10 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 	@Override
 	public void onFinish() {
 		NovaServerForCreate csr = createServerRequestDriver.flush();
-		OpenStackClient.COMPUTE.saveServer(csr, new DefaultAsyncCallback<NovaServer>() {
+		OpenStackClient.COMPUTE.saveServer(csr, new DefaultAsyncCallback<Server>() {
 
 			@Override
-			public void onSuccess(NovaServer result) {
+			public void onSuccess(Server result) {
 				wizard.popup.hide(true);
 			}
 		});
@@ -127,7 +128,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 	@Override
 	public void onSaveSecurityGroup() {
-		NovaSecurityGroup sg = securityGroupDriver.flush();
+		SecurityGroup sg = securityGroupDriver.flush();
 		NovaServerForCreate.SecurityGroup sg2 = new NovaServerForCreate.SecurityGroup(sg.getName());
 		wizard.firewall.securityGroups.addItem(sg2.getName(), sg2);
 		Window.alert(sg.toString());
@@ -169,10 +170,10 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 	@Override
 	public void updateImages() {
-		OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<NovaImageList>() {
+		OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<ImageList>() {
 
 			@Override
-			public void onSuccess(NovaImageList result) {
+			public void onSuccess(ImageList result) {
 				wizard.image.imageRef.refresh(result.getList());
 
 			}

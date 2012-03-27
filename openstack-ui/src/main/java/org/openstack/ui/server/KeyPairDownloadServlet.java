@@ -13,7 +13,8 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.JerseyClientFactory;
-import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 
 public class KeyPairDownloadServlet extends HttpServlet {
 
@@ -22,11 +23,11 @@ public class KeyPairDownloadServlet extends HttpServlet {
 			throws ServletException, IOException {
 		UriBuilder uriBuilder = UriBuilder.fromPath(
 				req.getParameter("computeURL")).path("/os-keypairs");
-		NovaKeyPair keyPair = new NovaKeyPair(req.getParameter("keyPairName"));
+		KeyPair keyPair = new NovaKeyPair(req.getParameter("keyPairName"));
 		keyPair = JerseyClientFactory.newClient().target(uriBuilder)
 				.request(MediaType.APPLICATION_XML)
 				.header("X-Auth-Token", req.getParameter("token"))
-				.post(Entity.xml(keyPair), NovaKeyPair.class);
+				.post(Entity.xml(keyPair), KeyPair.class);
 
 		ServletOutputStream out = resp.getOutputStream();
 		// resp.setContentLength(responseBytes.length);

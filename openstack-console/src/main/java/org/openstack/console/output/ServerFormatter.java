@@ -10,33 +10,34 @@ import org.openstack.client.OpenStackClient;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.common.formatter.SimpleFormatter;
 import org.openstack.console.common.output.OutputSink;
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.extensions.diskconfig.DiskConfigAttributes;
-import org.openstack.model.compute.extensions.extendedstatus.ExtendedStatusAttributes;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.nova.NovaServer;
+import org.openstack.model.compute.nova.diskconfig.DiskConfigAttributes;
+import org.openstack.model.compute.nova.extendedstatus.ExtendedStatusAttributes;
 
 import com.google.common.collect.Maps;
 
-public class ServerFormatter extends SimpleFormatter<NovaServer> {
+public class ServerFormatter extends SimpleFormatter<Server> {
 
 	public ServerFormatter() {
 		super(NovaServer.class);
 	}
 
 	@Override
-	public void visit(NovaServer server, OutputSink sink) throws IOException {
+	public void visit(Server server, OutputSink sink) throws IOException {
 		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
 		OpenStackClient service = OpenstackCliContext.get().getOpenstackService();
 
-		NovaFlavor flavor = service.getComputeEndpoint().flavors().flavor(server.getFlavor().getId()).get();
+		Flavor flavor = service.getComputeEndpoint().flavors().flavor(server.getFlavor().getId()).get();
 		String flavorName = null;
 		if (flavor != null) {
 			flavorName = flavor.getName();
 		}
 
-		NovaImage image = service.getComputeEndpoint().images().image(server.getImage().getId()).get();
+		Image image = service.getComputeEndpoint().images().image(server.getImage().getId()).get();
 		String imageName = null;
 		if (image != null) {
 			imageName = image.getName();

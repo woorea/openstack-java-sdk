@@ -8,7 +8,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
-import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.collect.Lists;
@@ -18,7 +19,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 
 	private static final int POLL_INTERVAL_MILLISECONDS = 5000;
 
-	final NovaServer returnValue;
+	final Server returnValue;
 	final String serverId;
 
 	final Collection<String> acceptableTransitionStates;
@@ -29,7 +30,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	volatile boolean cancelled;
 	volatile boolean done;
 
-	public AsyncServerOperation(TenantResource client, NovaServer returnValue, String serverId,
+	public AsyncServerOperation(TenantResource client, Server returnValue, String serverId,
 			Collection<String> acceptableTransitionStates, Collection<String> finishStates) {
 		super();
 		this.client = client;
@@ -46,7 +47,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 				NovaServer server = null;
 				String status;
 				try {
-					server = client.servers().server(serverId).get(new HashMap<String, Object>());
+					server = client.servers().server(serverId).get();
 					status = server.getStatus();
 				} catch (Exception /*OpenstackNotFoundException*/ e) {
 					// Treat as DELETED
@@ -132,7 +133,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	/**
 	 * This method throws OpenStackComputeException instead of wrapping it in ExecutionException
 	 */
-	public NovaServer waitComplete() throws InterruptedException, OpenstackException {
+	public Server waitComplete() throws InterruptedException, OpenstackException {
 		try {
 			return waitComplete(0, null);
 		} catch (TimeoutException e) {
@@ -156,15 +157,15 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	 * 
 	 * @return
 	 */
-	public NovaServer getReturnedServer() {
+	public Server getReturnedServer() {
 		return returnValue;
 	}
 
-	public static AsyncServerOperation wrapServerCreate(TenantResource client, NovaServer server) {
+	public static AsyncServerOperation wrapServerCreate(TenantResource client, Server server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("BUILD"), Lists.newArrayList("ACTIVE"));
 	}
 
-	public static AsyncServerOperation wrapServerDelete(TenantResource client, NovaServer server) {
+	public static AsyncServerOperation wrapServerDelete(TenantResource client, Server server) {
 		return new AsyncServerOperation(client, server, server.getId(), Lists.newArrayList("ACTIVE"), Lists.newArrayList("DELETED"));
 	}
 }

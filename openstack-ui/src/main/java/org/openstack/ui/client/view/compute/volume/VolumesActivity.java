@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.compute.volume;
 
-import org.openstack.model.compute.NovaVolume;
-import org.openstack.model.compute.NovaVolumeList;
+import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.VolumeList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -20,12 +20,12 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<NovaVolume> dataProvider;
+	private RefreshableDataProvider<Volume> dataProvider;
 
-	private MultiSelectionModel<NovaVolume> selectionModel = new MultiSelectionModel<NovaVolume>();
+	private MultiSelectionModel<Volume> selectionModel = new MultiSelectionModel<Volume>();
 
-	private DefaultSelectionEventManager<NovaVolume> selectionManager = DefaultSelectionEventManager
-			.<NovaVolume> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Volume> selectionManager = DefaultSelectionEventManager
+			.<Volume> createCheckboxManager(0);
 
 	public VolumesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,14 +36,14 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaVolume>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Volume>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaVolume> display) {
-				OpenStackClient.COMPUTE.listVolumes(new DefaultAsyncCallback<NovaVolumeList>() {
+			protected void onRangeChanged(HasData<Volume> display) {
+				OpenStackClient.COMPUTE.listVolumes(new DefaultAsyncCallback<VolumeList>() {
 
 					@Override
-					public void onSuccess(NovaVolumeList result) {
+					public void onSuccess(VolumeList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute.volume;
 
-import org.openstack.model.compute.NovaVolume;
+import org.openstack.model.compute.Volume;
 import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.CheckboxCell;
@@ -28,7 +28,7 @@ public class VolumesView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<NovaVolume> grid = new DataGrid<NovaVolume>();
+	DataGrid<Volume> grid = new DataGrid<Volume>();
 
 	private Presenter presenter;
 
@@ -38,27 +38,27 @@ public class VolumesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<NovaVolume, Boolean> checkboxColumn = new Column<NovaVolume, Boolean>(new CheckboxCell()) {
+		Column<Volume, Boolean> checkboxColumn = new Column<Volume, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(NovaVolume object) {
+			public Boolean getValue(Volume object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		Column<NovaVolume, String> logoColumn = new Column<NovaVolume, String>(new LogoCell()) {
+		Column<Volume, String> logoColumn = new Column<Volume, String>(new LogoCell()) {
 
 			@Override
-			public String getValue(NovaVolume object) {
+			public String getValue(Volume object) {
 				return "";
 			}
 		};
 		grid.setColumnWidth(logoColumn, "60px");
 		grid.addColumn(logoColumn);
-		TextColumn<NovaVolume> nameColumn = new TextColumn<NovaVolume>() {
+		TextColumn<Volume> nameColumn = new TextColumn<Volume>() {
 			@Override
-			public String getValue(NovaVolume object) {
+			public String getValue(Volume object) {
 				return object.getName();
 			}
 		};

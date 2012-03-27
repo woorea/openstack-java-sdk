@@ -3,7 +3,7 @@ package org.openstack.console.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.ImageName;
-import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.Image;
 
 public class DeleteImage extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -17,7 +17,7 @@ public class DeleteImage extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		OpenstackCliContext context = getContext();
 
-		NovaImage image = imageName.findImage(context);
+		Image image = imageName.findImage(context);
 		if (image == null) {
 			throw new IllegalArgumentException("Cannot find image: " + imageName.getKey());
 		}

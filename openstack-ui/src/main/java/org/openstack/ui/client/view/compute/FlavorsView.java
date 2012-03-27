@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute;
 
-import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.Flavor;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -27,7 +27,7 @@ public class FlavorsView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<NovaFlavor> grid = new DataGrid<NovaFlavor>();
+	DataGrid<Flavor> grid = new DataGrid<Flavor>();
 
 	private Presenter presenter;
 
@@ -37,50 +37,50 @@ public class FlavorsView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<NovaFlavor, Boolean> checkboxColumn = new Column<NovaFlavor, Boolean>(new CheckboxCell()) {
+		Column<Flavor, Boolean> checkboxColumn = new Column<Flavor, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(NovaFlavor object) {
+			public Boolean getValue(Flavor object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<NovaFlavor> nameColumn = new TextColumn<NovaFlavor>() {
+		TextColumn<Flavor> nameColumn = new TextColumn<Flavor>() {
 			@Override
-			public String getValue(NovaFlavor object) {
+			public String getValue(Flavor object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "NAME");
-		TextColumn<NovaFlavor> vcpusColumn = new TextColumn<NovaFlavor>() {
+		TextColumn<Flavor> vcpusColumn = new TextColumn<Flavor>() {
 			@Override
-			public String getValue(NovaFlavor object) {
+			public String getValue(Flavor object) {
 				return String.valueOf(object.getVcpus());
 			}
 		};
 		grid.setColumnWidth(vcpusColumn, "60px");
 		grid.addColumn(vcpusColumn, "vCPU");
-		TextColumn<NovaFlavor> ramColumn = new TextColumn<NovaFlavor>() {
+		TextColumn<Flavor> ramColumn = new TextColumn<Flavor>() {
 			@Override
-			public String getValue(NovaFlavor object) {
+			public String getValue(Flavor object) {
 				return String.valueOf(object.getRam());
 			}
 		};
 		grid.setColumnWidth(ramColumn, "60px");
 		grid.addColumn(ramColumn, "RAM");
-		TextColumn<NovaFlavor> diskColumn = new TextColumn<NovaFlavor>() {
+		TextColumn<Flavor> diskColumn = new TextColumn<Flavor>() {
 			@Override
-			public String getValue(NovaFlavor object) {
+			public String getValue(Flavor object) {
 				return String.valueOf(object.getDisk());
 			}
 		};
 		grid.setColumnWidth(diskColumn, "60px");
 		grid.addColumn(diskColumn, "DISK");
-		TextColumn<NovaFlavor> rxtxColumn = new TextColumn<NovaFlavor>() {
+		TextColumn<Flavor> rxtxColumn = new TextColumn<Flavor>() {
 			@Override
-			public String getValue(NovaFlavor object) {
+			public String getValue(Flavor object) {
 				return String.valueOf(object.getRxTxFactor());
 			}
 		};

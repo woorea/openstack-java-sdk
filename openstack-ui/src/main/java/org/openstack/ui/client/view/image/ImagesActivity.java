@@ -1,7 +1,8 @@
 package org.openstack.ui.client.view.image;
 
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaImageList;
+
+import org.openstack.model.images.Image;
+import org.openstack.model.images.ImageList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -20,12 +21,12 @@ public class ImagesActivity extends AbstractActivity implements ImagesView.Prese
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<NovaImage> dataProvider;
+	private RefreshableDataProvider<Image> dataProvider;
 
-	private MultiSelectionModel<NovaImage> selectionModel = new MultiSelectionModel<NovaImage>();
+	private MultiSelectionModel<Image> selectionModel = new MultiSelectionModel<Image>();
 
-	private DefaultSelectionEventManager<NovaImage> selectionManager = DefaultSelectionEventManager
-			.<NovaImage> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Image> selectionManager = DefaultSelectionEventManager
+			.<Image> createCheckboxManager(0);
 
 	public ImagesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,19 +37,21 @@ public class ImagesActivity extends AbstractActivity implements ImagesView.Prese
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaImage>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Image>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaImage> display) {
-				OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<NovaImageList>() {
+			protected void onRangeChanged(HasData<Image> display) {
+				/*
+				OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<ImageList>() {
 
 					@Override
-					public void onSuccess(NovaImageList result) {
+					public void onSuccess(ImageList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
 					}
 				});
+				*/
 			}
 
 		};

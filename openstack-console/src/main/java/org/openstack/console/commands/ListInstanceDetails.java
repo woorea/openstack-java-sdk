@@ -1,7 +1,5 @@
 package org.openstack.console.commands;
 
-import java.util.HashMap;
-
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
@@ -18,7 +16,7 @@ public class ListInstanceDetails extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		TenantResource tenant = getContext().getComputeClient();
 		// TODO: We don't format any extra details
-		return tenant.servers().server(serverId.getKey()).get(new HashMap<String, Object>());
+		return tenant.servers().server(serverId.getKey()).get();
 	}
 
 }

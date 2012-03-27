@@ -8,8 +8,10 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaKeyPair;
-import org.openstack.model.compute.NovaKeyPairList;
+import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.nova.keypair.NovaKeyPair;
+import org.openstack.model.compute.nova.keypair.NovaKeyPairList;
 
 /**
  * Keypair Support
@@ -28,7 +30,7 @@ public class KeyPairsResource extends Resource {
 	 * 
 	 * @return
 	 */
-	public NovaKeyPairList get() {
+	public KeyPairList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaKeyPairList.class);
 	}
 
@@ -42,7 +44,7 @@ public class KeyPairsResource extends Resource {
 	 * @param keyPair
 	 * @return
 	 */
-	public NovaKeyPair post(Entity<NovaKeyPair> keyPair) {
+	public KeyPair post(Entity<NovaKeyPair> keyPair) {
 		// OSAPI bug: Can't specify an SSH key in XML?
 		return target.request(MediaType.APPLICATION_JSON).post(keyPair, NovaKeyPair.class);
 	}

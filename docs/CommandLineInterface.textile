@@ -12,7 +12,7 @@ Build the code using @mvn package@, if you haven't already done so.
 This builds everything, including an all-in-one JAR which can be run standalone.
 
 If you're running devstack, you should then be able to run this (replacing the server address with your keystone server address):
-@java -jar openstack-cli/target/openstack-cli-standalone.jar --user demo --password supersecret --tenant demo --server http://192.168.71.1:5000/v2.0/ list-flavors@
+@java -jar openstack-cli/target/openstack-cli-standalone.jar --user demo --password secret0 --tenant demo --server http://192.168.1.52:5000/v2.0/ list-flavors@
 
 h2. Usage with nailgun
 

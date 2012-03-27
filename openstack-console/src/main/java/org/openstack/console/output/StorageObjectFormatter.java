@@ -5,18 +5,19 @@ import java.util.LinkedHashMap;
 
 import org.openstack.console.common.formatter.SimpleFormatter;
 import org.openstack.console.common.output.OutputSink;
-import org.openstack.model.storage.SwiftStorageObject;
+import org.openstack.model.storage.StorageObject;
+import org.openstack.model.storage.swift.SwiftStorageObject;
 
 import com.google.common.collect.Maps;
 
-public class StorageObjectFormatter extends SimpleFormatter<SwiftStorageObject> {
+public class StorageObjectFormatter extends SimpleFormatter<StorageObject> {
 
 	public StorageObjectFormatter() {
 		super(SwiftStorageObject.class);
 	}
 
 	@Override
-	public void visit(SwiftStorageObject o, OutputSink sink) throws IOException {
+	public void visit(StorageObject o, OutputSink sink) throws IOException {
 		LinkedHashMap<String, Object> values = Maps.newLinkedHashMap();
 
 		values.put("name", o.getName());

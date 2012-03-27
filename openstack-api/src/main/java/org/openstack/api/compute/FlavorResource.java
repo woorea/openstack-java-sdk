@@ -4,7 +4,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaFlavor;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.nova.NovaFlavor;
 
 public class FlavorResource extends Resource {
 
@@ -12,7 +13,7 @@ public class FlavorResource extends Resource {
 		super(target);
 	}
 
-	public NovaFlavor get() {
+	public Flavor get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaFlavor.class);
 	}
 

@@ -6,7 +6,7 @@ import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.autocomplete.ImageNameAutoCompleter;
 import org.openstack.console.common.StringWrapper;
 import org.openstack.console.common.autocomplete.HasAutoCompletor;
-import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.Image;
 import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.base.Objects;
@@ -18,9 +18,9 @@ public class ImageName extends StringWrapper {
 		super(key);
 	}
 
-	public NovaImage findImage(OpenstackCliContext context) throws OpenstackException {
-		List<NovaImage> matches = Lists.newArrayList();
-		for (NovaImage image : context.getComputeClient().images().get().getList()) {
+	public Image findImage(OpenstackCliContext context) throws OpenstackException {
+		List<Image> matches = Lists.newArrayList();
+		for (Image image : context.getComputeClient().images().get().getList()) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {

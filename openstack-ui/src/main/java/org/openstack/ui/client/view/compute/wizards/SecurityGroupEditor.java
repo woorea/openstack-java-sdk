@@ -2,8 +2,9 @@ package org.openstack.ui.client.view.compute.wizards;
 
 import java.io.IOException;
 
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupRule;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.TableLayout;
@@ -29,9 +30,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class SecurityGroupEditor extends Composite implements Editor<NovaSecurityGroup> {
+public class SecurityGroupEditor extends Composite implements Editor<SecurityGroup> {
 
-	public static class SecurityGroupRuleEditor implements Editor<NovaSecurityGroupRule> {
+	public static class SecurityGroupRuleEditor implements Editor<SecurityGroupRule> {
 
 		ValueListBox<String> ipProtocol;
 
@@ -85,7 +86,7 @@ public class SecurityGroupEditor extends Composite implements Editor<NovaSecurit
 
 	FlexTable table = new FlexTable();
 
-	ListEditor<NovaSecurityGroupRule, SecurityGroupRuleEditor> rules = ListEditor.<NovaSecurityGroupRule, SecurityGroupRuleEditor> of(new EditorSource<SecurityGroupRuleEditor>() {
+	ListEditor<SecurityGroupRule, SecurityGroupRuleEditor> rules = ListEditor.<SecurityGroupRule, SecurityGroupRuleEditor> of(new EditorSource<SecurityGroupRuleEditor>() {
 
 		@Override
 		public SecurityGroupRuleEditor create(int index) {

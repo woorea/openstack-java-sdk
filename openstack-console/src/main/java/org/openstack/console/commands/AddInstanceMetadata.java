@@ -1,15 +1,12 @@
 package org.openstack.console.commands;
 
-import java.util.HashMap;
-
-import javax.ws.rs.client.Entity;
-
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
-import org.openstack.model.compute.NovaMetadata;
-import org.openstack.model.compute.NovaMetadata.Item;
-import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.Metadata;
+import org.openstack.model.compute.nova.NovaMetadata;
+import org.openstack.model.compute.nova.NovaMetadata.Item;
+import org.openstack.model.compute.nova.NovaServer;
 
 public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -32,17 +29,17 @@ public class AddInstanceMetadata extends OpenstackCliCommandRunnerBase {
 		String instanceId = instanceName.findInstanceId(getContext());
 
 		NovaServer server = new NovaServer();
-		NovaMetadata metadata = server.getMetadata();
+		Metadata metadata = server.getMetadata();
 		if (metadata == null) {
 			metadata = new NovaMetadata();
-			server.setMetadata(metadata);
+			server.setMetadata((NovaMetadata) metadata);
 		}
 		Item item = new Item();
 		item.setKey(key);
 		item.setValue(value);
 		metadata.getItems().add(item);
 
-		return compute.servers().server(instanceId).put(new HashMap<String, Object>(), Entity.json(server));
+		return compute.servers().server(instanceId).put(server);
 	}
 
 }

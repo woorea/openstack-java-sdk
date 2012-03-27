@@ -7,8 +7,9 @@ import org.openstack.api.compute.TenantResource;
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.common.Extension;
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.nova.NovaImage;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 
@@ -19,13 +20,12 @@ public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
 	@BeforeClass
 	public void init() {
 		init("/openstack.properties");
-		client = client.reauthenticateOnTenant("admin");
 		compute = client.getComputeEndpoint();
 	}
 
-	protected NovaFlavor findSmallestFlavor() {
-		NovaFlavor bestFlavor = null;
-		for (NovaFlavor flavor : compute.flavors().get().getList()) {
+	protected Flavor findSmallestFlavor() {
+		Flavor bestFlavor = null;
+		for (Flavor flavor : compute.flavors().get().getList()) {
 			if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 				bestFlavor = flavor;
 			}
@@ -33,11 +33,8 @@ public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
 		return bestFlavor;
 	}
 
-	protected NovaImage findUecImage() {
-		
-
-		Iterable<NovaImage> images = compute.images().get().getList();
-		for (NovaImage i : images) {
+	protected Image findUecImage() {
+		for (Image i : compute.images().get().getList()) {
 			// Some UEC images
 			if (i.getName().equals("lucid-server-cloudimg-amd64") || i.getName().equals("natty-server-cloudimg-amd64")) {
 				return i;
@@ -48,8 +45,8 @@ public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
 
 	
 
-	protected NovaImage getUecImage() {
-		NovaImage image = findUecImage();
+	protected Image getUecImage() {
+		Image image = findUecImage();
 		if (image == null) {
 			throw new SkipException("Skipping test because image not found");
 		}
@@ -82,7 +79,7 @@ public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
 
 	private boolean supportsExtension(String namespace) {
 		if (extensions == null) {
-			extensions = compute.extensions().get(new HashMap<String, Object>()).getList();
+			extensions = compute.extensions().get().getList();
 		}
 		for (Extension extension : extensions) {
 			if (namespace.equals(extension.getNamespace()))

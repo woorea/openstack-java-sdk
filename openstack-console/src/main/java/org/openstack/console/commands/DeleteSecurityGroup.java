@@ -3,7 +3,7 @@ package org.openstack.console.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.model.SecurityGroupName;
-import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.SecurityGroup;
 
 public class DeleteSecurityGroup extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -17,7 +17,7 @@ public class DeleteSecurityGroup extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		OpenstackCliContext context = getContext();
 
-		NovaSecurityGroup securityGroup = name.resolve(context);
+		SecurityGroup securityGroup = name.resolve(context);
 		if (securityGroup == null) {
 			throw new IllegalArgumentException("Cannot find security group: " + name.getKey());
 		}

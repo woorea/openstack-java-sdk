@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute.snapshot;
 
-import org.openstack.model.compute.NovaSnapshot;
+import org.openstack.model.compute.Snapshot;
 import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.CheckboxCell;
@@ -28,7 +28,7 @@ public class SnapshotsView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<NovaSnapshot> grid = new DataGrid<NovaSnapshot>();
+	DataGrid<Snapshot> grid = new DataGrid<Snapshot>();
 
 	private Presenter presenter;
 
@@ -38,27 +38,27 @@ public class SnapshotsView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<NovaSnapshot, Boolean> checkboxColumn = new Column<NovaSnapshot, Boolean>(new CheckboxCell()) {
+		Column<Snapshot, Boolean> checkboxColumn = new Column<Snapshot, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(NovaSnapshot object) {
+			public Boolean getValue(Snapshot object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		Column<NovaSnapshot, String> logoColumn = new Column<NovaSnapshot, String>(new LogoCell()) {
+		Column<Snapshot, String> logoColumn = new Column<Snapshot, String>(new LogoCell()) {
 
 			@Override
-			public String getValue(NovaSnapshot object) {
+			public String getValue(Snapshot object) {
 				return "";
 			}
 		};
 		grid.setColumnWidth(logoColumn, "60px");
 		grid.addColumn(logoColumn);
-		TextColumn<NovaSnapshot> nameColumn = new TextColumn<NovaSnapshot>() {
+		TextColumn<Snapshot> nameColumn = new TextColumn<Snapshot>() {
 			@Override
-			public String getValue(NovaSnapshot object) {
+			public String getValue(Snapshot object) {
 				return "";
 			}
 		};

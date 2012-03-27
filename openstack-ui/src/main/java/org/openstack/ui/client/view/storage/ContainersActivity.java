@@ -1,13 +1,11 @@
 package org.openstack.ui.client.view.storage;
 
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaImageList;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.ImageList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
-import org.openstack.ui.client.view.image.ImagesView;
-import org.openstack.ui.client.view.image.ImagesView.Presenter;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -22,12 +20,12 @@ public class ContainersActivity extends AbstractActivity implements ContainersVi
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<NovaImage> dataProvider;
+	private RefreshableDataProvider<Image> dataProvider;
 
-	private MultiSelectionModel<NovaImage> selectionModel = new MultiSelectionModel<NovaImage>();
+	private MultiSelectionModel<Image> selectionModel = new MultiSelectionModel<Image>();
 
-	private DefaultSelectionEventManager<NovaImage> selectionManager = DefaultSelectionEventManager
-			.<NovaImage> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Image> selectionManager = DefaultSelectionEventManager
+			.<Image> createCheckboxManager(0);
 
 	public ContainersActivity(OpenStackPlace place) {
 		this.place = place;
@@ -38,14 +36,14 @@ public class ContainersActivity extends AbstractActivity implements ContainersVi
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaImage>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Image>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaImage> display) {
-				OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<NovaImageList>() {
+			protected void onRangeChanged(HasData<Image> display) {
+				OpenStackClient.COMPUTE.listImages(new DefaultAsyncCallback<ImageList>() {
 
 					@Override
-					public void onSuccess(NovaImageList result) {
+					public void onSuccess(ImageList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

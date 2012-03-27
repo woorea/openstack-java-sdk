@@ -3,12 +3,12 @@ package org.openstack.ui.client.view.compute;
 import java.util.Collection;
 import java.util.Set;
 
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.compute.NovaServerList;
-import org.openstack.model.compute.server.action.Console;
-import org.openstack.model.compute.server.action.GetConsoleOutputAction;
-import org.openstack.model.compute.server.action.GetVncConsoleAction;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.server.actions.Console;
+import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
+import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -42,12 +42,12 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 		this.place = place;
 	}
 
-	private RefreshableDataProvider<NovaServer> dataProvider;
+	private RefreshableDataProvider<Server> dataProvider;
 
-	private MultiSelectionModel<NovaServer> selectionModel = new MultiSelectionModel<NovaServer>();
+	private MultiSelectionModel<Server> selectionModel = new MultiSelectionModel<Server>();
 
-	private DefaultSelectionEventManager<NovaServer> selectionManager = DefaultSelectionEventManager
-			.<NovaServer> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Server> selectionManager = DefaultSelectionEventManager
+			.<Server> createCheckboxManager(0);
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
@@ -55,14 +55,14 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaServer>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Server>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaServer> display) {
-				OpenStackClient.COMPUTE.listServers(new DefaultAsyncCallback<NovaServerList>() {
+			protected void onRangeChanged(HasData<Server> display) {
+				OpenStackClient.COMPUTE.listServers(new DefaultAsyncCallback<ServerList>() {
 
 					@Override
-					public void onSuccess(NovaServerList result) {
+					public void onSuccess(ServerList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
@@ -88,7 +88,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 	@Override
 	public void onServerAction(final ServerAction action) {
-		final Set<NovaServer> servers = selectionModel.getSelectedSet();
+		final Set<Server> servers = selectionModel.getSelectedSet();
 		switch (action) {
 		case GET_CONSOLE_OUTPUT:
 			showConsoleOutput(servers);
@@ -109,8 +109,8 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 		}
 	}
 
-	public void showVncConsole(Collection<NovaServer> servers) {
-		for (NovaServer server : servers) {
+	public void showVncConsole(Collection<Server> servers) {
+		for (Server server : servers) {
 
 			final PopupPanel popup = new PopupPanel(true, true);
 
@@ -136,8 +136,8 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 		}
 	}
 
-	public void showConsoleOutput(Collection<NovaServer> servers) {
-		for (NovaServer server : servers) {
+	public void showConsoleOutput(Collection<Server> servers) {
+		for (Server server : servers) {
 
 			final PopupPanel popup = new PopupPanel(true, true);
 
@@ -164,7 +164,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 	@Override
 	public void onDeleteServers() {
-		for(NovaServer ns : selectionModel.getSelectedSet()) {
+		for(Server ns : selectionModel.getSelectedSet()) {
 			OpenStackClient.COMPUTE.deleteServer(ns.getId(), new DefaultAsyncCallback<Void>() {
 
 				@Override
@@ -177,10 +177,10 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 
 	@Override
 	public void onShowServer(String id) {
-		OpenStackClient.COMPUTE.showServer(id, new DefaultAsyncCallback<NovaServer>() {
+		OpenStackClient.COMPUTE.showServer(id, new DefaultAsyncCallback<Server>() {
 
 			@Override
-			public void onSuccess(NovaServer result) {
+			public void onSuccess(Server result) {
 				VIEW.detail.setWidget(new Label(result.toString()));
 				
 			}
@@ -189,7 +189,7 @@ public class ServersActivity extends AbstractActivity implements ServersView.Pre
 	}
 
 	@Override
-	public boolean isSelected(NovaServer object) {
+	public boolean isSelected(Server object) {
 		return selectionModel.isSelected(object);
 	}
 

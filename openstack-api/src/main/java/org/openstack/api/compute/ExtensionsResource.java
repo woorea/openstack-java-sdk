@@ -1,8 +1,5 @@
 package org.openstack.api.compute;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -14,12 +11,8 @@ public class ExtensionsResource extends Resource {
 	public ExtensionsResource(Target target) {
 		super(target);
 	}
-	
-	public Object get() {
-		return get(new HashMap<String, Object>());
-	}
 
-	public ExtensionList get(Map<String, Object> properties) {
+	public ExtensionList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(ExtensionList.class);
 	}
 

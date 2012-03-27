@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute.wizards;
 
-import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.compute.nova.NovaServerForCreate;
 
 import com.google.common.collect.Iterables;
 import com.google.gwt.core.client.GWT;

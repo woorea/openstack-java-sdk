@@ -2,11 +2,13 @@ package org.openstack.client.compute;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaKeyPair;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.nova.NovaImage;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
@@ -21,17 +23,17 @@ public class ITConfigDrive extends ComputeIntegrationTest {
 
 		//Image image = getUecImage();
 		//NovaImage image = findImageByName("DebianSqueeze_20120226");
-		NovaImage image = Iterables.find(compute.images().get().getList(), new Predicate<NovaImage>() {
+		Image image = Iterables.find(compute.images().get().getList(), new Predicate<Image>() {
 
 			@Override
-			public boolean apply(NovaImage image) {
+			public boolean apply(Image image) {
 				return "cirros-0.3.0-x86_64-blank".equals(image.getName());
 			}
 		});
 		if (image == null) {
 			throw new SkipException("Cannot find image for test");
 		}
-		NovaFlavor bestFlavor = findSmallestFlavor();
+		Flavor bestFlavor = findSmallestFlavor();
 
 		NovaServerForCreate serverForCreate = new NovaServerForCreate();
 		serverForCreate.setName(random.randomAlphanumericString(10));
@@ -56,12 +58,12 @@ public class ITConfigDrive extends ComputeIntegrationTest {
 
 		compute.keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
 		*/
-		NovaKeyPair keyPair = compute.keyPairs().post(Entity.json(new NovaKeyPair("test")));
+		KeyPair keyPair = compute.keyPairs().post(Entity.json(new NovaKeyPair("test")));
 
 		serverForCreate.setKeyName(keyPair.getName());
 		serverForCreate.setConfigDrive(true);
 
-		NovaServer server = compute.servers().post(Entity.json(serverForCreate));
+		Server server = compute.servers().post(serverForCreate);
 
 		// Wait for the server to be ready
 		// AsyncServerOperation async = AsyncServerOperation.wrapServerCreate(client.compute(), server);

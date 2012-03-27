@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.compute.snapshot;
 
-import org.openstack.model.compute.NovaSnapshot;
-import org.openstack.model.compute.NovaSnapshotList;
+import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -20,12 +20,12 @@ public class SnapshotsActivity extends AbstractActivity implements SnapshotsView
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<NovaSnapshot> dataProvider;
+	private RefreshableDataProvider<Snapshot> dataProvider;
 
-	private MultiSelectionModel<NovaSnapshot> selectionModel = new MultiSelectionModel<NovaSnapshot>();
+	private MultiSelectionModel<Snapshot> selectionModel = new MultiSelectionModel<Snapshot>();
 
-	private DefaultSelectionEventManager<NovaSnapshot> selectionManager = DefaultSelectionEventManager
-			.<NovaSnapshot> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Snapshot> selectionManager = DefaultSelectionEventManager
+			.<Snapshot> createCheckboxManager(0);
 
 	public SnapshotsActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,14 +36,14 @@ public class SnapshotsActivity extends AbstractActivity implements SnapshotsView
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaSnapshot>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Snapshot>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaSnapshot> display) {
-				OpenStackClient.COMPUTE.listSnapshots(new DefaultAsyncCallback<NovaSnapshotList>() {
+			protected void onRangeChanged(HasData<Snapshot> display) {
+				OpenStackClient.COMPUTE.listSnapshots(new DefaultAsyncCallback<SnapshotList>() {
 
 					@Override
-					public void onSuccess(NovaSnapshotList result) {
+					public void onSuccess(SnapshotList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

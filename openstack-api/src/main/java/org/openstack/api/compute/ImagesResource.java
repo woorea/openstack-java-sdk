@@ -4,7 +4,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaImageList;
+import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.nova.NovaImageList;
 
 public class ImagesResource extends Resource {
 	
@@ -12,7 +13,7 @@ public class ImagesResource extends Resource {
 		super(target);
 	}
 
-    public NovaImageList get() { 
+    public ImageList get() { 
 		return target.path("/detail").request(MediaType.APPLICATION_JSON).get(NovaImageList.class);
 	}
 

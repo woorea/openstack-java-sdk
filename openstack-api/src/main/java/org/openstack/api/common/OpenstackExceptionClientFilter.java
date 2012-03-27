@@ -10,8 +10,8 @@ import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.ResponseFilter;
 
 import org.apache.commons.io.IOUtils;
-import org.openstack.model.compute.NovaBadRequest;
-import org.openstack.model.compute.NovaItemNotFound;
+import org.openstack.model.compute.nova.NovaBadRequest;
+import org.openstack.model.compute.nova.NovaItemNotFound;
 import org.openstack.model.exceptions.OpenstackAuthenticationException;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackForbiddenException;

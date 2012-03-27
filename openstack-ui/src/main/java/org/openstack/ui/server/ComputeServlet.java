@@ -4,43 +4,44 @@ import java.util.Collection;
 
 import javax.ws.rs.client.Entity;
 
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaFlavorList;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPairList;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.compute.NovaServerList;
-import org.openstack.model.compute.NovaSnapshotList;
-import org.openstack.model.compute.NovaVolumeList;
-import org.openstack.model.compute.server.action.Console;
-import org.openstack.model.compute.server.action.GetConsoleOutputAction;
-import org.openstack.model.compute.server.action.GetVncConsoleAction;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.server.actions.Console;
+import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
+import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
+import org.openstack.model.compute.nova.snapshot.NovaSnapshotList;
 import org.openstack.ui.client.api.ComputeService;
 
 @SuppressWarnings("serial")
 public class ComputeServlet extends OpenStackRemoteServiceServlet implements ComputeService {
 
-	public NovaSecurityGroup showSecurityGroup(Integer id) {
+	public SecurityGroup showSecurityGroup(Integer id) {
 		return getClient().getComputeEndpoint().securityGroups().securityGroup(id).get();
 	}
 
 	@Override
-	public NovaServerList listServers() {
+	public ServerList listServers() {
 		return getClient().getComputeEndpoint().servers().get();
 	}
 	
 	@Override
-	public NovaServer showServer(String id) {
+	public Server showServer(String id) {
 		return getClient().getComputeEndpoint().servers().server(id).get();
 	}
 	
 	@Override
-	public NovaServer saveServer(NovaServerForCreate serverForCreate) {
-		return getClient().getComputeEndpoint().servers().post(Entity.json(serverForCreate));
+	public Server saveServer(NovaServerForCreate serverForCreate) {
+		return getClient().getComputeEndpoint().servers().post(serverForCreate);
 	}
 	
 	@Override
@@ -48,98 +49,98 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 		getClient().getComputeEndpoint().servers().server(id).delete();
 	}
 	
-	public void restoreServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void restoreServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void forceDeleteServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void forceDeleteServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void changePasswordServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void changePasswordServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void rebuildServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void rebuildServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void resizeServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void resizeServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void revertResizeServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void revertResizeServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void createImageServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void createImageServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void pauseServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void pauseServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void unpauseServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void unpauseServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void suspendServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void suspendServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void resumeServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void resumeServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void migrateServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void migrateServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void resetNetworkServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void resetNetworkServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void injectNetworkInfoServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void injectNetworkInfoServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void lockServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void lockServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
 
-	public void unlockServer(Collection<NovaServer> servers) {
-		for(NovaServer s : servers) {
+	public void unlockServer(Collection<Server> servers) {
+		for(Server s : servers) {
 			getClient().getComputeEndpoint().servers().server("").restore();
 		}
 	}
@@ -158,40 +159,40 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 
 
 	@Override
-	public NovaImageList listImages() {
+	public ImageList listImages() {
 		return getClient().getComputeEndpoint().images().get();
 	}
 
 	@Override
-	public NovaFlavorList listFlavors() {
+	public FlavorList listFlavors() {
 		return getClient().getComputeEndpoint().flavors().get();
 	}
 
 	@Override
-	public NovaKeyPairList listKeyPairs() {
+	public KeyPairList listKeyPairs() {
 		return getClient().getComputeEndpoint().keyPairs().get();
 	}
 
 	@Override
-	public NovaSecurityGroupList listSecurityGroups() {
+	public SecurityGroupList listSecurityGroups() {
 		return getClient().getComputeEndpoint().securityGroups().get();
 	}
 
 	@Override
-	public NovaVolumeList listVolumes() {
+	public VolumeList listVolumes() {
 		return getClient().getComputeEndpoint().volumes().get();
 	}
 
 	@Override
-	public NovaSnapshotList listSnapshots() {
+	public SnapshotList listSnapshots() {
 		return new NovaSnapshotList();
 	}
 
-	public NovaImage showImage(String id) {
+	public Image showImage(String id) {
 		return getClient().getComputeEndpoint().images().image(id).get();
 	}
 
-	public NovaFlavor showFlavor(String id) {
+	public Flavor showFlavor(String id) {
 		return getClient().getComputeEndpoint().flavors().flavor(id).get();
 	}
 

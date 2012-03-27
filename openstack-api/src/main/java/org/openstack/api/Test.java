@@ -7,7 +7,7 @@ import org.openstack.api.compute.TenantResource;
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
-import org.openstack.model.compute.NovaServerList;
+import org.openstack.model.compute.ServerList;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
 import org.openstack.model.identity.Service;
@@ -20,8 +20,8 @@ import org.openstack.model.identity.keystone.KeystoneRole;
 import org.openstack.model.identity.keystone.KeystoneService;
 import org.openstack.model.identity.keystone.KeystoneTenant;
 import org.openstack.model.identity.keystone.KeystoneUser;
-import org.openstack.model.storage.SwiftContainer;
-import org.openstack.model.storage.SwiftObjectProperties;
+import org.openstack.model.storage.swift.SwiftContainer;
+import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 public class Test {
 
@@ -95,7 +95,7 @@ public class Test {
 		
 		TenantResource compute = openstack.getComputeEndpoint();
 
-		NovaServerList servers = compute.servers().get();
+		ServerList servers = compute.servers().get();
 //		
 //		NovaImageList images = compute.images().get();
 		// "cirros-0.3.0-x86_64-blank"
@@ -112,7 +112,7 @@ public class Test {
 		
 		List<SwiftContainer> sAccount = openstack.getStorageEndpoint().get();
 		
-		SwiftObjectProperties p = new SwiftObjectProperties();
+		SwiftStorageObjectProperties p = new SwiftStorageObjectProperties();
 		openstack.getStorageEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);
 
 	}

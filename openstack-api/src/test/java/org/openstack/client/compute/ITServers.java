@@ -5,11 +5,12 @@ import java.util.NoSuchElementException;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.ServerResource;
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.compute.NovaServerList;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.nova.NovaImage;
+import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -19,17 +20,17 @@ import com.google.common.collect.Iterables;
 
 public class ITServers extends ComputeIntegrationTest {
 	
-	private NovaServer server;
+	private Server server;
 
 	@Test
 	public void listServers() {
 		
-		NovaServerList servers = compute.servers().get();
+		ServerList servers = compute.servers().get();
 
-		for (NovaServer server : servers.getList()) {
+		for (Server server : servers.getList()) {
 			//Until this is resolved? on compute server api we access throught id
 			//NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
-			NovaImage image = compute.images().image(server.getImage().getId()).get();
+			Image image = compute.images().image(server.getImage().getId()).get();
 			//rel=self carries the version but rel=bookmark ¿clarify from openstack team?
 			client.target(server.getLink("self").getHref(), ServerResource.class).delete();
 		}
@@ -40,17 +41,17 @@ public class ITServers extends ComputeIntegrationTest {
 	public void createServer() throws OpenstackException {
 		
 		try {
-			NovaFlavor bestFlavor = null;
-			for (NovaFlavor flavor : compute.flavors().get().getList()) {
+			Flavor bestFlavor = null;
+			for (Flavor flavor : compute.flavors().get().getList()) {
 				if (bestFlavor == null || bestFlavor.getRam() > flavor.getRam()) {
 					bestFlavor = flavor;
 				}
 			}
 			
-			NovaImage image = Iterables.find(compute.images().get().getList(), new Predicate<NovaImage>() {
+			Image image = Iterables.find(compute.images().get().getList(), new Predicate<Image>() {
 
 				@Override
-				public boolean apply(NovaImage image) {
+				public boolean apply(Image image) {
 					return "cirros-0.3.0-x86_64-blank".equals(image.getName());
 				}
 			});
@@ -64,7 +65,7 @@ public class ITServers extends ComputeIntegrationTest {
 			// }});
 			System.out.println(serverForCreate);
 
-			server = compute.servers().post(Entity.json(serverForCreate));
+			server = compute.servers().post(serverForCreate);
 			
 		} catch (NoSuchElementException e) {
 			throw new SkipException("Skipping test because image not found");

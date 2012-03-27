@@ -3,7 +3,10 @@ package org.openstack.client.compute;
 import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.TenantResource;
-import org.openstack.model.compute.NovaKeyPair;
+import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.KeyPairListItem;
+import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,10 +16,9 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 	@Test
 	public void testListKeypairs() throws OpenstackException {
 		skipIfNoKeyPairs();
-
 		
-		Iterable<NovaKeyPair> keyPairs = compute.keyPairs().get();
-		for (NovaKeyPair keyPair : keyPairs) {
+		for (KeyPairListItem keyPairItem : compute.keyPairs().get().getList()) {
+			KeyPair keyPair = keyPairItem.getKeypair();
 			Assert.assertNotNull(keyPair.getName());
 			Assert.assertNotNull(keyPair.getFingerprint());
 			Assert.assertNotNull(keyPair.getPublicKey());
@@ -26,17 +28,16 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 	@Test
 	public void deleteAllKeypairs() throws OpenstackException {
 		
-		Iterable<NovaKeyPair> keyPairs = compute.keyPairs().get();
-		for (NovaKeyPair keyPair : keyPairs) {
+		for (KeyPairListItem keyPair : compute.keyPairs().get().getList()) {
 			try {
-				compute.keyPairs().keypair(keyPair.getName()).delete();
+				compute.keyPairs().keypair(keyPair.getKeypair().getName()).delete();
 			} catch (Exception e) {
 
 			}
 		}
 	}
 
-	private void assertKeyPairEquals(NovaKeyPair actual, NovaKeyPair expected) {
+	private void assertKeyPairEquals(KeyPair actual, KeyPair expected) {
 		Assert.assertEquals(actual.getName(), expected.getName());
 		Assert.assertEquals(actual.getFingerprint(), expected.getFingerprint());
 		Assert.assertEquals(actual.getPublicKey(), expected.getPublicKey());
@@ -47,12 +48,12 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		NovaKeyPair created = compute.keyPairs().post(Entity.json(createRequest));
+		KeyPair created = compute.keyPairs().post(Entity.json(createRequest));
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());
 
-		NovaKeyPair fetched = findKeyPair(compute, created.getName());
+		KeyPair fetched = findKeyPair(compute, created.getName());
 		assertKeyPairEquals(fetched, created);
 
 		// Delete the keypair
@@ -74,10 +75,10 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 		testCreateAndDelete(name);
 	}
 
-	private NovaKeyPair findKeyPair(TenantResource nova, String name) {
-		for (NovaKeyPair keyPair : nova.keyPairs().get()) {
-			if (keyPair.getName().equals(name))
-				return keyPair;
+	private KeyPair findKeyPair(TenantResource nova, String name) {
+		for (KeyPairListItem keyPair : nova.keyPairs().get().getList()) {
+			if (keyPair.getKeypair().getName().equals(name))
+				return keyPair.getKeypair();
 		}
 		return null;
 	}

@@ -18,7 +18,8 @@ import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.TenantResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
-import org.openstack.model.storage.SwiftObjectProperties;
+import org.openstack.model.storage.StorageObjectProperties;
+import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 import com.google.common.base.Preconditions;
 
@@ -40,12 +41,12 @@ public class ObjectResource  extends Resource {
 		super(target);
 	}
 	
-	public SwiftObjectProperties head() {
+	public StorageObjectProperties head() {
 		
 		Response response = target.request(MediaType.APPLICATION_JSON).head();
 		int httpStatus = response.getStatus();
 		if (httpStatus == 200) {
-			SwiftObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response.getHeaders());
+			StorageObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response.getHeaders());
 			return properties;
 		}
 
@@ -57,7 +58,7 @@ public class ObjectResource  extends Resource {
 		
 	}
 	
-	public Response post(SwiftObjectProperties changeProperties) {
+	public Response post(StorageObjectProperties changeProperties) {
 		Invocation.Builder b = target.request(MediaType.APPLICATION_JSON);
 		SwiftHeaderUtils.setHeadersForProperties(b, changeProperties);
 		return b.method("POST");
@@ -71,7 +72,7 @@ public class ObjectResource  extends Resource {
 		return target.request(MediaType.APPLICATION_OCTET_STREAM).get(InputStream.class);	
 	}
 
-	public Response put(File srcFile, SwiftObjectProperties properties) throws OpenstackException {
+	public Response put(File srcFile, SwiftStorageObjectProperties properties) throws OpenstackException {
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(srcFile);
@@ -83,7 +84,7 @@ public class ObjectResource  extends Resource {
 		}
 	}
 
-	public Response put(InputStream objectStream, long objectStreamLength, SwiftObjectProperties properties) throws OpenstackException {
+	public Response put(InputStream objectStream, long objectStreamLength, SwiftStorageObjectProperties properties) throws OpenstackException {
 		Preconditions.checkNotNull(properties, "You have to supply object propeties");
 		Preconditions.checkNotNull(properties, "You have to supply object name");
 		try {

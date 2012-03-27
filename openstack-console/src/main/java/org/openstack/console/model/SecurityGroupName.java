@@ -6,7 +6,7 @@ import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.autocomplete.SecurityGroupNameAutoCompleter;
 import org.openstack.console.common.StringWrapper;
 import org.openstack.console.common.autocomplete.HasAutoCompletor;
-import org.openstack.model.compute.NovaSecurityGroup;
+import org.openstack.model.compute.SecurityGroup;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
@@ -18,9 +18,9 @@ public class SecurityGroupName extends StringWrapper {
 		super(key);
 	}
 
-	public NovaSecurityGroup resolve(OpenstackCliContext context) {
-		List<NovaSecurityGroup> matches = Lists.newArrayList();
-		for (NovaSecurityGroup candidate : context.getComputeClient().securityGroups().get().getList()) {
+	public SecurityGroup resolve(OpenstackCliContext context) {
+		List<SecurityGroup> matches = Lists.newArrayList();
+		for (SecurityGroup candidate : context.getComputeClient().securityGroups().get().getList()) {
 			if (Objects.equal(candidate.getName(), getKey())) {
 				matches.add(candidate);
 			} else if (Objects.equal(candidate.getId(), getKey())) {

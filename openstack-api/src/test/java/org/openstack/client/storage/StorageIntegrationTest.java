@@ -8,8 +8,8 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.storage.AccountResource;
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.model.storage.SwiftContainer;
-import org.openstack.model.storage.SwiftObjectProperties;
+import org.openstack.model.storage.swift.SwiftContainer;
+import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -60,7 +60,7 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	
 	@Test(dependsOnMethods="createContainer", priority=3)
 	public void createObject() {
-		SwiftObjectProperties properties = new SwiftObjectProperties();
+		SwiftStorageObjectProperties properties = new SwiftStorageObjectProperties();
 		properties.setName("test-object");
 		int size = 1024;
 		InputStream is = new ByteArrayInputStream(new byte[size]);

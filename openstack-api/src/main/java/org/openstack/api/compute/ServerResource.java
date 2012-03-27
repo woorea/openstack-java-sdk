@@ -11,34 +11,35 @@ import javax.ws.rs.core.Response;
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.SecurityGroupsResource;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.server.action.AddFixedIpAction;
-import org.openstack.model.compute.server.action.AddFloatingIpAction;
-import org.openstack.model.compute.server.action.ChangePasswordAction;
-import org.openstack.model.compute.server.action.ConfirmResizeAction;
-import org.openstack.model.compute.server.action.Console;
-import org.openstack.model.compute.server.action.CreateBackupAction;
-import org.openstack.model.compute.server.action.ForceDeleteAction;
-import org.openstack.model.compute.server.action.GetConsoleOutputAction;
-import org.openstack.model.compute.server.action.GetVncConsoleAction;
-import org.openstack.model.compute.server.action.InjectNetworkInfoAction;
-import org.openstack.model.compute.server.action.LockAction;
-import org.openstack.model.compute.server.action.MigrateAction;
-import org.openstack.model.compute.server.action.Output;
-import org.openstack.model.compute.server.action.PauseAction;
-import org.openstack.model.compute.server.action.RebootAction;
-import org.openstack.model.compute.server.action.RebuildAction;
-import org.openstack.model.compute.server.action.RemoveFixedIpAction;
-import org.openstack.model.compute.server.action.RemoveFloatingIpAction;
-import org.openstack.model.compute.server.action.ResetNetworkAction;
-import org.openstack.model.compute.server.action.ResizeAction;
-import org.openstack.model.compute.server.action.RestoreAction;
-import org.openstack.model.compute.server.action.ResumeAction;
-import org.openstack.model.compute.server.action.RevertResize;
-import org.openstack.model.compute.server.action.SuspendAction;
-import org.openstack.model.compute.server.action.UnlockAction;
-import org.openstack.model.compute.server.action.UnpauseAction;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.nova.NovaServer;
+import org.openstack.model.compute.nova.server.actions.AddFixedIpAction;
+import org.openstack.model.compute.nova.server.actions.AddFloatingIpAction;
+import org.openstack.model.compute.nova.server.actions.ChangePasswordAction;
+import org.openstack.model.compute.nova.server.actions.ConfirmResizeAction;
+import org.openstack.model.compute.nova.server.actions.Console;
+import org.openstack.model.compute.nova.server.actions.CreateBackupAction;
+import org.openstack.model.compute.nova.server.actions.ForceDeleteAction;
+import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
+import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
+import org.openstack.model.compute.nova.server.actions.InjectNetworkInfoAction;
+import org.openstack.model.compute.nova.server.actions.LockAction;
+import org.openstack.model.compute.nova.server.actions.MigrateAction;
+import org.openstack.model.compute.nova.server.actions.Output;
+import org.openstack.model.compute.nova.server.actions.PauseAction;
+import org.openstack.model.compute.nova.server.actions.RebootAction;
+import org.openstack.model.compute.nova.server.actions.RebuildAction;
+import org.openstack.model.compute.nova.server.actions.RemoveFixedIpAction;
+import org.openstack.model.compute.nova.server.actions.RemoveFloatingIpAction;
+import org.openstack.model.compute.nova.server.actions.ResetNetworkAction;
+import org.openstack.model.compute.nova.server.actions.ResizeAction;
+import org.openstack.model.compute.nova.server.actions.RestoreAction;
+import org.openstack.model.compute.nova.server.actions.ResumeAction;
+import org.openstack.model.compute.nova.server.actions.RevertResize;
+import org.openstack.model.compute.nova.server.actions.SuspendAction;
+import org.openstack.model.compute.nova.server.actions.UnlockAction;
+import org.openstack.model.compute.nova.server.actions.UnpauseAction;
 
 public class ServerResource extends Resource {
 
@@ -57,17 +58,13 @@ public class ServerResource extends Resource {
 	public ServerResource(Target target) {
 		super(target);
 	}
-	
-	public NovaServer get() {
-		return get(new HashMap<String, Object>());
-	}
 
-	public NovaServer get(HashMap<String, Object> properties) {
+	public NovaServer get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaServer.class);
 	}
 	
-	public NovaServer put(HashMap<String, Object> properties, Entity<NovaServer> server) {
-		return target.request(MediaType.APPLICATION_JSON).put(server, NovaServer.class);
+	public Server put(NovaServer server) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.entity(server, MediaType.APPLICATION_JSON), NovaServer.class);
 	}
 
 	public Response delete() {
@@ -375,7 +372,7 @@ public class ServerResource extends Resource {
 		return path("consoles", ConsolesResource.class);
 	}
 
-	public NovaSecurityGroupList listSecurityGroups() {
+	public SecurityGroupList listSecurityGroups() {
 		return path("os-security-groups", SecurityGroupsResource.class).get();
 	}
 	

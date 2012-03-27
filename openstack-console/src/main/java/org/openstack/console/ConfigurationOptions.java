@@ -42,7 +42,19 @@ public class ConfigurationOptions extends CliOptions {
 	public OpenStackClient getOpenstackService() {
 		if (service == null) {
 			if (configFile == null) {
-				service = OpenStackClientFactory.authenticate();
+				Properties properties = new Properties();
+				
+				properties.setProperty("verbose", "true");
+				properties.setProperty("auth.endpoint", server);
+				properties.setProperty("auth.username", username);
+				properties.setProperty("auth.password", password);
+				properties.setProperty("auth.tenant.name", tenantId);
+				properties.setProperty("identity.endpoint.publicURL", String.format("http://%s:5000/v2.0", server));
+				properties.setProperty("identity.endpoint.internalURL", String.format("http://%s:5000/v2.0", server));
+				properties.setProperty("identity.endpoint.adminURL", String.format("http://%s:35357/v2.0", server));
+				properties.setProperty("identity.admin.token", "secret0");
+				
+				service = OpenStackClientFactory.authenticate(properties);
 			} else {
 				InputStream is = null;
 				try {

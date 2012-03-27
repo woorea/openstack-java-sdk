@@ -7,8 +7,10 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaConsole;
-import org.openstack.model.compute.NovaConsoleList;
+import org.openstack.model.compute.Console;
+import org.openstack.model.compute.ConsoleList;
+import org.openstack.model.compute.nova.NovaConsole;
+import org.openstack.model.compute.nova.NovaConsoleList;
 
 public class ConsolesResource extends Resource {
 	
@@ -16,11 +18,11 @@ public class ConsolesResource extends Resource {
 		super(target);
 	}
 
-	public NovaConsoleList get(Map<String, Object> properties) {
+	public ConsoleList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaConsoleList.class);
 	}
 	
-	public NovaConsole post(Map<String,Object> properties, Entity<NovaConsole> rule) {
+	public Console post(Entity<NovaConsole> rule) {
 		// OSAPI bug: Can't specify an SSH key in XML?
 		return target.request(MediaType.APPLICATION_JSON).post(rule, NovaConsole.class);
 	}

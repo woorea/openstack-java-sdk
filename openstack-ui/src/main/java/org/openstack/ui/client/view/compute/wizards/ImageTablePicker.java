@@ -2,7 +2,8 @@ package org.openstack.ui.client.view.compute.wizards;
 
 import java.util.List;
 
-import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.nova.NovaImage;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
@@ -37,9 +38,9 @@ public class ImageTablePicker extends Composite implements LeafValueEditor<Strin
 		this.presenter = presenter;
 	}
 
-	public void refresh(List<NovaImage> images) {
+	public void refresh(List<Image> images) {
 		int row = 0;
-		for (final NovaImage image : images) {
+		for (final Image image : images) {
 			int col = 0;
 			table.setHTML(row, col++, "<img src=\"img/logos/debian.png\" style=\"width: 60px\" />");
 			table.setHTML(row, col++, "<h3>" + image.getName() + "</h3><p>Available on June 2012</p>");

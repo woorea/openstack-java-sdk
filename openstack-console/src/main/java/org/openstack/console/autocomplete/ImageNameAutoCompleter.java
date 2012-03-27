@@ -5,7 +5,7 @@ import java.util.List;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.common.CliContext;
 import org.openstack.console.common.autocomplete.SimpleArgumentAutoCompleter;
-import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.Image;
 
 import com.google.common.collect.Lists;
 
@@ -16,7 +16,7 @@ public class ImageNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (NovaImage image : osContext.getComputeClient().images().get().getList()) {
+		for (Image image : osContext.getComputeClient().images().get().getList()) {
 			strings.add(image.getName());
 			strings.add(image.getId());
 		}

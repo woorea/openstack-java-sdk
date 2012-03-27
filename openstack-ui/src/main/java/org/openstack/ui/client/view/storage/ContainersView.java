@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.storage;
 
-import org.openstack.model.compute.NovaImage;
+import org.openstack.model.compute.Image;
 import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -32,7 +32,7 @@ public class ContainersView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<NovaImage> grid = new DataGrid<NovaImage>();
+	DataGrid<Image> grid = new DataGrid<Image>();
 
 	private Presenter presenter;
 
@@ -42,57 +42,57 @@ public class ContainersView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<NovaImage, Boolean> checkboxColumn = new Column<NovaImage, Boolean>(new CheckboxCell()) {
+		Column<Image, Boolean> checkboxColumn = new Column<Image, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(NovaImage object) {
+			public Boolean getValue(Image object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<NovaImage> statusColumn = new TextColumn<NovaImage>() {
+		TextColumn<Image> statusColumn = new TextColumn<Image>() {
 			@Override
-			public String getValue(NovaImage object) {
+			public String getValue(Image object) {
 				return object.getStatus();
 			}
 		};
 		grid.setColumnWidth(statusColumn, "120px");
 		grid.addColumn(statusColumn);
-		Column<NovaImage, String> logoColumn = new Column<NovaImage, String>(new LogoCell()) {
+		Column<Image, String> logoColumn = new Column<Image, String>(new LogoCell()) {
 
 			@Override
-			public String getValue(NovaImage object) {
+			public String getValue(Image object) {
 				return "";
 			}
 		};
 		grid.setColumnWidth(logoColumn, "60px");
 		grid.addColumn(logoColumn);
-		TextColumn<NovaImage> nameColumn = new TextColumn<NovaImage>() {
+		TextColumn<Image> nameColumn = new TextColumn<Image>() {
 			@Override
-			public String getValue(NovaImage object) {
+			public String getValue(Image object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn);
-		TextColumn<NovaImage> minDiskColumn = new TextColumn<NovaImage>() {
+		TextColumn<Image> minDiskColumn = new TextColumn<Image>() {
 			@Override
-			public String getValue(NovaImage object) {
+			public String getValue(Image object) {
 				return String.valueOf(object.getMinDisk());
 			}
 		};
 		grid.setColumnWidth(minDiskColumn, "120px");
 		grid.addColumn(minDiskColumn);
 		ButtonCell previewButton = new ButtonCell();
-		Column<NovaImage,String> preview = new Column<NovaImage,String>(previewButton) {
-		  public String getValue(NovaImage object) {
+		Column<Image,String> preview = new Column<Image,String>(previewButton) {
+		  public String getValue(Image object) {
 		    return "Launch";
 		  }
 		};
-		preview.setFieldUpdater(new FieldUpdater<NovaImage, String>() {
+		preview.setFieldUpdater(new FieldUpdater<Image, String>() {
 		  @Override
-		  public void update(int index, NovaImage securityGroup, String value) {
+		  public void update(int index, Image securityGroup, String value) {
 		    presenter.onLaunchImage(securityGroup.getId());
 		  }
 		});

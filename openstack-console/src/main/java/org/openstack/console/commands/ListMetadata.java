@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
-import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.Server;
 
 public class ListMetadata extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -21,7 +21,7 @@ public class ListMetadata extends OpenstackCliCommandRunnerBase {
 
 		String instanceId = instanceName.findInstanceId(getContext());
 
-		NovaServer server = compute.servers().server(instanceId).get(new HashMap<String, Object>());
+		Server server = compute.servers().server(instanceId).get();
 		return server.getMetadata().getItems();
 	}
 

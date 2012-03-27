@@ -7,8 +7,9 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaServer;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.nova.NovaServer;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 
 public class SecurityGroupResource extends Resource  {
 	
@@ -16,11 +17,11 @@ public class SecurityGroupResource extends Resource  {
 		super(target);
 	}
 
-	public NovaSecurityGroup get() {
+	public SecurityGroup get() {
 		return get(new HashMap<String, Object>());
 	}
 
-	public NovaSecurityGroup get(HashMap<String, Object> properties) {
+	public SecurityGroup get(HashMap<String, Object> properties) {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroup.class);
 	}
 

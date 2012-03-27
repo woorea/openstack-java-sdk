@@ -14,7 +14,7 @@ public class ExtensionResource extends Resource {
 		super(target);
 	}
 
-    public Extension get(Map<String, Object> properties) {
+    public Extension get() {
 		return target.request(MediaType.APPLICATION_JSON).get(Extension.class);
 	}
 }

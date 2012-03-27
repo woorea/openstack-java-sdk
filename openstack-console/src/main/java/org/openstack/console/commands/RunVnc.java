@@ -3,7 +3,7 @@ package org.openstack.console.commands;
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.compute.TenantResource;
 import org.openstack.console.model.InstanceName;
-import org.openstack.model.compute.server.action.Console;
+import org.openstack.model.compute.nova.server.actions.Console;
 
 public class RunVnc extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)

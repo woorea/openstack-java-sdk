@@ -5,9 +5,11 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.compute.NovaServerList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.nova.NovaServer;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.NovaServerList;
 
 public class ServersResource extends Resource {
 	
@@ -27,14 +29,20 @@ public class ServersResource extends Resource {
 	 * @param detail
 	 * @return
 	 */
-	public NovaServerList get() {
+	public ServerList get() {
 		return target.path("/detail").request().get(NovaServerList.class);
 	}
 
-	public NovaServer post(Entity<NovaServerForCreate> serverForCreate) {
+	public Server post(NovaServerForCreate serverForCreate) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		return target.request(MediaType.APPLICATION_JSON).post(serverForCreate, NovaServer.class);
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(serverForCreate, MediaType.APPLICATION_JSON), NovaServer.class);
 	}
+	
+	public ServerActionResource action() {
+		return path("/action", ServerActionResource.class);
+	}
+	
+	
 
 	public ServerResource server(String id) {
 		return new ServerResource(target.path("/{id}").pathParam("id", id));

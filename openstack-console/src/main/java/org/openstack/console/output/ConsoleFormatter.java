@@ -8,7 +8,7 @@ import org.openstack.console.common.output.ClientAction;
 import org.openstack.console.common.output.ClientActionFormatter;
 import org.openstack.console.common.output.OutputSink;
 import org.openstack.console.common.output.ClientAction.ClientActionType;
-import org.openstack.model.compute.server.action.Console;
+import org.openstack.model.compute.nova.server.actions.Console;
 
 import com.google.common.collect.Maps;
 

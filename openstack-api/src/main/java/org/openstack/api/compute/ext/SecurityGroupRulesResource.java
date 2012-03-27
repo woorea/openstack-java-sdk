@@ -7,8 +7,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
-import org.openstack.model.compute.NovaSecurityGroupRule;
+import org.openstack.model.compute.nova.NovaCreateSecurityGroupRuleRequest;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 
 public class SecurityGroupRulesResource extends Resource {
 	

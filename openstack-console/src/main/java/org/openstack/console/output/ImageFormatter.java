@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 
 import org.openstack.console.common.formatter.SimpleFormatter;
 import org.openstack.console.common.output.OutputSink;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaMetadata;
+import org.openstack.model.compute.nova.NovaImage;
+import org.openstack.model.compute.nova.NovaMetadata;
 
 import com.google.common.collect.Maps;
 

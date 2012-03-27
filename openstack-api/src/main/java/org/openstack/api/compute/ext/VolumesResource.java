@@ -8,7 +8,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ImageResource;
-import org.openstack.model.compute.NovaVolumeList;
+import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.nova.volume.NovaVolumeList;
 
 /**
  * The volume types API controller for the Openstack API
@@ -22,7 +23,7 @@ public class VolumesResource extends Resource {
 		super(target);
 	}
 	
-	public NovaVolumeList get() {
+	public VolumeList get() {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("detail",true);
 		return get(properties);
@@ -33,7 +34,7 @@ public class VolumesResource extends Resource {
 	 * 
 	 * @return
 	 */
-	public NovaVolumeList get(Map<String, Object> properties) {
+	public VolumeList get(Map<String, Object> properties) {
 		if(properties.get("detail") != null) {
 			target =  target.path("/detail");
 		} 

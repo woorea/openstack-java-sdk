@@ -3,10 +3,12 @@ package org.openstack.client.compute;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.InvocationException;
 
-import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaSecurityGroupRule;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.nova.NovaCreateSecurityGroupRuleRequest;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.testng.Assert;
@@ -18,10 +20,8 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 	public void testListSecurityGroups() throws OpenstackException {
 		skipIfNoSecurityGroups();
 
-		
-		NovaSecurityGroupList securityGroups = compute.securityGroups().get();
-		for (NovaSecurityGroup securityGroup : securityGroups) {
-			NovaSecurityGroup details = compute.securityGroups().securityGroup(securityGroup.getId()).get();
+		for (SecurityGroup securityGroup : compute.securityGroups().get().getList()) {
+			SecurityGroup details = compute.securityGroups().securityGroup(securityGroup.getId()).get();
 
 			assertSecurityGroupEquals(securityGroup, details);
 		}
@@ -40,13 +40,13 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
-		NovaSecurityGroup created = compute.securityGroups().post(Entity.json(createRequest));
+		SecurityGroup created = compute.securityGroups().post(Entity.json(createRequest));
 		Assert.assertEquals(created.getName(), groupName);
 		Assert.assertEquals(created.getDescription(), description);
 		Assert.assertNotNull(created.getId());
 		Assert.assertNotEquals(created.getId(), 0);
 
-		NovaSecurityGroup fetched = compute.securityGroups().securityGroup(created.getId()).get();
+		SecurityGroup fetched = compute.securityGroups().securityGroup(created.getId()).get();
 		assertSecurityGroupEquals(fetched, created);
 
 		Assert.assertEquals(fetched.getRules().size(), 0);
@@ -67,7 +67,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 			assertSecurityGroupEquals(fetched, created);
 
 			Assert.assertEquals(fetched.getRules().size(), 1);
-			NovaSecurityGroupRule rule = fetched.getRules().get(0);
+			SecurityGroupRule rule = fetched.getRules().get(0);
 			assertSecurityGroupRuleEquals(newRule, rule);
 
 			// List the rules directly
@@ -98,14 +98,14 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		Assert.assertNull(fetched);
 	}
 	
-	private void assertSecurityGroupEquals(NovaSecurityGroup actual, NovaSecurityGroup expected) {
+	private void assertSecurityGroupEquals(SecurityGroup actual, SecurityGroup expected) {
 		Assert.assertEquals(actual.getId(), expected.getId());
 		Assert.assertEquals(actual.getTenantId(), expected.getTenantId());
 		Assert.assertEquals(actual.getName(), expected.getName());
 		Assert.assertEquals(actual.getDescription(), expected.getDescription());
 	}
 
-	private void assertSecurityGroupRuleEquals(NovaCreateSecurityGroupRuleRequest newRule, NovaSecurityGroupRule rule) {
+	private void assertSecurityGroupRuleEquals(NovaCreateSecurityGroupRuleRequest newRule, SecurityGroupRule rule) {
 		Assert.assertEquals(rule.getFromPort(), newRule.getFromPort());
 		Assert.assertEquals(rule.getToPort(), newRule.getToPort());
 		Assert.assertEquals(rule.getIpProtocol(), newRule.getIpProtocol());

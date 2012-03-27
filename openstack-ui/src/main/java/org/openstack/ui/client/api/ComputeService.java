@@ -1,24 +1,22 @@
 package org.openstack.ui.client.api;
 
 import java.util.Collection;
-import java.util.List;
 
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaFlavorList;
-import org.openstack.model.compute.NovaImage;
-import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPair;
-import org.openstack.model.compute.NovaKeyPairList;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
-import org.openstack.model.compute.NovaServer;
-import org.openstack.model.compute.NovaServerForCreate;
-import org.openstack.model.compute.NovaServerList;
-import org.openstack.model.compute.NovaSnapshotList;
-import org.openstack.model.compute.NovaVolumeList;
-import org.openstack.model.compute.server.action.Console;
-import org.openstack.model.compute.server.action.GetConsoleOutputAction;
-import org.openstack.model.compute.server.action.GetVncConsoleAction;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.Image;
+import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.compute.nova.server.actions.Console;
+import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
+import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -26,67 +24,67 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("compute")
 public interface ComputeService extends RemoteService {
 
-	NovaServerList listServers();
+	ServerList listServers();
 	
-	NovaServer showServer(String id);
+	Server showServer(String id);
 	
-	NovaServer saveServer(NovaServerForCreate serverForCreate);
+	Server saveServer(NovaServerForCreate serverForCreate);
 	
 	void deleteServer(String id);
 	
-	void restoreServer(Collection<NovaServer> servers);
+	void restoreServer(Collection<Server> servers);
 
-	void forceDeleteServer(Collection<NovaServer> servers);
+	void forceDeleteServer(Collection<Server> servers);
 
-	void changePasswordServer(Collection<NovaServer> servers);
+	void changePasswordServer(Collection<Server> servers);
 
-	void rebuildServer(Collection<NovaServer> servers);
+	void rebuildServer(Collection<Server> servers);
 
-	void resizeServer(Collection<NovaServer> servers);
+	void resizeServer(Collection<Server> servers);
 
-	void revertResizeServer(Collection<NovaServer> servers);
+	void revertResizeServer(Collection<Server> servers);
 
-	void createImageServer(Collection<NovaServer> servers);
+	void createImageServer(Collection<Server> servers);
 
-	void pauseServer(Collection<NovaServer> servers);
+	void pauseServer(Collection<Server> servers);
 
-	void unpauseServer(Collection<NovaServer> servers);
+	void unpauseServer(Collection<Server> servers);
 
-	void suspendServer(Collection<NovaServer> servers);
+	void suspendServer(Collection<Server> servers);
 
-	void resumeServer(Collection<NovaServer> servers);
+	void resumeServer(Collection<Server> servers);
 
-	void migrateServer(Collection<NovaServer> servers);
+	void migrateServer(Collection<Server> servers);
 
-	void resetNetworkServer(Collection<NovaServer> servers);
+	void resetNetworkServer(Collection<Server> servers);
 
-	void injectNetworkInfoServer(Collection<NovaServer> servers);
+	void injectNetworkInfoServer(Collection<Server> servers);
 
-	void lockServer(Collection<NovaServer> servers);
+	void lockServer(Collection<Server> servers);
 
-	void unlockServer(Collection<NovaServer> servers);
+	void unlockServer(Collection<Server> servers);
 
 	Console getVncConsole(String serverId, GetVncConsoleAction action);
 
 	String getConsoleOutput(String serverId, GetConsoleOutputAction action);
 	
-	NovaImageList listImages();
+	ImageList listImages();
 	
-	NovaImage showImage(String id);
+	Image showImage(String id);
 	
-	NovaFlavorList listFlavors();
+	FlavorList listFlavors();
 	
-	NovaFlavor showFlavor(String id);
+	Flavor showFlavor(String id);
 	
-	NovaKeyPairList listKeyPairs();
+	KeyPairList listKeyPairs();
 	
-	NovaSecurityGroupList listSecurityGroups();
+	SecurityGroupList listSecurityGroups();
 	
-	NovaVolumeList listVolumes();
+	VolumeList listVolumes();
 	
-	NovaSnapshotList listSnapshots();
+	SnapshotList listSnapshots();
 
-	NovaSecurityGroup showSecurityGroup(Integer id);
+	SecurityGroup showSecurityGroup(Integer id);
 
 	
 	

@@ -4,8 +4,8 @@ import javax.ws.rs.client.Entity;
 
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.compute.TenantResource;
-import org.openstack.model.compute.NovaCreateSecurityGroupRuleRequest;
-import org.openstack.model.compute.NovaSecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.nova.NovaCreateSecurityGroupRuleRequest;
 
 public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -41,7 +41,7 @@ public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 		newRule.setIpProtocol(protocol);
 		newRule.setParentGroupId(securityGroupId);
 
-		NovaSecurityGroupRule createdRule = compute.securityGroupRules().post(Entity.json(newRule));
+		SecurityGroupRule createdRule = compute.securityGroupRules().post(Entity.json(newRule));
 
 		return createdRule;
 	}

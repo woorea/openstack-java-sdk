@@ -6,7 +6,8 @@ import org.openstack.api.storage.AccountResource;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.common.CliContext;
 import org.openstack.console.common.autocomplete.SimpleArgumentAutoCompleter;
-import org.openstack.model.storage.SwiftContainer;
+import org.openstack.model.storage.StorageContainer;
+import org.openstack.model.storage.swift.SwiftContainer;
 
 import com.google.common.collect.Lists;
 
@@ -19,7 +20,7 @@ public class ContainerNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
 		AccountResource client = osContext.getStorageClient();
 		Iterable<SwiftContainer> items = client.get();
-		for (SwiftContainer item : items) {
+		for (StorageContainer item : items) {
 			strings.add(item.getName());
 		}
 		addSuffix(strings, " ");

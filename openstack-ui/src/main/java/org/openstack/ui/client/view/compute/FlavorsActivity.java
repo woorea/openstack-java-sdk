@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.compute;
 
-import org.openstack.model.compute.NovaFlavor;
-import org.openstack.model.compute.NovaFlavorList;
+import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.FlavorList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -20,12 +20,12 @@ public class FlavorsActivity extends AbstractActivity implements FlavorsView.Pre
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<NovaFlavor> dataProvider;
+	private RefreshableDataProvider<Flavor> dataProvider;
 
-	private MultiSelectionModel<NovaFlavor> selectionModel = new MultiSelectionModel<NovaFlavor>();
+	private MultiSelectionModel<Flavor> selectionModel = new MultiSelectionModel<Flavor>();
 
-	private DefaultSelectionEventManager<NovaFlavor> selectionManager = DefaultSelectionEventManager
-			.<NovaFlavor> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Flavor> selectionManager = DefaultSelectionEventManager
+			.<Flavor> createCheckboxManager(0);
 
 	public FlavorsActivity(OpenStackPlace place) {
 		this.place = place;
@@ -36,14 +36,14 @@ public class FlavorsActivity extends AbstractActivity implements FlavorsView.Pre
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaFlavor>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Flavor>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaFlavor> display) {
-				OpenStackClient.COMPUTE.listFlavors(new DefaultAsyncCallback<NovaFlavorList>() {
+			protected void onRangeChanged(HasData<Flavor> display) {
+				OpenStackClient.COMPUTE.listFlavors(new DefaultAsyncCallback<FlavorList>() {
 
 					@Override
-					public void onSuccess(NovaFlavorList result) {
+					public void onSuccess(FlavorList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

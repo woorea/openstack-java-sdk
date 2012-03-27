@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.ResponseHeaders;
 
-import org.openstack.model.storage.SwiftObjectProperties;
+import org.openstack.model.storage.StorageObjectProperties;
+import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 class SwiftHeaderUtils {
 	
@@ -23,9 +24,9 @@ class SwiftHeaderUtils {
 		return classInfo;
 	}
 */
-	public static SwiftObjectProperties unmarshalHeaders(ResponseHeaders response) {
+	public static StorageObjectProperties unmarshalHeaders(ResponseHeaders response) {
 		
-		SwiftObjectProperties properties = new SwiftObjectProperties();
+		StorageObjectProperties properties = new SwiftStorageObjectProperties();
 		
 		Map<String, String> userProperties = properties.getCustomProperties();
 
@@ -61,7 +62,7 @@ class SwiftHeaderUtils {
 		return properties;
 	}
 
-	public static Invocation.Builder setHeadersForProperties(Invocation.Builder builder, SwiftObjectProperties changeProperties) {
+	public static Invocation.Builder setHeadersForProperties(Invocation.Builder builder, StorageObjectProperties changeProperties) {
 		
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {
 			builder.header("x-object-meta-" + tag.getKey(), tag.getValue());

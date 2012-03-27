@@ -5,8 +5,10 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupList;
 
 public class SecurityGroupsResource extends Resource {
 	
@@ -14,11 +16,11 @@ public class SecurityGroupsResource extends Resource {
 		super(target);
 	}
 
-	public NovaSecurityGroupList get() {
+	public SecurityGroupList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
 	}
 	
-	public NovaSecurityGroup post(Entity<NovaSecurityGroup> securityGroup) {
+	public SecurityGroup post(Entity<NovaSecurityGroup> securityGroup) {
 		return target.request(MediaType.APPLICATION_JSON).post(securityGroup, NovaSecurityGroup.class);
 		
 	}

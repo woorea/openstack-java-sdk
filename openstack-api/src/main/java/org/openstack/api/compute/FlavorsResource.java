@@ -3,7 +3,8 @@ package org.openstack.api.compute;
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.NovaFlavorList;
+import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.nova.NovaFlavorList;
 
 public class FlavorsResource extends Resource {
 	
@@ -11,7 +12,7 @@ public class FlavorsResource extends Resource {
 		super(target);
 	}
 
-    public NovaFlavorList get() {
+    public FlavorList get() {
 		return target.path("/detail").request().get(NovaFlavorList.class);
     }
 

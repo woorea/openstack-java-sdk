@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.compute.wizards;
 
-import org.openstack.model.compute.NovaMetadata;
+import org.openstack.model.compute.nova.NovaMetadata;
 import org.openstack.ui.client.view.compute.wizards.MetadataEditor.NovaMetadataItemEditor;
 
 import com.google.gwt.dom.client.Style.VerticalAlign;

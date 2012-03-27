@@ -1,9 +1,7 @@
 package org.openstack.ui.client.view.compute.securitygroup;
 
-import java.util.List;
-
-import org.openstack.model.compute.NovaSecurityGroup;
-import org.openstack.model.compute.NovaSecurityGroupList;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
@@ -23,12 +21,12 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<NovaSecurityGroup> dataProvider;
+	private RefreshableDataProvider<SecurityGroup> dataProvider;
 
-	private MultiSelectionModel<NovaSecurityGroup> selectionModel = new MultiSelectionModel<NovaSecurityGroup>();
+	private MultiSelectionModel<SecurityGroup> selectionModel = new MultiSelectionModel<SecurityGroup>();
 
-	private DefaultSelectionEventManager<NovaSecurityGroup> selectionManager = DefaultSelectionEventManager
-			.<NovaSecurityGroup> createCheckboxManager(0);
+	private DefaultSelectionEventManager<SecurityGroup> selectionManager = DefaultSelectionEventManager
+			.<SecurityGroup> createCheckboxManager(0);
 
 	public SecurityGroupsActivity(OpenStackPlace place) {
 		this.place = place;
@@ -39,14 +37,14 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<NovaSecurityGroup>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<SecurityGroup>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<NovaSecurityGroup> display) {
-				OpenStackClient.COMPUTE.listSecurityGroups(new DefaultAsyncCallback<NovaSecurityGroupList>() {
+			protected void onRangeChanged(HasData<SecurityGroup> display) {
+				OpenStackClient.COMPUTE.listSecurityGroups(new DefaultAsyncCallback<SecurityGroupList>() {
 
 					@Override
-					public void onSuccess(NovaSecurityGroupList result) {
+					public void onSuccess(SecurityGroupList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 
@@ -65,10 +63,10 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 
 	@Override
 	public void onShowSecurityGroup(Integer id) {
-		OpenStackClient.COMPUTE.showSecurityGroup(id, new DefaultAsyncCallback<NovaSecurityGroup>() {
+		OpenStackClient.COMPUTE.showSecurityGroup(id, new DefaultAsyncCallback<SecurityGroup>() {
 
 			@Override
-			public void onSuccess(NovaSecurityGroup result) {
+			public void onSuccess(SecurityGroup result) {
 				VIEW.detail.setWidget(new Label(result.toString()));
 				
 			}
