@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 
@@ -8,11 +8,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
+import org.openstack.model.identity.Role;
 
 @XmlRootElement(name="role")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("role")
-public class KeystoneRole implements Serializable {
+public class KeystoneRole implements Serializable, Role {
 	
 	@XmlAttribute
 	private String id;
@@ -26,6 +27,10 @@ public class KeystoneRole implements Serializable {
 	@XmlAttribute
 	private String tenantId;
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Role#getId()
+	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -34,6 +39,10 @@ public class KeystoneRole implements Serializable {
 		this.id = id;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Role#getName()
+	 */
+	@Override
 	public String getName() {
 		return name;
 	}

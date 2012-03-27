@@ -5,7 +5,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneRole;
+import org.openstack.model.identity.Role;
+import org.openstack.model.identity.keystone.KeystoneRole;
 
 public class RoleResource extends Resource {
 	
@@ -17,7 +18,7 @@ public class RoleResource extends Resource {
 		return target.request().get(KeystoneRole.class);
 	}
 
-	public KeystoneRole update(Entity<KeystoneRole> entity) {
+	public Role update(Entity<Role> entity) {
 		return target.request().put(entity, KeystoneRole.class);
 	}
 

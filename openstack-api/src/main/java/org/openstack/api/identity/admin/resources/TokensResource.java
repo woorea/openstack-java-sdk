@@ -5,8 +5,9 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.keystone.KeystoneAccess;
 
 public class TokensResource extends Resource {
 	
@@ -14,7 +15,7 @@ public class TokensResource extends Resource {
 		super(target);
 	}
 
-    public KeystoneAccess post(KeystoneAuthentication authentication) {	
+    public Access post(Authentication authentication) {	
     	return target.request(MediaType.APPLICATION_JSON).post(Entity.json(authentication), KeystoneAccess.class);
     }
 

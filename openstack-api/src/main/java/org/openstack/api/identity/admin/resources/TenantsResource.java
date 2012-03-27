@@ -5,8 +5,10 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.keystone.KeystoneTenant;
+import org.openstack.model.identity.keystone.KeystoneTenantList;
 
 public class TenantsResource extends Resource {
 
@@ -14,12 +16,12 @@ public class TenantsResource extends Resource {
 		super(target);
 	}
 	
-	public KeystoneTenantList get() {
+	public TenantList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(KeystoneTenantList.class);
 	}
 
-	public KeystoneTenant post(Entity<KeystoneTenant> tenant) {
-		return target.request(MediaType.APPLICATION_JSON).post(tenant, KeystoneTenant.class);
+	public Tenant post(Tenant tenant) {
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(tenant), KeystoneTenant.class);
 	}
 	
 	public TenantResource tenant(String id) {

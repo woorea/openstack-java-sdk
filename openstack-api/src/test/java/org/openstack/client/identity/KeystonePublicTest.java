@@ -2,7 +2,7 @@ package org.openstack.client.identity;
 
 import org.openstack.api.identity.IdentityPublicEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.model.identity.KeystoneTenantList;
+import org.openstack.model.identity.TenantList;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,7 +19,7 @@ public class KeystonePublicTest extends AbstractOpenStackTest {
 	}
 	
 	public void listTenants() {
-		KeystoneTenantList tenants = identity.tenants().get();
+		TenantList tenants = identity.tenants().get();
 		Assert.assertNotNull(tenants);
 	}
 	

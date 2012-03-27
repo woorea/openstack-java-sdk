@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 
@@ -6,8 +6,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.openstack.model.identity.ServiceEndpoint;
+
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeystoneServiceEndpoint implements Serializable {
+public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 
     @XmlAttribute
     private String region;
@@ -30,38 +32,58 @@ public class KeystoneServiceEndpoint implements Serializable {
     @XmlAttribute
     private String versionList;
 
-    public String getRegion() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.ServiceEndpoint#getRegion()
+	 */
+    @Override
+	public String getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+	public void setRegion(String region) {
         this.region = region;
     }
 
-    public String getTenantId() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.ServiceEndpoint#getTenantId()
+	 */
+    @Override
+	public String getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+	public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getInternalURL() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.ServiceEndpoint#getInternalURL()
+	 */
+    @Override
+	public String getInternalURL() {
         return internalURL;
     }
 
-    public void setInternalURL(String internalURL) {
+	public void setInternalURL(String internalURL) {
         this.internalURL = internalURL;
     }
 
-    public String getPublicURL() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.ServiceEndpoint#getPublicURL()
+	 */
+    @Override
+	public String getPublicURL() {
         return publicURL;
     }
 
-    public void setPublicURL(String publicURL) {
+	public void setPublicURL(String publicURL) {
         this.publicURL = publicURL;
     }
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.ServiceEndpoint#getAdminURL()
+	 */
+	@Override
 	public String getAdminURL() {
 		return adminURL;
 	}

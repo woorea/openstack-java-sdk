@@ -5,7 +5,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneService;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.keystone.KeystoneService;
 
 public class ServiceResource extends Resource {
 
@@ -18,7 +19,7 @@ public class ServiceResource extends Resource {
 		return target.request().get(KeystoneService.class);
 	}
 
-	public KeystoneService update(Entity<KeystoneService> entity) {
+	public Service update(Entity<Service> entity) {
 		return target.request().put(entity, KeystoneService.class);
 	}
 	

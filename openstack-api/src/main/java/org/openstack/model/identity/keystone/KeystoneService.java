@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceEndpoint;
 
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
@@ -18,10 +20,10 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name="service", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("OS-KSADM:service")
-public class KeystoneService implements Serializable {
+public class KeystoneService implements Serializable, Service {
 
 	@SerializedName("endpoints")
-	@XmlElement(nillable = true, name = "endpoint")
+	@XmlElement(nillable = true, name = "endpoint", type = KeystoneServiceEndpoint.class)
 	private List<KeystoneServiceEndpoint> endpoints;
 
 	// Not sure what these are...
@@ -40,43 +42,63 @@ public class KeystoneService implements Serializable {
     @XmlElement
     private String description;
 
-    public String getId() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Service#getId()
+	 */
+    @Override
+	public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+	public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Service#getName()
+	 */
+    @Override
+	public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+	public void setName(String name) {
         this.name = name;
     }
 
-    public String getType() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Service#getType()
+	 */
+    @Override
+	public String getType() {
         return type;
     }
-
-    public void setType(String type) {
+    
+	public void setType(String type) {
         this.type = type;
     }
 
-    public String getDescription() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Service#getDescription()
+	 */
+    @Override
+	public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+	public void setDescription(String description) {
         this.description = description;
     }
 
-    public List<KeystoneServiceEndpoint> getEndpoints() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Service#getEndpoints()
+	 */
+    @Override
+	public List<ServiceEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = Lists.newArrayList();
         }
-        return endpoints;
+        return (List<ServiceEndpoint>) (List<?>) endpoints;
     }
 
 	@Override

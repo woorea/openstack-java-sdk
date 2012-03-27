@@ -7,8 +7,8 @@ import java.util.Map;
 import org.openstack.console.common.discovery.Discovery;
 
 
-public class FormatterRegistryBase implements FormatterRegistry {
-	final Map<Class<?>, Formatter> registry = new HashMap<Class<?>, Formatter>();
+public class FormatterRegistryBase<T> implements FormatterRegistry {
+	final Map<Class<? extends T>, Formatter> registry = new HashMap<Class<? extends T>, Formatter>();
 
 	public Formatter getFormatter(Class<?> clazz) {
 		return registry.get(clazz);
@@ -19,8 +19,8 @@ public class FormatterRegistryBase implements FormatterRegistry {
 		addFormatter(new ClientActionDefaultFormatter());
 	}
 
-	protected void addFormatter(Formatter formatter) {
-		for (Class<?> command : formatter.getHandledClasses()) {
+	protected void addFormatter(Formatter<? extends T> formatter) {
+		for (Class<? extends T> command : formatter.getHandledClasses()) {
 			registry.put(command, formatter);
 		}
 	}

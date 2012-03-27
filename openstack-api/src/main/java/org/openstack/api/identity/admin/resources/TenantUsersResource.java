@@ -4,7 +4,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneUserList;
+import org.openstack.model.identity.UserList;
+import org.openstack.model.identity.keystone.KeystoneUserList;
 
 public class TenantUsersResource extends Resource {
 
@@ -12,7 +13,7 @@ public class TenantUsersResource extends Resource {
 		super(target);
 	}
 	
-	public KeystoneUserList get() {
+	public UserList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(KeystoneUserList.class);
 		
 	}

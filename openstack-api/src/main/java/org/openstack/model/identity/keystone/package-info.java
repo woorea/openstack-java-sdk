@@ -5,5 +5,5 @@
 	},
 	namespace = org.openstack.api.Namespaces.NS_OPENSTACK_IDENTITY_2_0,
 	elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 

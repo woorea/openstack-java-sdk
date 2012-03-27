@@ -8,15 +8,15 @@ import org.openstack.console.common.output.OutputSink;
 import com.google.common.collect.Lists;
 
 public abstract class SimpleFormatter<T> implements Formatter {
-    final Class<T> clazz;
+    final Class<? extends T> clazz;
 
-    public SimpleFormatter(Class<T> clazz) {
+    public SimpleFormatter(Class<? extends T> clazz) {
         this.clazz = clazz;
     }
 
     @Override
-    public List<Class<?>> getHandledClasses() {
-        List<Class<?>> classes = Lists.newArrayList();
+    public List<Class<? extends T>> getHandledClasses() {
+        List<Class<? extends T>> classes = Lists.newArrayList();
         classes.add(clazz);
         return classes;
     }

@@ -1,8 +1,7 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneEndpointTemplates;
-import org.openstack.model.identity.KeystoneEndpointTemplatesList;
-import org.openstack.model.identity.KeystoneService;
+import org.openstack.model.identity.Endpoint;
+import org.openstack.model.identity.EndpointList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -22,12 +21,12 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeystoneEndpointTemplates> dataProvider;
+	private RefreshableDataProvider<Endpoint> dataProvider;
 
-	private MultiSelectionModel<KeystoneEndpointTemplates> selectionModel = new MultiSelectionModel<KeystoneEndpointTemplates>();
+	private MultiSelectionModel<Endpoint> selectionModel = new MultiSelectionModel<Endpoint>();
 
-	private DefaultSelectionEventManager<KeystoneEndpointTemplates> selectionManager = DefaultSelectionEventManager
-			.<KeystoneEndpointTemplates> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Endpoint> selectionManager = DefaultSelectionEventManager
+			.<Endpoint> createCheckboxManager(0);
 
 	public EndpointTemplatesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -38,14 +37,14 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeystoneEndpointTemplates>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Endpoint>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeystoneEndpointTemplates> display) {
-				OpenStackClient.IDENTITY.listEndpontTemplates(new DefaultAsyncCallback<KeystoneEndpointTemplatesList>() {
+			protected void onRangeChanged(HasData<Endpoint> display) {
+				OpenStackClient.IDENTITY.listEndpontTemplates(new DefaultAsyncCallback<EndpointList>() {
 
 					@Override
-					public void onSuccess(KeystoneEndpointTemplatesList result) {
+					public void onSuccess(EndpointList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

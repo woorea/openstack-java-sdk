@@ -14,7 +14,7 @@ import javax.xml.bind.JAXBException;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
 import org.glassfish.jersey.filter.LoggingFilter;
-import org.openstack.model.identity.KeystoneAuthentication;
+import org.openstack.model.identity.keystone.KeystoneAuthentication;
 
 public class Test {
 

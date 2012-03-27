@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceList;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -21,12 +21,12 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeystoneService> dataProvider;
+	private RefreshableDataProvider<Service> dataProvider;
 
-	private MultiSelectionModel<KeystoneService> selectionModel = new MultiSelectionModel<KeystoneService>();
+	private MultiSelectionModel<Service> selectionModel = new MultiSelectionModel<Service>();
 
-	private DefaultSelectionEventManager<KeystoneService> selectionManager = DefaultSelectionEventManager
-			.<KeystoneService> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Service> selectionManager = DefaultSelectionEventManager
+			.<Service> createCheckboxManager(0);
 
 	public ServicesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -37,14 +37,14 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeystoneService>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Service>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeystoneService> display) {
-				OpenStackClient.IDENTITY.listServices(new DefaultAsyncCallback<KeystoneServiceList>() {
+			protected void onRangeChanged(HasData<Service> display) {
+				OpenStackClient.IDENTITY.listServices(new DefaultAsyncCallback<ServiceList>() {
 
 					@Override
-					public void onSuccess(KeystoneServiceList result) {
+					public void onSuccess(ServiceList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

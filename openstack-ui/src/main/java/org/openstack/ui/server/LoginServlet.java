@@ -12,9 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceEndpoint;
-import org.openstack.model.identity.KeystoneTenantList;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceEndpoint;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.keystone.KeystoneServiceEndpoint;
 
 public class LoginServlet extends HttpServlet {
 	
@@ -44,17 +45,18 @@ public class LoginServlet extends HttpServlet {
 		
 		OpenStackClient openstack = OpenStackClientFactory.authenticate(properties);
 		
-		KeystoneTenantList tenants = openstack.getIdentityEndpoint().tenants().get();
+		TenantList tenants = openstack.getIdentityEndpoint().tenants().get();
 		
 		openstack.exchangeTokenForTenant(tenants.getList().get(0).getId());
 		
 		//openstack.reauthenticateOnTenant(tenants.getList().get(0).getName());
 		
-		for(KeystoneService svc : openstack.getAccess().getServices()) {
-			for(KeystoneServiceEndpoint endpoint : svc.getEndpoints()) {
-				endpoint.setPublicURL(endpoint.getPublicURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
-				endpoint.setInternalURL(endpoint.getInternalURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
-				endpoint.setAdminURL(endpoint.getAdminURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
+		for(Service svc : openstack.getAccess().getServices()) {
+			for(ServiceEndpoint endpoint : svc.getEndpoints()) {
+				KeystoneServiceEndpoint kse = (KeystoneServiceEndpoint) endpoint; 
+				kse.setPublicURL(endpoint.getPublicURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
+				kse.setInternalURL(endpoint.getInternalURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
+				kse.setAdminURL(endpoint.getAdminURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
 			}
 		}
 		

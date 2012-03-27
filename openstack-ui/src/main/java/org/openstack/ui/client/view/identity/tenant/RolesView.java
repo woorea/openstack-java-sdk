@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneRole;
+import org.openstack.model.identity.Role;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -31,7 +31,7 @@ public class RolesView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeystoneRole> grid = new DataGrid<KeystoneRole>();
+	DataGrid<Role> grid = new DataGrid<Role>();
 
 	private Presenter presenter;
 
@@ -41,26 +41,26 @@ public class RolesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeystoneRole, Boolean> checkboxColumn = new Column<KeystoneRole, Boolean>(new CheckboxCell()) {
+		Column<Role, Boolean> checkboxColumn = new Column<Role, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeystoneRole object) {
+			public Boolean getValue(Role object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeystoneRole> nameColumn = new TextColumn<KeystoneRole>() {
+		TextColumn<Role> nameColumn = new TextColumn<Role>() {
 			@Override
-			public String getValue(KeystoneRole object) {
+			public String getValue(Role object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeystoneRole> descriptionColumn = new TextColumn<KeystoneRole>() {
+		TextColumn<Role> descriptionColumn = new TextColumn<Role>() {
 			@Override
-			public String getValue(KeystoneRole object) {
+			public String getValue(Role object) {
 				return object.getName();
 			}
 		};

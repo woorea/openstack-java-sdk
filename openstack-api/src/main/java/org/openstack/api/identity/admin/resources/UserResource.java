@@ -6,7 +6,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneUser;
+import org.openstack.model.identity.User;
+import org.openstack.model.identity.keystone.KeystoneUser;
 
 public class UserResource extends Resource {
 
@@ -18,29 +19,29 @@ public class UserResource extends Resource {
 		return target.request(MediaType.APPLICATION_XML).get(KeystoneUser.class);
 	}
 	
-	public KeystoneUser post(Entity<KeystoneUser> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneUser.class);
+	public User post(User entity) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(entity), KeystoneUser.class);
 	}
 
-	public KeystoneUser put(Entity<KeystoneUser> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneUser.class);
+	public User put(User entity) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(entity), KeystoneUser.class);
 	}
 	
 	public Response delete() {
 		return target.request().delete();
 	}
 
-	public KeystoneUser password(KeystoneUser user) {
+	public User password(User user) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(user), KeystoneUser.class);
 		
 	}
 
-	public KeystoneUser tenant(KeystoneUser user) {
+	public User tenant(User user) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(user), KeystoneUser.class);
 		
 	}
 
-	public KeystoneUser enabled(KeystoneUser user) {
+	public User enabled(User user) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(user), KeystoneUser.class);
 		
 	}

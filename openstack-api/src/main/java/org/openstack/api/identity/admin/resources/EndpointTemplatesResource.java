@@ -7,8 +7,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneEndpointTemplates;
-import org.openstack.model.identity.KeystoneEndpointTemplatesList;
+import org.openstack.model.identity.Endpoint;
+import org.openstack.model.identity.EndpointList;
+import org.openstack.model.identity.keystone.KeystoneEndpoint;
+import org.openstack.model.identity.keystone.KeystoneEndpointList;
 
 public class EndpointTemplatesResource extends Resource {
 	
@@ -16,19 +18,19 @@ public class EndpointTemplatesResource extends Resource {
 		super(target);
 	}
 	
-	public KeystoneEndpointTemplatesList get(Map<String, Object> properties) {
-		return target.request().get(KeystoneEndpointTemplatesList.class);
+	public EndpointList get(Map<String, Object> properties) {
+		return target.request().get(KeystoneEndpointList.class);
 	}
 
-	public KeystoneEndpointTemplates post(Entity<KeystoneEndpointTemplates> user) {
-		return target.request().post(user, KeystoneEndpointTemplates.class);
+	public Endpoint post(Entity<Endpoint> user) {
+		return target.request().post(user, KeystoneEndpoint.class);
 	}
 
 	public EndpointTemplateResource endpointTemplate(String id) {
 		return new EndpointTemplateResource(target.path("/{id}").pathParam("id", id));
 	}
 
-	public KeystoneEndpointTemplatesList get() {
+	public EndpointList get() {
 		return get(new HashMap<String, Object>());
 	}
 

@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 
@@ -11,12 +11,14 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
+import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.Token;
 
 @XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
 @XmlRootElement(name = "auth", namespace= "")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("auth")
-public class KeystoneAuthentication implements Serializable {
+public class KeystoneAuthentication implements Serializable, Authentication {
 
     @XmlAccessorType(XmlAccessType.NONE)
     public static class PasswordCredentials implements Serializable {
@@ -45,7 +47,7 @@ public class KeystoneAuthentication implements Serializable {
 
     }
     
-    @XmlElement
+    @XmlElement(type = KeystoneToken.class)
     private KeystoneToken token;
 
     @XmlElement(namespace= "")
@@ -57,7 +59,11 @@ public class KeystoneAuthentication implements Serializable {
     @XmlAttribute
     private String tenantName;
 
-    public KeystoneToken getToken() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Authentication#getToken()
+	 */
+    @Override
+	public Token getToken() {
 		return token;
 	}
 
@@ -65,14 +71,22 @@ public class KeystoneAuthentication implements Serializable {
 		this.token = token;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Authentication#getPasswordCredentials()
+	 */
+	@Override
 	public PasswordCredentials getPasswordCredentials() {
         return passwordCredentials;
     }
 
-    public void setPasswordCredentials(PasswordCredentials passwordCredentials) {
+	public void setPasswordCredentials(PasswordCredentials passwordCredentials) {
         this.passwordCredentials = passwordCredentials;
     }
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Authentication#getTenantId()
+	 */
+	@Override
 	public String getTenantId() {
 		return tenantId;
 	}
@@ -81,6 +95,10 @@ public class KeystoneAuthentication implements Serializable {
 		this.tenantId = tenantId;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Authentication#getTenantName()
+	 */
+	@Override
 	public String getTenantName() {
 		return tenantName;
 	}

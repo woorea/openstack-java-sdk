@@ -7,20 +7,20 @@ import java.util.Set;
 import javax.ws.rs.ext.ContextResolver;
 import javax.xml.bind.JAXBContext;
 
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
-import org.openstack.model.identity.KeystoneEndpointTemplates;
-import org.openstack.model.identity.KeystoneEndpointTemplatesList;
-import org.openstack.model.identity.KeystoneRole;
-import org.openstack.model.identity.KeystoneRoleList;
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceEndpoint;
-import org.openstack.model.identity.KeystoneServiceList;
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
-import org.openstack.model.identity.KeystoneToken;
-import org.openstack.model.identity.KeystoneUser;
-import org.openstack.model.identity.KeystoneUserList;
+import org.openstack.model.identity.keystone.KeystoneAccess;
+import org.openstack.model.identity.keystone.KeystoneAuthentication;
+import org.openstack.model.identity.keystone.KeystoneEndpoint;
+import org.openstack.model.identity.keystone.KeystoneEndpointList;
+import org.openstack.model.identity.keystone.KeystoneRole;
+import org.openstack.model.identity.keystone.KeystoneRoleList;
+import org.openstack.model.identity.keystone.KeystoneService;
+import org.openstack.model.identity.keystone.KeystoneServiceEndpoint;
+import org.openstack.model.identity.keystone.KeystoneServiceList;
+import org.openstack.model.identity.keystone.KeystoneTenant;
+import org.openstack.model.identity.keystone.KeystoneTenantList;
+import org.openstack.model.identity.keystone.KeystoneToken;
+import org.openstack.model.identity.keystone.KeystoneUser;
+import org.openstack.model.identity.keystone.KeystoneUserList;
 
 public class JaxbContextResolver implements ContextResolver<JAXBContext> {
 
@@ -28,7 +28,7 @@ public class JaxbContextResolver implements ContextResolver<JAXBContext> {
 	private final Set<Class<?>> types;
 	private final Class<?>[] cTypes = {
 		KeystoneAccess.class, KeystoneAuthentication.class, 
-		KeystoneEndpointTemplates.class, KeystoneEndpointTemplatesList.class,
+		KeystoneEndpoint.class, KeystoneEndpointList.class,
 		KeystoneRole.class, KeystoneRoleList.class,
 		KeystoneService.class, KeystoneServiceList.class,
 		KeystoneServiceEndpoint.class, KeystoneServiceList.class,

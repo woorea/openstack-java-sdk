@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 
 @XmlRootElement(name = "images")
@@ -24,8 +25,8 @@ public class GlanceImageList implements Serializable, ImageList {
 	 * @see org.openstack.model.image.glance.ImageList#getList()
 	 */
     @Override
-	public List<GlanceImage> getList() {
-    	return images;
+	public List<Image> getList() {
+    	return (List<Image>) (List<?>) images;
     }
 
 	@Override

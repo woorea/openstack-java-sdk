@@ -1,7 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneUser;
-import org.openstack.ui.client.view.compute.LogoCell;
+import org.openstack.model.identity.User;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -32,7 +31,7 @@ public class UsersView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeystoneUser> grid = new DataGrid<KeystoneUser>();
+	DataGrid<User> grid = new DataGrid<User>();
 
 	private Presenter presenter;
 
@@ -42,26 +41,26 @@ public class UsersView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeystoneUser, Boolean> checkboxColumn = new Column<KeystoneUser, Boolean>(new CheckboxCell()) {
+		Column<User, Boolean> checkboxColumn = new Column<User, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeystoneUser object) {
+			public Boolean getValue(User object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeystoneUser> nameColumn = new TextColumn<KeystoneUser>() {
+		TextColumn<User> nameColumn = new TextColumn<User>() {
 			@Override
-			public String getValue(KeystoneUser object) {
+			public String getValue(User object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeystoneUser> descriptionColumn = new TextColumn<KeystoneUser>() {
+		TextColumn<User> descriptionColumn = new TextColumn<User>() {
 			@Override
-			public String getValue(KeystoneUser object) {
+			public String getValue(User object) {
 				return object.getName();
 			}
 		};

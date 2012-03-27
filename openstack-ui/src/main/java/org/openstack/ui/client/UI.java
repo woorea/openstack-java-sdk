@@ -1,9 +1,13 @@
 package org.openstack.ui.client;
 
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
+import java.util.List;
+
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.keystone.KeystoneAuthentication;
+import org.openstack.model.identity.keystone.KeystoneToken;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 
@@ -31,19 +35,19 @@ public class UI implements EntryPoint, UIView.Presenter {
 		final UIView ui = new UIView();
 		ui.setPresenter(UI.this);
 		
-		OpenStackClient.IDENTITY.getSessionData(new DefaultAsyncCallback<KeystoneAccess>() {
+		OpenStackClient.IDENTITY.getSessionData(new DefaultAsyncCallback<Access>() {
 
 			@Override
-			public void onSuccess(KeystoneAccess access) {
+			public void onSuccess(Access access) {
 				
 				OpenStackClient.access = access;
 				
-				OpenStackClient.IDENTITY.listTenants(new DefaultAsyncCallback<KeystoneTenantList>() {
+				OpenStackClient.IDENTITY.listTenants(new DefaultAsyncCallback<TenantList>() {
 
 					@Override
-					public void onSuccess(KeystoneTenantList result) {
+					public void onSuccess(TenantList result) {
 						OpenStackClient.tenants = result.getList();
-						for(KeystoneTenant tenant : OpenStackClient.getTenants()) {
+						for(Tenant tenant : OpenStackClient.getTenants()) {
 		                    ui.tenants.addItem(tenant.getName(), tenant.getId());
 						}
 						
@@ -74,12 +78,12 @@ public class UI implements EntryPoint, UIView.Presenter {
 	@Override
 	public void onChangeTenant(String tenantId) {
 		KeystoneAuthentication authentication = new KeystoneAuthentication();
-		authentication.setToken(OpenStackClient.access.getToken());
+		authentication.setToken((KeystoneToken) OpenStackClient.access.getToken());
 		authentication.setTenantId(tenantId);
-		OpenStackClient.IDENTITY.authenticate(authentication, new DefaultAsyncCallback<KeystoneAccess>() {
+		OpenStackClient.IDENTITY.authenticate(authentication, new DefaultAsyncCallback<Access>() {
 
 			@Override
-			public void onSuccess(KeystoneAccess access) {
+			public void onSuccess(Access access) {
 				GWT.log(access.toString());
 				OpenStackClient.access = access;
 				GWT.log(OpenStackClient.getTenant());

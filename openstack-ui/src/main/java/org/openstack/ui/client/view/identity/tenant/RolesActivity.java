@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneRole;
-import org.openstack.model.identity.KeystoneRoleList;
+import org.openstack.model.identity.Role;
+import org.openstack.model.identity.RoleList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -21,12 +21,11 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeystoneRole> dataProvider;
+	private RefreshableDataProvider<Role> dataProvider;
 
-	private MultiSelectionModel<KeystoneRole> selectionModel = new MultiSelectionModel<KeystoneRole>();
+	private MultiSelectionModel<Role> selectionModel = new MultiSelectionModel<Role>();
 
-	private DefaultSelectionEventManager<KeystoneRole> selectionManager = DefaultSelectionEventManager
-			.<KeystoneRole> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Role> selectionManager = DefaultSelectionEventManager.<Role> createCheckboxManager(0);
 
 	public RolesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -37,14 +36,14 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeystoneRole>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Role>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeystoneRole> display) {
-				OpenStackClient.IDENTITY.listRoles(new DefaultAsyncCallback<KeystoneRoleList>() {
+			protected void onRangeChanged(HasData<Role> display) {
+				OpenStackClient.IDENTITY.listRoles(new DefaultAsyncCallback<RoleList>() {
 
 					@Override
-					public void onSuccess(KeystoneRoleList result) {
+					public void onSuccess(RoleList result) {
 						updateRowCount(result.getList().size(), true);
 						updateRowData(0, result.getList());
 

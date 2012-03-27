@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
@@ -21,10 +20,11 @@ import org.openstack.api.identity.IdentityPublicEndpoint;
 import org.openstack.api.images.ImagesResource;
 import org.openstack.api.storage.AccountResource;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceEndpoint;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceEndpoint;
+import org.openstack.model.identity.keystone.KeystoneAuthentication;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
@@ -40,7 +40,7 @@ public class OpenStackClient {
 	
 	private Properties properties;
 
-	private KeystoneAccess access;
+	private Access access;
 
 	private RequestFilter authFilter = new RequestFilter() {
 
@@ -62,13 +62,13 @@ public class OpenStackClient {
 
 	};
 
-	OpenStackClient(Properties properties, KeystoneAccess access) {
+	OpenStackClient(Properties properties, Access access) {
 		this.client = RestClient.INSTANCE.getJerseyClient();
 		this.properties = properties;
 		this.access = access;
 	}
 
-	public KeystoneAccess getAccess() {
+	public Access getAccess() {
 		return access;
 	}
 	
@@ -76,14 +76,14 @@ public class OpenStackClient {
 		return this.properties;
 	}
 
-	public void setAccess(KeystoneAccess access) {
+	public void setAccess(Access access) {
 		this.access = access;
 	}
 
 	public void exchangeTokenForTenant(String tenantId) {
 		String endpoint = properties.getProperty("identity.endpoint.publicURL");
-		KeystoneAuthentication authentication = new KeystoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenantId);
-		KeystoneAccess access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
+		Authentication authentication = new KeystoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenantId);
+		Access access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
 		setAccess(access);
 	}
 	
@@ -161,28 +161,25 @@ public class OpenStackClient {
 
 	}
 
-	private KeystoneServiceEndpoint getEndpoint(final String type, final String region) {
+	private ServiceEndpoint getEndpoint(final String type, final String region) {
 		Preconditions.checkNotNull(access, "You must be authenticated before get a identity client");
 		try {
-			KeystoneService service = Iterables.find(access.getServices(),
-					new Predicate<KeystoneService>() {
+			Service service = Iterables.find(access.getServices(), new Predicate<Service>() {
 
 						@Override
-						public boolean apply(KeystoneService service) {
+						public boolean apply(Service service) {
 							System.out.println(service);
 							return type.equals(service.getType());
 						}
 
 					});
-			List<KeystoneServiceEndpoint> endpoints = service
-					.getEndpoints();
-			KeystoneServiceEndpoint serviceRegionEndpoint = null;
+			List<? extends ServiceEndpoint> endpoints = service.getEndpoints();
 			if (region != null) {
 				return  Iterables.find(endpoints,
-						new Predicate<KeystoneServiceEndpoint>() {
+						new Predicate<ServiceEndpoint>() {
 
 							@Override
-							public boolean apply(KeystoneServiceEndpoint endpoint) {
+							public boolean apply(ServiceEndpoint endpoint) {
 								return region.equals(endpoint.getRegion());
 							}
 						});

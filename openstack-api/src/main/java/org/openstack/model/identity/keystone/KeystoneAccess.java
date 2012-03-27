@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +13,10 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.Token;
+import org.openstack.model.identity.User;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -20,28 +24,36 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("access")
-public class KeystoneAccess implements Serializable {
+public class KeystoneAccess implements Serializable, Access {
     
-    @XmlElement
+    @XmlElement(type = KeystoneToken.class)
     private KeystoneToken token;
     
     @XmlElementWrapper(name = "serviceCatalog")
-    @XmlElement(name = "service")
+    @XmlElement(name = "service", type = KeystoneService.class)
     @SerializedName("serviceCatalog")
 	private List<KeystoneService> services = new ArrayList<KeystoneService>();
 
-    @XmlElement
+    @XmlElement(type = KeystoneUser.class)
     private KeystoneUser user;
 
-    public KeystoneToken getToken() {
+    /* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Access#getToken()
+	 */
+    @Override
+	public Token getToken() {
         return token;
     }
 
-    public void setToken(KeystoneToken token) {
-        this.token = token;
+	public void setToken(KeystoneToken token) {
+        this.token = (KeystoneToken) token;
     }
 
-	public List<KeystoneService> getServices() {
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Access#getServices()
+	 */
+	@Override
+	public List<? extends Service> getServices() {
 		return services;
 	}
 
@@ -49,7 +61,11 @@ public class KeystoneAccess implements Serializable {
 		this.services = services;
 	}
 
-	public KeystoneUser getUser() {
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Access#getUser()
+	 */
+	@Override
+	public User getUser() {
 		return user;
 	}
 

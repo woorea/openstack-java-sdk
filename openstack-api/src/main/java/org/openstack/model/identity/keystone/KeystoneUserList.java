@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,15 +8,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserList;
+
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeystoneUserList implements Serializable {
+public class KeystoneUserList implements Serializable, UserList {
 
-	@XmlElement(name = "user")
+	@XmlElement(name = "user", type = KeystoneUser.class)
 	private List<KeystoneUser> users;
 
-	public List<KeystoneUser> getList() {
-		return users;
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.UserList#getList()
+	 */
+	@Override
+	public List<User> getList() {
+		return (List<User>) (List<?>) users;
 	}
 
 	public void setList(List<KeystoneUser> list) {

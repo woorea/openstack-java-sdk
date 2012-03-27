@@ -1,21 +1,21 @@
 package org.openstack.client.identity;
 
-import static javax.ws.rs.client.Entity.json;
-
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
-import org.openstack.model.identity.KeystoneEndpointTemplates;
-import org.openstack.model.identity.KeystoneEndpointTemplatesList;
-import org.openstack.model.identity.KeystoneRole;
-import org.openstack.model.identity.KeystoneRoleList;
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceList;
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
-import org.openstack.model.identity.KeystoneUser;
-import org.openstack.model.identity.KeystoneUserList;
+import org.openstack.model.identity.Role;
+import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserList;
+import org.openstack.model.identity.keystone.KeystoneRole;
+import org.openstack.model.identity.keystone.KeystoneService;
+import org.openstack.model.identity.keystone.KeystoneTenant;
+import org.openstack.model.identity.keystone.KeystoneUser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -25,10 +25,10 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	
 	private IdentityAdministrationEndpoint identity;
 	
-	private KeystoneTenant tenant;
-	private KeystoneUser user;
-	private KeystoneRole role;
-	private KeystoneService service;
+	private Tenant tenant;
+	private User user;
+	private Role role;
+	private Service service;
 	
 	@BeforeClass
 	public void init() {
@@ -38,29 +38,29 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	
 	@Test(priority = 1)
 	public void createTenant() {
-		tenant = new KeystoneTenant();
-		tenant.setName("test");
-		tenant.setDescription("desc");
-		tenant.setEnabled(true);
-		tenant = identity.tenants().post(json(tenant));
+		KeystoneTenant kst = new KeystoneTenant();
+		kst.setName("test");
+		kst.setDescription("desc");
+		kst.setEnabled(true);
+		tenant = identity.tenants().post(kst);
 		Assert.assertNotNull(tenant);
 	}
 	
 	@Test(priority = 2)
 	public void createUser() {
-		user = new KeystoneUser();
-		user.setName("test");
-		user.setPassword("secret0");
-		user.setEmail("test@test.com");
-		user.setEnabled(true);
-		user = identity.users().post(json(user));
+		KeystoneUser ksu = new KeystoneUser();
+		ksu.setName("test");
+		ksu.setPassword("secret0");
+		ksu.setEmail("test@test.com");
+		ksu.setEnabled(true);
+		user = identity.users().post(ksu);
 		Assert.assertNotNull(user);
 	}
 	
 	@Test(priority = 3)
 	public void createRole() {
-		role = new KeystoneRole();
-		role = identity.roles().post(json(role));
+		KeystoneRole ksr = new KeystoneRole();
+		role = identity.roles().post(ksr);
 		Assert.assertNotNull(role);
 	}
 	
@@ -72,11 +72,11 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	
 	@Test(priority = 5)
 	public void createService() {
-		service = new KeystoneService();
-		service.setName("test");
-		service.setType("compute");
-		service.setDescription("Nova 3");
-		service = identity.services().post(json(service));
+		KeystoneService kss = new KeystoneService();
+		kss.setName("test");
+		kss.setType("compute");
+		kss.setDescription("Nova 3");
+		service = identity.services().post(kss);
 		Assert.assertNotNull(service);
 	}
 	
@@ -90,13 +90,13 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 
 	
 	public void listTenants() {
-		KeystoneTenantList tenants = identity.tenants().get();
+		TenantList tenants = identity.tenants().get();
 		Assert.assertNotNull(tenants);
 	}
 	
 	@Test(dependsOnMethods={"createTenant"})
 	public void listTenantUsers() {
-		KeystoneUserList users = identity.tenants().tenant(tenant.getId()).users().get();
+		UserList users = identity.tenants().tenant(tenant.getId()).users().get();
 		Assert.assertNotNull(users);
 	}
 	
@@ -107,20 +107,22 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	}
 	
 	public void listUsers() {
-		KeystoneUserList users = identity.users().get();
+		UserList users = identity.users().get();
 		Assert.assertNotNull(users);
 	}
 	
 	@Test(dependsOnMethods={"createUser"})
 	public void updateUser() {
-		user.setEmail("luis@woorea.es");
-		user = identity.users().user(user.getId()).put(json(user));
+		KeystoneUser ksu = (KeystoneUser) user;
+		ksu.setEmail("luis@woorea.es");
+		user = identity.users().user(user.getId()).put(ksu);
 		Assert.assertNotNull(user);
 	}
 	
 	@Test(dependsOnMethods={"createUser"})
 	public void updateUserPassword() {
-		user.setPassword("testing");
+		KeystoneUser ksu = (KeystoneUser) user;
+		ksu.setPassword("testing");
 		identity.users().user(user.getId()).password(user);
 		Assert.assertNotNull(user);
 	}
@@ -133,7 +135,8 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	
 	@Test(dependsOnMethods={"createUser"})
 	public void updateUserEnabled() {
-		user.setEnabled(false);
+		KeystoneUser ksu = (KeystoneUser) user;
+		ksu.setEnabled(false);
 		identity.users().user(user.getId()).enabled(user);
 		Assert.assertNotNull(user);
 	}
@@ -161,7 +164,7 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	}
 	
 	public void listServices() {
-		KeystoneServiceList services = identity.services().get();
+		ServiceList services = identity.services().get();
 		Assert.assertNotNull(services);
 	}
 	
@@ -193,7 +196,7 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	}
 	
 	public void listRoles() {
-		KeystoneRoleList roles = identity.roles().get();
+		RoleList roles = identity.roles().get();
 		Assert.assertNotNull(roles);
 	}
 	

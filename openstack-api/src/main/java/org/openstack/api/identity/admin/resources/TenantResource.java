@@ -6,7 +6,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneTenant;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.keystone.KeystoneTenant;
 
 public class TenantResource extends Resource {
 
@@ -18,7 +19,7 @@ public class TenantResource extends Resource {
 		return target.request(MediaType.APPLICATION_XML).get(KeystoneTenant.class);
 	}
 
-	public KeystoneTenant update(Entity<KeystoneTenant> entity) {
+	public Tenant update(Entity<Tenant> entity) {
 		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneTenant.class);
 	}
 

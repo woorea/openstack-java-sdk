@@ -1,4 +1,4 @@
-package org.openstack.model.identity;
+package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 
@@ -8,9 +8,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.identity.Endpoint;
+
 @XmlRootElement(namespace="http://docs.openstack.org/identity/api/ext/OS-KSCATALOG/v1.0")
 @XmlAccessorType(XmlAccessType.NONE)
-public class KeystoneEndpointTemplates implements Serializable {
+public class KeystoneEndpoint implements Serializable, Endpoint {
 	
 	@XmlAttribute
 	private String id;
@@ -39,6 +41,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 	@XmlElement
 	private boolean global;
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getId()
+	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -47,6 +53,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.id = id;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getRegion()
+	 */
+	@Override
 	public String getRegion() {
 		return region;
 	}
@@ -55,6 +65,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.region = region;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getName()
+	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -63,6 +77,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.name = name;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getType()
+	 */
+	@Override
 	public String getType() {
 		return type;
 	}
@@ -71,6 +89,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.type = type;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getPublicUrl()
+	 */
+	@Override
 	public String getPublicUrl() {
 		return publicUrl;
 	}
@@ -79,6 +101,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.publicUrl = publicUrl;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getInternalUrl()
+	 */
+	@Override
 	public String getInternalUrl() {
 		return internalUrl;
 	}
@@ -87,6 +113,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.internalUrl = internalUrl;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#getAdminURL()
+	 */
+	@Override
 	public String getAdminURL() {
 		return adminURL;
 	}
@@ -95,6 +125,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.adminURL = adminURL;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#isEnabled()
+	 */
+	@Override
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -103,6 +137,10 @@ public class KeystoneEndpointTemplates implements Serializable {
 		this.enabled = enabled;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.keystone.Endpoint#isGlobal()
+	 */
+	@Override
 	public boolean isGlobal() {
 		return global;
 	}

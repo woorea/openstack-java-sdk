@@ -1,7 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.ui.client.view.compute.LogoCell;
+import org.openstack.model.identity.Service;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -32,7 +31,7 @@ public class ServicesView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeystoneService> grid = new DataGrid<KeystoneService>();
+	DataGrid<Service> grid = new DataGrid<Service>();
 
 	private Presenter presenter;
 
@@ -42,34 +41,34 @@ public class ServicesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeystoneService, Boolean> checkboxColumn = new Column<KeystoneService, Boolean>(new CheckboxCell()) {
+		Column<Service, Boolean> checkboxColumn = new Column<Service, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeystoneService object) {
+			public Boolean getValue(Service object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeystoneService> typeColumn = new TextColumn<KeystoneService>() {
+		TextColumn<Service> typeColumn = new TextColumn<Service>() {
 			@Override
-			public String getValue(KeystoneService object) {
+			public String getValue(Service object) {
 				return object.getType();
 			}
 		};
 		grid.setColumnWidth(typeColumn, "120px");
 		grid.addColumn(typeColumn, "Type");
-		TextColumn<KeystoneService> nameColumn = new TextColumn<KeystoneService>() {
+		TextColumn<Service> nameColumn = new TextColumn<Service>() {
 			@Override
-			public String getValue(KeystoneService object) {
+			public String getValue(Service object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeystoneService> descriptionColumn = new TextColumn<KeystoneService>() {
+		TextColumn<Service> descriptionColumn = new TextColumn<Service>() {
 			@Override
-			public String getValue(KeystoneService object) {
+			public String getValue(Service object) {
 				return object.getName();
 			}
 		};

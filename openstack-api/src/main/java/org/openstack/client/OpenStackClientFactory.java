@@ -6,8 +6,8 @@ import java.util.Properties;
 import org.openstack.api.common.RestClient;
 import org.openstack.api.identity.IdentityPublicEndpoint;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.keystone.KeystoneAuthentication;
 
 public class OpenStackClientFactory {
 	
@@ -34,12 +34,12 @@ public class OpenStackClientFactory {
 			authentication.setTenantName(tenantName);
 		}
 		IdentityPublicEndpoint auth = new IdentityPublicEndpoint(RestClient.INSTANCE.getJerseyClient().target(endpoint));
-		KeystoneAccess access = auth.tokens().post(authentication);
+		Access access = auth.tokens().post(authentication);
 		OpenStackClient openstack = new OpenStackClient(properties, access);
 		return openstack;
 	}
 
-	public static OpenStackClient create(Properties properties, KeystoneAccess access) {
+	public static OpenStackClient create(Properties properties, Access access) {
 		return new OpenStackClient(properties, access);
 	}
 

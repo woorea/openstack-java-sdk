@@ -1,6 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneEndpointTemplates;
+import org.openstack.model.identity.Endpoint;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -31,7 +31,7 @@ public class EndpointTemplatesView extends Composite {
 	}
 
 	@UiField(provided = true)
-	DataGrid<KeystoneEndpointTemplates> grid = new DataGrid<KeystoneEndpointTemplates>();
+	DataGrid<Endpoint> grid = new DataGrid<Endpoint>();
 
 	private Presenter presenter;
 
@@ -41,34 +41,34 @@ public class EndpointTemplatesView extends Composite {
 	}
 
 	private void initGrid() {
-		Column<KeystoneEndpointTemplates, Boolean> checkboxColumn = new Column<KeystoneEndpointTemplates, Boolean>(new CheckboxCell()) {
+		Column<Endpoint, Boolean> checkboxColumn = new Column<Endpoint, Boolean>(new CheckboxCell()) {
 
 			@Override
-			public Boolean getValue(KeystoneEndpointTemplates object) {
+			public Boolean getValue(Endpoint object) {
 				return false;
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<KeystoneEndpointTemplates> typeColumn = new TextColumn<KeystoneEndpointTemplates>() {
+		TextColumn<Endpoint> typeColumn = new TextColumn<Endpoint>() {
 			@Override
-			public String getValue(KeystoneEndpointTemplates object) {
+			public String getValue(Endpoint object) {
 				return object.getType();
 			}
 		};
 		grid.setColumnWidth(typeColumn, "120px");
 		grid.addColumn(typeColumn, "Type");
-		TextColumn<KeystoneEndpointTemplates> nameColumn = new TextColumn<KeystoneEndpointTemplates>() {
+		TextColumn<Endpoint> nameColumn = new TextColumn<Endpoint>() {
 			@Override
-			public String getValue(KeystoneEndpointTemplates object) {
+			public String getValue(Endpoint object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
 		grid.addColumn(nameColumn, "Name");
-		TextColumn<KeystoneEndpointTemplates> descriptionColumn = new TextColumn<KeystoneEndpointTemplates>() {
+		TextColumn<Endpoint> descriptionColumn = new TextColumn<Endpoint>() {
 			@Override
-			public String getValue(KeystoneEndpointTemplates object) {
+			public String getValue(Endpoint object) {
 				return object.getName();
 			}
 		};

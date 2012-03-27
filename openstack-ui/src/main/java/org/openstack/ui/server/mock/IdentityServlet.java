@@ -1,29 +1,29 @@
 package org.openstack.ui.server.mock;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.openstack.model.common.OpenStackSessionData;
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
-import org.openstack.model.identity.KeystoneEndpointTemplatesList;
-import org.openstack.model.identity.KeystoneRoleList;
-import org.openstack.model.identity.KeystoneServiceList;
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
-import org.openstack.model.identity.KeystoneToken;
-import org.openstack.model.identity.KeystoneUserList;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.EndpointList;
+import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.UserList;
+import org.openstack.model.identity.keystone.KeystoneAccess;
+import org.openstack.model.identity.keystone.KeystoneAuthentication;
+import org.openstack.model.identity.keystone.KeystoneTenant;
+import org.openstack.model.identity.keystone.KeystoneTenantList;
+import org.openstack.model.identity.keystone.KeystoneToken;
 import org.openstack.ui.client.api.IdentityService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class IdentityServlet extends RemoteServiceServlet implements IdentityService {
 	
-	private KeystoneAccess session;
+	private Access session;
 
 	@Override
-	public KeystoneAccess authenticate(KeystoneAuthentication authentication) {
-		KeystoneTenant tenant = new KeystoneTenant(authentication.getTenantId() != null ? authentication.getTenantId() : "1","Tenant.1");
+	public Access authenticate(Authentication authentication) {
+		Tenant tenant = new KeystoneTenant(authentication.getTenantId() != null ? authentication.getTenantId() : "1","Tenant.1");
 		KeystoneToken token = new KeystoneToken();
 		token.setId("123");
 		token.setExpires("unlimited");
@@ -34,15 +34,15 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 	}
 
 	@Override
-	public KeystoneTenantList listTenants() {
-		List<KeystoneTenant> tenants =  Arrays.asList(new KeystoneTenant("1","Tenant.1"), new KeystoneTenant("2", "Tenant 2"));
-		KeystoneTenantList list = new KeystoneTenantList();
-		list.setList(tenants);
-		return list;
+	public TenantList listTenants() {
+		//List<? extends Tenant> tenants =  Arrays.asList(new KeystoneTenant("1","Tenant.1"), new KeystoneTenant("2", "Tenant 2"));
+		TenantList list = new KeystoneTenantList();
+		//list.setList(tenants);
+		return list; 
 	}
 
 	@Override
-	public KeystoneAccess getSessionData() {
+	public Access getSessionData() {
 		if(session == null) {
 			session = authenticate(new KeystoneAuthentication());
 		}
@@ -50,25 +50,25 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 	}
 
 	@Override
-	public KeystoneServiceList listServices() {
+	public ServiceList listServices() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KeystoneEndpointTemplatesList listEndpontTemplates() {
+	public EndpointList listEndpontTemplates() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KeystoneUserList listUsers() {
+	public UserList listUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KeystoneRoleList listRoles() {
+	public RoleList listRoles() {
 		// TODO Auto-generated method stub
 		return null;
 	}

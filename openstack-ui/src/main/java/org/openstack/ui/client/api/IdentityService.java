@@ -1,12 +1,12 @@
 package org.openstack.ui.client.api;
 
-import org.openstack.model.identity.KeystoneAccess;
-import org.openstack.model.identity.KeystoneAuthentication;
-import org.openstack.model.identity.KeystoneEndpointTemplatesList;
-import org.openstack.model.identity.KeystoneRoleList;
-import org.openstack.model.identity.KeystoneServiceList;
-import org.openstack.model.identity.KeystoneTenantList;
-import org.openstack.model.identity.KeystoneUserList;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.EndpointList;
+import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.UserList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -14,18 +14,18 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("identity")
 public interface IdentityService extends RemoteService {
 
-	KeystoneAccess getSessionData();
+	Access getSessionData();
 	
-	KeystoneAccess authenticate(KeystoneAuthentication authentication);
+	Access authenticate(Authentication authentication);
 	
-	KeystoneTenantList listTenants();
+	TenantList listTenants();
 	
-	KeystoneServiceList listServices();
+	ServiceList listServices();
 	
-	KeystoneEndpointTemplatesList listEndpontTemplates();
+	EndpointList listEndpontTemplates();
 
-	KeystoneUserList listUsers();
+	UserList listUsers();
 
-	KeystoneRoleList listRoles();
+	RoleList listRoles();
 	
 }

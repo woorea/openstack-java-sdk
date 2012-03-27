@@ -4,8 +4,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceList;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.keystone.KeystoneService;
+import org.openstack.model.identity.keystone.KeystoneServiceList;
 
 public class ServicesResource extends Resource {
 
@@ -13,12 +15,12 @@ public class ServicesResource extends Resource {
 		super(target);
 	}
 	
-	public KeystoneServiceList get() {
+	public ServiceList get() {
 		return target.request().get(KeystoneServiceList.class);
 	}
 	
-	public KeystoneService post(Entity<KeystoneService> user) {
-		return target.request().post(user, KeystoneService.class);
+	public Service post(Service service) {
+		return target.request().post(Entity.json(service), KeystoneService.class);
 	}
 	
 	public ServiceResource service(String id) {

@@ -5,7 +5,7 @@ import java.util.List;
 import org.openstack.console.OpenstackCliContext;
 import org.openstack.console.common.CliContext;
 import org.openstack.console.common.autocomplete.SimpleArgumentAutoCompleter;
-import org.openstack.model.images.glance.GlanceImage;
+import org.openstack.model.images.Image;
 
 import com.google.common.collect.Lists;
 
@@ -16,7 +16,7 @@ public class GlanceImageNameAutoCompleter extends SimpleArgumentAutoCompleter {
 		List<String> strings = Lists.newArrayList();
 
 		OpenstackCliContext osContext = (OpenstackCliContext) context;
-		for (GlanceImage image : osContext.getImageClient().get().getList()) {
+		for (Image image : osContext.getImageClient().get().getList()) {
 			strings.add(image.getName());
 		}
 

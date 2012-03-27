@@ -1,7 +1,10 @@
 package org.openstack.ui.client.view.identity.tenant;
 
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
+import java.util.List;
+
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.keystone.KeystoneTenant;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -10,9 +13,7 @@ import org.openstack.ui.client.api.RefreshableDataProvider;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
@@ -23,12 +24,11 @@ public class TenantsActivity extends AbstractActivity implements TenantsView.Pre
 	
 	private OpenStackPlace place;
 	
-	private RefreshableDataProvider<KeystoneTenant> dataProvider;
+	private RefreshableDataProvider<? extends Tenant> dataProvider;
 
-	private MultiSelectionModel<KeystoneTenant> selectionModel = new MultiSelectionModel<KeystoneTenant>();
+	private MultiSelectionModel<Tenant> selectionModel = new MultiSelectionModel<Tenant>();
 
-	private DefaultSelectionEventManager<KeystoneTenant> selectionManager = DefaultSelectionEventManager
-			.<KeystoneTenant> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Tenant> selectionManager = DefaultSelectionEventManager.<Tenant> createCheckboxManager(0);
 
 	public TenantsActivity(OpenStackPlace place) {
 		this.place = place;
@@ -39,17 +39,16 @@ public class TenantsActivity extends AbstractActivity implements TenantsView.Pre
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
-		dataProvider = new RefreshableDataProvider<KeystoneTenant>(VIEW.grid) {
+		dataProvider = new RefreshableDataProvider<Tenant>(VIEW.grid) {
 
 			@Override
-			protected void onRangeChanged(HasData<KeystoneTenant> display) {
-				OpenStackClient.IDENTITY.listTenants(new DefaultAsyncCallback<KeystoneTenantList>() {
+			protected void onRangeChanged(HasData<Tenant> display) {
+				OpenStackClient.IDENTITY.listTenants(new DefaultAsyncCallback<TenantList>() {
 
 					@Override
-					public void onSuccess(KeystoneTenantList result) {
+					public void onSuccess(TenantList result) {
 						updateRowCount(result.getList().size(), true);
-						updateRowData(0, result.getList());
-
+						updateRowData(0, (List<Tenant>) result.getList());
 					}
 				});
 			}

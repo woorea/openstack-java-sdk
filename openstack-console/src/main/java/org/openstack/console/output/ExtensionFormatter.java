@@ -7,7 +7,8 @@ import java.util.List;
 import org.openstack.console.common.formatter.SimpleFormatter;
 import org.openstack.console.common.output.OutputSink;
 import org.openstack.model.common.Extension;
-import org.openstack.model.identity.KeystoneServiceEndpoint;
+import org.openstack.model.identity.ServiceEndpoint;
+import org.openstack.model.identity.keystone.KeystoneServiceEndpoint;
 
 import com.google.common.collect.Maps;
 
@@ -43,7 +44,7 @@ public class ExtensionFormatter extends SimpleFormatter<Extension> {
         }
     }
 
-    public static void formatEndpoint(StringBuilder sb, KeystoneServiceEndpoint serviceEndpoint) {
+    public static void formatEndpoint(StringBuilder sb, ServiceEndpoint serviceEndpoint) {
         sb.append("publicUrl=" + serviceEndpoint.getPublicURL());
         sb.append(" internalUrl=" + serviceEndpoint.getInternalURL());
         sb.append(" region=" + serviceEndpoint.getRegion());

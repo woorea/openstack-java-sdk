@@ -2,28 +2,24 @@ package org.openstack.api;
 
 import java.io.File;
 import java.util.List;
-import java.util.Properties;
-
-import javax.ws.rs.client.Entity;
 
 import org.openstack.api.compute.TenantResource;
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
-import org.openstack.model.compute.NovaFlavorList;
-import org.openstack.model.compute.NovaImageList;
-import org.openstack.model.compute.NovaKeyPairList;
-import org.openstack.model.compute.NovaSecurityGroupList;
 import org.openstack.model.compute.NovaServerList;
-import org.openstack.model.compute.NovaVolumeList;
-import org.openstack.model.identity.KeystoneRole;
-import org.openstack.model.identity.KeystoneRoleList;
-import org.openstack.model.identity.KeystoneService;
-import org.openstack.model.identity.KeystoneServiceList;
-import org.openstack.model.identity.KeystoneTenant;
-import org.openstack.model.identity.KeystoneTenantList;
-import org.openstack.model.identity.KeystoneUser;
-import org.openstack.model.identity.KeystoneUserList;
+import org.openstack.model.identity.Role;
+import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserList;
+import org.openstack.model.identity.keystone.KeystoneRole;
+import org.openstack.model.identity.keystone.KeystoneService;
+import org.openstack.model.identity.keystone.KeystoneTenant;
+import org.openstack.model.identity.keystone.KeystoneUser;
 import org.openstack.model.storage.SwiftContainer;
 import org.openstack.model.storage.SwiftObjectProperties;
 
@@ -45,48 +41,48 @@ public class Test {
 
 		IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
 		
-		KeystoneTenantList tenants = identity.tenants().get();
+		TenantList tenants = identity.tenants().get();
 
-		KeystoneTenant tenant = new KeystoneTenant();
-		tenant.setName("test");
-		tenant.setDescription("desc");
-		tenant.setEnabled(true);
-		tenant = identity.tenants().post(Entity.json(tenant));
+		KeystoneTenant kst = new KeystoneTenant();
+		kst.setName("test");
+		kst.setDescription("desc");
+		kst.setEnabled(true);
+		Tenant tenant = identity.tenants().post(kst);
 
 		tenant = identity.tenants().tenant(tenant.getId()).get();
 
 		identity.tenants().tenant(tenant.getId()).delete();
 
-		KeystoneUserList users = identity.users().get();
+		UserList users = identity.users().get();
 
-		KeystoneUser user = new KeystoneUser();
-		user.setName("test");
-		user.setPassword("secret0");
-		user.setEmail("test@test.com");
-		user.setEnabled(true);
-		user = identity.users().post(Entity.json(user));
+		KeystoneUser ksu = new KeystoneUser();
+		ksu.setName("test");
+		ksu.setPassword("secret0");
+		ksu.setEmail("test@test.com");
+		ksu.setEnabled(true);
+		User user = identity.users().post(ksu);
 
 		user = identity.users().user(user.getId()).get();
 
 		identity.users().user(user.getId()).delete();
 
-		KeystoneRoleList roles = identity.roles().get();
+		RoleList roles = identity.roles().get();
 
-		KeystoneRole role = new KeystoneRole();
-		role.setName("test");
-		role = identity.roles().post(Entity.json(role));
+		KeystoneRole ksr = new KeystoneRole();
+		ksr.setName("test");
+		Role role = identity.roles().post(ksr);
 
 		role = identity.roles().role(role.getId()).get();
 
 		identity.roles().role(role.getId()).delete();
 
-		KeystoneServiceList services = identity.services().get();
+		ServiceList services = identity.services().get();
 
-		KeystoneService service = new KeystoneService();
-		service.setName("test");
-		service.setType("compute");
-		service.setDescription("Nova 3");
-		service = identity.services().post(Entity.json(service));
+		KeystoneService kss = new KeystoneService();
+		kss.setName("test");
+		kss.setType("compute");
+		kss.setDescription("Nova 3");
+		Service service = identity.services().post(kss);
 
 		service = identity.services().service(service.getId()).get();
 

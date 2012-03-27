@@ -5,7 +5,8 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneEndpointTemplates;
+import org.openstack.model.identity.Endpoint;
+import org.openstack.model.identity.keystone.KeystoneEndpoint;
 
 public class EndpointTemplateResource extends Resource {
 	
@@ -13,12 +14,12 @@ public class EndpointTemplateResource extends Resource {
 		super(target);
 	}
 
-	public KeystoneEndpointTemplates get() {
-		return target.request().get(KeystoneEndpointTemplates.class);
+	public Endpoint get() {
+		return target.request().get(KeystoneEndpoint.class);
 	}
 
-	public KeystoneEndpointTemplates update(Entity<KeystoneEndpointTemplates> entity) {
-		return target.request().put(entity, KeystoneEndpointTemplates.class);
+	public Endpoint update(Entity<KeystoneEndpoint> entity) {
+		return target.request().put(entity, KeystoneEndpoint.class);
 	}
 	
 	public Response delete() {

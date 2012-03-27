@@ -1,14 +1,12 @@
 package org.openstack.api.identity.admin.resources;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.KeystoneRole;
-import org.openstack.model.identity.KeystoneRoleList;
+import org.openstack.model.identity.Role;
+import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.keystone.KeystoneRole;
+import org.openstack.model.identity.keystone.KeystoneRoleList;
 
 public class RolesResource extends Resource {
 	
@@ -16,12 +14,12 @@ public class RolesResource extends Resource {
 		super(target);
 	}
 	
-	public KeystoneRoleList get() {
+	public RoleList get() {
 		return target.request().get(KeystoneRoleList.class);
 	}
 	
-	public KeystoneRole post(Entity<KeystoneRole> user) {
-		return target.request().post(user, KeystoneRole.class);
+	public Role post(Role role) {
+		return target.request().post(Entity.json(role), KeystoneRole.class);
 	}
 	
 	public RoleResource role(String id) {

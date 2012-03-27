@@ -7,6 +7,7 @@ import org.openstack.console.autocomplete.GlanceImageNameAutoCompleter;
 import org.openstack.console.common.StringWrapper;
 import org.openstack.console.common.autocomplete.HasAutoCompletor;
 import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.images.Image;
 import org.openstack.model.images.glance.GlanceImage;
 
 import com.google.common.base.Objects;
@@ -18,9 +19,9 @@ public class GlanceImageName extends StringWrapper {
 		super(key);
 	}
 
-	public GlanceImage resolve(OpenstackCliContext context) throws OpenstackException {
-		List<GlanceImage> matches = Lists.newArrayList();
-		for (GlanceImage image : context.getImageClient().get().getList()) {
+	public Image resolve(OpenstackCliContext context) throws OpenstackException {
+		List<Image> matches = Lists.newArrayList();
+		for (Image image : context.getImageClient().get().getList()) {
 			if (Objects.equal(image.getName(), getKey())) {
 				matches.add(image);
 			} else if (Objects.equal(image.getId(), getKey())) {
