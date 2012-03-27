@@ -38,9 +38,7 @@ public class ServersResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(serverForCreate, MediaType.APPLICATION_JSON), NovaServer.class);
 	}
 	
-	public ServerActionResource action() {
-		return path("/action", ServerActionResource.class);
-	}
+	
 	
 	
 

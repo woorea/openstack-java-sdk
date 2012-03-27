@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
 
 @XmlRootElement(name="output", namespace="")

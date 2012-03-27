@@ -10,12 +10,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 
 @XmlRootElement(name="rebuild")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("rebuild")
 public class RebuildAction implements Serializable, ServerAction {
 
 	@XmlAttribute

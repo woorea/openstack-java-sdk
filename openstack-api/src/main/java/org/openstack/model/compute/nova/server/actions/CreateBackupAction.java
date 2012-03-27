@@ -9,11 +9,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.ws.Action;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.ServerAction;
 
 @XmlRootElement(name="createBackup")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("createBackup")
 public class CreateBackupAction implements Serializable, ServerAction {
 
 	@XmlAttribute

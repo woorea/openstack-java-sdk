@@ -14,7 +14,7 @@ import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.collect.Lists;
 
-public class AsyncServerOperation implements Future<NovaServer> {
+public class AsyncServerOperation implements Future<Server> {
 	static final Logger log = Logger.getLogger(AsyncServerOperation.class.getName());
 
 	private static final int POLL_INTERVAL_MILLISECONDS = 5000;
@@ -40,11 +40,11 @@ public class AsyncServerOperation implements Future<NovaServer> {
 		this.finishStates = finishStates;
 	}
 
-	NovaServer waitForState(long timeout, TimeUnit unit) throws OpenstackException {
+	Server waitForState(long timeout, TimeUnit unit) throws OpenstackException {
 		try {
 			long timeoutAt = unit != null ? System.currentTimeMillis() + unit.toMillis(timeout) : Long.MAX_VALUE;
 			while (true) {
-				NovaServer server = null;
+				Server server = null;
 				String status;
 				try {
 					server = client.servers().server(serverId).get();
@@ -102,7 +102,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	}
 
 	@Override
-	public NovaServer get() {
+	public Server get() {
 		try {
 			return get(0, null);
 		} catch (Exception e) {
@@ -112,7 +112,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	}
 
 	@Override
-	public NovaServer get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+	public Server get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
 		try {
 			return waitComplete(timeout, unit);
 		} catch (OpenstackException e) {
@@ -125,7 +125,7 @@ public class AsyncServerOperation implements Future<NovaServer> {
 	 * 
 	 * @throws OpenstackException
 	 */
-	public NovaServer waitComplete(long timeout, TimeUnit unit) throws InterruptedException, TimeoutException,
+	public Server waitComplete(long timeout, TimeUnit unit) throws InterruptedException, TimeoutException,
 			OpenstackException {
 		return this.waitForState(timeout, unit);
 	}

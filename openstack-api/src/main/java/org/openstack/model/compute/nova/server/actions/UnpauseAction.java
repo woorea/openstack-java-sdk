@@ -6,10 +6,12 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
 
 @XmlRootElement(name="unpause")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("unpause")
 public class UnpauseAction implements Serializable, ServerAction {
 	
 }

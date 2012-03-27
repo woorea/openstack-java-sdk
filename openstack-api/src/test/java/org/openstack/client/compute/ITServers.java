@@ -1,17 +1,17 @@
 package org.openstack.client.compute;
 
 import java.util.NoSuchElementException;
-
-import javax.ws.rs.client.Entity;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.openstack.api.compute.ServerResource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
-import org.openstack.model.compute.nova.NovaImage;
 import org.openstack.model.compute.nova.NovaServerForCreate;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.compute.nova.server.actions.PauseAction;
+import org.openstack.model.compute.nova.server.actions.UnpauseAction;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
@@ -32,13 +32,13 @@ public class ITServers extends ComputeIntegrationTest {
 			//NovaImage image = client.target(server.getImage().getLink("bookmark").getHref(), ImageResource.class).get(new HashMap<String, Object>());
 			Image image = compute.images().image(server.getImage().getId()).get();
 			//rel=self carries the version but rel=bookmark ¿clarify from openstack team?
-			client.target(server.getLink("self").getHref(), ServerResource.class).delete();
+			//client.target(server.getLink("self").getHref(), ServerResource.class).delete();
 		}
 	}
 
 	
 	@Test
-	public void createServer() throws OpenstackException {
+	public void createServer() throws Exception {
 		
 		try {
 			Flavor bestFlavor = null;
@@ -66,16 +66,49 @@ public class ITServers extends ComputeIntegrationTest {
 			System.out.println(serverForCreate);
 
 			server = compute.servers().post(serverForCreate);
-			
+			waitForState("ACTIVE");
 		} catch (NoSuchElementException e) {
 			throw new SkipException("Skipping test because image not found");
 		}
 
 	}
 	
-	@Test(dependsOnMethods="createServer")
+	@Test(dependsOnMethods="createServer", priority=1)
+	public void pauseServer() throws Exception {
+		compute.servers().server(server.getId()).action().post(new PauseAction());
+		waitForState("PAUSED");
+	}
+	
+	@Test(dependsOnMethods={"createServer"}, priority=2)
+	public void unpauseServer() {
+		compute.servers().server(server.getId()).action().post(new UnpauseAction());
+	}
+	
+	@Test(dependsOnMethods="createServer", priority=1000)
 	public void deleteServer() {
 		compute.servers().server(server.getId()).delete();
+	}
+	
+	private void waitForState(final String state) {
+		try {
+			final ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(1);
+			timer.scheduleAtFixedRate(new Runnable() {
+				
+				@Override
+				public void run() {
+					server = compute.servers().server(server.getId()).get();
+					if(state.equals(server.getStatus())) {
+						timer.shutdown();
+					} else {
+						System.out.print(".");
+					}
+				}
+			}, 3, 1, TimeUnit.SECONDS);
+			timer.awaitTermination(30, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 }

@@ -11,7 +11,7 @@ import org.openstack.model.compute.nova.NovaServer;
 
 public class ServerActionResource extends Resource {
 
-	protected ServerActionResource(Target target) {
+	public ServerActionResource(Target target) {
 		super(target);
 	}
 	

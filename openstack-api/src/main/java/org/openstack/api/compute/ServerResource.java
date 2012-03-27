@@ -1,6 +1,5 @@
 package org.openstack.api.compute;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
@@ -59,16 +58,20 @@ public class ServerResource extends Resource {
 		super(target);
 	}
 
-	public NovaServer get() {
+	public Server get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaServer.class);
 	}
 	
-	public Server put(NovaServer server) {
+	public Server put(Server server) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.entity(server, MediaType.APPLICATION_JSON), NovaServer.class);
 	}
 
 	public Response delete() {
 		return target.request().delete();
+	}
+	
+	public ServerActionResource action() {
+		return path("/action", ServerActionResource.class);
 	}
 
 	/**
