@@ -1,5 +1,30 @@
 h1. OpenStack Java SDK
 
+h2. Configuration
+
+A openstack.properties file must be found on the CLASSPATH
+
+h3. openstack.properties
+
+<pre>
+verbose=true
+
+auth.endpoint=http://192.168.1.52:5000/v2.0
+auth.username=demo
+auth.password=secret0
+#auth.tenant.id=123456789
+auth.tenant.name=demo
+
+
+identity.endpoint.publicURL=http://192.168.1.52:5000/v2.0
+identity.endpoint.internalURL=http://192.168.1.52:5000/v2.0
+identity.endpoint.adminURL=http://192.168.1.52:35357/v2.0
+identity.admin.token=secret0
+
+test.glance=true
+test.swift=false
+</pre>
+
 h2. Example
 
 h3. Identity API (keystone)
@@ -7,30 +32,24 @@ h3. Identity API (keystone)
 h4. Access
 
 <pre>
-// X-Auth-Token (no tenant selected)
-OpenStackClient openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0");
+// X-Auth-Token
+OpenStackClient openstack = OpenStackClientFactory.authenticate();
 
-//Here we use the admintoken (set on installation process. It may be different from admin password setted before)
-openstack.getAccess().getToken().setId("secret0");
-
-//Since Keystone does not give us information about services
-//when we do not choose a tenant, we have to know the identity
-//admin endpoint and create the administration endpoint from it.
-IdentityAdministrationEndpoint identity = openstack.target("http://192.168.1.52:35357/v2.0", IdentityAdministrationEndpoint.class);
+IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
 </pre>
 
 h4. Tenants
 
 <pre>
 //GET tenants available
-KeystoneTenantList tenants = identity.tenants().get();
+TenantList tenants = identity.tenants().get();
 
 //POST tenant
-KeystoneTenant tenant = new KeystoneTenant();
-tenant.setName("test");
-tenant.setDescription("desc");
-tenant.setEnabled(true);
-tenant = identity.tenants().post(Entity.json(tenant));
+KeystoneTenant kst = new KeystoneTenant();
+kst.setName("test");
+kst.setDescription("desc");
+kst.setEnabled(true);
+Tenant tenant = identity.tenants().post(kst);
 
 //GET tenant
 tenant = identity.tenants().tenant(tenant.getId()).get();
@@ -42,14 +61,14 @@ identity.tenants().tenant(tenant.getId()).delete();
 h4. Users
 
 <pre>
-KeystoneUserList users = identity.users().get();
+UserList users = identity.users().get();
 
-KeystoneUser user = new KeystoneUser();
-user.setName("test");
-user.setPassword("secret0");
-user.setEmail("test@test.com");
-user.setEnabled(true);
-user = identity.users().post(Entity.json(user));
+KeystoneUser ksu = new KeystoneUser();
+ksu.setName("test");
+ksu.setPassword("secret0");
+ksu.setEmail("test@test.com");
+ksu.setEnabled(true);
+User user = identity.users().post(ksu);
 
 user = identity.users().user(user.getId()).get();
 
@@ -59,27 +78,27 @@ identity.users().user(user.getId()).delete();
 h4. Roles
 
 <pre>
-KeystoneRoleList roles = identity.roles().get();
+RoleList roles = identity.roles().get();
 
-KeystoneRole role = new KeystoneRole();
-role.setName("test");
-role = identity.roles().post(Entity.json(role));
+KeystoneRole ksr = new KeystoneRole();
+ksr.setName("test");
+Role role = identity.roles().post(ksr);
 
 role = identity.roles().role(role.getId()).get();
 
 identity.roles().role(role.getId()).delete();
 </pre>
 
-h4. Services (this is from previous revision)
+h4. Services
 
 <pre>
-KeystoneServiceList services = identity.services().get();
+ServiceList services = identity.services().get();
 
-KeystoneService service = new KeystoneService();
-service.setName("test");
-service.setType("compute");
-service.setDescription("Nova 3");
-service = identity.services().post(Entity.json(service));
+KeystoneService kss = new KeystoneService();
+kss.setName("test");
+kss.setType("compute");
+kss.setDescription("Nova 3.0");
+Service service = identity.services().post(kss);
 
 service = identity.services().service(service.getId()).get();
 
@@ -98,14 +117,14 @@ h4. Select a Tenant
 
 <pre>
 // Authenticate on admin tenant
-openstack = OpenStackClientFactory.authenticate("http://192.168.1.52:5000/v2.0", "admin", "secret0", "admin");
-TenantResource compute = openstack.compute().getPublicEndpoint();
+openstack = openstack.reauthenticateOnTenant("admin");
+TenantResource compute = openstack.getComputeEndpoint();
 </pre>
 
 h4. Servers
 
 <pre>
-NovaServerList servers = compute.servers().get();
+ServerList servers = compute.servers().get();
 </pre>
 
 h5. Server Actions
@@ -117,31 +136,43 @@ TODO
 h4. Images
 
 <pre>
-NovaImageList images = compute.images().get();
+ImageList images = compute.images().get();
 </pre>
 
 h4. Flavors
 
 <pre>
-NovaFlavorList flavors = compute.flavors().get();
+FlavorList flavors = compute.flavors().get();
 </pre>
 
 h4. Key Pairs
 
 <pre>
-NovaKeyPairList keypairs = compute.keyPairs().get();
+KeyPairList keypairs = compute.keyPairs().get();
 </pre>
 
 h4. Security Groups
 
 <pre>
-NovaSecurityGroupList securityGroups = compute.securityGroups().get();
+SecurityGroupList securityGroups = compute.securityGroups().get();
 </pre>
 
 h4. Volumes
 
 <pre>
-NovaVolumeList volumes = compute.volumes().get();
+VolumeList volumes = compute.volumes().get();
+</pre>
+
+h3. Image Store (glance)
+
+<pre>
+org.openstack.model.images.ImageList gImages = openstack.getImagesEndpoint().get();
+</pre>
+
+h3. Object Store (swift)
+
+<pre>
+List<StorageContainer> sAccount = openstack.getStorageEndpoint().get();
 </pre>
 
 h1. Maven

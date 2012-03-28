@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.storage.AccountResource;
 import org.openstack.client.AbstractOpenStackTest;
+import org.openstack.model.storage.StorageContainer;
 import org.openstack.model.storage.swift.SwiftContainer;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 import org.testng.SkipException;
@@ -47,7 +48,7 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	}
 	@Test(priority=2)
 	public void listContainers() {
-		List<SwiftContainer> containers = storage.get();
+		List<StorageContainer> containers = storage.get();
 	}
 	@Test(dependsOnMethods="createContainer", priority=1)
 	public void showContainer() {

@@ -23,7 +23,7 @@ public class StoragePathAutoCompleter extends SimpleArgumentAutoCompleter {
 		AccountResource client = osContext.getStorageClient();
 
 		if (!prefix.contains("/")) {
-			Iterable<SwiftContainer> items = client.get();
+			Iterable<StorageContainer> items = client.get();
 			for (StorageContainer item : items) {
 				strings.add(item.getName());
 			}

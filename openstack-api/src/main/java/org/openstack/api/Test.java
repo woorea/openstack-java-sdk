@@ -7,7 +7,12 @@ import org.openstack.api.compute.TenantResource;
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.OpenStackClient;
 import org.openstack.client.OpenStackClientFactory;
+import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.ImageList;
+import org.openstack.model.compute.KeyPairList;
+import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.VolumeList;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
 import org.openstack.model.identity.Service;
@@ -20,7 +25,7 @@ import org.openstack.model.identity.keystone.KeystoneRole;
 import org.openstack.model.identity.keystone.KeystoneService;
 import org.openstack.model.identity.keystone.KeystoneTenant;
 import org.openstack.model.identity.keystone.KeystoneUser;
-import org.openstack.model.storage.swift.SwiftContainer;
+import org.openstack.model.storage.StorageContainer;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 public class Test {
@@ -97,20 +102,20 @@ public class Test {
 
 		ServerList servers = compute.servers().get();
 //		
-//		NovaImageList images = compute.images().get();
+		ImageList images = compute.images().get();
 		// "cirros-0.3.0-x86_64-blank"
 //		
-//		NovaFlavorList flavors = compute.flavors().get();
+		FlavorList flavors = compute.flavors().get();
 //		
-//		NovaKeyPairList keypairs = compute.keyPairs().get();
+		KeyPairList keypairs = compute.keyPairs().get();
 //		
-//		NovaSecurityGroupList securityGroups = compute.securityGroups().get();
+		SecurityGroupList securityGroups = compute.securityGroups().get();
 //		
-//		NovaVolumeList volumes = compute.volumes().get();
+		VolumeList volumes = compute.volumes().get();
 		
-//		ImageList gImages = openstack.images().publicEndpoint().get();
+		org.openstack.model.images.ImageList gImages = openstack.getImagesEndpoint().get();
 		
-		List<SwiftContainer> sAccount = openstack.getStorageEndpoint().get();
+		List<StorageContainer> sAccount = openstack.getStorageEndpoint().get();
 		
 		SwiftStorageObjectProperties p = new SwiftStorageObjectProperties();
 		openstack.getStorageEndpoint().container(sAccount.get(0).getName()).object("test2").put(new File("logging.properties"), p);

@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
+import org.openstack.model.storage.StorageContainer;
 import org.openstack.model.storage.swift.SwiftContainer;
 
 public class AccountResource extends Resource {
@@ -20,8 +21,8 @@ public class AccountResource extends Resource {
 		super(target);
 	}
 
-	public List<SwiftContainer> get() {
-		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftContainer>>() {});
+	public List<StorageContainer> get() {
+		return (List<StorageContainer>) (List<?>) target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftContainer>>() {});
 	}
 	
 	public Response head() {
