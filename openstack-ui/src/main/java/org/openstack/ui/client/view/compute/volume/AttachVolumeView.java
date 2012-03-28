@@ -11,23 +11,33 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateFlavorView extends Composite implements HasText {
+public class AttachVolumeView extends Composite implements HasText {
 
 	private static CreateVolumeViewUiBinder uiBinder = GWT
 			.create(CreateVolumeViewUiBinder.class);
 
 	interface CreateVolumeViewUiBinder extends
-			UiBinder<Widget, CreateFlavorView> {
+			UiBinder<Widget, AttachVolumeView> {
 	}
+	
+	public interface Presenter {
+		
+	}
+	
+	private Presenter presenter;
 
-	public CreateFlavorView() {
+	public AttachVolumeView() {
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
 
 	@UiField
 	Button button;
 
-	public CreateFlavorView(String firstName) {
+	public AttachVolumeView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		button.setText(firstName);
 	}

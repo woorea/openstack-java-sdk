@@ -1,9 +1,7 @@
 package org.openstack.ui.client;
 
-import java.util.List;
-
 import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
@@ -51,15 +49,15 @@ public class UI implements EntryPoint, UIView.Presenter {
 		                    ui.tenants.addItem(tenant.getName(), tenant.getId());
 						}
 						
-						for(String service : new String[]{"compute","identity","images","storage"}) {
-		                    ui.services.addItem(service);
+						for(Service service : OpenStackClient.access.getServices()) {
+		                    ui.services.addItem(service.getType());
 						}
 
 						RootLayoutPanel.get().add(ui);
 
 						UIPlaceHistoryMapper historyMapper = GWT.create(UIPlaceHistoryMapper.class);
 						PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
-						historyHandler.register(PLACE_CONTROLLER, EVENT_BUS, new OpenStackPlace("compute","1",null));
+						historyHandler.register(PLACE_CONTROLLER, EVENT_BUS, new OpenStackPlace("identity","1",null));
 						
 						historyHandler.handleCurrentHistory();
 					}

@@ -8,9 +8,9 @@ import org.openstack.api.common.Resource;
 import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.keystone.KeystoneEndpoint;
 
-public class EndpointTemplateResource extends Resource {
+public class EndpointResource extends Resource {
 	
-	public EndpointTemplateResource(Target target) {
+	public EndpointResource(Target target) {
 		super(target);
 	}
 

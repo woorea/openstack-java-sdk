@@ -4,7 +4,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
-import org.openstack.api.identity.admin.resources.EndpointTemplatesResource;
+import org.openstack.api.identity.admin.resources.EndpointsResource;
 import org.openstack.api.identity.admin.resources.RolesResource;
 import org.openstack.api.identity.admin.resources.ServicesResource;
 import org.openstack.api.identity.admin.resources.TenantsResource;
@@ -41,9 +41,8 @@ public class IdentityAdministrationEndpoint extends Resource {
 		return path("/OS-KSADM/services", ServicesResource.class);
 	}
 
-	public EndpointTemplatesResource endpoints() {
-		//throw new UnsupportedOperationException("This is not implemented yet in the api (19 mar 2012)");
-		return path("/endpoints", EndpointTemplatesResource.class);
+	public EndpointsResource endpoints() {
+		return path("/endpoints", EndpointsResource.class);
 	}
 
 }

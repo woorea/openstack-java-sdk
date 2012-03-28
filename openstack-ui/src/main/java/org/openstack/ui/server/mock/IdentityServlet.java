@@ -2,11 +2,15 @@ package org.openstack.ui.server.mock;
 
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.EndpointList;
+import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceList;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserList;
 import org.openstack.model.identity.keystone.KeystoneAccess;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
@@ -56,12 +60,6 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 	}
 
 	@Override
-	public EndpointList listEndpontTemplates() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public UserList listUsers() {
 		// TODO Auto-generated method stub
 		return null;
@@ -71,6 +69,72 @@ public class IdentityServlet extends RemoteServiceServlet implements IdentitySer
 	public RoleList listRoles() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Service createService(Service service) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Tenant createTenant(Tenant tenant) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteTenant(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteService(String service) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User createUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUser(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Role createRole(Role role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteRole(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public EndpointList listEndpoints() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Endpoint createEndpoint(Endpoint endpoint) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteEndpoint(String id) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

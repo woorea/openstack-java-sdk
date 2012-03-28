@@ -1,5 +1,7 @@
 package org.openstack.ui.client.view.compute.volume;
 
+import org.openstack.ui.client.view.compute.volume.AttachVolumeView.Presenter;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,9 +21,19 @@ public class CreateVolumeView extends Composite implements HasText {
 	interface CreateVolumeViewUiBinder extends
 			UiBinder<Widget, CreateVolumeView> {
 	}
+	
+	public interface Presenter {
+		
+	}
+	
+	private Presenter presenter;
 
 	public CreateVolumeView() {
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
 
 	@UiField

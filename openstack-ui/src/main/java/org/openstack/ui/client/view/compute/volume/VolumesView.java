@@ -25,6 +25,14 @@ public class VolumesView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void onCreateVolume();
+
+		void onDeleteVolume();
+
+		void onAttachVolume();
+
+		void onDetachVolume();
 	}
 
 	@UiField(provided = true)
@@ -67,6 +75,26 @@ public class VolumesView extends Composite {
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+	
+	@UiHandler("create")
+	void onCreateVolume(ClickEvent event) {
+		presenter.onCreateVolume();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteVolume(ClickEvent event) {
+		presenter.onDeleteVolume();
+	}
+	
+	@UiHandler("attach")
+	void onAttachVolume(ClickEvent event) {
+		presenter.onAttachVolume();
+	}
+	
+	@UiHandler("detach")
+	void onDetachVolume(ClickEvent event) {
+		presenter.onDetachVolume();
 	}
 
 	@UiHandler("refresh")

@@ -36,11 +36,21 @@
 							</td>
 						</tr>
 					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Enabled</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:CheckBox ui:field="enabled" />
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</g:HTMLPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
-			<g:Button ui:field="finish" styleName="btn">Save</g:Button>
+			<g:Button ui:field="save" styleName="btn">Save</g:Button>
 			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
 		</g:HTMLPanel>
 	</g:HeaderPanel>

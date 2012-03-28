@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.identity;
 
 import org.openstack.ui.client.OpenStackPlace;
-import org.openstack.ui.client.view.identity.tenant.EndpointTemplatesActivity;
+import org.openstack.ui.client.view.identity.tenant.EndpointsActivity;
 import org.openstack.ui.client.view.identity.tenant.RolesActivity;
 import org.openstack.ui.client.view.identity.tenant.ServicesActivity;
 import org.openstack.ui.client.view.identity.tenant.TenantsActivity;
@@ -38,7 +38,7 @@ public class IdentityActivity extends AbstractActivity implements
 			ServicesActivity activity = new ServicesActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else if ("endpoint-templates".equals(place.getPlace())) {
-			EndpointTemplatesActivity activity = new EndpointTemplatesActivity(place);
+			EndpointsActivity activity = new EndpointsActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else {
 			VIEW.content.setWidget(new Label(place.getPlace()));

@@ -1,5 +1,6 @@
 package org.openstack.ui.client.view.identity.tenant;
 
+import org.openstack.model.compute.Server;
 import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserList;
 import org.openstack.ui.client.OpenStackPlace;
@@ -57,7 +58,7 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		dataProvider.refresh();
 		
 	}
 
@@ -71,8 +72,16 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 
 	@Override
 	public void onDeleteUser() {
-		// TODO Auto-generated method stub
-		
+		for(User u : selectionModel.getSelectedSet()) {
+			OpenStackClient.IDENTITY.deleteUser(u.getId(), new DefaultAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		}
 	}
 
 }

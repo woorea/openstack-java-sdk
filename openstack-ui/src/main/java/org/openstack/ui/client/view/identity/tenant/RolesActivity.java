@@ -2,6 +2,7 @@ package org.openstack.ui.client.view.identity.tenant;
 
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
+import org.openstack.model.identity.User;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -56,7 +57,7 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		dataProvider.refresh();
 		
 	}
 
@@ -70,7 +71,16 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 
 	@Override
 	public void onDeleteRole() {
-		// TODO Auto-generated method stub
+		for(Role u : selectionModel.getSelectedSet()) {
+			OpenStackClient.IDENTITY.deleteRole(u.getId(), new DefaultAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		}
 		
 	}
 

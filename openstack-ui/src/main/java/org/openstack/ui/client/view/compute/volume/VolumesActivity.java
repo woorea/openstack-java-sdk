@@ -3,9 +3,11 @@ package org.openstack.ui.client.view.compute.volume;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
+import org.openstack.ui.client.view.identity.tenant.CreateUserActivity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -56,6 +58,34 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 
 	@Override
 	public void refresh() {
+		dataProvider.refresh();
+		
+	}
+
+	@Override
+	public void onCreateVolume() {
+		CreateVolumeActivity activity = new CreateVolumeActivity();
+		activity.start(UI.MODAL, null);
+		UI.MODAL.center();
+		
+	}
+
+	@Override
+	public void onDeleteVolume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAttachVolume() {
+		AttachVolumeActivity activity = new AttachVolumeActivity();
+		activity.start(UI.MODAL, null);
+		UI.MODAL.center();
+		
+	}
+
+	@Override
+	public void onDetachVolume() {
 		// TODO Auto-generated method stub
 		
 	}

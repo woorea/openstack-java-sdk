@@ -6,11 +6,11 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HeaderPanel width="600px" height="400px">
+	<g:HeaderPanel width="600px" height="450px">
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
-				<h3>Create Service</h3>
+				<h3>Create Endpoint</h3>
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
@@ -18,32 +18,56 @@
 				<table>
 					<tbody>
 						<tr>
-							<td colspan="2">Type</td>
+							<td>Name</td>
+							<td>Region</td>
+							<td>Type</td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td>
+								<g:TextBox ui:field="name" width="100%" />
+							</td>
+							<td>
+								<g:TextBox ui:field="region" width="100%" />
+							</td>
+							<td>
 								<g:TextBox ui:field="type" width="100%" />
 							</td>
 						</tr>
 					</tbody>
 					<tbody>
 						<tr>
-							<td colspan="2">Name</td>
+							<td colspan="2">Public URL</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:TextBox ui:field="name" width="100%" />
+								<g:TextBox ui:field="publicURL" width="100%" />
 							</td>
 						</tr>
 					</tbody>
 					<tbody>
 						<tr>
-							<td colspan="2">Description</td>
+							<td colspan="2">Internal URL</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:TextArea ui:field="description" width="100%" />
+								<g:TextBox ui:field="internalURL" width="100%" />
 							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Administration URL</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:TextBox ui:field="adminURL" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td><g:CheckBox ui:field="global" /> Global</td>
+							<td><g:CheckBox ui:field="enabled" /> Enabled</td>
 						</tr>
 					</tbody>
 				</table>

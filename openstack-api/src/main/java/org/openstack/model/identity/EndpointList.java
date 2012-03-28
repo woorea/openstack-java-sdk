@@ -6,6 +6,4 @@ public interface EndpointList {
 
 	List<Endpoint> getList();
 
-	//void setList(List<Endpoint> list);
-
 }

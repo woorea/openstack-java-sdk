@@ -28,11 +28,41 @@
 					</tbody>
 					<tbody>
 						<tr>
-							<td colspan="2">Description</td>
+							<td colspan="2">Username</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:TextArea ui:field="description" width="100%" />
+								<g:TextBox ui:field="username" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Password</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:TextBox ui:field="password" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Email</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:TextBox ui:field="email" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Enabled</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:CheckBox ui:field="enabled" />
 							</td>
 						</tr>
 					</tbody>
@@ -40,7 +70,7 @@
 			</g:HTMLPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
-			<g:Button ui:field="finish" styleName="btn">Save</g:Button>
+			<g:Button ui:field="save" styleName="btn">Save</g:Button>
 			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
 		</g:HTMLPanel>
 	</g:HeaderPanel>

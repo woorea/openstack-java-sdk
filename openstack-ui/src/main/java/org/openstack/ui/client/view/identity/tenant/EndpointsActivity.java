@@ -2,6 +2,7 @@ package org.openstack.ui.client.view.identity.tenant;
 
 import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.EndpointList;
+import org.openstack.model.identity.User;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -15,9 +16,9 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
 
-public class EndpointTemplatesActivity extends AbstractActivity implements EndpointTemplatesView.Presenter {
+public class EndpointsActivity extends AbstractActivity implements EndpointsView.Presenter {
 	
-	private static final EndpointTemplatesView VIEW = new EndpointTemplatesView();
+	private static final EndpointsView VIEW = new EndpointsView();
 	
 	private OpenStackPlace place;
 	
@@ -28,7 +29,7 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 	private DefaultSelectionEventManager<Endpoint> selectionManager = DefaultSelectionEventManager
 			.<Endpoint> createCheckboxManager(0);
 
-	public EndpointTemplatesActivity(OpenStackPlace place) {
+	public EndpointsActivity(OpenStackPlace place) {
 		this.place = place;
 	}
 
@@ -41,7 +42,7 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 
 			@Override
 			protected void onRangeChanged(HasData<Endpoint> display) {
-				OpenStackClient.IDENTITY.listEndpontTemplates(new DefaultAsyncCallback<EndpointList>() {
+				OpenStackClient.IDENTITY.listEndpoints(new DefaultAsyncCallback<EndpointList>() {
 
 					@Override
 					public void onSuccess(EndpointList result) {
@@ -57,13 +58,13 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		dataProvider.refresh();
 		
 	}
 
 	@Override
 	public void onCreateEndpointTemplates() {
-		CreateEndpointTemplatesActivity activity = new CreateEndpointTemplatesActivity();
+		CreateEndpointActivity activity = new CreateEndpointActivity();
 		activity.start(UI.MODAL, null);
 		UI.MODAL.center();
 		
@@ -71,7 +72,16 @@ public class EndpointTemplatesActivity extends AbstractActivity implements Endpo
 
 	@Override
 	public void onDeleteEndpointTemplates() {
-		// TODO Auto-generated method stub
+		for(Endpoint u : selectionModel.getSelectedSet()) {
+			OpenStackClient.IDENTITY.deleteEndpoint(u.getId(), new DefaultAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		}
 		
 	}
 

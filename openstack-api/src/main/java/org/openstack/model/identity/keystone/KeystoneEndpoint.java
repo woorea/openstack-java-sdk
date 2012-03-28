@@ -2,44 +2,29 @@ package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Endpoint;
 
-@XmlRootElement(namespace="http://docs.openstack.org/identity/api/ext/OS-KSCATALOG/v1.0")
-@XmlAccessorType(XmlAccessType.NONE)
-public class KeystoneEndpoint implements Serializable, Endpoint {
+import com.google.gson.annotations.SerializedName;
+
+@JsonRootElement("endpoint")
+public class KeystoneEndpoint implements Endpoint, Serializable {
 	
-	@XmlAttribute
 	private String id;
 	
-	@XmlAttribute
 	private String region;
 	
-	@XmlAttribute
-	private String name;
+	@SerializedName("service_id")
+	private String serviceId;
 	
-	@XmlAttribute
-	private String type;
+	@SerializedName("publicurl")
+	private String publicURL;
 	
-	@XmlAttribute(name="publicURL")
-	private String publicUrl;
-	
-	@XmlAttribute(name="internalURL")
-	private String internalUrl;
-	
-	@XmlAttribute(name="adminURL")
+	@SerializedName("adminurl")
 	private String adminURL;
 	
-	@XmlAttribute
-	private boolean enabled;
-	
-	@XmlElement
-	private boolean global;
+	@SerializedName("internalurl")
+	private String internalURL;
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.Endpoint#getId()
@@ -66,51 +51,27 @@ public class KeystoneEndpoint implements Serializable, Endpoint {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Endpoint#getName()
+	 * @see org.openstack.model.identity.keystone.Endpoint#getServiceId()
 	 */
 	@Override
-	public String getName() {
-		return name;
+	public String getServiceId() {
+		return serviceId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Endpoint#getType()
+	 * @see org.openstack.model.identity.keystone.Endpoint#getPublicURL()
 	 */
 	@Override
-	public String getType() {
-		return type;
+	public String getPublicURL() {
+		return publicURL;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Endpoint#getPublicUrl()
-	 */
-	@Override
-	public String getPublicUrl() {
-		return publicUrl;
-	}
-
-	public void setPublicUrl(String publicUrl) {
-		this.publicUrl = publicUrl;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Endpoint#getInternalUrl()
-	 */
-	@Override
-	public String getInternalUrl() {
-		return internalUrl;
-	}
-
-	public void setInternalUrl(String internalUrl) {
-		this.internalUrl = internalUrl;
+	public void setPublicURL(String publicURL) {
+		this.publicURL = publicURL;
 	}
 
 	/* (non-Javadoc)
@@ -126,36 +87,22 @@ public class KeystoneEndpoint implements Serializable, Endpoint {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Endpoint#isEnabled()
+	 * @see org.openstack.model.identity.keystone.Endpoint#getInternalURL()
 	 */
 	@Override
-	public boolean isEnabled() {
-		return enabled;
+	public String getInternalURL() {
+		return internalURL;
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Endpoint#isGlobal()
-	 */
-	@Override
-	public boolean isGlobal() {
-		return global;
-	}
-
-	public void setGlobal(boolean global) {
-		this.global = global;
+	public void setInternalURL(String internalURL) {
+		this.internalURL = internalURL;
 	}
 
 	@Override
 	public String toString() {
-		return "EndpointTemplate [id=" + id + ", region=" + region + ", name="
-				+ name + ", type=" + type + ", publicUrl=" + publicUrl
-				+ ", internalUrl=" + internalUrl + ", adminURL=" + adminURL
-				+ ", enabled=" + enabled + ", global=" + global + "]";
+		return "KeystoneEndpoint [region=" + region + ", serviceId="
+				+ serviceId + ", publicURL=" + publicURL + ", adminURL="
+				+ adminURL + ", internalURL=" + internalURL + "]";
 	}
 	
 }
-

@@ -1,6 +1,6 @@
-package org.openstack.ui.client.view.compute.keypair;
+package org.openstack.ui.client.view.compute.securitygroup;
 
-import org.openstack.ui.client.view.compute.securitygroup.CreateSecurityGroupView.Presenter;
+import org.openstack.ui.client.view.compute.volume.AttachVolumeView.Presenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,17 +13,13 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateKeyPairView extends Composite implements HasText {
+public class CreateSecurityGroupView extends Composite implements HasText {
 
 	private static CreateVolumeViewUiBinder uiBinder = GWT
 			.create(CreateVolumeViewUiBinder.class);
 
 	interface CreateVolumeViewUiBinder extends
-			UiBinder<Widget, CreateKeyPairView> {
-	}
-
-	public CreateKeyPairView() {
-		initWidget(uiBinder.createAndBindUi(this));
+			UiBinder<Widget, CreateSecurityGroupView> {
 	}
 	
 	public interface Presenter {
@@ -36,10 +32,14 @@ public class CreateKeyPairView extends Composite implements HasText {
 		this.presenter = presenter;
 	}
 
+	public CreateSecurityGroupView() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
+
 	@UiField
 	Button button;
 
-	public CreateKeyPairView(String firstName) {
+	public CreateSecurityGroupView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		button.setText(firstName);
 	}

@@ -2,6 +2,7 @@ package org.openstack.ui.client.view.identity.tenant;
 
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceList;
+import org.openstack.model.identity.User;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -57,7 +58,7 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		dataProvider.refresh();
 		
 	}
 
@@ -71,7 +72,16 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 
 	@Override
 	public void onDeleteService() {
-		// TODO Auto-generated method stub
+		for(Service u : selectionModel.getSelectedSet()) {
+			OpenStackClient.IDENTITY.deleteService(u.getId(), new DefaultAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		}
 		
 	}
 

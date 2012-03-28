@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
+import org.openstack.model.identity.User;
 import org.openstack.model.identity.keystone.KeystoneTenant;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
@@ -58,7 +59,7 @@ public class TenantsActivity extends AbstractActivity implements TenantsView.Pre
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		dataProvider.refresh();
 		
 	}
 
@@ -71,7 +72,16 @@ public class TenantsActivity extends AbstractActivity implements TenantsView.Pre
 
 	@Override
 	public void onDeleteTenant() {
-		// TODO Auto-generated method stub
+		for(Tenant u : selectionModel.getSelectedSet()) {
+			OpenStackClient.IDENTITY.deleteTenant(u.getId(), new DefaultAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		}
 		
 	}
 

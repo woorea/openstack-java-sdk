@@ -14,11 +14,11 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EndpointTemplatesView extends Composite {
+public class EndpointsView extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface Binder extends UiBinder<Widget, EndpointTemplatesView> {
+	interface Binder extends UiBinder<Widget, EndpointsView> {
 	}
 
 	public interface Presenter {
@@ -35,7 +35,7 @@ public class EndpointTemplatesView extends Composite {
 
 	private Presenter presenter;
 
-	public EndpointTemplatesView() {
+	public EndpointsView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initGrid();
 	}
@@ -53,7 +53,7 @@ public class EndpointTemplatesView extends Composite {
 		TextColumn<Endpoint> typeColumn = new TextColumn<Endpoint>() {
 			@Override
 			public String getValue(Endpoint object) {
-				return object.getType();
+				return ""; //object.getType();
 			}
 		};
 		grid.setColumnWidth(typeColumn, "120px");
@@ -61,7 +61,7 @@ public class EndpointTemplatesView extends Composite {
 		TextColumn<Endpoint> nameColumn = new TextColumn<Endpoint>() {
 			@Override
 			public String getValue(Endpoint object) {
-				return object.getName();
+				return ""; //object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
@@ -69,7 +69,7 @@ public class EndpointTemplatesView extends Composite {
 		TextColumn<Endpoint> descriptionColumn = new TextColumn<Endpoint>() {
 			@Override
 			public String getValue(Endpoint object) {
-				return object.getName();
+				return ""; //object.getName();
 			}
 		};
 		grid.setColumnWidth(descriptionColumn, "120px");

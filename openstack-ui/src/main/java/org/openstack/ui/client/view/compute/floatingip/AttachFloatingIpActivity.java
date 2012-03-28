@@ -1,16 +1,18 @@
-package org.openstack.ui.client.view.identity.tenant;
+package org.openstack.ui.client.view.compute.floatingip;
 
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.keystone.KeystoneRole;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
+import org.openstack.ui.client.view.identity.tenant.CreateRoleView;
+import org.openstack.ui.client.view.identity.tenant.CreateRoleView.Presenter;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class CreateRoleActivity extends AbstractActivity implements CreateRoleView.Presenter {
+public class AttachFloatingIpActivity extends AbstractActivity implements CreateRoleView.Presenter {
 
 	private static final CreateRoleView VIEW = new CreateRoleView();
 

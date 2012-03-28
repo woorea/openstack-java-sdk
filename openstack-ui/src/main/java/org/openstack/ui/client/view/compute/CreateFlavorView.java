@@ -1,4 +1,6 @@
-package org.openstack.ui.client.view.compute.volume;
+package org.openstack.ui.client.view.compute;
+
+import org.openstack.ui.client.view.compute.securitygroup.CreateSecurityGroupView.Presenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -11,23 +13,33 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateSecurityGroupView extends Composite implements HasText {
+public class CreateFlavorView extends Composite implements HasText {
 
 	private static CreateVolumeViewUiBinder uiBinder = GWT
 			.create(CreateVolumeViewUiBinder.class);
 
 	interface CreateVolumeViewUiBinder extends
-			UiBinder<Widget, CreateSecurityGroupView> {
+			UiBinder<Widget, CreateFlavorView> {
 	}
 
-	public CreateSecurityGroupView() {
+	public CreateFlavorView() {
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	public interface Presenter {
+		
+	}
+	
+	private Presenter presenter;
+	
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
 
 	@UiField
 	Button button;
 
-	public CreateSecurityGroupView(String firstName) {
+	public CreateFlavorView(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		button.setText(firstName);
 	}
