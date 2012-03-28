@@ -3,6 +3,9 @@ package org.openstack.client;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.ws.rs.client.Target;
+
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.RestClient;
 import org.openstack.api.identity.IdentityPublicEndpoint;
 import org.openstack.model.exceptions.OpenstackException;
@@ -33,7 +36,9 @@ public class OpenStackClientFactory {
 		} else if(tenantName != null) {
 			authentication.setTenantName(tenantName);
 		}
-		IdentityPublicEndpoint auth = new IdentityPublicEndpoint(RestClient.INSTANCE.getJerseyClient().target(endpoint));
+		Target t = RestClient.INSTANCE.getJerseyClient().target(endpoint);
+		t.configuration().register(new LoggingFilter());
+		IdentityPublicEndpoint auth = new IdentityPublicEndpoint(t);
 		Access access = auth.tokens().post(authentication);
 		OpenStackClient openstack = new OpenStackClient(properties, access);
 		return openstack;

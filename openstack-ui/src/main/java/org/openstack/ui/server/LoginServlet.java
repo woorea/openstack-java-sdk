@@ -17,11 +17,20 @@ import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.TenantList;
 import org.openstack.model.identity.keystone.KeystoneServiceEndpoint;
 
+import com.google.gwt.core.client.GWT;
+
 public class LoginServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
+		Properties properties = new Properties();
+		properties.load(LoginServlet.class.getResourceAsStream("/openstack.properties"));
+		
+		if(properties.getProperty("auth.endpoint") == null) {
+			resp.sendRedirect(String.format("%s/setup",req.getContextPath()));
+		} else {
+			req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
+		}	
 	}
 
 	@Override
@@ -33,15 +42,16 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		Properties properties = new Properties();
+		properties.load(LoginServlet.class.getResourceAsStream("/openstack.properties"));
 		
-		properties.setProperty("verbose", "true");
-		properties.setProperty("auth.endpoint", String.format("http://%s:5000/v2.0", req.getParameter("wan")));
+		if(properties.getProperty("auth.endpoint") == null) {
+			resp.sendRedirect(String.format("%s/setup",req.getContextPath()));
+		}
+		
 		properties.setProperty("auth.username", req.getParameter("username"));
 		properties.setProperty("auth.password", req.getParameter("password"));
-		properties.setProperty("identity.endpoint.publicURL", String.format("http://%s:5000/v2.0", req.getParameter("wan")));
-		properties.setProperty("identity.endpoint.internalURL", String.format("http://%s:5000/v2.0", req.getParameter("wan")));
-		properties.setProperty("identity.endpoint.adminURL", String.format("http://%s:35357/v2.0", req.getParameter("wan")));
-		properties.setProperty("identity.admin.token", "secret0");
+		
+		System.out.println(properties);
 		
 		OpenStackClient openstack = OpenStackClientFactory.authenticate(properties);
 		
@@ -51,26 +61,28 @@ public class LoginServlet extends HttpServlet {
 		
 		//openstack.reauthenticateOnTenant(tenants.getList().get(0).getName());
 		
-		for(Service svc : openstack.getAccess().getServices()) {
-			for(ServiceEndpoint endpoint : svc.getEndpoints()) {
-				KeystoneServiceEndpoint kse = (KeystoneServiceEndpoint) endpoint; 
-				kse.setPublicURL(endpoint.getPublicURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
-				kse.setInternalURL(endpoint.getInternalURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
-				kse.setAdminURL(endpoint.getAdminURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
-			}
-		}
-		
 		OpenStackSession oss = new OpenStackSession();
+		oss.setProperties(properties);
 		oss.setAccess(openstack.getAccess());
-		oss.setProperties(openstack.getProperties());
 		
 		req.getSession().setAttribute(Constants.OPENSTACK_SESSION, oss);
 		
-		if("192.168.1.52".equals(req.getParameter("wan"))) {
-			resp.sendRedirect(String.format("%s/openstack.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
-		} else {
+		if(GWT.isProdMode()) {
 			resp.sendRedirect(String.format("%s/openstack.html",req.getContextPath()));
+		} else {
+			resp.sendRedirect(String.format("%s/openstack.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
 		}
+		
+//		for(Service svc : openstack.getAccess().getServices()) {
+//			for(ServiceEndpoint endpoint : svc.getEndpoints()) {
+//				KeystoneServiceEndpoint kse = (KeystoneServiceEndpoint) endpoint; 
+//				kse.setPublicURL(endpoint.getPublicURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
+//				kse.setInternalURL(endpoint.getInternalURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
+//				kse.setAdminURL(endpoint.getAdminURL().replace(URI.create(endpoint.getPublicURL()).getHost(), req.getParameter("wan")));
+//			}
+//		}
+		
+		
 	}
 
 }

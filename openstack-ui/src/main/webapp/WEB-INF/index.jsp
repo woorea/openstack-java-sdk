@@ -18,14 +18,6 @@
 			<div class="modal-body">
 
 				<div class="control-group">
-					<label class="control-label" for="authURL">Auth URL</label>
-					<div class="controls">
-						<input class="input-xlarge" id="wan" name="wan"
-							value="192.168.1.52" />
-						<p class="help-block">Single Node WAN IP</p>
-					</div>
-				</div>
-				<div class="control-group">
 					<label class="control-label" for="username">Username</label>
 					<div class="controls">
 						<input class="input-xlarge" id="username" name="username"
