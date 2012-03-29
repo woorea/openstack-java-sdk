@@ -40,7 +40,7 @@
 			</g:HTMLPanel>
 		</g:north>
 		<g:center>
-			<g:Label text="x" />
+			<g:SimpleLayoutPanel ui:field="detail" />
 		</g:center>
 	</g:SplitLayoutPanel>
 </ui:UiBinder> 

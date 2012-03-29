@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.FloatingIpList;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
@@ -12,6 +14,7 @@ import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.server.actions.Console;
@@ -22,13 +25,27 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ComputeServiceAsync {
 
+	void attachVolume(String serverId, String volumeId,
+			AsyncCallback<Void> callback);
+
 	void changePasswordServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
+
+	void createFloatingIp(String pool, AsyncCallback<FloatingIp> callback);
 
 	void createImageServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
+	void createVolume(Volume volume, AsyncCallback<Volume> callback);
+
+	void deleteFloatingIp(Integer id, AsyncCallback<Void> callback);
+
 	void deleteServer(String id, AsyncCallback<Void> callback);
+
+	void deleteVolume(String id, AsyncCallback<Void> callback);
+
+	void detachVolume(String serverId, String volumeId,
+			AsyncCallback<Void> callback);
 
 	void forceDeleteServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
@@ -43,6 +60,8 @@ public interface ComputeServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void listFlavors(AsyncCallback<FlavorList> callback);
+
+	void listFloatingIps(AsyncCallback<FloatingIpList> callback);
 
 	void listImages(AsyncCallback<ImageList> callback);
 

@@ -25,7 +25,7 @@ public class ServiceFormatter extends SimpleFormatter<Service> {
 
         values.put("type", o.getType());
         values.put("name", o.getName());
-        values.put("endpoints", formatEndpoints(o.getEndpoints()));
+        //values.put("endpoints", formatEndpoints(o.getEndpoints()));
 
         sink.outputRow(values);
     }

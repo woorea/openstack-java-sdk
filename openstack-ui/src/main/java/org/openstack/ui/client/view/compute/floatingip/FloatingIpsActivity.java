@@ -1,17 +1,13 @@
 package org.openstack.ui.client.view.compute.floatingip;
 
 import org.openstack.model.compute.FloatingIp;
-import org.openstack.model.identity.Role;
-import org.openstack.model.identity.RoleList;
-import org.openstack.model.identity.User;
+import org.openstack.model.compute.FloatingIpList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
 import org.openstack.ui.client.view.identity.tenant.CreateRoleActivity;
-import org.openstack.ui.client.view.identity.tenant.RolesView;
-import org.openstack.ui.client.view.identity.tenant.RolesView.Presenter;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -45,15 +41,15 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 
 			@Override
 			protected void onRangeChanged(HasData<FloatingIp> display) {
-//				OpenStackClient.IDENTITY.listRoles(new DefaultAsyncCallback<FloatingIp>() {
-//
-//					@Override
-//					public void onSuccess(FloatingIp result) {
-//						updateRowCount(result.getList().size(), true);
-//						updateRowData(0, result.getList());
-//
-//					}
-//				});
+				OpenStackClient.COMPUTE.listFloatingIps(new DefaultAsyncCallback<FloatingIpList>() {
+
+					@Override
+					public void onSuccess(FloatingIpList result) {
+						updateRowCount(result.getList().size(), true);
+						updateRowData(0, result.getList());
+
+					}
+				});
 			}
 
 		};
@@ -67,16 +63,21 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 
 	@Override
 	public void onCreateFloatingIp() {
-		CreateRoleActivity activity = new CreateRoleActivity();
-		activity.start(UI.MODAL, null);
-		UI.MODAL.center();
+		OpenStackClient.COMPUTE.createFloatingIp(null, new DefaultAsyncCallback<FloatingIp>() {
+
+			@Override
+			public void onSuccess(FloatingIp result) {
+				refresh();
+				
+			}
+		});
 		
 	}
 
 	@Override
 	public void onDeleteFloatingIp() {
 		for(FloatingIp fip : selectionModel.getSelectedSet()) {
-			OpenStackClient.IDENTITY.deleteRole(fip.getId(), new DefaultAsyncCallback<Void>() {
+			OpenStackClient.COMPUTE.deleteFloatingIp(fip.getId(), new DefaultAsyncCallback<Void>() {
 
 				@Override
 				public void onSuccess(Void result) {

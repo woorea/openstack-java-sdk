@@ -15,8 +15,8 @@ public class ServerActionResource extends Resource {
 		super(target);
 	}
 	
-	public Server post(ServerAction action) {
-		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(action, MediaType.APPLICATION_JSON), NovaServer.class);
+	public <T> T post(ServerAction action, Class<T> type) {
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(action, MediaType.APPLICATION_JSON), type);
 	}
 
 }

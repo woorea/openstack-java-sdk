@@ -22,14 +22,6 @@ import com.google.gson.annotations.SerializedName;
 @JsonRootElement("OS-KSADM:service")
 public class KeystoneService implements Serializable, Service {
 
-	@SerializedName("endpoints")
-	@XmlElement(nillable = true, name = "endpoint", type = KeystoneServiceEndpoint.class)
-	private List<KeystoneServiceEndpoint> endpoints;
-
-	// Not sure what these are...
-	@SerializedName("endpoints_links")
-	private List<String> endpointsLinks;
-
     @XmlAttribute
     private String id;
 
@@ -89,25 +81,7 @@ public class KeystoneService implements Serializable, Service {
 	public void setDescription(String description) {
         this.description = description;
     }
-
-    /* (non-Javadoc)
-	 * @see org.openstack.model.identity.keystone.Service#getEndpoints()
-	 */
-    @Override
-	public List<ServiceEndpoint> getEndpoints() {
-        if (endpoints == null) {
-            endpoints = Lists.newArrayList();
-        }
-        return (List<ServiceEndpoint>) (List<?>) endpoints;
-    }
-
-	@Override
-	public String toString() {
-		return "KeyStoneService [endpoints=" + endpoints + ", endpointsLinks="
-				+ endpointsLinks + ", id=" + id + ", name=" + name + ", type="
-				+ type + ", description=" + description + "]";
-	}
-    
+	    
     
 
 }

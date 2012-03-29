@@ -1,24 +1,30 @@
 package org.openstack.ui.server;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.ws.rs.client.Entity;
 
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.FloatingIpList;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.server.actions.Console;
 import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
 import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
+import org.openstack.model.compute.nova.server.actions.Output;
 import org.openstack.model.compute.nova.snapshot.NovaSnapshotList;
 import org.openstack.ui.client.api.ComputeService;
 
@@ -147,13 +153,13 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 
 	public Console getVncConsole(String serverId, GetVncConsoleAction action) {
 		
-		return getClient().getComputeEndpoint().servers().server(serverId).executeAction(Console.class, action);
+		return getClient().getComputeEndpoint().servers().server(serverId).action().post(action, Console.class);
 		
 	}
 
 	public String getConsoleOutput(String serverId, GetConsoleOutputAction action) {
 		
-		return getClient().getComputeEndpoint().servers().server(serverId).executeAction(String.class, action);
+		return getClient().getComputeEndpoint().servers().server(serverId).action().post(action,  Output.class).getOutput();
 		
 	}
 
@@ -194,6 +200,45 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 
 	public Flavor showFlavor(String id) {
 		return getClient().getComputeEndpoint().flavors().flavor(id).get();
+	}
+
+	@Override
+	public FloatingIpList listFloatingIps() {
+		return getClient().getComputeEndpoint().floatingIps().get();
+	}
+
+	@Override
+	public FloatingIp createFloatingIp(String pool) {
+		return getClient().getComputeEndpoint().floatingIps().post(pool);
+	}
+
+	@Override
+	public void deleteFloatingIp(Integer id) {
+		getClient().getComputeEndpoint().floatingIps().floatingIp(id).delete();
+		
+	}
+
+	@Override
+	public Volume createVolume(Volume volume) {
+		return getClient().getComputeEndpoint().volumes().post(volume);
+	}
+
+	@Override
+	public void deleteVolume(String id) {
+		getClient().getComputeEndpoint().volumes().volume(id).delete();
+		
+	}
+
+	@Override
+	public void attachVolume(String serverId, String volumeId) {
+		getClient().getComputeEndpoint().servers().server(serverId).createAttachment();
+		
+	}
+
+	@Override
+	public void detachVolume(String serverId, String volumeId) {
+		getClient().getComputeEndpoint().servers().server(serverId).delteAttachment();
+		
 	}
 
 	

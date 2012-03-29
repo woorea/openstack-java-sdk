@@ -31,21 +31,15 @@ public class CreateEndpointView extends Composite {
 
 	private Presenter presenter;
 	
-	@UiField TextBox name;
+	@UiField TextBox serviceId;
 	
 	@UiField TextBox region;
-	
-	@UiField TextBox type;
 	
 	@UiField TextBox publicURL;
 	
 	@UiField TextBox internalURL;
 	
 	@UiField TextBox adminURL;
-	
-	@UiField CheckBox enabled;
-	
-	@UiField CheckBox global;
 
 	public CreateEndpointView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -63,14 +57,11 @@ public class CreateEndpointView extends Composite {
 	@UiHandler({ "save" })
 	public void onSave(ClickEvent event) {
 		KeystoneEndpoint endpoint = new KeystoneEndpoint();
-		//endpoint.setName(name.getValue());
+		endpoint.setServiceId(serviceId.getValue());
 		endpoint.setRegion(region.getValue());
-		//endpoint.setType(type.getValue());
 		endpoint.setPublicURL(publicURL.getValue());
 		endpoint.setInternalURL(internalURL.getValue());
 		endpoint.setAdminURL(adminURL.getValue());
-		//endpoint.setGlobal(global.getValue());
-		//endpoint.setEnabled(enabled.getValue());
 		presenter.createEndpoint(endpoint);
 	}
 }

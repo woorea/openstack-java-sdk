@@ -32,7 +32,7 @@ public class KeystoneAccess implements Serializable, Access {
     @XmlElementWrapper(name = "serviceCatalog")
     @XmlElement(name = "service", type = KeystoneService.class)
     @SerializedName("serviceCatalog")
-	private List<KeystoneService> services = new ArrayList<KeystoneService>();
+	private List<KeystoneServiceCatalogEntry> services = new ArrayList<KeystoneServiceCatalogEntry>();
 
     @XmlElement(type = KeystoneUser.class)
     private KeystoneUser user;
@@ -53,11 +53,11 @@ public class KeystoneAccess implements Serializable, Access {
 	 * @see org.openstack.model.identity.glance.Access#getServices()
 	 */
 	@Override
-	public List<? extends Service> getServices() {
-		return services;
+	public List<ServiceCatalogEntry> getServices() {
+		return (List<ServiceCatalogEntry>) (List<?>) services;
 	}
 
-	public void setServices(List<KeystoneService> services) {
+	public void setServices(List<KeystoneServiceCatalogEntry> services) {
 		this.services = services;
 	}
 

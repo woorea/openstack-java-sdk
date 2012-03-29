@@ -18,19 +18,23 @@
 				<table>
 					<tbody>
 						<tr>
-							<td>Name</td>
-							<td>Region</td>
-							<td>Type</td>
+							<td>Service Id</td>
 						</tr>
 						<tr>
 							<td>
-								<g:TextBox ui:field="name" width="100%" />
+								<g:TextBox ui:field="serviceId" width="100%" />
 							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td>
+								<td>Region</td>
+							</td>
+						</tr>
+						<tr>
 							<td>
 								<g:TextBox ui:field="region" width="100%" />
-							</td>
-							<td>
-								<g:TextBox ui:field="type" width="100%" />
 							</td>
 						</tr>
 					</tbody>
@@ -62,12 +66,6 @@
 							<td colspan="2">
 								<g:TextBox ui:field="adminURL" width="100%" />
 							</td>
-						</tr>
-					</tbody>
-					<tbody>
-						<tr>
-							<td><g:CheckBox ui:field="global" /> Global</td>
-							<td><g:CheckBox ui:field="enabled" /> Enabled</td>
 						</tr>
 					</tbody>
 				</table>

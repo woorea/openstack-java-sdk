@@ -9,12 +9,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ComputeView extends Composite {
 
-	private static ComputeViewUiBinder uiBinder = GWT
-			.create(ComputeViewUiBinder.class);
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface ComputeViewUiBinder extends UiBinder<Widget, ComputeView> {
+	interface Binder extends UiBinder<Widget, ComputeView> {
 	}
 	
+	@UiField ComputeNavigation navigation;
 	@UiField SimpleLayoutPanel content;
 
 	public ComputeView() {

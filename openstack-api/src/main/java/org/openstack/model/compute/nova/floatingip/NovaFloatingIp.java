@@ -7,14 +7,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.FloatingIp;
 
 @XmlRootElement(name = "floating_ip", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("floating_ip")
 public class NovaFloatingIp implements Serializable, FloatingIp {
 
 	@XmlAttribute
-	private String id;
+	private Integer id;
 
 	@XmlAttribute
 	private String ip;
@@ -29,19 +31,19 @@ public class NovaFloatingIp implements Serializable, FloatingIp {
 	private String fixedIp;
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.FloatingIp#getId()
+	 * @see org.openstack.model.compute.nova.floatingip.FloatingIp#getId()
 	 */
 	@Override
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.FloatingIp#getIp()
+	 * @see org.openstack.model.compute.nova.floatingip.FloatingIp#getIp()
 	 */
 	@Override
 	public String getIp() {
@@ -53,7 +55,7 @@ public class NovaFloatingIp implements Serializable, FloatingIp {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.FloatingIp#getPool()
+	 * @see org.openstack.model.compute.nova.floatingip.FloatingIp#getPool()
 	 */
 	@Override
 	public String getPool() {
@@ -64,13 +66,8 @@ public class NovaFloatingIp implements Serializable, FloatingIp {
 		this.pool = pool;
 	}
 
-	@Override
-	public String toString() {
-		return "FloatingIp [id=" + id + ", ip=" + ip + ", pool=" + pool + "]";
-	}
-
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.FloatingIp#getInstanceId()
+	 * @see org.openstack.model.compute.nova.floatingip.FloatingIp#getInstanceId()
 	 */
 	@Override
 	public String getInstanceId() {
@@ -79,6 +76,24 @@ public class NovaFloatingIp implements Serializable, FloatingIp {
 
 	public void setInstanceId(String instanceId) {
 		this.instanceId = instanceId;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.openstack.model.compute.nova.floatingip.FloatingIp#getFixedIp()
+	 */
+	@Override
+	public String getFixedIp() {
+		return fixedIp;
+	}
+
+	public void setFixedIp(String fixedIp) {
+		this.fixedIp = fixedIp;
+	}
+
+	@Override
+	public String toString() {
+		return "NovaFloatingIp [id=" + id + ", ip=" + ip + ", pool=" + pool
+				+ ", instanceId=" + instanceId + ", fixedIp=" + fixedIp + "]";
 	}
 
 }

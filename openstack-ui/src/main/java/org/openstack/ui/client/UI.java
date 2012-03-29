@@ -6,6 +6,7 @@ import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
 import org.openstack.model.identity.keystone.KeystoneToken;
+import org.openstack.model.identity.keystone.ServiceCatalogEntry;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 
@@ -49,7 +50,8 @@ public class UI implements EntryPoint, UIView.Presenter {
 		                    ui.tenants.addItem(tenant.getName(), tenant.getId());
 						}
 						
-						for(Service service : OpenStackClient.access.getServices()) {
+						ui.services.addItem("identity");
+						for(ServiceCatalogEntry service : OpenStackClient.access.getServices()) {
 		                    ui.services.addItem(service.getType());
 						}
 

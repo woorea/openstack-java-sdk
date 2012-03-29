@@ -1,6 +1,7 @@
 package org.openstack.ui.client.view.compute;
 
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.view.compute.floatingip.FloatingIpsActivity;
 import org.openstack.ui.client.view.compute.keypair.KeyPairsActivity;
 import org.openstack.ui.client.view.compute.securitygroup.SecurityGroupsActivity;
 import org.openstack.ui.client.view.compute.snapshot.SnapshotsActivity;
@@ -32,6 +33,9 @@ public class ComputeActivity extends AbstractActivity {
 		} else if ("flavors".equals(place.getPlace())) {
 			FlavorsActivity activity = new FlavorsActivity(place);
 			activity.start(VIEW.content, eventBus);
+		} else if ("floatingips".equals(place.getPlace())) {
+			FloatingIpsActivity activity = new FloatingIpsActivity(place);
+			activity.start(VIEW.content, eventBus);
 		} else if ("volumes".equals(place.getPlace())) {
 			VolumesActivity activity = new VolumesActivity(place);
 			activity.start(VIEW.content, eventBus);
@@ -41,12 +45,13 @@ public class ComputeActivity extends AbstractActivity {
 		} else if ("keypairs".equals(place.getPlace())) {
 			KeyPairsActivity activity = new KeyPairsActivity(place);
 			activity.start(VIEW.content, eventBus);
-		} else if ("firewall".equals(place.getPlace())) {
+		} else if ("securitygroups".equals(place.getPlace())) {
 			SecurityGroupsActivity activity = new SecurityGroupsActivity(place);
 			activity.start(VIEW.content, eventBus);
 		} else {
 			VIEW.content.setWidget(new Label(place.getPlace()));
 		}
+		VIEW.navigation.setTenantId(place.getTenantId());
 		panel.setWidget(VIEW);
 	}
 

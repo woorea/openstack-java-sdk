@@ -13,7 +13,7 @@ public class CreateFloatingIp extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		TenantResource compute = getContext().getComputeClient();
 
-		return compute.floatingIps().post();
+		return compute.floatingIps().post(null);
 	}
 
 }

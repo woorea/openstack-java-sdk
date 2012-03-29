@@ -62,32 +62,34 @@ public class Test {
 //
 		ServiceList services = identity.services().get();
 
-		KeystoneService kss = new KeystoneService();
-		kss.setName("test");
-		kss.setType("compute");
-		kss.setDescription("Nova 3");
-		Service service = identity.services().post(kss);
-
-		service = identity.services().service(service.getId()).get();
+//		KeystoneService kss = new KeystoneService();
+//		kss.setName("test");
+//		kss.setType("compute");
+//		kss.setDescription("Nova 3");
+//		Service service = identity.services().post(kss);
+//
+		Service service = identity.services().service(services.getList().get(0).getId()).get();
+		
+		
 
 		
 
 		identity.endpoints().get();
 		
-		KeystoneEndpoint kse = new KeystoneEndpoint();
+//		KeystoneEndpoint kse = new KeystoneEndpoint();
+//		
+//		
+//		kse.setRegion("RegionOne");
+//		kse.setServiceId(service.getId());
+//		kse.setPublicURL("http://192.168.1.52:8774/v2/$(tenant_id)s");
+//		kse.setInternalURL("http://192.168.1.52:8774/v2/$(tenant_id)s");
+//		kse.setAdminURL("http://192.168.1.52:8774/v2/$(tenant_id)s");
+//		
+//		Endpoint endpoint = identity.endpoints().post(kse);
 		
+//		identity.endpoints().endpoint(endpoint.getId()).delete();
 		
-		kse.setRegion("RegionOne");
-		kse.setServiceId(service.getId());
-		kse.setPublicURL("http://192.168.1.52:8774/v2/%tenant_id%");
-		kse.setInternalURL("http://192.168.1.52:8774/v2/%tenant_id%");
-		kse.setAdminURL("http://192.168.1.52:8774/v2/%tenant_id%");
-		
-		Endpoint endpoint = identity.endpoints().post(kse);
-		
-		identity.endpoints().endpoint(endpoint.getId()).delete();
-		
-		identity.services().service(service.getId()).delete();
+//		identity.services().service(service.getId()).delete();
 //		
 //		openstack = openstack.reauthenticateOnTenant("admin");
 //				

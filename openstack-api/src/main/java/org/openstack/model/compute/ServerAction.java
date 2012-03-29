@@ -1,5 +1,7 @@
 package org.openstack.model.compute;
 
-public interface ServerAction {
+import java.io.Serializable;
+
+public interface ServerAction extends Serializable {
 
 }

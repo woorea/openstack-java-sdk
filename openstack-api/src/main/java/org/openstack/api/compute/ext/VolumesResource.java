@@ -1,13 +1,11 @@
 package org.openstack.api.compute.ext;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.api.compute.ImageResource;
+import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 import org.openstack.model.compute.nova.volume.NovaVolumeList;
 
@@ -23,22 +21,17 @@ public class VolumesResource extends Resource {
 		super(target);
 	}
 	
-	public VolumeList get() {
-		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("detail",true);
-		return get(properties);
-	}
-	
 	/**
 	 * Returns the list of volume types
 	 * 
 	 * @return
 	 */
-	public VolumeList get(Map<String, Object> properties) {
-		if(properties.get("detail") != null) {
-			target =  target.path("/detail");
-		} 
+	public VolumeList get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaVolumeList.class);
+	}
+	
+	public Volume post(Volume volume) {
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(volume, MediaType.APPLICATION_JSON), Volume.class);
 	}
 
 	/**

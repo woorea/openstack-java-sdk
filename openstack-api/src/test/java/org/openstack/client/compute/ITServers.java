@@ -75,13 +75,13 @@ public class ITServers extends ComputeIntegrationTest {
 	
 	@Test(dependsOnMethods="createServer", priority=1)
 	public void pauseServer() throws Exception {
-		compute.servers().server(server.getId()).action().post(new PauseAction());
+		compute.servers().server(server.getId()).action().post(new PauseAction(), String.class);
 		waitForState("PAUSED");
 	}
 	
 	@Test(dependsOnMethods={"createServer"}, priority=2)
 	public void unpauseServer() {
-		compute.servers().server(server.getId()).action().post(new UnpauseAction());
+		compute.servers().server(server.getId()).action().post(new UnpauseAction(), String.class);
 	}
 	
 	@Test(dependsOnMethods="createServer", priority=1000)

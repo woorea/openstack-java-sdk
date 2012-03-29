@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.FloatingIpList;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
@@ -12,6 +14,7 @@ import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.server.actions.Console;
@@ -85,7 +88,19 @@ public interface ComputeService extends RemoteService {
 	SnapshotList listSnapshots();
 
 	SecurityGroup showSecurityGroup(Integer id);
+	
+	FloatingIpList listFloatingIps();
+	
+	FloatingIp createFloatingIp(String pool);
+	
+	void deleteFloatingIp(Integer id);
+	
+	Volume createVolume(Volume volume);
+	
+	void deleteVolume(String id);
+	
+	void attachVolume(String serverId, String volumeId);
+	
+	void detachVolume(String serverId, String volumeId);
 
-	
-	
 }

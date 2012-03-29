@@ -22,7 +22,7 @@ public class GetVncConsoleAction implements Serializable, ServerAction {
 	 *
 	 */
 	@XmlElement(required=true)
-	private String type;
+	private String type = "novnc";
 
 	public String getType() {
 		return type;

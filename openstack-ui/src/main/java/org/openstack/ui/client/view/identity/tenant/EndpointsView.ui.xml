@@ -24,23 +24,11 @@
 						</g:cell>
 					</g:HorizontalPanel>
 				</div>
-				<div>
-					<g:HorizontalPanel width="100%">
-						<g:cell width="50%">
-							<g:HTMLPanel>
-								<g:Button styleName="btn btn-small" ui:field="filters" text="Filters" />
-							</g:HTMLPanel>
-						</g:cell>
-						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">
-							<cell:SimplePager location="CENTER" />
-						</g:cell>
-					</g:HorizontalPanel>
-				</div>
 				<cell:DataGrid ui:field="grid" height="300px" width="100%" />
 			</g:HTMLPanel>
 		</g:north>
 		<g:center>
-			<g:Label text="x" />
+			<g:SimpleLayoutPanel ui:field="detail" />
 		</g:center>
 	</g:SplitLayoutPanel>
 </ui:UiBinder> 

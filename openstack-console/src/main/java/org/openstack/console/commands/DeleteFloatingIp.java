@@ -15,7 +15,7 @@ public class DeleteFloatingIp extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		TenantResource compute = getContext().getComputeClient();
 
-		compute.floatingIps().floatingIp(id).delete();
+		compute.floatingIps().floatingIp(Integer.parseInt(id)).delete();
 
 		return id;
 	}

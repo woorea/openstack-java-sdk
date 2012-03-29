@@ -25,6 +25,7 @@ import org.openstack.model.identity.Authentication;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
+import org.openstack.model.identity.keystone.ServiceCatalogEntry;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
@@ -164,19 +165,17 @@ public class OpenStackClient {
 	private ServiceEndpoint getEndpoint(final String type, final String region) {
 		Preconditions.checkNotNull(access, "You must be authenticated before get a identity client");
 		try {
-			Service service = Iterables.find(access.getServices(), new Predicate<Service>() {
+			ServiceCatalogEntry service = Iterables.find(access.getServices(), new Predicate<ServiceCatalogEntry>() {
 
 						@Override
-						public boolean apply(Service service) {
-							System.out.println(service);
+						public boolean apply(ServiceCatalogEntry service) {
 							return type.equals(service.getType());
 						}
 
 					});
-			List<? extends ServiceEndpoint> endpoints = service.getEndpoints();
+			List<ServiceEndpoint> endpoints = service.getEndpoints();
 			if (region != null) {
-				return  Iterables.find(endpoints,
-						new Predicate<ServiceEndpoint>() {
+				return  Iterables.find(endpoints, new Predicate<ServiceEndpoint>() {
 
 							@Override
 							public boolean apply(ServiceEndpoint endpoint) {

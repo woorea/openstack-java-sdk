@@ -13,28 +13,14 @@
 					<g:HorizontalPanel width="100%">
 						<g:cell width="50%">
 							<g:HTMLPanel>
-								<g:Button styleName="btn btn-small" ui:field="launch" text="Launch" />
-								<g:Button styleName="btn btn-small" ui:field="register" text="Register" />
-								<g:Button styleName="btn btn-small" ui:field="deregister" text="Deregister" />
-								<g:Button styleName="btn btn-small" ui:field="permisions" text="Permissions" />
+								<g:Button styleName="btn btn-small" ui:field="create" text="Create Flavor" />
+								<g:Button styleName="btn btn-small" ui:field="delete" text="Delete Flavor" />
 							</g:HTMLPanel>
 						</g:cell>
 						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">
 							<g:HTMLPanel>
 								<g:Button ui:field="refresh" styleName="btn btn-small"><i class="icon-refresh" /> Refresh</g:Button>
 							</g:HTMLPanel>
-						</g:cell>
-					</g:HorizontalPanel>
-				</div>
-				<div>
-					<g:HorizontalPanel width="100%">
-						<g:cell width="50%">
-							<g:HTMLPanel>
-								<g:Button styleName="btn btn-small" ui:field="filters" text="Filters" />
-							</g:HTMLPanel>
-						</g:cell>
-						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">
-							<cell:SimplePager location="CENTER" />
 						</g:cell>
 					</g:HorizontalPanel>
 				</div>

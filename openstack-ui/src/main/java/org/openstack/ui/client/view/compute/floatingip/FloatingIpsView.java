@@ -50,22 +50,38 @@ public class FloatingIpsView extends Composite {
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		TextColumn<FloatingIp> nameColumn = new TextColumn<FloatingIp>() {
+		TextColumn<FloatingIp> ipColumn = new TextColumn<FloatingIp>() {
 			@Override
 			public String getValue(FloatingIp object) {
 				return object.getIp();
 			}
 		};
-		grid.setColumnWidth(nameColumn, "120px");
-		grid.addColumn(nameColumn, "Name");
-		TextColumn<FloatingIp> descriptionColumn = new TextColumn<FloatingIp>() {
+		grid.setColumnWidth(ipColumn, "120px");
+		grid.addColumn(ipColumn, "Name");
+		TextColumn<FloatingIp> instanceIdColumn = new TextColumn<FloatingIp>() {
 			@Override
 			public String getValue(FloatingIp object) {
 				return object.getInstanceId();
 			}
 		};
-		grid.setColumnWidth(descriptionColumn, "120px");
-		grid.addColumn(descriptionColumn, "Description");
+		grid.setColumnWidth(instanceIdColumn, "120px");
+		grid.addColumn(instanceIdColumn, "Instance Id");
+		TextColumn<FloatingIp> fixedIpColumn = new TextColumn<FloatingIp>() {
+			@Override
+			public String getValue(FloatingIp object) {
+				return object.getFixedIp();
+			}
+		};
+		grid.setColumnWidth(fixedIpColumn, "120px");
+		grid.addColumn(fixedIpColumn, "Fixed Ip");
+		TextColumn<FloatingIp> poolColumn = new TextColumn<FloatingIp>() {
+			@Override
+			public String getValue(FloatingIp object) {
+				return object.getPool();
+			}
+		};
+		grid.setColumnWidth(poolColumn, "120px");
+		grid.addColumn(poolColumn, "Pool");
 	}
 
 	public void setPresenter(Presenter presenter) {

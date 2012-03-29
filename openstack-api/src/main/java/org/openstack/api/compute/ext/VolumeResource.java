@@ -1,13 +1,10 @@
 package org.openstack.api.compute.ext;
 
-import java.util.HashMap;
-
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Volume;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 import org.openstack.model.compute.nova.volume.NovaVolume;
 
 public class VolumeResource extends Resource {
@@ -21,11 +18,11 @@ public class VolumeResource extends Resource {
 	 * 
 	 * @return
 	 */
-	public Volume get(HashMap<String, Object> properties) {
+	public Volume get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaVolume.class);
 	}
 
-	public void delete(HashMap<String, Object> properties) {
+	public void delete() {
 		target.request().delete();
 	}
 	

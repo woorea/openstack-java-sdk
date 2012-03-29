@@ -1,6 +1,7 @@
 package org.openstack.ui.client.view.identity.tenant;
 
 import org.openstack.model.identity.Endpoint;
+import org.openstack.model.identity.Service;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -48,7 +49,7 @@ public class EndpointsView extends Composite {
 				return false;
 			}
 		};
-		grid.setColumnWidth(checkboxColumn, "40px");
+		grid.setColumnWidth(checkboxColumn, "30px");
 		grid.addColumn(checkboxColumn, "");
 		TextColumn<Endpoint> typeColumn = new TextColumn<Endpoint>() {
 			@Override
@@ -56,24 +57,57 @@ public class EndpointsView extends Composite {
 				return ""; //object.getType();
 			}
 		};
-		grid.setColumnWidth(typeColumn, "120px");
-		grid.addColumn(typeColumn, "Type");
-		TextColumn<Endpoint> nameColumn = new TextColumn<Endpoint>() {
+		/*
+		TextColumn<Endpoint> idColumn = new TextColumn<Endpoint>() {
+			@Override
+			public String getValue(Endpoint object) {
+				return object.getId();
+			}
+		};
+		grid.setColumnWidth(idColumn, "120px");
+		grid.addColumn(idColumn, "Id");
+		*/
+		TextColumn<Endpoint> serviceIdColumn = new TextColumn<Endpoint>() {
+			@Override
+			public String getValue(Endpoint object) {
+				return object.getServiceId();
+			}
+		};
+		grid.setColumnWidth(serviceIdColumn, "120px");
+		grid.addColumn(serviceIdColumn, "Service Id");
+		
+		TextColumn<Endpoint> regionColumn = new TextColumn<Endpoint>() {
 			@Override
 			public String getValue(Endpoint object) {
 				return ""; //object.getName();
 			}
 		};
-		grid.setColumnWidth(nameColumn, "120px");
-		grid.addColumn(nameColumn, "Name");
-		TextColumn<Endpoint> descriptionColumn = new TextColumn<Endpoint>() {
+		grid.setColumnWidth(regionColumn, "80px");
+		grid.addColumn(regionColumn, "Region");
+		TextColumn<Endpoint> publicURLColumn = new TextColumn<Endpoint>() {
 			@Override
 			public String getValue(Endpoint object) {
-				return ""; //object.getName();
+				return object.getPublicURL();
 			}
 		};
-		grid.setColumnWidth(descriptionColumn, "120px");
-		grid.addColumn(descriptionColumn, "Description");
+		grid.setColumnWidth(publicURLColumn, "130px");
+		grid.addColumn(publicURLColumn, "Public URL");
+		TextColumn<Endpoint> internalURLColumn = new TextColumn<Endpoint>() {
+			@Override
+			public String getValue(Endpoint object) {
+				return object.getInternalURL();
+			}
+		};
+		grid.setColumnWidth(internalURLColumn, "130px");
+		grid.addColumn(internalURLColumn, "Internal URL");
+		TextColumn<Endpoint> administrationURLColumn = new TextColumn<Endpoint>() {
+			@Override
+			public String getValue(Endpoint object) {
+				return object.getAdminURL();
+			}
+		};
+		grid.setColumnWidth(administrationURLColumn, "130px");
+		grid.addColumn(administrationURLColumn, "Administration URL");
 	}
 
 	public void setPresenter(Presenter presenter) {

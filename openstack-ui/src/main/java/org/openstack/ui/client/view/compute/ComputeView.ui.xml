@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:compute="urn:import:org.openstack.ui.client.view.compute.widgets">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:compute="urn:import:org.openstack.ui.client.view.compute">
 	<ui:style>
 		
 		.nav {
@@ -25,7 +25,7 @@
 	<g:DockLayoutPanel styleName="{style.content}">
 		<g:west size="180">
 			<g:HTMLPanel styleName="{style.nav}">
-				<compute:ComputeNavigation />
+				<compute:ComputeNavigation ui:field="navigation" />
 			</g:HTMLPanel>
 		</g:west>
 		<g:center>
