@@ -3,24 +3,24 @@ package org.openstack.client.compute;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.openstack.model.compute.Volume;
-import org.openstack.model.compute.VolumeList;
-import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
-import org.openstack.model.compute.nova.volume.NovaVolumeForCreate;
+import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotList;
+import org.openstack.model.compute.nova.volume.NovaSnapshotAttachment;
+import org.openstack.model.compute.nova.volume.NovaSnapshotForCreate;
 import org.testng.annotations.Test;
 
 public class ITSnapshots extends ComputeIntegrationTest {
 	
-	private Volume volume;
+	private Snapshot volume;
 
 	@Test
-	public void listVolumes() {
-		VolumeList volumes = compute.volumes().get();
+	public void listSnapshots() {
+		SnapshotList volumes = compute.volumes().get();
 	}
 	
 	@Test
-	public void createVolume() throws Exception {
-		NovaVolumeForCreate nv = new NovaVolumeForCreate();
+	public void createSnapshot() throws Exception {
+		NovaSnapshotForCreate nv = new NovaSnapshotForCreate();
 		nv.setName("v2");
 		nv.setSizeInGB(1);
 		volume = compute.volumes().post(nv);
@@ -28,26 +28,15 @@ public class ITSnapshots extends ComputeIntegrationTest {
 		waitForState("available");
 	}
 	
-	@Test(dependsOnMethods="createVolume", priority=1)
-	public void showVolume() throws Exception {
+	@Test(dependsOnMethods="createSnapshot", priority=1)
+	public void showSnapshot() throws Exception {
 		volume = compute.volumes().volume(volume.getId()).get();
 		System.out.println(volume);	
 	}
 	
-	@Test(dependsOnMethods="createVolume", priority=1000)
-	public void deleteVolume() {
+	@Test(dependsOnMethods="createSnapshot", priority=1000)
+	public void deleteSnapshot() {
 		compute.volumes().volume(volume.getId()).delete();
-	}
-	
-	public void createVolumeAttachment() {
-		NovaVolumeAttachment attachment = new NovaVolumeAttachment();
-		attachment.setVolumeId(volume.getId());
-		attachment.setDevice("/mnt");
-		compute.servers().server("").attachments().post(attachment);
-	}
-	
-	public void deleteVolumeAttachment() {
-		compute.servers().server("").attachments().attachment(volume.getId()).delete();
 	}
 	
 	private void waitForState(final String state) {
@@ -57,7 +46,7 @@ public class ITSnapshots extends ComputeIntegrationTest {
 				
 				@Override
 				public void run() {
-					volume = compute.volumes().volume(volume.getId()).get();
+					volume = compute.snapshots().snapshot(volume.getId()).get();
 					if(state.equals(volume.getStatus())) {
 						timer.shutdown();
 					} else {
