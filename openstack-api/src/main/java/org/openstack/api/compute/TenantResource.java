@@ -10,6 +10,7 @@ import org.openstack.api.compute.ext.QuotasResource;
 import org.openstack.api.compute.ext.SecurityGroupRulesResource;
 import org.openstack.api.compute.ext.SecurityGroupsResource;
 import org.openstack.api.compute.ext.SimpleTenantUsageResource;
+import org.openstack.api.compute.ext.SnapshotsResource;
 import org.openstack.api.compute.ext.VolumeTypesResource;
 import org.openstack.api.compute.ext.VolumesResource;
 import org.openstack.api.compute.notavailable.AccountsResource;
@@ -95,5 +96,9 @@ public class TenantResource extends Resource {
     public ExtensionsResource extensions() {
     	return path("/extensions", ExtensionsResource.class);
     }
+
+	public SnapshotsResource snapshots() {
+		return path("/os-security-group-rules", SnapshotsResource.class);
+	}
 
 }
