@@ -7,7 +7,9 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.nova.volume.NovaVolume;
 import org.openstack.model.compute.nova.volume.NovaVolumeList;
+import org.openstack.model.compute.nova.volume.VolumeForCreate;
 
 /**
  * The volume types API controller for the Openstack API
@@ -30,22 +32,18 @@ public class VolumesResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaVolumeList.class);
 	}
 	
-	public Volume post(Volume volume) {
-		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(volume, MediaType.APPLICATION_JSON), Volume.class);
-	}
-
 	/**
-	 * Creates a new volume type.
+	 * Creates a new volume.
 	 * 
 	 * @param flavor
 	 * @return
 	 */
-	//	public Volume create(Volume volume) {
-	//		return null;
-	//	}
+	public Volume post(VolumeForCreate volume) {
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(volume, MediaType.APPLICATION_JSON), NovaVolume.class);
+	}
 
-	public VolumeResource volume(String id) {
-		return new VolumeResource(target.path("/{id}").pathParam("id", id));
+	public VolumeResource volume(Integer id) {
+		return new VolumeResource(target.path("/{volumeId}").pathParam("volumeId", id));
 	}
 
 }

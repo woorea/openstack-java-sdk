@@ -4,11 +4,11 @@ public interface Volume {
 
 	Integer getId();
 
-	Integer getStatus();
+	String getStatus();
 
 	Integer getSizeInGB();
 
-	Integer getAvailabilityZone();
+	String getAvailabilityZone();
 
 	String getType();
 

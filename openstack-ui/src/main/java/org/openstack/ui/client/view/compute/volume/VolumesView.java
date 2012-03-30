@@ -55,22 +55,41 @@ public class VolumesView extends Composite {
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		Column<Volume, String> logoColumn = new Column<Volume, String>(new LogoCell()) {
+		TextColumn<Volume> statusColumn = new TextColumn<Volume>() {
 
 			@Override
 			public String getValue(Volume object) {
-				return "";
+				return object.getStatus();
 			}
 		};
-		grid.setColumnWidth(logoColumn, "60px");
-		grid.addColumn(logoColumn);
+		grid.setColumnWidth(statusColumn, "120px");
+		grid.addColumn(statusColumn,"status");
 		TextColumn<Volume> nameColumn = new TextColumn<Volume>() {
+
 			@Override
 			public String getValue(Volume object) {
 				return object.getName();
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
+		grid.addColumn(nameColumn);
+		TextColumn<Volume> sizeColumn = new TextColumn<Volume>() {
+			@Override
+			public String getValue(Volume object) {
+				return object.getSizeInGB().toString();
+			}
+		};
+		grid.setColumnWidth(sizeColumn, "120px");
+		grid.addColumn(sizeColumn);
+		TextColumn<Volume> descriptionColumn = new TextColumn<Volume>() {
+
+			@Override
+			public String getValue(Volume object) {
+				return object.getDescription();
+			}
+		};
+		//grid.setColumnWidth(descriptionColumn, "120px");
+		grid.addColumn(descriptionColumn);
 	}
 
 	public void setPresenter(Presenter presenter) {

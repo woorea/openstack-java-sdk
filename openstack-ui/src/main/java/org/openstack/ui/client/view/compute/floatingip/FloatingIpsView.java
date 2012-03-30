@@ -28,6 +28,10 @@ public class FloatingIpsView extends Composite {
 		void onCreateFloatingIp();
 
 		void onDeleteFloatingIp();
+
+		void onDisassociateFloatingIp();
+
+		void onAssociateFloatingIp();
 	}
 
 	@UiField(provided = true)
@@ -101,6 +105,16 @@ public class FloatingIpsView extends Composite {
 	@UiHandler("delete")
 	void onDeleteTenant(ClickEvent event) {
 		presenter.onDeleteFloatingIp();
+	}
+	
+	@UiHandler("associate")
+	void onAssociateFloatingIp(ClickEvent event) {
+		presenter.onAssociateFloatingIp();
+	}
+	
+	@UiHandler("disassociate")
+	void onDisassociateFloatingIp(ClickEvent event) {
+		presenter.onDisassociateFloatingIp();
 	}
 
 }

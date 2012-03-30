@@ -11,12 +11,12 @@
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
-				<h3>Create Endpoint</h3>
+				<h3>Create Volume</h3>
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
 			<g:HTMLPanel>
-				<table>
+				<table style="width:98%">
 					<tbody>
 						<tr>
 							<td>Size (in GB)</td>
@@ -29,23 +29,11 @@
 					</tbody>
 					<tbody>
 						<tr>
-							<td>
-								<td>Availability Zone</td>
-							</td>
+							<td>Availability Zone</td>
 						</tr>
 						<tr>
 							<td>
 								<g:TextBox ui:field="availabilityZone" width="100%" />
-							</td>
-						</tr>
-					</tbody>
-					<tbody>
-						<tr>
-							<td colspan="2">Type</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:TextBox ui:field="type" width="100%" />
 							</td>
 						</tr>
 					</tbody>

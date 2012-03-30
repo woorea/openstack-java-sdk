@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.SecurityGroupsResource;
+import org.openstack.api.compute.ext.VolumeAttachmentsResource;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.nova.NovaServer;
@@ -359,12 +360,8 @@ public class ServerResource extends Resource {
 		return target.path("action").request(forceType).post(Entity.xml(action), c);
 	}
 
-	public void createAttachment() {
-		// "os-volume_attachments"
-	}
-
-	public void delteAttachment() {
-		// "os-volume_attachments"
+	public VolumeAttachmentsResource attachments() {
+		return path("os-volume_attachments", VolumeAttachmentsResource.class);
 	}
 
 	public FloatingIpsResource floatingIps() {

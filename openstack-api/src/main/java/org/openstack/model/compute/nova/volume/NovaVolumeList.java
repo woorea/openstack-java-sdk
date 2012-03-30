@@ -19,23 +19,23 @@ import org.openstack.model.compute.VolumeList;
 public class NovaVolumeList implements Serializable, VolumeList {
 
 	@XmlElement(name="volume")
-	private List<NovaVolume> list = new ArrayList<NovaVolume>();
+	private List<NovaVolume> volumes = new ArrayList<NovaVolume>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.VolumeList#getList()
 	 */
 	@Override
 	public List<Volume> getList() {
-		return (List<Volume>) (List<?>) list;
+		return (List<Volume>) (List<?>) volumes;
 	}
 
 	public void setList(List<NovaVolume> list) {
-		this.list = list;
+		this.volumes = list;
 	}
 
 	@Override
 	public String toString() {
-		return "NovaVolumeList [list=" + list + "]";
+		return "NovaVolumeList [list=" + volumes + "]";
 	}
 	
 }

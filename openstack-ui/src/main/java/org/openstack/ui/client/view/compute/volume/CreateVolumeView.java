@@ -1,6 +1,7 @@
 package org.openstack.ui.client.view.compute.volume;
 
 import org.openstack.model.compute.nova.volume.NovaVolume;
+import org.openstack.model.compute.nova.volume.NovaVolumeForCreate;
 import org.openstack.model.identity.keystone.KeystoneEndpoint;
 import org.openstack.ui.client.UI;
 
@@ -28,7 +29,7 @@ public class CreateVolumeView extends Composite {
 	
 	public interface Presenter {
 
-		void createVolume(NovaVolume volume);
+		void createVolume(NovaVolumeForCreate volume);
 		
 	}
 	
@@ -46,8 +47,6 @@ public class CreateVolumeView extends Composite {
 	
 	@UiField TextBox availabilityZone;
 	
-	@UiField TextBox type;
-	
 	@UiField TextBox name;
 	
 	@UiField TextArea description;
@@ -59,11 +58,10 @@ public class CreateVolumeView extends Composite {
 	
 	@UiHandler({ "save" })
 	public void onSave(ClickEvent event) {
-		NovaVolume volume = new NovaVolume();
+		NovaVolumeForCreate volume = new NovaVolumeForCreate();
 		volume.setSizeInGB(sizeInGB.getValue());
-		volume.setAvailabilityZone(0);
+		volume.setAvailabilityZone("nova");
 		volume.setName(name.getValue());
-		volume.setType(type.getValue());
 		volume.setDescription(description.getValue());
 		presenter.createVolume(volume);
 	}

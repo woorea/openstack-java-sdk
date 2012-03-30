@@ -5,10 +5,8 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.Snapshot;
 
 
@@ -41,10 +39,7 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	private String description;
 	
 	@XmlAttribute(name="snapshotId")
-	private String snapshotId;
-	
-	@XmlElement(name="metadata")
-	private Metadata metadata;
+	private Integer volumeId;
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Snapshot#getId()
@@ -143,27 +138,15 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getSnapshotId()
+	 * @see org.openstack.model.compute.Snapshot#getVolumeId()
 	 */
 	@Override
-	public String getSnapshotId() {
-		return snapshotId;
+	public Integer getVolumeId() {
+		return volumeId;
 	}
 
-	public void setSnapshotId(String snapshotId) {
-		this.snapshotId = snapshotId;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getMetadata()
-	 */
-	@Override
-	public Metadata getMetadata() {
-		return metadata;
-	}
-
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
+	public void setVolumeId(Integer volumeId) {
+		this.volumeId = volumeId;
 	}
 
 	@Override
@@ -171,8 +154,8 @@ public class NovaSnapshot implements Serializable, Snapshot {
 		return "Volume [id=" + id + ", status=" + status + ", sizeInGB="
 				+ sizeInGB + ", availabilityZone=" + availabilityZone
 				+ ", type=" + type + ", created=" + created + ", name=" + name
-				+ ", description=" + description + ", snapshotId=" + snapshotId
-				+ ", metadata=" + metadata + "]";
+				+ ", description=" + description + ", volumeId=" + volumeId
+				+ ", metadata=" + volumeId + "]";
 	}
 
 	

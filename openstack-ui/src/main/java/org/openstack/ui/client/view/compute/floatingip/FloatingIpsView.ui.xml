@@ -15,6 +15,8 @@
 							<g:HTMLPanel>
 								<g:Button styleName="btn btn-small" ui:field="create"><i class="icon-plus-sign" /> Create Floating Ip</g:Button>
 								<g:Button styleName="btn btn-small" ui:field="delete"><i class="icon-remove-sign" /> Delete Floating Ip</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="associate"><i class="icon-plus-sign" /> Associate Floating Ip</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="disassociate"><i class="icon-remove-sign" /> Disassocitate Floating Ip</g:Button>
 							</g:HTMLPanel>
 						</g:cell>
 						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">

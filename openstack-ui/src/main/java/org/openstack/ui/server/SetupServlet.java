@@ -34,9 +34,7 @@ public class SetupServlet extends HttpServlet {
 		
 		properties.load(new FileInputStream(file));
 		
-		properties.setProperty("verbose", "false");
-		
-		properties.setProperty("auth.endpoint", req.getParameter("auth.endpoint"));
+		properties.setProperty("verbose", "true");
 		
 		properties.setProperty("identity.endpoint.publicURL", req.getParameter("identity.endpoint.publicURL"));
 		properties.setProperty("identity.endpoint.internalURL", req.getParameter("identity.endpoint.internalURL"));

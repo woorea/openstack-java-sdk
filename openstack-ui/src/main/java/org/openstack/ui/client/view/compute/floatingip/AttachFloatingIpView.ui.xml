@@ -10,23 +10,12 @@
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
-				<h3>Create Role</h3>
+				<h3>Associate Floating IP</h3>
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
 			<g:HTMLPanel>
-				<table>
-					<tbody>
-						<tr>
-							<td colspan="2">Name</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:TextBox ui:field="name" width="100%" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<g:ListBox ui:field="serverId" />
 			</g:HTMLPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">

@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
 		Properties properties = new Properties();
 		properties.load(LoginServlet.class.getResourceAsStream("/openstack.properties"));
 		
-		if(properties.getProperty("auth.endpoint") == null) {
+		if(properties.getProperty("identity.endpoint.publicURL") == null) {
 			resp.sendRedirect(String.format("%s/setup",req.getContextPath()));
 		} else {
 			req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 		Properties properties = new Properties();
 		properties.load(LoginServlet.class.getResourceAsStream("/openstack.properties"));
 		
-		if(properties.getProperty("auth.endpoint") == null) {
+		if(properties.getProperty("identity.endpoint.publicURL") == null) {
 			resp.sendRedirect(String.format("%s/setup",req.getContextPath()));
 		}
 		

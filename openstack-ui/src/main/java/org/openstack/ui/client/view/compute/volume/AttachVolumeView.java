@@ -1,17 +1,19 @@
 package org.openstack.ui.client.view.compute.volume;
 
+import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
+import org.openstack.ui.client.UI;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AttachVolumeView extends Composite implements HasText {
+public class AttachVolumeView extends Composite {
 
 	private static CreateVolumeViewUiBinder uiBinder = GWT
 			.create(CreateVolumeViewUiBinder.class);
@@ -21,10 +23,16 @@ public class AttachVolumeView extends Composite implements HasText {
 	}
 	
 	public interface Presenter {
+
+		void attachVolume(String serverId, NovaVolumeAttachment attachment);
 		
 	}
 	
 	private Presenter presenter;
+	
+	@UiField ListBox serverId;
+	
+	@UiField TextBox device;
 
 	public AttachVolumeView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -34,25 +42,18 @@ public class AttachVolumeView extends Composite implements HasText {
 		this.presenter = presenter;
 	}
 
-	@UiField
-	Button button;
-
-	public AttachVolumeView(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
+	
+	
+	@UiHandler({ "cancel", "close" })
+	public void onCancel(ClickEvent event) {
+		UI.MODAL.hide(true);
 	}
 
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		Window.alert("Hello!");
-	}
-
-	public void setText(String text) {
-		button.setText(text);
-	}
-
-	public String getText() {
-		return button.getText();
+	@UiHandler({ "save" })
+	public void onSave(ClickEvent event) {
+		NovaVolumeAttachment attachment = new NovaVolumeAttachment();
+		attachment.setDevice(device.getValue());
+		presenter.attachVolume(serverId.getValue(serverId.getSelectedIndex()), attachment);
 	}
 
 }

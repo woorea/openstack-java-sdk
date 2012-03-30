@@ -20,12 +20,14 @@ import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.server.actions.Console;
 import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
 import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
+import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
+import org.openstack.model.compute.nova.volume.VolumeForCreate;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ComputeServiceAsync {
 
-	void attachVolume(String serverId, String volumeId,
+	void attachVolume(String serverId, NovaVolumeAttachment attachment,
 			AsyncCallback<Void> callback);
 
 	void changePasswordServer(Collection<Server> servers,
@@ -36,15 +38,15 @@ public interface ComputeServiceAsync {
 	void createImageServer(Collection<Server> servers,
 			AsyncCallback<Void> callback);
 
-	void createVolume(Volume volume, AsyncCallback<Volume> callback);
+	void createVolume(VolumeForCreate volume, AsyncCallback<Volume> callback);
 
 	void deleteFloatingIp(Integer id, AsyncCallback<Void> callback);
 
 	void deleteServer(String id, AsyncCallback<Void> callback);
 
-	void deleteVolume(String id, AsyncCallback<Void> callback);
+	void deleteVolume(Integer id, AsyncCallback<Void> callback);
 
-	void detachVolume(String serverId, String volumeId,
+	void detachVolume(String serverId, Integer volumeId,
 			AsyncCallback<Void> callback);
 
 	void forceDeleteServer(Collection<Server> servers,
@@ -111,5 +113,9 @@ public interface ComputeServiceAsync {
 	void unlockServer(Collection<Server> servers, AsyncCallback<Void> callback);
 
 	void unpauseServer(Collection<Server> servers, AsyncCallback<Void> callback);
+
+	void associateFloatingIp(String serverId, String address, AsyncCallback<Void> defaultAsyncCallback);
+	
+	void disassociateFloatingIp(String serverId, String address, AsyncCallback<Void> defaultAsyncCallback);
 
 }

@@ -2,6 +2,7 @@ package org.openstack.ui.client.view.compute.floatingip;
 
 import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.FloatingIpList;
+import org.openstack.model.compute.ServerList;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -10,7 +11,9 @@ import org.openstack.ui.client.api.RefreshableDataProvider;
 import org.openstack.ui.client.view.identity.tenant.CreateRoleActivity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
@@ -86,6 +89,39 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 				}
 			});
 		}
+		
+	}
+
+	@Override
+	public void onDisassociateFloatingIp() {
+		try {
+			FloatingIp fip = selectionModel.getSelectedSet().iterator().next();
+			OpenStackClient.COMPUTE.disassociateFloatingIp(fip.getInstanceId(), fip.getIp(), new DefaultAsyncCallback<Void>() {
+	
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		} catch (Exception e) {
+			
+		}
+	}
+
+	@Override
+	public void onAssociateFloatingIp() {
+		try {
+			FloatingIp fip = selectionModel.getSelectedSet().iterator().next();
+			AttachFloatingIpActivity activity = new AttachFloatingIpActivity(fip);
+			activity.start(UI.MODAL, null);
+			UI.MODAL.center();
+		} catch (Exception e) {
+			GWT.log(e.getMessage());
+		}
+		
+		
+		
 		
 	}
 

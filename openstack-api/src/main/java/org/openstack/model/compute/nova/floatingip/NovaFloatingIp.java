@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.FloatingIp;
 
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement(name = "floating_ip", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("floating_ip")
@@ -25,9 +27,11 @@ public class NovaFloatingIp implements Serializable, FloatingIp {
 	private String pool;
 
 	@XmlAttribute(name = "instance_id")
+	@SerializedName("instance_id")
 	private String instanceId;
 
 	@XmlAttribute(name = "fixed_ip")
+	@SerializedName("fixed_ip")
 	private String fixedIp;
 
 	/* (non-Javadoc)

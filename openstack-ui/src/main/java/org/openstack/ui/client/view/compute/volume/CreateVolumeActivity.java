@@ -1,7 +1,7 @@
 package org.openstack.ui.client.view.compute.volume;
 
 import org.openstack.model.compute.Volume;
-import org.openstack.model.compute.nova.volume.NovaVolume;
+import org.openstack.model.compute.nova.volume.NovaVolumeForCreate;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 
@@ -30,7 +30,7 @@ public class CreateVolumeActivity extends AbstractActivity implements CreateVolu
 	}
 
 	@Override
-	public void createVolume(NovaVolume volume) {
+	public void createVolume(NovaVolumeForCreate volume) {
 		OpenStackClient.COMPUTE.createVolume(volume, new DefaultAsyncCallback<Volume>() {
 
 			@Override

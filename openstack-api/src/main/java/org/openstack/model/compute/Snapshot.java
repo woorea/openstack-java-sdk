@@ -18,8 +18,6 @@ public interface Snapshot {
 
 	String getDescription();
 
-	String getSnapshotId();
-
-	Metadata getMetadata();
+	Integer getVolumeId();
 
 }

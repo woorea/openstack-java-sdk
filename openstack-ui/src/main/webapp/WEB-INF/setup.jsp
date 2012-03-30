@@ -18,12 +18,6 @@
 			<div class="modal-body">
 
 				<div class="control-group">
-					<label class="control-label" for="auth-endpoint">Authentication Endpoint</label>
-					<div class="controls">
-						<input class="input-xlarge" id="auth-url" name="auth.endpoint" value="http://192.168.1.52:5000/v2.0" />
-					</div>
-				</div>
-				<div class="control-group">
 					<label class="control-label" for="identity-public-url">Identity Public URL</label>
 					<div class="controls">
 						<input class="input-xlarge" id="identity-public-url" name="identity.endpoint.publicURL" value="http://192.168.1.52:5000/v2.0" />

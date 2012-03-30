@@ -8,43 +8,52 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.nova.NovaMetadata;
+
+import com.google.gson.annotations.SerializedName;
 
 
-@XmlRootElement(namespace="")
+@XmlRootElement(name = "volume", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("volume")
 public class NovaVolume implements Serializable, Volume {
 	
 	@XmlAttribute
 	private Integer id;
 	
 	@XmlAttribute
-	private Integer status;
+	private String status;
 
 	@XmlAttribute(name="size")
+	@SerializedName("size")
 	private Integer sizeInGB;
 	
 	@XmlAttribute(name="availabilityZone")
-	private Integer availabilityZone;
+	private String availabilityZone;
 	
 	@XmlAttribute(name="volumeType")
+	@SerializedName("volumeType")
 	private String type;
 	
 	@XmlAttribute(name="createdAt")
 	private String created;
 	
 	@XmlAttribute(name="displayName")
+	@SerializedName("displayName")
 	private String name;
 	
 	@XmlAttribute(name="displayDescription")
+	@SerializedName("displayDescription")
 	private String description;
 	
 	@XmlAttribute(name="snapshotId")
 	private String snapshotId;
 	
 	@XmlElement(name="metadata")
-	private Metadata metadata;
+	private NovaMetadata metadata;
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Volume#getId()
@@ -62,11 +71,11 @@ public class NovaVolume implements Serializable, Volume {
 	 * @see org.openstack.model.compute.Volume#getStatus()
 	 */
 	@Override
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -86,11 +95,11 @@ public class NovaVolume implements Serializable, Volume {
 	 * @see org.openstack.model.compute.Volume#getAvailabilityZone()
 	 */
 	@Override
-	public Integer getAvailabilityZone() {
+	public String getAvailabilityZone() {
 		return availabilityZone;
 	}
 
-	public void setAvailabilityZone(Integer availabilityZone) {
+	public void setAvailabilityZone(String availabilityZone) {
 		this.availabilityZone = availabilityZone;
 	}
 
@@ -162,7 +171,7 @@ public class NovaVolume implements Serializable, Volume {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
+	public void setMetadata(NovaMetadata metadata) {
 		this.metadata = metadata;
 	}
 

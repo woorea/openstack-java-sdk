@@ -20,6 +20,8 @@ import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.server.actions.Console;
 import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
 import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
+import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
+import org.openstack.model.compute.nova.volume.VolumeForCreate;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -95,12 +97,16 @@ public interface ComputeService extends RemoteService {
 	
 	void deleteFloatingIp(Integer id);
 	
-	Volume createVolume(Volume volume);
+	Volume createVolume(VolumeForCreate volume);
 	
-	void deleteVolume(String id);
+	void deleteVolume(Integer id);
 	
-	void attachVolume(String serverId, String volumeId);
+	void attachVolume(String serverId, NovaVolumeAttachment attachment);
 	
-	void detachVolume(String serverId, String volumeId);
+	void detachVolume(String serverId, Integer volumeId);
+	
+	void associateFloatingIp(String serverId, String address);
+	
+	void disassociateFloatingIp(String serverId, String address);
 
 }
