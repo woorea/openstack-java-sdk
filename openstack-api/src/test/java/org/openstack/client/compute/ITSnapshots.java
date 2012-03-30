@@ -5,8 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotList;
-import org.openstack.model.compute.nova.volume.NovaSnapshotAttachment;
-import org.openstack.model.compute.nova.volume.NovaSnapshotForCreate;
+import org.openstack.model.compute.nova.snapshot.NovaSnapshotForCreate;
 import org.testng.annotations.Test;
 
 public class ITSnapshots extends ComputeIntegrationTest {
@@ -15,22 +14,22 @@ public class ITSnapshots extends ComputeIntegrationTest {
 
 	@Test
 	public void listSnapshots() {
-		SnapshotList volumes = compute.volumes().get();
+		SnapshotList volumes = compute.snapshots().get();
 	}
 	
 	@Test
 	public void createSnapshot() throws Exception {
 		NovaSnapshotForCreate nv = new NovaSnapshotForCreate();
 		nv.setName("v2");
-		nv.setSizeInGB(1);
-		volume = compute.volumes().post(nv);
+		nv.setDescription("desc");
+		volume = compute.snapshots().post(nv);
 		System.out.println(volume);
 		waitForState("available");
 	}
 	
 	@Test(dependsOnMethods="createSnapshot", priority=1)
 	public void showSnapshot() throws Exception {
-		volume = compute.volumes().volume(volume.getId()).get();
+		volume = compute.snapshots().snapshot(volume.getId()).get();
 		System.out.println(volume);	
 	}
 	

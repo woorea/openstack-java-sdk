@@ -7,13 +7,9 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotList;
-import org.openstack.model.compute.Volume;
-import org.openstack.model.compute.VolumeList;
 import org.openstack.model.compute.nova.snapshot.NovaSnapshot;
 import org.openstack.model.compute.nova.snapshot.NovaSnapshotList;
-import org.openstack.model.compute.nova.volume.NovaVolume;
-import org.openstack.model.compute.nova.volume.NovaVolumeList;
-import org.openstack.model.compute.nova.volume.VolumeForCreate;
+import org.openstack.model.compute.nova.snapshot.SnapshotForCreate;
 
 public class SnapshotsResource extends Resource {
 
@@ -36,7 +32,7 @@ public class SnapshotsResource extends Resource {
 	 * @param flavor
 	 * @return
 	 */
-	public Snapshot post(VolumeForCreate volume) {
+	public Snapshot post(SnapshotForCreate volume) {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(volume, MediaType.APPLICATION_JSON), NovaSnapshot.class);
 	}
 
