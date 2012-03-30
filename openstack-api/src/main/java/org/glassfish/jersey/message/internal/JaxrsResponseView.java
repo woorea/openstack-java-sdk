@@ -130,8 +130,7 @@ final class JaxrsResponseView extends javax.ws.rs.core.Response {
 
     @Override
     public void bufferEntity() throws MessageProcessingException {
-        // TODO Where should this be implemented?
-        // throw new UnsupportedOperationException("Not supported yet.");
+        wrapped.bufferEntity();
     }
 
     @Override
@@ -143,14 +142,5 @@ final class JaxrsResponseView extends javax.ws.rs.core.Response {
     @SuppressWarnings("unchecked")
     public MultivaluedMap<String, Object> getMetadata() {
         return new ListMultimapAdapter(wrapped.headers());
-    }
-    
-    @Override
-    public String toString() {
-    	if(wrapped != null && wrapped.content() != null) {
-    		return wrapped.content().toString();
-    	} else {
-    		return null;
-    	}
     }
 }

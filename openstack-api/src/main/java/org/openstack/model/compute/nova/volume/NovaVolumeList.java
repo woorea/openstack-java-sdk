@@ -9,11 +9,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 
 @XmlRootElement(name="volumes", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class NovaVolumeList implements Serializable, VolumeList {
 
 	@XmlElement(name="volume")

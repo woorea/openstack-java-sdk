@@ -8,11 +8,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserList;
 
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class KeystoneUserList implements Serializable, UserList {
 
 	@XmlElement(name = "user", type = KeystoneUser.class)

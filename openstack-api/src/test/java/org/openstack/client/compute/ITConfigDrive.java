@@ -58,7 +58,7 @@ public class ITConfigDrive extends ComputeIntegrationTest {
 
 		compute.keyPairs().post(new HashMap<String, Object>(), Entity.json(keyPair));
 		*/
-		KeyPair keyPair = compute.keyPairs().post(Entity.json(new NovaKeyPair("test")));
+		KeyPair keyPair = compute.keyPairs().post(new NovaKeyPair("test"));
 
 		serverForCreate.setKeyName(keyPair.getName());
 		serverForCreate.setConfigDrive(true);

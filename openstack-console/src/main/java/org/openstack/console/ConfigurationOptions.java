@@ -10,7 +10,6 @@ import java.util.Properties;
 import org.apache.commons.io.IOUtils;
 import org.kohsuke.args4j.Option;
 import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackClientFactory;
 import org.openstack.console.common.CliOptions;
 
 
@@ -54,7 +53,7 @@ public class ConfigurationOptions extends CliOptions {
 				properties.setProperty("identity.endpoint.adminURL", String.format("http://%s:35357/v2.0", server));
 				properties.setProperty("identity.admin.token", "secret0");
 				
-				service = OpenStackClientFactory.authenticate(properties);
+				service = OpenStackClient.authenticate(properties);
 			} else {
 				InputStream is = null;
 				try {
@@ -80,12 +79,12 @@ public class ConfigurationOptions extends CliOptions {
 					} catch (IOException e) {
 						throw new IOException("Error reading configuration file", e);
 					}
-					String server = properties.getProperty("openstack.auth");
-					String username = properties.getProperty("openstack.username");
-					String password = properties.getProperty("openstack.password");
-					String tenantId = properties.getProperty("openstack.tenant");
+//					String server = properties.getProperty("openstack.auth");
+//					String username = properties.getProperty("openstack.username");
+//					String password = properties.getProperty("openstack.password");
+//					String tenantId = properties.getProperty("openstack.tenant");
 
-					service = OpenStackClientFactory.authenticate();
+					service = OpenStackClient.authenticate(properties);
 				} catch (IOException e) {
 					throw new IllegalArgumentException("Error reading configuration file", e);
 				} finally {

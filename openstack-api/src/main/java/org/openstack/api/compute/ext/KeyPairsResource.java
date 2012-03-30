@@ -44,9 +44,9 @@ public class KeyPairsResource extends Resource {
 	 * @param keyPair
 	 * @return
 	 */
-	public KeyPair post(Entity<NovaKeyPair> keyPair) {
+	public KeyPair post(NovaKeyPair keyPair) {
 		// OSAPI bug: Can't specify an SSH key in XML?
-		return target.request(MediaType.APPLICATION_JSON).post(keyPair, NovaKeyPair.class);
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(keyPair, MediaType.APPLICATION_JSON), NovaKeyPair.class);
 	}
 
 	public KeyPairResource keypair(String name) {

@@ -21,7 +21,7 @@ public class Test {
 		//The admintoken (setted on keystone config file)
 		//properties.setProperty("identity.admin.token", "secret0");
 		
-		OpenStackClient openstack = OpenStackClientFactory.authenticate();
+		OpenStackClient openstack = OpenStackClient.authenticate();
 
 		IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
 		

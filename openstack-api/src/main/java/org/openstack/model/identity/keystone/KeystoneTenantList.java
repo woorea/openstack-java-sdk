@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.atom.Link;
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
 
@@ -16,6 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "tenants")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class KeystoneTenantList implements Serializable, TenantList {
 	
 	@XmlElement(name = "tenant", type = KeystoneTenant.class)

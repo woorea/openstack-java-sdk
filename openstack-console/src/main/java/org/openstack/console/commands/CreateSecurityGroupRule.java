@@ -41,7 +41,7 @@ public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 		newRule.setIpProtocol(protocol);
 		newRule.setParentGroupId(securityGroupId);
 
-		SecurityGroupRule createdRule = compute.securityGroupRules().post(Entity.json(newRule));
+		SecurityGroupRule createdRule = compute.securityGroupRules().post(newRule);
 
 		return createdRule;
 	}

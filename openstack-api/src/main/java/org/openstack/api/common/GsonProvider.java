@@ -45,8 +45,7 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
     public Providers providers;
     
     public GsonProvider() {
-    	final GsonBuilder gsonBuilder = new GsonBuilder()
-    		.setPrettyPrinting();
+    	final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
     	gson = gsonBuilder.create();
     }
 
@@ -57,7 +56,7 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
      */
     public boolean isReadable(Class<?> type, Type genericType, java.lang.annotation.Annotation[] annotations, MediaType mediaType) {
         // all the types are supported
-        return true;
+        return type.getAnnotation(JsonRootElement.class) != null;
     }
 
     /**
@@ -69,11 +68,12 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
         // all the aspects of the system shall encode their content in the UTF-8 encoding.
         final InputStreamReader streamReader = new InputStreamReader(entityStream, Charsets.UTF_8);
         String json = IOUtils.toString(streamReader);
-        System.out.println("<<< " + json);
-        try {
+        //System.out.println("<<< " + json);
+        
+    	try {
         	Object result = null;
         	JsonRootElement jsonRootElement = type.getAnnotation(JsonRootElement.class);
-        	if(jsonRootElement != null) {
+        	if(jsonRootElement.value().length() > 0) {
         		JsonElement je = gson.fromJson(json, JsonElement.class).getAsJsonObject().get(jsonRootElement.value());
         		if("access".equals(jsonRootElement.value())) {
         			if(!je.getAsJsonObject().get("serviceCatalog").isJsonArray()) {
@@ -88,11 +88,12 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
         	} else {
         		result = gson.fromJson(json, genericType);
         	}
-        	System.out.println("<<< " + result);
+        	//System.out.println("<<< " + result);
             return result;
         } finally {
             streamReader.close();
         }
+        
     }
 
 
@@ -102,7 +103,7 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
      * {@inheritDoc}
      */
     public boolean isWriteable(Class<?> type, Type genericType, java.lang.annotation.Annotation[] annotations, MediaType mediaType) {
-        return true;
+    	return type.getAnnotation(JsonRootElement.class) != null;
     }
 
     /**
@@ -121,15 +122,14 @@ public final class GsonProvider implements MessageBodyWriter<Object>, MessageBod
     	JsonRootElement jsonRootElement = object.getClass().getAnnotation(JsonRootElement.class);
     	final OutputStreamWriter writer = new OutputStreamWriter(entityStream, Charsets.UTF_8);
     	try {
-    		if(jsonRootElement != null) {
-    			System.out.println(">>> " + object);
+    		if(jsonRootElement.value().length() > 0) {
+    			//System.out.println(">>> " + object);
     	        JsonElement element = gson.toJsonTree(object);
     	        JsonObject json = new JsonObject();
     	        json.add(jsonRootElement.value(), element);
-    	        System.out.println(">>> " + json);
+    	        //System.out.println(">>> " + json);
     	        writer.write(json.toString());
     		} else {
-    			gson.toJson(object, genericType, System.out);
     			gson.toJson(object, genericType, writer);
     		}
     	} finally {

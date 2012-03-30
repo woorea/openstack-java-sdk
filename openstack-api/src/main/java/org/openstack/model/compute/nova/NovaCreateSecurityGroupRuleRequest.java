@@ -7,26 +7,36 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
+
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement(name = "security_group_rule")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("security_group_rule")
 public class NovaCreateSecurityGroupRuleRequest implements Serializable {
 		
 		@XmlElement(name="parent_group_id", required=true)
+		@SerializedName("parent_group_id")
 		private Integer parentGroupId;
 		
 		@XmlElement(name="from_port")
+		@SerializedName("from_port")
 		private Integer fromPort;
 		
 		@XmlElement(name="to_port")
+		@SerializedName("to_port")
 		private Integer toPort;
 		
 		@XmlElement(name="ip_protocol")
+		@SerializedName("ip_protocol")
 		private String ipProtocol;
 		
 		@XmlElement
 		private String cidr;
 		
 		@XmlElement(name="group_id")
+		@SerializedName("group_id")
 		private Integer groupId;
 
 		public Integer getParentGroupId() {

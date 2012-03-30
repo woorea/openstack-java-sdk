@@ -133,7 +133,7 @@ final class JaxrsRequestView implements javax.ws.rs.core.Request {
     @Override
     public void bufferEntity() throws MessageProcessingException {
         // TODO implement
-        // throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

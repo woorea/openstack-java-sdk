@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.KeyPairListItem;
 
@@ -17,6 +18,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "keypairs", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class NovaKeyPairList implements Serializable, KeyPairList {
 
 	@XmlElement(name = "keypair", namespace = "")

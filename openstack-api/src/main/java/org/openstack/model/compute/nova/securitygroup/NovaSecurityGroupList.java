@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 
@@ -19,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "security_groups")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class NovaSecurityGroupList implements Serializable, Iterable<NovaSecurityGroup>, SecurityGroupList {
 
 	@XmlElementWrapper(name = "security_groups")

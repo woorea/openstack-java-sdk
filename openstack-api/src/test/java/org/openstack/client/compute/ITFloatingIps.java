@@ -10,7 +10,7 @@ public class ITFloatingIps extends ComputeIntegrationTest {
 
 	@Test
 	public void listFloatingIps() {
-		FloatingIpList servers = compute.floatingIps().get();
+		FloatingIpList ips = compute.floatingIps().get();
 	}
 	
 	@Test

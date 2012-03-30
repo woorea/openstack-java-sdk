@@ -9,7 +9,6 @@ h3. openstack.properties
 <pre>
 verbose=true
 
-auth.endpoint=http://192.168.1.52:5000/v2.0
 auth.username=demo
 auth.password=secret0
 #auth.tenant.id=123456789
@@ -33,7 +32,7 @@ h4. Access
 
 <pre>
 // X-Auth-Token
-OpenStackClient openstack = OpenStackClientFactory.authenticate();
+OpenStackClient openstack = OpenStackClient.authenticate();
 
 IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
 </pre>

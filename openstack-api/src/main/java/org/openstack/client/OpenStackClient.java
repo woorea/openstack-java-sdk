@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.RequestFilter;
@@ -22,7 +22,6 @@ import org.openstack.api.storage.AccountResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
-import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
 import org.openstack.model.identity.keystone.ServiceCatalogEntry;
@@ -32,12 +31,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public class OpenStackClient {
-
-	private Client client;
 	
-	//private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(OpenStackClient.class.getPackage().getName()),true);
-
-	private LoggingFilter loggingFilter = new LoggingFilter();
+	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(OpenStackClient.class.getPackage().getName()),true);
 	
 	private Properties properties;
 
@@ -62,23 +57,61 @@ public class OpenStackClient {
 		}
 
 	};
-
-	OpenStackClient(Properties properties, Access access) {
-		this.client = RestClient.INSTANCE.getJerseyClient();
-		this.properties = properties;
-		this.access = access;
+	
+	private OpenStackClient() {
+		
 	}
-
-	public Access getAccess() {
-		return access;
+	
+	public static OpenStackClient authenticate(Properties properties, Access access) {
+		OpenStackClient client = new OpenStackClient();
+		client.properties = properties;
+		client.access = access;
+		return client;
+	}
+	
+	public static OpenStackClient authenticate(Properties properties) {
+		OpenStackClient client = new OpenStackClient();
+		client.properties = properties;
+		//String endpoint = properties.getProperty("auth.endpoint");
+		String username = properties.getProperty("auth.username");
+		String password = properties.getProperty("auth.password");
+		String tenantId = properties.getProperty("auth.tenant.id");
+		String tenantName = properties.getProperty("auth.tenant.name");
+		KeystoneAuthentication authentication = new KeystoneAuthentication().withPasswordCredentials(username, password);
+		if(tenantId != null) {
+			authentication.setTenantId(tenantId);
+		} else if(tenantName != null) {
+			authentication.setTenantName(tenantName);
+		}
+		Access access = client.getIdentityEndpoint().tokens().post(authentication);
+		return authenticate(properties, access);
+	}
+	
+	public static OpenStackClient authenticate() {
+		try {
+			Properties properties = new Properties();
+			properties.load(OpenStackClient.class.getResourceAsStream("/openstack.properties"));
+			return authenticate(properties);
+		} catch (IOException e) {
+			throw new OpenstackException("openstack.properties not found in the CLASSPATH", e);
+		}
 	}
 	
 	public Properties getProperties() {
 		return this.properties;
 	}
+	
+	public Access getAccess() {
+		return access;
+	}
 
 	public void setAccess(Access access) {
 		this.access = access;
+	}
+	
+	public void reauthenticateOnTenant(String tenantName) {
+		properties.setProperty("auth.tenant.name", tenantName);
+		authenticate();
 	}
 
 	public void exchangeTokenForTenant(String tenantId) {
@@ -148,7 +181,7 @@ public class OpenStackClient {
 
 	private <T extends Resource> T target(String absoluteURL, Class<T> clazz, boolean useAdministrationToken) {
 		try {
-			Target target = client.target(absoluteURL);
+			Target target = RestClient.INSTANCE.getJerseyClient().target(absoluteURL);
 			if(Boolean.parseBoolean(properties.getProperty("verbose"))) {
 				target.configuration().register(loggingFilter);
 			}
@@ -192,10 +225,7 @@ public class OpenStackClient {
 		}
 	}
 
-	public OpenStackClient reauthenticateOnTenant(String tenantName) {
-		properties.setProperty("auth.tenant.name", tenantName);
-		return OpenStackClientFactory.authenticate(properties);
-	}
+	
 
 	
 

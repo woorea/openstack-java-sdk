@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.api.Namespaces;
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.common.ListWithAtomLinks;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceList;
@@ -17,6 +18,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name="services", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class KeystoneServiceList extends ListWithAtomLinks implements ServiceList {
 
 	@XmlElement(name="service", namespace="http://docs.openstack.org/identity/api/ext/OS-KSADM/v1.0", type = KeystoneService.class)

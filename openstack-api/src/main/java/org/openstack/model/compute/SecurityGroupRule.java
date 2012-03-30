@@ -5,6 +5,10 @@ import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule.IpRa
 
 public interface SecurityGroupRule {
 
+	Integer getId();
+
+	String getName();
+
 	Integer getParentGroupId();
 
 	Integer getFromPort();

@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 
@@ -16,6 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "servers")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class NovaServerList implements Serializable, ServerList {
 
 	@XmlElement(name = "server")

@@ -9,12 +9,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.common.ListWithAtomLinks;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotList;
 
 @XmlRootElement(name="snapshots", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class NovaSnapshotList implements Serializable, SnapshotList {
 
 	@XmlElement(name="snapshot")

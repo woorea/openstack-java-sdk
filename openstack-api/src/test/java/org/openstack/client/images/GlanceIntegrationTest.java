@@ -28,7 +28,7 @@ public class GlanceIntegrationTest extends AbstractOpenStackTest {
 	public void init() {
 		if (!glanceEnabled) {
 			init("/openstack.properties");
-			client = client.reauthenticateOnTenant("admin");
+			client.reauthenticateOnTenant("admin");
 			images = client.getImagesEndpoint();			
 		} else {
 			throw new SkipException("Skipping because glance not present / accessible");

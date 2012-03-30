@@ -1,10 +1,7 @@
 package org.openstack.client.compute;
 
-import javax.ws.rs.client.Entity;
-
 import org.openstack.api.compute.TenantResource;
 import org.openstack.model.compute.KeyPair;
-import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.KeyPairListItem;
 import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 import org.openstack.model.exceptions.OpenstackException;
@@ -48,7 +45,7 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 		NovaKeyPair createRequest = new NovaKeyPair();
 		createRequest.setName(name);
 
-		KeyPair created = compute.keyPairs().post(Entity.json(createRequest));
+		KeyPair created = compute.keyPairs().post(createRequest);
 		Assert.assertEquals(created.getName(), name);
 		Assert.assertNotNull(created.getPublicKey());
 		Assert.assertNotNull(created.getFingerprint());

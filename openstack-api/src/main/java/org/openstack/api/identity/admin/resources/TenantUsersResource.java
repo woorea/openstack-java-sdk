@@ -19,7 +19,7 @@ public class TenantUsersResource extends Resource {
 	}
 
 	public TenantUserResource user(String id) {
-		return new TenantUserResource(target.path("/{id}").pathParam("id", id));
+		return new TenantUserResource(target.path("/{userId}").pathParam("userId", id));
 	}
 
 }

@@ -34,7 +34,7 @@ public abstract class AbstractOpenStackTest {
 			// Command line properties should take precedence
 			//properties.putAll(System.getProperties());
 			
-			client = OpenStackClientFactory.authenticate();
+			client = OpenStackClient.authenticate();
 		} catch (Exception e) {
 			throw new OpenstackException(e.getMessage(), e);
 		}

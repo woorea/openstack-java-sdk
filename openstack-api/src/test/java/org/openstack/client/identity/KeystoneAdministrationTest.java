@@ -4,6 +4,8 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
+import org.openstack.model.identity.Endpoint;
+import org.openstack.model.identity.EndpointList;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
 import org.openstack.model.identity.Service;
@@ -12,6 +14,7 @@ import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
 import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserList;
+import org.openstack.model.identity.keystone.KeystoneEndpoint;
 import org.openstack.model.identity.keystone.KeystoneRole;
 import org.openstack.model.identity.keystone.KeystoneService;
 import org.openstack.model.identity.keystone.KeystoneTenant;
@@ -29,6 +32,7 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	private User user;
 	private Role role;
 	private Service service;
+	private Endpoint endpoint;
 	
 	@BeforeClass
 	public void init() {
@@ -64,12 +68,6 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 		Assert.assertNotNull(role);
 	}
 	
-	@Test(dependsOnMethods={"createTenant","createUser","createRole"}, priority = 4)
-	public void addRoleToUserOnTenant() {
-		role = identity.tenants().tenant(tenant.getId()).users().user(user.getId()).roles().role(role.getId()).put();
-		Assert.assertNotNull(role);
-	}
-	
 	@Test(priority = 5)
 	public void createService() {
 		KeystoneService kss = new KeystoneService();
@@ -82,11 +80,17 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	
 	@Test(priority = 6)
 	public void createEndpoint() {
-//		KeyStoneEndpointTemplates endpoints = new KeyStoneEndpointTemplates();
-//		endpoints = identity.endpoints().post(json(endpoints));
-//		Assert.assertNotNull(endpoints);
+		KeystoneEndpoint kse = new KeystoneEndpoint();
+		
+		kse.setRegion("RegionOne");
+		kse.setServiceId(service.getId());
+		kse.setPublicURL("http://192.168.1.52:8774/v2/$(tenant_id)s");
+		kse.setInternalURL("http://192.168.1.52:8774/v2/$(tenant_id)s");
+		kse.setAdminURL("http://192.168.1.52:8774/v2/$(tenant_id)s");
+		
+		endpoint = identity.endpoints().post(kse);
+		Assert.assertNotNull(endpoint);
 	}
-	
 
 	
 	public void listTenants() {
@@ -147,14 +151,6 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 		Assert.assertNotNull(response);
 	}
 	
-
-	
-	@Test(dependsOnMethods={"addRoleToUserOnTenant"}, priority = 50)
-	public void deleteRoleFromUserOnTenant() {
-		Response response = identity.tenants().tenant(tenant.getId()).users().user(user.getId()).roles().role(role.getId()).delete();
-		Assert.assertNotNull(response);
-	}
-	
 	
 	
 	@Test(dependsOnMethods={"createService"})
@@ -177,14 +173,14 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 
 	
 	public void listEndpoints() {
-//		KeyStoneEndpointTemplatesList endpoints = identity.endpoints().get();
-//		Assert.assertNotNull(endpoints);
+		EndpointList endpoints = identity.endpoints().get();
+		Assert.assertNotNull(endpoints);
 	}
 	
 	@Test(dependsOnMethods={"createEndpoint"}, priority = 100)
 	public void deleteEndpoint() {
-//		Response response = identity.endpoints().endpointTemplate("").delete();
-//		Assert.assertNotNull(response);
+		Response response = identity.endpoints().endpoint(endpoint.getId()).delete();
+		Assert.assertNotNull(response);
 	}
 	
 	

@@ -11,7 +11,7 @@ public class TenantUserRolesResource extends Resource {
 	}
 	
 	public TenantUserRoleResource role(String id) {
-		return new TenantUserRoleResource(target.path("/{id}").pathParam("id", id));
+		return new TenantUserRoleResource(target.path("/{roleId}").pathParam("roleId", id));
 	}
 
 }

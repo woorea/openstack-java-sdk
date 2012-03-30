@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response;
 import org.openstack.api.storage.AccountResource;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.storage.StorageContainer;
-import org.openstack.model.storage.swift.SwiftContainer;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -26,7 +25,7 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	public void init() {
 		if(swiftEnabled) {
 			init("/openstack.properties");
-			client = client.reauthenticateOnTenant("admin");
+			client.reauthenticateOnTenant("admin");
 			storage = client.getStorageEndpoint();
 		} else {
 			throw new SkipException("Skipping because swift not present / accessible");

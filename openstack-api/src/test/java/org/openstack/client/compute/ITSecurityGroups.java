@@ -40,7 +40,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
-		SecurityGroup created = compute.securityGroups().post(Entity.json(createRequest));
+		SecurityGroup created = compute.securityGroups().post(createRequest);
 		Assert.assertEquals(created.getName(), groupName);
 		Assert.assertEquals(created.getDescription(), description);
 		Assert.assertNotNull(created.getId());
@@ -59,9 +59,10 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 			newRule.setToPort(5678);
 			newRule.setIpProtocol("tcp");
 			newRule.setParentGroupId(created.getId());
+			//newRule.setGroupId(created.getId());
 
-			NovaSecurityGroupRule createdRule = compute.securityGroupRules().post(Entity.xml(newRule));
-			Assert.assertNotEquals(createdRule.id, "");
+			SecurityGroupRule createdRule = compute.securityGroupRules().post(newRule);
+			Assert.assertNotNull(createdRule.getId());
 
 			fetched = compute.securityGroups().securityGroup(created.getId()).get();
 			assertSecurityGroupEquals(fetched, created);
@@ -80,7 +81,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		// Drop the rule
 		{
 			NovaSecurityGroupRule rule = fetched.getRules().get(0);
-			compute.securityGroupRules().securityGroupRule(rule.id).delete();
+			compute.securityGroupRules().rule(rule.getId()).delete();
 
 			fetched = compute.securityGroups().securityGroup(created.getId()).get();
 			Assert.assertEquals(fetched.getRules().size(), 0);

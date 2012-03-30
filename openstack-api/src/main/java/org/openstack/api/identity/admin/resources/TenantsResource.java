@@ -25,7 +25,7 @@ public class TenantsResource extends Resource {
 	}
 	
 	public TenantResource tenant(String id) {
-		return new TenantResource(target.path("/{id}").pathParam("id", id));
+		return new TenantResource(target.path("/{tenantId}").pathParam("tenantId", id));
 	}
 
 }

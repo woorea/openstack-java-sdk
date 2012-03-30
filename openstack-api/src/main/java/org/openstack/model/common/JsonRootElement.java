@@ -12,5 +12,5 @@ public @interface JsonRootElement {
   /**
    * @return the desired name of the field when it is serialized
    */
-  String value();
+  String value() default "";
 }

@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.EndpointList;
 
+@JsonRootElement()
 public class KeystoneEndpointList implements EndpointList, Serializable {
 
 	private List<KeystoneEndpoint> endpoints = new ArrayList<KeystoneEndpoint>();

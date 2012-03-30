@@ -9,11 +9,9 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
-import org.glassfish.jersey.message.internal.MutableEntity;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.TenantResource;
 import org.openstack.model.exceptions.OpenstackException;

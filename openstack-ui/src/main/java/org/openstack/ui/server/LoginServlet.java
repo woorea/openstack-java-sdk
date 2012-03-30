@@ -1,7 +1,6 @@
 package org.openstack.ui.server;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -11,11 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.openstack.client.OpenStackClient;
-import org.openstack.client.OpenStackClientFactory;
-import org.openstack.model.identity.Service;
-import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.TenantList;
-import org.openstack.model.identity.keystone.KeystoneServiceEndpoint;
 
 import com.google.gwt.core.client.GWT;
 
@@ -51,9 +46,7 @@ public class LoginServlet extends HttpServlet {
 		properties.setProperty("auth.username", req.getParameter("username"));
 		properties.setProperty("auth.password", req.getParameter("password"));
 		
-		System.out.println(properties);
-		
-		OpenStackClient openstack = OpenStackClientFactory.authenticate(properties);
+		OpenStackClient openstack = OpenStackClient.authenticate(properties);
 		
 		TenantList tenants = openstack.getIdentityEndpoint().tenants().get();
 		

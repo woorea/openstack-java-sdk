@@ -13,6 +13,7 @@ import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "extensions")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class ExtensionList implements Iterable<Extension> {
 
     @XmlElement(name = "extension")

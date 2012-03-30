@@ -9,11 +9,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
 
 @XmlRootElement(name="roles")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement()
 public class KeystoneRoleList implements Serializable, RoleList {
 
 	@XmlElement(name="role", type = KeystoneRole.class)
