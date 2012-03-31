@@ -1,7 +1,6 @@
 package org.openstack.ui.client.view.compute.volume;
 
 import org.openstack.model.compute.Volume;
-import org.openstack.ui.client.view.compute.LogoCell;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -12,6 +11,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -34,6 +34,14 @@ public class VolumesView extends Composite {
 
 		void onDetachVolume();
 	}
+	
+	@UiField Button delete;
+	
+	@UiField Button attach;
+	
+	@UiField Button detach;
+	
+	@UiField Button createSnapshot;
 
 	@UiField(provided = true)
 	DataGrid<Volume> grid = new DataGrid<Volume>();
@@ -72,7 +80,7 @@ public class VolumesView extends Composite {
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
-		grid.addColumn(nameColumn);
+		grid.addColumn(nameColumn, "name");
 		TextColumn<Volume> sizeColumn = new TextColumn<Volume>() {
 			@Override
 			public String getValue(Volume object) {
@@ -80,7 +88,7 @@ public class VolumesView extends Composite {
 			}
 		};
 		grid.setColumnWidth(sizeColumn, "120px");
-		grid.addColumn(sizeColumn);
+		grid.addColumn(sizeColumn, "size");
 		TextColumn<Volume> descriptionColumn = new TextColumn<Volume>() {
 
 			@Override
@@ -89,7 +97,7 @@ public class VolumesView extends Composite {
 			}
 		};
 		//grid.setColumnWidth(descriptionColumn, "120px");
-		grid.addColumn(descriptionColumn);
+		grid.addColumn(descriptionColumn, "description");
 	}
 
 	public void setPresenter(Presenter presenter) {

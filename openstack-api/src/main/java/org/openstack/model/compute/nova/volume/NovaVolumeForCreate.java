@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.nova.NovaMetadata;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -24,19 +25,23 @@ public class NovaVolumeForCreate implements Serializable, VolumeForCreate {
 	@SerializedName("size")
 	private Integer sizeInGB;
 	
-	@XmlAttribute(name="availabilityZone")
+	@XmlAttribute(name="availability_zone")
 	@SerializedName("availability_zone")
 	private String availabilityZone;
 	
-	@XmlAttribute(name="displayName")
+	@XmlAttribute(name="display_name")
 	@SerializedName("display_name")
 	private String name;
 	
-	@XmlAttribute(name="displayDescription")
+	@XmlAttribute(name="display_description")
 	@SerializedName("display_description")
 	private String description;
-
 	
+	@SerializedName("snapshot_id")
+	private Integer snapshotId;
+	
+	private NovaMetadata metadata;
+
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.volume.VolumeForCreate#getSizeInGB()
 	 */
@@ -83,6 +88,30 @@ public class NovaVolumeForCreate implements Serializable, VolumeForCreate {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.openstack.model.compute.Volume#getSnapshotId()
+	 */
+	@Override
+	public Integer getSnapshotId() {
+		return snapshotId;
+	}
+
+	public void setSnapshotId(Integer snapshotId) {
+		this.snapshotId = snapshotId;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.openstack.model.compute.Volume#getMetadata()
+	 */
+	@Override
+	public NovaMetadata getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(NovaMetadata metadata) {
+		this.metadata = metadata;
 	}
 
 	@Override

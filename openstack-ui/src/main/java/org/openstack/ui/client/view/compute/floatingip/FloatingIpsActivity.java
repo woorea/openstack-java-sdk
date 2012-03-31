@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
 
 public class FloatingIpsActivity extends AbstractActivity implements FloatingIpsView.Presenter {
 	
@@ -38,7 +39,6 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		VIEW.setPresenter(this);
-		panel.setWidget(VIEW);
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
 		dataProvider = new RefreshableDataProvider<FloatingIp>(VIEW.grid) {
 
@@ -56,6 +56,32 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 			}
 
 		};
+		ui();
+		panel.setWidget(VIEW);
+	}
+	
+	private void ui() {
+		VIEW.delete.setEnabled(false);
+		VIEW.associate.setEnabled(false);
+		VIEW.disassociate.setEnabled(false);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				switch(selectionModel.getSelectedSet().size()) {
+					case 1:
+						VIEW.delete.setEnabled(true);
+						VIEW.associate.setEnabled(true);
+						VIEW.disassociate.setEnabled(true);
+						break;
+					default:
+						VIEW.delete.setEnabled(false);
+						VIEW.associate.setEnabled(false);
+						VIEW.disassociate.setEnabled(false);
+				}
+				
+			}
+		});
 	}
 
 	@Override

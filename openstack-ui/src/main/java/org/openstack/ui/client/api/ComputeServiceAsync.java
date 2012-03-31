@@ -13,6 +13,8 @@ import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.SnapshotList;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
@@ -117,5 +119,17 @@ public interface ComputeServiceAsync {
 	void associateFloatingIp(String serverId, String address, AsyncCallback<Void> defaultAsyncCallback);
 	
 	void disassociateFloatingIp(String serverId, String address, AsyncCallback<Void> defaultAsyncCallback);
+
+	void createSnapshot(SnapshotForCreate snapshot,
+			AsyncCallback<Snapshot> callback);
+
+	void deleteSnapshot(Integer id, AsyncCallback<Void> callback);
+
+	void deleteSecurityGroup(Integer id, AsyncCallback<Void> callback);
+
+	void getEndpointURL(AsyncCallback<String> callback);
+
+	void deleteKeyPair(String name,
+			AsyncCallback<Void> defaultAsyncCallback);
 
 }

@@ -12,6 +12,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,7 +26,18 @@ public class SnapshotsView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+		
+		void onCreateSnapshot();
+		
+		void onDeleteSnapshot();
+		
+		void onCreateVolume();
+		
 	}
+	
+	@UiField Button delete;
+	
+	@UiField Button createVolume;
 
 	@UiField(provided = true)
 	DataGrid<Snapshot> grid = new DataGrid<Snapshot>();
@@ -47,22 +59,31 @@ public class SnapshotsView extends Composite {
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
 		grid.addColumn(checkboxColumn, "");
-		Column<Snapshot, String> logoColumn = new Column<Snapshot, String>(new LogoCell()) {
+		TextColumn<Snapshot> nameColumn = new TextColumn<Snapshot>() {
 
 			@Override
 			public String getValue(Snapshot object) {
-				return "";
+				return object.getName();
 			}
 		};
-		grid.setColumnWidth(logoColumn, "60px");
-		grid.addColumn(logoColumn);
-		TextColumn<Snapshot> nameColumn = new TextColumn<Snapshot>() {
+		grid.setColumnWidth(nameColumn, "60px");
+		grid.addColumn(nameColumn,"name");
+		TextColumn<Snapshot> statusColumn = new TextColumn<Snapshot>() {
 			@Override
 			public String getValue(Snapshot object) {
-				return "";
+				return object.getStatus();
 			}
 		};
-		grid.setColumnWidth(nameColumn, "120px");
+		grid.setColumnWidth(statusColumn, "120px");
+		grid.addColumn(statusColumn,"status");
+		TextColumn<Snapshot> descriptionColumn = new TextColumn<Snapshot>() {
+
+			@Override
+			public String getValue(Snapshot object) {
+				return object.getName();
+			}
+		};
+		grid.addColumn(descriptionColumn,"description");
 	}
 
 	public void setPresenter(Presenter presenter) {
@@ -72,6 +93,21 @@ public class SnapshotsView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateSnapshot(ClickEvent event) {
+		presenter.onCreateSnapshot();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteSnapshot(ClickEvent event) {
+		presenter.onDeleteSnapshot();
+	}
+	
+	@UiHandler("createVolume")
+	void onCreateVolume(ClickEvent event) {
+		presenter.onCreateVolume();
 	}
 
 }

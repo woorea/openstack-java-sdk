@@ -7,42 +7,47 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Snapshot;
 
+import com.google.gson.annotations.SerializedName;
 
-@XmlRootElement(namespace="")
+
+@XmlRootElement(name = "snapshot", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonRootElement("snapshot")
 public class NovaSnapshot implements Serializable, Snapshot {
 	
 	@XmlAttribute
 	private Integer id;
 	
 	@XmlAttribute
-	private Integer status;
+	private String status;
 
 	@XmlAttribute(name="size")
+	@SerializedName("size")
 	private Integer sizeInGB;
 	
-	@XmlAttribute(name="availabilityZone")
-	private Integer availabilityZone;
-	
-	@XmlAttribute(name="volumeType")
-	private String type;
+	@XmlAttribute
+	private String availabilityZone;
 	
 	@XmlAttribute(name="createdAt")
+	@SerializedName("createdAt")
 	private String created;
 	
 	@XmlAttribute(name="displayName")
+	@SerializedName("displayName")
 	private String name;
 	
 	@XmlAttribute(name="displayDescription")
+	@SerializedName("displayDescription")
 	private String description;
 	
-	@XmlAttribute(name="snapshotId")
+	@XmlAttribute(name="volumeId")
 	private Integer volumeId;
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getId()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getId()
 	 */
 	@Override
 	public Integer getId() {
@@ -54,19 +59,19 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getStatus()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getStatus()
 	 */
 	@Override
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getSizeInGB()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getSizeInGB()
 	 */
 	@Override
 	public Integer getSizeInGB() {
@@ -78,31 +83,19 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getAvailabilityZone()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getAvailabilityZone()
 	 */
 	@Override
-	public Integer getAvailabilityZone() {
+	public String getAvailabilityZone() {
 		return availabilityZone;
 	}
 
-	public void setAvailabilityZone(Integer availabilityZone) {
+	public void setAvailabilityZone(String availabilityZone) {
 		this.availabilityZone = availabilityZone;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getType()
-	 */
-	@Override
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getCreated()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getCreated()
 	 */
 	@Override
 	public String getCreated() {
@@ -114,7 +107,7 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getName()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getName()
 	 */
 	@Override
 	public String getName() {
@@ -126,7 +119,7 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getDescription()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getDescription()
 	 */
 	@Override
 	public String getDescription() {
@@ -138,7 +131,7 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Snapshot#getVolumeId()
+	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getVolumeId()
 	 */
 	@Override
 	public Integer getVolumeId() {
@@ -151,13 +144,10 @@ public class NovaSnapshot implements Serializable, Snapshot {
 
 	@Override
 	public String toString() {
-		return "Volume [id=" + id + ", status=" + status + ", sizeInGB="
+		return "NovaSnapshot [id=" + id + ", status=" + status + ", sizeInGB="
 				+ sizeInGB + ", availabilityZone=" + availabilityZone
-				+ ", type=" + type + ", created=" + created + ", name=" + name
-				+ ", description=" + description + ", volumeId=" + volumeId
-				+ ", metadata=" + volumeId + "]";
+				+ ", created=" + created + ", name=" + name + ", description="
+				+ description + ", volumeId=" + volumeId + "]";
 	}
-
-	
 	
 }

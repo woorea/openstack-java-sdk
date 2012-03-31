@@ -131,7 +131,6 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 		SecurityGroup sg = securityGroupDriver.flush();
 		NovaServerForCreate.SecurityGroup sg2 = new NovaServerForCreate.SecurityGroup(sg.getName());
 		wizard.firewall.securityGroups.addItem(sg2.getName(), sg2);
-		Window.alert(sg.toString());
 	}
 
 	@Override

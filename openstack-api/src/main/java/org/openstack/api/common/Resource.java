@@ -28,4 +28,8 @@ public class Resource {
 		return instance;
 	}
 	
+	public String getURL() {
+		return target.getUri().toString();
+	}
+	
 }

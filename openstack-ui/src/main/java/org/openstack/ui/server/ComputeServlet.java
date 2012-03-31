@@ -13,6 +13,8 @@ import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.SnapshotList;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
@@ -23,14 +25,19 @@ import org.openstack.model.compute.nova.server.actions.Console;
 import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
 import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
 import org.openstack.model.compute.nova.server.actions.Output;
-import org.openstack.model.compute.nova.snapshot.NovaSnapshotList;
 import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
 import org.openstack.model.compute.nova.volume.VolumeForCreate;
 import org.openstack.ui.client.api.ComputeService;
 
 @SuppressWarnings("serial")
 public class ComputeServlet extends OpenStackRemoteServiceServlet implements ComputeService {
+	
+	@Override
+	public String getEndpointURL() {
+		return getClient().getComputeEndpoint().getURL();
+	}
 
+	@Override
 	public SecurityGroup showSecurityGroup(Integer id) {
 		return getClient().getComputeEndpoint().securityGroups().securityGroup(id).get();
 	}
@@ -191,7 +198,17 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 
 	@Override
 	public SnapshotList listSnapshots() {
-		return new NovaSnapshotList();
+		return getClient().getComputeEndpoint().snapshots().get();
+	}
+	
+	@Override
+	public Snapshot createSnapshot(SnapshotForCreate snapshot) {
+		return getClient().getComputeEndpoint().snapshots().post(snapshot);
+	}
+	
+	@Override
+	public void deleteSnapshot(Integer id) {
+		getClient().getComputeEndpoint().snapshots().snapshot(id).get();
 	}
 
 	public Image showImage(String id) {
@@ -254,6 +271,18 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 		DisassociateFloatingIpAction action = new DisassociateFloatingIpAction();
 		action.setAddress(address);
 		getClient().getComputeEndpoint().servers().server(serverId).action().post(action, String.class);
+		
+	}
+
+	@Override
+	public void deleteSecurityGroup(Integer id) {
+		getClient().getComputeEndpoint().securityGroups().securityGroup(id).delete();
+		
+	}
+
+	@Override
+	public void deleteKeyPair(String name) {
+		getClient().getComputeEndpoint().keyPairs().keypair(name).delete();
 		
 	}
 

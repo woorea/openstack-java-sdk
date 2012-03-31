@@ -4,13 +4,11 @@ public interface Snapshot {
 
 	Integer getId();
 
-	Integer getStatus();
+	String getStatus();
 
 	Integer getSizeInGB();
 
-	Integer getAvailabilityZone();
-
-	String getType();
+	String getAvailabilityZone();
 
 	String getCreated();
 

@@ -6,7 +6,6 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
 		<g:HeaderPanel width="600px" height="450px">
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
@@ -17,6 +16,16 @@
 		<g:ResizeLayoutPanel height="100%">
 			<g:HTMLPanel>
 				<table style="width:98%">
+					<tbody>
+						<tr>
+							<td>Snapshot</td>
+						</tr>
+						<tr>
+							<td>
+								<g:ListBox ui:field="snapshotId" />
+							</td>
+						</tr>
+					</tbody>
 					<tbody>
 						<tr>
 							<td>Size (in GB)</td>
@@ -65,5 +74,4 @@
 			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
 		</g:HTMLPanel>
 	</g:HeaderPanel>
-	</g:HTMLPanel>
 </ui:UiBinder> 

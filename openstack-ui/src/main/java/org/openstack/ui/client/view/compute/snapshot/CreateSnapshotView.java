@@ -1,48 +1,63 @@
 package org.openstack.ui.client.view.compute.snapshot;
 
+import org.openstack.model.compute.nova.snapshot.NovaSnapshotForCreate;
+import org.openstack.ui.client.UI;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.IntegerBox;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateSnapshotView extends Composite implements HasText {
+public class CreateSnapshotView extends Composite {
 
-	private static CreateVolumeViewUiBinder uiBinder = GWT
-			.create(CreateVolumeViewUiBinder.class);
+	private static Binder uiBinder = GWT
+			.create(Binder.class);
 
-	interface CreateVolumeViewUiBinder extends
+	interface Binder extends
 			UiBinder<Widget, CreateSnapshotView> {
 	}
+	
+	public interface Presenter {
+
+		void createSnapshot(NovaSnapshotForCreate volume);
+		
+	}
+	
+	private Presenter presenter;
 
 	public CreateSnapshotView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-
-	@UiField
-	Button button;
-
-	public CreateSnapshotView(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
+	
+	public void setPresenter(Presenter presenter) {
+		this.presenter = presenter;
 	}
-
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		Window.alert("Hello!");
+	
+	@UiField ListBox volumeId;
+	
+	@UiField TextBox name;
+	
+	@UiField TextArea description;
+	
+	@UiHandler({ "cancel", "close" })
+	public void onCancel(ClickEvent event) {
+		UI.MODAL.hide(true);
 	}
-
-	public void setText(String text) {
-		button.setText(text);
-	}
-
-	public String getText() {
-		return button.getText();
+	
+	@UiHandler({ "save" })
+	public void onSave(ClickEvent event) {
+		NovaSnapshotForCreate s = new NovaSnapshotForCreate();
+		s.setVolumeId(Integer.parseInt(volumeId.getValue(volumeId.getSelectedIndex())));
+		s.setName(name.getValue());
+		s.setDescription(description.getValue());
+		presenter.createSnapshot(s);
 	}
 
 }

@@ -1,5 +1,7 @@
 package org.openstack.model.compute.nova.volume;
 
+import org.openstack.model.compute.nova.NovaMetadata;
+
 public interface VolumeForCreate {
 
 	/* (non-Javadoc)
@@ -21,5 +23,9 @@ public interface VolumeForCreate {
 	 * @see org.openstack.model.compute.Volume#getDescription()
 	 */
 	String getDescription();
+
+	NovaMetadata getMetadata();
+
+	Integer getSnapshotId();
 
 }

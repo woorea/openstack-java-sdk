@@ -1,6 +1,5 @@
 package org.openstack.ui.client.view.compute.volume;
 
-import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 import org.openstack.ui.client.OpenStackPlace;
@@ -8,8 +7,6 @@ import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
-import org.openstack.ui.client.view.compute.floatingip.AttachFloatingIpActivity;
-import org.openstack.ui.client.view.identity.tenant.CreateUserActivity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
@@ -18,6 +15,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
 
 public class VolumesActivity extends AbstractActivity implements VolumesView.Presenter {
 	
@@ -29,8 +27,7 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 
 	private MultiSelectionModel<Volume> selectionModel = new MultiSelectionModel<Volume>();
 
-	private DefaultSelectionEventManager<Volume> selectionManager = DefaultSelectionEventManager
-			.<Volume> createCheckboxManager(0);
+	private DefaultSelectionEventManager<Volume> selectionManager = DefaultSelectionEventManager.<Volume> createCheckboxManager(0);
 
 	public VolumesActivity(OpenStackPlace place) {
 		this.place = place;
@@ -39,7 +36,7 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		VIEW.setPresenter(this);
-		panel.setWidget(VIEW);
+		
 		VIEW.grid.setSelectionModel(selectionModel, selectionManager);
 		dataProvider = new RefreshableDataProvider<Volume>(VIEW.grid) {
 
@@ -58,10 +55,40 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 			}
 
 		};
+		ui();
+		panel.setWidget(VIEW);
+	}
+	
+	private void ui() {
+		VIEW.delete.setEnabled(false);
+		VIEW.attach.setEnabled(false);
+		VIEW.detach.setEnabled(false);
+		VIEW.createSnapshot.setEnabled(false);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				switch(selectionModel.getSelectedSet().size()) {
+					case 1:
+						VIEW.delete.setEnabled(true);
+						VIEW.attach.setEnabled(true);
+						VIEW.detach.setEnabled(true);
+						VIEW.createSnapshot.setEnabled(true);
+						break;
+					default:
+						VIEW.delete.setEnabled(false);
+						VIEW.attach.setEnabled(false);
+						VIEW.detach.setEnabled(false);
+						VIEW.createSnapshot.setEnabled(false);
+				}
+				
+			}
+		});
 	}
 
 	@Override
 	public void refresh() {
+		ui();
 		dataProvider.refresh();
 		
 	}
@@ -70,14 +97,23 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 	public void onCreateVolume() {
 		CreateVolumeActivity activity = new CreateVolumeActivity();
 		activity.start(UI.MODAL, null);
-		UI.MODAL.center();
-		
 	}
 
 	@Override
 	public void onDeleteVolume() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Volume vol = selectionModel.getSelectedSet().iterator().next();
+			OpenStackClient.COMPUTE.deleteVolume(vol.getId(), new DefaultAsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+			});
+		} catch (Exception e) {
+			GWT.log(e.getMessage());
+		}
 	}
 
 	@Override
@@ -86,7 +122,6 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 			Volume vol = selectionModel.getSelectedSet().iterator().next();
 			AttachVolumeActivity activity = new AttachVolumeActivity(vol);
 			activity.start(UI.MODAL, null);
-			UI.MODAL.center();
 		} catch (Exception e) {
 			GWT.log(e.getMessage());
 		}		

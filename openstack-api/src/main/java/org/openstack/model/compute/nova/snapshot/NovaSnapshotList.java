@@ -20,18 +20,18 @@ import org.openstack.model.compute.SnapshotList;
 public class NovaSnapshotList implements Serializable, SnapshotList {
 
 	@XmlElement(name="snapshot")
-	private List<NovaSnapshot> list = new ArrayList<NovaSnapshot>();
+	private List<NovaSnapshot> snapshots = new ArrayList<NovaSnapshot>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.SnapshotList#getList()
 	 */
 	@Override
 	public List<Snapshot> getList() {
-		return (List<Snapshot>) (List<?>) list;
+		return (List<Snapshot>) (List<?>) snapshots;
 	}
 
-	public void setList(List<NovaSnapshot> list) {
-		this.list = list;
+	public void setList(List<NovaSnapshot> snapshots) {
+		this.snapshots = snapshots;
 	}
 	
 }

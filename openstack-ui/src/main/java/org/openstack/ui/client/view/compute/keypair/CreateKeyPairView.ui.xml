@@ -6,8 +6,14 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		Hello,
-		<g:Button styleName="{style.important}" ui:field="button" />
-	</g:HTMLPanel>
+	<g:HorizontalPanel>
+		<g:FormPanel ui:field="formPanel" action="/ui/keypair-download" method="POST">
+			<g:FlowPanel>
+				<g:TextBox ui:field="keyPairName" name="keyPairName" />
+				<g:Hidden ui:field="computeURL" name="computeURL" />
+				<g:Hidden ui:field="token" name="token" />
+			</g:FlowPanel>
+		</g:FormPanel>
+		<g:Anchor ui:field="createKeyPair">Create &amp; Download Key Pair</g:Anchor>
+	</g:HorizontalPanel>
 </ui:UiBinder> 

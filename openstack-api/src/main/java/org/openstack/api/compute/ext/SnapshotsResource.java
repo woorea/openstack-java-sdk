@@ -6,10 +6,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.SnapshotList;
 import org.openstack.model.compute.nova.snapshot.NovaSnapshot;
 import org.openstack.model.compute.nova.snapshot.NovaSnapshotList;
-import org.openstack.model.compute.nova.snapshot.SnapshotForCreate;
 
 public class SnapshotsResource extends Resource {
 

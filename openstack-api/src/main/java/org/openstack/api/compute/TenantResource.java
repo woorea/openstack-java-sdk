@@ -98,7 +98,7 @@ public class TenantResource extends Resource {
     }
 
 	public SnapshotsResource snapshots() {
-		return path("/os-security-group-rules", SnapshotsResource.class);
+		return path("/os-snapshots", SnapshotsResource.class);
 	}
 
 }

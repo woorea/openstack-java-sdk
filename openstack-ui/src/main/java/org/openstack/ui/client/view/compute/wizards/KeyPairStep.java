@@ -64,14 +64,6 @@ public class KeyPairStep extends Composite implements WizardStep, Editor<NovaSer
 	@Ignore
 	@UiField
 	TextBox keyPairName;
-	
-	@Ignore
-	@UiField
-	Hidden computeURL;
-	
-	@Ignore
-	@UiField
-	Hidden token;
 
 	public KeyPairStep() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -94,8 +86,6 @@ public class KeyPairStep extends Composite implements WizardStep, Editor<NovaSer
 
 	@UiHandler("createKeyPair")
 	void onCreateKeyPair(ClickEvent event) {
-		computeURL.setValue(OpenStackClient.getComputeURL());
-		token.setValue(OpenStackClient.getToken());
 		formPanel.submit();
 		keyNameListBox.addItem(keyPairName.getValue());
 		keyName.setValue(keyPairName.getValue());

@@ -13,6 +13,8 @@ import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.SnapshotList;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
@@ -85,9 +87,15 @@ public interface ComputeService extends RemoteService {
 	
 	SecurityGroupList listSecurityGroups();
 	
+	void deleteSecurityGroup(Integer id);
+	
 	VolumeList listVolumes();
 	
 	SnapshotList listSnapshots();
+	
+	Snapshot createSnapshot(SnapshotForCreate snapshot);
+	
+	void deleteSnapshot(Integer id);
 
 	SecurityGroup showSecurityGroup(Integer id);
 	
@@ -108,5 +116,9 @@ public interface ComputeService extends RemoteService {
 	void associateFloatingIp(String serverId, String address);
 	
 	void disassociateFloatingIp(String serverId, String address);
+
+	String getEndpointURL();
+
+	void deleteKeyPair(String name);
 
 }

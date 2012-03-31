@@ -13,10 +13,9 @@
 					<g:HorizontalPanel width="100%">
 						<g:cell width="50%">
 							<g:HTMLPanel>
-								<g:Button styleName="btn btn-small" ui:field="launch" text="Launch" />
-								<g:Button styleName="btn btn-small" ui:field="register" text="Register" />
-								<g:Button styleName="btn btn-small" ui:field="deregister" text="Deregister" />
-								<g:Button styleName="btn btn-small" ui:field="permisions" text="Permissions" />
+								<g:Button styleName="btn btn-small" ui:field="create"><i class="icon-plus-sign" /> Create Key Pair</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="importKeyPair"><i class="icon-plus-sign" /> Import Key Pair</g:Button>
+								<g:Button styleName="btn btn-small" ui:field="delete"><i class="icon-remove-sign" /> Delete Key Pair</g:Button>
 							</g:HTMLPanel>
 						</g:cell>
 						<g:cell width="50%" horizontalAlignment="ALIGN_RIGHT">

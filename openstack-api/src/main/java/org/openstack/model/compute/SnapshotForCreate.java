@@ -1,4 +1,4 @@
-package org.openstack.model.compute.nova.snapshot;
+package org.openstack.model.compute;
 
 public interface SnapshotForCreate {
 

@@ -11,7 +11,7 @@ import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
 
 public class VolumeAttachmentsResource extends Resource {
 
-	protected VolumeAttachmentsResource(Target target) {
+	public VolumeAttachmentsResource(Target target) {
 		super(target);
 	}
 	

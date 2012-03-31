@@ -2,10 +2,13 @@ package org.openstack.ui.client.view.compute.securitygroup;
 
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.Snapshot;
 import org.openstack.ui.client.OpenStackPlace;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 import org.openstack.ui.client.api.RefreshableDataProvider;
+import org.openstack.ui.client.view.compute.keypair.CreateKeyPairActivity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -71,6 +74,33 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 				
 			}
 		});
+		
+	}
+
+	@Override
+	public void createSecurityGroup() {
+		CreateSecurityGroupActivity activity = new CreateSecurityGroupActivity();
+		activity.start(UI.MODAL, null);
+		
+	}
+
+	@Override
+	public void deleteSecurityGroup() {
+		try {
+			SecurityGroup sg = selectionModel.getSelectedSet().iterator().next();
+			//vol.getAttachments()
+			OpenStackClient.COMPUTE.deleteSecurityGroup(sg.getId(), new DefaultAsyncCallback<Void>() {
+	
+				@Override
+				public void onSuccess(Void result) {
+					refresh();
+					
+				}
+				
+			});
+		} catch (Exception e) {
+			
+		}
 		
 	}
 

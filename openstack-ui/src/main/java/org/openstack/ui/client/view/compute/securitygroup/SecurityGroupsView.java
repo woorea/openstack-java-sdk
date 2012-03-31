@@ -29,6 +29,10 @@ public class SecurityGroupsView extends Composite {
 		void refresh();
 
 		void onShowSecurityGroup(Integer id);
+
+		void createSecurityGroup();
+
+		void deleteSecurityGroup();
 	}
 
 	@UiField(provided = true)
@@ -84,6 +88,16 @@ public class SecurityGroupsView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateKeyPair(ClickEvent event) {
+		presenter.createSecurityGroup();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteKeyPair(ClickEvent event) {
+		presenter.deleteSecurityGroup();
 	}
 
 }

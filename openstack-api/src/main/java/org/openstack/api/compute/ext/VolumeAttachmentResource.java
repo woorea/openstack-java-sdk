@@ -7,7 +7,7 @@ import org.openstack.api.common.Resource;
 
 public class VolumeAttachmentResource extends Resource {
 
-	protected VolumeAttachmentResource(Target target) {
+	public VolumeAttachmentResource(Target target) {
 		super(target);
 	}
 	

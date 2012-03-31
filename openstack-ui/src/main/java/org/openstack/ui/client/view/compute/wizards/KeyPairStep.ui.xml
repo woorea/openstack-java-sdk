@@ -12,8 +12,7 @@
 		</div>
 
 		<g:HorizontalPanel>
-			<g:FormPanel ui:field="formPanel" action="/ui/keypair-download"
-				method="POST">
+			<g:FormPanel ui:field="formPanel" action="/ui/keypair-download" method="POST">
 				<g:FlowPanel>
 					<g:TextBox ui:field="keyPairName" name="keyPairName" />
 					<g:Hidden ui:field="computeURL" name="computeURL" />

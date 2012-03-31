@@ -14,6 +14,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.IntegerBox;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -42,6 +43,8 @@ public class CreateVolumeView extends Composite {
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
+	
+	@UiField ListBox snapshotId;
 
 	@UiField IntegerBox sizeInGB;
 	
@@ -59,6 +62,10 @@ public class CreateVolumeView extends Composite {
 	@UiHandler({ "save" })
 	public void onSave(ClickEvent event) {
 		NovaVolumeForCreate volume = new NovaVolumeForCreate();
+		String sid = snapshotId.getValue(snapshotId.getSelectedIndex());
+		if(sid.length() > 0) {
+			volume.setSnapshotId(Integer.parseInt(sid));
+		}
 		volume.setSizeInGB(sizeInGB.getValue());
 		volume.setAvailabilityZone("nova");
 		volume.setName(name.getValue());

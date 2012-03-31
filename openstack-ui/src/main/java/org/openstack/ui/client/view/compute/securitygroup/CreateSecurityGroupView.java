@@ -1,5 +1,6 @@
 package org.openstack.ui.client.view.compute.securitygroup;
 
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 import org.openstack.ui.client.view.compute.volume.AttachVolumeView.Presenter;
 
 import com.google.gwt.core.client.GWT;
@@ -23,6 +24,8 @@ public class CreateSecurityGroupView extends Composite implements HasText {
 	}
 	
 	public interface Presenter {
+
+		void createSecurityGroup(NovaSecurityGroup securityGroup);
 		
 	}
 	

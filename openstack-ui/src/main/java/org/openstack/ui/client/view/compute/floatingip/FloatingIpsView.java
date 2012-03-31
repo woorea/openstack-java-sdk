@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -33,6 +34,12 @@ public class FloatingIpsView extends Composite {
 
 		void onAssociateFloatingIp();
 	}
+	
+	@UiField Button delete;
+	
+	@UiField Button associate;
+	
+	@UiField Button disassociate;
 
 	@UiField(provided = true)
 	DataGrid<FloatingIp> grid = new DataGrid<FloatingIp>();

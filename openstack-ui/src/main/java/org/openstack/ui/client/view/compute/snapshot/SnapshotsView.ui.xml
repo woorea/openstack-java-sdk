@@ -16,7 +16,6 @@
 								<g:Button styleName="btn btn-small" ui:field="create"><i class="icon-plus-sign" /> Create Snapshot</g:Button>
 								<g:Button styleName="btn btn-small" ui:field="delete"><i class="icon-remove-sign" /> Delete Snapshot</g:Button>
 
-								<g:Button styleName="btn btn-small" ui:field="permisions" text="Permissions" />
 								<g:Button styleName="btn btn-small" ui:field="createVolume"><i class="icon-plus-sign" /> Create Volume</g:Button>
 							</g:HTMLPanel>
 						</g:cell>

@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -24,7 +25,13 @@ public class KeyPairsView extends Composite {
 	public interface Presenter {
 
 		void refresh();
+
+		void createKeyPair();
+
+		void deleteKeyPair();
 	}
+	
+	@UiField Button delete;
 
 	@UiField(provided = true)
 	DataGrid<KeyPair> grid = new DataGrid<KeyPair>();
@@ -79,6 +86,21 @@ public class KeyPairsView extends Composite {
 	@UiHandler("refresh")
 	void onRefresh(ClickEvent event) {
 		presenter.refresh();
+	}
+	
+	@UiHandler("create")
+	void onCreateKeyPair(ClickEvent event) {
+		presenter.createKeyPair();
+	}
+	
+	@UiHandler("importKeyPair")
+	void onImportKeyPair(ClickEvent event) {
+		presenter.createKeyPair();
+	}
+	
+	@UiHandler("delete")
+	void onDeleteKeyPair(ClickEvent event) {
+		presenter.deleteKeyPair();
 	}
 
 }
