@@ -14,6 +14,7 @@ import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
+import org.openstack.ui.client.view.compute.securitygroup.SecurityGroupEditor;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;

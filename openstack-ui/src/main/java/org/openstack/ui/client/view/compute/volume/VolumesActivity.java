@@ -2,6 +2,7 @@ package org.openstack.ui.client.view.compute.volume;
 
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
+import org.openstack.model.compute.nova.volume.NovaVolumeForCreate;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -91,6 +92,19 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 		ui();
 		dataProvider.refresh();
 		
+	}
+	
+	@Override
+	public void createVolume(NovaVolumeForCreate volume) {
+		OpenStackClient.COMPUTE.createVolume(volume, new DefaultAsyncCallback<Volume>() {
+
+			@Override
+			public void onSuccess(Volume result) {
+				refresh();
+				
+			}
+			
+		});
 	}
 
 	@Override

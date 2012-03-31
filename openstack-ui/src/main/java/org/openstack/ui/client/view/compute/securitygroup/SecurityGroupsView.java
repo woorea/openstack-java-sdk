@@ -24,7 +24,7 @@ public class SecurityGroupsView extends Composite {
 	interface Binder extends UiBinder<Widget, SecurityGroupsView> {
 	}
 
-	public interface Presenter {
+	public interface Presenter extends CreateSecurityGroupView.Presenter {
 
 		void refresh();
 

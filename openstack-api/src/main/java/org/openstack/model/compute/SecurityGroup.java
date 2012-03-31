@@ -2,21 +2,26 @@ package org.openstack.model.compute;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
-
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
-
 public interface SecurityGroup {
 
-	Integer getId();
+	public abstract void setRules(List<SecurityGroupRule> rules);
 
-	String getTenantId();
+	public abstract List<SecurityGroupRule> getRules();
 
-	@XmlAttribute(name = "name")
-	String getName();
+	public abstract void setDescription(String description);
 
-	String getDescription();
+	public abstract String getDescription();
 
-	List<NovaSecurityGroupRule> getRules();
+	public abstract void setName(String name);
+
+	public abstract String getName();
+
+	public abstract void setTenantId(String tenantId);
+
+	public abstract String getTenantId();
+
+	public abstract void setId(Integer id);
+
+	public abstract Integer getId();
 
 }

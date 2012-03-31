@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "security_group_rule")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("security_group_rule")
-public class NovaSecurityGroupRule implements Serializable, SecurityGroupRule {
+public class NovaSecurityGroupRule implements SecurityGroupRule, Serializable {
 
     @XmlAccessorType(XmlAccessType.NONE)
     public static final class Group implements Serializable {
@@ -100,108 +100,84 @@ public class NovaSecurityGroupRule implements Serializable, SecurityGroupRule {
     @XmlElement
     private Group group;
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getId()
-	 */
 	@Override
 	public Integer getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getName()
-	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getParentGroupId()
-	 */
 	@Override
 	public Integer getParentGroupId() {
 		return parentGroupId;
 	}
 
+	@Override
 	public void setParentGroupId(Integer parentGroupId) {
 		this.parentGroupId = parentGroupId;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getFromPort()
-	 */
 	@Override
 	public Integer getFromPort() {
 		return fromPort;
 	}
 
+	@Override
 	public void setFromPort(Integer fromPort) {
 		this.fromPort = fromPort;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getToPort()
-	 */
 	@Override
 	public Integer getToPort() {
 		return toPort;
 	}
 
+	@Override
 	public void setToPort(Integer toPort) {
 		this.toPort = toPort;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getIpProtocol()
-	 */
 	@Override
 	public String getIpProtocol() {
 		return ipProtocol;
 	}
 
+	@Override
 	public void setIpProtocol(String ipProtocol) {
 		this.ipProtocol = ipProtocol;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getIpRange()
-	 */
 	@Override
 	public IpRange getIpRange() {
 		return ipRange;
 	}
 
+	@Override
 	public void setIpRange(IpRange ipRange) {
 		this.ipRange = ipRange;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.securitygroup.SecurityGroupRule#getGroup()
-	 */
 	@Override
 	public Group getGroup() {
 		return group;
 	}
 
+	@Override
 	public void setGroup(Group group) {
 		this.group = group;
-	}
-
-	@Override
-	public String toString() {
-		return "NovaSecurityGroupRule [id=" + id + ", name=" + name
-				+ ", parentGroupId=" + parentGroupId + ", fromPort=" + fromPort
-				+ ", toPort=" + toPort + ", ipProtocol=" + ipProtocol
-				+ ", ipRange=" + ipRange + ", group=" + group + "]";
 	}
 
 }

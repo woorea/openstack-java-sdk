@@ -20,7 +20,7 @@ public class SecurityGroupsResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
 	}
 	
-	public SecurityGroup post(NovaSecurityGroup securityGroup) {
+	public SecurityGroup post(SecurityGroup securityGroup) {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(securityGroup, MediaType.APPLICATION_JSON), NovaSecurityGroup.class);
 		
 	}

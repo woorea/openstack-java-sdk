@@ -5,20 +5,36 @@ import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule.IpRa
 
 public interface SecurityGroupRule {
 
-	Integer getId();
+	public abstract void setGroup(Group group);
 
-	String getName();
+	public abstract Group getGroup();
 
-	Integer getParentGroupId();
+	public abstract void setIpRange(IpRange ipRange);
 
-	Integer getFromPort();
+	public abstract IpRange getIpRange();
 
-	Integer getToPort();
+	public abstract void setIpProtocol(String ipProtocol);
 
-	String getIpProtocol();
+	public abstract String getIpProtocol();
 
-	IpRange getIpRange();
+	public abstract void setToPort(Integer toPort);
 
-	Group getGroup();
+	public abstract Integer getToPort();
+
+	public abstract void setFromPort(Integer fromPort);
+
+	public abstract Integer getFromPort();
+
+	public abstract void setParentGroupId(Integer parentGroupId);
+
+	public abstract Integer getParentGroupId();
+
+	public abstract void setName(String name);
+
+	public abstract String getName();
+
+	public abstract void setId(Integer id);
+
+	public abstract Integer getId();
 
 }

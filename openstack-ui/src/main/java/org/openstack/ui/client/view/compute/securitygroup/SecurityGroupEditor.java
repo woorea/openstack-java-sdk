@@ -1,4 +1,4 @@
-package org.openstack.ui.client.view.compute.wizards;
+package org.openstack.ui.client.view.compute.securitygroup;
 
 import java.io.IOException;
 
@@ -147,7 +147,9 @@ public class SecurityGroupEditor extends Composite implements Editor<SecurityGro
 
 			@Override
 			public void onClick(ClickEvent event) {
-				rules.getList().add(new NovaSecurityGroupRule());
+				SecurityGroupRule rule = new NovaSecurityGroupRule();
+				System.out.println(rules + "!!!!");
+				rules.getList().add(rule);
 
 			}
 		}));

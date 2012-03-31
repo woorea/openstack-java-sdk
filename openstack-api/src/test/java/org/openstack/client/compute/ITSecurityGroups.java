@@ -80,7 +80,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 
 		// Drop the rule
 		{
-			NovaSecurityGroupRule rule = fetched.getRules().get(0);
+			SecurityGroupRule rule = fetched.getRules().get(0);
 			compute.securityGroupRules().rule(rule.getId()).delete();
 
 			fetched = compute.securityGroups().securityGroup(created.getId()).get();

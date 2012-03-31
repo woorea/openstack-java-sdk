@@ -8,7 +8,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.SecurityGroup;
-import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 
 public class SecurityGroupResource extends Resource  {

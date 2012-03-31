@@ -87,6 +87,8 @@ public interface ComputeService extends RemoteService {
 	
 	SecurityGroupList listSecurityGroups();
 	
+	SecurityGroup createSecurityGroup(SecurityGroup securityGroup);
+	
 	void deleteSecurityGroup(Integer id);
 	
 	VolumeList listVolumes();

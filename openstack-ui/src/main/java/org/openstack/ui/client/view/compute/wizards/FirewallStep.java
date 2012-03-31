@@ -1,6 +1,7 @@
 package org.openstack.ui.client.view.compute.wizards;
 
 import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.ui.client.view.compute.securitygroup.SecurityGroupEditor;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;

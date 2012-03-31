@@ -1,6 +1,7 @@
 package org.openstack.model.compute.nova.securitygroup;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -12,11 +13,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupRule;
 
 @XmlRootElement(name = "security_group")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("security_group")
-public class NovaSecurityGroup implements Serializable, SecurityGroup {
+public class NovaSecurityGroup implements SecurityGroup, Serializable {
 
     @XmlAttribute
     protected Integer id;
@@ -35,7 +37,7 @@ public class NovaSecurityGroup implements Serializable, SecurityGroup {
 
     @XmlElementWrapper(name = "rules")
     @XmlElement(name = "rule")
-    protected List<NovaSecurityGroupRule> rules;
+    protected List<NovaSecurityGroupRule> rules = new ArrayList<NovaSecurityGroupRule>();
 
     public NovaSecurityGroup() {
 		// TODO Auto-generated constructor stub
@@ -46,87 +48,54 @@ public class NovaSecurityGroup implements Serializable, SecurityGroup {
 		this.name = name;
 	}
 
-	
-
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.SecurityGroup#getId()
-	 */
 	@Override
 	public Integer getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    /* (non-Javadoc)
-	 * @see org.openstack.model.compute.SecurityGroup#getTenantId()
-	 */
-    @Override
+	@Override
 	public String getTenantId() {
-        return tenantId;
-    }
+		return tenantId;
+	}
 
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	@Override
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 
-    /* (non-Javadoc)
-	 * @see org.openstack.model.compute.SecurityGroup#getName()
-	 */
-    @Override
-	@XmlAttribute(name = "name")
-    public String getName() {
-    	/*
-        if (nameAttribute == null) {
-            return nameElement;
-        }
-        if (nameElement == null) {
-            return nameAttribute;
-        }
-        if (!nameElement.equals(nameAttribute))
-            throw new IllegalStateException();
-        return nameElement;
-        */
-    	return name;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-    	this.name = name;
-    	/*
-        this.nameAttribute = name;
-        this.nameElement = name;
-        */
-    }
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /* (non-Javadoc)
-	 * @see org.openstack.model.compute.SecurityGroup#getDescription()
-	 */
-    @Override
+	@Override
 	public String getDescription() {
-        return description;
-    }
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    /* (non-Javadoc)
-	 * @see org.openstack.model.compute.SecurityGroup#getRules()
-	 */
-    @Override
-	public List<NovaSecurityGroupRule> getRules() {
-        return rules;
-    }
+	@Override
+	public List<SecurityGroupRule> getRules() {
+		return (List<SecurityGroupRule>) (List<?>)  rules;
+	}
 
-    public void setRules(List<NovaSecurityGroupRule> rules) {
-        this.rules = rules;
-    }
-
-    @Override
-    public String toString() {
-        return "SecurityGroup [id=" + id + ", tenantId=" + tenantId + ", name=" + name + ", description=" + description + ", rules=" + rules + "]";
-    }
+	@Override
+	public void setRules(List<SecurityGroupRule> rules) {
+		this.rules = (List<NovaSecurityGroupRule>) (List<?>) rules;
+	}
 
 }

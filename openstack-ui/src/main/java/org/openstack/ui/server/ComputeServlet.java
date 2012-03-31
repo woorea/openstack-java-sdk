@@ -11,6 +11,7 @@ import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
@@ -284,6 +285,15 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 	public void deleteKeyPair(String name) {
 		getClient().getComputeEndpoint().keyPairs().keypair(name).delete();
 		
+	}
+
+	@Override
+	public SecurityGroup createSecurityGroup(SecurityGroup securityGroup) {
+		SecurityGroup created = getClient().getComputeEndpoint().securityGroups().post(securityGroup);
+		for(SecurityGroupRule r : securityGroup.getRules()) {
+			getClient().getComputeEndpoint().securityGroupRules().post(null);
+		}
+		return getClient().getComputeEndpoint().securityGroups().securityGroup(created.getId()).get();
 	}
 
 	

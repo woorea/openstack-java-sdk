@@ -2,7 +2,6 @@ package org.openstack.model.compute.nova.securitygroup;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,7 +20,7 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "security_groups")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement()
-public class NovaSecurityGroupList implements Serializable, Iterable<NovaSecurityGroup>, SecurityGroupList {
+public class NovaSecurityGroupList implements Serializable, SecurityGroupList {
 
 	@XmlElementWrapper(name = "security_groups")
 	@XmlElement(name = "security_group")
@@ -37,11 +36,6 @@ public class NovaSecurityGroupList implements Serializable, Iterable<NovaSecurit
 			list = Lists.newArrayList();
 		}
 		return (List<SecurityGroup>) (List<?>) list;
-	}
-
-	@Override
-	public Iterator<NovaSecurityGroup> iterator() {
-		return list.iterator();
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package org.openstack.ui.client.view.compute.wizards;
 
 import org.openstack.model.compute.nova.NovaServerForCreate;
 
-import com.google.common.collect.Iterables;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.event.dom.client.ClickEvent;

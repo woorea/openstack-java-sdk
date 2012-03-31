@@ -1,13 +1,27 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:compute="urn:import:org.openstack.ui.client.view.compute.securitygroup">
 	<ui:style>
 		.important {
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		Hello,
-		<g:Button styleName="{style.important}" ui:field="button" />
-	</g:HTMLPanel>
+	<g:HeaderPanel width="800px" height="400px">
+		<g:HTMLPanel>
+			<div class="modal-header" style="margin-bottom: 15px">
+				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
+				<h3>Create Security Group</h3>
+			</div>
+		</g:HTMLPanel>
+		<g:ResizeLayoutPanel height="100%">
+			<g:HTMLPanel>
+				<compute:SecurityGroupEditor ui:field="securityGroup" />
+			</g:HTMLPanel>
+		</g:ResizeLayoutPanel>
+		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
+			<g:Button ui:field="save" styleName="btn">Save</g:Button>
+			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
+		</g:HTMLPanel>
+	</g:HeaderPanel>
+
 </ui:UiBinder> 

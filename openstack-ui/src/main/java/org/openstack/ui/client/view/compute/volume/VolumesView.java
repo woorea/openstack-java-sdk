@@ -22,7 +22,7 @@ public class VolumesView extends Composite {
 	interface Binder extends UiBinder<Widget, VolumesView> {
 	}
 
-	public interface Presenter {
+	public interface Presenter extends CreateVolumeView.Presenter {
 
 		void refresh();
 

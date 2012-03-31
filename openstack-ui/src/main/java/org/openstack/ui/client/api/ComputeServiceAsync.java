@@ -132,4 +132,7 @@ public interface ComputeServiceAsync {
 	void deleteKeyPair(String name,
 			AsyncCallback<Void> defaultAsyncCallback);
 
+	void createSecurityGroup(SecurityGroup securityGroup,
+			AsyncCallback<SecurityGroup> callback);
+
 }
