@@ -35,8 +35,10 @@ public class FirewallStep extends Composite implements WizardStep, Editor<NovaSe
 	
 	@UiField ScrollPanel securityGroupEditor;
 	
+	@Ignore
 	@UiField SecurityGroupEditor securityGroup;
 	
+	@Ignore
 	@UiField SecurityGroupRulesEditor rules;
 
 	public FirewallStep() {

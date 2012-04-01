@@ -1,6 +1,7 @@
 package org.openstack.ui.client.view.compute.wizards;
 
 import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.ui.client.UI;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
@@ -43,8 +44,6 @@ public class CreateServerWizard extends Composite implements Editor<NovaServerFo
 
 	private Presenter presenter;
 
-	PopupPanel popup;
-
 	@UiField
 	HorizontalPanel steps;
 	@UiField
@@ -76,7 +75,6 @@ public class CreateServerWizard extends Composite implements Editor<NovaServerFo
 
 	public CreateServerWizard() {
 		initWidget(uiBinder.createAndBindUi(this));
-		popup = new PopupPanel(false, true);
 		for (int i = 0; i < body.getWidgetCount(); i++) {
 			WizardStep ws = (WizardStep) body.getWidget(i);
 			HTML step = new HTML("<h3>Step" + (i + 1) + "</h3><p>" + ws.getDescription() + "</p>");
@@ -91,7 +89,7 @@ public class CreateServerWizard extends Composite implements Editor<NovaServerFo
 			});
 			steps.add(step);
 		}
-		popup.setWidget(this);
+		UI.MODAL.setWidget(this);
 	}
 
 	private void buttonsStuff(int index) {
@@ -111,7 +109,7 @@ public class CreateServerWizard extends Composite implements Editor<NovaServerFo
 	@UiHandler({ "cancel", "close" })
 	void onCancelOrClose(ClickEvent evt) {
 		presenter.onCancel();
-		popup.hide(true);
+		UI.MODAL.hide();
 	}
 
 	@UiHandler("previous")

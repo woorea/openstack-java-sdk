@@ -1,11 +1,9 @@
 package org.openstack.ui.client.view.compute.wizards;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.nova.NovaImage;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -38,7 +36,7 @@ public class ImageTablePicker extends Composite implements LeafValueEditor<Strin
 		this.presenter = presenter;
 	}
 
-	public void refresh(List<Image> images) {
+	public void refresh(Collection<Image> images) {
 		int row = 0;
 		for (final Image image : images) {
 			int col = 0;

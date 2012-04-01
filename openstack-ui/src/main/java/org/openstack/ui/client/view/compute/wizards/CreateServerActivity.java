@@ -1,8 +1,10 @@
 package org.openstack.ui.client.view.compute.wizards;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.openstack.model.compute.FlavorList;
+import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.KeyPairListItem;
@@ -11,10 +13,13 @@ import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -100,7 +105,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 		createServerRequestDriver.initialize(wizard);
 		createServerRequestDriver.edit(new NovaServerForCreate());
 		show(serverForCreate.getImageRef() == null ? 0 : 1);
-		wizard.popup.center();
+		UI.MODAL.center();
 	}
 
 	@Override
@@ -110,7 +115,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 			@Override
 			public void onSuccess(Server result) {
-				wizard.popup.hide(true);
+				UI.MODAL.hide();
 			}
 		});
 		
@@ -166,7 +171,14 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 			@Override
 			public void onSuccess(ImageList result) {
-				wizard.image.imageRef.refresh(result.getList());
+				Collection<Image> images = Collections2.filter(result.getList(), new Predicate<Image>() {
+
+					@Override
+					public boolean apply(Image input) {
+						return input.getName().endsWith("uec");
+					}
+				});
+				wizard.image.imageRef.refresh(images);
 
 			}
 
