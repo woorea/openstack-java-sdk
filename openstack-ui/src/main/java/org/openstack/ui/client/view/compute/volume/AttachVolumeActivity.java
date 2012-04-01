@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class AttachVolumeActivity extends AbstractActivity implements AttachVolumeView.Presenter {
 	
-	private static final AttachVolumeView VIEW = new AttachVolumeView();
+	public static final AttachVolumeView VIEW = new AttachVolumeView();
 	
 	private Volume volume;
 	

@@ -110,6 +110,7 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 	@Override
 	public void onCreateVolume() {
 		CreateVolumeActivity activity = new CreateVolumeActivity();
+		CreateVolumeActivity.VIEW.setPresenter(this);
 		activity.start(UI.MODAL, null);
 	}
 

@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class CreateVolumeActivity extends AbstractActivity {
 	
-	private static final CreateVolumeView VIEW = new CreateVolumeView();
+	public static final CreateVolumeView VIEW = new CreateVolumeView();
 	
 	//create volume from snapshot
 	private Snapshot snapshot;
@@ -29,7 +29,6 @@ public class CreateVolumeActivity extends AbstractActivity {
 
 	@Override
 	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
-		//VIEW.setPresenter(this);
 		OpenStackClient.COMPUTE.listSnapshots(new DefaultAsyncCallback<SnapshotList>() {
 			
 			@Override
