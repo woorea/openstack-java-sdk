@@ -7,13 +7,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>OpenStack Java SDK</name>
 	<url>http://github.com/woorea/openstack-java-sdk</url>
-
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>5</version>
-	</parent>
-
+	<!-- <parent> <groupId>org.sonatype.oss</groupId> <artifactId>oss-parent</artifactId> 
+		<version>5</version> </parent> -->
+		
+	<licenses>
+		<license>
+			<name>Apache2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	
 	<developers>
 		<developer>
 			<id>woorea</id>
@@ -27,24 +30,28 @@
 		</developer>
 	</developers>
 
-	<licenses>
-		<license>
-			<name>Apache2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
+	<modules>
+		<module>openstack-api</module>
+		<module>openstack-console</module>
+		<module>openstack-ui</module>
+	</modules>
 
 	<scm>
 		<connection>scm:http://github.com/woorea/openstack-java-sdk.git</connection>
 		<developerConnection>scm:http://github.com/woorea/openstack-java-sdk.git</developerConnection>
 		<url>http://github.com/woorea/openstack-java-sdk.git</url>
 	</scm>
-
-	<modules>
-		<module>openstack-api</module>
-		<module>openstack-console</module>
-		<module>openstack-ui</module>
-	</modules>
+	
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>https://github.com/woorea/maven/raw/master/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>https://github.com/woorea/maven/raw/master/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,17 +59,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.openstack</groupId>
-				<artifactId>openstack-commons</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openstack</groupId>
-				<artifactId>shared-cli</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.openstack</groupId>
 				<artifactId>openstack-api</artifactId>
@@ -123,23 +119,13 @@
 					<excludeFilterFile>config/findbugs-exclude.xml</excludeFilterFile>
 				</configuration>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-gpg-plugin</artifactId> 
+				<executions> <execution> <id>sign-artifacts</id> <phase>verify</phase> <goals> 
+				<goal>sign</goal> </goals> </execution> </executions> </plugin> -->
 		</plugins>
 
 	</build>
+
+	
 
 </project>
