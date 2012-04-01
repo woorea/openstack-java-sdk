@@ -14,9 +14,10 @@
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
-			<g:HTMLPanel>
+			<g:HorizontalPanel>
 				<compute:SecurityGroupEditor ui:field="securityGroup" />
-			</g:HTMLPanel>
+				<compute:SecurityGroupRulesEditor ui:field="rules" />
+			</g:HorizontalPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
 			<g:Button ui:field="save" styleName="btn">Save</g:Button>

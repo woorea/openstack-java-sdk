@@ -1,16 +1,15 @@
 package org.openstack.client.compute;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.InvocationException;
 
 import org.openstack.model.compute.SecurityGroup;
-import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupRule;
-import org.openstack.model.compute.nova.NovaCreateSecurityGroupRuleRequest;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupForCreate;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRuleForCreate;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,7 +35,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		String groupName = random.randomAlphanumericString(1, 128).trim();
 		String description = random.randomAlphanumericString(1, 255).trim();
 
-		NovaSecurityGroup createRequest = new NovaSecurityGroup();
+		SecurityGroupForCreate createRequest = new NovaSecurityGroupForCreate();
 		createRequest.setName(groupName);
 		createRequest.setDescription(description);
 
@@ -53,7 +52,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 
 		// Create a rule
 		{
-			NovaCreateSecurityGroupRuleRequest newRule = new NovaCreateSecurityGroupRuleRequest();
+			NovaSecurityGroupRuleForCreate newRule = new NovaSecurityGroupRuleForCreate();
 			newRule.setCidr("1.2.3.4/32");
 			newRule.setFromPort(1234);
 			newRule.setToPort(5678);
@@ -106,7 +105,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		Assert.assertEquals(actual.getDescription(), expected.getDescription());
 	}
 
-	private void assertSecurityGroupRuleEquals(NovaCreateSecurityGroupRuleRequest newRule, SecurityGroupRule rule) {
+	private void assertSecurityGroupRuleEquals(SecurityGroupRuleForCreate newRule, SecurityGroupRule rule) {
 		Assert.assertEquals(rule.getFromPort(), newRule.getFromPort());
 		Assert.assertEquals(rule.getToPort(), newRule.getToPort());
 		Assert.assertEquals(rule.getIpProtocol(), newRule.getIpProtocol());

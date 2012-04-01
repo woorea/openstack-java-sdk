@@ -7,20 +7,17 @@ import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.KeyPairListItem;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.nova.NovaServerForCreate;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
 import org.openstack.ui.client.api.OpenStackClient;
-import org.openstack.ui.client.view.compute.securitygroup.SecurityGroupEditor;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.user.client.Window;
 
 public class CreateServerActivity implements CreateServerWizard.Presenter {
 	
@@ -30,14 +27,12 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 	}
 
-	interface SecurityGroupDriver extends SimpleBeanEditorDriver<SecurityGroup, SecurityGroupEditor> {
-
-	}
+	
 
 	private static final CreateServerRequestDriver createServerRequestDriver = GWT.create(CreateServerRequestDriver.class);
 
-	private static final SecurityGroupDriver securityGroupDriver = GWT.create(SecurityGroupDriver.class);
-
+	
+	
 	private int index;
 	
 	private NovaServerForCreate serverForCreate;
@@ -47,14 +42,9 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 	}
 
 	@Override
-	public SecurityGroupEditor onAddSecurityGroup() {
-		SecurityGroupEditor securityGroupEditor = new SecurityGroupEditor();
-		securityGroupEditor.setPresenter(this);
-		securityGroupDriver.initialize(securityGroupEditor);
-		SecurityGroup securityGroup = new NovaSecurityGroup();
-		securityGroup.getRules().add(new NovaSecurityGroupRule());
-		securityGroupDriver.edit(securityGroup);
-		return securityGroupEditor;
+	public void onAddSecurityGroup() {
+		wizard.firewall.securityGroup.edit();
+		wizard.firewall.rules.edit();
 	}
 
 	@Override
@@ -127,9 +117,11 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 
 	}
 
-	@Override
+	//@Override
 	public void onSaveSecurityGroup() {
-		SecurityGroup sg = securityGroupDriver.flush();
+		//wizard.firewall.securityGroup.edit();
+		//wizard.firewall.rules.edit();
+		SecurityGroupForCreate sg = wizard.firewall.securityGroup.flush();
 		NovaServerForCreate.SecurityGroup sg2 = new NovaServerForCreate.SecurityGroup(sg.getName());
 		wizard.firewall.securityGroups.addItem(sg2.getName(), sg2);
 	}

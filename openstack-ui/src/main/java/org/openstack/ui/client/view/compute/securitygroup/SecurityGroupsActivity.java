@@ -1,9 +1,15 @@
 package org.openstack.ui.client.view.compute.securitygroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupForCreate;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRuleForCreate;
 import org.openstack.ui.client.OpenStackPlace;
 import org.openstack.ui.client.UI;
 import org.openstack.ui.client.api.DefaultAsyncCallback;
@@ -13,8 +19,8 @@ import org.openstack.ui.client.api.RefreshableDataProvider;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.editor.client.adapters.ListEditor;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -23,13 +29,7 @@ import com.google.gwt.view.client.MultiSelectionModel;
 
 public class SecurityGroupsActivity extends AbstractActivity implements SecurityGroupsView.Presenter {
 	
-	interface SecurityGroupDriver extends SimpleBeanEditorDriver<SecurityGroup, SecurityGroupEditor> {
-
-	}
-	
 	private static final CreateSecurityGroupView CREATE_VIEW = new CreateSecurityGroupView();
-	
-	private static final SecurityGroupDriver driver = GWT.create(SecurityGroupDriver.class);
 	
 	private static final SecurityGroupsView VIEW = new SecurityGroupsView();
 	
@@ -39,8 +39,7 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 
 	private MultiSelectionModel<SecurityGroup> selectionModel = new MultiSelectionModel<SecurityGroup>();
 
-	private DefaultSelectionEventManager<SecurityGroup> selectionManager = DefaultSelectionEventManager
-			.<SecurityGroup> createCheckboxManager(0);
+	private DefaultSelectionEventManager<SecurityGroup> selectionManager = DefaultSelectionEventManager.<SecurityGroup> createCheckboxManager(0);
 
 	public SecurityGroupsActivity(OpenStackPlace place) {
 		this.place = place;
@@ -90,11 +89,8 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 
 	@Override
 	public void createSecurityGroup() {
-		CREATE_VIEW.securityGroup.setPresenter(this);
-		driver.initialize(CREATE_VIEW.securityGroup);
-		SecurityGroup securityGroup = new NovaSecurityGroup();
-		securityGroup.getRules().add(new NovaSecurityGroupRule());
-		driver.edit(securityGroup);
+		CREATE_VIEW.securityGroup.edit();
+		CREATE_VIEW.rules.edit();
 		CREATE_VIEW.setPresenter(this);
 		UI.MODAL.setWidget(CREATE_VIEW);
 		UI.MODAL.center();
@@ -122,22 +118,29 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 	}
 	
 	@Override
-	public void createSecurityGroup(SecurityGroup securityGroup) {
-		Window.alert("createSecurityGroup!!!");
-	}
-
-	@Override
-	public void onSaveSecurityGroup() {
-		OpenStackClient.COMPUTE.createSecurityGroup(driver.flush(), new DefaultAsyncCallback<SecurityGroup>() {
+	public void saveSecurityGroup() {
+		OpenStackClient.COMPUTE.createSecurityGroup(CREATE_VIEW.securityGroup.flush(), new DefaultAsyncCallback<SecurityGroup>() {
 
 			@Override
-			public void onSuccess(SecurityGroup result) {
+			public void onSuccess(final SecurityGroup result) {
+				List<SecurityGroupRuleForCreate> rules = CREATE_VIEW.rules.flush();
+				for(SecurityGroupRuleForCreate r : rules) {
+					r.setParentGroupId(result.getId());
+					OpenStackClient.COMPUTE.createSecurityGroupRule(r, new DefaultAsyncCallback<SecurityGroupRule>() {
+
+						@Override
+						public void onSuccess(SecurityGroupRule result) {
+							
+							
+							
+						}
+					});
+				}
 				UI.MODAL.hide();
+				
 				
 			}
 		});
-		
-		
 	}
 
 }

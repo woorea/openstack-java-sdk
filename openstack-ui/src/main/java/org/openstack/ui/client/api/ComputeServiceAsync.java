@@ -10,7 +10,10 @@ import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
@@ -132,7 +135,10 @@ public interface ComputeServiceAsync {
 	void deleteKeyPair(String name,
 			AsyncCallback<Void> defaultAsyncCallback);
 
-	void createSecurityGroup(SecurityGroup securityGroup,
+	void createSecurityGroup(SecurityGroupForCreate securityGroup,
 			AsyncCallback<SecurityGroup> callback);
+
+	void createSecurityGroupRule(SecurityGroupRuleForCreate securityGroupRule,
+			AsyncCallback<SecurityGroupRule> callback);
 
 }

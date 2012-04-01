@@ -6,7 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.SecurityGroupRule;
-import org.openstack.model.compute.nova.NovaCreateSecurityGroupRuleRequest;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 
 public class SecurityGroupRulesResource extends Resource {
@@ -15,7 +15,7 @@ public class SecurityGroupRulesResource extends Resource {
 		super(target);
 	}
 
-    public SecurityGroupRule post(NovaCreateSecurityGroupRuleRequest rule) {
+    public SecurityGroupRule post(SecurityGroupRuleForCreate rule) {
 		// OSAPI bug: Can't specify an SSH key in XML?
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(rule, MediaType.APPLICATION_JSON), NovaSecurityGroupRule.class);
 	}

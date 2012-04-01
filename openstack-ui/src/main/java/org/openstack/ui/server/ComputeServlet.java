@@ -10,8 +10,10 @@ import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
@@ -288,12 +290,13 @@ public class ComputeServlet extends OpenStackRemoteServiceServlet implements Com
 	}
 
 	@Override
-	public SecurityGroup createSecurityGroup(SecurityGroup securityGroup) {
-		SecurityGroup created = getClient().getComputeEndpoint().securityGroups().post(securityGroup);
-		for(SecurityGroupRule r : securityGroup.getRules()) {
-			getClient().getComputeEndpoint().securityGroupRules().post(null);
-		}
-		return getClient().getComputeEndpoint().securityGroups().securityGroup(created.getId()).get();
+	public SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroup) {
+		return getClient().getComputeEndpoint().securityGroups().post(securityGroup);
+	}
+
+	@Override
+	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate securityGroupRule) {
+		return getClient().getComputeEndpoint().securityGroupRules().post(securityGroupRule);
 	}
 
 	

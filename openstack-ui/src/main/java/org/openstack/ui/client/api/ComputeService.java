@@ -10,7 +10,10 @@ import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
@@ -87,9 +90,11 @@ public interface ComputeService extends RemoteService {
 	
 	SecurityGroupList listSecurityGroups();
 	
-	SecurityGroup createSecurityGroup(SecurityGroup securityGroup);
+	SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroup);
 	
 	void deleteSecurityGroup(Integer id);
+	
+	SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate securityGroupRule);
 	
 	VolumeList listVolumes();
 	

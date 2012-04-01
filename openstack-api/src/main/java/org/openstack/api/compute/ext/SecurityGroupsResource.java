@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupList;
@@ -20,7 +21,7 @@ public class SecurityGroupsResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaSecurityGroupList.class);
 	}
 	
-	public SecurityGroup post(SecurityGroup securityGroup) {
+	public SecurityGroup post(SecurityGroupForCreate securityGroup) {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(securityGroup, MediaType.APPLICATION_JSON), NovaSecurityGroup.class);
 		
 	}

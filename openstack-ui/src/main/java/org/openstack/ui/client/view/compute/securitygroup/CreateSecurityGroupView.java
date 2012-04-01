@@ -1,6 +1,5 @@
 package org.openstack.ui.client.view.compute.securitygroup;
 
-import org.openstack.model.compute.SecurityGroup;
 import org.openstack.ui.client.UI;
 
 import com.google.gwt.core.client.GWT;
@@ -13,16 +12,14 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CreateSecurityGroupView extends Composite {
 
-	private static CreateVolumeViewUiBinder uiBinder = GWT
-			.create(CreateVolumeViewUiBinder.class);
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface CreateVolumeViewUiBinder extends
-			UiBinder<Widget, CreateSecurityGroupView> {
+	interface Binder extends UiBinder<Widget, CreateSecurityGroupView> {
 	}
 	
-	public interface Presenter extends SecurityGroupEditor.Presenter {
+	public interface Presenter {
 
-		void createSecurityGroup(SecurityGroup securityGroup);
+		void saveSecurityGroup();
 		
 	}
 	
@@ -30,17 +27,26 @@ public class CreateSecurityGroupView extends Composite {
 	
 	@UiField SecurityGroupEditor securityGroup;
 	
+	@UiField SecurityGroupRulesEditor rules;
+	
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
 
 	public CreateSecurityGroupView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		
 	}
 	
 	@UiHandler({ "cancel", "close" })
 	public void onCancel(ClickEvent event) {
 		UI.MODAL.hide(true);
+	}
+	
+	@UiHandler({ "save" })
+	public void onCreateSecurityGroup(ClickEvent event) {
+		presenter.saveSecurityGroup();
 	}
 
 }

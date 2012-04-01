@@ -2,6 +2,7 @@ package org.openstack.ui.client.view.compute.wizards;
 
 import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.ui.client.view.compute.securitygroup.SecurityGroupEditor;
+import org.openstack.ui.client.view.compute.securitygroup.SecurityGroupRulesEditor;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
@@ -22,8 +23,8 @@ public class FirewallStep extends Composite implements WizardStep, Editor<NovaSe
 	interface FirewallStepUiBinder extends UiBinder<Widget, FirewallStep> {
 	}
 	
-	interface Presenter extends SecurityGroupEditor.Presenter {
-		SecurityGroupEditor onAddSecurityGroup();
+	interface Presenter {
+		void onAddSecurityGroup();
 	}
 	
 	private Presenter presenter; 
@@ -32,7 +33,11 @@ public class FirewallStep extends Composite implements WizardStep, Editor<NovaSe
 	
 	@UiField Button add;
 	
-	@UiField ScrollPanel securityGroup;
+	@UiField ScrollPanel securityGroupEditor;
+	
+	@UiField SecurityGroupEditor securityGroup;
+	
+	@UiField SecurityGroupRulesEditor rules;
 
 	public FirewallStep() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -50,8 +55,8 @@ public class FirewallStep extends Composite implements WizardStep, Editor<NovaSe
 	
 	@UiHandler("add")
 	void onAddSecurityGroup(ClickEvent event) {
-		SecurityGroupEditor editor = presenter.onAddSecurityGroup();
-		securityGroup.setWidget(editor);
+		//SecurityGroupEditor editor = presenter.onAddSecurityGroup();
+		securityGroupEditor.setVisible(true);
 	}
 	
 	public void setPresenter(Presenter presenter) {

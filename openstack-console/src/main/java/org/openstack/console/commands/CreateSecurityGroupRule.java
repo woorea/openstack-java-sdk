@@ -5,7 +5,7 @@ import javax.ws.rs.client.Entity;
 import org.kohsuke.args4j.Argument;
 import org.openstack.api.compute.TenantResource;
 import org.openstack.model.compute.SecurityGroupRule;
-import org.openstack.model.compute.nova.NovaCreateSecurityGroupRuleRequest;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRuleForCreate;
 
 public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 	@Argument(index = 0)
@@ -30,7 +30,7 @@ public class CreateSecurityGroupRule extends OpenstackCliCommandRunnerBase {
 	public Object runCommand() throws Exception {
 		TenantResource compute = getContext().getComputeClient();
 
-		NovaCreateSecurityGroupRuleRequest newRule = new NovaCreateSecurityGroupRuleRequest();
+		NovaSecurityGroupRuleForCreate newRule = new NovaSecurityGroupRuleForCreate();
 		newRule.setCidr(cidr);
 		if (fromPort == null)
 			fromPort = -1;
