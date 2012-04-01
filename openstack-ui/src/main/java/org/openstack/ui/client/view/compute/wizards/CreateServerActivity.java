@@ -105,6 +105,7 @@ public class CreateServerActivity implements CreateServerWizard.Presenter {
 		createServerRequestDriver.initialize(wizard);
 		createServerRequestDriver.edit(new NovaServerForCreate());
 		show(serverForCreate.getImageRef() == null ? 0 : 1);
+		UI.MODAL.setWidget(wizard);
 		UI.MODAL.center();
 	}
 
