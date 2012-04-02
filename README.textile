@@ -181,27 +181,6 @@ We use maven to build the project. Some helpful maven commands:
 @mvn eclipse:eclipse@ _Create the eclipse projects_
 @mvn install@ _Builds everything, runs unit & integration tests, installs into your maven repo_
 @mvn install -Dmaven.test.skip=true@ _As above, but without running tests_
-@mvn test@ _Runs unit tests_
-@mvn verify@ _Runs integration tests_
-
-h2. Integration Tests
-
-The integration tests run against an OpenStack installation.
-It takes its configuration from the system properties.
-
-Useful properties:
-
-| Property | Default | Explanation |
-| openstack.debug | false | Set to true for lots of debug output |
-| openstack.auth.url | http://127.0.0.1:5000/v2.0 | Location of Keystone service |
-| openstack.auth.user | demo | Authentication info: username |
-| openstack.auth.secret | secret0 | Authentication info: password |
-| openstack.auth.tenant | demo | Authentication info: tenant |
-
-The defaults should work with a local devstack installation.  Otherwise do something like this:
-
-@mvn verify -Dopenstack.auth.url=http://192.168.2.10:5000/v2.0@
-
 
 h1. License
 
