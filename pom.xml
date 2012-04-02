@@ -46,6 +46,14 @@
 			<url>https://github.com/woorea/maven/raw/master/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>woorea</id>
+			<snapshots />
+			<url>https://github.com/woorea/maven/raw/master/snapshots</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
