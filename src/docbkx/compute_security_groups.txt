@@ -1,0 +1,190 @@
+Apr 2, 2012 5:08:18 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 1 * LoggingFilter - Request received on thread main
+1 > POST http://192.168.1.52:5000/v2.0/tokens
+1 > Accept: application/json
+1 > Content-Type: application/json
+{"auth":{"passwordCredentials":{"username":"demo","password":"secret0"},"tenantName":"demo"}}
+
+Apr 2, 2012 5:08:18 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 2 * LoggingFilter - Response received on thread main
+2 < 200
+2 < Connection: keep-alive
+2 < Content-Length: 2470
+2 < Content-Type: application/json
+2 < Date: Tue, 20 Mar 2012 18:14:44 GMT
+2 < Vary: X-Auth-Token
+{"access": {"token": {"expires": "2012-03-21T18:14:44Z", "id": "3ff4ae0cba7e4ee68ac2c403b90cb725", "tenant": {"enabled": true, "id": "49ca8fb0aef0469996ca10eec7ff51a2", "name": "demo", "description": null}}, "serviceCatalog": [{"endpoints": [{"adminURL": "http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2", "region": "RegionOne", "publicURL": "http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2", "internalURL": "http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2"}], "endpoints_links": [], "type": "compute", "name": "Compute Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8080", "region": "RegionOne", "publicURL": "http://192.168.1.52:8080", "internalURL": "http://192.168.1.52:8080"}], "endpoints_links": [], "type": "s3", "name": "S3 Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:9292/v1", "region": "RegionOne", "publicURL": "http://192.168.1.52:9292/v1", "internalURL": "http://192.168.1.52:9292/v1"}], "endpoints_links": [], "type": "image", "name": "Image Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8776/v1/49ca8fb0aef0469996ca10eec7ff51a2", "region": "RegionOne", "publicURL": "http://192.168.1.52:8776/v1/49ca8fb0aef0469996ca10eec7ff51a2", "internalURL": "http://192.168.1.52:8776/v1/49ca8fb0aef0469996ca10eec7ff51a2"}], "endpoints_links": [], "type": "volume", "name": "Volume Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8773/services/Admin", "region": "RegionOne", "publicURL": "http://192.168.1.52:8773/services/Cloud", "internalURL": "http://192.168.1.52:8773/services/Cloud"}], "endpoints_links": [], "type": "ec2", "name": "EC2 Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8080/", "region": "RegionOne", "publicURL": "http://192.168.1.52:8080/v1/AUTH_49ca8fb0aef0469996ca10eec7ff51a2", "internalURL": "http://192.168.1.52:8080/v1/AUTH_49ca8fb0aef0469996ca10eec7ff51a2"}], "endpoints_links": [], "type": "object-store", "name": "Swift Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:35357/v2.0", "region": "RegionOne", "publicURL": "http://192.168.1.52:5000/v2.0", "internalURL": "http://192.168.1.52:5000/v2.0"}], "endpoints_links": [], "type": "identity", "name": "Identity Service"}], "user": {"username": "demo", "roles_links": [], "id": "76e2570dadf2413ba0349ea9583b6b76", "roles": [{"id": "fd9f96340215451cb5d7089ec091a9de", "name": "anotherrole"}, {"id": "31d8e7c333124a32a7ba5d117cd3d09a", "name": "Member"}], "name": "demo"}}}
+
+Apr 2, 2012 5:08:18 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 1 * LoggingFilter - Request received on thread main
+1 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/extensions
+1 > Accept: application/json
+1 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 2 * LoggingFilter - Response received on thread main
+2 < 200
+2 < Connection: keep-alive
+2 < Content-Length: 8609
+2 < Content-Type: application/json
+2 < Date: Tue, 20 Mar 2012 18:14:44 GMT
+2 < X-Compute-Request-Id: req-67712aee-cf0b-46a3-955c-c7991f1ef22a
+{"extensions": [{"updated": "2011-09-27T00:00:00+00:00", "name": "DiskConfig", "links": [], "namespace": "http://docs.openstack.org/compute/ext/disk_config/api/v1.1", "alias": "OS-DCF", "description": "Disk Management Extension"}, {"updated": "2011-06-29T00:00:00+00:00", "name": "Hosts", "links": [], "namespace": "http://docs.openstack.org/compute/ext/hosts/api/v1.1", "alias": "os-hosts", "description": "Admin-only host administration"}, {"updated": "2011-07-19T00:00:00+00:00", "name": "SchedulerHints", "links": [], "namespace": "http://docs.openstack.org/compute/ext/scheduler-hints/api/v2", "alias": "os-scheduler-hints", "description": "Pass arbitrary key/value pairs to the scheduler"}, {"updated": "2011-08-08T00:00:00+00:00", "name": "Quotas", "links": [], "namespace": "http://docs.openstack.org/compute/ext/quotas-sets/api/v1.1", "alias": "os-quota-sets", "description": "Quotas management support"}, {"updated": "2011-12-23T00:00:00+00:00", "name": "Floating_ip_dns", "links": [], "namespace": "http://docs.openstack.org/ext/floating_ip_dns/api/v1.1", "alias": "os-floating-ip-dns", "description": "Floating IP DNS support"}, {"updated": "2011-09-14T00:00:00+00:00", "name": "FlavorExtraData", "links": [], "namespace": "http://docs.openstack.org/compute/ext/flavor_extra_data/api/v1.1", "alias": "OS-FLV-EXT-DATA", "description": "Provide additional data for flavors"}, {"updated": "2011-06-23T00:00:00+00:00", "name": "FlavorExtraSpecs", "links": [], "namespace": "http://docs.openstack.org/compute/ext/flavor_extra_specs/api/v1.1", "alias": "os-flavor-extra-specs", "description": "Instance type (flavor) extra specs"}, {"updated": "2011-07-21T00:00:00+00:00", "name": "SecurityGroups", "links": [], "namespace": "http://docs.openstack.org/compute/ext/securitygroups/api/v1.1", "alias": "security_groups", "description": "Security group support"}, {"updated": "2011-12-23T00:00:00+00:00", "name": "Accounts", "links": [], "namespace": "http://docs.openstack.org/compute/ext/accounts/api/v1.1", "alias": "os-accounts", "description": "Admin-only access to accounts"}, {"updated": "2011-03-25T00:00:00+00:00", "name": "Volumes", "links": [], "namespace": "http://docs.openstack.org/compute/ext/volumes/api/v1.1", "alias": "os-volumes", "description": "Volumes support"}, {"updated": "2011-11-03T00:00:00+00:00", "name": "ExtendedStatus", "links": [], "namespace": "http://docs.openstack.org/compute/ext/extended_status/api/v1.1", "alias": "OS-EXT-STS", "description": "Extended Status support"}, {"updated": "2011-12-23T00:00:00+00:00", "name": "Consoles", "links": [], "namespace": "http://docs.openstack.org/compute/ext/os-consoles/api/v2", "alias": "os-consoles", "description": "Interactive Console support."}, {"updated": "2011-08-17T00:00:00+00:00", "name": "VirtualInterfaces", "links": [], "namespace": "http://docs.openstack.org/compute/ext/virtual_interfaces/api/v1.1", "alias": "virtual_interfaces", "description": "Virtual interface support"}, {"updated": "2012-01-12T00:00:00+00:00", "name": "Aggregates", "links": [], "namespace": "http://docs.openstack.org/compute/ext/aggregates/api/v1.1", "alias": "os-aggregates", "description": "Admin-only aggregate administration"}, {"updated": "2011-07-19T00:00:00+00:00", "name": "Createserverext", "links": [], "namespace": "http://docs.openstack.org/compute/ext/createserverext/api/v1.1", "alias": "os-create-server-ext", "description": "Extended support to the Create Server v1.1 API"}, {"updated": "2011-09-01T00:00:00+00:00", "name": "DeferredDelete", "links": [], "namespace": "http://docs.openstack.org/compute/ext/deferred-delete/api/v1.1", "alias": "os-deferred-delete", "description": "Instance deferred delete"}, {"updated": "2011-12-21T00:00:00+00:00", "name": "ServerDiagnostics", "links": [], "namespace": "http://docs.openstack.org/compute/ext/server-diagnostics/api/v1.1", "alias": "os-server-diagnostics", "description": "Allow Admins to view server diagnostics through server action"}, {"updated": "2011-12-23T00:00:00+00:00", "name": "Networks", "links": [], "namespace": "http://docs.openstack.org/compute/ext/networks/api/v1.1", "alias": "os-networks", "description": "Admin-only Network Management Extension"}, {"updated": "2011-11-03T00:00:00+00:00", "name": "ExtendedServerAttributes", "links": [], "namespace": "http://docs.openstack.org/compute/ext/extended_status/api/v1.1", "alias": "OS-EXT-SRV-ATTR", "description": "Extended Server Attributes support."}, {"updated": "2011-08-08T00:00:00+00:00", "name": "Keypairs", "links": [], "namespace": "http://docs.openstack.org/compute/ext/keypairs/api/v1.1", "alias": "os-keypairs", "description": "Keypair Support"}, {"updated": "2011-08-24T00:00:00+00:00", "name": "VolumeTypes", "links": [], "namespace": "http://docs.openstack.org/compute/ext/volume_types/api/v1.1", "alias": "os-volume-types", "description": "Volume types support"}, {"updated": "2011-08-19T00:00:00+00:00", "name": "SimpleTenantUsage", "links": [], "namespace": "http://docs.openstack.org/compute/ext/os-simple-tenant-usage/api/v1.1", "alias": "os-simple-tenant-usage", "description": "Simple tenant usage extension"}, {"updated": "2012-01-04T00:00:00+00:00", "name": "Floating_ip_pools", "links": [], "namespace": "http://docs.openstack.org/compute/ext/floating_ip_pools/api/v1.1", "alias": "os-floating-ip-pools", "description": "Floating IPs support"}, {"updated": "2012-01-23T00:00:00+00:00", "name": "ServerStartStop", "links": [], "namespace": "http://docs.openstack.org/compute/ext/servers/api/v1.1", "alias": "os-server-start-stop", "description": "Start/Stop instance compute API support"}, {"updated": "2012-03-12T00:00:00+00:00", "name": "QuotaClasses", "links": [], "namespace": "http://docs.openstack.org/compute/ext/quota-classes-sets/api/v1.1", "alias": "os-quota-class-sets", "description": "Quota classes management support"}, {"updated": "2012-01-19T00:00:00+00:00", "name": "Certificates", "links": [], "namespace": "http://docs.openstack.org/compute/ext/certificates/api/v1.1", "alias": "os-certificates", "description": "Certificates support"}, {"updated": "2011-12-08T00:00:00+00:00", "name": "Console_output", "links": [], "namespace": "http://docs.openstack.org/compute/ext/os-console-output/api/v2", "alias": "os-console-output", "description": "Console log output support, with tailing ability."}, {"updated": "2012-01-19T00:00:00+00:00", "name": "FlavorManage", "links": [], "namespace": "http://docs.openstack.org/compute/ext/flavor_manage/api/v1.1", "alias": "os-flavor-manage", "description": "\n    Flavor create/delete API support\n    "}, {"updated": "2011-12-16T00:00:00+00:00", "name": "Cloudpipe", "links": [], "namespace": "http://docs.openstack.org/compute/ext/cloudpipe/api/v1.1", "alias": "os-cloudpipe", "description": "Adds actions to create cloudpipe instances.\n\n    When running with the Vlan network mode, you need a mechanism to route\n    from the public Internet to your vlans.  This mechanism is known as a\n    cloudpipe.\n\n    At the time of creating this class, only OpenVPN is supported.  Support for\n    a SSH Bastion host is forthcoming.\n    "}, {"updated": "2011-06-09T00:00:00+00:00", "name": "Multinic", "links": [], "namespace": "http://docs.openstack.org/compute/ext/multinic/api/v1.1", "alias": "NMN", "description": "Multiple network support"}, {"updated": "2011-08-08T00:00:00+00:00", "name": "Users", "links": [], "namespace": "http://docs.openstack.org/compute/ext/users/api/v1.1", "alias": "os-users", "description": "Allow admins to acces user information"}, {"updated": "2011-09-20T00:00:00+00:00", "name": "AdminActions", "links": [], "namespace": "http://docs.openstack.org/compute/ext/admin-actions/api/v1.1", "alias": "os-admin-actions", "description": "Enable admin-only server actions\n\n    Actions include: pause, unpause, suspend, resume, migrate,\n    resetNetwork, injectNetworkInfo, lock, unlock, createBackup\n    "}, {"updated": "2011-12-21T00:00:00+00:00", "name": "ServerActionList", "links": [], "namespace": "http://docs.openstack.org/compute/ext/server-actions-list/api/v1.1", "alias": "os-server-action-list", "description": "Allow Admins to view pending server actions"}, {"updated": "2011-08-18T00:00:00+00:00", "name": "Rescue", "links": [], "namespace": "http://docs.openstack.org/compute/ext/rescue/api/v1.1", "alias": "os-rescue", "description": "Instance rescue mode"}, {"updated": "2011-06-16T00:00:00+00:00", "name": "Floating_ips", "links": [], "namespace": "http://docs.openstack.org/compute/ext/floating_ips/api/v1.1", "alias": "os-floating-ips", "description": "Floating IPs support"}]}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 3 * LoggingFilter - Request received on thread main
+3 > POST http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups
+3 > Accept: application/json
+3 > Content-Type: application/json
+3 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+{"security_group":{"name":"GvOLAdTZvmCVvoKt4uk8rle6NPXawe0S6ww4Vri89BMCbVk4GdteGdOsyUypZQ","description":"L33evMS0a5mCSTRVmOE0T7Sxs3ulFDRUyUuaWcmHUANaX3GWk40aT2R330VqE9AJZcTrSqfdNruptzogqO6F7XPWZFUc00lwixFs5MK8QuG9wGYTuq3SPdqa6J1i7sMjG1XUyiRgFNThJ4ZbF2wZztgVqdXxaDX4r5U0e8qqFapXsZuW6UHZX1VJrtLMxUyJKAAtCN5IvgJgJYX479iAhb1lytNQG9EIU8cQpmcPy4g6AkFvXxGnch"}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 4 * LoggingFilter - Response received on thread main
+4 < 200
+4 < Connection: keep-alive
+4 < Content-Length: 430
+4 < Content-Type: application/json
+4 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+4 < X-Compute-Request-Id: req-756220ca-3a35-46e2-922d-ab11013cf0df
+{"security_group": {"rules": [], "tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", "id": 2, "name": "GvOLAdTZvmCVvoKt4uk8rle6NPXawe0S6ww4Vri89BMCbVk4GdteGdOsyUypZQ", "description": "L33evMS0a5mCSTRVmOE0T7Sxs3ulFDRUyUuaWcmHUANaX3GWk40aT2R330VqE9AJZcTrSqfdNruptzogqO6F7XPWZFUc00lwixFs5MK8QuG9wGYTuq3SPdqa6J1i7sMjG1XUyiRgFNThJ4ZbF2wZztgVqdXxaDX4r5U0e8qqFapXsZuW6UHZX1VJrtLMxUyJKAAtCN5IvgJgJYX479iAhb1lytNQG9EIU8cQpmcPy4g6AkFvXxGnch"}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 5 * LoggingFilter - Request received on thread main
+5 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups/2
+5 > Accept: application/json
+5 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 6 * LoggingFilter - Response received on thread main
+6 < 200
+6 < Connection: keep-alive
+6 < Content-Length: 430
+6 < Content-Type: application/json
+6 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+6 < X-Compute-Request-Id: req-8dfef523-b2cc-4e44-af1c-e47a56a6a122
+{"security_group": {"rules": [], "tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", "id": 2, "name": "GvOLAdTZvmCVvoKt4uk8rle6NPXawe0S6ww4Vri89BMCbVk4GdteGdOsyUypZQ", "description": "L33evMS0a5mCSTRVmOE0T7Sxs3ulFDRUyUuaWcmHUANaX3GWk40aT2R330VqE9AJZcTrSqfdNruptzogqO6F7XPWZFUc00lwixFs5MK8QuG9wGYTuq3SPdqa6J1i7sMjG1XUyiRgFNThJ4ZbF2wZztgVqdXxaDX4r5U0e8qqFapXsZuW6UHZX1VJrtLMxUyJKAAtCN5IvgJgJYX479iAhb1lytNQG9EIU8cQpmcPy4g6AkFvXxGnch"}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 7 * LoggingFilter - Request received on thread main
+7 > POST http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-group-rules
+7 > Accept: application/json
+7 > Content-Type: application/json
+7 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+{"security_group_rule":{"parent_group_id":2,"from_port":1234,"to_port":5678,"ip_protocol":"tcp","cidr":"1.2.3.4/32"}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 8 * LoggingFilter - Response received on thread main
+8 < 200
+8 < Connection: keep-alive
+8 < Content-Length: 163
+8 < Content-Type: application/json
+8 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+8 < X-Compute-Request-Id: req-d07a36b3-550e-4521-aae0-7bd443c36cb1
+{"security_group_rule": {"from_port": 1234, "group": {}, "ip_protocol": "tcp", "to_port": 5678, "parent_group_id": 2, "ip_range": {"cidr": "1.2.3.4/32"}, "id": 1}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 9 * LoggingFilter - Request received on thread main
+9 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups/2
+9 > Accept: application/json
+9 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 10 * LoggingFilter - Response received on thread main
+10 < 200
+10 < Connection: keep-alive
+10 < Content-Length: 568
+10 < Content-Type: application/json
+10 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+10 < X-Compute-Request-Id: req-95b5d395-90eb-49b2-a0d4-0c3ea5abd783
+{"security_group": {"rules": [{"from_port": 1234, "group": {}, "ip_protocol": "tcp", "to_port": 5678, "parent_group_id": 2, "ip_range": {"cidr": "1.2.3.4/32"}, "id": 1}], "tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", "id": 2, "name": "GvOLAdTZvmCVvoKt4uk8rle6NPXawe0S6ww4Vri89BMCbVk4GdteGdOsyUypZQ", "description": "L33evMS0a5mCSTRVmOE0T7Sxs3ulFDRUyUuaWcmHUANaX3GWk40aT2R330VqE9AJZcTrSqfdNruptzogqO6F7XPWZFUc00lwixFs5MK8QuG9wGYTuq3SPdqa6J1i7sMjG1XUyiRgFNThJ4ZbF2wZztgVqdXxaDX4r5U0e8qqFapXsZuW6UHZX1VJrtLMxUyJKAAtCN5IvgJgJYX479iAhb1lytNQG9EIU8cQpmcPy4g6AkFvXxGnch"}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 11 * LoggingFilter - Request received on thread main
+11 > DELETE http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-group-rules/1
+11 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 12 * LoggingFilter - Response received on thread main
+12 < 202
+12 < Connection: keep-alive
+12 < Content-Length: 0
+12 < Content-Type: text/html; charset=UTF-8
+12 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 13 * LoggingFilter - Request received on thread main
+13 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups/2
+13 > Accept: application/json
+13 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 14 * LoggingFilter - Response received on thread main
+14 < 200
+14 < Connection: keep-alive
+14 < Content-Length: 430
+14 < Content-Type: application/json
+14 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+14 < X-Compute-Request-Id: req-e6d5d7b2-dca7-4af0-a1fd-05a2794e94fd
+{"security_group": {"rules": [], "tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", "id": 2, "name": "GvOLAdTZvmCVvoKt4uk8rle6NPXawe0S6ww4Vri89BMCbVk4GdteGdOsyUypZQ", "description": "L33evMS0a5mCSTRVmOE0T7Sxs3ulFDRUyUuaWcmHUANaX3GWk40aT2R330VqE9AJZcTrSqfdNruptzogqO6F7XPWZFUc00lwixFs5MK8QuG9wGYTuq3SPdqa6J1i7sMjG1XUyiRgFNThJ4ZbF2wZztgVqdXxaDX4r5U0e8qqFapXsZuW6UHZX1VJrtLMxUyJKAAtCN5IvgJgJYX479iAhb1lytNQG9EIU8cQpmcPy4g6AkFvXxGnch"}}
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 15 * LoggingFilter - Request received on thread main
+15 > DELETE http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups/2
+15 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 16 * LoggingFilter - Response received on thread main
+16 < 202
+16 < Connection: keep-alive
+16 < Content-Length: 0
+16 < Content-Type: text/html; charset=UTF-8
+16 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+
+Apr 2, 2012 5:08:19 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 17 * LoggingFilter - Request received on thread main
+17 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups/2
+17 > Accept: application/json
+17 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 18 * LoggingFilter - Response received on thread main
+18 < 404
+18 < Connection: keep-alive
+18 < Content-Length: 73
+18 < Content-Type: application/json; charset=UTF-8
+18 < Date: Tue, 20 Mar 2012 18:14:45 GMT
+18 < X-Compute-Request-Id: req-42965edb-b3a9-4e13-9d2d-ac571c27df5e
+{"itemNotFound": {"message": "Security group 2 not found.", "code": 404}}
+
+Apr 2, 2012 5:08:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 19 * LoggingFilter - Request received on thread main
+19 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups
+19 > Accept: application/json
+19 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 20 * LoggingFilter - Response received on thread main
+20 < 200
+20 < Connection: keep-alive
+20 < Content-Length: 139
+20 < Content-Type: application/json
+20 < Date: Tue, 20 Mar 2012 18:14:46 GMT
+20 < X-Compute-Request-Id: req-c54c8859-21a7-4ef1-af31-d00f67fb9da5
+{"security_groups": [{"rules": [], "tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", "id": 1, "name": "default", "description": "default"}]}
+
+Apr 2, 2012 5:08:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 21 * LoggingFilter - Request received on thread main
+21 > GET http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/os-security-groups/1
+21 > Accept: application/json
+21 > X-Auth-Token: 3ff4ae0cba7e4ee68ac2c403b90cb725
+
+Apr 2, 2012 5:08:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 22 * LoggingFilter - Response received on thread main
+22 < 200
+22 < Connection: keep-alive
+22 < Content-Length: 136
+22 < Content-Type: application/json
+22 < Date: Tue, 20 Mar 2012 18:14:46 GMT
+22 < X-Compute-Request-Id: req-80043593-7691-4bd5-8af2-b39304b2f462
+{"security_group": {"rules": [], "tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", "id": 1, "name": "default", "description": "default"}}

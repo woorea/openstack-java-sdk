@@ -1,0 +1,211 @@
+Apr 2, 2012 3:53:13 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 1 * LoggingFilter - Request received on thread main
+1 > POST http://192.168.1.52:5000/v2.0/tokens
+1 > Accept: application/json
+1 > Content-Type: application/json
+{"auth":{"passwordCredentials":{"username":"demo","password":"secret0"},"tenantName":"demo"}}
+
+Apr 2, 2012 3:53:13 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 2 * LoggingFilter - Response received on thread main
+2 < 200
+2 < Connection: keep-alive
+2 < Content-Length: 2470
+2 < Content-Type: application/json
+2 < Date: Tue, 20 Mar 2012 17:51:13 GMT
+2 < Vary: X-Auth-Token
+{"access": {"token": {"expires": "2012-03-21T17:51:13Z", "id": "5fe0d3add307482cb5781b39619c912d", "tenant": {"enabled": true, "id": "ed9c8b3b0853427ab0c58893a8a274b9", "name": "demo", "description": null}}, "serviceCatalog": [{"endpoints": [{"adminURL": "http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9", "region": "RegionOne", "publicURL": "http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9", "internalURL": "http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9"}], "endpoints_links": [], "type": "compute", "name": "Compute Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8080", "region": "RegionOne", "publicURL": "http://192.168.1.52:8080", "internalURL": "http://192.168.1.52:8080"}], "endpoints_links": [], "type": "s3", "name": "S3 Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:9292/v1", "region": "RegionOne", "publicURL": "http://192.168.1.52:9292/v1", "internalURL": "http://192.168.1.52:9292/v1"}], "endpoints_links": [], "type": "image", "name": "Image Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8776/v1/ed9c8b3b0853427ab0c58893a8a274b9", "region": "RegionOne", "publicURL": "http://192.168.1.52:8776/v1/ed9c8b3b0853427ab0c58893a8a274b9", "internalURL": "http://192.168.1.52:8776/v1/ed9c8b3b0853427ab0c58893a8a274b9"}], "endpoints_links": [], "type": "volume", "name": "Volume Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8773/services/Admin", "region": "RegionOne", "publicURL": "http://192.168.1.52:8773/services/Cloud", "internalURL": "http://192.168.1.52:8773/services/Cloud"}], "endpoints_links": [], "type": "ec2", "name": "EC2 Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:8080/", "region": "RegionOne", "publicURL": "http://192.168.1.52:8080/v1/AUTH_ed9c8b3b0853427ab0c58893a8a274b9", "internalURL": "http://192.168.1.52:8080/v1/AUTH_ed9c8b3b0853427ab0c58893a8a274b9"}], "endpoints_links": [], "type": "object-store", "name": "Swift Service"}, {"endpoints": [{"adminURL": "http://192.168.1.52:35357/v2.0", "region": "RegionOne", "publicURL": "http://192.168.1.52:5000/v2.0", "internalURL": "http://192.168.1.52:5000/v2.0"}], "endpoints_links": [], "type": "identity", "name": "Identity Service"}], "user": {"username": "demo", "roles_links": [], "id": "0d349a392fd8478ca1a87c6208c9914f", "roles": [{"id": "adcea98694694849bc793951a19a2eb4", "name": "anotherrole"}, {"id": "713ec3ef73d84ac99c8f5b131c84bc60", "name": "Member"}], "name": "demo"}}}
+
+Apr 2, 2012 3:53:13 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 1 * LoggingFilter - Request received on thread main
+1 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-volumes
+1 > Accept: application/json
+1 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:14 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 2 * LoggingFilter - Response received on thread main
+2 < 200
+2 < Connection: keep-alive
+2 < Content-Length: 15
+2 < Content-Type: application/json
+2 < Date: Tue, 20 Mar 2012 17:51:14 GMT
+2 < X-Compute-Request-Id: req-5bacc90f-c6be-4785-ac6c-53b441f9ac72
+{"volumes": []}
+
+Apr 2, 2012 3:53:14 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 3 * LoggingFilter - Request received on thread main
+3 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-snapshots
+3 > Accept: application/json
+3 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:14 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 4 * LoggingFilter - Response received on thread main
+4 < 200
+4 < Connection: keep-alive
+4 < Content-Length: 17
+4 < Content-Type: application/json
+4 < Date: Tue, 20 Mar 2012 17:51:14 GMT
+4 < X-Compute-Request-Id: req-cd72a271-5d3a-41f6-89ae-693f7bbde261
+{"snapshots": []}
+
+Apr 2, 2012 3:53:14 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 5 * LoggingFilter - Request received on thread main
+5 > POST http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-volumes
+5 > Accept: application/json
+5 > Content-Type: application/json
+5 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+{"volume":{"size":1,"display_name":"v2"}}
+
+Apr 2, 2012 3:53:14 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 6 * LoggingFilter - Response received on thread main
+6 < 200
+6 < Connection: keep-alive
+6 < Content-Length: 251
+6 < Content-Type: application/json
+6 < Date: Tue, 20 Mar 2012 17:51:14 GMT
+6 < X-Compute-Request-Id: req-018507d8-af9d-4dde-a5a6-0614a255105c
+{"volume": {"status": "creating", "displayDescription": null, "availabilityZone": "nova", "displayName": "v2", "attachments": [{}], "volumeType": null, "snapshotId": null, "size": 1, "id": 1, "createdAt": "2012-03-20 17:51:14.900875", "metadata": {}}}
+
+Volume [id=1, status=creating, sizeInGB=1, availabilityZone=nova, type=null, created=null, name=v2, description=null, snapshotId=null, metadata=org.openstack.model.compute.nova.NovaMetadata@290e1513]
+Apr 2, 2012 3:53:17 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 7 * LoggingFilter - Request received on thread pool-2-thread-1
+7 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-volumes/1
+7 > Accept: application/json
+7 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:17 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 8 * LoggingFilter - Response received on thread pool-2-thread-1
+8 < 200
+8 < Connection: keep-alive
+8 < Content-Length: 245
+8 < Content-Type: application/json
+8 < Date: Tue, 20 Mar 2012 17:51:18 GMT
+8 < X-Compute-Request-Id: req-4de2ad3b-d150-4d89-be7c-dcd336c46241
+{"volume": {"status": "available", "displayDescription": null, "availabilityZone": "nova", "displayName": "v2", "attachments": [{}], "volumeType": null, "snapshotId": null, "size": 1, "id": 1, "createdAt": "2012-03-20 17:51:14", "metadata": {}}}
+
+Apr 2, 2012 3:53:17 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 9 * LoggingFilter - Request received on thread main
+9 > POST http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-snapshots
+9 > Accept: application/json
+9 > Content-Type: application/json
+9 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+{"snapshot":{"volume_id":1,"display_name":"v2","display_description":"desc"}}
+
+Apr 2, 2012 3:53:17 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 10 * LoggingFilter - Response received on thread main
+10 < 200
+10 < Connection: keep-alive
+10 < Content-Length: 165
+10 < Content-Type: application/json
+10 < Date: Tue, 20 Mar 2012 17:51:18 GMT
+10 < X-Compute-Request-Id: req-7c1c0898-1f29-4723-bf39-e2fbfd82427e
+{"snapshot": {"status": "creating", "displayDescription": "desc", "displayName": "v2", "volumeId": 1, "id": 1, "createdAt": "2012-03-20 17:51:18.227946", "size": 1}}
+
+Apr 2, 2012 3:53:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 11 * LoggingFilter - Request received on thread pool-3-thread-1
+11 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-snapshots/1
+11 > Accept: application/json
+11 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 12 * LoggingFilter - Response received on thread pool-3-thread-1
+12 < 200
+12 < Connection: keep-alive
+12 < Content-Length: 159
+12 < Content-Type: application/json
+12 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+12 < X-Compute-Request-Id: req-76d7b8e3-6d5b-4441-bd14-0f2f4ddbce21
+{"snapshot": {"status": "available", "displayDescription": "desc", "displayName": "v2", "volumeId": 1, "id": 1, "createdAt": "2012-03-20 17:51:18", "size": 1}}
+
+Apr 2, 2012 3:53:20 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 13 * LoggingFilter - Request received on thread main
+13 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-volumes
+13 > Accept: application/json
+13 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 14 * LoggingFilter - Response received on thread main
+14 < 200
+14 < Connection: keep-alive
+14 < Content-Length: 248
+14 < Content-Type: application/json
+14 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+14 < X-Compute-Request-Id: req-b53e0021-6e17-4d94-8c5d-1dbadaa3f46e
+{"volumes": [{"status": "available", "displayDescription": null, "availabilityZone": "nova", "displayName": "v2", "attachments": [{}], "volumeType": null, "snapshotId": null, "size": 1, "id": 1, "createdAt": "2012-03-20 17:51:14", "metadata": {}}]}
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 15 * LoggingFilter - Request received on thread main
+15 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-volumes/1
+15 > Accept: application/json
+15 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 16 * LoggingFilter - Response received on thread main
+16 < 200
+16 < Connection: keep-alive
+16 < Content-Length: 245
+16 < Content-Type: application/json
+16 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+16 < X-Compute-Request-Id: req-8060c2a0-4ee7-4e68-8ce6-df5dd73f855c
+{"volume": {"status": "available", "displayDescription": null, "availabilityZone": "nova", "displayName": "v2", "attachments": [{}], "volumeType": null, "snapshotId": null, "size": 1, "id": 1, "createdAt": "2012-03-20 17:51:14", "metadata": {}}}
+
+Volume [id=1, status=available, sizeInGB=1, availabilityZone=nova, type=null, created=null, name=v2, description=null, snapshotId=null, metadata=org.openstack.model.compute.nova.NovaMetadata@2bab5dae]
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 17 * LoggingFilter - Request received on thread main
+17 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-snapshots
+17 > Accept: application/json
+17 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 18 * LoggingFilter - Response received on thread main
+18 < 200
+18 < Connection: keep-alive
+18 < Content-Length: 162
+18 < Content-Type: application/json
+18 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+18 < X-Compute-Request-Id: req-924ae458-6d53-429c-beef-27b7c4ec0642
+{"snapshots": [{"status": "available", "displayDescription": "desc", "displayName": "v2", "volumeId": 1, "id": 1, "createdAt": "2012-03-20 17:51:18", "size": 1}]}
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 19 * LoggingFilter - Request received on thread main
+19 > GET http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-snapshots/1
+19 > Accept: application/json
+19 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+NovaSnapshot [id=1, status=available, sizeInGB=1, availabilityZone=null, created=2012-03-20 17:51:18, name=v2, description=desc, volumeId=1]
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 20 * LoggingFilter - Response received on thread main
+20 < 200
+20 < Connection: keep-alive
+20 < Content-Length: 159
+20 < Content-Type: application/json
+20 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+20 < X-Compute-Request-Id: req-ea181b89-1a1c-47a1-9d09-884a6d7add95
+{"snapshot": {"status": "available", "displayDescription": "desc", "displayName": "v2", "volumeId": 1, "id": 1, "createdAt": "2012-03-20 17:51:18", "size": 1}}
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 21 * LoggingFilter - Request received on thread main
+21 > DELETE http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-snapshots/1
+21 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 22 * LoggingFilter - Response received on thread main
+22 < 202
+22 < Connection: keep-alive
+22 < Content-Length: 0
+22 < Content-Type: text/html; charset=UTF-8
+22 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 23 * LoggingFilter - Request received on thread main
+23 > DELETE http://192.168.1.52:8774/v2/ed9c8b3b0853427ab0c58893a8a274b9/os-volumes/1
+23 > X-Auth-Token: 5fe0d3add307482cb5781b39619c912d
+
+Apr 2, 2012 3:53:21 AM org.glassfish.jersey.filter.LoggingFilter log
+INFO: 24 * LoggingFilter - Response received on thread main
+24 < 400
+24 < Connection: keep-alive
+24 < Content-Length: 98
+24 < Content-Type: application/json; charset=UTF-8
+24 < Date: Tue, 20 Mar 2012 17:51:21 GMT
+24 < X-Compute-Request-Id: req-475b822f-2567-4185-98ce-800038ff6532
+{"badRequest": {"message": "Invalid volume: Volume still has 1 dependent snapshots", "code": 400}}
