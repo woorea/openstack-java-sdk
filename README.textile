@@ -2,7 +2,7 @@ h1. OpenStack Java SDK
 
 h2. Configuration
 
-A openstack.properties file must be found on the CLASSPATH
+You can configure the client in a properties file
 
 h3. openstack.properties
 
@@ -20,7 +20,7 @@ identity.endpoint.internalURL=http://192.168.1.52:5000/v2.0
 identity.endpoint.adminURL=http://192.168.1.52:35357/v2.0
 identity.admin.token=secret0
 
-test.glance=true
+test.glance=false
 test.swift=false
 </pre>
 
@@ -32,7 +32,7 @@ h4. Access
 
 <pre>
 // X-Auth-Token
-OpenStackClient openstack = OpenStackClient.authenticate();
+OpenStackClient openstack = OpenStackClient.authenticate(properties);
 
 IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
 </pre>
