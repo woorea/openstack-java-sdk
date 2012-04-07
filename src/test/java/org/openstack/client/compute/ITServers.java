@@ -63,7 +63,7 @@ public class ITServers extends ComputeIntegrationTest {
 			// serverForCreate.setSecurityGroups(new ArrayList<ServerForCreate.SecurityGroup>() {{
 			// add(new ServerForCreate.SecurityGroup("test"));
 			// }});
-			System.out.println(serverForCreate);
+			
 
 			server = compute.servers().post(serverForCreate);
 			waitForState("ACTIVE");

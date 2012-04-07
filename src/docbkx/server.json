@@ -1,0 +1,39 @@
+{"server": {
+					"OS-EXT-STS:task_state": null,
+					"addresses": {
+						"private": [{"version": 4, "addr": "10.0.0.2"}]
+					}, 
+					"links": [
+						{"href": "http://192.168.1.52:8774/v2/49ca8fb0aef0469996ca10eec7ff51a2/servers/af7b93fe-3262-446a-8f19-b5b637d67b74", "rel": "self"}, 
+						{"href": "http://192.168.1.52:8774/49ca8fb0aef0469996ca10eec7ff51a2/servers/af7b93fe-3262-446a-8f19-b5b637d67b74", "rel": "bookmark"}
+					],
+					"image": {
+						"id": "d00e8cef-a05f-4d53-bace-0289b43c15bf",
+						"links": [
+							{"href": "http://192.168.1.52:8774/49ca8fb0aef0469996ca10eec7ff51a2/images/d00e8cef-a05f-4d53-bace-0289b43c15bf", "rel": "bookmark"}
+						]
+					},
+					"OS-EXT-STS:vm_state": "active",
+					"flavor": {
+						"id": "1",
+						"links": [
+							{"href": "http://192.168.1.52:8774/49ca8fb0aef0469996ca10eec7ff51a2/flavors/1", "rel": "bookmark"}
+						]
+					},
+					"id": "af7b93fe-3262-446a-8f19-b5b637d67b74",
+					"user_id": "76e2570dadf2413ba0349ea9583b6b76",
+					"OS-DCF:diskConfig": "MANUAL",
+					"accessIPv4": "",
+					"accessIPv6": "",
+					"progress": 0,
+					"OS-EXT-STS:power_state": 1,
+					"config_drive": "",
+					"status": "ACTIVE",
+					"updated": "2012-03-20T18:13:52Z",
+					"hostId": "d9f670be93015ca363c5a40b6db902102db46d2c7240f6dd7346028d", 
+					"key_name": "", 
+					"name": "VGVpUeSzOk",
+					"created": "2012-03-20T18:13:33Z",
+					"tenant_id": "49ca8fb0aef0469996ca10eec7ff51a2", 
+					"metadata": {}
+				}}

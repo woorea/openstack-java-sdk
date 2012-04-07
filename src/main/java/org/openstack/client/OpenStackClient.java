@@ -97,18 +97,6 @@ public class OpenStackClient {
 		}
 	}
 	
-	public Properties getProperties() {
-		return this.properties;
-	}
-	
-	public Access getAccess() {
-		return access;
-	}
-
-	public void setAccess(Access access) {
-		this.access = access;
-	}
-	
 	public void reauthenticateOnTenant(String tenantName) {
 		properties.setProperty("auth.tenant.name", tenantName);
 		authenticate(properties);
@@ -117,8 +105,7 @@ public class OpenStackClient {
 	public void exchangeTokenForTenant(String tenantId) {
 		String endpoint = properties.getProperty("identity.endpoint.publicURL");
 		Authentication authentication = new KeystoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenantId);
-		Access access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
-		setAccess(access);
+		this.access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
 	}
 	
 	public IdentityPublicEndpoint getIdentityEndpoint() {
