@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -40,6 +41,11 @@ public class NovaImageList implements Serializable, ImageList {
 	@Override
 	public String toString() {
 		return "NovaImageList [list=" + list + "]";
+	}
+
+	@Override
+	public Iterator<Image> iterator() {
+		return getList().iterator();
 	}
 
 }

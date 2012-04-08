@@ -16,6 +16,8 @@ public interface Access {
 
 	User getUser();
 
+	public abstract ServiceEndpoint getEndpoint(final String type, final String region);
+
 	//void setUser(User user);
 
 }

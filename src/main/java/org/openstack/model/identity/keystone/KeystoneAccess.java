@@ -3,6 +3,7 @@ package org.openstack.model.identity.keystone;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -13,11 +14,16 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
+import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Service;
+import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.Token;
 import org.openstack.model.identity.User;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.gson.annotations.SerializedName;
 
 @XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
@@ -77,6 +83,39 @@ public class KeystoneAccess implements Serializable, Access {
 	public String toString() {
 		return "KeyStoneAccess [token=" + token + ", services=" + services
 				+ ", user=" + user + "]";
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openstack.model.identity.glance.Access#getEndpoint()
+	 */
+	@Override
+	public ServiceEndpoint getEndpoint(final String type, final String region) {
+		try {
+			ServiceCatalogEntry service = Iterables.find(getServices(), new Predicate<ServiceCatalogEntry>() {
+
+						@Override
+						public boolean apply(ServiceCatalogEntry service) {
+							return type.equals(service.getType());
+						}
+
+					});
+			List<ServiceEndpoint> endpoints = service.getEndpoints();
+			if (region != null) {
+				return  Iterables.find(endpoints, new Predicate<ServiceEndpoint>() {
+
+							@Override
+							public boolean apply(ServiceEndpoint endpoint) {
+								return region.equals(endpoint.getRegion());
+							}
+						});
+			} else {
+				return endpoints.get(0);
+			}
+		} catch (NoSuchElementException e) {
+			throw new OpenstackException("Service " + type + " not found, you can try openstack.target(<endpoint>, <resource class>) method instead", e);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 
 }

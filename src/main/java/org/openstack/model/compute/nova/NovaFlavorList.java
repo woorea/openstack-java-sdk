@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -40,5 +41,10 @@ public class NovaFlavorList implements Serializable, FlavorList {
 	@Override
 	public String toString() {
 		return "NovaFlavorList [list=" + list + "]";
+	}
+
+	@Override
+	public Iterator<Flavor> iterator() {
+		return getList().iterator();
 	}
 }

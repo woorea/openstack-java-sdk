@@ -17,4 +17,9 @@ public class FlavorResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaFlavor.class);
 	}
 
+	public void delete() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

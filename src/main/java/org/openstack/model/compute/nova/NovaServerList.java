@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -39,6 +40,11 @@ public class NovaServerList implements Serializable, ServerList {
 	@Override
 	public List<Server> getList() {
 		return (List<Server>) (List<?>) list;
+	}
+
+	@Override
+	public Iterator<Server> iterator() {
+		return getList().iterator();
 	}
 
 }

@@ -1,14 +1,10 @@
 package org.openstack.client;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Target;
-import javax.ws.rs.ext.FilterContext;
-import javax.ws.rs.ext.RequestFilter;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
@@ -22,13 +18,9 @@ import org.openstack.api.storage.AccountResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
-import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
-import org.openstack.model.identity.keystone.ServiceCatalogEntry;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 
 public class OpenStackClient {
 	
@@ -38,25 +30,9 @@ public class OpenStackClient {
 
 	private Access access;
 
-	private RequestFilter authFilter = new RequestFilter() {
+	private XAuthTokenFilter authFilter;
 
-		@Override
-		public void preFilter(FilterContext context) throws IOException {
-			context.getRequestBuilder().header("X-Auth-Token", access.getToken().getId());
-
-		}
-
-	};
-	
-	private RequestFilter authAsAdministratorFilter = new RequestFilter() {
-
-		@Override
-		public void preFilter(FilterContext context) throws IOException {
-			context.getRequestBuilder().header("X-Auth-Token", properties.get("identity.admin.token"));
-
-		}
-
-	};
+	private XAuthTokenFilter authAsAdministratorFilter;
 	
 	private OpenStackClient() {
 		
@@ -66,13 +42,14 @@ public class OpenStackClient {
 		OpenStackClient client = new OpenStackClient();
 		client.properties = properties;
 		client.access = access;
+		client.authFilter = new XAuthTokenFilter(access.getToken().getId());
+		client.authAsAdministratorFilter = new XAuthTokenFilter(properties.getProperty("identity.admin.token"));
 		return client;
 	}
 	
 	public static OpenStackClient authenticate(Properties properties) {
 		OpenStackClient client = new OpenStackClient();
 		client.properties = properties;
-		//String endpoint = properties.getProperty("auth.endpoint");
 		String username = properties.getProperty("auth.username");
 		String password = properties.getProperty("auth.password");
 		String tenantId = properties.getProperty("auth.tenant.id");
@@ -108,6 +85,10 @@ public class OpenStackClient {
 		this.access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
 	}
 	
+	public Access getAccess() {
+		return this.access;
+	}
+	
 	public IdentityPublicEndpoint getIdentityEndpoint() {
 		String url = properties.getProperty("identity.endpoint.publicURL");
 		Preconditions.checkNotNull(url, "'identity.endpoint.publicURL' property not found");
@@ -126,40 +107,52 @@ public class OpenStackClient {
 		return target(url, IdentityAdministrationEndpoint.class, true);
 	}
 	
+	public ComputeClient getComputeClient() {
+		return new ComputeClient(getComputeEndpoint());
+	}
+	
 	public TenantResource getComputeEndpoint() {
-		return target(getEndpoint("compute", null).getPublicURL(), TenantResource.class);
+		return target(access.getEndpoint("compute", null).getPublicURL(), TenantResource.class);
+	}
+	
+	public ComputeClient getComputeInternalClient() {
+		return new ComputeClient(getComputeInternalEndpoint());
 	}
 	
 	public TenantResource getComputeInternalEndpoint() {
-		return target(getEndpoint("compute", null).getInternalURL(), TenantResource.class);
+		return target(access.getEndpoint("compute", null).getInternalURL(), TenantResource.class);
+	}
+	
+	public ComputeClient getComputeAdministrationClient() {
+		return new ComputeClient(getComputeAdministationEndpoint());
 	}
 
 	public TenantResource getComputeAdministationEndpoint() {
-		return target(getEndpoint("compute", null).getAdminURL(), TenantResource.class);
+		return target(access.getEndpoint("compute", null).getAdminURL(), TenantResource.class);
 	}
 	
 	public ImagesResource getImagesEndpoint() {
-		return target(getEndpoint("image", null).getPublicURL().concat("/images"), ImagesResource.class);
+		return target(access.getEndpoint("image", null).getPublicURL().concat("/images"), ImagesResource.class);
 	}
 	
 	public ImagesResource getImagesInternalEndpoint() {
-		return target(getEndpoint("image", null).getAdminURL().concat("/images"), ImagesResource.class);
+		return target(access.getEndpoint("image", null).getAdminURL().concat("/images"), ImagesResource.class);
 	}
 
 	public ImagesResource getImagesAdministationEndpoint() {
-		return target(getEndpoint("image", null).getAdminURL().concat("/images"), ImagesResource.class);
+		return target(access.getEndpoint("image", null).getAdminURL().concat("/images"), ImagesResource.class);
 	}
 	
 	public AccountResource getStorageEndpoint() {
-		return target(getEndpoint("object-store", null).getPublicURL(), AccountResource.class);
+		return target(access.getEndpoint("object-store", null).getPublicURL(), AccountResource.class);
 	}
 	
 	public AccountResource getStorageInternalEndpoint() {
-		return target(getEndpoint("object-store", null).getInternalURL().replace("AUTH_", ""), AccountResource.class);
+		return target(access.getEndpoint("object-store", null).getInternalURL().replace("AUTH_", ""), AccountResource.class);
 	}
 
 	public AccountResource getStorageAdministationEndpoint() {
-		return target(getEndpoint("object-store", null).getAdminURL().replace("AUTH_", ""), AccountResource.class);
+		return target(access.getEndpoint("object-store", null).getAdminURL().replace("AUTH_", ""), AccountResource.class);
 	}
 	
 	public <T extends Resource> T target(String absoluteURL, Class<T> clazz) {
@@ -181,39 +174,5 @@ public class OpenStackClient {
 		}
 
 	}
-
-	private ServiceEndpoint getEndpoint(final String type, final String region) {
-		Preconditions.checkNotNull(access, "You must be authenticated before get a identity client");
-		try {
-			ServiceCatalogEntry service = Iterables.find(access.getServices(), new Predicate<ServiceCatalogEntry>() {
-
-						@Override
-						public boolean apply(ServiceCatalogEntry service) {
-							return type.equals(service.getType());
-						}
-
-					});
-			List<ServiceEndpoint> endpoints = service.getEndpoints();
-			if (region != null) {
-				return  Iterables.find(endpoints, new Predicate<ServiceEndpoint>() {
-
-							@Override
-							public boolean apply(ServiceEndpoint endpoint) {
-								return region.equals(endpoint.getRegion());
-							}
-						});
-			} else {
-				return endpoints.get(0);
-			}
-		} catch (NoSuchElementException e) {
-			throw new OpenstackException("Service " + type + " not found, you can try openstack.target(<endpoint>, <resource class>) method instead", e);
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
-
-	
-
-	
 
 }
