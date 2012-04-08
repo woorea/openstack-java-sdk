@@ -1,13 +1,10 @@
 package org.openstack.api.compute.ext;
 
-import java.util.Map;
-
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.FloatingIp;
-import org.openstack.model.compute.nova.NovaConsole;
 import org.openstack.model.compute.nova.floatingip.NovaFloatingIp;
 
 /**
@@ -22,7 +19,7 @@ public class FloatingIpResource extends Resource {
 		super(target);
 	}
 	
-	public FloatingIp get(Map<String, Object> properties) {
+	public FloatingIp get() {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaFloatingIp.class);
 	}
 	

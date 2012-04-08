@@ -7,14 +7,20 @@ import org.openstack.api.compute.TenantResource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
 import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairListItem;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerForCreate;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.nova.volume.VolumeForCreate;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -37,6 +43,10 @@ public class ComputeClient {
 
 	public ServerList listServers(Map<String, Object> params) {
 		return resource.servers().get();
+	}
+	
+	public Server createServer(ServerForCreate serverForCreate) {
+		return resource.servers().post(serverForCreate);
 	}
 	
 	public Server showServer(String id) {
@@ -129,8 +139,8 @@ public class ComputeClient {
 		return resource.volumes().get().getList();
 	}
 	
-	public Volume createVolume(String name, String description) {
-		return resource.volumes().post(null);
+	public Volume createVolume(VolumeForCreate volume) {
+		return resource.volumes().post(volume);
 	}
 	
 	public void showVolume(Integer id) {
@@ -145,8 +155,8 @@ public class ComputeClient {
 		return resource.snapshots().get().getList();
 	}
 	
-	public Snapshot createSnapshot(String name, String description) {
-		return resource.snapshots().post(null);
+	public Snapshot createSnapshot(SnapshotForCreate snapshot) {
+		return resource.snapshots().post(snapshot);
 	}
 	
 	public void showSnapshot(Integer id) {
@@ -156,5 +166,15 @@ public class ComputeClient {
 	public void deleteSnapshot(Integer id) {
 		resource.snapshots().snapshot(id).delete();
 	}
+
+	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule) {
+		return resource.securityGroupRules().post(rule);
+	}
+
+	public Image showImage(String id) {
+		return resource.images().image(id).get();
+	}
+
 	
+
 }
