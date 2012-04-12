@@ -33,6 +33,18 @@ public class NovaFloatingIp implements Serializable, FloatingIp {
 	@XmlAttribute(name = "fixed_ip")
 	@SerializedName("fixed_ip")
 	private String fixedIp;
+	
+	public NovaFloatingIp() {
+		
+	}
+	
+	public NovaFloatingIp(Integer id, String ip, String fixedIp, String pool, String instanceId) {
+		this.id = id;
+		this.ip = ip;
+		this.fixedIp = fixedIp;
+		this.pool = pool;
+		this.instanceId = instanceId;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.floatingip.FloatingIp#getId()

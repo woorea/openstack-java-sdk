@@ -54,6 +54,15 @@ public class NovaVolume implements Serializable, Volume {
 	
 	@XmlElement(name="metadata")
 	private NovaMetadata metadata;
+	
+	public NovaVolume() {
+		
+	}
+	
+	public NovaVolume(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Volume#getId()

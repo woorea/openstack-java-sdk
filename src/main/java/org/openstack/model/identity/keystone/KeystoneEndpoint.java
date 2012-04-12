@@ -25,6 +25,16 @@ public class KeystoneEndpoint implements Endpoint, Serializable {
 	
 	@SerializedName("internalurl")
 	private String internalURL;
+	
+	public KeystoneEndpoint() {
+		
+	}
+	
+	public KeystoneEndpoint(String id, String region, String serviceId) {
+		this.id = id;
+		this.region = region;
+		this.serviceId = serviceId;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.Endpoint#getId()

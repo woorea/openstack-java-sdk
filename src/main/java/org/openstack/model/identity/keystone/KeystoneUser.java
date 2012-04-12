@@ -41,6 +41,15 @@ public class KeystoneUser implements Serializable, User {
 
     @XmlElement(name = "roles")
     private List<KeystoneRole> roles;
+    
+    public KeystoneUser() {
+    	
+    }
+    
+    public KeystoneUser(String id, String name) {
+    	this.id = id;
+    	this.name = name;
+    }
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.User#getId()

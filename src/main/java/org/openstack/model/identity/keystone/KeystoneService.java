@@ -33,6 +33,17 @@ public class KeystoneService implements Serializable, Service {
 
     @XmlElement
     private String description;
+    
+    public KeystoneService() {
+    	
+    }
+    
+    public KeystoneService(String id, String name, String type, String description) {
+    	this.id = id;
+    	this.name = name;
+    	this.type = type;
+    	this.description = description;
+    }
 
     /* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.Service#getId()

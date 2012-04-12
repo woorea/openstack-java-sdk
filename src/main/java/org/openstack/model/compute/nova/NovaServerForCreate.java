@@ -366,4 +366,14 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 		this.configDrive = configDrive;
 	}
 
+	@Override
+	public String toString() {
+		return "NovaServerForCreate [name=" + name + ", min=" + min + ", max="
+				+ max + ", imageRef=" + imageRef + ", flavorRef=" + flavorRef
+				+ ", accessIpV4=" + accessIpV4 + ", accessIpV6=" + accessIpV6
+				+ ", zone=" + zone + ", keyName=" + keyName + ", configDrive="
+				+ configDrive + ", metadata=" + metadata + ", personality="
+				+ personality + ", securityGroups=" + securityGroups + "]";
+	}
+
 }

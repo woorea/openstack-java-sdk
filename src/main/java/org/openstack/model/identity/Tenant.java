@@ -4,18 +4,18 @@ public interface Tenant {
 
 	String getId();
 
-	//void setId(String id);
+	void setId(String id);
 
 	String getName();
 
-	//void setName(String name);
+	void setName(String name);
 
 	boolean isEnabled();
 
-	//void setEnabled(boolean enabled);
+	void setEnabled(boolean enabled);
 
 	String getDescription();
 
-	//void setDescription(String description);
+	void setDescription(String description);
 
 }

@@ -26,6 +26,15 @@ public class KeystoneRole implements Serializable, Role {
 
 	@XmlAttribute
 	private String tenantId;
+	
+	public KeystoneRole() {
+		
+	}
+	
+	public KeystoneRole(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.Role#getId()

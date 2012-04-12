@@ -63,10 +63,19 @@ public class GlanceImage implements Serializable, Image {
     private Boolean isProtected;
     @XmlAttribute
     private String id;
-
+   
     //@XmlElement
     //private GlanceImageProperties properties;
     final Map<String, Object> properties = Maps.newHashMap();
+    
+    public GlanceImage() {
+    	
+    }
+    
+    public GlanceImage(String id, String name) {
+    	this.id = id;
+    	this.name = name;
+    }
 
     /* (non-Javadoc)
 	 * @see org.openstack.model.image.glance.Image#getUri()
