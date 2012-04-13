@@ -54,7 +54,7 @@ public class NovaSecurityGroupRule implements SecurityGroupRule, Serializable {
     public static final class IpRange implements Serializable {
 
         @XmlElement
-        public String cidr;
+        private String cidr;
 
         public String getCidr() {
             return cidr;
@@ -95,7 +95,7 @@ public class NovaSecurityGroupRule implements SecurityGroupRule, Serializable {
 
     @XmlElement(name = "ip_range")
     @SerializedName("ip_range")
-    private IpRange ipRange;
+    private IpRange ipRange = new IpRange();
 
     @XmlElement
     private Group group;

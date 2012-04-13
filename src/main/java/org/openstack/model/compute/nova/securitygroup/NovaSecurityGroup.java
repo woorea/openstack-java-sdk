@@ -43,9 +43,10 @@ public class NovaSecurityGroup implements SecurityGroup, Serializable {
 		// TODO Auto-generated constructor stub
 	}
     
-    public NovaSecurityGroup(int id, String name) {
+    public NovaSecurityGroup(int id, String name, String description) {
 		this.id = id;
 		this.name = name;
+		this.description = description;
 	}
 
 	@Override

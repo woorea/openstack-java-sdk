@@ -58,16 +58,13 @@ public class NovaMetadata implements Serializable, Metadata {
     }
 
     @XmlElement(name = "item")
-    private List<Item> items;
+    private List<Item> items = Lists.newArrayList();
 
     /* (non-Javadoc)
 	 * @see org.openstack.model.compute.Metadata#getItems()
 	 */
     @Override
 	public List<Item> getItems() {
-    	if (items == null) {
-    		items = Lists.newArrayList();
-    	}
         return items;
     }
 

@@ -25,6 +25,17 @@ public class NovaFault implements Serializable, Fault {
 	
 	@XmlElement
 	private String details;
+	
+	public NovaFault() {
+		
+	}
+	
+	public NovaFault(int code, String created, String message, String details) {
+		this.code = code;
+		this.created = created;
+		this.message = message;
+		this.details = details;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Fault#getCode()

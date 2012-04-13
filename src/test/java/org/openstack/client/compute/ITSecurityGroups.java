@@ -109,7 +109,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 		Assert.assertEquals(rule.getFromPort(), newRule.getFromPort());
 		Assert.assertEquals(rule.getToPort(), newRule.getToPort());
 		Assert.assertEquals(rule.getIpProtocol(), newRule.getIpProtocol());
-		Assert.assertEquals(rule.getIpRange().cidr, newRule.getCidr());
+		Assert.assertEquals(rule.getIpRange().getCidr(), newRule.getCidr());
 	}
 
 }

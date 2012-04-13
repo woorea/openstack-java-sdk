@@ -26,6 +26,15 @@ public class NovaAddressList implements Serializable, AddressList {
 
             @XmlAttribute
             private String addr;
+            
+            public Ip() {
+            	
+            }
+            
+            public Ip(String version, String addr) {
+            	this.version = version;
+            	this.addr = addr;
+            }
 
             public String getVersion() {
                 return version;
