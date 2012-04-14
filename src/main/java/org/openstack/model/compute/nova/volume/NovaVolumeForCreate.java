@@ -106,12 +106,12 @@ public class NovaVolumeForCreate implements Serializable, VolumeForCreate {
 	 * @see org.openstack.model.compute.Volume#getMetadata()
 	 */
 	@Override
-	public NovaMetadata getMetadata() {
+	public Metadata getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(NovaMetadata metadata) {
-		this.metadata = metadata;
+	public void setMetadata(Metadata metadata) {
+		this.metadata = (NovaMetadata) metadata;
 	}
 
 	@Override
