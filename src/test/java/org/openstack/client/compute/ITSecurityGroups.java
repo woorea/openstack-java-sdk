@@ -8,7 +8,6 @@ import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupForCreate;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRuleForCreate;
-import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 import org.openstack.model.exceptions.OpenstackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -1,7 +1,5 @@
 package org.openstack.api.compute.ext;
 
-import java.util.Map;
-
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;

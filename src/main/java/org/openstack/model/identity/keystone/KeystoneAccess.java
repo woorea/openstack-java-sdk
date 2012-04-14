@@ -16,12 +16,10 @@ import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.Access;
-import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.Token;
 import org.openstack.model.identity.User;
 
-import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.gson.annotations.SerializedName;

@@ -50,7 +50,7 @@ public class NovaVolume implements Serializable, Volume {
 	private String description;
 	
 	@XmlAttribute(name="snapshotId")
-	private String snapshotId;
+	private Integer snapshotId;
 	
 	@XmlElement(name="metadata")
 	private NovaMetadata metadata;
@@ -59,9 +59,10 @@ public class NovaVolume implements Serializable, Volume {
 		
 	}
 	
-	public NovaVolume(Integer id, String name) {
+	public NovaVolume(Integer id, String name, Integer snapshotId) {
 		this.id = id;
 		this.name = name;
+		this.snapshotId = snapshotId;
 	}
 
 	/* (non-Javadoc)
@@ -164,11 +165,11 @@ public class NovaVolume implements Serializable, Volume {
 	 * @see org.openstack.model.compute.Volume#getSnapshotId()
 	 */
 	@Override
-	public String getSnapshotId() {
+	public Integer getSnapshotId() {
 		return snapshotId;
 	}
 
-	public void setSnapshotId(String snapshotId) {
+	public void setSnapshotId(Integer snapshotId) {
 		this.snapshotId = snapshotId;
 	}
 

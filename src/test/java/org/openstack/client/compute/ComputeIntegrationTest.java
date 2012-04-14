@@ -1,15 +1,12 @@
 package org.openstack.client.compute;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.openstack.api.compute.TenantResource;
-import org.openstack.api.identity.IdentityAdministrationEndpoint;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.common.Extension;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.nova.NovaImage;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 

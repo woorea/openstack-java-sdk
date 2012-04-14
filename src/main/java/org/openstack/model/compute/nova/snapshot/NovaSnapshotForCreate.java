@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotForCreate;
 
 import com.google.gson.annotations.SerializedName;

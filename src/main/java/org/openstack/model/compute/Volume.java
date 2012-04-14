@@ -18,7 +18,7 @@ public interface Volume {
 
 	String getDescription();
 
-	String getSnapshotId();
+	Integer getSnapshotId();
 
 	Metadata getMetadata();
 

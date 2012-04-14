@@ -1,8 +1,5 @@
 package org.openstack.api.compute.ext;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;

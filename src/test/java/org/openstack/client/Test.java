@@ -1,11 +1,8 @@
 package org.openstack.client;
 
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
-import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceList;
-import org.openstack.model.identity.keystone.KeystoneEndpoint;
-import org.openstack.model.identity.keystone.KeystoneService;
 
 public class Test {
 

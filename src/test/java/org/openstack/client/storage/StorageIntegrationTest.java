@@ -10,7 +10,6 @@ import org.openstack.api.storage.AccountResource;
 import org.openstack.client.AbstractOpenStackTest;
 import org.openstack.model.storage.StorageContainer;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
-import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

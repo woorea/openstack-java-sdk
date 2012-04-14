@@ -1,7 +1,5 @@
 package org.openstack.api.compute;
 
-import java.util.Map;
-
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 

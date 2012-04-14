@@ -45,6 +45,16 @@ public class NovaSnapshot implements Serializable, Snapshot {
 	
 	@XmlAttribute(name="volumeId")
 	private Integer volumeId;
+	
+	public NovaSnapshot() {
+		
+	}
+	
+	public NovaSnapshot(Integer id, String name, Integer volumeId) {
+		this.id = id;
+		this.name = name;
+		this.volumeId = volumeId;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getId()

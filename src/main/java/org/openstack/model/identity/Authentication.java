@@ -1,6 +1,5 @@
 package org.openstack.model.identity;
 
-import org.openstack.model.identity.keystone.KeystoneAuthentication;
 import org.openstack.model.identity.keystone.KeystoneAuthentication.PasswordCredentials;
 
 public interface Authentication {

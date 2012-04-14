@@ -1,7 +1,6 @@
 package org.openstack.api.compute;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +8,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.exceptions.OpenstackException;
 
 import com.google.common.collect.Lists;

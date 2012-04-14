@@ -1,7 +1,6 @@
 package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,10 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Service;
-import org.openstack.model.identity.ServiceEndpoint;
-
-import com.google.common.collect.Lists;
-import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name="service", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
