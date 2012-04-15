@@ -89,6 +89,10 @@ public class OpenStackClient {
 		return this.access;
 	}
 	
+	public IdentityClient getIdentityClient() {
+		return new IdentityClient(getIdentityAdministationEndpoint());
+	}
+	
 	public IdentityPublicEndpoint getIdentityEndpoint() {
 		String url = properties.getProperty("identity.endpoint.publicURL");
 		Preconditions.checkNotNull(url, "'identity.endpoint.publicURL' property not found");
@@ -129,6 +133,10 @@ public class OpenStackClient {
 
 	public TenantResource getComputeAdministationEndpoint() {
 		return target(access.getEndpoint("compute", null).getAdminURL(), TenantResource.class);
+	}
+	
+	public ImagesClient getImagesClient() {
+		return new ImagesClient(getImagesEndpoint());
 	}
 	
 	public ImagesResource getImagesEndpoint() {
@@ -174,5 +182,7 @@ public class OpenStackClient {
 		}
 
 	}
+
+	
 
 }
