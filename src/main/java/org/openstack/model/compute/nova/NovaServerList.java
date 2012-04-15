@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,7 +24,15 @@ public class NovaServerList implements Serializable, ServerList {
 
 	@XmlElement(name = "server")
 	@SerializedName("servers")
-	private List<NovaServer> list = new ArrayList<NovaServer>();
+	private List<NovaServer> list;
+	
+	public NovaServerList() {
+		list = new ArrayList<NovaServer>();
+	}
+
+	public NovaServerList(Collection<NovaServer> values) {
+		list = new ArrayList<NovaServer>(values);
+	}
 
 	@Override
 	public String toString() {

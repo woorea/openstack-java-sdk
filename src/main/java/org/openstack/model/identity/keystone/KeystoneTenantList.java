@@ -1,6 +1,8 @@
 package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,6 +28,15 @@ public class KeystoneTenantList implements Serializable, TenantList {
 	
 	@SerializedName("tenants_links")
 	private List<Link> links;
+	
+	public KeystoneTenantList() {
+		tenants = new ArrayList<KeystoneTenant>();
+	}
+
+	public KeystoneTenantList(Collection<KeystoneTenant> collection) {
+		this.tenants = new ArrayList<KeystoneTenant>(collection);
+	}
+
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.TenantList#getList()

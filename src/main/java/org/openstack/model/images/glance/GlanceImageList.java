@@ -2,6 +2,7 @@ package org.openstack.model.images.glance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,7 +24,15 @@ public class GlanceImageList implements Serializable, ImageList {
     @XmlElement(name = "image")
     private List<GlanceImage> images = new ArrayList<GlanceImage>();
     
-    /* (non-Javadoc)
+    public GlanceImageList() {
+    	
+    }
+    
+    public GlanceImageList(Collection<GlanceImage> collection) {
+		this.images = new ArrayList<GlanceImage>(collection);
+	}
+
+	/* (non-Javadoc)
 	 * @see org.openstack.model.image.glance.ImageList#getList()
 	 */
     @Override

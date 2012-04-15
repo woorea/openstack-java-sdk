@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,7 +26,15 @@ public class NovaFlavorList implements Serializable, FlavorList {
     @SerializedName("flavors")
     private List<NovaFlavor> list = new ArrayList<NovaFlavor>();
     
-    /* (non-Javadoc)
+    public NovaFlavorList() {
+    	this.list = new ArrayList<NovaFlavor>();
+    }
+    
+    public NovaFlavorList(Collection<NovaFlavor> collection) {
+		this.list = new ArrayList<NovaFlavor>();
+	}
+
+	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.FlavorList#getList()
 	 */
     @Override
