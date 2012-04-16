@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.openstack.model.atom.Link;
+import org.openstack.model.compute.nova.NovaAddressList.Network;
 
 public interface Server {
 
@@ -26,9 +27,9 @@ public interface Server {
 
 	String getTenantId();
 
-	String getAccessIpV4();
+	String getAccessIPv4();
 
-	String getAccessIpV6();
+	String getAccessIPv6();
 
 	String getAdminPass();
 
@@ -46,9 +47,9 @@ public interface Server {
 
 	Fault getFault();
 
-	Metadata getMetadata();
+	Map<String, String> getMetadata();
 
-	AddressList getAddresses();
+	Map<String, List<Network.Ip>> getAddresses();
 
 	Map<QName, String> getExtensionAttributes();
 
@@ -70,7 +71,6 @@ public interface Server {
 		this.extensionAttributes = transform;
 	}
 	 */
-	String getUuid();
 
 	List<Link> getLinks();
 

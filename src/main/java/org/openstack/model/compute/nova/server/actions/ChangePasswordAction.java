@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="changePassword")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -24,6 +25,11 @@ public class ChangePasswordAction implements Serializable, ServerAction {
 
 	public void setAdminPass(String adminPass) {
 		this.adminPass = adminPass;
+	}
+	
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
 	}
 	
 }

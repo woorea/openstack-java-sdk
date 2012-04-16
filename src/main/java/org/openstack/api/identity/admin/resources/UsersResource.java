@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.identity.UserList;
 import org.openstack.model.identity.keystone.KeystoneUser;
 import org.openstack.model.identity.keystone.KeystoneUserList;
@@ -20,7 +21,7 @@ public class UsersResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(KeystoneUserList.class);
 	}
 	
-	public User post(User user) {
+	public User post(UserForCreate user) {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(user), KeystoneUser.class);
 	}
 

@@ -15,12 +15,11 @@ import javax.xml.namespace.QName;
 
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.AddressList;
 import org.openstack.model.compute.Fault;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.nova.NovaAddressList.Network;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -57,11 +56,11 @@ public class NovaServer implements Serializable, Server {
 	@SerializedName("tenant_id")
 	private String tenantId;
 
-	@XmlAttribute(name = "accessIPv4")
-	private String accessIpV4;
+	@XmlAttribute
+	private String accessIPv4;
 
-	@XmlAttribute(name = "accessIPv6")
-	private String accessIpV6;
+	@XmlAttribute
+	private String accessIPv6;
 	
 	@XmlAnyAttribute
 	private Map<QName, String> extensionAttributes;
@@ -69,13 +68,14 @@ public class NovaServer implements Serializable, Server {
 	@XmlAttribute
 	private String adminPass;
 
-	@XmlAttribute()
+	@XmlAttribute
 	private String progress;
 
 	@XmlAttribute(name = "config_drive")
 	private String configDrive;
 
 	@XmlAttribute(name = "key_name")
+	@SerializedName("key_name")
 	private String keyName;
 
 	@XmlElement(name = "image")
@@ -88,16 +88,13 @@ public class NovaServer implements Serializable, Server {
 	private NovaFault fault;
 
 	@XmlElement(name = "metadata")
-	private NovaMetadata metadata;
+	private Map<String, String> metadata;
 
 	@XmlElement(name = "addresses")
-	private NovaAddressList addresses;
+	private Map<String, List<Network.Ip>> addresses;
 
 	@XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
 	private List<Link> links;
-
-	@XmlAttribute
-	private String uuid;
 	
 	public NovaServer() {
 		// TODO Auto-generated constructor stub
@@ -208,24 +205,24 @@ public class NovaServer implements Serializable, Server {
 	 * @see org.openstack.model.compute.Server#getAccessIpV4()
 	 */
 	@Override
-	public String getAccessIpV4() {
-		return accessIpV4;
+	public String getAccessIPv4() {
+		return accessIPv4;
 	}
 
-	public void setAccessIpV4(String accessIpV4) {
-		this.accessIpV4 = accessIpV4;
+	public void setAccessIPv4(String accessIPv4) {
+		this.accessIPv4 = accessIPv4;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Server#getAccessIpV6()
 	 */
 	@Override
-	public String getAccessIpV6() {
-		return accessIpV6;
+	public String getAccessIPv6() {
+		return accessIPv6;
 	}
 
-	public void setAccessIpV6(String accessIpV6) {
-		this.accessIpV6 = accessIpV6;
+	public void setAccessIPv6(String accessIPv6) {
+		this.accessIPv6 = accessIPv6;
 	}
 
 	/* (non-Javadoc)
@@ -327,11 +324,11 @@ public class NovaServer implements Serializable, Server {
 	 * @see org.openstack.model.compute.Server#getMetadata()
 	 */
 	@Override
-	public Metadata getMetadata() {
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(NovaMetadata metadata) {
+	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
 
@@ -339,11 +336,11 @@ public class NovaServer implements Serializable, Server {
 	 * @see org.openstack.model.compute.Server#getAddresses()
 	 */
 	@Override
-	public AddressList getAddresses() {
+	public Map<String, List<Network.Ip>> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(NovaAddressList addresses) {
+	public void setAddresses(Map<String, List<Network.Ip>> addresses) {
 		this.addresses = addresses;
 	}
 	
@@ -378,17 +375,6 @@ public class NovaServer implements Serializable, Server {
 		this.extensionAttributes = transform;
 	}
 	*/
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Server#getUuid()
-	 */
-	@Override
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Server#getLinks()
@@ -406,7 +392,7 @@ public class NovaServer implements Serializable, Server {
 	public String toString() {
 		return "Server [id=" + id + ", name=" + name + ", status=" + status + ", updated=" + updated + ", created="
 				+ created + ", hostId=" + hostId + ", userId=" + userId + ", tenantId=" + tenantId + ", accessIpV4="
-				+ accessIpV4 + ", accessIpV6=" + accessIpV6 + ", adminPass=" + adminPass + ", progress=" + progress
+				+ accessIPv4 + ", accessIpV6=" + accessIPv6 + ", adminPass=" + adminPass + ", progress=" + progress
 				+ ", configDrive=" + configDrive + ", keyName=" + keyName + ", image=" + image + ", flavor=" + flavor
 				+ ", fault=" + fault + ", metadata=" + metadata + ", addresses=" + addresses + ", links=" + links + "]";
 	}

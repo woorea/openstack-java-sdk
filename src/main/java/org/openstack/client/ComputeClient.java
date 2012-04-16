@@ -1,5 +1,6 @@
 package org.openstack.client;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerForCreate;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
@@ -174,6 +176,11 @@ public class ComputeClient {
 
 	public Image showImage(String id) {
 		return resource.images().image(id).get();
+	}
+
+	public Serializable executeServerAction(String id, ServerAction action) {
+		return resource.servers().server(id).action().post(action, action.getReturnType());
+		
 	}
 
 }

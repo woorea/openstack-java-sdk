@@ -1,8 +1,8 @@
 package org.openstack.model.compute;
 
 import java.util.List;
+import java.util.Map;
 
-import org.openstack.model.compute.nova.NovaMetadata;
 import org.openstack.model.compute.nova.NovaServerForCreate.File;
 import org.openstack.model.compute.nova.NovaServerForCreate.SecurityGroup;
 
@@ -36,17 +36,17 @@ public interface ServerForCreate {
 
 	void setKeyName(String keyName);
 
-	String getAccessIpV4();
+	String getAccessIPv4();
 
-	void setAccessIpV4(String accessIpV4);
+	void setAccessIPv4(String accessIPv4);
 
-	String getAccessIpV6();
+	String getAccessIPv6();
 
-	void setAccessIpV6(String accessIpV6);
+	void setAccessIPv6(String accessIPv6);
 
-	List<NovaMetadata.Item> getMetadata();
+	Map<String, String> getMetadata();
 
-	void setMetadata(List<NovaMetadata.Item> metadata);
+	void setMetadata(Map<String, String> metadata);
 
 	List<File> getPersonality();
 

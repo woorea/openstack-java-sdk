@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="addFloatingIp")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -24,6 +25,11 @@ public class AddFloatingIpAction implements Serializable, ServerAction {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
 	}
 	
 }

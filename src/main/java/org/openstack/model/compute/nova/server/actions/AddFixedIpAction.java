@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="addFixedIp")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -25,5 +26,12 @@ public class AddFixedIpAction implements Serializable, ServerAction {
 	public void setNetworkId(String networkId) {
 		this.networkId = networkId;
 	}
+
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
+	}
+	
+	
 	
 }

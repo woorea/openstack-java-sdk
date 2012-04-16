@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="createBackup")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -65,6 +66,11 @@ public class CreateBackupAction implements Serializable, ServerAction {
 	public String toString() {
 		return "CreateBackupAction [name=" + name + ", type=" + type
 				+ ", rotation=" + rotation + ", metadata=" + metadata + "]";
+	}
+	
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
 	}
 	
 }

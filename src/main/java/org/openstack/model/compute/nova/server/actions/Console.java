@@ -9,11 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="console", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("console")
-public class Console implements Serializable, ServerAction {
+public class Console implements Serializable {
 
 	@XmlElement
 	private String url;
@@ -41,6 +42,5 @@ public class Console implements Serializable, ServerAction {
 	public String toString() {
 		return "Console [url=" + url + ", type=" + type + "]";
 	}
-	
 	
 }

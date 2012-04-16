@@ -26,4 +26,9 @@ public class GetConsoleOutputAction implements Serializable, ServerAction {
 		this.length = length;
 	}
 	
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return Output.class;
+	}
+	
 }

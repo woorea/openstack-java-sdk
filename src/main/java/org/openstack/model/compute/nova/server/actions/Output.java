@@ -7,11 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.openstack.model.compute.ServerAction;
+import org.openstack.model.common.JsonRootElement;
 
 @XmlRootElement(name="output", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-public class Output implements Serializable, ServerAction {
+@JsonRootElement()
+public class Output implements Serializable {
 
 	@XmlValue
 	private String output;

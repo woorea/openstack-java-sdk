@@ -1,8 +1,9 @@
 package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -17,6 +18,7 @@ import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerForCreate;
 
 import com.google.common.collect.Lists;
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -96,27 +98,29 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 	@XmlAttribute
 	private String flavorRef;
 
-	@XmlAttribute(name = "accessIPv4")
-	private String accessIpV4;
+	@XmlAttribute
+	private String accessIPv4;
 
-	@XmlAttribute(name = "accessIPv6")
-	private String accessIpV6;
+	@XmlAttribute
+	private String accessIPv6;
 
 	@XmlAttribute
 	private String zone;
 
-	// OSAPI-BUG: I think this is only valid in JSON
 	@XmlAttribute(name="key_name")
+	@SerializedName("key_name")
 	private String keyName;
 
 	// We have a problem here - config_drive can be both a boolean and an image ref...
 	// But booleans can't be quoted!
 	@XmlAttribute(name="config_drive")
+	@SerializedName("config_drive")
 	private boolean configDrive;
 
 	@XmlElementWrapper(name="metatadata")
 	@XmlElement(name="meta")
-	private List<NovaMetadata.Item> metadata;
+	//private List<NovaMetadata.Item> metadata;
+	private Map<String, String> metadata = new HashMap<String, String>();
 
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name="file")
@@ -243,45 +247,42 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.ServerForCreate#getAccessIpV4()
+	 * @see org.openstack.model.compute.nova.ServerForCreate#getAccessIPv4()
 	 */
 	@Override
-	public String getAccessIpV4() {
-		return accessIpV4;
+	public String getAccessIPv4() {
+		return accessIPv4;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.ServerForCreate#setAccessIpV4(java.lang.String)
+	 * @see org.openstack.model.compute.nova.ServerForCreate#setAccessIPv4(java.lang.String)
 	 */
 	@Override
-	public void setAccessIpV4(String accessIpV4) {
-		this.accessIpV4 = accessIpV4;
+	public void setAccessIPv4(String accessIPv4) {
+		this.accessIPv4 = accessIPv4;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.ServerForCreate#getAccessIpV6()
+	 * @see org.openstack.model.compute.nova.ServerForCreate#getAccessIPv6()
 	 */
 	@Override
-	public String getAccessIpV6() {
-		return accessIpV6;
+	public String getAccessIPv6() {
+		return accessIPv6;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.ServerForCreate#setAccessIpV6(java.lang.String)
 	 */
 	@Override
-	public void setAccessIpV6(String accessIpV6) {
-		this.accessIpV6 = accessIpV6;
+	public void setAccessIPv6(String accessIPv6) {
+		this.accessIPv6 = accessIPv6;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.ServerForCreate#getMetadata()
 	 */
 	@Override
-	public List<NovaMetadata.Item> getMetadata() {
-		if (metadata == null) {
-			metadata = new ArrayList<NovaMetadata.Item>();
-		}
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
@@ -289,7 +290,7 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 	 * @see org.openstack.model.compute.nova.ServerForCreate#setMetadata(java.util.List)
 	 */
 	@Override
-	public void setMetadata(List<NovaMetadata.Item> metadata) {
+	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
 
@@ -370,7 +371,7 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 	public String toString() {
 		return "NovaServerForCreate [name=" + name + ", min=" + min + ", max="
 				+ max + ", imageRef=" + imageRef + ", flavorRef=" + flavorRef
-				+ ", accessIpV4=" + accessIpV4 + ", accessIpV6=" + accessIpV6
+				+ ", accessIpV4=" + accessIPv4 + ", accessIpV6=" + accessIPv6
 				+ ", zone=" + zone + ", keyName=" + keyName + ", configDrive="
 				+ configDrive + ", metadata=" + metadata + ", personality="
 				+ personality + ", securityGroups=" + securityGroups + "]";

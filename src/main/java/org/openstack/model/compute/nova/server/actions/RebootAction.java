@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="reboot")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -26,6 +27,9 @@ public class RebootAction implements Serializable, ServerAction {
 		this.type = type;
 	}
 	
-	
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
+	}
 	
 }

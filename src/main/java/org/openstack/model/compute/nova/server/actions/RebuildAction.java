@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 
 @XmlRootElement(name="rebuild")
@@ -74,6 +75,11 @@ public class RebuildAction implements Serializable, ServerAction {
 
 	public void setImageRef(String imageRef) {
 		this.imageRef = imageRef;
+	}
+	
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
 	}
 
 }

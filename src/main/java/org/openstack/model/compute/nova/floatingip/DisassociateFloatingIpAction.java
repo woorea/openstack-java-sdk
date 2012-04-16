@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.ServerAction;
+import org.openstack.model.compute.nova.NovaServer;
 
 @JsonRootElement("removeFloatingIp")
 public class DisassociateFloatingIpAction implements Serializable, ServerAction {
@@ -16,6 +17,11 @@ public class DisassociateFloatingIpAction implements Serializable, ServerAction 
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Override
+	public Class<? extends Serializable> getReturnType() {
+		return NovaServer.class;
 	}
 	
 }
