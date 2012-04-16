@@ -2,11 +2,11 @@ package org.openstack.model.compute.nova.floatingip;
 
 import java.io.Serializable;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 
-@JsonRootElement("addFloatingIp")
+@JsonRootName("addFloatingIp")
 public class AssociateFloatingIpAction implements Serializable, ServerAction {
 
 	private String address;
