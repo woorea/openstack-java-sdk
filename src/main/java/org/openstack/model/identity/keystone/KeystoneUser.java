@@ -9,9 +9,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.User;
+
+import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -36,8 +39,8 @@ public class KeystoneUser implements Serializable, User {
     @XmlAttribute
     private boolean enabled;
 
-    //@SerializedName("roles_links")
-    //private List<String> rolesLinks;
+    @JsonProperty("roles_links")
+    private List<String> rolesLinks;
 
     @XmlElement(name = "roles")
     private List<KeystoneRole> roles;
@@ -121,6 +124,14 @@ public class KeystoneUser implements Serializable, User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public List<String> getRolesLinks() {
+		return rolesLinks;
+	}
+
+	public void setRolesLinks(List<String> rolesLinks) {
+		this.rolesLinks = rolesLinks;
 	}
 
 	/* (non-Javadoc)

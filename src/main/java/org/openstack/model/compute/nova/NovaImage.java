@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,10 +10,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Metadata;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -20,6 +22,7 @@ import com.google.common.collect.Iterables;
 @XmlRootElement(name="image")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("image")
+@JsonRootName("image")
 public class NovaImage implements Serializable, Image {
 
 	@XmlAttribute
@@ -30,7 +33,6 @@ public class NovaImage implements Serializable, Image {
 	
 	@XmlAttribute
 	private String status;
-	
 	
 	//2011-12-26T02:09:15Z
 	@XmlAttribute
@@ -43,10 +45,13 @@ public class NovaImage implements Serializable, Image {
 	private int minDisk;
 	
 	@XmlAttribute
+	private int minRam;
+	
+	@XmlAttribute
 	private int progress;
 	
 	@XmlElement
-	private NovaMetadata metadata;
+	private Map<String, String> metadata;
 
 	//RAX-DCF="http://docs.rackspacecloud.com/servers/api/ext/diskConfig/v1.0"
 	
@@ -134,6 +139,14 @@ public class NovaImage implements Serializable, Image {
 		this.minDisk = minDisk;
 	}
 
+	public int getMinRam() {
+		return minRam;
+	}
+
+	public void setMinRam(int minRam) {
+		this.minRam = minRam;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Image#getProgress()
 	 */
@@ -146,15 +159,11 @@ public class NovaImage implements Serializable, Image {
 		this.progress = progress;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Image#getMetadata()
-	 */
-	@Override
-	public Metadata getMetadata() {
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(NovaMetadata metadata) {
+	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
 

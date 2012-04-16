@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Flavor;
@@ -23,6 +24,7 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name="flavor")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("flavor")
+@JsonRootName("flavor")
 public class NovaFlavor implements Serializable, Flavor {
 
     @XmlAttribute

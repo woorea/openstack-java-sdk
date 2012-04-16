@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Authentication;
@@ -18,6 +19,7 @@ import org.openstack.model.identity.Token;
 @XmlRootElement(name = "auth", namespace= "")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("auth")
+@JsonRootName("auth")
 public class KeystoneAuthentication implements Serializable, Authentication {
 
     @XmlAccessorType(XmlAccessType.NONE)

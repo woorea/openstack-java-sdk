@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.Token;
 
@@ -53,7 +55,8 @@ public class KeystoneToken implements Serializable, Token {
 	public Tenant getTenant() {
 		return tenant;
 	}
-
+	
+	@JsonDeserialize(as=KeystoneTenant.class)
 	public void setTenant(Tenant tenant) {
 		this.tenant = (KeystoneTenant) tenant;
 	}

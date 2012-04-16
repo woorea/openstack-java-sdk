@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.identity.ServiceEndpoint;
 
 import com.google.gson.annotations.SerializedName;
@@ -24,6 +25,7 @@ public class KeystoneServiceCatalogEntry implements Serializable, ServiceCatalog
 
 	// Not sure what these are...
 	@SerializedName("endpoints_links")
+	@JsonProperty("endpoints_links")
 	private List<String> endpointsLinks;
 
 	/* (non-Javadoc)

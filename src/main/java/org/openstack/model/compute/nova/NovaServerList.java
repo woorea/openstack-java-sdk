@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
@@ -24,6 +26,7 @@ public class NovaServerList implements Serializable, ServerList {
 
 	@XmlElement(name = "server")
 	@SerializedName("servers")
+	@JsonProperty("servers")
 	private List<NovaServer> list;
 	
 	public NovaServerList() {

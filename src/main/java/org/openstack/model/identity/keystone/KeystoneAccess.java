@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.exceptions.OpenstackException;
@@ -28,6 +31,7 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootElement("access")
+@JsonRootName("access")
 public class KeystoneAccess implements Serializable, Access {
     
     @XmlElement(type = KeystoneToken.class)
@@ -36,6 +40,8 @@ public class KeystoneAccess implements Serializable, Access {
     @XmlElementWrapper(name = "serviceCatalog")
     @XmlElement(name = "service", type = KeystoneService.class)
     @SerializedName("serviceCatalog")
+    @JsonProperty("serviceCatalog")
+    @JsonDeserialize(as=List.class, contentAs=KeystoneServiceCatalogEntry.class)
 	private List<KeystoneServiceCatalogEntry> services = new ArrayList<KeystoneServiceCatalogEntry>();
 
     @XmlElement(type = KeystoneUser.class)
@@ -57,10 +63,11 @@ public class KeystoneAccess implements Serializable, Access {
 	 * @see org.openstack.model.identity.glance.Access#getServices()
 	 */
 	@Override
+	
 	public List<ServiceCatalogEntry> getServices() {
 		return (List<ServiceCatalogEntry>) (List<?>) services;
 	}
-
+	
 	public void setServices(List<KeystoneServiceCatalogEntry> services) {
 		this.services = services;
 	}

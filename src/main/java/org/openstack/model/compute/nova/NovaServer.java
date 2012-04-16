@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
+import org.codehaus.jackson.annotate.JsonAnyGetter;
+import org.codehaus.jackson.annotate.JsonAnySetter;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.atom.Link;
 import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Fault;
@@ -79,7 +83,8 @@ public class NovaServer implements Serializable, Server {
 	private String keyName;
 
 	@XmlElement(name = "image")
-	private NovaImage image;
+	@JsonDeserialize(as=NovaImage.class)
+	private Image image;
 
 	@XmlElement(name = "flavor")
 	private NovaFlavor flavor;
@@ -92,6 +97,18 @@ public class NovaServer implements Serializable, Server {
 
 	@XmlElement(name = "addresses")
 	private Map<String, List<Network.Ip>> addresses;
+	
+	private Map<String, String> extensions = new HashMap<String, String>();
+
+	@JsonAnyGetter
+	public Map<String, String> getExtensions() {
+		return extensions;
+	}
+
+	@JsonAnySetter 
+	public void put(String key, String value) {
+	      extensions.put(key, value);
+	}
 
 	@XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
 	private List<Link> links;

@@ -1,6 +1,7 @@
 package org.openstack.model.compute;
 
 import java.util.List;
+import java.util.Map;
 
 import org.openstack.model.atom.Link;
 
@@ -20,7 +21,7 @@ public interface Image {
 
 	int getProgress();
 
-	Metadata getMetadata();
+	Map<String, String> getMetadata();
 
 	List<Link> getLinks();
 
