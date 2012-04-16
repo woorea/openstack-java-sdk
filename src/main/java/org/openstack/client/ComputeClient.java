@@ -1,5 +1,6 @@
 package org.openstack.client;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -102,13 +103,13 @@ public class ComputeClient {
 	}
 	
 	public List<KeyPair> listKeyPairs() {
-		return Lists.transform(resource.keyPairs().get().getList(), new Function<KeyPairListItem, KeyPair>() {
+		return new ArrayList<KeyPair>(Lists.transform(resource.keyPairs().get().getList(), new Function<KeyPairListItem, KeyPair>() {
 
 			@Override
 			public KeyPair apply(KeyPairListItem item) {
 				return item.getKeypair();
 			}
-		});
+		}));
 	}
 	
 	public KeyPair createKeyPair(String name) {
@@ -174,7 +175,5 @@ public class ComputeClient {
 	public Image showImage(String id) {
 		return resource.images().image(id).get();
 	}
-
-	
 
 }
