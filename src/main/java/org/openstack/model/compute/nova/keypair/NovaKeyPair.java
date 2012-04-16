@@ -7,34 +7,33 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.KeyPair;
-
-import com.google.gson.annotations.SerializedName;
 
 // TODO: Rename to KeyPairInfo?
 
 @XmlRootElement(name="keypair", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("keypair")
+@JsonRootName("keypair")
 public class NovaKeyPair implements Serializable, KeyPair {
 	
 	@XmlElement(required=true, namespace="")
 	private String name;
 	
 	@XmlElement(name="public_key", namespace="")
-	@SerializedName("public_key")
+	@JsonProperty("public_key")
 	private String publicKey;
 	
 	@XmlElement(namespace="")
 	private String fingerprint;
 
 	@XmlElement(name="user_id")
-	@SerializedName("user_id")
+	@JsonProperty("user_id")
 	private String userId;
 	
 	@XmlElement(name="private_key")
-	@SerializedName("private_key")
+	@JsonProperty("private_key")
 	private String privateKey;
 	
 	public NovaKeyPair() {

@@ -2,7 +2,6 @@ package org.openstack.model.identity;
 
 import java.util.List;
 
-import org.openstack.model.identity.keystone.ServiceCatalogEntry;
 
 public interface Access {
 

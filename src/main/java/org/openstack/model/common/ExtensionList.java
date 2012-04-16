@@ -1,5 +1,6 @@
 package org.openstack.model.common;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,22 +9,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.common.collect.Lists;
-import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 @XmlRootElement(name = "extensions")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class ExtensionList implements Iterable<Extension> {
 
     @XmlElement(name = "extension")
-    @SerializedName("extensions")
-    private List<Extension> list;
+    @JsonProperty("extensions")
+    private List<Extension> list = new ArrayList<Extension>();
 
     public List<Extension> getList() {
-        if (list == null) {
-            list = Lists.newArrayList();
-        }
         return list;
     }
 

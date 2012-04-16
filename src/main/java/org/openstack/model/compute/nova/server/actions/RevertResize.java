@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="revertResize")
-@JsonRootElement("revertResize")
+@JsonRootName("revertResize")
 public class RevertResize implements Serializable, ServerAction {
 
 	@Override

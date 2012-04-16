@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.storage.StorageObject;
 
 @XmlRootElement(name = "object")
@@ -21,9 +22,11 @@ public class SwiftStorageObject implements StorageObject {
 	private Long bytes;
 
 	@XmlElement(name="content_type")
+	@JsonProperty("content_type")
 	private String contentType;
 
 	@XmlElement(name = "last_modified")
+	@JsonProperty("last_modified")
 	private Date lastModified;
 
 	/* (non-Javadoc)

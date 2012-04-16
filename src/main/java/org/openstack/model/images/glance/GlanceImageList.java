@@ -5,31 +5,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 
-@XmlRootElement(name = "images")
-@XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class GlanceImageList implements Serializable, ImageList {
 
-    @XmlElementWrapper(name = "images")
-    @XmlElement(name = "image")
-    private List<GlanceImage> images = new ArrayList<GlanceImage>();
+	@JsonDeserialize(as=List.class, contentAs=GlanceImage.class)
+    private List<Image> images = new ArrayList<Image>();
     
     public GlanceImageList() {
     	
     }
     
-    public GlanceImageList(Collection<GlanceImage> collection) {
-		this.images = new ArrayList<GlanceImage>(collection);
+    public GlanceImageList(Collection<Image> collection) {
+		this.images = new ArrayList<Image>(collection);
 	}
 
 	/* (non-Javadoc)
@@ -37,7 +27,7 @@ public class GlanceImageList implements Serializable, ImageList {
 	 */
     @Override
 	public List<Image> getList() {
-    	return (List<Image>) (List<?>) images;
+    	return images;
     }
 
 	@Override

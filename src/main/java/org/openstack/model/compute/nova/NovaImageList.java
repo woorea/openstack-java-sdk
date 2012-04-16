@@ -10,19 +10,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.compute.Image;
 import org.openstack.model.compute.ImageList;
 
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement(name = "images")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class NovaImageList implements Serializable, ImageList {
 
 	@XmlElement(name = "image")
-	@SerializedName("images")
+	@JsonProperty("images")
 	private List<NovaImage> list = new ArrayList<NovaImage>();
 
 	/* (non-Javadoc)

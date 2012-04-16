@@ -9,27 +9,27 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.RoleList;
 
 @XmlRootElement(name="roles")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class KeystoneRoleList implements Serializable, RoleList {
 
 	@XmlElement(name="role", type = KeystoneRole.class)
-	private List<KeystoneRole> roles = new ArrayList<KeystoneRole>();
+	@JsonDeserialize(as=List.class, contentAs=KeystoneRole.class)
+	private List<Role> roles = new ArrayList<Role>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.RoleList#getList()
 	 */
 	@Override
 	public List<Role> getList() {
-		return (List<Role>) (List<?>) roles;
+		return roles;
 	}
 
-	public void setList(List<KeystoneRole> list) {
+	public void setList(List<Role> list) {
 		this.roles = list;
 	}
 

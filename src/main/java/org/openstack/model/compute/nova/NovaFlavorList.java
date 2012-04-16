@@ -11,19 +11,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
 
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement(name = "flavors")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class NovaFlavorList implements Serializable, FlavorList {
 
     @XmlElement(name = "flavor")
-    @SerializedName("flavors")
+    @JsonProperty("flavors")
     private List<NovaFlavor> list = new ArrayList<NovaFlavor>();
     
     public NovaFlavorList() {

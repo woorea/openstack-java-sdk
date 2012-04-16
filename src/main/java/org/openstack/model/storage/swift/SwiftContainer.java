@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 @XmlRootElement(name = "container")
 @XmlAccessorType(XmlAccessType.NONE)
 public class SwiftContainer implements StorageContainer {
+	
 	@XmlElement
 	private String name;
 

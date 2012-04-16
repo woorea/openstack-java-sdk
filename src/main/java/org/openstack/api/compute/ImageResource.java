@@ -6,9 +6,7 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Image;
-import org.openstack.model.compute.Metadata;
 import org.openstack.model.compute.nova.NovaImage;
-import org.openstack.model.compute.nova.NovaMetadata;
 
 public class ImageResource extends Resource {
 
@@ -24,9 +22,11 @@ public class ImageResource extends Resource {
 		return target.request().delete();
 	}
 
+	/*
 	public Metadata metadata() {
 		// /metadata
 		return new NovaMetadata();
 	}
+	*/
 
 }

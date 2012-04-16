@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.identity.Tenant;
 
 @XmlRootElement(name="tenant")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("tenant")
+@JsonRootName("tenant")
 public class KeystoneTenant implements Serializable, Tenant {
 	
 	@XmlAttribute

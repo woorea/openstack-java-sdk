@@ -1,6 +1,7 @@
 package org.openstack.model.compute.nova.server.actions;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,14 +9,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.Metadata;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="createBackup")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("createBackup")
+@JsonRootName("createBackup")
 public class CreateBackupAction implements Serializable, ServerAction {
 
 	@XmlAttribute
@@ -28,7 +28,7 @@ public class CreateBackupAction implements Serializable, ServerAction {
 	private String rotation;
 	
 	@XmlElement
-	private Metadata metadata;
+	private Map<String, String> metadata;
 
 	public String getName() {
 		return name;
@@ -54,11 +54,11 @@ public class CreateBackupAction implements Serializable, ServerAction {
 		this.rotation = rotation;
 	}
 
-	public Metadata getMetadata() {
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
+	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
 

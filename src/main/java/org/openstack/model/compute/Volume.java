@@ -1,5 +1,7 @@
 package org.openstack.model.compute;
 
+import java.util.Map;
+
 public interface Volume {
 
 	Integer getId();
@@ -20,6 +22,6 @@ public interface Volume {
 
 	Integer getSnapshotId();
 
-	Metadata getMetadata();
+	Map<String, String> getMetadata();
 
 }

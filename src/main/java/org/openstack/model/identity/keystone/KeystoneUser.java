@@ -2,6 +2,7 @@ package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,15 +11,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.User;
 
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("user")
+@JsonRootName("user")
 public class KeystoneUser implements Serializable, User {
 
     @XmlAttribute
@@ -38,12 +38,19 @@ public class KeystoneUser implements Serializable, User {
 
     @XmlAttribute
     private boolean enabled;
+    
+    @XmlAttribute
+    private String tenantId;
+    
+    @XmlElement(name = "roles")
+    @JsonDeserialize(as=List.class, contentAs=KeystoneRole.class)
+    private List<Role> roles;
 
     @JsonProperty("roles_links")
     private List<String> rolesLinks;
-
-    @XmlElement(name = "roles")
-    private List<KeystoneRole> roles;
+    
+    @JsonProperty
+    private Map<String, String> extra;
     
     public KeystoneUser() {
     	
@@ -126,6 +133,14 @@ public class KeystoneUser implements Serializable, User {
 		this.username = username;
 	}
 
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
+
 	public List<String> getRolesLinks() {
 		return rolesLinks;
 	}
@@ -139,11 +154,19 @@ public class KeystoneUser implements Serializable, User {
 	 */
 	@Override
 	public List<Role> getRoles() {
-		return (List<Role>) (List<?>) roles;
+		return roles;
 	}
 
-	public void setRoles(List<KeystoneRole> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Map<String, String> getExtra() {
+		return extra;
+	}
+
+	public void setExtra(Map<String, String> extra) {
+		this.extra = extra;
 	}
 
 	@Override

@@ -10,32 +10,27 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupList;
 
-import com.google.common.collect.Lists;
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement(name = "security_groups")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class NovaSecurityGroupList implements Serializable, SecurityGroupList {
 
 	@XmlElementWrapper(name = "security_groups")
 	@XmlElement(name = "security_group")
-	@SerializedName("security_groups")
-	private List<NovaSecurityGroup> list = new ArrayList<NovaSecurityGroup>();
+	@JsonProperty("security_groups")
+	@JsonDeserialize(as=List.class, contentAs=NovaSecurityGroup.class)
+	private List<SecurityGroup> list = new ArrayList<SecurityGroup>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.SecurityGroupList#getList()
 	 */
 	@Override
 	public List<SecurityGroup> getList() {
-		if (list == null) {
-			list = Lists.newArrayList();
-		}
-		return (List<SecurityGroup>) (List<?>) list;
+		return list;
 	}
 
 	@Override

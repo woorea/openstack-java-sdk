@@ -8,13 +8,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Service;
 
 @XmlRootElement(name="service", namespace=Namespaces.NS_OPENSTACK_IDENTITY_ADM_1_0)
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("OS-KSADM:service")
+@JsonRootName("OS-KSADM:service")
 public class KeystoneService implements Serializable, Service {
 
     @XmlAttribute

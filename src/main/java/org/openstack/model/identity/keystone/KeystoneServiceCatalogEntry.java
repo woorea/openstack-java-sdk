@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.openstack.model.identity.ServiceCatalogEntry;
 import org.openstack.model.identity.ServiceEndpoint;
-
-import com.google.gson.annotations.SerializedName;
 
 public class KeystoneServiceCatalogEntry implements Serializable, ServiceCatalogEntry {
 
@@ -19,12 +19,12 @@ public class KeystoneServiceCatalogEntry implements Serializable, ServiceCatalog
     @XmlAttribute
     private String type;
     
-	@SerializedName("endpoints")
+	
 	@XmlElement(nillable = true, name = "endpoint", type = KeystoneServiceEndpoint.class)
-	private List<KeystoneServiceEndpoint> endpoints;
+	@JsonProperty("endpoints")
+	@JsonDeserialize(as=List.class, contentAs=KeystoneServiceEndpoint.class)
+	private List<ServiceEndpoint> endpoints;
 
-	// Not sure what these are...
-	@SerializedName("endpoints_links")
 	@JsonProperty("endpoints_links")
 	private List<String> endpointsLinks;
 
@@ -60,7 +60,7 @@ public class KeystoneServiceCatalogEntry implements Serializable, ServiceCatalog
 		return (List<ServiceEndpoint>) (List<?>) endpoints;
 	}
 
-	public void setEndpoints(List<KeystoneServiceEndpoint> endpoints) {
+	public void setEndpoints(List<ServiceEndpoint> endpoints) {
 		this.endpoints = endpoints;
 	}
 

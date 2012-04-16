@@ -7,13 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
-import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="os-getVNCConsole")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("os-getVNCConsole")
+@JsonRootName("os-getVNCConsole")
 public class GetVncConsoleAction implements Serializable, ServerAction {
 
 	/**

@@ -9,27 +9,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 
 @XmlRootElement(name="volumes", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class NovaVolumeList implements Serializable, VolumeList {
 
 	@XmlElement(name="volume")
-	private List<NovaVolume> volumes = new ArrayList<NovaVolume>();
+	private List<Volume> volumes = new ArrayList<Volume>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.VolumeList#getList()
 	 */
 	@Override
 	public List<Volume> getList() {
-		return (List<Volume>) (List<?>) volumes;
+		return volumes;
 	}
 
-	public void setList(List<NovaVolume> list) {
+	public void setList(List<Volume> list) {
 		this.volumes = list;
 	}
 

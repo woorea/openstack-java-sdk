@@ -9,32 +9,27 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.compute.KeyPairList;
 import org.openstack.model.compute.KeyPairListItem;
 
-import com.google.common.collect.Lists;
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement(name = "keypairs", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class NovaKeyPairList implements Serializable, KeyPairList {
 
 	@XmlElement(name = "keypair", namespace = "")
-	@SerializedName("keypairs")
-	private List<NovaKeyPairListItem> list = new ArrayList<NovaKeyPairListItem>();
+	@JsonProperty("keypairs")
+	@JsonDeserialize(as=List.class, contentAs=NovaKeyPairListItem.class)
+	private List<KeyPairListItem> list = new ArrayList<KeyPairListItem>();
 
 	
-
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.KeyPairList#getList()
 	 */
 	@Override
 	public List<KeyPairListItem> getList() {
-		if (list == null)
-			list = Lists.newArrayList();
-		return (List<KeyPairListItem>) (List<?>) list;
+		return  list;
 	}
 
 	@Override

@@ -11,19 +11,22 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupRule;
 
 @XmlRootElement(name = "security_group")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("security_group")
+@JsonRootName("security_group")
 public class NovaSecurityGroup implements SecurityGroup, Serializable {
 
     @XmlAttribute
     protected Integer id;
 
     @XmlAttribute(name = "tenant_id")
+    @JsonProperty("tenant_id")
     protected String tenantId;
 
     // The name shifts from being an element to being an attribute; sigh
@@ -37,7 +40,8 @@ public class NovaSecurityGroup implements SecurityGroup, Serializable {
 
     @XmlElementWrapper(name = "rules")
     @XmlElement(name = "rule")
-    protected List<NovaSecurityGroupRule> rules = new ArrayList<NovaSecurityGroupRule>();
+    @JsonDeserialize(as=List.class, contentAs=NovaSecurityGroupRule.class)
+    protected List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
 
     public NovaSecurityGroup() {
 		// TODO Auto-generated constructor stub
@@ -91,12 +95,12 @@ public class NovaSecurityGroup implements SecurityGroup, Serializable {
 
 	@Override
 	public List<SecurityGroupRule> getRules() {
-		return (List<SecurityGroupRule>) (List<?>)  rules;
+		return rules;
 	}
 
 	@Override
 	public void setRules(List<SecurityGroupRule> rules) {
-		this.rules = (List<NovaSecurityGroupRule>) (List<?>) rules;
+		this.rules = rules;
 	}
 
 }

@@ -1,44 +1,42 @@
 package org.openstack.model.compute.nova.volume;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.Metadata;
-import org.openstack.model.compute.nova.NovaMetadata;
-
-import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
 
 @XmlRootElement(name = "volume", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("volume")
+@JsonRootName("volume")
 public class NovaVolumeForCreate implements Serializable, VolumeForCreate {
 
 	@XmlAttribute(name="size")
-	@SerializedName("size")
+	@JsonProperty("size")
 	private Integer sizeInGB;
 	
 	@XmlAttribute(name="availability_zone")
-	@SerializedName("availability_zone")
+	@JsonProperty("availability_zone")
 	private String availabilityZone;
 	
 	@XmlAttribute(name="display_name")
-	@SerializedName("display_name")
+	@JsonProperty("display_name")
 	private String name;
 	
 	@XmlAttribute(name="display_description")
-	@SerializedName("display_description")
+	@JsonProperty("display_description")
 	private String description;
 	
-	@SerializedName("snapshot_id")
+	@JsonProperty("snapshot_id")
 	private Integer snapshotId;
 	
-	private NovaMetadata metadata;
+	private Map<String, String> metadata;
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.volume.VolumeForCreate#getSizeInGB()
@@ -104,12 +102,12 @@ public class NovaVolumeForCreate implements Serializable, VolumeForCreate {
 	 * @see org.openstack.model.compute.Volume#getMetadata()
 	 */
 	@Override
-	public Metadata getMetadata() {
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
-		this.metadata = (NovaMetadata) metadata;
+	public void setMetadata(Map<String, String> metadata) {
+		this.metadata = metadata;
 	}
 
 	@Override

@@ -9,27 +9,27 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotList;
 
 @XmlRootElement(name="snapshots", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class NovaSnapshotList implements Serializable, SnapshotList {
 
 	@XmlElement(name="snapshot")
-	private List<NovaSnapshot> snapshots = new ArrayList<NovaSnapshot>();
+	@JsonDeserialize(as=List.class, contentAs=NovaSnapshot.class)
+	private List<Snapshot> snapshots = new ArrayList<Snapshot>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.SnapshotList#getList()
 	 */
 	@Override
 	public List<Snapshot> getList() {
-		return (List<Snapshot>) (List<?>) snapshots;
+		return snapshots;
 	}
 
-	public void setList(List<NovaSnapshot> snapshots) {
+	public void setList(List<Snapshot> snapshots) {
 		this.snapshots = snapshots;
 	}
 	

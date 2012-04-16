@@ -10,31 +10,30 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.atom.Link;
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
 
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement(name = "tenants")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class KeystoneTenantList implements Serializable, TenantList {
 	
 	@XmlElement(name = "tenant", type = KeystoneTenant.class)
-	@SerializedName("tenants")
-	private List<KeystoneTenant> tenants;
+	@JsonProperty("tenants")
+	@JsonDeserialize(as=List.class, contentAs=KeystoneTenant.class)
+	private List<Tenant> tenants;
 	
-	@SerializedName("tenants_links")
+	@JsonProperty("tenants_links")
 	private List<Link> links;
 	
 	public KeystoneTenantList() {
-		tenants = new ArrayList<KeystoneTenant>();
+		tenants = new ArrayList<Tenant>();
 	}
 
 	public KeystoneTenantList(Collection<KeystoneTenant> collection) {
-		this.tenants = new ArrayList<KeystoneTenant>(collection);
+		this.tenants = new ArrayList<Tenant>(collection);
 	}
 
 
@@ -43,11 +42,11 @@ public class KeystoneTenantList implements Serializable, TenantList {
 	 */
 	@Override
 	public List<Tenant> getList() {
-		return (List<Tenant>) (List<?>) tenants;
+		return tenants;
 	}
 
 	
-	public void setList(List<KeystoneTenant> list) {
+	public void setList(List<Tenant> list) {
 		this.tenants = list;
 	}
 	

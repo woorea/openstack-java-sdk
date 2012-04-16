@@ -7,30 +7,29 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.SnapshotForCreate;
-
-import com.google.gson.annotations.SerializedName;
 
 
 @XmlRootElement(namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("snapshot")
+@JsonRootName("snapshot")
 public class NovaSnapshotForCreate implements Serializable, SnapshotForCreate {
 	
 	@XmlAttribute(name="volume_id")
-	@SerializedName("volume_id")
+	@JsonProperty("volume_id")
 	private Integer volumeId;
 	
 	@XmlAttribute
 	private Boolean force;
 	
 	@XmlAttribute(name="display_name")
-	@SerializedName("display_name")
+	@JsonProperty("display_name")
 	private String name;
 	
 	@XmlAttribute(name="display_description")
-	@SerializedName("display_description")
+	@JsonProperty("display_description")
 	private String description;
 
 	/* (non-Javadoc)

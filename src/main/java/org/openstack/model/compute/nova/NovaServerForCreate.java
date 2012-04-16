@@ -14,15 +14,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerForCreate;
 
 import com.google.common.collect.Lists;
-import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("server")
+@JsonRootName("server")
 public class NovaServerForCreate implements Serializable, ServerForCreate {
 
 	@XmlType
@@ -108,13 +108,13 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 	private String zone;
 
 	@XmlAttribute(name="key_name")
-	@SerializedName("key_name")
+	@JsonProperty("key_name")
 	private String keyName;
 
 	// We have a problem here - config_drive can be both a boolean and an image ref...
 	// But booleans can't be quoted!
 	@XmlAttribute(name="config_drive")
-	@SerializedName("config_drive")
+	@JsonProperty("config_drive")
 	private boolean configDrive;
 
 	@XmlElementWrapper(name="metatadata")

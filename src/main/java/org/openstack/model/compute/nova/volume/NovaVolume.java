@@ -1,6 +1,7 @@
 package org.openstack.model.compute.nova.volume;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,17 +9,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.Metadata;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.Volume;
-import org.openstack.model.compute.nova.NovaMetadata;
-
-import com.google.gson.annotations.SerializedName;
 
 
 @XmlRootElement(name = "volume", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("volume")
+@JsonRootName("volume")
 public class NovaVolume implements Serializable, Volume {
 	
 	@XmlAttribute
@@ -28,32 +26,32 @@ public class NovaVolume implements Serializable, Volume {
 	private String status;
 
 	@XmlAttribute(name="size")
-	@SerializedName("size")
+	@JsonProperty("size")
 	private Integer sizeInGB;
 	
 	@XmlAttribute(name="availabilityZone")
 	private String availabilityZone;
 	
 	@XmlAttribute(name="volumeType")
-	@SerializedName("volumeType")
+	@JsonProperty("volumeType")
 	private String type;
 	
 	@XmlAttribute(name="createdAt")
 	private String created;
 	
 	@XmlAttribute(name="displayName")
-	@SerializedName("displayName")
+	@JsonProperty("displayName")
 	private String name;
 	
 	@XmlAttribute(name="displayDescription")
-	@SerializedName("displayDescription")
+	@JsonProperty("displayDescription")
 	private String description;
 	
 	@XmlAttribute(name="snapshotId")
 	private Integer snapshotId;
 	
 	@XmlElement(name="metadata")
-	private NovaMetadata metadata;
+	private Map<String, String> metadata;
 	
 	public NovaVolume() {
 		
@@ -177,11 +175,11 @@ public class NovaVolume implements Serializable, Volume {
 	 * @see org.openstack.model.compute.Volume#getMetadata()
 	 */
 	@Override
-	public Metadata getMetadata() {
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(NovaMetadata metadata) {
+	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
 

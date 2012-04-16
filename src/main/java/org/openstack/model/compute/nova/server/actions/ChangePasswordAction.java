@@ -7,13 +7,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="changePassword")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("changePassword")
+@JsonRootName("changePassword")
 public class ChangePasswordAction implements Serializable, ServerAction {
 
 	@XmlAttribute(required=true)

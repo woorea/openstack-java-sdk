@@ -1,8 +1,7 @@
-package org.openstack.model.identity.keystone;
+package org.openstack.model.identity;
 
 import java.util.List;
 
-import org.openstack.model.identity.ServiceEndpoint;
 
 public interface ServiceCatalogEntry {
 

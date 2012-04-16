@@ -6,13 +6,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 
 @XmlRootElement(name="resume")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("resume")
+@JsonRootName("resume")
 public class ResumeAction implements Serializable, ServerAction {
 	
 	@Override

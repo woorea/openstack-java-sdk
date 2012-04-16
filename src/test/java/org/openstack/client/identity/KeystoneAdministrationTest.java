@@ -53,7 +53,7 @@ public class KeystoneAdministrationTest extends AbstractOpenStackTest {
 	@Test(priority = 2)
 	public void createUser() {
 		KeystoneUser ksu = new KeystoneUser();
-		ksu.setName("test");
+		ksu.setName("test2");
 		ksu.setPassword("secret0");
 		ksu.setEmail("test@test.com");
 		ksu.setEnabled(true);

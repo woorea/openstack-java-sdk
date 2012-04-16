@@ -1,6 +1,6 @@
 package org.openstack.model.compute.nova.volume;
 
-import org.openstack.model.compute.Metadata;
+import java.util.Map;
 
 public interface VolumeForCreate {
 
@@ -32,9 +32,9 @@ public interface VolumeForCreate {
 	
 	void setDescription(String description);
 
-	Metadata getMetadata();
+	Map<String, String> getMetadata();
 	
-	void setMetadata(Metadata metadata);
+	void setMetadata(Map<String, String> metadata);
 
 	Integer getSnapshotId();
 	

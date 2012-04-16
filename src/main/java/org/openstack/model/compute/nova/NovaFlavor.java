@@ -1,29 +1,28 @@
 package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.namespace.QName;
 
+import org.codehaus.jackson.annotate.JsonAnyGetter;
+import org.codehaus.jackson.annotate.JsonAnySetter;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.atom.Link;
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Flavor;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name="flavor")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("flavor")
 @JsonRootName("flavor")
 public class NovaFlavor implements Serializable, Flavor {
 
@@ -43,14 +42,13 @@ public class NovaFlavor implements Serializable, Flavor {
     private String swap;
 
     @XmlAttribute(name = "rxtx_factor")
-    @SerializedName("rxtx_factor")
+    @JsonProperty("rxtx_factor")
     private float rxTxFactor;
 
     @XmlAttribute
     private int disk;
     
-    @XmlAnyAttribute
-    private Map<QName, Object> extensionAttributes;
+    private Map<String, String> extensions = new HashMap<String, String>();
 
     @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
 	private List<Link> links;
@@ -159,6 +157,16 @@ public class NovaFlavor implements Serializable, Flavor {
     public void setLinks(List<Link> links) {
         this.links = links;
     }
+
+	@JsonAnyGetter
+	public Map<String, String> getExtensions() {
+		return extensions;
+	}
+
+	@JsonAnySetter 
+	public void put(String key, String value) {
+	      extensions.put(key, value);
+	}
     
     @Override
 	public String toString() {

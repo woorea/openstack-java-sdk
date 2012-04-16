@@ -7,13 +7,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.ServerAction;
-import org.openstack.model.compute.nova.NovaServer;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @XmlRootElement(name="console", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("console")
+@JsonRootName("console")
 public class Console implements Serializable {
 
 	@XmlElement

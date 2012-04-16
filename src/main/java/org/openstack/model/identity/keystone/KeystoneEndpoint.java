@@ -2,28 +2,27 @@ package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.identity.Endpoint;
 
-import com.google.gson.annotations.SerializedName;
-
-@JsonRootElement("endpoint")
+@JsonRootName("endpoint")
 public class KeystoneEndpoint implements Endpoint, Serializable {
 	
 	private String id;
 	
 	private String region;
 	
-	@SerializedName("service_id")
+	@JsonProperty("service_id")
 	private String serviceId;
 	
-	@SerializedName("publicurl")
+	@JsonProperty("publicurl")
 	private String publicURL;
 	
-	@SerializedName("adminurl")
+	@JsonProperty("adminurl")
 	private String adminURL;
 	
-	@SerializedName("internalurl")
+	@JsonProperty("internalurl")
 	private String internalURL;
 	
 	public KeystoneEndpoint() {

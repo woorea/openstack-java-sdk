@@ -8,14 +8,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.SecurityGroupRule;
-
-import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "security_group_rule")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("security_group_rule")
+@JsonRootName("security_group_rule")
 public class NovaSecurityGroupRule implements SecurityGroupRule, Serializable {
 
     @XmlAccessorType(XmlAccessType.NONE)
@@ -78,23 +77,23 @@ public class NovaSecurityGroupRule implements SecurityGroupRule, Serializable {
     private String name;
 
     @XmlElement(name = "parent_group_id", required = true)
-    @SerializedName("parent_group_id")
+    @JsonProperty("parent_group_id")
     private Integer parentGroupId;
 
     @XmlElement(name = "from_port")
-    @SerializedName("from_port")
+    @JsonProperty("from_port")
     private Integer fromPort;
 
     @XmlElement(name = "to_port")
-    @SerializedName("to_port")
+    @JsonProperty("to_port")
     private Integer toPort;
 
     @XmlElement(name = "ip_protocol")
-    @SerializedName("ip_protocol")
+    @JsonProperty("ip_protocol")
     private String ipProtocol;
 
     @XmlElement(name = "ip_range")
-    @SerializedName("ip_range")
+    @JsonProperty("ip_range")
     private IpRange ipRange = new IpRange();
 
     @XmlElement

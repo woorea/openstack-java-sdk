@@ -2,9 +2,9 @@ package org.openstack.model.compute.nova.volume;
 
 import java.io.Serializable;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
-@JsonRootElement("volumeAttachment")
+@JsonRootName("volumeAttachment")
 public class NovaVolumeAttachment implements Serializable {
 
 	private Integer volumeId;

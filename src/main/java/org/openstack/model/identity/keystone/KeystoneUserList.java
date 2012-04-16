@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserList;
 
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class KeystoneUserList implements Serializable, UserList {
 
 	@XmlElement(name = "user", type = KeystoneUser.class)
-	private List<KeystoneUser> users;
+	@JsonDeserialize(as=List.class, contentAs=KeystoneUser.class)
+	private List<User> users;
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.UserList#getList()
@@ -28,7 +28,7 @@ public class KeystoneUserList implements Serializable, UserList {
 		return (List<User>) (List<?>) users;
 	}
 
-	public void setList(List<KeystoneUser> list) {
+	public void setList(List<User> list) {
 		this.users = list;
 	}
 

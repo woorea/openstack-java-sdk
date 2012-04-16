@@ -10,10 +10,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.atom.Link;
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Image;
 
 import com.google.common.base.Predicate;
@@ -21,7 +19,6 @@ import com.google.common.collect.Iterables;
 
 @XmlRootElement(name="image")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("image")
 @JsonRootName("image")
 public class NovaImage implements Serializable, Image {
 

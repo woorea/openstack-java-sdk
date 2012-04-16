@@ -15,7 +15,6 @@ import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
 import org.glassfish.jersey.media.json.JsonFeature;
-import org.openstack.model.common.JsonRootElement;
 
 public enum RestClient {
 

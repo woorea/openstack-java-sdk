@@ -8,17 +8,16 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.namespace.QName;
 
 import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.codehaus.jackson.annotate.JsonAnySetter;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.atom.Link;
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.compute.Fault;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
@@ -27,11 +26,10 @@ import org.openstack.model.compute.nova.NovaAddressList.Network;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("server")
+@JsonRootName("server")
 public class NovaServer implements Serializable, Server {
 
 	@XmlAttribute
@@ -53,11 +51,11 @@ public class NovaServer implements Serializable, Server {
 	private String hostId;
 
 	@XmlAttribute
-	@SerializedName("user_id")
+	@JsonProperty("user_id")
 	private String userId;
 
 	@XmlAttribute
-	@SerializedName("tenant_id")
+	@JsonProperty("tenant_id")
 	private String tenantId;
 
 	@XmlAttribute
@@ -65,9 +63,6 @@ public class NovaServer implements Serializable, Server {
 
 	@XmlAttribute
 	private String accessIPv6;
-	
-	@XmlAnyAttribute
-	private Map<QName, String> extensionAttributes;
 
 	@XmlAttribute
 	private String adminPass;
@@ -76,10 +71,11 @@ public class NovaServer implements Serializable, Server {
 	private String progress;
 
 	@XmlAttribute(name = "config_drive")
+	@JsonProperty("config_drive")
 	private String configDrive;
 
 	@XmlAttribute(name = "key_name")
-	@SerializedName("key_name")
+	@JsonProperty("key_name")
 	private String keyName;
 
 	@XmlElement(name = "image")
@@ -87,10 +83,12 @@ public class NovaServer implements Serializable, Server {
 	private Image image;
 
 	@XmlElement(name = "flavor")
-	private NovaFlavor flavor;
+	@JsonDeserialize(as=NovaFlavor.class)
+	private Flavor flavor;
 
 	@XmlElement(name = "fault")
-	private NovaFault fault;
+	@JsonDeserialize(as=NovaFault.class)
+	private Fault fault;
 
 	@XmlElement(name = "metadata")
 	private Map<String, String> metadata;
@@ -360,38 +358,6 @@ public class NovaServer implements Serializable, Server {
 	public void setAddresses(Map<String, List<Network.Ip>> addresses) {
 		this.addresses = addresses;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Server#getExtensionAttributes()
-	 */
-	@Override
-	public Map<QName, String> getExtensionAttributes() {
-		return extensionAttributes;
-	}
-
-	public void setExtensionAttributes(Map<QName, String> extensionAttributes) {
-		this.extensionAttributes = extensionAttributes;
-	}
-
-	/*
-	@XmlAnyAttribute
-	public Map<QName, String> getExtensionAttributes() {
-		Map<QName, String> transform = new HashMap<QName, String>();
-		for(Map.Entry<String, String> entry : extensionAttributes.entrySet()) {
-			
-		}
-		return transform;
-	}
-
-	public void setExtensionAttributes(Map<QName, String> extensionAttributes) {
-		Map<String, String> transform = new HashMap<String, String>();
-		for(Map.Entry<QName, String> entry : extensionAttributes.entrySet()) {
-			
-		}
-		this.extensionAttributes = transform;
-	}
-	*/
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Server#getLinks()

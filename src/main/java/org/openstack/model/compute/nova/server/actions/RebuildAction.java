@@ -2,6 +2,7 @@ package org.openstack.model.compute.nova.server.actions;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,15 +11,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
-import org.openstack.model.compute.Metadata;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 
 @XmlRootElement(name="rebuild")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("rebuild")
+@JsonRootName("rebuild")
 public class RebuildAction implements Serializable, ServerAction {
 
 	@XmlAttribute
@@ -28,7 +28,7 @@ public class RebuildAction implements Serializable, ServerAction {
 	private String autoDiskConfig;
 	
 	@XmlElement
-	private Metadata metadata;
+	private Map<String, String> metadata;
 	
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name = "file")
@@ -53,11 +53,11 @@ public class RebuildAction implements Serializable, ServerAction {
 		this.autoDiskConfig = autoDiskConfig;
 	}
 
-	public Metadata getMetadata() {
+	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
+	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
 

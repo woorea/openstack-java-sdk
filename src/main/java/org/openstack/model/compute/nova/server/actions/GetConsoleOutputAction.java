@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 
 @XmlRootElement(name="os-getConsoleOutput")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("os-getConsoleOutput")
+@JsonRootName("os-getConsoleOutput")
 public class GetConsoleOutputAction implements Serializable, ServerAction {
 
 	@XmlElement(required=true)

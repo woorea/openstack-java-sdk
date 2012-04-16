@@ -1,6 +1,8 @@
 package org.openstack.model.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,9 +10,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.openstack.model.atom.Link;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("extension")
+@JsonRootName("extension")
 public class Extension implements Serializable {
 
     @XmlAttribute
@@ -27,6 +32,8 @@ public class Extension implements Serializable {
 
     @XmlElement
     private String description;
+    
+    private List<Link> links = new ArrayList<Link>();
 
     public String getAlias() {
         return alias;
@@ -68,7 +75,15 @@ public class Extension implements Serializable {
         this.description = description;
     }
 
-    @Override
+    public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+
+	@Override
     public String toString() {
         return "Extension [alias=" + alias + ", updated=" + updated + ", namespace=" + namespace + ", name=" + name + ", description=" + description + "]";
     }

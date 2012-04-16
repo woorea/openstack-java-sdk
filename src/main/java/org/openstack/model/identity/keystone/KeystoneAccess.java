@@ -16,21 +16,19 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
-import org.openstack.model.common.JsonRootElement;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.identity.Access;
+import org.openstack.model.identity.ServiceCatalogEntry;
 import org.openstack.model.identity.ServiceEndpoint;
 import org.openstack.model.identity.Token;
 import org.openstack.model.identity.User;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.google.gson.annotations.SerializedName;
 
 @XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
 @XmlRootElement(name = "access")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement("access")
 @JsonRootName("access")
 public class KeystoneAccess implements Serializable, Access {
     
@@ -39,10 +37,9 @@ public class KeystoneAccess implements Serializable, Access {
     
     @XmlElementWrapper(name = "serviceCatalog")
     @XmlElement(name = "service", type = KeystoneService.class)
-    @SerializedName("serviceCatalog")
     @JsonProperty("serviceCatalog")
     @JsonDeserialize(as=List.class, contentAs=KeystoneServiceCatalogEntry.class)
-	private List<KeystoneServiceCatalogEntry> services = new ArrayList<KeystoneServiceCatalogEntry>();
+	private List<ServiceCatalogEntry> services = new ArrayList<ServiceCatalogEntry>();
 
     @XmlElement(type = KeystoneUser.class)
     private KeystoneUser user;
@@ -65,10 +62,10 @@ public class KeystoneAccess implements Serializable, Access {
 	@Override
 	
 	public List<ServiceCatalogEntry> getServices() {
-		return (List<ServiceCatalogEntry>) (List<?>) services;
+		return services;
 	}
 	
-	public void setServices(List<KeystoneServiceCatalogEntry> services) {
+	public void setServices(List<ServiceCatalogEntry> services) {
 		this.services = services;
 	}
 

@@ -8,29 +8,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.storage.StorageAccount;
 import org.openstack.model.storage.StorageContainer;
 
-import com.google.common.collect.Lists;
-
 @XmlRootElement(name = "account")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class SwiftAccount implements StorageAccount {
 	
 	@XmlElement(name="container")
-	private List<SwiftContainer> containers = new ArrayList<SwiftContainer>();
+	@JsonDeserialize(as=List.class, contentAs=SwiftContainer.class)
+	private List<StorageContainer> containers = new ArrayList<StorageContainer>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.storage.swift.Account#getContainers()
 	 */
 	@Override
 	public List<StorageContainer> getContainers() {
-		if (containers == null) {
-			containers = Lists.newArrayList();
-		}
-		return (List<StorageContainer>) (List<?>) containers;
+		return containers;
 	}
 
 	@Override

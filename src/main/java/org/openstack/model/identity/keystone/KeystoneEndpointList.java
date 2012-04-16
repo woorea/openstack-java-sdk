@@ -4,24 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.EndpointList;
 
-@JsonRootElement()
 public class KeystoneEndpointList implements EndpointList, Serializable {
 
-	private List<KeystoneEndpoint> endpoints = new ArrayList<KeystoneEndpoint>();
+	@JsonDeserialize(as=List.class, contentAs=KeystoneEndpoint.class)
+	private List<Endpoint> endpoints = new ArrayList<Endpoint>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.identity.keystone.EndpointList#getList()
 	 */
 	@Override
 	public List<Endpoint> getList() {
-		return (List<Endpoint>) (List<?>) endpoints;
+		return endpoints;
 	}
 
-	public void setList(List<KeystoneEndpoint> endpoints) {
+	public void setList(List<Endpoint> endpoints) {
 		this.endpoints = endpoints;
 	}
 	

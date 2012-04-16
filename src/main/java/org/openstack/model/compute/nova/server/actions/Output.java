@@ -7,14 +7,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.openstack.model.common.JsonRootElement;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 @XmlRootElement(name="output", namespace="")
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonRootElement()
 public class Output implements Serializable {
 
 	@XmlValue
+	@JsonProperty
 	private String output;
 
 	public String getOutput() {
