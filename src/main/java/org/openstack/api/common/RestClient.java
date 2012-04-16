@@ -88,6 +88,7 @@ public enum RestClient {
     		objectMapper = new ObjectMapper();
     		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
     		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+    		objectMapper.configure(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             AnnotationIntrospector introspector = new JacksonAnnotationIntrospector();
             objectMapper.setDeserializationConfig(objectMapper.getDeserializationConfig().withAnnotationIntrospector(introspector));
             objectMapper.setSerializationConfig(objectMapper.getSerializationConfig().withSerializationInclusion(Inclusion.NON_NULL).withAnnotationIntrospector(introspector));

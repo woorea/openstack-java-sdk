@@ -18,6 +18,14 @@ public class ChangePasswordAction implements Serializable, ServerAction {
 
 	@XmlAttribute(required=true)
 	private String adminPass;
+	
+	public ChangePasswordAction() {
+		
+	}
+
+	public ChangePasswordAction(String adminPass) {
+		this.adminPass = adminPass;
+	}
 
 	public String getAdminPass() {
 		return adminPass;

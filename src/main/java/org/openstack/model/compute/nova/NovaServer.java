@@ -296,17 +296,6 @@ public class NovaServer implements Serializable, Server {
 		return image;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.Server#getImageId()
-	 */
-	@Override
-	public String getImageId() {
-		if (image != null) {
-			return image.getId();
-		}
-		return null;
-	}
-
 	public void setImage(NovaImage image) {
 		this.image = image;
 	}

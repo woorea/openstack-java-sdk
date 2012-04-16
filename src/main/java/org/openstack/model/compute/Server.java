@@ -39,8 +39,6 @@ public interface Server {
 
 	Image getImage();
 
-	String getImageId();
-
 	Flavor getFlavor();
 
 	Fault getFault();

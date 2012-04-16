@@ -1,6 +1,8 @@
 package org.openstack.model.compute.nova.server.actions;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,19 @@ import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 
+/**
+ * The rebuild operation removes all data on the server and replaces it with the specified image. 
+ * 
+ * The serverRef and all IP addresses will remain the same. 
+ * 
+ * If name, metadata, accessIPv4, or accessIPv6 are specified, they will replace existing values, otherwise they do not change.
+ * 
+ * A rebuild operation always removes data injected into the file system through server personality. 
+ * 
+ * You can reinsert data into the file system during the rebuild.
+ * @author luis@woorea.es
+ *
+ */
 @XmlRootElement(name="rebuild")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootName("rebuild")
@@ -25,14 +40,14 @@ public class RebuildAction implements Serializable, ServerAction {
 	private String name;
 	
 	@XmlAttribute(name="auto_disk_config")
-	private String autoDiskConfig;
+	private boolean autoDiskConfig;
 	
 	@XmlElement
-	private Map<String, String> metadata;
+	private Map<String, String> metadata = new HashMap<String, String>();
 	
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name = "file")
-	private List<NovaServerForCreate.File> personality;
+	private List<NovaServerForCreate.File> personality = new ArrayList<NovaServerForCreate.File>();
 	
 	@XmlElement
 	private String imageRef;
@@ -45,11 +60,11 @@ public class RebuildAction implements Serializable, ServerAction {
 		this.name = name;
 	}
 
-	public String getAutoDiskConfig() {
+	public boolean getAutoDiskConfig() {
 		return autoDiskConfig;
 	}
 
-	public void setAutoDiskConfig(String autoDiskConfig) {
+	public void setAutoDiskConfig(boolean autoDiskConfig) {
 		this.autoDiskConfig = autoDiskConfig;
 	}
 
