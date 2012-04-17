@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -18,8 +20,8 @@ import org.openstack.model.compute.nova.keypair.NovaKeyPairList;
  */
 public class KeyPairsResource extends Resource {
 	
-	public KeyPairsResource(Target target) {
-		super(target);
+	public KeyPairsResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	/**
@@ -47,7 +49,7 @@ public class KeyPairsResource extends Resource {
 	}
 
 	public KeyPairResource keypair(String name) {
-		return new KeyPairResource(target.path("/{name}").pathParam("name", name));
+		return new KeyPairResource(target.path("/{name}").pathParam("name", name), properties);
 	}
 
 	

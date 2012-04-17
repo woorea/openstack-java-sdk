@@ -1,5 +1,7 @@
 package org.openstack.api.identity.admin.resources;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.Response;
@@ -10,8 +12,8 @@ import org.openstack.model.identity.keystone.KeystoneService;
 
 public class ServiceResource extends Resource {
 
-	public ServiceResource(Target target) {
-		super(target);
+	public ServiceResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 

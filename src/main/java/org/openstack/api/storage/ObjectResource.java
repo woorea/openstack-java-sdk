@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -35,8 +36,8 @@ public class ObjectResource  extends Resource {
 	private TenantResource t = null; //new TenantResource();
 	
 	
-	public ObjectResource(Target target) {
-		super(target);
+	public ObjectResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public StorageObjectProperties head() {

@@ -2,6 +2,7 @@ package org.openstack.api.compute.ext;
 
 
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -12,8 +13,8 @@ import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 
 public class SecurityGroupResource extends Resource  {
 	
-	public SecurityGroupResource(Target target) {
-		super(target);
+	public SecurityGroupResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public SecurityGroup get() {

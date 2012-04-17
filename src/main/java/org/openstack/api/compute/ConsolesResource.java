@@ -1,5 +1,7 @@
 package org.openstack.api.compute;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -12,8 +14,8 @@ import org.openstack.model.compute.nova.NovaConsoleList;
 
 public class ConsolesResource extends Resource {
 	
-	public ConsolesResource(Target target) {
-		super(target);
+	public ConsolesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public ConsoleList get() {
@@ -26,7 +28,7 @@ public class ConsolesResource extends Resource {
 	}
 	
 	public ConsoleResource console(String id) {
-		return new ConsoleResource(target.path("/{id}").pathParam("id", id));
+		return new ConsoleResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 
 }

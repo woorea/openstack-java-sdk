@@ -24,7 +24,9 @@ import com.google.common.base.Preconditions;
 
 public class OpenStackClient {
 	
-	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(OpenStackClient.class.getPackage().getName()),true);
+	//private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(OpenStackClient.class.getPackage().getName()),false);
+	
+	//private LoggingFilter loggingEntityFilter = new LoggingFilter(Logger.getLogger(OpenStackClient.class.getPackage().getName()),true);
 	
 	private Properties properties;
 
@@ -170,13 +172,10 @@ public class OpenStackClient {
 	private <T extends Resource> T target(String absoluteURL, Class<T> clazz, boolean useAdministrationToken) {
 		try {
 			Target target = RestClient.INSTANCE.getJerseyClient().target(absoluteURL);
-			if(Boolean.parseBoolean(properties.getProperty("verbose"))) {
-				target.configuration().register(loggingFilter);
-			}
 			if (access != null) {
 				target.configuration().register(useAdministrationToken ? authAsAdministratorFilter : authFilter);
 			}
-			return clazz.getConstructor(Target.class).newInstance(target);
+			return clazz.getConstructor(Target.class, Properties.class).newInstance(target, properties);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}

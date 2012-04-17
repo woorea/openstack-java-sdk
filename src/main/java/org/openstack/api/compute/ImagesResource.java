@@ -1,5 +1,7 @@
 package org.openstack.api.compute;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -9,8 +11,8 @@ import org.openstack.model.compute.nova.NovaImageList;
 
 public class ImagesResource extends Resource {
 	
-	public ImagesResource(Target target) {
-		super(target);
+	public ImagesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
     public ImageList get() { 
@@ -18,7 +20,7 @@ public class ImagesResource extends Resource {
 	}
 
     public ImageResource image(String id) {
-    	return new ImageResource(target.path("/{id}").pathParam("id", id));
+    	return new ImageResource(target.path("/{id}").pathParam("id", id), properties);
     }
 
 	

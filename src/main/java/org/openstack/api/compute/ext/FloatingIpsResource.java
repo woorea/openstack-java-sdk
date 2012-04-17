@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -19,8 +21,8 @@ import org.openstack.model.compute.nova.floatingip.NovaFloatingIpList;
 // TODO: Is this an OpenStack bug or an HP bug?
 public class FloatingIpsResource extends Resource {
 
-	public FloatingIpsResource(Target target) {
-		super(target);
+	public FloatingIpsResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	/**
@@ -37,7 +39,7 @@ public class FloatingIpsResource extends Resource {
 	}
 	
 	public FloatingIpResource floatingIp(Integer id) {
-		return new FloatingIpResource(target.path("/{id}").pathParam("id", id));
+		return new FloatingIpResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 
 }

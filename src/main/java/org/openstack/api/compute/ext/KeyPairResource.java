@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
@@ -12,8 +14,8 @@ import org.openstack.api.common.Resource;
  */
 public class KeyPairResource extends Resource {
 	
-	public KeyPairResource(Target target) {
-		super(target);
+	public KeyPairResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 

@@ -1,6 +1,7 @@
 package org.openstack.api.compute;
 
 import java.util.Map;
+import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
@@ -45,8 +46,8 @@ public class ServerResource extends Resource {
 
 	public static class IpsResource extends Resource {
 		
-		public IpsResource(Target target) {
-			super(target);
+		public IpsResource(Target target, Properties properties) {
+			super(target, properties);
 		}
 
 		public String get(Map<String, Object> properties, String networkId) {
@@ -55,8 +56,8 @@ public class ServerResource extends Resource {
 
 	}
 
-	public ServerResource(Target target) {
-		super(target);
+	public ServerResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public Server get() {

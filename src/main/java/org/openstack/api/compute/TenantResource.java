@@ -1,8 +1,12 @@
 package org.openstack.api.compute;
 
+import java.util.Properties;
+import java.util.logging.Logger;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.KeyPairsResource;
@@ -21,12 +25,17 @@ import org.openstack.api.compute.notavailable.NetworksResource;
 
 public class TenantResource extends Resource {
 	
-	public TenantResource(Target target) {
-		super(target);
+	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(TenantResource.class.getPackage().getName()),true);
+	
+	public TenantResource(Target target, Properties properties) {
+		super(target, properties);
+		if(Boolean.parseBoolean(properties.getProperty("verbose"))) {
+			target.configuration().register(loggingFilter);
+		}
 	}
 	
-	public static TenantResource endpoint(Client client, String tenantEndpoint) {
-		return new TenantResource(client.target(tenantEndpoint));
+	public static TenantResource endpoint(Client client, String tenantEndpoint, Properties properties) {
+		return new TenantResource(client.target(tenantEndpoint), properties);
 	}
 
 	public ServersResource servers() {

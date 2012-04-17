@@ -1,5 +1,7 @@
 package org.openstack.api.compute;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -9,8 +11,8 @@ import org.openstack.model.compute.nova.NovaConsole;
 
 public class ConsoleResource extends Resource {
 
-	public ConsoleResource(Target target) {
-		super(target);
+	public ConsoleResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public Console get() {

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
@@ -11,7 +13,9 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.io.IOUtils;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
+import org.openstack.api.compute.TenantResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
@@ -20,8 +24,10 @@ import org.openstack.model.images.glance.GlanceImageList;
 
 public class ImagesResource extends Resource {
 	
-	public ImagesResource(Target target) {
-		super(target);
+	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(TenantResource.class.getPackage().getName()),false);
+	
+	public ImagesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public ImageList get() {
@@ -29,7 +35,7 @@ public class ImagesResource extends Resource {
 	}
 
     public ImageResource image(String id) {
-    	return new ImageResource(target.path("/{id}").pathParam("id", id));
+    	return new ImageResource(target.path("/{id}").pathParam("id", id), properties);
     }
 
 	public Image post(File imageFile, Image imageProperties) throws IOException, OpenstackException {

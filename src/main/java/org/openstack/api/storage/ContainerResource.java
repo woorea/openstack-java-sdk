@@ -1,6 +1,7 @@
 package org.openstack.api.storage;
 
 import java.util.List;
+import java.util.Properties;
 
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.Target;
@@ -24,8 +25,8 @@ public class ContainerResource extends Resource {
 	// DELETE /account/container Delete container
 	// HEAD /account/container Retrieve container metadata
 	
-	public ContainerResource(Target target) {
-		super(target);
+	public ContainerResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public List<SwiftStorageObject> get() {
@@ -80,7 +81,7 @@ public class ContainerResource extends Resource {
 	}
 
 	public ObjectResource object(String name) {
-		return new ObjectResource(target.path("/{name}").pathParam("name", name));
+		return new ObjectResource(target.path("/{name}").pathParam("name", name), properties);
 	}
 
 	

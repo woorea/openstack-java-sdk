@@ -1,5 +1,7 @@
 package org.openstack.api.identity.admin.resources;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -12,8 +14,8 @@ import org.openstack.model.identity.keystone.KeystoneEndpointList;
 
 public class EndpointsResource extends Resource {
 	
-	public EndpointsResource(Target target) {
-		super(target);
+	public EndpointsResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public EndpointList get() {
@@ -25,7 +27,7 @@ public class EndpointsResource extends Resource {
 	}
 
 	public EndpointResource endpoint(String id) {
-		return new EndpointResource(target.path("/{id}").pathParam("id", id));
+		return new EndpointResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 
 }

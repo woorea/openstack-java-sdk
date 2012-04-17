@@ -1,13 +1,15 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 
 import org.openstack.api.common.Resource;
 
 public class SecurityGroupRuleResource extends Resource {
 
-	public SecurityGroupRuleResource(Target target) {
-		super(target);
+	public SecurityGroupRuleResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public void delete() {

@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -19,8 +21,8 @@ import org.openstack.model.compute.nova.volume.VolumeForCreate;
  */
 public class VolumesResource extends Resource {
 	
-	public VolumesResource(Target target) {
-		super(target);
+	public VolumesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	/**
@@ -43,7 +45,7 @@ public class VolumesResource extends Resource {
 	}
 
 	public VolumeResource volume(Integer id) {
-		return new VolumeResource(target.path("/{volumeId}").pathParam("volumeId", id));
+		return new VolumeResource(target.path("/{volumeId}").pathParam("volumeId", id), properties);
 	}
 
 }

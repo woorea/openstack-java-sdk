@@ -32,28 +32,10 @@ public enum RestClient {
 		
 		client.configuration().register(OpenStackObjectMapperProvider.class);
 		
-		//client.configuration().enable(JsonFeature.getInstance());
-		
-		//client.configuration().register(GsonProvider.class);
-		
 		//client.configuration().register(JaxbContextResolver.class);
-		
-		//client.configuration().register(ObjectMapperProvider.class);
 		
 		//client.configuration().register(OpenstackJaxbContext.class);
 		
-		/*
-        ObjectMapper objectMapper = buildObjectMapper();
-        if (objectMapper != null) {
-        	OpenstackSerializationModule simpleModule = new OpenstackSerializationModule();
-            objectMapper.registerModule(simpleModule);
-        	client.configuration().register(new ObjectMapperProvider(objectMapper));
-        }
-       
-        
-        
-        client.configuration().register(KnownLengthInputStreamProvider.class);
-         */
 	}
 	
 	public Client getJerseyClient() {

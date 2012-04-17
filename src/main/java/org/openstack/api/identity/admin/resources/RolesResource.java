@@ -1,4 +1,6 @@
 package org.openstack.api.identity.admin.resources;
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 
@@ -10,8 +12,8 @@ import org.openstack.model.identity.keystone.KeystoneRoleList;
 
 public class RolesResource extends Resource {
 	
-	public RolesResource(Target target) {
-		super(target);
+	public RolesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public RoleList get() {
@@ -23,7 +25,7 @@ public class RolesResource extends Resource {
 	}
 	
 	public RoleResource role(String id) {
-		return new RoleResource(target.path("/{id}").pathParam("id", id));
+		return new RoleResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 	
 }

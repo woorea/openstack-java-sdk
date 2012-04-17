@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -9,8 +11,8 @@ import org.openstack.model.compute.nova.snapshot.NovaSnapshot;
 
 public class SnapshotResource extends Resource {
 
-	public SnapshotResource(Target target) {
-		super(target);
+	public SnapshotResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	/**

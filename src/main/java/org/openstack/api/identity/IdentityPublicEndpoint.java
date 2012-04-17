@@ -1,5 +1,7 @@
 package org.openstack.api.identity;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
@@ -9,12 +11,12 @@ import org.openstack.api.identity.resources.TokensResource;
 
 public class IdentityPublicEndpoint extends Resource {
 
-	public IdentityPublicEndpoint(Target target) {
-		super(target);
+	public IdentityPublicEndpoint(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
-	public static IdentityPublicEndpoint endpoint(Client client, String endpoint) {
-		return new IdentityPublicEndpoint(client.target(endpoint));
+	public static IdentityPublicEndpoint endpoint(Client client, String endpoint, Properties properties) {
+		return new IdentityPublicEndpoint(client.target(endpoint), properties);
 	}
 
 	public TokensResource tokens() {

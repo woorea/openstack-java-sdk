@@ -1,5 +1,7 @@
 package org.openstack.api.compute;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -8,8 +10,8 @@ import org.openstack.model.common.ExtensionList;
 
 public class ExtensionsResource extends Resource {
 	
-	public ExtensionsResource(Target target) {
-		super(target);
+	public ExtensionsResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public ExtensionList get() {
@@ -17,7 +19,7 @@ public class ExtensionsResource extends Resource {
 	}
 
     public ExtensionResource extension(String alias) {
-    	return new ExtensionResource(target.path("/{alias}").pathParam("alias", alias));
+    	return new ExtensionResource(target.path("/{alias}").pathParam("alias", alias), properties);
     }
 
 	

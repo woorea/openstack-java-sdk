@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -15,8 +17,8 @@ import org.openstack.model.compute.nova.floatingip.NovaFloatingIp;
  */
 public class FloatingIpResource extends Resource {
 
-	public FloatingIpResource(Target target) {
-		super(target);
+	public FloatingIpResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public FloatingIp get() {

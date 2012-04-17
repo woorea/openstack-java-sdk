@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -11,8 +13,8 @@ import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
 
 public class VolumeAttachmentsResource extends Resource {
 
-	public VolumeAttachmentsResource(Target target) {
-		super(target);
+	public VolumeAttachmentsResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public Response post(NovaVolumeAttachment attachment) {
@@ -20,7 +22,7 @@ public class VolumeAttachmentsResource extends Resource {
 	}
 	
 	public VolumeAttachmentResource attachment(Integer id) {
-		return new VolumeAttachmentResource(target.path("/{volumeId}").pathParam("volumeId", id));
+		return new VolumeAttachmentResource(target.path("/{volumeId}").pathParam("volumeId", id), properties);
 	}
 	
 	

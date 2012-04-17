@@ -1,5 +1,7 @@
 package org.openstack.api.identity.admin.resources;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 
@@ -11,8 +13,8 @@ import org.openstack.model.identity.keystone.KeystoneServiceList;
 
 public class ServicesResource extends Resource {
 
-	public ServicesResource(Target target) {
-		super(target);
+	public ServicesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
 	public ServiceList get() {
@@ -24,7 +26,7 @@ public class ServicesResource extends Resource {
 	}
 	
 	public ServiceResource service(String id) {
-		return new ServiceResource(target.path("/{id}").pathParam("id", id));
+		return new ServiceResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 
 	

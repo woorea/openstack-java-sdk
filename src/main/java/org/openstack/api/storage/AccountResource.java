@@ -1,6 +1,7 @@
 package org.openstack.api.storage;
 
 import java.util.List;
+import java.util.Properties;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.GenericType;
@@ -17,8 +18,8 @@ public class AccountResource extends Resource {
 	// HEAD account Retrieve account metadata
 
 	
-	public AccountResource(Target target) {
-		super(target);
+	public AccountResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	public List<StorageContainer> get() {
@@ -30,7 +31,7 @@ public class AccountResource extends Resource {
 	}
 
 	public ContainerResource container(String id) {
-		return new ContainerResource(target.path("/{id}").pathParam("id", id));
+		return new ContainerResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 
 	public Response post() {

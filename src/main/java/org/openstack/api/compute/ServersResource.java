@@ -1,5 +1,7 @@
 package org.openstack.api.compute;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -13,8 +15,8 @@ import org.openstack.model.compute.nova.NovaServerList;
 
 public class ServersResource extends Resource {
 	
-	public ServersResource(Target target) {
-		super(target);
+	public ServersResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	/**
@@ -39,7 +41,7 @@ public class ServersResource extends Resource {
 	}
 
 	public ServerResource server(String id) {
-		return new ServerResource(target.path("/{id}").pathParam("id", id));
+		return new ServerResource(target.path("/{id}").pathParam("id", id), properties);
 	}
 
 	

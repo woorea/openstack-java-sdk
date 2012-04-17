@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -9,8 +11,8 @@ import org.openstack.model.compute.nova.volume.NovaVolume;
 
 public class VolumeResource extends Resource {
 
-	public VolumeResource(Target target) {
-		super(target);
+	public VolumeResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	/**

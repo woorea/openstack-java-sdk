@@ -1,5 +1,7 @@
 package org.openstack.api.compute.ext;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -11,8 +13,8 @@ import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 
 public class SecurityGroupRulesResource extends Resource {
 	
-	public SecurityGroupRulesResource(Target target) {
-		super(target);
+	public SecurityGroupRulesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
     public SecurityGroupRule post(SecurityGroupRuleForCreate rule) {
@@ -21,7 +23,7 @@ public class SecurityGroupRulesResource extends Resource {
 	}
 
     public SecurityGroupRuleResource rule(Integer id) {
-    	return new SecurityGroupRuleResource(target.path("/{ruleId}").pathParam("ruleId", id));
+    	return new SecurityGroupRuleResource(target.path("/{ruleId}").pathParam("ruleId", id), properties);
     }
 
 }

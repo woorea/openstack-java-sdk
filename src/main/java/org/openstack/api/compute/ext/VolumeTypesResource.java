@@ -1,6 +1,7 @@
 package org.openstack.api.compute.ext;
 
 import java.util.Map;
+import java.util.Properties;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -15,8 +16,8 @@ import org.openstack.api.common.Resource;
  */
 public class VolumeTypesResource extends Resource {
 	
-	public VolumeTypesResource(Target target) {
-		super(target);
+	public VolumeTypesResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
 	/**

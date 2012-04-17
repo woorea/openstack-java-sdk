@@ -1,5 +1,7 @@
 package org.openstack.api.identity;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
@@ -13,12 +15,12 @@ import org.openstack.api.identity.admin.resources.UsersResource;
 
 public class IdentityAdministrationEndpoint extends Resource {
 
-	public IdentityAdministrationEndpoint(Target target) {
-		super(target);
+	public IdentityAdministrationEndpoint(Target target, Properties properties) {
+		super(target, properties);
 	}
 	
-	public static IdentityAdministrationEndpoint endpoint(Client client, String endpoint) {
-		return new IdentityAdministrationEndpoint(client.target(endpoint));
+	public static IdentityAdministrationEndpoint endpoint(Client client, String endpoint, Properties properties) {
+		return new IdentityAdministrationEndpoint(client.target(endpoint), properties);
 	}
 
 	public TokensResource tokens() {

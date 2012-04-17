@@ -1,5 +1,7 @@
 package org.openstack.api.identity.resources;
 
+import java.util.Properties;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
@@ -11,8 +13,8 @@ import org.openstack.model.identity.keystone.KeystoneAccess;
 
 public class TokensResource extends Resource {
 	
-	public TokensResource(Target target) {
-		super(target);
+	public TokensResource(Target target, Properties properties) {
+		super(target, properties);
 	}
 
     public Access post(Authentication authentication) {	
