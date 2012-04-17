@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.openstack.model.compute.Volume;
 import org.openstack.model.compute.VolumeList;
 
@@ -17,23 +19,25 @@ import org.openstack.model.compute.VolumeList;
 public class NovaVolumeList implements Serializable, VolumeList {
 
 	@XmlElement(name="volume")
-	private List<Volume> volumes = new ArrayList<Volume>();
+	@JsonProperty("volumes")
+	@JsonDeserialize(as=List.class, contentAs=NovaVolume.class)
+	private List<Volume> list = new ArrayList<Volume>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.VolumeList#getList()
 	 */
 	@Override
 	public List<Volume> getList() {
-		return volumes;
+		return list;
 	}
 
 	public void setList(List<Volume> list) {
-		this.volumes = list;
+		this.list = list;
 	}
 
 	@Override
 	public String toString() {
-		return "NovaVolumeList [list=" + volumes + "]";
+		return "NovaVolumeList [list=" + list + "]";
 	}
 	
 }
