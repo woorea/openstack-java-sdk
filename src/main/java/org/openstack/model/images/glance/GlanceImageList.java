@@ -3,6 +3,7 @@ package org.openstack.model.images.glance;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
@@ -33,6 +34,11 @@ public class GlanceImageList implements Serializable, ImageList {
 	@Override
 	public String toString() {
 		return "GlanceImageList [images=" + images + "]";
+	}
+
+	@Override
+	public Iterator<Image> iterator() {
+		return getList().iterator();
 	}
     
 }
