@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 
@@ -27,6 +28,7 @@ public class GetConsoleOutputAction implements Serializable, ServerAction {
 	}
 	
 	@Override
+	@JsonIgnore(true)
 	public Class<? extends Serializable> getReturnType() {
 		return Output.class;
 	}
