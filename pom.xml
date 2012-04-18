@@ -4,7 +4,7 @@
 	<packaging>jar</packaging>
 	<groupId>org.openstack</groupId>
 	<artifactId>openstack-java-sdk</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-RC1</version>
 	<name>OpenStack Java SDK</name>
 	<url>http://github.com/woorea/openstack-java-sdk</url>
 
