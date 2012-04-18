@@ -14,6 +14,7 @@ import org.openstack.model.compute.ImageList;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairListItem;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupForCreate;
 import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
@@ -126,8 +127,8 @@ public class ComputeClient {
 		return resource.securityGroups().get().getList();
 	}
 	
-	public SecurityGroup createSecurityGroup(String name, String description) {
-		return resource.securityGroups().post(null);
+	public SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroupForCreate) {
+		return resource.securityGroups().post(securityGroupForCreate);
 	}
 	
 	public SecurityGroup showSecurityGroup(Integer id) {

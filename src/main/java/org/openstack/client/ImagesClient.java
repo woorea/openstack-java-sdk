@@ -25,4 +25,9 @@ public class ImagesClient {
 		return resource.get();
 	}
 
+	public void deleteImage(String id) {
+		resource.image(id).delete();
+		
+	}
+
 }

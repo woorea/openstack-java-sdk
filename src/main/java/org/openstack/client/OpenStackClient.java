@@ -85,6 +85,7 @@ public class OpenStackClient {
 		String endpoint = properties.getProperty("identity.endpoint.publicURL");
 		Authentication authentication = new KeystoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenantId);
 		this.access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
+		System.out.println("EX " + this.access);
 	}
 	
 	public Access getAccess() {
