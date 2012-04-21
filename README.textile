@@ -1,5 +1,12 @@
 h1. OpenStack Java SDK
 
+h2. Maven
+
+|groupId|artifactId|version|
+|org.openstack|openstack-java-sdk|1.0-RC1|
+
+https://raw.github.com/woorea/maven/master/snapshots/
+
 h2. Configuration
 
 You can configure the client in a properties file
