@@ -13,7 +13,8 @@ public class TenantUserResource extends Resource {
 	}
 	
 	public TenantUserRolesResource roles() {
-		return path("/roles/OS-KSADM", TenantUserRolesResource.class);
+		//return path("/roles/OS-KSADM", TenantUserRolesResource.class);
+		return path("/roles", TenantUserRolesResource.class);
 	}
 
 }

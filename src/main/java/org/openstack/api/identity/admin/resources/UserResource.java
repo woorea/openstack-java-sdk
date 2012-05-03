@@ -18,7 +18,7 @@ public class UserResource extends Resource {
 	}
 
 	public KeystoneUser get() {
-		return target.request(MediaType.APPLICATION_XML).get(KeystoneUser.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneUser.class);
 	}
 	
 	public User post(User entity) {
@@ -46,6 +46,10 @@ public class UserResource extends Resource {
 	public User enabled(User user) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(user), KeystoneUser.class);
 		
+	}
+	
+	public UserRolesResource roles() {
+		return path("roles", UserRolesResource.class);
 	}
 
 }
