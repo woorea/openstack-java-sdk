@@ -1,14 +1,15 @@
 package org.openstack.client;
 
+import java.util.Properties;
+
 import org.openstack.api.identity.IdentityAdministrationEndpoint;
-import org.openstack.model.identity.Service;
 import org.openstack.model.identity.ServiceList;
 
 public class Test {
 
 	public static void main(String[] args) throws Exception {
 		
-		//Properties properties = new Properties(); 
+		Properties properties = new Properties(); 
 		
 		//properties.setProperty("auth.endpoint", "http://192.168.1.52:5000/v2.0");
 		//properties.setProperty("auth.username", "admin");
@@ -18,9 +19,16 @@ public class Test {
 		//The admintoken (setted on keystone config file)
 		//properties.setProperty("identity.admin.token", "secret0");
 		
-		OpenStackClient openstack = OpenStackClient.authenticate();
+		properties.setProperty("identity.endpoint.publicURL", "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v2.0/");
+		properties.setProperty("auth.credentials", "apiAccessKeyCredentials");
+		properties.setProperty("auth.accessKey", "");
+		properties.setProperty("auth.secretKey", "");
+		properties.setProperty("auth.tenantId", "");
+		properties.setProperty("verbose", "true");
+		
+		OpenStackClient openstack = OpenStackClient.authenticate(properties);
 
-		IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
+		//IdentityAdministrationEndpoint identity = openstack.getIdentityAdministationEndpoint();
 		
 //		TenantList tenants = identity.tenants().get();
 //
@@ -57,7 +65,7 @@ public class Test {
 //
 //		identity.roles().role(role.getId()).delete();
 //
-		ServiceList services = identity.services().get();
+//		ServiceList services = identity.services().get();
 
 //		KeystoneService kss = new KeystoneService();
 //		kss.setName("test");
@@ -65,13 +73,13 @@ public class Test {
 //		kss.setDescription("Nova 3");
 //		Service service = identity.services().post(kss);
 //
-		Service service = identity.services().service(services.getList().get(0).getId()).get();
+//		Service service = identity.services().service(services.getList().get(0).getId()).get();
 		
 		
 
 		
 
-		identity.endpoints().get();
+//		identity.endpoints().get();
 		
 //		KeystoneEndpoint kse = new KeystoneEndpoint();
 //		

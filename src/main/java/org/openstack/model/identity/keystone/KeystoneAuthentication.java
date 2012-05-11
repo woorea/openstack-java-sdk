@@ -9,9 +9,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
 import org.openstack.model.identity.Authentication;
+import org.openstack.model.identity.Credentials;
 import org.openstack.model.identity.Token;
 
 @XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
@@ -19,45 +21,49 @@ import org.openstack.model.identity.Token;
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootName("auth")
 public class KeystoneAuthentication implements Serializable, Authentication {
-
-    @XmlAccessorType(XmlAccessType.NONE)
-    public static class PasswordCredentials implements Serializable {
-
-        @XmlAttribute
-        private String username;
-
-        @XmlAttribute
-        private String password;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-    }
     
     @XmlElement(type = KeystoneToken.class)
     private KeystoneToken token;
 
-    @XmlElement(namespace= "")
-    private PasswordCredentials passwordCredentials;
+    @XmlElement(namespace= "", name="passwordCredentials")
+    @JsonProperty
+    private KeystonePasswordCredentials passwordCredentials;
+    
+    @XmlElement(namespace= "", name="apiAccessKeyCredentials")
+    @JsonProperty
+    private KeystoneApiAccessKeyCredentials apiAccessKeyCredentials;
 
     @XmlAttribute
     private String tenantId;
     
     @XmlAttribute
     private String tenantName;
+    
+    private KeystoneAuthentication() { }
+    
+    public static KeystoneAuthentication withPasswordCredentials(String username, String password) {
+    	KeystoneAuthentication auth = new KeystoneAuthentication();
+    	auth.passwordCredentials = new KeystonePasswordCredentials();
+    	auth.passwordCredentials.setUsername(username);
+    	auth.passwordCredentials.setPassword(password);
+		return auth;
+	}
+	
+	public static KeystoneAuthentication withApiAccessKeyCredentials(String accessKey, String secretKey) {
+		KeystoneAuthentication auth = new KeystoneAuthentication();
+		auth.apiAccessKeyCredentials = new KeystoneApiAccessKeyCredentials();
+		auth.apiAccessKeyCredentials.setAccessKey(accessKey);
+		auth.apiAccessKeyCredentials.setSecretKey(secretKey);
+		return auth;
+	}
+	
+	public static KeystoneAuthentication withTokenAndTenant(String tokenId, String tenantId) {
+		KeystoneAuthentication auth = new KeystoneAuthentication();
+		auth.token = new KeystoneToken();
+		auth.token.setId(tokenId);
+		auth.tenantId = tenantId;
+		return auth;
+	}
 
     /* (non-Javadoc)
 	 * @see org.openstack.model.identity.glance.Authentication#getToken()
@@ -75,12 +81,8 @@ public class KeystoneAuthentication implements Serializable, Authentication {
 	 * @see org.openstack.model.identity.glance.Authentication#getPasswordCredentials()
 	 */
 	@Override
-	public PasswordCredentials getPasswordCredentials() {
+	public Credentials getCredentials() {
         return passwordCredentials;
-    }
-
-	public void setPasswordCredentials(PasswordCredentials passwordCredentials) {
-        this.passwordCredentials = passwordCredentials;
     }
 
 	/* (non-Javadoc)
@@ -107,20 +109,9 @@ public class KeystoneAuthentication implements Serializable, Authentication {
 		this.tenantName = tenantName;
 	}
 	
-	public KeystoneAuthentication withPasswordCredentials(String username, String password) {
-		passwordCredentials = new PasswordCredentials();
-		passwordCredentials.username = username;
-		passwordCredentials.password = password;
-		return this;
-	}
 	
-	public KeystoneAuthentication withTokenAndTenant(String tokenId, String tenantId) {
-		KeystoneToken token = new KeystoneToken();
-		token.setId(tokenId);
-		this.token = token;
-		this.tenantId = tenantId;
-		return this;
-	}
+	
+	
 
 	@Override
 	public String toString() {

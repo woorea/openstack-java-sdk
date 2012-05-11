@@ -1,14 +1,12 @@
 package org.openstack.model.identity;
 
-import org.openstack.model.identity.keystone.KeystoneAuthentication.PasswordCredentials;
-
 public interface Authentication {
 
 	Token getToken();
 
 	//void setToken(Token token);
 
-	PasswordCredentials getPasswordCredentials();
+	Credentials getCredentials();
 
 	//void setPasswordCredentials(PasswordCredentials passwordCredentials);
 

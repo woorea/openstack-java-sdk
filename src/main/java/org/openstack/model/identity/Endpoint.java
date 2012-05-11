@@ -26,6 +26,4 @@ public interface Endpoint {
 	
 	void setInternalURL(String internalURL);
 
-	
-
 }

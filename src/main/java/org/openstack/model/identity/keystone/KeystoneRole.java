@@ -59,6 +59,24 @@ public class KeystoneRole implements Serializable, Role {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	//serviceId and tenantId are only in access/user/roles
+
+	public String getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 
 	@Override
 	public String toString() {

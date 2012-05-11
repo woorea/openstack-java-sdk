@@ -1,6 +1,7 @@
 package org.openstack.model.identity.keystone;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,6 +25,12 @@ public class KeystoneTenant implements Serializable, Tenant {
 	
 	@XmlAttribute
 	private boolean enabled;
+	
+	@XmlAttribute
+	private Date created;
+	
+	@XmlAttribute
+	private Date updated;
 	
 	@XmlElement
 	private String description;
@@ -72,6 +79,22 @@ public class KeystoneTenant implements Serializable, Tenant {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 	/* (non-Javadoc)

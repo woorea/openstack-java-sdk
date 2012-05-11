@@ -20,5 +20,9 @@ public class TokensResource extends Resource {
     public Access post(Authentication authentication) {	
     	return target.request(MediaType.APPLICATION_JSON).post(Entity.json(authentication), KeystoneAccess.class);
     }
+    
+    public <T> T post(Authentication authentication, Class<T> type) {	
+    	return target.request(MediaType.APPLICATION_JSON).post(Entity.json(authentication), type);
+    }
 
 }

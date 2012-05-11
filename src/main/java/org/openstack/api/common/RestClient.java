@@ -14,7 +14,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientFactory;
-import org.glassfish.jersey.media.json.JsonFeature;
+import org.glassfish.jersey.media.json.JsonJacksonFeature;
 
 public enum RestClient {
 
@@ -28,7 +28,7 @@ public enum RestClient {
 		
 		client = (JerseyClient) JerseyClientFactory.newClient();
 		
-		client.configuration().enable(new JsonFeature());
+		client.configuration().enable(new JsonJacksonFeature());
 		
 		client.configuration().register(OpenStackObjectMapperProvider.class);
 		

@@ -3,6 +3,7 @@ package org.openstack.api.compute;
 import java.util.Properties;
 
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.FlavorList;
@@ -15,7 +16,7 @@ public class FlavorsResource extends Resource {
 	}
 
     public FlavorList get() {
-		return target.path("/detail").request().get(NovaFlavorList.class);
+		return target.path("/detail").request(MediaType.APPLICATION_JSON).get(NovaFlavorList.class);
     }
 
     public FlavorResource flavor(String id) {

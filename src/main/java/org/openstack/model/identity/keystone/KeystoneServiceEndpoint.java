@@ -6,9 +6,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.openstack.model.identity.ServiceEndpoint;
 
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonIgnoreProperties({"publicURL2"})
 public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 
     @XmlAttribute
@@ -28,6 +30,9 @@ public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 
     @XmlAttribute
     private String versionId;
+    
+    @XmlAttribute
+    private String versionInfo;
 
     @XmlAttribute
     private String versionList;
@@ -91,6 +96,30 @@ public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 	public void setAdminURL(String adminURL) {
 		this.adminURL = adminURL;
 	}
+	
+	public String getVersionId() {
+		return versionId;
+	}
+
+	public void setVersionId(String versionId) {
+		this.versionId = versionId;
+	}
+
+	public String getVersionInfo() {
+		return versionInfo;
+	}
+
+	public void setVersionInfo(String versionInfo) {
+		this.versionInfo = versionInfo;
+	}
+
+	public String getVersionList() {
+		return versionList;
+	}
+
+	public void setVersionList(String versionList) {
+		this.versionList = versionList;
+	}
 
 	@Override
 	public String toString() {
@@ -99,11 +128,5 @@ public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 				+ publicURL + ", adminURL=" + adminURL + ", versionId="
 				+ versionId + ", versionList=" + versionList + "]";
 	}
-
-    // @XmlElement
-    // private ServiceVersion version;
-	
-	
-
     
 }

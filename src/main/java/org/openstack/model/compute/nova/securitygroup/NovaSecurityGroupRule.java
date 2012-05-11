@@ -24,6 +24,7 @@ public class NovaSecurityGroupRule implements SecurityGroupRule, Serializable {
         private String name;
 
         @XmlElement(name = "tenant_id")
+        @JsonProperty("tenant_id")
         private String tenantId;
 
         public String getName() {

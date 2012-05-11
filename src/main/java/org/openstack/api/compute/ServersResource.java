@@ -32,7 +32,7 @@ public class ServersResource extends Resource {
 	 * @return
 	 */
 	public ServerList get() {
-		return target.path("/detail").request().get(NovaServerList.class);
+		return target.path("/detail").request(MediaType.APPLICATION_JSON).get(NovaServerList.class);
 	}
 
 	public Server post(ServerForCreate serverForCreate) {

@@ -2,11 +2,9 @@ package org.openstack.client;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.ws.rs.client.Target;
 
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
 import org.openstack.api.common.RestClient;
 import org.openstack.api.compute.TenantResource;
@@ -52,17 +50,31 @@ public class OpenStackClient {
 	public static OpenStackClient authenticate(Properties properties) {
 		OpenStackClient client = new OpenStackClient();
 		client.properties = properties;
-		String username = properties.getProperty("auth.username");
-		String password = properties.getProperty("auth.password");
-		String tenantId = properties.getProperty("auth.tenant.id");
-		String tenantName = properties.getProperty("auth.tenant.name");
-		KeystoneAuthentication authentication = new KeystoneAuthentication().withPasswordCredentials(username, password);
+		
+		String credentials = properties.getProperty("auth.credentials");
+		
+		KeystoneAuthentication authentication = null;
+		
+		if("apiAccessKeyCredentials".equals(credentials)) {
+			String accessKey = properties.getProperty("auth.accessKey");
+			String secretKey = properties.getProperty("auth.secretKey");
+			authentication = KeystoneAuthentication.withApiAccessKeyCredentials(accessKey, secretKey);
+		} else {
+			String username = properties.getProperty("auth.username");
+			String password = properties.getProperty("auth.password");
+			authentication = KeystoneAuthentication.withPasswordCredentials(username, password);
+		}
+		
+		String tenantId = properties.getProperty("auth.tenantId");
+		String tenantName = properties.getProperty("auth.tenantName");
+		
 		if(tenantId != null) {
 			authentication.setTenantId(tenantId);
 		} else if(tenantName != null) {
 			authentication.setTenantName(tenantName);
 		}
 		Access access = client.getIdentityEndpoint().tokens().post(authentication);
+		System.out.println(access);
 		return authenticate(properties, access);
 	}
 	
@@ -83,7 +95,7 @@ public class OpenStackClient {
 
 	public void exchangeTokenForTenant(String tenantId) {
 		String endpoint = properties.getProperty("identity.endpoint.publicURL");
-		Authentication authentication = new KeystoneAuthentication().withTokenAndTenant(access.getToken().getId(), tenantId);
+		Authentication authentication = KeystoneAuthentication.withTokenAndTenant(access.getToken().getId(), tenantId);
 		this.access = target(endpoint, IdentityPublicEndpoint.class).tokens().post(authentication);
 		System.out.println("EX " + this.access);
 	}
