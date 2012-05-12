@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.openstack.model.atom.Link;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupRule;
 
@@ -42,6 +43,9 @@ public class NovaSecurityGroup implements SecurityGroup, Serializable {
     @XmlElement(name = "rule")
     @JsonDeserialize(as=List.class, contentAs=NovaSecurityGroupRule.class)
     protected List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
+    
+    @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
+	private List<Link> links;
 
     public NovaSecurityGroup() {
 		// TODO Auto-generated constructor stub
@@ -101,6 +105,14 @@ public class NovaSecurityGroup implements SecurityGroup, Serializable {
 	@Override
 	public void setRules(List<SecurityGroupRule> rules) {
 		this.rules = rules;
+	}
+
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 
 }

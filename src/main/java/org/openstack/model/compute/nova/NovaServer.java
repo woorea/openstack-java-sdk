@@ -21,8 +21,10 @@ import org.openstack.model.atom.Link;
 import org.openstack.model.compute.Fault;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Image;
+import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.nova.NovaAddressList.Network;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -96,6 +98,13 @@ public class NovaServer implements Serializable, Server {
 	@XmlElement(name = "addresses")
 	private Map<String, List<Network.Ip>> addresses;
 	
+	@JsonProperty("security_groups")
+	@JsonDeserialize(contentAs=NovaSecurityGroup.class)
+	private List<SecurityGroup> securityGroups;
+	
+	@XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
+	private List<Link> links;
+	
 	private Map<String, String> extensions = new HashMap<String, String>();
 
 	@JsonAnyGetter
@@ -108,9 +117,6 @@ public class NovaServer implements Serializable, Server {
 	      extensions.put(key, value);
 	}
 
-	@XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
-	private List<Link> links;
-	
 	public NovaServer() {
 		// TODO Auto-generated constructor stub
 	}
@@ -322,6 +328,10 @@ public class NovaServer implements Serializable, Server {
 
 	public void setFault(NovaFault fault) {
 		this.fault = fault;
+	}
+
+	public List<SecurityGroup> getSecurityGroups() {
+		return securityGroups;
 	}
 
 	/* (non-Javadoc)

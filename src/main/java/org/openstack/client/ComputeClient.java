@@ -24,6 +24,7 @@ import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 import org.openstack.model.compute.nova.volume.VolumeForCreate;
 
 import com.google.common.base.Function;
@@ -116,7 +117,7 @@ public class ComputeClient {
 	}
 	
 	public KeyPair createKeyPair(String name) {
-		return resource.keyPairs().post(null);
+		return resource.keyPairs().post(new NovaKeyPair(name));
 	}
 	
 	public void deleteKeyPair(String name) {
