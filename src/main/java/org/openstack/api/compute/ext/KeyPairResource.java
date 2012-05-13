@@ -3,6 +3,7 @@ package org.openstack.api.compute.ext;
 import java.util.Properties;
 
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 
@@ -20,7 +21,7 @@ public class KeyPairResource extends Resource {
 
 
 	public void delete() {
-		target.request().delete();
+		target.request(MediaType.WILDCARD).delete();
 	}
 
 	// OSAPI-BUG: This function is missing from the OS API

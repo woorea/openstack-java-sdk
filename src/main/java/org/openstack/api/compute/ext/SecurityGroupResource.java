@@ -26,7 +26,7 @@ public class SecurityGroupResource extends Resource  {
 	}
 
 	public void delete() {
-		target.request().delete();
+		target.request(MediaType.WILDCARD).delete();
 	}
 
 	

@@ -3,6 +3,7 @@ package org.openstack.api.compute.ext;
 import java.util.Properties;
 
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 
@@ -13,7 +14,7 @@ public class SecurityGroupRuleResource extends Resource {
 	}
 
 	public void delete() {
-		 target.request().delete();
+		 target.request(MediaType.WILDCARD).delete();
 	}
 
 	// This function is "missing" from the OpenStack API

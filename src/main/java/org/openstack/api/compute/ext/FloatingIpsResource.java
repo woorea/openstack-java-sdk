@@ -1,7 +1,10 @@
 package org.openstack.api.compute.ext;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
@@ -35,7 +38,11 @@ public class FloatingIpsResource extends Resource {
 	}
 	
 	public FloatingIp post(String pool) {
-		return target.request(MediaType.APPLICATION_JSON).post(null,NovaFloatingIp.class);
+		Map<String, String> body = new HashMap<String, String>();
+		if(pool != null) {
+			body.put("pool", pool);
+		}
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(body), NovaFloatingIp.class);
 	}
 	
 	public FloatingIpResource floatingIp(Integer id) {

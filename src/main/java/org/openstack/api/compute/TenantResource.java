@@ -8,6 +8,7 @@ import javax.ws.rs.client.Target;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
+import org.openstack.api.compute.ext.FloatingIpPoolsResource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.KeyPairsResource;
 import org.openstack.api.compute.ext.QuotasResource;
@@ -20,7 +21,6 @@ import org.openstack.api.compute.ext.VolumesResource;
 import org.openstack.api.compute.notavailable.AccountsResource;
 import org.openstack.api.compute.notavailable.CloudPipeResource;
 import org.openstack.api.compute.notavailable.FloatingIpDnsResource;
-import org.openstack.api.compute.notavailable.FloatingIpPoolsResource;
 import org.openstack.api.compute.notavailable.NetworksResource;
 
 public class TenantResource extends Resource {

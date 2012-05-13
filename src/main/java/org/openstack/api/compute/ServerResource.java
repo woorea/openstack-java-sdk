@@ -16,11 +16,12 @@ import org.openstack.model.compute.SecurityGroupList;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.compute.nova.server.actions.AddFixedIpAction;
-import org.openstack.model.compute.nova.server.actions.AddFloatingIpAction;
+import org.openstack.model.compute.nova.server.actions.AssociateFloatingIpAction;
 import org.openstack.model.compute.nova.server.actions.ChangePasswordAction;
 import org.openstack.model.compute.nova.server.actions.ConfirmResizeAction;
 import org.openstack.model.compute.nova.server.actions.Console;
 import org.openstack.model.compute.nova.server.actions.CreateBackupAction;
+import org.openstack.model.compute.nova.server.actions.DisassociateFloatingIpAction;
 import org.openstack.model.compute.nova.server.actions.ForceDeleteAction;
 import org.openstack.model.compute.nova.server.actions.GetConsoleOutputAction;
 import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
@@ -32,7 +33,6 @@ import org.openstack.model.compute.nova.server.actions.PauseAction;
 import org.openstack.model.compute.nova.server.actions.RebootAction;
 import org.openstack.model.compute.nova.server.actions.RebuildAction;
 import org.openstack.model.compute.nova.server.actions.RemoveFixedIpAction;
-import org.openstack.model.compute.nova.server.actions.RemoveFloatingIpAction;
 import org.openstack.model.compute.nova.server.actions.ResetNetworkAction;
 import org.openstack.model.compute.nova.server.actions.ResizeAction;
 import org.openstack.model.compute.nova.server.actions.RestoreAction;
@@ -69,7 +69,7 @@ public class ServerResource extends Resource {
 	}
 
 	public Response delete() {
-		return target.request().delete();
+		return target.request(MediaType.WILDCARD).delete();
 	}
 	
 	public ServerActionResource action() {
@@ -313,8 +313,7 @@ public class ServerResource extends Resource {
 	 * Attaches a floating IP to the instance.
 	 */
 	public void addFloatingIp(String ip) {
-		AddFloatingIpAction action = new AddFloatingIpAction();
-		action.setAddress(ip);
+		AssociateFloatingIpAction action = new AssociateFloatingIpAction(ip);
 		executeAction(String.class, action);
 	}
 
@@ -322,8 +321,7 @@ public class ServerResource extends Resource {
 	 * Detaches a floating IP from the instance
 	 */
 	public void removeFloatingIp(String ip) {
-		RemoveFloatingIpAction action = new RemoveFloatingIpAction();
-		action.setAddress(ip);
+		DisassociateFloatingIpAction action = new DisassociateFloatingIpAction(ip);
 		executeAction(String.class, action);
 	}
 

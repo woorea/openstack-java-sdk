@@ -24,6 +24,7 @@ import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.nova.floatingip.NovaFloatingIpPool;
 import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 import org.openstack.model.compute.nova.volume.VolumeForCreate;
 
@@ -62,6 +63,11 @@ public class ComputeClient {
 		resource.servers().server(id).delete();
 	}
 	
+	public Serializable executeServerAction(String id, ServerAction action) {
+		return resource.servers().server(id).action().post(action, action.getReturnType());
+		
+	}
+	
 	public FlavorList listFlavors() {
 		return resource.flavors().get();
 	}
@@ -94,15 +100,24 @@ public class ComputeClient {
 		return resource.images().get();
 	}
 	
+	public Image showImage(String id) {
+		return resource.images().image(id).get();
+	}
+	
+	public List<NovaFloatingIpPool> listFloatingIpPools() {
+		resource.floatingIpPools().get();
+		return new ArrayList<NovaFloatingIpPool>();
+	}
+	
 	public List<FloatingIp> listFloatingIps() {
 		return resource.floatingIps().get().getList();
 	}
 	
-	public FloatingIp createFloatingIp(String pool) {
+	public FloatingIp allocateFloatingIp(String pool) {
 		return resource.floatingIps().post(pool);
 	}
 	
-	public void deleteFloatingIp(Integer id) {
+	public void deallocateFloatingIp(Integer id) {
 		resource.floatingIps().floatingIp(id).delete();
 	}
 	
@@ -140,6 +155,14 @@ public class ComputeClient {
 		resource.securityGroups().securityGroup(id).delete();
 	}
 	
+	public SecurityGroupRule addSecurityGroupRule(SecurityGroupRuleForCreate rule) {
+		return resource.securityGroupRules().post(rule);
+	}
+	
+	public void removeSecurityGroupRule(Integer id) {
+		resource.securityGroupRules().rule(id).delete();
+	}
+	
 	public List<Volume> listVolumes() {
 		return resource.volumes().get().getList();
 	}
@@ -170,19 +193,6 @@ public class ComputeClient {
 	
 	public void deleteSnapshot(Integer id) {
 		resource.snapshots().snapshot(id).delete();
-	}
-
-	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule) {
-		return resource.securityGroupRules().post(rule);
-	}
-
-	public Image showImage(String id) {
-		return resource.images().image(id).get();
-	}
-
-	public Serializable executeServerAction(String id, ServerAction action) {
-		return resource.servers().server(id).action().post(action, action.getReturnType());
-		
 	}
 
 }

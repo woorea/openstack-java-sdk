@@ -2,22 +2,18 @@ package org.openstack.model.compute.nova.server.actions;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.nova.NovaServer;
 
-@XmlRootElement(name="removeFloatingIp")
-@XmlAccessorType(XmlAccessType.NONE)
-@JsonRootName("removeFloatingIp")
-public class RemoveFloatingIpAction implements Serializable, ServerAction {
+@JsonRootName("addFloatingIp")
+public class AssociateFloatingIpAction implements Serializable, ServerAction {
 
-	@XmlAttribute
 	private String address;
+	
+	public AssociateFloatingIpAction(String address) {
+		this.address = address;
+	}
 
 	public String getAddress() {
 		return address;
@@ -26,7 +22,7 @@ public class RemoveFloatingIpAction implements Serializable, ServerAction {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	@Override
 	public Class<? extends Serializable> getReturnType() {
 		return NovaServer.class;

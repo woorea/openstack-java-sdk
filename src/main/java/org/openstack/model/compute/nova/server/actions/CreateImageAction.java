@@ -17,8 +17,8 @@ import org.openstack.model.compute.ServerAction;
  * @author luis@woorea.es
  *
  */
-@XmlRootElement(name="confirmResize")
-@JsonRootName("confirmResize")
+@XmlRootElement(name="createImage")
+@JsonRootName("createImage")
 public class CreateImageAction implements Serializable, ServerAction {
 	
 	private String name;

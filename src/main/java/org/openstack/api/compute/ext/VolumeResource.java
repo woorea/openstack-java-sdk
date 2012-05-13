@@ -25,7 +25,7 @@ public class VolumeResource extends Resource {
 	}
 
 	public void delete() {
-		target.request().delete();
+		target.request(MediaType.WILDCARD).delete();
 	}
 	
 }
