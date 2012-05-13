@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,6 +20,7 @@ import org.openstack.api.identity.admin.resources.TenantResource;
 import org.openstack.model.exceptions.OpenstackException;
 import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.storage.StorageObjectProperties;
+import org.openstack.model.storage.swift.SwiftStorageObject;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 import com.google.common.base.Preconditions;
@@ -57,6 +60,10 @@ public class ObjectResource  extends Resource {
 		
 	}
 	
+	public List<SwiftStorageObject> get() {
+		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftStorageObject>>() {});
+	}
+	
 	public Response post(StorageObjectProperties changeProperties) {
 		Invocation.Builder b = target.request(MediaType.APPLICATION_JSON);
 		SwiftHeaderUtils.setHeadersForProperties(b, changeProperties);
@@ -64,7 +71,7 @@ public class ObjectResource  extends Resource {
 	}
 	
 	public Response delete() {
-		return target.request().delete();
+		return target.request(MediaType.WILDCARD).delete();
 	}
 
 	public InputStream openStream() {

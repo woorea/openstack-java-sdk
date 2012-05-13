@@ -166,6 +166,10 @@ public class OpenStackClient {
 		return target(access.getEndpoint("image", null).getAdminURL().concat("/images"), ImagesResource.class);
 	}
 	
+	public StorageClient getStorageClient() {
+		return new StorageClient(getStorageEndpoint());
+	}
+	
 	public AccountResource getStorageEndpoint() {
 		return target(access.getEndpoint("object-store", null).getPublicURL(), AccountResource.class);
 	}
