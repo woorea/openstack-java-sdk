@@ -40,9 +40,15 @@ public class StorageClient {
 		accountResource.container(id).delete();
 	}
 	
-	public List<SwiftStorageObject> listObjects(String containerName, String objectName) {
+	public List<SwiftStorageObject> listObjects(String containerName, String prefix) {
 		ContainerResource container = accountResource.container(containerName);
-		return objectName != null ? container.object(objectName).get() : container.get();
+		return container.get(prefix,"/");
+	}
+	
+	
+	
+	public void createDirectory(String containerName, String objectName, String directoryName) {
+		Response response = accountResource.container(containerName).object(objectName + directoryName).put();
 	}
 	
 	public void createObject(String containerId, String objectId, InputStream is, int size, SwiftStorageObjectProperties properties) {

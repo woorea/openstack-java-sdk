@@ -29,10 +29,25 @@ public class ContainerResource extends Resource {
 		super(target, properties);
 	}
 	
+	//public List<SwiftStorageObject> get() {
+	//	return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftStorageObject>>() {});
+	//}
+	
 	public List<SwiftStorageObject> get() {
+		return get(null, null);
+	}
+	
+	public List<SwiftStorageObject> get(String prefix, String delimiter) {
+		if(prefix != null) {
+			target = target.queryParam("prefix", prefix);
+		}
+		if(delimiter != null) {
+			target = target.queryParam("delimiter", delimiter);
+		}
 		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftStorageObject>>() {});
 	}
 	
+	/*
 	public List<SwiftStorageObject> get(String prefix, String delimiter) {
 		
 		Builder b = target.request();
@@ -62,6 +77,7 @@ public class ContainerResource extends Resource {
 
 		return list;
 	}
+	*/
 	
 	public Response put() {
 		return target.request().method("PUT");

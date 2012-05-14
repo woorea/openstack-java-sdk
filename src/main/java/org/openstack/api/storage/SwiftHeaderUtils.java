@@ -14,16 +14,8 @@ import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 class SwiftHeaderUtils {
 	
 	static final Logger log = Logger.getLogger(SwiftHeaderUtils.class.getName());
-/*
-	static SimpleClassInfo classInfo;
 
-	static SimpleClassInfo getHeaderClassInfo() {
-		if (classInfo == null) {
-			classInfo = new SimpleClassInfo(SwiftObjectProperties.class);
-		}
-		return classInfo;
-	}
-*/
+	
 	public static StorageObjectProperties unmarshalHeaders(ResponseHeaders response) {
 		
 		StorageObjectProperties properties = new SwiftStorageObjectProperties();
@@ -39,29 +31,18 @@ class SwiftHeaderUtils {
 			String value = values.get(0);
 			key = key.toLowerCase();
 
-			//SimpleClassInfo headerClassInfo = getHeaderClassInfo();
-
 			String USER_PROPERTY_PREFIX = "x-object-meta-";
 			if (key.startsWith(USER_PROPERTY_PREFIX)) {
 				String name = key.substring(USER_PROPERTY_PREFIX.length());
 				userProperties.put(name, value);
 			} else {
-				/*
-				FieldInfo field = headerClassInfo.getField(key);
-
-				if (field == null) {
-					log.fine("Ignoring unknown header " + key);
-					continue;
-				}
-				Object converted = field.convertToValue(value);
-				field.setValue(properties, converted);
-				*/
+				
 			}
 		}
 		
 		return properties;
 	}
-
+	
 	public static Invocation.Builder setHeadersForProperties(Invocation.Builder builder, StorageObjectProperties changeProperties) {
 		
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {

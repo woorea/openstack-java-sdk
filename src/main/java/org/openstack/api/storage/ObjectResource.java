@@ -4,15 +4,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.RequestHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Link.Builder;
 
 import org.apache.commons.io.IOUtils;
 import org.openstack.api.common.Resource;
@@ -60,10 +70,6 @@ public class ObjectResource  extends Resource {
 		
 	}
 	
-	public List<SwiftStorageObject> get() {
-		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<SwiftStorageObject>>() {});
-	}
-	
 	public Response post(StorageObjectProperties changeProperties) {
 		Invocation.Builder b = target.request(MediaType.APPLICATION_JSON);
 		SwiftHeaderUtils.setHeadersForProperties(b, changeProperties);
@@ -76,6 +82,12 @@ public class ObjectResource  extends Resource {
 
 	public InputStream openStream() {
 		return target.request(MediaType.APPLICATION_OCTET_STREAM).get(InputStream.class);	
+	}
+	
+	public Response put() throws OpenstackException {
+		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
+		builder = builder.header("Content-Length", "0");
+		return builder.put(Entity.entity(new byte[1], "application/directory"));
 	}
 
 	public Response put(File srcFile, SwiftStorageObjectProperties properties) throws OpenstackException {

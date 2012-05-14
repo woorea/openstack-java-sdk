@@ -28,6 +28,8 @@ public class SwiftStorageObject implements StorageObject {
 	@XmlElement(name = "last_modified")
 	@JsonProperty("last_modified")
 	private Date lastModified;
+	
+	private String subdir;
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.storage.swift.StorageObject#getName()
@@ -87,6 +89,14 @@ public class SwiftStorageObject implements StorageObject {
 
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
+	}
+
+	public String getSubdir() {
+		return subdir;
+	}
+
+	public void setSubdir(String subdir) {
+		this.subdir = subdir;
 	}
 
 }
