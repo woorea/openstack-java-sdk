@@ -3,6 +3,7 @@ package org.openstack.api.compute.notavailable;
 import java.util.Properties;
 
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 
@@ -14,9 +15,11 @@ import org.openstack.api.common.Resource;
  */
 public class NetworksResource extends Resource {
 
-	protected NetworksResource(Target target, Properties properties) {
+	public NetworksResource(Target target, Properties properties) {
 		super(target, properties);
 	}
 
-
+	public String get() {
+		return target.request(MediaType.APPLICATION_JSON).get(String.class);
+	}
 }

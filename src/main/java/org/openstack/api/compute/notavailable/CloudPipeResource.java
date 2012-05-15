@@ -20,7 +20,7 @@ import org.openstack.api.common.Resource;
  */
 public class CloudPipeResource extends Resource {
 
-	protected CloudPipeResource(Target target, Properties properties) {
+	public CloudPipeResource(Target target, Properties properties) {
 		super(target, properties);
 	}
 
