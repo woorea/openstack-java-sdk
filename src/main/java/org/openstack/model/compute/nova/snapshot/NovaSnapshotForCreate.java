@@ -19,7 +19,7 @@ public class NovaSnapshotForCreate implements Serializable, SnapshotForCreate {
 	
 	@XmlAttribute(name="volume_id")
 	@JsonProperty("volume_id")
-	private Integer volumeId;
+	private String volumeId;
 	
 	@XmlAttribute
 	private Boolean force;
@@ -36,11 +36,11 @@ public class NovaSnapshotForCreate implements Serializable, SnapshotForCreate {
 	 * @see org.openstack.model.compute.nova.snapshot.SnapshotForCreate#getVolumeId()
 	 */
 	@Override
-	public Integer getVolumeId() {
+	public String getVolumeId() {
 		return volumeId;
 	}
 
-	public void setVolumeId(Integer volumeId) {
+	public void setVolumeId(String volumeId) {
 		this.volumeId = volumeId;
 	}
 

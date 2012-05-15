@@ -44,7 +44,7 @@ public class VolumesResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(volume, MediaType.APPLICATION_JSON), NovaVolume.class);
 	}
 
-	public VolumeResource volume(Integer id) {
+	public VolumeResource volume(String id) {
 		return new VolumeResource(target.path("/{volumeId}").pathParam("volumeId", id), properties);
 	}
 

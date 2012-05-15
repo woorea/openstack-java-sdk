@@ -2,13 +2,11 @@ package org.openstack.model.compute;
 
 public interface Snapshot {
 
-	Integer getId();
+	String getId();
 
 	String getStatus();
 
 	Integer getSizeInGB();
-
-	String getAvailabilityZone();
 
 	String getCreated();
 
@@ -16,6 +14,6 @@ public interface Snapshot {
 
 	String getDescription();
 
-	Integer getVolumeId();
+	String getVolumeId();
 
 }

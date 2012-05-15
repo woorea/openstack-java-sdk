@@ -18,10 +18,10 @@ public class VolumeAttachmentsResource extends Resource {
 	}
 	
 	public Response post(NovaVolumeAttachment attachment) {
-		return target.request().post(Entity.entity(attachment, MediaType.APPLICATION_JSON));
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(attachment, MediaType.APPLICATION_JSON));
 	}
 	
-	public VolumeAttachmentResource attachment(Integer id) {
+	public VolumeAttachmentResource attachment(String id) {
 		return new VolumeAttachmentResource(target.path("/{volumeId}").pathParam("volumeId", id), properties);
 	}
 	

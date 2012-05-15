@@ -2,9 +2,9 @@ package org.openstack.model.compute;
 
 public interface SnapshotForCreate {
 
-	Integer getVolumeId();
+	String getVolumeId();
 	
-	void setVolumeId(Integer volumeId);
+	void setVolumeId(String volumeId);
 
 	Boolean getForce();
 	

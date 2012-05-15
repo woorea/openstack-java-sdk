@@ -11,63 +11,63 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.Snapshot;
 
-
-@XmlRootElement(name = "snapshot", namespace="")
+@XmlRootElement(name = "snapshot", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootName("snapshot")
 public class NovaSnapshot implements Serializable, Snapshot {
-	
+
 	@XmlAttribute
-	private Integer id;
-	
+	private String id;
+
 	@XmlAttribute
 	private String status;
 
-	@XmlAttribute(name="size")
+	@XmlAttribute(name = "size")
 	@JsonProperty("size")
 	private Integer sizeInGB;
-	
-	@XmlAttribute
-	private String availabilityZone;
-	
-	@XmlAttribute(name="createdAt")
+
+	@XmlAttribute(name = "createdAt")
 	@JsonProperty("createdAt")
 	private String created;
-	
-	@XmlAttribute(name="displayName")
+
+	@XmlAttribute(name = "displayName")
 	@JsonProperty("displayName")
 	private String name;
-	
-	@XmlAttribute(name="displayDescription")
+
+	@XmlAttribute(name = "displayDescription")
 	@JsonProperty("displayDescription")
 	private String description;
-	
-	@XmlAttribute(name="volumeId")
-	private Integer volumeId;
-	
+
+	@XmlAttribute(name = "volumeId")
+	private String volumeId;
+
 	public NovaSnapshot() {
-		
+
 	}
-	
-	public NovaSnapshot(Integer id, String name, Integer volumeId) {
+
+	public NovaSnapshot(String id, String name, String volumeId) {
 		this.id = id;
 		this.name = name;
 		this.volumeId = volumeId;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getId()
 	 */
 	@Override
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getStatus()
 	 */
 	@Override
@@ -79,7 +79,9 @@ public class NovaSnapshot implements Serializable, Snapshot {
 		this.status = status;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getSizeInGB()
 	 */
 	@Override
@@ -91,19 +93,9 @@ public class NovaSnapshot implements Serializable, Snapshot {
 		this.sizeInGB = sizeInGB;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getAvailabilityZone()
-	 */
-	@Override
-	public String getAvailabilityZone() {
-		return availabilityZone;
-	}
-
-	public void setAvailabilityZone(String availabilityZone) {
-		this.availabilityZone = availabilityZone;
-	}
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getCreated()
 	 */
 	@Override
@@ -115,7 +107,9 @@ public class NovaSnapshot implements Serializable, Snapshot {
 		this.created = created;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getName()
 	 */
 	@Override
@@ -127,7 +121,9 @@ public class NovaSnapshot implements Serializable, Snapshot {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getDescription()
 	 */
 	@Override
@@ -139,24 +135,26 @@ public class NovaSnapshot implements Serializable, Snapshot {
 		this.description = description;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.compute.nova.snapshot.Snapshot#getVolumeId()
 	 */
 	@Override
-	public Integer getVolumeId() {
+	public String getVolumeId() {
 		return volumeId;
 	}
 
-	public void setVolumeId(Integer volumeId) {
+	public void setVolumeId(String volumeId) {
 		this.volumeId = volumeId;
 	}
 
 	@Override
 	public String toString() {
 		return "NovaSnapshot [id=" + id + ", status=" + status + ", sizeInGB="
-				+ sizeInGB + ", availabilityZone=" + availabilityZone
-				+ ", created=" + created + ", name=" + name + ", description="
-				+ description + ", volumeId=" + volumeId + "]";
+				+ sizeInGB + ", created=" + created + ", name=" + name
+				+ ", description=" + description + ", volumeId=" + volumeId
+				+ "]";
 	}
-	
+
 }

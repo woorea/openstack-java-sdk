@@ -171,11 +171,11 @@ public class ComputeClient {
 		return resource.volumes().post(volume);
 	}
 	
-	public void showVolume(Integer id) {
+	public void showVolume(String id) {
 		resource.volumes().volume(id).get();
 	}
 	
-	public void deleteVolume(Integer id) {
+	public void deleteVolume(String id) {
 		resource.volumes().volume(id).delete();
 	}
 	
@@ -187,11 +187,11 @@ public class ComputeClient {
 		return resource.snapshots().post(snapshot);
 	}
 	
-	public void showSnapshot(Integer id) {
+	public void showSnapshot(String id) {
 		resource.snapshots().snapshot(id).get();
 	}
 	
-	public void deleteSnapshot(Integer id) {
+	public void deleteSnapshot(String id) {
 		resource.snapshots().snapshot(id).delete();
 	}
 

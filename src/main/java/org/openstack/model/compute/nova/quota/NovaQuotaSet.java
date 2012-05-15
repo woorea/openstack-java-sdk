@@ -31,6 +31,12 @@ public class NovaQuotaSet implements Serializable {
 	private Integer volumes;
 	
 	private Integer cores;
+	
+	@JsonProperty("security_groups")
+	private Integer securityGroups;
+	
+	@JsonProperty("security_group_rules")
+	private Integer securityGroupRules;
 
 	public String getId() {
 		return id;
@@ -110,6 +116,22 @@ public class NovaQuotaSet implements Serializable {
 
 	public void setCores(Integer cores) {
 		this.cores = cores;
+	}
+
+	public Integer getSecurityGroups() {
+		return securityGroups;
+	}
+
+	public void setSecurityGroups(Integer securityGroups) {
+		this.securityGroups = securityGroups;
+	}
+
+	public Integer getSecurityGroupRules() {
+		return securityGroupRules;
+	}
+
+	public void setSecurityGroupRules(Integer securityGroupRules) {
+		this.securityGroupRules = securityGroupRules;
 	}
 	
 }

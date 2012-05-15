@@ -38,7 +38,7 @@ public class SnapshotsResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(volume, MediaType.APPLICATION_JSON), NovaSnapshot.class);
 	}
 
-	public SnapshotResource snapshot(Integer id) {
+	public SnapshotResource snapshot(String id) {
 		return new SnapshotResource(target.path("/{snapshotId}").pathParam("snapshotId", id), properties);
 	}
 	
