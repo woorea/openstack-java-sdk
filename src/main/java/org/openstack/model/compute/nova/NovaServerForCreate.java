@@ -1,6 +1,7 @@
 package org.openstack.model.compute.nova;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +125,7 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 
 	@XmlElementWrapper(name = "personality")
 	@XmlElement(name="file")
-	private List<File> personality;
+	private List<File> personality = new ArrayList<NovaServerForCreate.File>();
 
 	/**
 	 * This security groups are not created on the fly. They must be exist in
@@ -132,7 +133,7 @@ public class NovaServerForCreate implements Serializable, ServerForCreate {
 	 */
 	@XmlElementWrapper(name = "security_groups")
 	@XmlElement(name = "security_group")
-	private List<SecurityGroup> securityGroups;
+	private List<SecurityGroup> securityGroups = new ArrayList<NovaServerForCreate.SecurityGroup>();
 
 	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.nova.ServerForCreate#getName()
