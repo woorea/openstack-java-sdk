@@ -88,9 +88,14 @@ public class OpenStackClient {
 		}
 	}
 	
-	public void reauthenticateOnTenant(String tenantName) {
-		properties.setProperty("auth.tenant.name", tenantName);
-		authenticate(properties);
+	public OpenStackClient reauthenticateOnTenantById(String tenantId) {
+		properties.setProperty("auth.tenantId", tenantId);
+		return authenticate(properties);
+	}
+	
+	public OpenStackClient reauthenticateOnTenantByName(String tenantName) {
+		properties.setProperty("auth.tenantName", tenantName);
+		return authenticate(properties);
 	}
 
 	public void exchangeTokenForTenant(String tenantId) {

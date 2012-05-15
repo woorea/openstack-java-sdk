@@ -2,10 +2,12 @@ package org.openstack.api.compute.ext;
 
 import java.util.Properties;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
+import org.openstack.model.compute.nova.quota.NovaQuotaSet;
 
 /**
  * Quotas management support
@@ -19,12 +21,12 @@ public class QuotasResource extends Resource {
 		super(target, properties);
 	}
 
-	public String get() {
-		return target.request(MediaType.APPLICATION_JSON).get(String.class);
+	public NovaQuotaSet get() {
+		return target.request(MediaType.APPLICATION_JSON).get(NovaQuotaSet.class);
 	}
 	
-	public String update() {
-		return null;
+	public NovaQuotaSet update(NovaQuotaSet quotaSet) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(quotaSet),NovaQuotaSet.class);
 	}
 
 }

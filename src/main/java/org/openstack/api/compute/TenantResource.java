@@ -58,12 +58,13 @@ public class TenantResource extends Resource {
     	return path("/os-volumes", VolumesResource.class);
     }
 
-    public SimpleTenantUsageResource usage() {
-    	return path("/os-simple-tenant-usage", SimpleTenantUsageResource.class);
+    public SimpleTenantUsageResource usage(String id) {
+    	return new SimpleTenantUsageResource(target.path("/os-simple-tenant-usage/{id}").pathParam("id", id), properties);
     }
 
-    public QuotasResource quotas() {
-    	return path("/os-quota-sets", QuotasResource.class);
+    public QuotasResource quotas(String id) {
+    	return new QuotasResource(target.path("/os-quota-sets/{id}").pathParam("id", id), properties);
+    	//return path(""+id, QuotasResource.class);
     }
 
     public NetworksResource networks() {
