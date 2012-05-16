@@ -3,9 +3,9 @@ h1. OpenStack Java SDK
 h2. Maven
 
 |groupId|artifactId|version|
-|org.openstack|openstack-java-sdk|1.0-RC1|
+|org.openstack|openstack-java-sdk|1.0-RC2|
 
-https://raw.github.com/woorea/maven/master/snapshots/
+https://raw.github.com/woorea/maven/master/releases/
 
 h2. Configuration
 
@@ -16,15 +16,22 @@ h3. openstack.properties
 <pre>
 verbose=true
 
+#for HPCloud
+#auth.credentials=apiAccessKeyCredentials
+#auth.accessKey=<your accessKey>
+#auth.secretKey=<your secretKey>
+#auth.tenantId=<your tenantId>
+
+auth.credentials=passwordCredentials
 auth.username=demo
 auth.password=secret0
-#auth.tenant.id=123456789
-auth.tenant.name=demo
+#auth.tenantId=123456789
+auth.tenantName=demo
 
 
-identity.endpoint.publicURL=http://192.168.1.52:5000/v2.0
-identity.endpoint.internalURL=http://192.168.1.52:5000/v2.0
-identity.endpoint.adminURL=http://192.168.1.52:35357/v2.0
+identity.endpoint.publicURL=http://192.168.1.43:5000/v2.0
+identity.endpoint.internalURL=http://192.168.1.43:5000/v2.0
+identity.endpoint.adminURL=http://192.168.1.43:35357/v2.0
 identity.admin.token=secret0
 
 test.glance=false
