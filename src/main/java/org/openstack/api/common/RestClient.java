@@ -66,7 +66,6 @@ public enum RestClient {
     	private final ObjectMapper objectMapper;
     	
     	public OpenStackObjectMapperProvider() {
-    		System.out.println("Configure JSON");
     		objectMapper = new ObjectMapper();
     		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
     		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
