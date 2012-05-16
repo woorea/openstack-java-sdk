@@ -13,8 +13,10 @@ import com.google.common.collect.Maps;
 @JsonRootName("image")
 public class GlanceImage implements Serializable, Image {
 	
+	
     private String uri;
 
+    @JsonProperty("name")
     private String name;
     
     @JsonProperty("disk_format")
@@ -23,8 +25,10 @@ public class GlanceImage implements Serializable, Image {
     @JsonProperty("container_format")
     private String containerFormat;
 
+    @JsonProperty("size")
     private Long size;
 
+    @JsonProperty("checksum")
     private String checksum;
 
     @JsonProperty("created_at")
@@ -36,6 +40,7 @@ public class GlanceImage implements Serializable, Image {
     @JsonProperty("deleted_at")
     private Date deletedAt;
 
+    @JsonProperty("status")
     private String status;
  
     @JsonProperty("is_public")
@@ -47,13 +52,16 @@ public class GlanceImage implements Serializable, Image {
     @JsonProperty("min_disk")
     private Integer minDisk;
 
+    @JsonProperty("owner")
     private String owner;
 
+    @JsonProperty("deleted")
     private Boolean deleted;
     
     @JsonProperty("protected")
     private Boolean isProtected;
 
+    @JsonProperty("id")
     private String id;
    
     final Map<String, Object> properties = Maps.newHashMap();

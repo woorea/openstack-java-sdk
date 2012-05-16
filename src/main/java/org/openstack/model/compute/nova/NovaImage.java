@@ -10,9 +10,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.atom.Link;
 import org.openstack.model.compute.Image;
+import org.openstack.model.compute.Server;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -46,6 +48,10 @@ public class NovaImage implements Serializable, Image {
 	
 	@XmlAttribute
 	private int progress;
+	
+	@XmlElement(name = "server")
+	@JsonDeserialize(as=NovaServer.class)
+	private Server server;
 	
 	@XmlElement
 	private Map<String, String> metadata;
@@ -154,6 +160,14 @@ public class NovaImage implements Serializable, Image {
 
 	public void setProgress(int progress) {
 		this.progress = progress;
+	}
+
+	public Server getServer() {
+		return server;
+	}
+
+	public void setServer(Server server) {
+		this.server = server;
 	}
 
 	public Map<String, String> getMetadata() {

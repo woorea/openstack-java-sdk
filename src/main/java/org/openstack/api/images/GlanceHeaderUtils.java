@@ -15,6 +15,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.ResponseHeaders;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.glance.GlanceImage;
 
@@ -87,20 +88,12 @@ class GlanceHeaderUtils {
         if (imageFieldMap == null) {
             Map<String, Field> map = Maps.newHashMap();
             for (Field field : GlanceImage.class.getDeclaredFields()) {
-                XmlAttribute xmlAttribute = field.getAnnotation(XmlAttribute.class);
-                if (xmlAttribute == null)
-                    continue;
-
-                String name = xmlAttribute.name();
-                if ("##default".equals(name))
-                    name = null;
-
-                if (name == null)
-                    name = field.getName();
-
-                field.setAccessible(true);
-
-                map.put(name, field);
+                JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
+                if(jsonProperty != null) {
+                	String name = jsonProperty.value();
+                    field.setAccessible(true);
+                    map.put(name, field);
+                }
             }
             imageFieldMap = map;
         }
@@ -139,17 +132,6 @@ class GlanceHeaderUtils {
             } else {
                 log.fine("Ignoring unknown header " + key);
             }
-            // if (key.equals("x-image-meta-min-ram")) {
-            // image.setMinRam(Integer.parseInt(value));
-            // } else if (key.equals("x-image-meta-checksum")) {
-            // image.setChecksum(value);
-            // } else if (key.equals("x-image-meta-owner")) {
-            // image.setOwner(value);
-            // } else if (key.equals("x-image-meta-deleted_at")) {
-            // image.setOwner(value);
-            // } else {
-            // throw new IllegalStateException();
-            // }
         }
         return image;
     }

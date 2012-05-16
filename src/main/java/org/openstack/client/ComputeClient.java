@@ -80,6 +80,10 @@ public class ComputeClient {
 		return resource.flavors().get();
 	}
 	
+	public Flavor createFlavor(Flavor flavor) {
+		return resource.flavors().post(flavor);
+	}
+	
 	public Flavor showFlavor(String id) {
 		return resource.flavors().flavor(id).get();
 	}
@@ -171,8 +175,8 @@ public class ComputeClient {
 		return resource.volumes().post(volume);
 	}
 	
-	public void showVolume(String id) {
-		resource.volumes().volume(id).get();
+	public Volume showVolume(String id) {
+		return resource.volumes().volume(id).get();
 	}
 	
 	public void deleteVolume(String id) {
@@ -187,8 +191,8 @@ public class ComputeClient {
 		return resource.snapshots().post(snapshot);
 	}
 	
-	public void showSnapshot(String id) {
-		resource.snapshots().snapshot(id).get();
+	public Snapshot showSnapshot(String id) {
+		return  resource.snapshots().snapshot(id).get();
 	}
 	
 	public void deleteSnapshot(String id) {

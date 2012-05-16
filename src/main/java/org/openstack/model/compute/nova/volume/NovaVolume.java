@@ -61,7 +61,7 @@ public class NovaVolume implements Serializable, Volume {
 	private Map<String, String> metadata;
 	
 	@JsonProperty
-	private List<String> attachments;
+	private List<NovaVolumeAttachment> attachments;
 	
 	public NovaVolume() {
 		
@@ -113,7 +113,7 @@ public class NovaVolume implements Serializable, Volume {
 		return metadata;
 	}
 
-	public List<String> getAttachments() {
+	public List<NovaVolumeAttachment> getAttachments() {
 		return attachments;
 	}
 

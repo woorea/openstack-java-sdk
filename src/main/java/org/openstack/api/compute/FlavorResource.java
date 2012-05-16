@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Flavor;
@@ -19,9 +20,8 @@ public class FlavorResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaFlavor.class);
 	}
 
-	public void delete() {
-		// TODO Auto-generated method stub
-		
+	public Response delete() {
+		return target.request(MediaType.WILDCARD).delete();
 	}
 
 }

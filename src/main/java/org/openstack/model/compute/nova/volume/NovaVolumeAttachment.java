@@ -6,11 +6,13 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.model.compute.ServerAction;
 
 @JsonRootName("volumeAttachment")
-public class NovaVolumeAttachment implements Serializable, ServerAction {
+public class NovaVolumeAttachment implements Serializable {
 
 	private String id;
 	
 	private String volumeId;
+	
+	private String serverId;
 	
 	private String device;
 
@@ -30,17 +32,20 @@ public class NovaVolumeAttachment implements Serializable, ServerAction {
 		this.volumeId = volumeId;
 	}
 
+	public String getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(String serverId) {
+		this.serverId = serverId;
+	}
+
 	public String getDevice() {
 		return device;
 	}
 
 	public void setDevice(String device) {
 		this.device = device;
-	}
-
-	@Override
-	public Class<? extends Serializable> getReturnType() {
-		return NovaVolumeAttachment.class;
 	}
 	
 }

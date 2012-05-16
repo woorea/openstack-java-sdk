@@ -48,6 +48,9 @@ public class NovaFlavor implements Serializable, Flavor {
     @XmlAttribute
     private int disk;
     
+    @JsonProperty("OS-FLV-EXT-DATA:ephemeral")
+    private int ephemeralGb;
+    
     private Map<String, String> extensions = new HashMap<String, String>();
 
     @XmlElement(name = "link", namespace = "http://www.w3.org/2005/Atom")
@@ -134,7 +137,15 @@ public class NovaFlavor implements Serializable, Flavor {
         this.disk = disk;
     }
 
-    /* (non-Javadoc)
+    public int getEphemeralGb() {
+		return ephemeralGb;
+	}
+
+	public void setEphemeralGb(int ephemeralGb) {
+		this.ephemeralGb = ephemeralGb;
+	}
+
+	/* (non-Javadoc)
 	 * @see org.openstack.model.compute.Flavor#getSwap()
 	 */
     @Override

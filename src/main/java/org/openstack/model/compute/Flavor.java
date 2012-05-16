@@ -17,6 +17,10 @@ public interface Flavor {
 	float getRxTxFactor();
 
 	int getDisk();
+	
+	int getEphemeralGb();
+	
+	void setEphemeralGb(int value);
 
 	String getSwap();
 

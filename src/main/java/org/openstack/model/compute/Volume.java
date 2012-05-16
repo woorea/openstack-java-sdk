@@ -3,6 +3,8 @@ package org.openstack.model.compute;
 import java.util.List;
 import java.util.Map;
 
+import org.openstack.model.compute.nova.volume.NovaVolumeAttachment;
+
 public interface Volume {
 
 	String getId();
@@ -25,6 +27,6 @@ public interface Volume {
 
 	Map<String, String> getMetadata();
 	
-	List<String> getAttachments();
+	List<NovaVolumeAttachment> getAttachments();
 
 }

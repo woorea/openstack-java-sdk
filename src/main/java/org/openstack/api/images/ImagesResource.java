@@ -24,10 +24,13 @@ import org.openstack.model.images.glance.GlanceImageList;
 
 public class ImagesResource extends Resource {
 	
-	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(TenantResource.class.getPackage().getName()),false);
+	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(ImagesResource.class.getPackage().getName()),false);
 	
 	public ImagesResource(Target target, Properties properties) {
 		super(target, properties);
+		if(Boolean.parseBoolean(properties.getProperty("verbose"))) {
+			target.configuration().register(loggingFilter);
+		}
 	}
 	
 	public ImageList get() {

@@ -3,6 +3,7 @@ package org.openstack.api.compute.ext;
 import java.util.Properties;
 
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
@@ -14,7 +15,7 @@ public class VolumeAttachmentResource extends Resource {
 	}
 	
 	public Response delete() {
-		return target.request().delete();
+		return target.request(MediaType.WILDCARD).delete();
 	}
 
 }
