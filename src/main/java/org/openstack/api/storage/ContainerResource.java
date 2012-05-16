@@ -80,7 +80,7 @@ public class ContainerResource extends Resource {
 	*/
 	
 	public Response put() {
-		return target.request().method("PUT");
+		return target.request(MediaType.APPLICATION_JSON).method("PUT");
 	}
 	
 	public Response head() {

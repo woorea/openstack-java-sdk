@@ -106,7 +106,7 @@ public class ObjectResource  extends Resource {
 		Preconditions.checkNotNull(properties, "You have to supply object propeties");
 		Preconditions.checkNotNull(properties, "You have to supply object name");
 		try {
-			Invocation.Builder builder = target.request();
+			Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
 			
 			byte[] bytes = IOUtils.toByteArray(objectStream);
 			
