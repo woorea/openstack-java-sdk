@@ -26,6 +26,10 @@ public class IdentityClient {
 	public Tenant createTenant(Tenant tenant) {
 		return endpoint.tenants().post(tenant);
 	}
+	
+	public Tenant showTenant(String id) {
+		return endpoint.tenants().tenant(id).get();
+	}
 
 	public void deleteTenant(String id) {
 		endpoint.tenants().tenant(id).delete();
