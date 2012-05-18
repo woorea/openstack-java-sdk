@@ -19,11 +19,11 @@ public class EndpointsResource extends Resource {
 	}
 	
 	public EndpointList get() {
-		return target.request().get(KeystoneEndpointList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneEndpointList.class);
 	}
 
 	public Endpoint post(Endpoint endpoint) {
-		return target.request().post(Entity.entity(endpoint, MediaType.APPLICATION_JSON), KeystoneEndpoint.class);
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(endpoint, MediaType.APPLICATION_JSON), KeystoneEndpoint.class);
 	}
 
 	public EndpointResource endpoint(String id) {

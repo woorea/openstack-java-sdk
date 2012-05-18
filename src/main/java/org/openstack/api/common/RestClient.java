@@ -30,6 +30,8 @@ public enum RestClient {
 		
 		client.configuration().enable(new JsonJacksonFeature());
 		
+		client.configuration().register(new OpenstackExceptionClientFilter());
+		
 		client.configuration().register(OpenStackObjectMapperProvider.class);
 		
 		//client.configuration().register(JaxbContextResolver.class);

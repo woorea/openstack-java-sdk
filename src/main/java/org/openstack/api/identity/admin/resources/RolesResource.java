@@ -3,6 +3,7 @@ import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.identity.Role;
@@ -17,11 +18,11 @@ public class RolesResource extends Resource {
 	}
 	
 	public RoleList get() {
-		return target.request().get(KeystoneRoleList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneRoleList.class);
 	}
 	
 	public Role post(Role role) {
-		return target.request().post(Entity.json(role), KeystoneRole.class);
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(role), KeystoneRole.class);
 	}
 	
 	public RoleResource role(String id) {

@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
@@ -17,15 +18,15 @@ public class EndpointResource extends Resource {
 	}
 	
 	public Endpoint get() {
-		return target.request().get(KeystoneEndpoint.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneEndpoint.class);
 	}
 
 	public Endpoint update(Entity<KeystoneEndpoint> entity) {
-		return target.request().put(entity, KeystoneEndpoint.class);
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneEndpoint.class);
 	}
 	
 	public Response delete() {
-		return target.request().delete();
+		return target.request(MediaType.APPLICATION_JSON).delete();
 	}
 
 }

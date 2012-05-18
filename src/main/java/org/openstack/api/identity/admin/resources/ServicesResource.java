@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
+import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.identity.Service;
@@ -18,11 +19,11 @@ public class ServicesResource extends Resource {
 	}
 	
 	public ServiceList get() {
-		return target.request().get(KeystoneServiceList.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneServiceList.class);
 	}
 	
 	public Service post(Service service) {
-		return target.request().post(Entity.json(service), KeystoneService.class);
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(service), KeystoneService.class);
 	}
 	
 	public ServiceResource service(String id) {

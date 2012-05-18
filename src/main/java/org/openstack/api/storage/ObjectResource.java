@@ -4,33 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Target;
-import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.RequestHeaders;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Link.Builder;
 
 import org.apache.commons.io.IOUtils;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.TenantResource;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.storage.StorageObjectProperties;
-import org.openstack.model.storage.swift.SwiftStorageObject;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 import com.google.common.base.Preconditions;
@@ -54,20 +40,9 @@ public class ObjectResource  extends Resource {
 	}
 	
 	public StorageObjectProperties head() {
-		
 		Response response = target.request(MediaType.APPLICATION_JSON).head();
-		int httpStatus = response.getStatus();
-		if (httpStatus == 200) {
-			StorageObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response.getHeaders());
-			return properties;
-		}
-
-		if (httpStatus == 404) {
-			throw new OpenstackNotFoundException("Object not found");
-		}
-
-		throw new OpenstackException("Unexpected HTTP status code: " + httpStatus);
-		
+		StorageObjectProperties properties = SwiftHeaderUtils.unmarshalHeaders(response.getHeaders());
+		return properties;
 	}
 	
 	public Response post(StorageObjectProperties changeProperties) {

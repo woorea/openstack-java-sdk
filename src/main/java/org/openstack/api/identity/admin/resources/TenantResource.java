@@ -18,7 +18,7 @@ public class TenantResource extends Resource {
 	}
 
 	public KeystoneTenant get() {
-		return target.request(MediaType.APPLICATION_XML).get(KeystoneTenant.class);
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneTenant.class);
 	}
 
 	public Tenant update(Entity<Tenant> entity) {
@@ -26,7 +26,7 @@ public class TenantResource extends Resource {
 	}
 
 	public Response delete() {
-		return target.request().delete();
+		return target.request(MediaType.APPLICATION_JSON).delete();
 	}
 	
 	public TenantUsersResource users() {

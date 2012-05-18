@@ -11,7 +11,6 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.exceptions.OpenstackException;
-import org.openstack.model.exceptions.OpenstackNotFoundException;
 import org.openstack.model.images.Image;
 
 public class ImageResource extends Resource {
@@ -28,17 +27,8 @@ public class ImageResource extends Resource {
 
     public Image head() throws OpenstackException {
         Response response = target.request().head();
-        int httpStatus = response.getStatus();
-        if (httpStatus == 200) {
-            Image image = GlanceHeaderUtils.unmarshalHeaders(response.getHeaders());
-            return image;
-        }
-
-        if (httpStatus == 404) {
-            throw new OpenstackNotFoundException("Image not found");
-        }
-
-        throw new OpenstackException("Unexpected HTTP status code: " + httpStatus);
+        Image image = GlanceHeaderUtils.unmarshalHeaders(response.getHeaders());
+        return image;
     }
 
 	public InputStream openStream() {

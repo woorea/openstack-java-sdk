@@ -42,6 +42,10 @@ public class IdentityClient {
 	public User createUser(UserForCreate userForCreate) {
 		return endpoint.users().post(userForCreate);
 	}
+	
+	public User updateUser(User user) {
+		return endpoint.users().user(user.getId()).put(user);
+	}
 
 	public void deleteUser(String id) {
 		endpoint.users().user(id).delete();
@@ -53,6 +57,14 @@ public class IdentityClient {
 
 	public Role createRole(Role role) {
 		return endpoint.roles().post(role);
+	}
+	
+	public Role showRole(String id) {
+		return endpoint.roles().role(id).get();
+	}
+	
+	public Role updateRole(Role role) {
+		return endpoint.roles().role(role.getId()).put(role);
 	}
 
 	public void deleteRole(String id) {
