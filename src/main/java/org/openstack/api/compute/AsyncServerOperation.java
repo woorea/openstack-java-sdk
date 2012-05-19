@@ -8,7 +8,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 import org.openstack.model.compute.Server;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 
 import com.google.common.collect.Lists;
 
@@ -38,7 +38,7 @@ public class AsyncServerOperation implements Future<Server> {
 		this.finishStates = finishStates;
 	}
 
-	Server waitForState(long timeout, TimeUnit unit) throws OpenstackException {
+	Server waitForState(long timeout, TimeUnit unit) throws OpenStackException {
 		try {
 			long timeoutAt = unit != null ? System.currentTimeMillis() + unit.toMillis(timeout) : Long.MAX_VALUE;
 			while (true) {
@@ -70,7 +70,7 @@ public class AsyncServerOperation implements Future<Server> {
 				}
 
 				if (!acceptableTransitionStates.contains(status)) {
-					throw new OpenstackException("Server is in unexpected state: " + status);
+					throw new OpenStackException("Server is in unexpected state: " + status);
 				}
 
 				if (server != null) {
@@ -80,12 +80,12 @@ public class AsyncServerOperation implements Future<Server> {
 				}
 
 				if (System.currentTimeMillis() > timeoutAt)
-					throw new OpenstackException("Server did not transition to expected state within timeout");
+					throw new OpenStackException("Server did not transition to expected state within timeout");
 
 				try {
 					Thread.sleep(POLL_INTERVAL_MILLISECONDS);
 				} catch (InterruptedException e) {
-					throw new OpenstackException(e.getMessage(), e);
+					throw new OpenStackException(e.getMessage(), e);
 				}
 
 			}
@@ -105,7 +105,7 @@ public class AsyncServerOperation implements Future<Server> {
 			return get(0, null);
 		} catch (Exception e) {
 			// TimeoutException shouldn't happen without a timeout specified!!
-			throw new OpenstackException("Unexpected error", e);
+			throw new OpenStackException("Unexpected error", e);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class AsyncServerOperation implements Future<Server> {
 	public Server get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
 		try {
 			return waitComplete(timeout, unit);
-		} catch (OpenstackException e) {
+		} catch (OpenStackException e) {
 			throw new ExecutionException("Error with OpenStack", e);
 		}
 	}
@@ -121,17 +121,17 @@ public class AsyncServerOperation implements Future<Server> {
 	/**
 	 * This method throws OpenStackComputeException instead of wrapping it in ExecutionException
 	 * 
-	 * @throws OpenstackException
+	 * @throws OpenStackException
 	 */
 	public Server waitComplete(long timeout, TimeUnit unit) throws InterruptedException, TimeoutException,
-			OpenstackException {
+			OpenStackException {
 		return this.waitForState(timeout, unit);
 	}
 
 	/**
 	 * This method throws OpenStackComputeException instead of wrapping it in ExecutionException
 	 */
-	public Server waitComplete() throws InterruptedException, OpenstackException {
+	public Server waitComplete() throws InterruptedException, OpenStackException {
 		try {
 			return waitComplete(0, null);
 		} catch (TimeoutException e) {

@@ -4,14 +4,14 @@ import org.openstack.api.compute.TenantResource;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.KeyPairListItem;
 import org.openstack.model.compute.nova.keypair.NovaKeyPair;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ITKeyPairs extends ComputeIntegrationTest {
 
 	@Test
-	public void testListKeypairs() throws OpenstackException {
+	public void testListKeypairs() throws OpenStackException {
 		skipIfNoKeyPairs();
 		
 		for (KeyPairListItem keyPairItem : compute.keyPairs().get().getList()) {
@@ -23,7 +23,7 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 	}
 
 	@Test
-	public void deleteAllKeypairs() throws OpenstackException {
+	public void deleteAllKeypairs() throws OpenStackException {
 		
 		for (KeyPairListItem keyPair : compute.keyPairs().get().getList()) {
 			try {
@@ -62,7 +62,7 @@ public class ITKeyPairs extends ComputeIntegrationTest {
 	}
 
 	@Test
-	public void testCreateAndDelete() throws OpenstackException {
+	public void testCreateAndDelete() throws OpenStackException {
 		skipIfNoKeyPairs();
 
 		// OSAPI-BUG: I think an full-ascii name is often undeletable

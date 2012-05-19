@@ -7,7 +7,8 @@ import javax.ws.rs.ext.FilterContext;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.ResponseFilter;
 
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackComputeException;
+import org.openstack.model.exceptions.OpenStackException;
 
 @Provider
 public class OpenstackExceptionClientFilter implements ResponseFilter {
@@ -18,11 +19,17 @@ public class OpenstackExceptionClientFilter implements ResponseFilter {
 		if(httpStatus / 100 > 3) {
 			MediaType responseType = context.getResponse().getHeaders().getMediaType();
 			if (responseType != null && responseType.isCompatible(MediaType.APPLICATION_JSON_TYPE)) {
-				throw context.getResponse().readEntity(OpenstackException.class);
+				// the filter should be applied per project basics
+				// for now is applied in a coarse grained fashion
+				try {
+					throw context.getResponse().readEntity(OpenStackComputeException.class);
+				} catch (Exception e) {
+					throw context.getResponse().readEntity(OpenStackException.class);
+				}
 			} else if (context.getResponse().hasEntity()) {
-				throw new OpenstackException(context.getResponse().readEntity(String.class));
+				throw new OpenStackException(context.getResponse().readEntity(String.class));
 			} else {
-				throw new OpenstackException("Unknown exception");
+				throw new OpenStackException("Unknown exception");
 			}
 		} 
 	}

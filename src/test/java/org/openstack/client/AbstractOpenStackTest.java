@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.openstack.client.utils.RandomUtil;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.testng.SkipException;
 
 public abstract class AbstractOpenStackTest {
@@ -35,7 +35,7 @@ public abstract class AbstractOpenStackTest {
 			
 			client = OpenStackClient.authenticate(properties);
 		} catch (IOException e) {
-			throw new OpenstackException(e.getMessage(), e);
+			throw new OpenStackException(e.getMessage(), e);
 		}
 
 	}

@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.images.Image;
 
 public class ImageResource extends Resource {
@@ -25,7 +25,7 @@ public class ImageResource extends Resource {
         b.method("PUT");
     }
 
-    public Image head() throws OpenstackException {
+    public Image head() throws OpenStackException {
         Response response = target.request().head();
         Image image = GlanceHeaderUtils.unmarshalHeaders(response.getHeaders());
         return image;

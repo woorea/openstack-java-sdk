@@ -16,7 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
 import org.openstack.api.compute.TenantResource;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 import org.openstack.model.images.glance.GlanceImage;
@@ -41,7 +41,7 @@ public class ImagesResource extends Resource {
     	return new ImageResource(target.path("/{id}").pathParam("id", id), properties);
     }
 
-	public Image post(File imageFile, Image imageProperties) throws IOException, OpenstackException {
+	public Image post(File imageFile, Image imageProperties) throws IOException, OpenStackException {
 		FileInputStream fis = new FileInputStream(imageFile);
 		try {
 
@@ -51,7 +51,7 @@ public class ImagesResource extends Resource {
 		}
 	}
 
-	public Image post(InputStream imageStream, long size, Image imageProperties) throws OpenstackException, IOException {
+	public Image post(InputStream imageStream, long size, Image imageProperties) throws OpenStackException, IOException {
 	
 		Builder b = target.request(MediaType.APPLICATION_JSON);
 		

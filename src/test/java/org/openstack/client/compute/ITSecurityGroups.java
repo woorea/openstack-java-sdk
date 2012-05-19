@@ -8,14 +8,14 @@ import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupForCreate;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRuleForCreate;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ITSecurityGroups extends ComputeIntegrationTest {
 
 	@Test
-	public void testListSecurityGroups() throws OpenstackException {
+	public void testListSecurityGroups() throws OpenStackException {
 		skipIfNoSecurityGroups();
 
 		for (SecurityGroup securityGroup : compute.securityGroups().get().getList()) {
@@ -26,7 +26,7 @@ public class ITSecurityGroups extends ComputeIntegrationTest {
 	}
 
 	@Test
-	public void testCreateAndDelete() throws OpenstackException {
+	public void testCreateAndDelete() throws OpenStackException {
 		skipIfNoSecurityGroups();
 
 		

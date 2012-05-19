@@ -43,12 +43,8 @@ public class ComputeClient {
 		return resource.servers().get();
 	}
 	
-	public ServerList listServers(int offset, int max) {
-		return resource.servers().get();
-	}
-
-	public ServerList listServers(Map<String, Object> params) {
-		return resource.servers().get();
+	public ServerList listServers(Map<String, Object> filters) {
+		return resource.servers().get(filters);
 	}
 	
 	public Server createServer(ServerForCreate serverForCreate) {

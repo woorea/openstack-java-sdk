@@ -3,7 +3,7 @@ package org.openstack.model.exceptions;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("error")
-public class OpenstackException extends RuntimeException {
+public class OpenStackException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -11,15 +11,15 @@ public class OpenstackException extends RuntimeException {
 	private Integer code;
 	private String title;
 	
-	public OpenstackException() {
+	public OpenStackException() {
 		
 	}
 
-	public OpenstackException(String message, Throwable cause) {
+	public OpenStackException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public OpenstackException(String message) {
+	public OpenStackException(String message) {
 		super(message);
 	}
 

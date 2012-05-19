@@ -16,7 +16,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.ServiceCatalogEntry;
 import org.openstack.model.identity.ServiceEndpoint;
@@ -114,7 +114,7 @@ public class KeystoneAccess implements Serializable, Access {
 				return endpoints.get(0);
 			}
 		} catch (NoSuchElementException e) {
-			throw new OpenstackException("Service " + type + " not found, you can try openstack.target(<endpoint>, <resource class>) method instead", e);
+			throw new OpenStackException("Service " + type + " not found, you can try openstack.target(<endpoint>, <resource class>) method instead", e);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}

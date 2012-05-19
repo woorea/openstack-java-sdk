@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.TenantResource;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.storage.StorageObjectProperties;
 import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
@@ -59,25 +59,25 @@ public class ObjectResource  extends Resource {
 		return target.request(MediaType.APPLICATION_OCTET_STREAM).get(InputStream.class);	
 	}
 	
-	public Response put() throws OpenstackException {
+	public Response put() throws OpenStackException {
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
 		builder = builder.header("Content-Length", "0");
 		return builder.put(Entity.entity(new byte[1], "application/directory"));
 	}
 
-	public Response put(File srcFile, SwiftStorageObjectProperties properties) throws OpenstackException {
+	public Response put(File srcFile, SwiftStorageObjectProperties properties) throws OpenStackException {
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(srcFile);
 			return put(fis, srcFile.length(), properties);
 		} catch(IOException e) {
-			throw new OpenstackException(e.getMessage(), e);
+			throw new OpenStackException(e.getMessage(), e);
 		} finally {
 			IOUtils.closeQuietly(fis);
 		}
 	}
 
-	public Response put(InputStream objectStream, long objectStreamLength, SwiftStorageObjectProperties properties) throws OpenstackException {
+	public Response put(InputStream objectStream, long objectStreamLength, SwiftStorageObjectProperties properties) throws OpenStackException {
 		Preconditions.checkNotNull(properties, "You have to supply object propeties");
 		Preconditions.checkNotNull(properties, "You have to supply object name");
 		try {
@@ -109,7 +109,7 @@ public class ObjectResource  extends Resource {
 			*/
 			return response;
 		} catch(IOException e) {
-			throw new OpenstackException(e.getMessage(), e);
+			throw new OpenStackException(e.getMessage(), e);
 		}
 	}
 

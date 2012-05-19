@@ -13,7 +13,7 @@ import org.openstack.api.identity.IdentityInternalEndpoint;
 import org.openstack.api.identity.IdentityPublicEndpoint;
 import org.openstack.api.images.ImagesResource;
 import org.openstack.api.storage.AccountResource;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.identity.Access;
 import org.openstack.model.identity.Authentication;
 import org.openstack.model.identity.keystone.KeystoneAuthentication;
@@ -83,7 +83,7 @@ public class OpenStackClient {
 			properties.load(OpenStackClient.class.getResourceAsStream("/openstack.properties"));
 			return authenticate(properties);
 		} catch (IOException e) {
-			throw new OpenstackException("openstack.properties not found in the CLASSPATH", e);
+			throw new OpenStackException("openstack.properties not found in the CLASSPATH", e);
 		}
 	}
 	

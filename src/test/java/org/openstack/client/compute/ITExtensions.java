@@ -2,14 +2,14 @@ package org.openstack.client.compute;
 
 import org.openstack.model.common.Extension;
 import org.openstack.model.common.ExtensionList;
-import org.openstack.model.exceptions.OpenstackException;
+import org.openstack.model.exceptions.OpenStackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ITExtensions extends ComputeIntegrationTest {
 
     @Test
-    public void testListExtensions() throws OpenstackException {
+    public void testListExtensions() throws OpenStackException {
         
         ExtensionList extensions = compute.extensions().get();
         for (Extension extension : extensions) {
