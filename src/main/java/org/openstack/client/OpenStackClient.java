@@ -160,7 +160,7 @@ public class OpenStackClient {
 	}
 	
 	public ImagesResource getImagesEndpoint() {
-		return target(access.getEndpoint("image", null).getPublicURL().concat("/images"), ImagesResource.class);
+		return target(access.getEndpoint("image", null).getPublicURL().concat("/v1/images"), ImagesResource.class);
 	}
 	
 	public ImagesResource getImagesInternalEndpoint() {
