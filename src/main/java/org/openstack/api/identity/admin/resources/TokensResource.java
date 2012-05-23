@@ -17,8 +17,12 @@ public class TokensResource extends Resource {
 		super(target, properties);
 	}
 
-    public Access post(Authentication authentication) {	
-    	return target.request(MediaType.APPLICATION_JSON).post(Entity.json(authentication), KeystoneAccess.class);
-    }
+	public Access post(Authentication authentication) {	
+		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(authentication), KeystoneAccess.class);
+	}
+
+	public TokenResource token(String id) {
+		return new TokenResource(target.path("/{tokenId}").pathParam("tokenId", id), properties);
+	}
 
 }
