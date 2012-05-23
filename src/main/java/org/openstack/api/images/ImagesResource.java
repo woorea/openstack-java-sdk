@@ -54,11 +54,11 @@ public class ImagesResource extends Resource {
 	public Image post(InputStream imageStream, long size, Image imageProperties) throws OpenStackException, IOException {
 	
 		Builder b = target.request(MediaType.APPLICATION_JSON);
-		
-		GlanceHeaderUtils.setHeaders(b, imageProperties);
 		byte[] bytes = IOUtils.toByteArray(imageStream);
 		imageProperties.setSize((long) bytes.length);
-		System.out.println(bytes.length);
+		
+		GlanceHeaderUtils.setHeaders(b, imageProperties);
+
 
 		return b.post(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM_TYPE), GlanceImage.class);
 	}
