@@ -8,8 +8,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.identity.Token;
-import org.openstack.model.identity.keystone.KeystoneToken;
+import org.openstack.model.identity.Access;
+import org.openstack.model.identity.keystone.KeystoneAccess;
 
 public class TokenResource extends Resource {
 
@@ -17,12 +17,12 @@ public class TokenResource extends Resource {
 		super(target, properties);
 	}
 
-	public KeystoneToken get() {
-		return target.request(MediaType.APPLICATION_JSON).get(KeystoneToken.class);
+	public KeystoneAccess get() {
+		return target.request(MediaType.APPLICATION_JSON).get(KeystoneAccess.class);
 	}
 
-	public Token update(Entity<Token> entity) {
-		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneToken.class);
+	public Access update(Entity<Access> entity) {
+		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneAccess.class);
 	}
 
 	public Response delete() {
