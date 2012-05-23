@@ -44,6 +44,9 @@ import org.openstack.model.compute.nova.server.actions.UnpauseAction;
 
 public class ServerResource extends Resource {
 
+	public static final String REBOOT_HARD = "HARD";
+	public static final String REBOOT_SOFT = "SOFT";
+	
 	public static class IpsResource extends Resource {
 		
 		public IpsResource(Target target, Properties properties) {
@@ -106,11 +109,13 @@ public class ServerResource extends Resource {
 	/**
 	 * Reboot a server.
 	 * 
+	 * Usage: server.reboot(ServerResource.REBOOT_HARD);
 	 * @param type
-	 *            either REBOOT_SOFT for a software-level reboot, or REBOOT_HARD for a virtual power cycle hard reboot.
+	 *            either ServerResource.REBOOT_SOFT for a software-level reboot, or ServerResource.REBOOT_HARD for a virtual power cycle hard reboot.
 	 */
 	public void reboot(String type) {
 		RebootAction rebootAction = new RebootAction();
+		rebootAction.setType(type);
 		executeAction(String.class, rebootAction);
 	}
 
