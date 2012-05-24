@@ -102,7 +102,7 @@ public class ITServers extends ComputeIntegrationTest {
 						System.out.print(".");
 					}
 				}
-			}, 3, 1, TimeUnit.SECONDS);
+			}, 10, 5, TimeUnit.SECONDS);
 			timer.awaitTermination(30, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			
