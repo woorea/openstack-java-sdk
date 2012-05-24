@@ -1,7 +1,10 @@
 package org.openstack.client;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.ws.rs.core.Response;
 
@@ -11,7 +14,6 @@ import org.openstack.model.storage.StorageContainer;
 import org.openstack.model.storage.StorageObjectProperties;
 import org.openstack.model.storage.swift.SwiftContainer;
 import org.openstack.model.storage.swift.SwiftStorageObject;
-import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 public class StorageClient {
 
@@ -47,20 +49,36 @@ public class StorageClient {
 	
 	
 	
-	public void createDirectory(String containerName, String objectName, String directoryName) {
-		Response response = accountResource.container(containerName).object(objectName + directoryName).put();
+	public void createDirectory(String containerName, String directoryName) {
+		Response response = accountResource.container(containerName).object(directoryName).put();
 	}
 	
-	public void createObject(String containerId, String objectId, InputStream is, int size, SwiftStorageObjectProperties properties) {
+	public void createObject(String containerId, String objectId, InputStream is, int size, Map<String, String> properties) {
 		Response response = accountResource.container(containerId).object(objectId).put(is,size, properties);
+	}
+	
+	public void createObject(String containerId, String objectId, File file, Map<String,String> properties) {
+		Response response = accountResource.container(containerId).object(objectId).put(file, properties);
+	}
+	
+	public void createObject(String containerId, String objectId, File file) {
+		Response response = accountResource.container(containerId).object(objectId).put(file, null);
 	}
 	
 	public StorageObjectProperties showObject(String containerId, String objectId) {
 		return accountResource.container(containerId).object(objectId).head();
 	}
 	
-	public InputStream getObjectInputStream(String containerId, String objectId) {
-		return accountResource.container(containerId).object(objectId).openStream();
+	public InputStream getObjectAsInputStream(String containerId, String objectId) {
+		return accountResource.container(containerId).object(objectId).get(InputStream.class);
+	}
+	
+	public String getObjectAsString(String containerId, String objectId) {
+		return accountResource.container(containerId).object(objectId).get(String.class);
+	}
+	
+	public byte[] getObjectAsByteArray(String containerId, String objectId) {
+		return accountResource.container(containerId).object(objectId).get(byte[].class);
 	}
 	
 	public void deleteObject(String containerId, String objectId) {

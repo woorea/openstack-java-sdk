@@ -53,11 +53,11 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	
 	@Test(dependsOnMethods="createContainer", priority=3)
 	public void createObject() {
-		SwiftStorageObjectProperties properties = new SwiftStorageObjectProperties();
-		properties.setName("test-object");
+		//SwiftStorageObjectProperties properties = new SwiftStorageObjectProperties();
+		//properties.setName("test-object");
 		int size = 1024;
 		InputStream is = new ByteArrayInputStream(new byte[size]);
-		Response response = storage.container(container).object(object).put(is,size, properties);
+		Response response = storage.container(container).object(object).put(is,size);
 	}
 	
 	@Test(dependsOnMethods={"createObject"}, priority=4)

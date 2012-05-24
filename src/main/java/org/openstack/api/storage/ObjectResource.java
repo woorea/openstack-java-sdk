@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.ws.rs.client.Entity;
@@ -17,7 +18,6 @@ import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.TenantResource;
 import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.storage.StorageObjectProperties;
-import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 
 import com.google.common.base.Preconditions;
 
@@ -45,9 +45,12 @@ public class ObjectResource  extends Resource {
 		return properties;
 	}
 	
-	public Response post(StorageObjectProperties changeProperties) {
+	public Response post(Properties properties) {
+		Preconditions.checkNotNull(properties, "You have to supply properties");
 		Invocation.Builder b = target.request(MediaType.APPLICATION_JSON);
-		SwiftHeaderUtils.setHeadersForProperties(b, changeProperties);
+		for(String name : properties.stringPropertyNames()) {
+			b = b.header("x-object-meta-" + name, properties.getProperty(name));
+		}
 		return b.method("POST");
 	}
 	
@@ -55,17 +58,17 @@ public class ObjectResource  extends Resource {
 		return target.request(MediaType.WILDCARD).delete();
 	}
 
-	public InputStream openStream() {
-		return target.request(MediaType.APPLICATION_OCTET_STREAM).get(InputStream.class);	
+	public <T> T get(Class<T> c) {
+		return target.request(MediaType.WILDCARD).get(c);	
 	}
 	
 	public Response put() throws OpenStackException {
-		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
-		builder = builder.header("Content-Length", "0");
-		return builder.put(Entity.entity(new byte[1], "application/directory"));
+		Invocation.Builder builder = target.request();
+		builder = builder.header("Content-Length", 0);
+		return builder.put(Entity.entity(new byte[1],"application/directory"));
 	}
 
-	public Response put(File srcFile, SwiftStorageObjectProperties properties) throws OpenStackException {
+	public Response put(File srcFile, Map<String, String> properties) throws OpenStackException {
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(srcFile);
@@ -76,10 +79,13 @@ public class ObjectResource  extends Resource {
 			IOUtils.closeQuietly(fis);
 		}
 	}
+	
+	public Response put(File srcFile) throws OpenStackException {
+		return put(srcFile, null);
+	}
 
-	public Response put(InputStream objectStream, long objectStreamLength, SwiftStorageObjectProperties properties) throws OpenStackException {
-		Preconditions.checkNotNull(properties, "You have to supply object propeties");
-		Preconditions.checkNotNull(properties, "You have to supply object name");
+	public Response put(InputStream objectStream, long objectStreamLength, Map<String, String> properties) throws OpenStackException {
+		//Preconditions.checkNotNull(properties, "You have to supply object name");
 		try {
 			Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
 			
@@ -87,15 +93,16 @@ public class ObjectResource  extends Resource {
 			
 			builder = builder.header("Content-Length", bytes.length);
 			
-			SwiftHeaderUtils.setHeadersForProperties(builder, properties);
-			
-			Response response = null;
-			if (properties.getContentType() != null) {
-				MediaType contentType = MediaType.valueOf(properties.getContentType());
-				response = builder.put(Entity.entity(bytes, contentType), Response.class);
+			if(properties != null) {
+				for(String name : properties.keySet()) {
+					builder = builder.header("x-object-meta-" + name, properties.get(name));
+				}
+				String contentType = properties.get("Content-Type") != null ? properties.get("Content-Type") : MediaType.APPLICATION_OCTET_STREAM;
+				return builder.put(Entity.entity(bytes, contentType), Response.class);
 			} else {
-				response = builder.put(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM_TYPE), Response.class);
+				return builder.put(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM), Response.class);
 			}
+				
 			/*
 			MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
 
@@ -107,10 +114,13 @@ public class ObjectResource  extends Resource {
 			}
 			return responseProperties;
 			*/
-			return response;
 		} catch(IOException e) {
 			throw new OpenStackException(e.getMessage(), e);
 		}
+	}
+	
+	public Response put(InputStream objectStream, long objectStreamLength) {
+		return put(objectStream, objectStreamLength, null);
 	}
 
 }

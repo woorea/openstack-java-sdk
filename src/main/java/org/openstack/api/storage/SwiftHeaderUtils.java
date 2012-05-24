@@ -43,12 +43,14 @@ class SwiftHeaderUtils {
 		return properties;
 	}
 	
+	/*
 	public static Invocation.Builder setHeadersForProperties(Invocation.Builder builder, StorageObjectProperties changeProperties) {
 		
 		for (Map.Entry<String, String> tag : changeProperties.getCustomProperties().entrySet()) {
-			builder.header("x-object-meta-" + tag.getKey(), tag.getValue());
+			
 		}
 		return builder;
 	}
+	*/
 
 }
