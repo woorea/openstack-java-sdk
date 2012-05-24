@@ -1,4 +1,4 @@
-package org.openstack.api.compute.notavailable;
+package org.openstack.api.compute.ext;
 
 import java.util.Properties;
 

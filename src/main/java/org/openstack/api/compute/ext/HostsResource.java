@@ -1,4 +1,4 @@
-package org.openstack.api.compute.notavailable;
+package org.openstack.api.compute.ext;
 
 import java.util.Properties;
 
@@ -13,14 +13,18 @@ import org.openstack.api.common.Resource;
  * @author sp
  *
  */
-public class HostResource extends Resource {
+public class HostsResource extends Resource {
 
-	public HostResource(Target target, Properties properties) {
+	public HostsResource(Target target, Properties properties) {
 		super(target, properties);
 	}
 
+	/**
+	 * Shows the physical/usage resource given by hosts.
+	 * @return
+	 */
 	public String get() {
 		return target.request(MediaType.APPLICATION_JSON).get(String.class);
 	}
-
+	
 }

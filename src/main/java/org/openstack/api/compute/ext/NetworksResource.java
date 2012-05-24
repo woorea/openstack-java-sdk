@@ -1,4 +1,4 @@
-package org.openstack.api.compute.notavailable;
+package org.openstack.api.compute.ext;
 
 import java.util.Properties;
 
@@ -6,6 +6,7 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
+import org.openstack.api.compute.ExtensionResource;
 
 /**
  * Admin-only Network Management Extension
@@ -21,5 +22,9 @@ public class NetworksResource extends Resource {
 
 	public String get() {
 		return target.request(MediaType.APPLICATION_JSON).get(String.class);
+	}
+	
+	public NetworkResource network(String id) {
+		return new NetworkResource(target.path("/{networkId}").pathParam("networkId", id), properties);
 	}
 }

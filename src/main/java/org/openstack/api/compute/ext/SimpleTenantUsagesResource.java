@@ -7,6 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.nova.usage.NovaSimpleTenantUsage;
+import org.openstack.model.compute.nova.usage.NovaSimpleTenantUsages;
 
 /**
  * Simple tenant usage extension
@@ -14,13 +15,13 @@ import org.openstack.model.compute.nova.usage.NovaSimpleTenantUsage;
  * @author sp
  *
  */
-public class SimpleTenantUsageResource extends Resource {
+public class SimpleTenantUsagesResource extends Resource {
 	
-	public SimpleTenantUsageResource(Target target, Properties properties) {
+	public SimpleTenantUsagesResource(Target target, Properties properties) {
 		super(target, properties);
 	}
 	
-	public NovaSimpleTenantUsage get(String start, String end) {
+	public NovaSimpleTenantUsages get(String start, String end) {
 		Target localTarget = target.queryParam("detailed",1);
 		if(start != null) {
 			localTarget = localTarget.queryParam("start",start);
@@ -28,7 +29,11 @@ public class SimpleTenantUsageResource extends Resource {
 		if(end != null) {
 			localTarget = localTarget.queryParam("end",end);
 		}
-		return localTarget.request(MediaType.APPLICATION_JSON).get(NovaSimpleTenantUsage.class);
+		return localTarget.request(MediaType.APPLICATION_JSON).get(NovaSimpleTenantUsages.class);
+	}
+	
+	public SimpleTenantUsageResource keypair(String id) {
+		return new SimpleTenantUsageResource(target.path("/{tenantId}").pathParam("tenantId", id), properties);
 	}
 
 }

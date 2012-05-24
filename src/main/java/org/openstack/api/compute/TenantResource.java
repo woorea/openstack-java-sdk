@@ -8,9 +8,12 @@ import javax.ws.rs.client.Target;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
+import org.openstack.api.compute.ext.CloudPipesResource;
+import org.openstack.api.compute.ext.FloatingIpDnsResource;
 import org.openstack.api.compute.ext.FloatingIpPoolsResource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
 import org.openstack.api.compute.ext.KeyPairsResource;
+import org.openstack.api.compute.ext.NetworksResource;
 import org.openstack.api.compute.ext.QuotasResource;
 import org.openstack.api.compute.ext.SecurityGroupRulesResource;
 import org.openstack.api.compute.ext.SecurityGroupsResource;
@@ -19,9 +22,6 @@ import org.openstack.api.compute.ext.SnapshotsResource;
 import org.openstack.api.compute.ext.VolumeTypesResource;
 import org.openstack.api.compute.ext.VolumesResource;
 import org.openstack.api.compute.notavailable.AccountsResource;
-import org.openstack.api.compute.notavailable.CloudPipeResource;
-import org.openstack.api.compute.notavailable.FloatingIpDnsResource;
-import org.openstack.api.compute.notavailable.NetworksResource;
 
 public class TenantResource extends Resource {
 	
@@ -83,8 +83,8 @@ public class TenantResource extends Resource {
 		return path("/os-floating-ip-dns", FloatingIpDnsResource.class);
 	}
 
-	public CloudPipeResource cloudPipe() {
-		return path("/os-cloudpipe", CloudPipeResource.class);
+	public CloudPipesResource cloudPipe() {
+		return path("/os-cloudpipe", CloudPipesResource.class);
 	}
 
 	public AccountsResource accounts() {

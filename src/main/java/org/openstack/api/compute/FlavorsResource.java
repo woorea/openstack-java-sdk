@@ -10,9 +10,7 @@ import javax.ws.rs.core.MediaType;
 import org.openstack.api.common.Resource;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
-import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.nova.NovaFlavorList;
-import org.openstack.model.compute.nova.NovaServerList;
 
 public class FlavorsResource extends Resource {
 	

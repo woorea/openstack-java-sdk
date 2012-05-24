@@ -7,9 +7,7 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.FlavorList;
 import org.openstack.model.compute.ImageList;
-import org.openstack.model.compute.nova.NovaFlavorList;
 import org.openstack.model.compute.nova.NovaImageList;
 
 public class ImagesResource extends Resource {
