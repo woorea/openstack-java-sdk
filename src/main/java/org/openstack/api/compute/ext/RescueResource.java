@@ -14,7 +14,7 @@ import org.openstack.api.common.Resource;
  */
 public class RescueResource extends Resource {
 
-	protected RescueResource(Target target, Properties properties) {
+	public RescueResource(Target target, Properties properties) {
 		super(target, properties);
 	}
 	

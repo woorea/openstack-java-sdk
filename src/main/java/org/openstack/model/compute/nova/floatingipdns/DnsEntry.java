@@ -4,7 +4,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("dns_entry")
-public class FloatingIpDnsForUpdate {
+public class DnsEntry {
 
 	private String ip;
 	

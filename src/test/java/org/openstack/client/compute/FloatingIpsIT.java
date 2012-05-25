@@ -4,7 +4,7 @@ import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.FloatingIpList;
 import org.testng.annotations.Test;
 
-public class ITFloatingIps extends ComputeIntegrationTest {
+public class FloatingIpsIT extends ComputeIntegrationTest {
 	
 	private FloatingIp floatingIp;
 

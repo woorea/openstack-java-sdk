@@ -8,7 +8,7 @@ import org.openstack.model.exceptions.OpenStackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ITKeyPairs extends ComputeIntegrationTest {
+public class KeyPairsIT extends ComputeIntegrationTest {
 
 	@Test
 	public void testListKeypairs() throws OpenStackException {

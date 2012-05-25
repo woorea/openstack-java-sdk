@@ -32,7 +32,7 @@ public class SimpleTenantUsagesResource extends Resource {
 		return localTarget.request(MediaType.APPLICATION_JSON).get(NovaSimpleTenantUsages.class);
 	}
 	
-	public SimpleTenantUsageResource keypair(String id) {
+	public SimpleTenantUsageResource tenant(String id) {
 		return new SimpleTenantUsageResource(target.path("/{tenantId}").pathParam("tenantId", id), properties);
 	}
 

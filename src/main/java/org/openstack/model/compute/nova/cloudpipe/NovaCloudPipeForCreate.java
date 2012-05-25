@@ -11,5 +11,13 @@ public class NovaCloudPipeForCreate implements Serializable {
 
 	@JsonProperty("project_id")
 	private String tenantId;
+
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 	
 }

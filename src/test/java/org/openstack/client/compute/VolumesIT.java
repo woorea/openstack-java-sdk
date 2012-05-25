@@ -13,7 +13,7 @@ import org.openstack.model.compute.nova.volume.NovaVolumeForCreate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ITVolumes extends ComputeIntegrationTest {
+public class VolumesIT extends ComputeIntegrationTest {
 	
 	private Volume volume;
 	private Snapshot snapshot;

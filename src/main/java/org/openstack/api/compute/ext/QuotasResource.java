@@ -25,7 +25,7 @@ public class QuotasResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(NovaQuotaSet.class);
 	}
 	
-	public NovaQuotaSet update(NovaQuotaSet quotaSet) {
+	public NovaQuotaSet put(NovaQuotaSet quotaSet) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(quotaSet),NovaQuotaSet.class);
 	}
 

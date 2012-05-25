@@ -27,4 +27,8 @@ public class HostsResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(String.class);
 	}
 	
+	public HostResource host(String id) {
+		return new HostResource(target.path("/{hostId}").pathParam("hostId", id), properties);
+	}
+	
 }

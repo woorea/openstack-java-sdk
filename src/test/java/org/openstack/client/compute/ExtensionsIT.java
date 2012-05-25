@@ -6,7 +6,7 @@ import org.openstack.model.exceptions.OpenStackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ITExtensions extends ComputeIntegrationTest {
+public class ExtensionsIT extends ComputeIntegrationTest {
 
     @Test
     public void testListExtensions() throws OpenStackException {

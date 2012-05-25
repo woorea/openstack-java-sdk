@@ -2,10 +2,12 @@ package org.openstack.api.compute.ext;
 
 import java.util.Properties;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
+import org.openstack.model.compute.nova.host.UpdateNovaHostRequest;
 
 /**
  * Admin-only host administration
@@ -19,8 +21,8 @@ public class HostResource extends Resource {
 		super(target, properties);
 	}
 
-	public String put() {
-		return target.request(MediaType.APPLICATION_JSON).get(String.class);
+	public String put(UpdateNovaHostRequest request) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(request), String.class);
 	}
 	
 	public String get(HostAction action) {

@@ -12,7 +12,7 @@ import org.openstack.model.exceptions.OpenStackException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ITSecurityGroups extends ComputeIntegrationTest {
+public class SecurityGroupsIT extends ComputeIntegrationTest {
 
 	@Test
 	public void testListSecurityGroups() throws OpenStackException {

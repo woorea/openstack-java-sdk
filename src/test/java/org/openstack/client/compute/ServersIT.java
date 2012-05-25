@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class ITServers extends ComputeIntegrationTest {
+public class ServersIT extends ComputeIntegrationTest {
 	
 	private Server server;
 

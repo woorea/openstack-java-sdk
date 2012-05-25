@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class ITConfigDrive extends ComputeIntegrationTest {
+public class ConfigDriveIT extends ComputeIntegrationTest {
 
 	@Test
 	public void testCreateAndDeleteServer() throws Exception {
