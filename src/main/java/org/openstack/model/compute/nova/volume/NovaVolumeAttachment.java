@@ -3,7 +3,6 @@ package org.openstack.model.compute.nova.volume;
 import java.io.Serializable;
 
 import org.codehaus.jackson.map.annotate.JsonRootName;
-import org.openstack.model.compute.ServerAction;
 
 @JsonRootName("volumeAttachment")
 public class NovaVolumeAttachment implements Serializable {

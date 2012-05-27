@@ -10,14 +10,14 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 public class NovaCloudPipeForCreate implements Serializable {
 
 	@JsonProperty("project_id")
-	private String tenantId;
+	private String projectId;
 
-	public String getTenantId() {
-		return tenantId;
+	public String getProjectId() {
+		return projectId;
 	}
 
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 	
 }

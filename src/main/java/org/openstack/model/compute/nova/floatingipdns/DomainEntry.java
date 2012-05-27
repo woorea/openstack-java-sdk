@@ -8,8 +8,9 @@ public class DomainEntry {
 
 	private String scope;
 	
-	@JsonProperty("project")
 	private String project;
+	
+	private String domain;
 	
 	@JsonProperty("availability_zone")
 	private String availabilityZone;
@@ -30,6 +31,14 @@ public class DomainEntry {
 		this.project = project;
 	}
 
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
 	public String getAvailabilityZone() {
 		return availabilityZone;
 	}
@@ -37,5 +46,5 @@ public class DomainEntry {
 	public void setAvailabilityZone(String availabilityZone) {
 		this.availabilityZone = availabilityZone;
 	}
-	
+
 }

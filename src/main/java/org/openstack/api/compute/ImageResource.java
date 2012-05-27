@@ -21,7 +21,7 @@ public class ImageResource extends Resource {
 	}
 
 	public Response delete() {
-		return target.request().delete();
+		return target.request(MediaType.WILDCARD).delete();
 	}
 
 	/*

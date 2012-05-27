@@ -15,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
-import org.openstack.api.compute.TenantResource;
 import org.openstack.model.exceptions.OpenStackException;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;

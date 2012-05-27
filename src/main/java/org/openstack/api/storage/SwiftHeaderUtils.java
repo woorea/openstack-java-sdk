@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.ResponseHeaders;
 
 import org.openstack.model.storage.StorageObjectProperties;

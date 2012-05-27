@@ -31,4 +31,5 @@ public class HostsResource extends Resource {
 		return new HostResource(target.path("/{hostId}").pathParam("hostId", id), properties);
 	}
 	
+	
 }

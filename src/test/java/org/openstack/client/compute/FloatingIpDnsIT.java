@@ -2,9 +2,18 @@ package org.openstack.client.compute;
 
 import org.openstack.model.compute.nova.floatingipdns.DnsEntry;
 import org.openstack.model.compute.nova.floatingipdns.DomainEntry;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 public class FloatingIpDnsIT extends ComputeIntegrationTest {
+	
+	@BeforeClass
+	public void init() {
+		init("etc/openstack.admin.properties");
+		compute = client.getComputeEndpoint();
+	}
 
+	@Test
 	public void listDomains() {
 		compute.floatingIpDns().get();
 	}
@@ -17,29 +26,46 @@ public class FloatingIpDnsIT extends ComputeIntegrationTest {
 		compute.floatingIpDns().domain("").entries().entry("").get();
 	}
 	
-	public void createDomain() {
+	@Test
+	public void createPrivateDomain() {
 		DomainEntry entry = new DomainEntry();
-		compute.floatingIpDns().domain("").post(entry);
+		entry.setAvailabilityZone("nova");
+		entry.setScope("private");
+		compute.floatingIpDns().domain("woorea").put(entry);
 	}
 	
+	//@Test error maybe project
+	public void createPublicDomain() {
+		DomainEntry entry = new DomainEntry();
+		entry.setScope("public");
+		entry.setProject("demo");
+		compute.floatingIpDns().domain("woorea2").put(entry);
+	}
+	
+	@Test
 	public void deleteDomain() {
-		DomainEntry entry = new DomainEntry();
-		compute.floatingIpDns().domain("").delete();
+		compute.floatingIpDns().domain("woorea").delete();
 	}
 	
+	@Test
 	public void createDnsEntry() {
 		DnsEntry entry = new DnsEntry();
-		compute.floatingIpDns().domain("").entries().entry("").post(entry);
+		entry.setIp("10.0.0.1");
+		entry.setDnsType("A");
+		compute.floatingIpDns().domain("woorea").entries().entry("fake").put(entry);
 	}
 	
+	@Test
 	public void updateDnsEntry() {
 		DnsEntry entry = new DnsEntry();
-		compute.floatingIpDns().domain("").entries().entry("").put(entry);
+		entry.setIp("10.0.0.2");
+		entry.setDnsType("B");
+		compute.floatingIpDns().domain("woorea").entries().entry("fake").put(entry);
 	}
 	
+	@Test
 	public void deleteDnsEntry() {
-		DnsEntry entry = new DnsEntry();
-		compute.floatingIpDns().domain("").entries().entry("").delete();
+		compute.floatingIpDns().domain("woorea").entries().entry("fake").delete();
 	}
 	
 }

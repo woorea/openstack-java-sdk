@@ -7,6 +7,7 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
+import org.openstack.model.compute.nova.host.NovaHost;
 import org.openstack.model.compute.nova.host.UpdateNovaHostRequest;
 
 /**
@@ -25,15 +26,18 @@ public class HostResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(request), String.class);
 	}
 	
+	public NovaHost get() {
+		return target.request(MediaType.APPLICATION_JSON).get(NovaHost.class);
+	}
+	
 	public String get(HostAction action) {
-		//{"host": host, "power_action": result}
 		switch (action) {
 		case STARTUP:
-			return target.request(MediaType.APPLICATION_JSON).get(String.class);
+			return target.path("/startup").request(MediaType.APPLICATION_JSON).get(String.class);
 		case SHUTDOWN:
-			return target.request(MediaType.APPLICATION_JSON).get(String.class);
+			return target.path("/shutdown").request(MediaType.APPLICATION_JSON).get(String.class);
 		case REBOOT:
-			return target.request(MediaType.APPLICATION_JSON).get(String.class);
+			return target.path("/reboot").request(MediaType.APPLICATION_JSON).get(String.class);
 		default:
 			throw new UnsupportedOperationException();
 		}

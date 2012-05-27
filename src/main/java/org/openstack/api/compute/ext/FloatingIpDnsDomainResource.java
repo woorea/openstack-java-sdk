@@ -21,8 +21,8 @@ public class FloatingIpDnsDomainResource extends Resource {
 	 * @return
 	 */
 	
-	public String post(DomainEntry domainEntry) {
-		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(domainEntry), String.class);
+	public String put(DomainEntry domainEntry) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(domainEntry), String.class);
 	}
 	
 	public String delete() {

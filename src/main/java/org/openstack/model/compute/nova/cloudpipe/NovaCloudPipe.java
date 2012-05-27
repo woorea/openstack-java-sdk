@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class NovaCloudPipe implements Serializable {
 	
 	@JsonProperty("project_id")
-	private String tenantId;
+	private String projectId;
 	
 	private String state;
 	

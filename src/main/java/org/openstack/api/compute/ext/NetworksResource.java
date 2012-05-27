@@ -6,7 +6,6 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.api.compute.ExtensionResource;
 
 /**
  * Admin-only Network Management Extension

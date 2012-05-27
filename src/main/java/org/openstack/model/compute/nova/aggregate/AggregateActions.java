@@ -1,17 +1,26 @@
 package org.openstack.model.compute.nova.aggregate;
 
+import java.util.Map;
+
 public class AggregateActions {
 
 	public static final AddHostAction addHost(String name) {
-		return new AddHostAction();
+		AddHostAction action =  new AddHostAction();
+		action.setHost(name);
+		return action;
 	}
 	
 	public static final RemoveHostAction removeHost(String name) {
-		return new RemoveHostAction();
+		RemoveHostAction action =  new RemoveHostAction();
+		action.setHost(name);
+		return action;
+
 	}
 	
-	public static final SetMetadataAction setMetadata(String key, String value) {
-		return new SetMetadataAction();
+	public static final SetMetadataAction setMetadata(Map<String, String> metadata) {
+		SetMetadataAction action = new SetMetadataAction();
+		action.setMetadata(metadata);
+		return action;
 	}
 	
 }

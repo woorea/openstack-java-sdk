@@ -3,7 +3,6 @@ package org.openstack.api.storage;
 import java.util.List;
 import java.util.Properties;
 
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -11,10 +10,6 @@ import javax.ws.rs.core.Response;
 
 import org.openstack.api.common.Resource;
 import org.openstack.model.storage.swift.SwiftStorageObject;
-
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 
 
 public class ContainerResource extends Resource {

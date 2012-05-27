@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.ResponseHeaders;
-import javax.xml.bind.annotation.XmlAttribute;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.model.images.Image;

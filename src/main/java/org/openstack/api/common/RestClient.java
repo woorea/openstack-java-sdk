@@ -69,8 +69,8 @@ public enum RestClient {
     	
     	public OpenStackObjectMapperProvider() {
     		objectMapper = new ObjectMapper();
-    		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
-    		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+    		//objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, true);
+    		//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
     		objectMapper.configure(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             AnnotationIntrospector introspector = new JacksonAnnotationIntrospector();
             objectMapper.setDeserializationConfig(objectMapper.getDeserializationConfig().withAnnotationIntrospector(introspector));
@@ -81,6 +81,7 @@ public enum RestClient {
 		public ObjectMapper getContext(Class<?> type) {
 			JsonRootName jsonRootName = type.getAnnotation(JsonRootName.class);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, jsonRootName != null);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, jsonRootName != null);
 			return objectMapper;
 		}
     	

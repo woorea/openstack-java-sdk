@@ -2,12 +2,10 @@ package org.openstack.api.compute.ext;
 
 import java.util.Properties;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.nova.floatingipdns.DomainEntry;
 
 public class FloatingIpDnsResource extends Resource {
 

@@ -16,6 +16,7 @@ public abstract class ComputeIntegrationTest extends AbstractOpenStackTest {
 	
 	@BeforeClass
 	public void init() {
+		System.out.println("Without admin");
 		init("etc/openstack.public.properties");
 		compute = client.getComputeEndpoint();
 	}

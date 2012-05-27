@@ -6,8 +6,6 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.api.common.Resource;
-import org.openstack.model.compute.FloatingIpList;
-import org.openstack.model.compute.nova.floatingip.NovaFloatingIpList;
 
 /**
  * Floating IPs support

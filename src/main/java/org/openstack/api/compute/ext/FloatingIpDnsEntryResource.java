@@ -24,15 +24,6 @@ public class FloatingIpDnsEntryResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).get(String.class);
 	}
 	
-	/**
-	 * Return a list of dns entries for the specified domain and ip.
-	 * 
-	 * @return
-	 */
-	public String post(DnsEntry dnsEntry) {
-		return target.request(MediaType.APPLICATION_JSON).post(Entity.json(dnsEntry), String.class);
-	}
-	
 	public String put(DnsEntry dnsEntry) {
 		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(dnsEntry), String.class);
 	}

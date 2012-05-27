@@ -8,8 +8,8 @@ import javax.ws.rs.client.Target;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
+import org.openstack.api.compute.ext.AggregatesResource;
 import org.openstack.api.compute.ext.CloudPipesResource;
-import org.openstack.api.compute.ext.FloatingIpDnsEntriesResource;
 import org.openstack.api.compute.ext.FloatingIpDnsResource;
 import org.openstack.api.compute.ext.FloatingIpPoolsResource;
 import org.openstack.api.compute.ext.FloatingIpsResource;
@@ -111,6 +111,10 @@ public class TenantResource extends Resource {
 
 	public SnapshotsResource snapshots() {
 		return path("/os-snapshots", SnapshotsResource.class);
+	}
+	
+	public AggregatesResource aggregates() {
+		return path("/os-aggregates", AggregatesResource.class);
 	}
 	
 	public HostsResource hosts() {
