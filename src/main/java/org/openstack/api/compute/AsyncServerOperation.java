@@ -85,7 +85,7 @@ public class AsyncServerOperation implements Future<Server> {
 				try {
 					Thread.sleep(POLL_INTERVAL_MILLISECONDS);
 				} catch (InterruptedException e) {
-					throw new OpenStackException(e.getMessage(), e);
+					throw new OpenStackException(e.getMessage());
 				}
 
 			}
@@ -105,7 +105,7 @@ public class AsyncServerOperation implements Future<Server> {
 			return get(0, null);
 		} catch (Exception e) {
 			// TimeoutException shouldn't happen without a timeout specified!!
-			throw new OpenStackException("Unexpected error", e);
+			throw new OpenStackException("Unexpected error");
 		}
 	}
 

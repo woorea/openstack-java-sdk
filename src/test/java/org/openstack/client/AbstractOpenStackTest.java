@@ -35,7 +35,7 @@ public abstract class AbstractOpenStackTest {
 			
 			client = OpenStackClient.authenticate(properties);
 		} catch (IOException e) {
-			throw new OpenStackException(e.getMessage(), e);
+			throw new OpenStackException(e.getMessage());
 		}
 
 	}

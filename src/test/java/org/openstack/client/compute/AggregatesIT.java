@@ -40,6 +40,7 @@ public class AggregatesIT extends ComputeIntegrationTest {
 	
 	@Test
 	public void removeHost() {
+		//InvalidAggregateAction: Cannot perform action 'remove host' on aggregate 1. Reason: setup in progress.
 		compute.aggregates().aggregate("1").post(AggregateActions.removeHost("openstack"));
 	}
 	

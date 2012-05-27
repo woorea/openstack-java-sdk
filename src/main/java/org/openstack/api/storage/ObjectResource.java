@@ -74,7 +74,7 @@ public class ObjectResource  extends Resource {
 			fis = new FileInputStream(srcFile);
 			return put(fis, srcFile.length(), properties);
 		} catch(IOException e) {
-			throw new OpenStackException(e.getMessage(), e);
+			throw new OpenStackException(e.getMessage());
 		} finally {
 			IOUtils.closeQuietly(fis);
 		}
@@ -115,7 +115,7 @@ public class ObjectResource  extends Resource {
 			return responseProperties;
 			*/
 		} catch(IOException e) {
-			throw new OpenStackException(e.getMessage(), e);
+			throw new OpenStackException(e.getMessage());
 		}
 	}
 	

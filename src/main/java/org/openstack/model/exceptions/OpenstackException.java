@@ -1,55 +1,25 @@
 package org.openstack.model.exceptions;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
 
-@JsonRootName("error")
 public class OpenStackException extends RuntimeException {
+	
+	private int status;
 
-	private static final long serialVersionUID = 1L;
-	
-	private String message;
-	private Integer code;
-	private String title;
-	
 	public OpenStackException() {
-		
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public OpenStackException(String message, Throwable cause) {
+	public OpenStackException(int status, String message, Throwable cause) {
 		super(message, cause);
+		this.status = status;
 	}
 
 	public OpenStackException(String message) {
 		super(message);
+		// TODO Auto-generated constructor stub
 	}
 
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	@Override
-	public String toString() {
-		return "OpenstackException [message=" + message + ", code=" + code + ", title=" + title + "]";
-	}
-
+	
+	
 }

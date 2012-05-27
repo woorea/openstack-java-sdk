@@ -12,7 +12,7 @@ import org.openstack.model.compute.nova.aggregate.AggregateAction;
 
 public class AggregateResource extends Resource {
 
-	protected AggregateResource(Target target, Properties properties) {
+	public AggregateResource(Target target, Properties properties) {
 		super(target, properties);
 	}
 	
@@ -21,7 +21,9 @@ public class AggregateResource extends Resource {
 	}
 	
 	public Aggregate post(AggregateAction action) {
-		return target.path("/action").request(MediaType.APPLICATION_JSON).post(Entity.entity(action, MediaType.APPLICATION_JSON), Aggregate.class);
+		//return target.path("/action").request(MediaType.APPLICATION_JSON).post(Entity.entity(action, MediaType.APPLICATION_JSON), Aggregate.class);
+		return execute(target.path("/action").request(MediaType.APPLICATION_JSON).buildPost(Entity.entity(action, MediaType.APPLICATION_JSON)), Aggregate.class);
+		
 	}
 	
 	public String delete() {

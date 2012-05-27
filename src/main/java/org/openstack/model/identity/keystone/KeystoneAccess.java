@@ -114,7 +114,7 @@ public class KeystoneAccess implements Serializable, Access {
 				return endpoints.get(0);
 			}
 		} catch (NoSuchElementException e) {
-			throw new OpenStackException("Service " + type + " not found, you can try openstack.target(<endpoint>, <resource class>) method instead", e);
+			throw new OpenStackException("Service " + type + " not found, you can try openstack.target(<endpoint>, <resource class>) method instead");
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}

@@ -1,17 +1,17 @@
 package org.openstack.api.common;
 
-import java.util.Map;
 import java.util.Properties;
 
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.InvocationException;
 import javax.ws.rs.client.Target;
 
-import com.google.common.collect.Maps;
+import org.openstack.model.exceptions.OpenStackException;
 
 public class Resource {
 	
 	protected Target target;
 	protected Properties properties;
-	final Map<String, Target> targets = Maps.newHashMap();
 	
 	protected Resource(Target target, Properties properties) {
 		this.target = target;
@@ -33,6 +33,14 @@ public class Resource {
 	
 	public String getURL() {
 		return target.getUri().toString();
+	}
+	
+	protected <T> T execute(Invocation invocation, Class<T> responseType) {
+		try {
+			return invocation.invoke(responseType);
+		} catch (InvocationException e) {
+			throw new OpenStackException(e.getResponse().getStatus(), e.getResponse().readEntity(String.class),e);
+		}
 	}
 	
 }

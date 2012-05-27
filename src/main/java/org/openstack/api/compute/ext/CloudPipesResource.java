@@ -11,6 +11,9 @@ import org.openstack.api.common.Resource;
 import org.openstack.model.compute.nova.cloudpipe.NovaCloudPipeForCreate;
 
 /**
+ * 
+ * """A cloudpipe instance is a VPN attached to a proejct's VLAN."""
+ * 
  * Adds actions to create cloudpipe instances.
  * 
  * When running with the Vlan network mode, you need a mechanism to route from

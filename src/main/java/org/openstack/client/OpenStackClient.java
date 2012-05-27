@@ -83,7 +83,7 @@ public class OpenStackClient {
 			properties.load(OpenStackClient.class.getResourceAsStream("/openstack.properties"));
 			return authenticate(properties);
 		} catch (IOException e) {
-			throw new OpenStackException("openstack.properties not found in the CLASSPATH", e);
+			throw new OpenStackException("openstack.properties not found in the CLASSPATH");
 		}
 	}
 	
