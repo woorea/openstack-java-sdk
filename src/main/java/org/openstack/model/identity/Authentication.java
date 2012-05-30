@@ -6,8 +6,6 @@ public interface Authentication {
 
 	//void setToken(Token token);
 
-	Credentials getCredentials();
-
 	//void setPasswordCredentials(PasswordCredentials passwordCredentials);
 
 	String getTenantId();

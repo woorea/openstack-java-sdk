@@ -9,54 +9,40 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.openstack.api.Namespaces;
 import org.openstack.model.identity.Authentication;
-import org.openstack.model.identity.Credentials;
 import org.openstack.model.identity.Token;
 
-@XmlType(namespace= Namespaces.NS_OPENSTACK_IDENTITY_2_0)
-@XmlRootElement(name = "auth", namespace= "")
+@XmlType(namespace = Namespaces.NS_OPENSTACK_IDENTITY_2_0)
+@XmlRootElement(name = "auth", namespace = "")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonRootName("auth")
 public class KeystoneAuthentication implements Serializable, Authentication {
-    
-    @XmlElement(type = KeystoneToken.class)
-    private KeystoneToken token;
 
-    @XmlElement(namespace= "", name="passwordCredentials")
-    @JsonProperty
-    private KeystonePasswordCredentials passwordCredentials;
-    
-    @XmlElement(namespace= "", name="apiAccessKeyCredentials")
-    @JsonProperty
-    private KeystoneApiAccessKeyCredentials apiAccessKeyCredentials;
+	@XmlElement(type = KeystoneToken.class)
+	private KeystoneToken token;
 
-    @XmlAttribute
-    private String tenantId;
-    
-    @XmlAttribute
-    private String tenantName;
-    
-    private KeystoneAuthentication() { }
-    
-    public static KeystoneAuthentication withPasswordCredentials(String username, String password) {
-    	KeystoneAuthentication auth = new KeystoneAuthentication();
-    	auth.passwordCredentials = new KeystonePasswordCredentials();
-    	auth.passwordCredentials.setUsername(username);
-    	auth.passwordCredentials.setPassword(password);
-		return auth;
+	@XmlAttribute
+	private String tenantId;
+
+	@XmlAttribute
+	private String tenantName;
+
+	protected KeystoneAuthentication() {
 	}
-	
-	public static KeystoneAuthentication withApiAccessKeyCredentials(String accessKey, String secretKey) {
-		KeystoneAuthentication auth = new KeystoneAuthentication();
-		auth.apiAccessKeyCredentials = new KeystoneApiAccessKeyCredentials();
-		auth.apiAccessKeyCredentials.setAccessKey(accessKey);
-		auth.apiAccessKeyCredentials.setSecretKey(secretKey);
-		return auth;
+
+	public static KeystoneAuthentication withPasswordCredentials(
+			String username, String password) {
+		return new KeystonePasswordCredentialsAuthentication(username, password);
 	}
-	
+
+	public static KeystoneAuthentication withApiAccessKeyCredentials(
+			String accessKey, String secretKey) {
+		return new KeystoneAccessKeyCredentialsAuthentication(accessKey,
+				secretKey);
+	}
+
 	public static KeystoneAuthentication withTokenAndTenant(String tokenId, String tenantId) {
 		KeystoneAuthentication auth = new KeystoneAuthentication();
 		auth.token = new KeystoneToken();
@@ -65,10 +51,12 @@ public class KeystoneAuthentication implements Serializable, Authentication {
 		return auth;
 	}
 
-    /* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.identity.glance.Authentication#getToken()
 	 */
-    @Override
+	@Override
 	public Token getToken() {
 		return token;
 	}
@@ -77,15 +65,9 @@ public class KeystoneAuthentication implements Serializable, Authentication {
 		this.token = token;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openstack.model.identity.glance.Authentication#getPasswordCredentials()
-	 */
-	@Override
-	public Credentials getCredentials() {
-        return passwordCredentials;
-    }
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.identity.glance.Authentication#getTenantId()
 	 */
 	@Override
@@ -97,7 +79,9 @@ public class KeystoneAuthentication implements Serializable, Authentication {
 		this.tenantId = tenantId;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.openstack.model.identity.glance.Authentication#getTenantName()
 	 */
 	@Override
@@ -108,18 +92,11 @@ public class KeystoneAuthentication implements Serializable, Authentication {
 	public void setTenantName(String tenantName) {
 		this.tenantName = tenantName;
 	}
-	
-	
-	
-	
 
 	@Override
 	public String toString() {
-		return "KeyStoneAuthentication [token=" + token
-				+ ", passwordCredentials=" + passwordCredentials
-				+ ", tenantId=" + tenantId + ", tenantName=" + tenantName + "]";
+		return "KeyStoneAuthentication [token=" + token + ", tenantId="
+				+ tenantId + ", tenantName=" + tenantName + "]";
 	}
-
-	
 
 }

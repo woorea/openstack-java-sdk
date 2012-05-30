@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.openstack.model.identity.Credentials;
 
-public class KeystoneApiAccessKeyCredentials implements Credentials, Serializable {
+public class KeystoneAccessKeyCredentials implements Credentials, Serializable {
 
     @XmlAttribute
     private String accessKey;
