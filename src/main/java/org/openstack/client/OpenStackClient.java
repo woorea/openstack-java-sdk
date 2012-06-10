@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.ws.rs.client.Target;
 
+import org.glassfish.jersey.message.MessageProperties;
 import org.openstack.api.common.Resource;
 import org.openstack.api.common.RestClient;
 import org.openstack.api.compute.TenantResource;
@@ -35,11 +36,12 @@ public class OpenStackClient {
 	private XAuthTokenFilter authAsAdministratorFilter;
 	
 	private OpenStackClient() {
-		
+		System.setProperty(MessageProperties.IO_BUFFER_SIZE,"4096");
 	}
 	
 	public static OpenStackClient authenticate(Properties properties, Access access) {
 		OpenStackClient client = new OpenStackClient();
+		properties.put("auth.token", access.getToken().getId());
 		client.properties = properties;
 		client.access = access;
 		client.authFilter = new XAuthTokenFilter(access.getToken().getId());
@@ -167,10 +169,6 @@ public class OpenStackClient {
 
 	public ImagesResource getImagesAdministationEndpoint() {
 		return target(access.getEndpoint("image", null).getAdminURL().concat("/images"), ImagesResource.class);
-	}
-	
-	public StorageClient getStorageClient() {
-		return new StorageClient(getStorageEndpoint());
 	}
 	
 	public AccountResource getStorageEndpoint() {

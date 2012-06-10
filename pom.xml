@@ -48,6 +48,7 @@
 	</distributionManagement>
 
 	<repositories>
+		<!--
 		<repository>
 			<id>woorea-releases</id>
 			<snapshots />
@@ -57,6 +58,12 @@
 			<id>woorea-snapshots</id>
 			<snapshots />
 			<url>https://github.com/woorea/maven/raw/master/snapshots</url>
+		</repository>
+		-->
+		<repository>
+			<id>javanet-snapshots</id>
+			<snapshots />
+			<url>https://maven.java.net/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
 
@@ -85,12 +92,12 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.0-m04</version>
+			<version>2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json</artifactId>
-			<version>2.0-m04</version>
+			<version>2.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

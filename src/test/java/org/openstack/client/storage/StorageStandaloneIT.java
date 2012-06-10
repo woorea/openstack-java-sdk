@@ -1,19 +1,21 @@
 package org.openstack.client.storage;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import javax.ws.rs.core.Response;
 
+import org.openstack.api.authentication.SwiftTempAuthenticationProvider;
 import org.openstack.api.storage.AccountResource;
-import org.openstack.client.AbstractOpenStackTest;
+import org.openstack.client.StorageClient;
 import org.openstack.model.storage.StorageContainer;
-import org.openstack.model.storage.swift.SwiftStorageObjectProperties;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class StorageIntegrationTest extends AbstractOpenStackTest {
+public class StorageStandaloneIT {
 	
 	private AccountResource storage;
 	
@@ -22,10 +24,17 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 
 	@BeforeClass
 	public void init() {
-		init("etc/openstack.public.properties");
-		storage = client.getStorageEndpoint();
+		Properties properties = new Properties();
+		properties.put("auth.provider", "org.openstack.api.authentication.SwiftTempAuthenticationProvider");
+		properties.put("storage.auth.endpoint", "http://192.168.1.43:8080/auth/v1.0");
+		properties.put("storage.auth.account", "admin");
+		properties.put("storage.auth.username", "admin");
+		properties.put("storage.auth.password", "admin");
+		StorageClient client = StorageClient.authenticate(properties);
+		storage = client.getAccountResource();
 	}
 	
+	@Test
 	public void showAccount() {
 		Response response = storage.head();
 	}
@@ -52,12 +61,15 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	}
 	
 	@Test(dependsOnMethods="createContainer", priority=3)
-	public void createObject() {
+	public void createObject() throws Exception {
 		//SwiftStorageObjectProperties properties = new SwiftStorageObjectProperties();
 		//properties.setName("test-object");
-		int size = 1024;
-		InputStream is = new ByteArrayInputStream(new byte[size]);
-		Response response = storage.container(container).object(object).put(is,size);
+		//InputStream is = new ByteArrayInputStream(new byte[1024]);
+		//InputStream is = new FileInputStream("/Users/woorea/Downloads/D50102GC20_sg2.pdf");
+		//File file = new File("/Users/woorea/Downloads/ubuntu-11.10-desktop-amd64.iso");
+		File file = new File("/Users/woorea/Downloads/D50102GC20_sg2.pdf");
+		//InputStream is = new FileInputStream(file);
+		Response response = storage.container(container).object(object).put(file);
 	}
 	
 	@Test(dependsOnMethods={"createObject"}, priority=4)
@@ -84,5 +96,6 @@ public class StorageIntegrationTest extends AbstractOpenStackTest {
 	public void deleteContainer() {
 		storage.container(container).delete();
 	}
+	
 	
 }

@@ -13,7 +13,6 @@ import javax.ws.rs.client.Target;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.io.IOUtils;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.TenantResource;
 import org.openstack.model.exceptions.OpenStackException;
@@ -67,60 +66,49 @@ public class ObjectResource  extends Resource {
 		builder = builder.header("Content-Length", 0);
 		return builder.put(Entity.entity(new byte[1],"application/directory"));
 	}
-
-	public Response put(File srcFile, Map<String, String> properties) throws OpenStackException {
-		FileInputStream fis = null;
-		try {
-			fis = new FileInputStream(srcFile);
-			return put(fis, srcFile.length(), properties);
-		} catch(IOException e) {
-			throw new OpenStackException(e.getMessage());
-		} finally {
-			IOUtils.closeQuietly(fis);
+	
+	public Response put(InputStream is, Map<String, String> headers) throws OpenStackException {
+		Invocation.Builder builder = target.request(MediaType.WILDCARD);
+		if(headers != null) {
+			for(Map.Entry<String, String> entry : headers.entrySet()) {
+				builder = builder.header("x-object-meta-"+entry.getKey(), entry.getValue());
+			}
 		}
+		long start = System.currentTimeMillis();
+		Response response = builder.put(Entity.entity(is, MediaType.APPLICATION_OCTET_STREAM));
+		long end = System.currentTimeMillis();
+		System.out.println("TIME : " + (end - start));
+		return response;
+		/*
+		try {
+			Map<String, String> swiftHeaders = new HashMap<String, String>();
+			for(Map.Entry<String, String> entry : headers.entrySet()) {
+				swiftHeaders.put("x-object-meta-"+entry.getKey(), entry.getValue());
+			}
+			swiftHeaders.put("X-Auth-Token", properties.getProperty("auth.token"));
+			HttpUtils.upload("PUT", target.getUri().toURL(), swiftHeaders, is);
+			return null;
+		} catch (IOException e) {
+			throw new OpenStackException(e.getMessage(), e);
+		}
+		*/
+	}
+
+	public Response put(File file, Map<String, String> headers) throws OpenStackException {
+		try {
+			return put(new FileInputStream(file), headers);
+		} catch (IOException e) {
+			throw new OpenStackException(e.getMessage(), e);
+		}
+		
 	}
 	
-	public Response put(File srcFile) throws OpenStackException {
-		return put(srcFile, null);
-	}
-
-	public Response put(InputStream objectStream, long objectStreamLength, Map<String, String> properties) throws OpenStackException {
-		//Preconditions.checkNotNull(properties, "You have to supply object name");
-		try {
-			Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON);
-			
-			byte[] bytes = IOUtils.toByteArray(objectStream);
-			
-			builder = builder.header("Content-Length", bytes.length);
-			
-			if(properties != null) {
-				for(String name : properties.keySet()) {
-					builder = builder.header("x-object-meta-" + name, properties.get(name));
-				}
-				String contentType = properties.get("Content-Type") != null ? properties.get("Content-Type") : MediaType.APPLICATION_OCTET_STREAM;
-				return builder.put(Entity.entity(bytes, contentType), Response.class);
-			} else {
-				return builder.put(Entity.entity(bytes, MediaType.APPLICATION_OCTET_STREAM), Response.class);
-			}
-				
-			/*
-			MultivaluedMap<String, String> responseHeaders = response.getHeaders().asMap();
-
-			SwiftObjectProperties responseProperties = new SwiftObjectProperties();
-			String etag = responseHeaders.getFirst("ETag");
-
-			if (etag != null) {
-				responseProperties.setETag(etag);
-			}
-			return responseProperties;
-			*/
-		} catch(IOException e) {
-			throw new OpenStackException(e.getMessage());
-		}
+	public Response put(File file) throws OpenStackException {
+		return put(file, null);
 	}
 	
-	public Response put(InputStream objectStream, long objectStreamLength) {
-		return put(objectStream, objectStreamLength, null);
+	public Response put(InputStream objectStream) {
+		return put(objectStream, null);
 	}
 
 }
