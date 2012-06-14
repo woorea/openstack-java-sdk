@@ -19,7 +19,7 @@ public class ImageResource extends Resource {
 		super(target, properties);
 	}
 	
-    public void put(Map<String, Object> properties, Map<String, Object> metadata) {
+    public void put(Map<String, Object> metadata) {
     	Builder b = target.request(MediaType.APPLICATION_JSON);
         b = GlanceHeaderUtils.setHeadersForProperties(b, metadata);
         b.method("PUT");
