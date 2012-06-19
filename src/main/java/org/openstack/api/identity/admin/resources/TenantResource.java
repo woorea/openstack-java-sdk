@@ -25,6 +25,10 @@ public class TenantResource extends Resource {
 		return target.request(MediaType.APPLICATION_JSON).put(entity, KeystoneTenant.class);
 	}
 
+	public Tenant put(Tenant entity) {
+		return target.request(MediaType.APPLICATION_JSON).put(Entity.json(entity), KeystoneTenant.class);
+	}
+
 	public Response delete() {
 		return target.request(MediaType.APPLICATION_JSON).delete();
 	}
