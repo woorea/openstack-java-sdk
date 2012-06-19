@@ -9,6 +9,6 @@ public interface User extends UserForCreate {
 
 	List<Role> getRoles();
 	
-	Map<String, String> getExtra();
+	Map<String, Object> getExtra();
 
 }
