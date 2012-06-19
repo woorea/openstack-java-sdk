@@ -48,10 +48,10 @@ public class KeystoneUser implements Serializable, User {
 
     @JsonProperty("roles_links")
     private List<String> rolesLinks;
-    
+
     @JsonProperty
-    private Map<String, String> extra;
-    
+    private Map<String, Object> extra;
+
     public KeystoneUser() {
     	
     }
@@ -161,11 +161,11 @@ public class KeystoneUser implements Serializable, User {
 		this.roles = roles;
 	}
 
-	public Map<String, String> getExtra() {
+	public Map<String, Object> getExtra() {
 		return extra;
 	}
 
-	public void setExtra(Map<String, String> extra) {
+	public void setExtra(Map<String, Object> extra) {
 		this.extra = extra;
 	}
 
