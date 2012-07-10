@@ -1,11 +1,17 @@
 package org.openstack.api.common;
 
 import java.util.Properties;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.InvocationException;
 import javax.ws.rs.client.Target;
 
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.model.exceptions.OpenStackException;
 
 public class Resource {
@@ -42,5 +48,26 @@ public class Resource {
 			throw new OpenStackException(e.getResponse().getStatus(), e.getResponse().readEntity(String.class),e);
 		}
 	}
-	
+
+	protected void registerLoggingFilter(String loggerName) {
+		Formatter formatter = new Formatter() {
+			@Override
+			public String format(LogRecord record) {
+				StringBuilder b = new StringBuilder();
+				b.append(record.getMessage().replaceAll("\"password\":\".+\"(,|})", "\"password\":\"******\"$1"));
+				b.append(System.getProperty("line.separator"));
+				return b.toString();
+			}
+		};
+		Logger logger = Logger.getLogger(loggerName);
+		Handler ch = new ConsoleHandler();
+		ch.setFormatter(formatter);
+		Handler[] handlers = logger.getHandlers();
+		for(Handler handler : handlers) {
+			logger.removeHandler(handler);
+		}
+		logger.setUseParentHandlers(false);
+		logger.addHandler(ch);
+		target.configuration().register(new LoggingFilter(logger, true));
+	}
 }
