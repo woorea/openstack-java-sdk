@@ -1,12 +1,10 @@
 package org.openstack.api.identity;
 
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Target;
 
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.api.common.Resource;
 import org.openstack.api.identity.admin.resources.EndpointsResource;
 import org.openstack.api.identity.admin.resources.RolesResource;
@@ -16,13 +14,11 @@ import org.openstack.api.identity.admin.resources.TokensResource;
 import org.openstack.api.identity.admin.resources.UsersResource;
 
 public class IdentityAdministrationEndpoint extends Resource {
-	
-	private LoggingFilter loggingFilter = new LoggingFilter(Logger.getLogger(IdentityAdministrationEndpoint.class.getPackage().getName()),true);
 
 	public IdentityAdministrationEndpoint(Target target, Properties properties) {
 		super(target, properties);
 		if(Boolean.parseBoolean(properties.getProperty("verbose"))) {
-			target.configuration().register(loggingFilter);
+			registerLoggingFilter(IdentityAdministrationEndpoint.class.getPackage().getName());
 		}
 	}
 	
