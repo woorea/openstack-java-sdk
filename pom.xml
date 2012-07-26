@@ -1,13 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<packaging>jar</packaging>
 	<groupId>org.openstack</groupId>
 	<artifactId>openstack-java-sdk</artifactId>
-	<version>1.0-RC2</version>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>OpenStack Java SDK</name>
-	<url>http://github.com/woorea/openstack-java-sdk</url>
-
+	<description>OpenStack Java SDK</description>
+	<modules>
+		<module>nova-client</module>
+		<module>glance-client</module>
+		<module>keystone-client</module>
+		<module>swift-client</module>
+		<module>openstack-client</module>
+		<module>ceilometer-client</module>
+		<module>nova-model</module>
+		<module>glance-model</module>
+		<module>keystone-model</module>
+		<module>swift-model</module>
+		<module>ceilometer-model</module>
+		<module>ceilometer-compute-agent</module>
+		<module>ceilometer-api</module>
+		<module>ceilometer-collector</module>
+		<module>openstack-examples</module>
+	</modules>
 	<licenses>
 		<license>
 			<name>Apache2</name>
@@ -23,10 +39,6 @@
 			<name>Luis Gervaso</name>
 			<email>luis@woorea.es</email>
 			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>justinsb</id>
-			<name>Justin Santa Barbara</name>
 		</developer>
 	</developers>
 
@@ -48,61 +60,13 @@
 	</distributionManagement>
 
 	<repositories>
-		<!--
-		<repository>
-			<id>woorea-releases</id>
-			<snapshots />
-			<url>https://github.com/woorea/maven/raw/master/releases</url>
-		</repository>
-		<repository>
-			<id>woorea-snapshots</id>
-			<snapshots />
-			<url>https://github.com/woorea/maven/raw/master/snapshots</url>
-		</repository>
-		-->
 		<repository>
 			<id>javanet-snapshots</id>
 			<snapshots />
 			<url>https://maven.java.net/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.5.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>12.0</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>2.0-m04-2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-json</artifactId>
-			<version>2.0-m04-2</version>
-		</dependency>
-	</dependencies>
-
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -116,314 +80,9 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
 			</plugin>
 		</plugins>
-
 	</build>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<skipTests>true</skipTests>
-
-		<findbugs.skip>false</findbugs.skip>
-		<findbugs.threshold>Low</findbugs.threshold>
-		<findbugs.exclude>etc/config/exclude-common.xml</findbugs.exclude>
-		<javadoc.stylesheet>etc/config/javadoc-stylesheet.css</javadoc.stylesheet>
-	</properties>
-
-	<profiles>
-		<profile>
-			<id>integration-tests</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.12</version>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-						<executions>
-							<execution>
-								<id>surefire-it</id>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>test</goal>
-								</goals>
-								<configuration>
-									<skip>${skipTests}</skip>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>2.12</version>
-						<configuration>
-							<skipTests>${skipTests}</skipTests>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>findbugs-maven-plugin</artifactId>
-						<version>2.4.0</version>
-						<configuration>
-							<findbugsXmlOutput>true</findbugsXmlOutput>
-							<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
-							<xmlOutput>true</xmlOutput>
-							<excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-checkstyle-plugin</artifactId>
-						<version>2.8</version>
-						<configuration>
-							<outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
-							<outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile>
-							<configLocation>etc/config/checkstyle.xml</configLocation>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>checkstyle</goal>
-								</goals>
-								<phase>validate</phase>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>attach-all</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.8.1</version>
-						<configuration>
-							<doctitle>OpenStack Java SDK ${project.version} Documentation</doctitle>
-							<bottom>
-								Copyright © 2012 OpenStack Java SDK.
-								All Rights Reserved.
-								Use is subject to license terms.
-							</bottom>
-							<stylesheetfile>${javadoc.stylesheet}</stylesheetfile>
-							<links>
-								<link>http://jax-rs-spec.java.net/nonav/2.0-SNAPSHOT/apidocs</link>
-							</links>
-						</configuration>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>site</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.agilejava.docbkx</groupId>
-						<artifactId>docbkx-maven-plugin</artifactId>
-						<version>2.0.14</version>
-						<executions>
-							<execution>
-								<id>genhtml</id>
-								<goals>
-									<goal>generate-html</goal>
-								</goals>
-								<phase>pre-site</phase>
-								<configuration>
-									<chunkedOutput>true</chunkedOutput>
-									<sectionAutolabel>1</sectionAutolabel>
-									<sectionLabelIncludesComponentLabel>1</sectionLabelIncludesComponentLabel>
-									<postProcess>
-										<copy todir="target/docbkx/html">
-											<fileset dir="src/docbkx">
-												<include name="images/*" />
-											</fileset>
-											<fileset dir="src/docbkx/styles">
-												<include name="*.css" />
-											</fileset>
-										</copy>
-									</postProcess>
-								</configuration>
-							</execution>
-							<execution>
-								<id>genpdf</id>
-								<goals>
-									<goal>generate-pdf</goal>
-								</goals>
-								<phase>pre-site</phase>
-								<configuration>
-									<argLine>-Xmx1024m</argLine>
-									<imgSrcPath>${basedir}/target/docbkx/pdf/</imgSrcPath>
-									<foCustomization>${basedir}/src/docbkx/styles/fop-cust.xsl</foCustomization>
-									<doubleSided>1</doubleSided>
-									<highlightSource>1</highlightSource>
-									<paperType>A4</paperType>
-									<preProcess>
-										<copy todir="${basedir}/target/docbkx/pdf">
-											<fileset dir="${basedir}/src/docbkx">
-												<include name="images/*" />
-											</fileset>
-										</copy>
-									</preProcess>
-								</configuration>
-							</execution>
-						</executions>
-						<configuration>
-							<htmlStylesheet>screen.css</htmlStylesheet>
-							<xincludeSupported>true</xincludeSupported>
-							<highlightSource>1</highlightSource>
-						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>org.docbook</groupId>
-								<artifactId>docbook-xml</artifactId>
-								<version>4.4</version>
-								<scope>runtime</scope>
-							</dependency>
-						</dependencies>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-site-plugin</artifactId>
-						<version>3.0</version>
-						<configuration>
-							<generateProjectInfo>false</generateProjectInfo>
-							<generateReports>true</generateReports>
-							<reportPlugins>
-								<plugin>
-									<groupId>org.codehaus.mojo</groupId>
-									<artifactId>findbugs-maven-plugin</artifactId>
-									<version>2.4.0</version>
-									<reportSets>
-										<reportSet>
-											<configuration>
-												<skip>${findbugs.skip}</skip>
-												<threshold>${findbugs.threshold}</threshold>
-												<!-- <excludeFilterFile>${findbugs.exclude}</excludeFilterFile> -->
-											</configuration>
-											<reports>
-												<report>findbugs</report>
-											</reports>
-										</reportSet>
-									</reportSets>
-								</plugin>
-
-								<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-project-info-reports-plugin</artifactId> 
-									<version>2.4</version> <configuration> <dependencyDetailsEnabled>false</dependencyDetailsEnabled> 
-									<dependencyLocationsEnabled>false</dependencyLocationsEnabled> </configuration> 
-									<reportSets> <reportSet> <reports> <report>dependencies</report> <report>project-team</report> 
-									<report>mailing-list</report> <report>cim</report> <report>issue-tracking</report> 
-									<report>license</report> <report>scm</report> </reports> </reportSet> </reportSets> 
-									</plugin -->
-								<plugin>
-									<groupId>org.apache.maven.plugins</groupId>
-									<artifactId>maven-javadoc-plugin</artifactId>
-									<version>2.8.1</version>
-									<configuration>
-										<doctitle>OpenStack Java SDK ${project.version} Documentation</doctitle>
-										<bottom>
-											Copyright © 2012 OpenStack Java SDK.
-											All Rights
-											Reserved.
-											Use is subject to license terms.
-										</bottom>
-										<stylesheetfile>${javadoc.stylesheet}</stylesheetfile>
-										<links>
-											<link>http://jax-rs-spec.java.net/nonav/2.0-SNAPSHOT/apidocs</link>
-										</links>
-									</configuration>
-									<reportSets>
-										<reportSet>
-											<reports>
-												<report>aggregate</report>
-											</reports>
-										</reportSet>
-									</reportSets>
-								</plugin>
-
-								<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId> 
-									<version>2.12</version> </plugin -->
-								<!--plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> 
-									<version>2.4</version> <configuration> <formats> <format>xml</format> <format>html</format> 
-									</formats> </configuration> </plugin -->
-
-								<plugin>
-									<groupId>org.apache.maven.plugins</groupId>
-									<artifactId>maven-jxr-plugin</artifactId>
-									<version>2.3</version>
-									<reportSets>
-										<reportSet>
-											<reports>
-												<report>jxr</report>
-												<report>aggregate</report>
-											</reports>
-										</reportSet>
-									</reportSets>
-								</plugin>
-								<plugin>
-									<groupId>org.apache.maven.plugins</groupId>
-									<artifactId>maven-checkstyle-plugin</artifactId>
-									<version>2.8</version>
-									<configuration>
-										<!--outputDirectory>${project.build.directory}/checkstyle</outputDirectory> 
-											<outputFile>${project.build.directory}/checkstyle/checkstyle-result.xml</outputFile -->
-										<configLocation>etc/config/checkstyle.xml</configLocation>
-									</configuration>
-									<reportSets>
-										<reportSet>
-											<reports>
-												<report>checkstyle</report>
-											</reports>
-										</reportSet>
-									</reportSets>
-								</plugin>
-							</reportPlugins>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-
 </project>
