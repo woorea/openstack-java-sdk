@@ -13,16 +13,12 @@
 		<module>keystone-client</module>
 		<module>swift-client</module>
 		<module>openstack-client</module>
-		<module>ceilometer-client</module>
 		<module>nova-model</module>
 		<module>glance-model</module>
 		<module>keystone-model</module>
 		<module>swift-model</module>
-		<module>ceilometer-model</module>
-		<module>ceilometer-compute-agent</module>
-		<module>ceilometer-api</module>
-		<module>ceilometer-collector</module>
 		<module>openstack-examples</module>
+		<module>ceilometer-java</module>
 	</modules>
 	<licenses>
 		<license>
