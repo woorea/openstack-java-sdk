@@ -50,6 +50,13 @@ OpenStack Nova Model
 
 OpenStack Nova Client
 
+NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
+			
+Servers servers = novaClient.execute(ServersCore.listServers());
+for(Server server : servers) {
+	System.out.println(server);
+}
+
 h2. OpenStack Image Store Service
 
 OpenStack Glance Model
