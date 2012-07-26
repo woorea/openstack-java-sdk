@@ -71,12 +71,41 @@ OpenStack Swift Client
 
 h2. OpenStack Ceilometer Service
 
+h3. MongoDB Installation
+
+OpenStack Ceilometer Service uses MongoDB as storage.
+
+h3. Ceilometer Compute Agent Installation
+
 OpenStack Ceilometer Compute Agent
+
+This artefact should be installed on each compute node
+
+<pre>
+mvn clean compile assembly:assembly
+Properties can be configured in /etc/ceilometer/ceilometer-agent.properties
+java -jar ceilometer-compute-agent-jar-with-dependencies.jar 
+</pre>
+
+h3. Ceilometer Collector Installation
 
 OpenStack Ceilometer Collector
 
+<pre>
+mvn clean compile assembly:assembly
+Properties can be configured in /etc/ceilometer/ceilometer-collector.properties
+java -jar ceilometer-collector.jar 
+</pre>
+
+h3. OpenStack Ceilometer API Installation
+
 OpenStack Ceilometer API
 
+<pre>
+mvn clean compile assembly:assembly
+Properties can be configured in /etc/ceilometer/ceilometer-api.properties
+java -jar ceilometer-api.jar 
+</pre>
 OpenStack Ceilometer Client
 
 h1. License
