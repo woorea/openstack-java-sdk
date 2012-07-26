@@ -12,7 +12,7 @@ OpenStack Keystone Model
 
 OpenStack Keystone Client
 
-```java
+<pre>
 KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
 Authentication authentication = new Authentication();
 PasswordCredentials passwordCredentials = new PasswordCredentials();
@@ -40,7 +40,7 @@ if(tenants.getList().size() > 0) {
 	access = keystone.execute(new Authenticate(authentication));
 	
 	...
-```
+</pre>
 
 h2. OpenStack Compute Service
 
@@ -48,12 +48,14 @@ OpenStack Nova Model
 
 OpenStack Nova Client
 
+<pre>
 NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 			
 Servers servers = novaClient.execute(ServersCore.listServers());
 for(Server server : servers) {
 	System.out.println(server);
 }
+</pre>
 
 h2. OpenStack Image Store Service
 
