@@ -13,7 +13,6 @@ OpenStack Keystone Model
 OpenStack Keystone Client
 
 ```java
-
 KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
 Authentication authentication = new Authentication();
 PasswordCredentials passwordCredentials = new PasswordCredentials();
@@ -41,7 +40,6 @@ if(tenants.getList().size() > 0) {
 	access = keystone.execute(new Authenticate(authentication));
 	
 	...
-
 ```
 
 h2. OpenStack Compute Service
