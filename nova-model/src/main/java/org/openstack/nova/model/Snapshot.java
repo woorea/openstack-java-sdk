@@ -1,7 +1,6 @@
 package org.openstack.nova.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;

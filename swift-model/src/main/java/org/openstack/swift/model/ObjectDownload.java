@@ -3,6 +3,7 @@ package org.openstack.swift.model;
 import java.io.InputStream;
 
 
+
 public class ObjectDownload {
 
 	private Object object;

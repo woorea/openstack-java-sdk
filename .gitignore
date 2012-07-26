@@ -17,3 +17,4 @@ openstack-ui/src/main/webapp/WEB-INF/lib/
 openstack-ui/.gwt/
 openstack-ui/deploy.sh
 test-output/
+bin
