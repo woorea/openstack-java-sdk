@@ -4,6 +4,74 @@ h1. Important
 
 You can continue using the latest source from v1.x essex branch
 
+h1. Available artifacts
+
+h2. OpenStack Identity Service
+
+OpenStack Keystone Model
+
+OpenStack Keystone Client
+
+```java
+
+KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
+Authentication authentication = new Authentication();
+PasswordCredentials passwordCredentials = new PasswordCredentials();
+passwordCredentials.setUsername(KEYSTONE_USERNAME);
+passwordCredentials.setPassword(KEYSTONE_PASSWORD);
+authentication.setPasswordCredentials(passwordCredentials);
+
+//access with unscoped token
+Access access = keystone.execute(new Authenticate(authentication));
+
+//use the token in the following requests
+keystone.setToken(access.getToken().getId());
+
+Tenants tenants = keystone.execute(new ListTenants());
+
+//try to exchange token using the first tenant
+if(tenants.getList().size() > 0) {
+	
+	authentication = new Authentication();
+	Token token = new Token();
+	token.setId(access.getToken().getId());
+	authentication.setToken(token);
+	authentication.setTenantId(tenants.getList().get(0).getId());
+	
+	access = keystone.execute(new Authenticate(authentication));
+	
+	...
+
+```
+
+h2. OpenStack Compute Service
+
+OpenStack Nova Model
+
+OpenStack Nova Client
+
+h2. OpenStack Image Store Service
+
+OpenStack Glance Model
+
+OpenStack Glance Client
+
+h2. OpenStack Object Store Service
+
+OpenStack Swift Model
+
+OpenStack Swift Client
+
+h2. OpenStack Ceilometer Service
+
+OpenStack Ceilometer Compute Agent
+
+OpenStack Ceilometer Collector
+
+OpenStack Ceilometer API
+
+OpenStack Ceilometer Client
+
 h1. License
 
 <pre>
