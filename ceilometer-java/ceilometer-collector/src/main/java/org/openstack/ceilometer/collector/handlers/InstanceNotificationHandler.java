@@ -46,6 +46,48 @@ public class InstanceNotificationHandler implements NotificationHandler {
 		
 		events.add(m);
 		
+		m = new MeterEvent();
+		m.setSource("?");
+		m.setName("vcpus");
+		m.setUserId(notificationInfo.getUserId());
+		m.setProjectId(notificationInfo.getProjectId());
+		m.setResourceId((String) notificationInfo.getPayload().get("instance_id"));
+		m.setTimestamp(notificationInfo.getTimestamp());
+		m.setType("absolute");
+		m.setDuration(0);
+		m.setVolume((Number) notificationInfo.getPayload().get("vcpus"));
+		m.setMetadata(new HashMap<String, Object>());
+		
+		events.add(m);
+		
+		m = new MeterEvent();
+		m.setSource("?");
+		m.setName("root_disk_size");
+		m.setUserId(notificationInfo.getUserId());
+		m.setProjectId(notificationInfo.getProjectId());
+		m.setResourceId((String) notificationInfo.getPayload().get("instance_id"));
+		m.setTimestamp(notificationInfo.getTimestamp());
+		m.setType("absolute");
+		m.setDuration(0);
+		m.setVolume((Number) notificationInfo.getPayload().get("root_gb"));
+		m.setMetadata(new HashMap<String, Object>());
+		
+		events.add(m);
+		
+		m = new MeterEvent();
+		m.setSource("?");
+		m.setName("ephemeral_disk_size");
+		m.setUserId(notificationInfo.getUserId());
+		m.setProjectId(notificationInfo.getProjectId());
+		m.setResourceId((String) notificationInfo.getPayload().get("instance_id"));
+		m.setTimestamp(notificationInfo.getTimestamp());
+		m.setType("absolute");
+		m.setDuration(0);
+		m.setVolume((Number) notificationInfo.getPayload().get("ephemeral_gb"));
+		m.setMetadata(new HashMap<String, Object>());
+		
+		events.add(m);
+		
 		return events;
 		
 	}
