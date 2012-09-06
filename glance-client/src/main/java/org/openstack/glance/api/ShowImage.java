@@ -19,6 +19,7 @@ public class ShowImage implements GlanceCommand<Image> {
 
 	@Override
 	public Image execute(WebTarget target) {
+		//
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_JSON).head();
 		Image image = new Image();
 		image.setId(response.getHeaderString("X-Image-Meta-Id"));
