@@ -99,7 +99,7 @@ public class VolumesExtension {
 
 		@Override
 		public Void execute(WebTarget target) {
-			target.path("servers").path(serverId).path("os-volume-attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
+			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
 			return null;
 		}
 
@@ -118,7 +118,7 @@ public class VolumesExtension {
 
 		@Override
 		public Void execute(WebTarget target) {
-			target.path("servers").path(serverId).path("os-volume-attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
+			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
 

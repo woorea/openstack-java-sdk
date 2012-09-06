@@ -3,6 +3,7 @@ package org.openstack.keystone.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -298,6 +299,8 @@ public class Access implements Serializable {
 	private List<Service> serviceCatalog;
 	
 	private User user;
+	
+	private Map<String, Object> metadata;
 
 	/**
 	 * @return the token
@@ -320,15 +323,20 @@ public class Access implements Serializable {
 		return user;
 	}
 
+	/**
+	 * @return the metadata
+	 */
+	public Map<String, Object> getMetadata() {
+		return metadata;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Access [token=" + token + ", serviceCatalog=" + serviceCatalog
-				+ ", user=" + user + "]";
+				+ ", user=" + user + ", metadata=" + metadata + "]";
 	}
-
-	
 	
 }

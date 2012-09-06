@@ -37,6 +37,9 @@ public class Flavor implements Serializable {
 	private Integer rxtxCap;
 	
 	private List<Link> links;
+	
+	@JsonProperty("os-flavor-access:is_public")
+	private Boolean isPublic;
 
 	/**
 	 * @return the id
@@ -191,6 +194,20 @@ public class Flavor implements Serializable {
 	public void setDisabled(Boolean disabled) {
 		this.disabled = disabled;
 	}
+	
+	/**
+	 * @return the isPublic
+	 */
+	public Boolean isPublic() {
+		return isPublic;
+	}
+
+	/**
+	 * @param isPublic the isPublic to set
+	 */
+	public void setPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
+	}
 
 	/**
 	 * @return the links
@@ -215,7 +232,8 @@ public class Flavor implements Serializable {
 				+ ", ram=" + ram + ", disk=" + disk + ", ephemeral="
 				+ ephemeral + ", swap=" + swap + ", rxtxFactor=" + rxtxFactor
 				+ ", disabled=" + disabled + ", rxtxQuota=" + rxtxQuota
-				+ ", rxtxCap=" + rxtxCap + ", links=" + links + "]";
+				+ ", rxtxCap=" + rxtxCap + ", links=" + links + ", isPublic="
+				+ isPublic + "]";
 	}
 	
 }

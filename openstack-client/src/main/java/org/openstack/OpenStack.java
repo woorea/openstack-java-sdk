@@ -15,7 +15,7 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.glassfish.jersey.filter.LoggingFilter;
-import org.glassfish.jersey.media.json.JsonJacksonFeature;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 public class OpenStack {
 
@@ -47,7 +47,7 @@ public class OpenStack {
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 		
-		CLIENT.configuration().register(new JsonJacksonFeature()).register(new ContextResolver<ObjectMapper>() {
+		CLIENT.configuration().register(new JacksonFeature()).register(new ContextResolver<ObjectMapper>() {
 
 			public ObjectMapper getContext(Class<?> type) {
 				return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
