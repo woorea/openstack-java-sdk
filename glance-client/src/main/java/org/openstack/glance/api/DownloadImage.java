@@ -23,24 +23,24 @@ public class DownloadImage implements GlanceCommand<ImageDownload> {
 	public ImageDownload execute(WebTarget target) {
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_OCTET_STREAM).head();
 		Image image = new Image();
-		image.setUri(response.getHeader("x-image-meta-uri"));
-		image.setName(response.getHeader("x-image-meta-name"));
-		image.setDiskFormat(response.getHeader("x-image-meta-disk_format"));
-		image.setContainerFormat(response.getHeader("x-image-meta-container_format"));
-		image.setSize(asInteger(response.getHeader("x-image-meta-size")));
-		image.setChecksum(response.getHeader("x-image-meta-checksum"));
-		image.setCreatedAt(asCalendar(response.getHeader("x-image-meta-create_at")));
-		image.setUpdatedAt(asCalendar(response.getHeader("x-image-meta-updated_at")));
-		image.setDeletedAt(asCalendar(response.getHeader("x-image-meta-deleted_at")));
-		image.setStatus(response.getHeader("x-image-meta-status"));
-		image.setPublic(asBoolean(response.getHeader("x-image-meta-is-public")));
-		image.setMinRam(asInteger(response.getHeader("x-image-meta-min-ram")));
-		image.setMinDisk(asInteger(response.getHeader("x-image-meta-min-disk")));
-		image.setOwner(response.getHeader("x-image-meta-owner"));
-		image.setName(response.getHeader("x-image-meta-owner"));
+		image.setUri(response.getHeaderString("x-image-meta-uri"));
+		image.setName(response.getHeaderString("x-image-meta-name"));
+		image.setDiskFormat(response.getHeaderString("x-image-meta-disk_format"));
+		image.setContainerFormat(response.getHeaderString("x-image-meta-container_format"));
+		image.setSize(asInteger(response.getHeaderString("x-image-meta-size")));
+		image.setChecksum(response.getHeaderString("x-image-meta-checksum"));
+		image.setCreatedAt(asCalendar(response.getHeaderString("x-image-meta-create_at")));
+		image.setUpdatedAt(asCalendar(response.getHeaderString("x-image-meta-updated_at")));
+		image.setDeletedAt(asCalendar(response.getHeaderString("x-image-meta-deleted_at")));
+		image.setStatus(response.getHeaderString("x-image-meta-status"));
+		image.setPublic(asBoolean(response.getHeaderString("x-image-meta-is-public")));
+		image.setMinRam(asInteger(response.getHeaderString("x-image-meta-min-ram")));
+		image.setMinDisk(asInteger(response.getHeaderString("x-image-meta-min-disk")));
+		image.setOwner(response.getHeaderString("x-image-meta-owner"));
+		image.setName(response.getHeaderString("x-image-meta-owner"));
 		for(String key : response.getMetadata().keySet()) {
 			if(key.startsWith("x-image-meta-property-")) {
-				image.getProperties().put(key.substring(22), response.getHeader(key));
+				image.getProperties().put(key.substring(22), response.getHeaderString(key));
 			}
 		}
 		ImageDownload imageDownload = new ImageDownload();
