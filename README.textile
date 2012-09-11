@@ -4,6 +4,13 @@ h1. Important
 
 You can continue using the latest source from v1.x essex branch
 
+h2. Maven
+
+|groupId|artifactId|version|
+|org.openstack|openstack-java-sdk|2.0.0-SNAPSHOT|
+
+https://raw.github.com/woorea/maven/master/snapshots/
+
 h1. Available artifacts
 
 h2. OpenStack Identity Service
