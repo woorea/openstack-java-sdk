@@ -1,5 +1,6 @@
 package org.openstack.keystone.api;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -19,7 +20,7 @@ public class AddUserToTenant implements KeystoneCommand<Void> {
 	
 	@Override
 	public Void execute(WebTarget target) {
-		target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).method("PUT");
+		target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).put(Entity.text(""));
 		return null;
 	}
 

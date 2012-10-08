@@ -12,7 +12,10 @@ h2. Maven
 |org.openstack|glance-client|2.0.0-SNAPSHOT|
 |org.openstack|swift-client|2.0.0-SNAPSHOT|
 
-https://raw.github.com/woorea/maven/master/snapshots/
+h3. Maven Repositories
+
+https://maven.java.net/content/repositories/snapshots
+https://raw.github.com/woorea/maven/master/snapshots
 
 h1. Available artifacts
 
