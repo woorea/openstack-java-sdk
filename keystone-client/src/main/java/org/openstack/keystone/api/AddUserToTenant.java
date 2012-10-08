@@ -20,7 +20,7 @@ public class AddUserToTenant implements KeystoneCommand<Void> {
 	
 	@Override
 	public Void execute(WebTarget target) {
-		target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).put(Entity.text(""));
+		target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).put(Entity.json("{}"));
 		return null;
 	}
 
