@@ -203,6 +203,7 @@ public class Access implements Serializable {
 		
 	}
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static final class User {
 		
 		@JsonIgnoreProperties(ignoreUnknown=true)
