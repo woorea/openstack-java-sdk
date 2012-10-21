@@ -18,7 +18,7 @@ public class OpenStackSimpleClient {
 	 */
 	public static void main(String[] args) {
 		AbstractOpenStackClient client = new AbstractOpenStackClient(KEYSTONE_AUTH_URL);
-		Access access = client.request("/tokens").execute("POST", Entity.json("{\"auth\":{\"passwordCredentials\":{\"username\":\"admin\",\"password\":\"1n1est4\"}}}"), Access.class);
+		Access access = client.request("/tokens").execute("POST", Entity.json("{\"auth\":{\"passwordCredentials\":{\"username\":\"\",\"password\":\"\"}}}"), Access.class);
 		System.out.println(access);
 	}
 
