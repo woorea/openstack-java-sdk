@@ -77,6 +77,25 @@ public class AbstractOpenStackClient {
 			builder.method(method, data, Void.class);
 		}
 		
+		public <ResponseType> ResponseType get(Class<ResponseType> type) {
+			return execute("GET", type);
+		}
+		
+		public <ResponseType> ResponseType postJson(Object data, Class<ResponseType> type) {
+			return execute("POST", Entity.json(data), type);
+		}
+		
+		public <ResponseType> ResponseType putJson(Object data, Class<ResponseType> type) {
+			return execute("PUT", Entity.json(data), type);
+		}
+		
+		public <ResponseType> ResponseType patchJson(Object data, Class<ResponseType> type) {
+			return execute("PATCH", Entity.json(data), type);
+		}
+		
+		public void delete() {
+			execute("DELETE", Void.class);
+		}
 	}
 
 }
