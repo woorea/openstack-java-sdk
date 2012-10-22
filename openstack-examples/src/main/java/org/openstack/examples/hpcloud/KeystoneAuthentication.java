@@ -19,14 +19,9 @@ public class KeystoneAuthentication {
 	 */
 	public static void main(String[] args) {
 		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
-		Authentication authentication = new Authentication();
-		PasswordCredentials passwordCredentials = new PasswordCredentials();
-		passwordCredentials.setUsername(KEYSTONE_USERNAME);
-		passwordCredentials.setPassword(KEYSTONE_PASSWORD);
-		authentication.setPasswordCredentials(passwordCredentials);
 		
 		//access with unscoped token
-		Access access = keystone.execute(new Authenticate(authentication));
+		Access access = keystone.execute(Authenticate.withPasswordCredentials(KEYSTONE_USERNAME, KEYSTONE_PASSWORD));
 		
 		System.out.println(access);
 

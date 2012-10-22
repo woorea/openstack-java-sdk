@@ -31,15 +31,9 @@ public class NovaCreateServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
-		Authentication authentication = new Authentication();
-		PasswordCredentials passwordCredentials = new PasswordCredentials();
-		passwordCredentials.setUsername(KEYSTONE_USERNAME);
-		passwordCredentials.setPassword(KEYSTONE_PASSWORD);
-		authentication.setPasswordCredentials(passwordCredentials);
-		
+		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);		
 		//access with unscoped token
-		Access access = keystone.execute(new Authenticate(authentication));
+		Access access = keystone.execute(Authenticate.withPasswordCredentials(KEYSTONE_USERNAME, KEYSTONE_PASSWORD));
 		
 		//use the token in the following requests
 		keystone.setToken(access.getToken().getId());
@@ -49,13 +43,7 @@ public class NovaCreateServer {
 		//try to exchange token using the first tenant
 		if(tenants.getList().size() > 0) {
 			
-			authentication = new Authentication();
-			Token token = new Token();
-			token.setId(access.getToken().getId());
-			authentication.setToken(token);
-			authentication.setTenantId(tenants.getList().get(0).getId());
-			
-			access = keystone.execute(new Authenticate(authentication));
+			access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantId(tenants.getList().get(0).getId()));
 			
 			NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 
