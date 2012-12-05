@@ -65,6 +65,8 @@ public class Access implements Serializable {
 		}
 		
 		private String id;
+
+		private Calendar issued_at;
 		
 		private Calendar expires;
 		
@@ -76,6 +78,13 @@ public class Access implements Serializable {
 		public String getId() {
 			return id;
 		}
+
+    /**
+     * @return the issued_at
+     */
+    public Calendar getIssued_at() {
+      return issued_at;
+    }
 
 		/**
 		 * @return the expires
@@ -96,8 +105,8 @@ public class Access implements Serializable {
 		 */
 		@Override
 		public String toString() {
-			return "Token [id=" + id + ", expires=" + expires + ", tenant="
-					+ tenant + "]";
+			return "Token [id=" + id + ", Issued_at=" + issued_at + ", expires=" + expires + ", tenant="
+              + tenant + "]";
 		}
 		
 	}
