@@ -59,7 +59,7 @@ public class OpenStack {
 			SSLContext context = null;
             context = SSLContext.getInstance("SSL");
             context.init(null, null, null);
-	        CLIENT.configuration().setProperty(ClientProperties.SSL_CONFIG, new SslConfig(context));
+	        CLIENT.setProperty(ClientProperties.SSL_CONFIG, new SslConfig(context));
 			
 			DEFAULT_MAPPER = new ObjectMapper();
 			
@@ -75,7 +75,7 @@ public class OpenStack {
 			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 			
-			CLIENT.configuration().register(new JacksonFeature()).register(new ContextResolver<ObjectMapper>() {
+			CLIENT.register(new JacksonFeature()).register(new ContextResolver<ObjectMapper>() {
 
 				public ObjectMapper getContext(Class<?> type) {
 					return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
@@ -83,7 +83,7 @@ public class OpenStack {
 				
 			});
 			
-			CLIENT.configuration().register(new ClientRequestFilter() {
+			CLIENT.register(new ClientRequestFilter() {
 				
 				public void filter(ClientRequestContext requestContext) throws IOException {
 					requestContext.getHeaders().remove("Content-Language");
@@ -91,7 +91,7 @@ public class OpenStack {
 				}
 			});
 			
-			CLIENT.configuration().register(new LoggingFilter(Logger.getLogger("openstack"), true));
+			CLIENT.register(new LoggingFilter(Logger.getLogger("openstack"), true));
 		} catch(Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}

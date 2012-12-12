@@ -44,7 +44,7 @@ public class AbstractOpenStackClient {
 	public OpenStackRequest request(String uri, String... mediaTypes) {
 		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
 		if(token != null) {
-			endpoint.configuration().register(tokenFilter);
+			endpoint.register(tokenFilter);
 		}
 		return new OpenStackRequest(endpoint.path(uri).request(mediaTypes));
 	}

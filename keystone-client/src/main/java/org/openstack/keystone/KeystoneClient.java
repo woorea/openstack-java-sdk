@@ -18,7 +18,7 @@ public class KeystoneClient extends AbstractOpenStackClient {
 	public <R> R execute(KeystoneCommand<R> command) {
 		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
 		if(token != null) {
-			endpoint.configuration().register(tokenFilter);
+			endpoint.register(tokenFilter);
 		}
 		return command.execute(endpoint);
 	}
