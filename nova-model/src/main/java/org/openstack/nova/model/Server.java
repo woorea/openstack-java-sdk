@@ -2,9 +2,11 @@ package org.openstack.nova.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
@@ -42,25 +44,18 @@ public class Server implements Serializable {
 			}
 			
 		}
-		
-		@JsonProperty("private")
-		private List<Address> privateList;
-		
-		@JsonProperty("public")
-		private List<Address> publicList;
 
-		/**
-		 * @return the privateList
-		 */
-		public List<Address> getPrivateList() {
-			return privateList;
+		private Map<String, List<Address>> addresses = new HashMap<String, List<Address>>();
+
+		@JsonAnySetter
+		public void add(String key, List<Address> value) {
+			addresses.put(key, value);
 		}
-
 		/**
-		 * @return the publicList
+		 * @return the ip address List Map
 		 */
-		public List<Address> getPublicList() {
-			return publicList;
+		public Map<String, List<Address>> getAddresses() {
+			return addresses;
 		}
 
 		/* (non-Javadoc)
@@ -68,8 +63,7 @@ public class Server implements Serializable {
 		 */
 		@Override
 		public String toString() {
-			return "Addresses [privateList=" + privateList + ", publicList="
-					+ publicList + "]";
+			return "Addresses List Map [" + addresses + "]";
 		}
 		
 	}
