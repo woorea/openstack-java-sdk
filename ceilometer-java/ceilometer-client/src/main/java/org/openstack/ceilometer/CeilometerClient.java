@@ -14,7 +14,7 @@ public class CeilometerClient extends AbstractOpenStackClient {
 	public <R> R execute(CeilometerCommand<R> command) {
 		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
 		if(token != null) {
-			endpoint.register(tokenFilter);
+			endpoint.configuration().register(tokenFilter);
 		}
 		return command.execute(endpoint);
 	}
