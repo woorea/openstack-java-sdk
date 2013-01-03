@@ -12,7 +12,6 @@ import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
 import org.openstack.swift.SwiftClient;
 import org.openstack.swift.api.CreateContainer;
-import org.openstack.swift.api.DeleteContainer;
 import org.openstack.swift.api.ListContainers;
 import org.openstack.swift.api.ListObjects;
 import org.openstack.swift.api.UploadObject;
@@ -48,19 +47,19 @@ public class SwiftExample {
 			
 			SwiftClient swiftClient = new SwiftClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"), access.getToken().getId());
 		
-			swiftClient.execute(new DeleteContainer("navidad"));
+			//swiftClient.execute(new DeleteContainer("navidad2"));
 			
-			swiftClient.execute(new CreateContainer("navidad"));
+			swiftClient.execute(new CreateContainer("navidad2"));
 			
 			System.out.println(swiftClient.execute(new ListContainers()));
 			
 			ObjectForUpload upload = new ObjectForUpload();
-			upload.setContainer("navidad");
-			upload.setName("example");
+			upload.setContainer("navidad2");
+			upload.setName("example2");
 			upload.setInputStream(new FileInputStream(TEST_FILE));
 			swiftClient.execute(new UploadObject(upload));
 			
-			System.out.println(swiftClient.execute(new ListObjects("navidad", new HashMap<String, String>() {{
+			System.out.println(swiftClient.execute(new ListObjects("navidad2", new HashMap<String, String>() {{
 				put("path", "");
 			}})).get(0).getContentType());
 			
