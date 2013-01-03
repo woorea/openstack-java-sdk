@@ -35,9 +35,9 @@ public class Main {
 		
 		ResourceConfig config = new ResourceConfig()
 			//.packages("org.openstack.ceilometer.api")
-			.addClasses(CeilometerApiV1.class)
-			.addSingletons(new JsonJacksonBinder())
-			.addSingletons(mongoDbBinder);
+			.register(CeilometerApiV1.class)
+			.register(new JsonJacksonBinder())
+			.register(mongoDbBinder);
 			//.addModules(new JsonJacksonModule())
 			//.addSingletons(api);
 		
