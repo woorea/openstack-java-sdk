@@ -6,6 +6,7 @@ import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
+import org.openstack.quantum.api.SubnetsCore;
 import org.openstack.quantum.api.query.NetworkQuery;
 import org.openstack.quantum.client.QuantumClient;
 import org.openstack.quantum.model.Network;
@@ -54,7 +55,7 @@ public class QuantumQueryNetworks {
 			}
 
 			Subnet subnetQuery = new Subnet();
-			subnetQuery.setIpversion("4");
+			subnetQuery.setIpversion(Subnet.IpVersion.IPV4);
 			Subnets Subnets = quantumClient.execute(NetworkQuery.querySubnets(subnetQuery));
 			for (Subnet subnet : Subnets) {
 				System.out.println(subnet);

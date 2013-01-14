@@ -3,7 +3,9 @@ package org.openstack.quantum.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonValue;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("subnet")
@@ -23,11 +25,40 @@ public class Subnet implements Serializable{
 	@JsonProperty("host_routes")
 	private List<String> hostRoutes;
 	@JsonProperty("ip_version")
-	private String ipversion;
+	private IpVersion ipversion;
 	@JsonProperty("gateway_ip")
 	private String gw;
 	private String cidr;
 	private String id;
+	
+	public static enum IpVersion implements Serializable {
+		IPV4(4), IPV6(6);
+		private int code;
+
+		IpVersion(int code) {
+			this.code = code;
+		}
+
+		@JsonValue
+		public int code() {
+			return code;
+		}
+
+		@JsonCreator
+		public static IpVersion valueOf(int value) {
+			for (IpVersion ipVersion : IpVersion.values()) {
+				if (ipVersion.code() == value) {
+					return ipVersion;
+				}
+			}
+			return IPV4;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(code);
+		}
+	}
 	
 
 	/**
@@ -145,7 +176,7 @@ public class Subnet implements Serializable{
 	/**
 	 * @return the ipversion
 	 */
-	public String getIpversion() {
+	public IpVersion getIpversion() {
 		return ipversion;
 	}
 
@@ -153,7 +184,7 @@ public class Subnet implements Serializable{
 	/**
 	 * @param ipversion the ipversion to set
 	 */
-	public void setIpversion(String ipversion) {
+	public void setIpversion(IpVersion ipversion) {
 		this.ipversion = ipversion;
 	}
 
