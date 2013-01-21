@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 public class SubnetForCreate implements Serializable{
 	
+	private String name;
 	@JsonProperty("network_id")
 	private String networkid;
 	@JsonProperty("ip_version")
@@ -18,6 +19,19 @@ public class SubnetForCreate implements Serializable{
 	@JsonProperty("allocation_pools")
 	private List<Pool> list;
 	
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 	/**
 	 * @return the id
 	 */
@@ -74,6 +88,7 @@ public class SubnetForCreate implements Serializable{
 	public void setList(List<Pool> list) {
 		this.list = list;
 	}
+
 	
 	
 	
