@@ -3,6 +3,7 @@ package org.openstack.model.identity.keystone;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -43,6 +44,9 @@ public class KeystoneAccess implements Serializable, Access {
 
     @XmlElement(type = KeystoneUser.class)
     private KeystoneUser user;
+
+    @XmlElement
+    private Map<String, Object> metadata;
 
     /* (non-Javadoc)
 	 * @see org.openstack.model.identity.glance.Access#getToken()
@@ -119,5 +123,19 @@ public class KeystoneAccess implements Serializable, Access {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
+
+    /**
+     * @return the metadata
+     */
+    public Map<String, Object> getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * @param metadata the metadata to set
+     */
+    public void setMetadata(Map<String, Object> metadata) {
+        this.metadata = metadata;
+    }
 
 }
