@@ -14,6 +14,9 @@ import org.openstack.model.identity.ServiceEndpoint;
 public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 
     @XmlAttribute
+    private String id;
+
+    @XmlAttribute
     private String region;
 
     @XmlAttribute
@@ -128,5 +131,19 @@ public class KeystoneServiceEndpoint implements Serializable, ServiceEndpoint {
 				+ publicURL + ", adminURL=" + adminURL + ", versionId="
 				+ versionId + ", versionList=" + versionList + "]";
 	}
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
     
 }
