@@ -6,8 +6,6 @@ import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
-import org.openstack.quantum.api.SubnetsCore;
-import org.openstack.quantum.api.query.NetworkQuery;
 import org.openstack.quantum.client.QuantumClient;
 import org.openstack.quantum.model.Network;
 import org.openstack.quantum.model.Networks;
@@ -48,6 +46,7 @@ public class QuantumQueryNetworks {
 			Network networkQuery = new Network();
 			networkQuery.setName("benn.cs");
 			networkQuery.setAdminStateUp(true);
+			/*
 			Networks networks = quantumClient.execute(NetworkQuery.queryNetworks(networkQuery));
 
 			for (Network network : networks) {
@@ -60,7 +59,7 @@ public class QuantumQueryNetworks {
 			for (Subnet subnet : Subnets) {
 				System.out.println(subnet);
 			}
-
+			*/
 		} else {
 			System.out.println("No tenants found!");
 		}

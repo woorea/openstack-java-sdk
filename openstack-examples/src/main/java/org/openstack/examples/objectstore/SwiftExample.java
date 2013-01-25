@@ -1,7 +1,13 @@
 package org.openstack.examples.objectstore;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 import org.openstack.keystone.KeystoneClient;
@@ -12,9 +18,11 @@ import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
 import org.openstack.swift.SwiftClient;
 import org.openstack.swift.api.CreateContainer;
+import org.openstack.swift.api.DownloadObject;
 import org.openstack.swift.api.ListContainers;
 import org.openstack.swift.api.ListObjects;
 import org.openstack.swift.api.UploadObject;
+import org.openstack.swift.model.ObjectDownload;
 import org.openstack.swift.model.ObjectForUpload;
 
 public class SwiftExample {
@@ -63,8 +71,27 @@ public class SwiftExample {
 				put("path", "");
 			}})).get(0).getContentType());
 			
+			
+			ObjectDownload download = swiftClient.execute(new DownloadObject("navidad2", "example2"));
+			write(download.getInputStream(), "example2");
 		}
 
+	}
+	
+	private static void write(InputStream is, String path) {
+		try {
+			OutputStream stream = new BufferedOutputStream(new FileOutputStream(path)); 
+			int bufferSize = 1024;
+			byte[] buffer = new byte[bufferSize];
+			int len = 0;
+			while ((len = is.read(buffer)) != -1) {
+			    stream.write(buffer, 0, len);
+			}
+			stream.close();   
+		} catch(IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
 	}
 
 }
