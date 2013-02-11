@@ -12,7 +12,7 @@ public class Container implements Serializable {
 	private Integer objectCount;
 	
 	@JsonProperty("bytes")
-	private Integer bytesUsed;
+	private Long bytesUsed;
 
 	/**
 	 * @return the name
@@ -45,14 +45,14 @@ public class Container implements Serializable {
 	/**
 	 * @return the bytesUsed
 	 */
-	public Integer getBytesUsed() {
+	public Long getBytesUsed() {
 		return bytesUsed;
 	}
 
 	/**
 	 * @param bytesUsed the bytesUsed to set
 	 */
-	public void setBytesUsed(Integer bytesUsed) {
+	public void setBytesUsed(Long bytesUsed) {
 		this.bytesUsed = bytesUsed;
 	}
 
