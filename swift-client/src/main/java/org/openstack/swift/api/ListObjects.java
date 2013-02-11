@@ -24,7 +24,7 @@ public class ListObjects implements SwiftCommand<List<Object>>{
 	@Override
 	public List<Object> execute(WebTarget target) {
 		target = target.path(containerName);
-		for(String filter : new String[]{"prefix","delimiter","path"}) {
+		for(String filter : new String[]{"prefix","delimiter","path","marker"}) {
 			if(filters.get(filter) != null) {
 				target = target.queryParam(filter, filters.get(filter));
 			}
