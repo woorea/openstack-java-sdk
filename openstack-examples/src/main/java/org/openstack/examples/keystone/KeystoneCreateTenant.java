@@ -10,11 +10,11 @@ import org.openstack.keystone.utils.KeystoneUtils;
 
 public class KeystoneCreateTenant {
 
-	private static final String KEYSTONE_AUTH_URL = "http://10.1.245.150:5000/v2.0";
+	private static final String KEYSTONE_AUTH_URL = "http://identity.x.org/v2.0";
 
 	private static final String KEYSTONE_USERNAME = "admin";
 
-	private static final String KEYSTONE_PASSWORD = "admin";
+	private static final String KEYSTONE_PASSWORD = "secret0";
 
 	/**
 	 * @param args
@@ -31,8 +31,7 @@ public class KeystoneCreateTenant {
 		tenant.setDescription("benn.cs");
 		tenant.setEnabled(true);
 		//Get the adminURL client and use the token got above
-		keystone = new KeystoneClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "identity", null, "admin"),
-				access.getToken().getId());
+		keystone = new KeystoneClient("http://keystone.x.org/v2.0", access.getToken().getId());
 		tenant = keystone.execute(new CreateTenant(tenant));
 		System.out.println(tenant);
 		keystone.execute(new DeleteTenant(tenant.getId()));

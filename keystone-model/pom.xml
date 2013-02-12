@@ -9,11 +9,4 @@
 	<artifactId>keystone-model</artifactId>
 	<name>OpenStack Keystone Model</name>
 	<description>OpenStack Keystone Model</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.8</version>
-		</dependency>
-	</dependencies>
 </project>

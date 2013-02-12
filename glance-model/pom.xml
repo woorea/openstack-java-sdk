@@ -9,11 +9,4 @@
 	<artifactId>glance-model</artifactId>
 	<name>OpenStack Glance Model</name>
 	<description>OpenStack Glance Model</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.8</version>
-		</dependency>
-	</dependencies>
 </project>

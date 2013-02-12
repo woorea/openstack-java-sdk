@@ -9,11 +9,4 @@
 	<artifactId>swift-model</artifactId>
 	<name>OpenStack Swift Model</name>
 	<description>OpenStack Swift Model</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.8</version>
-		</dependency>
-	</dependencies>
 </project>

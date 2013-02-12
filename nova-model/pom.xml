@@ -9,11 +9,4 @@
 	<artifactId>nova-model</artifactId>
 	<name>OpenStack Nova Model</name>
 	<description>OpenStack Nova Model</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.8</version>
-		</dependency>
-	</dependencies>
 </project>

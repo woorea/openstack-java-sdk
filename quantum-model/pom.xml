@@ -9,11 +9,4 @@
 	<artifactId>quantum-model</artifactId>
 	<name>Quantum Model</name>
 	<description>Quantum Model</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.8</version>
-		</dependency>
-	</dependencies>
 </project>
