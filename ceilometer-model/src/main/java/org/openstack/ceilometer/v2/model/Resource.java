@@ -39,5 +39,12 @@ public class Resource {
 	public Map<String, Object> getMetadata() {
 		return metadata;
 	}
+
+	@Override
+	public String toString() {
+		return "Resource [resource=" + resource + ", timestamp=" + timestamp
+				+ ", project=" + project + ", user=" + user + ", metadata="
+				+ metadata + "]";
+	}
 	
 }
