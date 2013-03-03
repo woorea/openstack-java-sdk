@@ -74,6 +74,8 @@ public class Server implements Serializable {
 		
 		private String message;
 		
+		private String details;
+		
 		private Calendar created;
 
 		/**
@@ -88,6 +90,13 @@ public class Server implements Serializable {
 		 */
 		public String getMessage() {
 			return message;
+		}
+
+		/**
+		 * @return the details
+		 */
+		public String getDetails() {
+			return details;
 		}
 
 		/**
@@ -165,6 +174,9 @@ public class Server implements Serializable {
 	
 	@JsonProperty("OS-DCF:diskConfig")
 	private String diskConfig;
+	
+	@JsonProperty("OS-EXT-AZ:availability_zone")
+	private String availabilityZone;
 	
 	private String uuid;
 	
@@ -374,6 +386,13 @@ public class Server implements Serializable {
 	}
 
 	/**
+	 * @return the availabilityZone
+	 */
+	public String getAvailabilityZone() {
+		return availabilityZone;
+	}
+
+	/**
 	 * @return the uuid
 	 */
 	public String getUuid() {
@@ -404,8 +423,9 @@ public class Server implements Serializable {
 				+ taskState + ", powerState=" + powerState + ", vmState="
 				+ vmState + ", host=" + host + ", instanceName=" + instanceName
 				+ ", hypervisorHostname=" + hypervisorHostname
-				+ ", diskConfig=" + diskConfig + ", uuid=" + uuid
-				+ ", adminPass=" + adminPass + "]";
+				+ ", diskConfig=" + diskConfig + ", availabilityZone="
+				+ availabilityZone + ", uuid=" + uuid + ", adminPass="
+				+ adminPass + "]";
 	}
 
 }

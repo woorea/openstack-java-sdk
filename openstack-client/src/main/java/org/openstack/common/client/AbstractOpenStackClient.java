@@ -1,6 +1,7 @@
 package org.openstack.common.client;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
@@ -9,6 +10,7 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.OpenStack;
 
 public class AbstractOpenStackClient {
@@ -16,6 +18,8 @@ public class AbstractOpenStackClient {
 	protected String endpointURL;
 	
 	protected String token;
+	
+	protected LoggingFilter loggingFilter;
 	
 	protected ClientRequestFilter tokenFilter = new ClientRequestFilter() {
 		
@@ -51,6 +55,25 @@ public class AbstractOpenStackClient {
 	
 	public OpenStackRequest request(String uri) {
 		return request(uri, MediaType.APPLICATION_JSON);
+	}
+	
+	protected WebTarget create(String endpoint) {
+		WebTarget target = OpenStack.CLIENT.target(endpoint);
+		if(loggingFilter != null) {
+			target.register(loggingFilter);
+		}
+		if(token != null) {
+			target.register(tokenFilter);
+		}
+		return target;
+	}
+	
+	public void enableLogging(Logger logger, int entitySize) {
+		loggingFilter = new LoggingFilter(logger, entitySize);
+	}
+	
+	public void disableLogging() {
+		loggingFilter = null;
 	}
 	
 	public static class OpenStackRequest {

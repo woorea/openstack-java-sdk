@@ -1,8 +1,5 @@
 package org.openstack.keystone;
 
-import javax.ws.rs.client.WebTarget;
-
-import org.openstack.OpenStack;
 import org.openstack.common.client.AbstractOpenStackClient;
 
 public class KeystoneClient extends AbstractOpenStackClient {
@@ -16,11 +13,7 @@ public class KeystoneClient extends AbstractOpenStackClient {
 	}
 
 	public <R> R execute(KeystoneCommand<R> command) {
-		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
-		if(token != null) {
-			endpoint.register(tokenFilter);
-		}
-		return command.execute(endpoint);
+		return command.execute(create(endpointURL));
 	}
 
 }

@@ -1,28 +1,22 @@
 package org.openstack.examples.keystone;
 
+import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.api.CreateTenant;
 import org.openstack.keystone.api.DeleteTenant;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenant;
-import org.openstack.keystone.utils.KeystoneUtils;
 
 public class KeystoneCreateTenant {
-
-	private static final String KEYSTONE_AUTH_URL = "http://identity.x.org/v2.0";
-
-	private static final String KEYSTONE_USERNAME = "admin";
-
-	private static final String KEYSTONE_PASSWORD = "secret0";
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
+		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		//access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(KEYSTONE_USERNAME, KEYSTONE_PASSWORD));
+		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 
 		access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantName("admin"));
 

@@ -4,12 +4,12 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 
+import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.api.ListTenants;
@@ -29,19 +29,13 @@ public class SwiftExample {
 	
 	private static final File TEST_FILE = new File("pom.xml");
 	
-	private static final String KEYSTONE_AUTH_URL = "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v2.0";
-	
-	private static final String KEYSTONE_USERNAME = "";
-	
-	private static final String KEYSTONE_PASSWORD = "";
-
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);		
+		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
 		//access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(KEYSTONE_USERNAME, KEYSTONE_PASSWORD));
+		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		
 		//use the token in the following requests
 		keystone.setToken(access.getToken().getId());

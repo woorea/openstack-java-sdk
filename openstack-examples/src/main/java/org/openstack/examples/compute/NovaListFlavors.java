@@ -1,5 +1,8 @@
 package org.openstack.examples.compute;
 
+import java.util.logging.Logger;
+
+import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.api.ListTenants;
@@ -15,23 +18,16 @@ import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.Flavors;
 
 public class NovaListFlavors {
-	
-	private static final String KEYSTONE_AUTH_URL = "";
-	
-	private static final String KEYSTONE_USERNAME = "";
-	
-	private static final String KEYSTONE_PASSWORD = "";
-	
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
+		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		Authentication authentication = new Authentication();
 		PasswordCredentials passwordCredentials = new PasswordCredentials();
-		passwordCredentials.setUsername(KEYSTONE_USERNAME);
-		passwordCredentials.setPassword(KEYSTONE_PASSWORD);
+		passwordCredentials.setUsername(ExamplesConfiguration.KEYSTONE_USERNAME);
+		passwordCredentials.setPassword(ExamplesConfiguration.KEYSTONE_PASSWORD);
 		authentication.setPasswordCredentials(passwordCredentials);
 		
 		//access with unscoped token
@@ -53,9 +49,11 @@ public class NovaListFlavors {
 			
 			access = keystone.execute(new Authenticate(authentication));
 			
-			NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
+			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
+			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()), access.getToken().getId());
+			novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			
-			Flavors flavors = novaClient.execute(FlavorsCore.listFlavors());
+			Flavors flavors = novaClient.execute(FlavorsCore.listFlavors(true));
 			for(Flavor flavor : flavors) {
 				System.out.println(flavor);
 			}

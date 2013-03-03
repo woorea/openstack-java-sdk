@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("image")
@@ -25,6 +26,9 @@ public class Image implements Serializable {
 	private Calendar created;
 	
 	private Calendar updated;
+	
+	@JsonProperty("OS-EXT-IMG-SIZE:size")
+	private Integer size;
 	
 	private Map<String, String> metadata;
 		
@@ -150,6 +154,13 @@ public class Image implements Serializable {
 	}
 
 	/**
+	 * @return the size
+	 */
+	public Integer getSize() {
+		return size;
+	}
+
+	/**
 	 * @param metadata the metadata to set
 	 */
 	public void setMetadata(Map<String, String> metadata) {
@@ -178,8 +189,8 @@ public class Image implements Serializable {
 		return "Image [id=" + id + ", status=" + status + ", name=" + name
 				+ ", progress=" + progress + ", minRam=" + minRam
 				+ ", minDisk=" + minDisk + ", created=" + created
-				+ ", updated=" + updated + ", metadata=" + metadata
-				+ ", links=" + links + "]";
+				+ ", updated=" + updated + ", size=" + size + ", metadata="
+				+ metadata + ", links=" + links + "]";
 	}
 	
 }

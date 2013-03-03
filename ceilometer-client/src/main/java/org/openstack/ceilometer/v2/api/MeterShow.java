@@ -14,7 +14,7 @@ public class MeterShow extends QueriableCeilometerCommand<MeterShow, List<Sample
 
 	private String name;
 		
-	public MeterShow id(String name) {
+	public MeterShow name(String name) {
 		this.name = name;
 		return this;
 	}

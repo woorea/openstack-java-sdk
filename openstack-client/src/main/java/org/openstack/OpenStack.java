@@ -91,7 +91,6 @@ public class OpenStack {
 				}
 			});
 			
-			CLIENT.register(new LoggingFilter(Logger.getLogger("openstack"), true));
 		} catch(Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
