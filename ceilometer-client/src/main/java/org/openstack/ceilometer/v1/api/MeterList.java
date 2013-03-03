@@ -1,12 +1,12 @@
-package org.openstack.ceilometer.api;
+package org.openstack.ceilometer.v1.api;
 
 import java.util.List;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import org.openstack.ceilometer.model.MeterEvent;
-import org.openstack.ceilometer.model.MeterEvents;
+import org.openstack.ceilometer.v1.model.MeterEvent;
+import org.openstack.ceilometer.v1.model.MeterEvents;
 
 public class MeterList extends MeterCommand<List<MeterEvent>> {
 

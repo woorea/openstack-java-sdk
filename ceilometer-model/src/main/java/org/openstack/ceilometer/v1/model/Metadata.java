@@ -1,4 +1,4 @@
-package org.openstack.ceilometer.model;
+package org.openstack.ceilometer.v1.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

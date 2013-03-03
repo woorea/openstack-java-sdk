@@ -1,4 +1,4 @@
-package org.openstack.ceilometer.api;
+package org.openstack.ceilometer.v1.api;
 
 import java.math.BigDecimal;
 

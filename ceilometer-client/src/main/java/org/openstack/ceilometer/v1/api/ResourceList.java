@@ -1,10 +1,10 @@
-package org.openstack.ceilometer.api;
+package org.openstack.ceilometer.v1.api;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import org.openstack.ceilometer.CeilometerCommand;
-import org.openstack.ceilometer.model.Resources;
+import org.openstack.ceilometer.v1.model.Resources;
 
 public class ResourceList implements CeilometerCommand<Resources> {
 
@@ -38,7 +38,7 @@ public class ResourceList implements CeilometerCommand<Resources> {
 		} else if(user != null) {
 			target = target.path("users").path(user);
 		}
-		return target.path("v1/resources").request(MediaType.APPLICATION_JSON).get(Resources.class);
+		return target.path("resources").request(MediaType.APPLICATION_JSON).get(Resources.class);
 	}
 
 }

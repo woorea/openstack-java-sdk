@@ -1,9 +1,9 @@
 package org.openstack.examples.metering;
 
 import org.openstack.ceilometer.CeilometerClient;
-import org.openstack.ceilometer.api.ProjectList;
-import org.openstack.ceilometer.api.ResourceList;
-import org.openstack.ceilometer.api.UserList;
+import org.openstack.ceilometer.v1.api.ProjectList;
+import org.openstack.ceilometer.v1.api.ResourceList;
+import org.openstack.ceilometer.v1.api.UserList;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;

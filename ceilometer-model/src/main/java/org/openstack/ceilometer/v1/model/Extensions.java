@@ -1,4 +1,4 @@
-package org.openstack.ceilometer.model;
+package org.openstack.ceilometer.v1.model;
 
 import java.io.Serializable;
 import java.util.Iterator;
