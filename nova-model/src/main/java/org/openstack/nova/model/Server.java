@@ -20,6 +20,9 @@ public class Server implements Serializable {
 			private String version;
 			
 			private String addr;
+			
+			@JsonProperty("OS-EXT-IPS:type")
+			private String type;
 
 			/**
 			 * @return the version
@@ -34,13 +37,34 @@ public class Server implements Serializable {
 			public String getAddr() {
 				return addr;
 			}
+			
 
-			/* (non-Javadoc)
-			 * @see java.lang.Object#toString()
+			/**
+			 * @return the type
 			 */
-			@Override
-			public String toString() {
-				return "Address [version=" + version + ", addr=" + addr + "]";
+			public String getType() {
+				return type;
+			}
+
+			/**
+			 * @param version the version to set
+			 */
+			public void setVersion(String version) {
+				this.version = version;
+			}
+
+			/**
+			 * @param addr the addr to set
+			 */
+			public void setAddr(String addr) {
+				this.addr = addr;
+			}
+
+			/**
+			 * @param type the type to set
+			 */
+			public void setType(String type) {
+				this.type = type;
 			}
 			
 		}
@@ -105,6 +129,16 @@ public class Server implements Serializable {
 		public Calendar getCreated() {
 			return created;
 		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Fault [code=" + code + ", message=" + message
+					+ ", details=" + details + ", created=" + created + "]";
+		}
+		
 		
 	}
 		
