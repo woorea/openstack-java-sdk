@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.FloatingIps;
+import org.openstack.nova.model.FloatingIp;
 
 public class FloatingIpsExtension {
 	
@@ -21,7 +22,7 @@ public class FloatingIpsExtension {
 
 	}
 
-	public static class AllocateFloatingIp implements NovaCommand<Void> {
+	public static class AllocateFloatingIp implements NovaCommand<FloatingIp> {
 		
 		private Map<String, String> body;
 			
@@ -33,9 +34,8 @@ public class FloatingIpsExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-floating-ips").request(MediaType.APPLICATION_JSON).post(Entity.json(body));
-			return null;
+		public FloatingIp execute(WebTarget target) {
+			return target.path("os-floating-ips").request(MediaType.APPLICATION_JSON).post(Entity.json(body)).readEntity(FloatingIp.class);
 		}
 
 	}
