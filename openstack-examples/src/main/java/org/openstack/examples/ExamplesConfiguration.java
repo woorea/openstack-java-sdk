@@ -10,4 +10,6 @@ public class ExamplesConfiguration {
 	
 	public static final String NOVA_ENDPOINT = "http://compute.stacksherpa.org/v2";
 	
+	public static final String CEILOMETER_ENDPOINT = "";
+	
 }

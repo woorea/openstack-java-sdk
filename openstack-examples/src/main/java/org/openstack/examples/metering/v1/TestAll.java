@@ -1,4 +1,4 @@
-package org.openstack.examples.metering;
+package org.openstack.examples.metering.v1;
 
 import org.openstack.ceilometer.CeilometerClient;
 import org.openstack.ceilometer.v1.api.ProjectList;
@@ -29,7 +29,7 @@ public class TestAll {
 		//access with unscoped token
 		Access access = keystone.execute(new Authenticate(authentication));
 		
-		CeilometerClient ceilometer = new CeilometerClient("", access.getToken().getId());
+		CeilometerClient ceilometer = new CeilometerClient(ExamplesConfiguration.CEILOMETER_ENDPOINT, access.getToken().getId());
 		ceilometer.execute(new UserList());
 		ceilometer.execute(new ProjectList());
 		//ceilometer.execute(new SourceList());
