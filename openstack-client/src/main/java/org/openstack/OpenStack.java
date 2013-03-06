@@ -1,12 +1,10 @@
 package org.openstack;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientFactory;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.ext.ContextResolver;
@@ -18,7 +16,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.SslConfig;
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 public class OpenStack {
@@ -54,12 +51,12 @@ public class OpenStack {
 		*/
 		
 		try {
-			CLIENT = ClientFactory.newClient();
+			CLIENT = ClientBuilder.newClient();
 			
 			SSLContext context = null;
             context = SSLContext.getInstance("SSL");
             context.init(null, null, null);
-	        CLIENT.setProperty(ClientProperties.SSL_CONFIG, new SslConfig(context));
+	        CLIENT.property(ClientProperties.SSL_CONFIG, new SslConfig(context));
 			
 			DEFAULT_MAPPER = new ObjectMapper();
 			
