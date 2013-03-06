@@ -52,6 +52,7 @@ public class TestAll {
 		
 		for(Meter m : meters) {
 			System.out.println(m);
+			
 //			List<Sample> samples = ceilometer.execute(new MeterShow().name(m.getName()));
 //			for(Sample s : samples) {
 //				System.out.println("\t" + s);
