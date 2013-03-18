@@ -2,6 +2,7 @@ package org.openstack.keystone.model;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("user")
@@ -10,6 +11,9 @@ public class User implements Serializable {
 	private String id;
 	
 	private String username;
+	
+	@JsonProperty("OS_KSADM_password")
+	private String password;
 	
 	private String tenantId;
 	
@@ -27,6 +31,13 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the username
 	 */
 	public String getUsername() {
@@ -38,6 +49,20 @@ public class User implements Serializable {
 	 */
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	/**
@@ -101,9 +126,9 @@ public class User implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", tenantId="
-				+ tenantId + ", name=" + name + ", email=" + email
-				+ ", enabled=" + enabled + "]";
+		return "User [id=" + id + ", username=" + username + ", password="
+				+ password + ", tenantId=" + tenantId + ", name=" + name
+				+ ", email=" + email + ", enabled=" + enabled + "]";
 	}
 	
 }

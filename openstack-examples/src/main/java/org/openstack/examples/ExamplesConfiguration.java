@@ -2,7 +2,7 @@ package org.openstack.examples;
 
 public class ExamplesConfiguration {
 
-	public static final String KEYSTONE_AUTH_URL = "";
+	public static final String KEYSTONE_AUTH_URL = "http://keystone/v2.0";
 	
 	public static final String KEYSTONE_USERNAME = "admin";
 	

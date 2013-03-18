@@ -92,7 +92,7 @@ public class SecurityGroupsExtension {
 
 		@Override
 		public Void execute(WebTarget target) {
-			target.path("os-security-groups").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
+			target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
 		
