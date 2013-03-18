@@ -10,6 +10,10 @@ public class Role implements Serializable {
 	private String id;
 	
 	private String name;
+	
+	private String description;
+	
+	private String enabled;
 
 	/**
 	 * @return the id
@@ -32,6 +36,32 @@ public class Role implements Serializable {
 		this.name = name;
 	}
 
-	
-	
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the enabled
+	 */
+	public String getEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * @param enabled the enabled to set
+	 */
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+
 }
