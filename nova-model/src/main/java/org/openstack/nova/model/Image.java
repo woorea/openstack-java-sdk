@@ -28,7 +28,7 @@ public class Image implements Serializable {
 	private Calendar updated;
 	
 	@JsonProperty("OS-EXT-IMG-SIZE:size")
-	private Integer size;
+	private Long size;
 	
 	private Map<String, String> metadata;
 		
@@ -156,7 +156,7 @@ public class Image implements Serializable {
 	/**
 	 * @return the size
 	 */
-	public Integer getSize() {
+	public Long getSize() {
 		return size;
 	}
 
