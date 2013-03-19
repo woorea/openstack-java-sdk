@@ -23,7 +23,7 @@ public class Image implements Serializable {
 	@JsonProperty("container_format")
 	private String containerFormat;
 	
-	private Integer size;
+	private Long size;
 	
 	private String checksum;
 	
@@ -130,14 +130,14 @@ public class Image implements Serializable {
 	/**
 	 * @return the size
 	 */
-	public Integer getSize() {
+	public Long getSize() {
 		return size;
 	}
 
 	/**
 	 * @param size the size to set
 	 */
-	public void setSize(Integer size) {
+	public void setSize(Long size) {
 		this.size = size;
 	}
 
