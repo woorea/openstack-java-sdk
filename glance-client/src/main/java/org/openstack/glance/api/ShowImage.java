@@ -27,7 +27,7 @@ public class ShowImage implements GlanceCommand<Image> {
 		image.setName(response.getHeaderString("X-Image-Meta-Name"));
 		image.setDiskFormat(response.getHeaderString("X-Image-Meta-Disk_format"));
 		image.setContainerFormat(response.getHeaderString("X-Image-Meta-Container_format"));
-		image.setSize(asInteger(response.getHeaderString("X-Image-Meta-Size")));
+		image.setSize(asLong(response.getHeaderString("X-Image-Meta-Size")));
 		image.setChecksum(response.getHeaderString("X-Image-Meta-Checksum"));
 		image.setCreatedAt(asCalendar(response.getHeaderString("X-Image-Meta-Created_at")));
 		image.setUpdatedAt(asCalendar(response.getHeaderString("X-Image-Meta-Updated_at")));
@@ -48,7 +48,7 @@ public class ShowImage implements GlanceCommand<Image> {
 	}
 	
 	private Calendar asCalendar(String calendarString) {
-		return null;
+		return Calendar.getInstance();
 	}
 	
 	private Integer asInteger(String integerString) {
@@ -63,6 +63,13 @@ public class ShowImage implements GlanceCommand<Image> {
 			return Boolean.parseBoolean(booleanString);
 		}
 		return Boolean.FALSE;
+	}
+	
+	private Long asLong(String longString) {
+		if(longString != null) {
+			return Long.parseLong(longString);
+		}
+		return 0L;
 	}
 	
 }
