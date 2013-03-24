@@ -1,13 +1,12 @@
 package org.openstack.nova.api.extensions;
 
 import java.util.Map;
+import java.util.UUID;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
-import org.openstack.nova.model.Metadata;
+import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.Volume;
 import org.openstack.nova.model.VolumeAttachment;
 import org.openstack.nova.model.VolumeForCreate;
@@ -28,9 +27,11 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Volumes execute(WebTarget target) {
-			String path = detail ? "os-volumes/detail" : "os-volumes";
-			return target.path(path).request(MediaType.APPLICATION_JSON).get(Volumes.class);
+		public Volumes execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path(detail ? "/os-volumes/detail" : "/os-volumes");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Volumes.class);
 		}
 
 	}
@@ -45,8 +46,9 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Volume execute(WebTarget target) {
-			return target.path("os-volumes").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeForCreate), Volume.class);
+		public Volume execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//return target.path("os-volumes").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeForCreate), Volume.class);
+			return null;
 		}
 		
 	}
@@ -60,8 +62,9 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Volume execute(WebTarget target) {
-			return target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).get(Volume.class);
+		public Volume execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//return target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).get(Volume.class);
+			return null;
 		}
 		
 	}
@@ -76,9 +79,10 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Map<String, String> execute(WebTarget target) {
-			Metadata metadata = target.path("os-volumes").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
-			return metadata.getMetadata();
+		public Map<String, String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+//			Metadata metadata = target.path("os-volumes").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
+//			return metadata.getMetadata();
+			return null;
 		}
 		
 	}
@@ -98,8 +102,8 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+//			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
 			return null;
 		}
 
@@ -117,8 +121,8 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+//			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
 
@@ -133,8 +137,8 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+//			target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
 		

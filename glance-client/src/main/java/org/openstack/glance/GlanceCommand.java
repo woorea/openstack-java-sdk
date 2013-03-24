@@ -1,9 +1,10 @@
 package org.openstack.glance;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
 public interface GlanceCommand<R> {
 
-	R execute(WebTarget endpoint);
+	R execute(OpenStackClientConnector connector, OpenStackRequest request);
 	
 }

@@ -1,22 +1,20 @@
 package org.openstack.glance;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
-import org.openstack.OpenStack;
-import org.openstack.common.client.AbstractOpenStackClient;
-
-public class GlanceClient extends AbstractOpenStackClient {
+public class GlanceClient extends OpenStackClient {
 	
-	public GlanceClient(String endpointURL, String token) {
-		super(endpointURL, token);
+	public GlanceClient(String endpoint, OpenStackClientConnector connector) {
+		super(endpoint, connector);
 	}
 
 	public <R> R execute(GlanceCommand<R> command) {
-		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
-		if(token != null) {
-			endpoint.register(tokenFilter);
-		}
-		return command.execute(endpoint);
+		OpenStackRequest request = new OpenStackRequest();
+		request.endpoint(endpoint);
+		request.header("X-Auth-Token", properties.getProperty("os.token"));
+		return command.execute(connector, request);
 	}
-
+	
 }

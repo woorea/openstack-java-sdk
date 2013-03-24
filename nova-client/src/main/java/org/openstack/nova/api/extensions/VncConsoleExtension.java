@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.GetVncConsole;
 import org.openstack.nova.model.ServerAction.VncConsole;
@@ -22,8 +20,12 @@ public class VncConsoleExtension {
 		}
 
 		@Override
-		public VncConsole execute(WebTarget target) {
-			return target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action), VncConsole.class);
+		public VncConsole execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    return connector.execute(request, VncConsole.class);
 		}
 
 	}

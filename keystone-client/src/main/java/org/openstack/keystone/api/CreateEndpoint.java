@@ -1,10 +1,9 @@
 package org.openstack.keystone.api;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
+import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Endpoint;
 
 public class CreateEndpoint implements KeystoneCommand<Endpoint> {
@@ -16,8 +15,13 @@ public class CreateEndpoint implements KeystoneCommand<Endpoint> {
 	}
 
 	@Override
-	public Endpoint execute(WebTarget target) {
-		return target.path("endpoints").request(MediaType.APPLICATION_JSON).post(Entity.json(endpointForCreate), Endpoint.class);
+	public Endpoint execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("POST");
+		request.path("/endpoints");
+		request.json(endpointForCreate);
+		request.header("Accept", "application/json");
+		return connector.execute(request, Endpoint.class);
+		//return target.path("endpoints").request(MediaType.APPLICATION_JSON).post(Entity.json(endpointForCreate), Endpoint.class);
 	}
 	
 }

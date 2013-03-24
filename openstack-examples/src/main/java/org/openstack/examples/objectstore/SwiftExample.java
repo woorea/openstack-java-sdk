@@ -38,7 +38,7 @@ public class SwiftExample {
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		
 		//use the token in the following requests
-		keystone.setToken(access.getToken().getId());
+		keystone.token(access.getToken().getId());
 		
 		Tenants tenants = keystone.execute(new ListTenants());
 		
@@ -47,7 +47,8 @@ public class SwiftExample {
 			
 			access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantId(tenants.getList().get(0).getId()));
 			
-			SwiftClient swiftClient = new SwiftClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"), access.getToken().getId());
+			SwiftClient swiftClient = new SwiftClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"));
+			swiftClient.token(access.getToken().getId());
 		
 			//swiftClient.execute(new DeleteContainer("navidad2"));
 			

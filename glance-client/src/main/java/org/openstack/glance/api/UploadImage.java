@@ -1,10 +1,7 @@
 package org.openstack.glance.api;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
 import org.openstack.glance.model.ImageForUpload;
@@ -18,7 +15,8 @@ public class UploadImage implements GlanceCommand<Image>{
 	}
 
 	@Override
-	public Image execute(WebTarget target) {
+	public Image execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		/*
 		Invocation.Builder invocationBuilder = target.path("images").request(MediaType.APPLICATION_JSON);
 		if(imageForUpload.getName() != null) {
 			invocationBuilder = invocationBuilder.header("x-image-meta-name", imageForUpload.getName());
@@ -52,6 +50,8 @@ public class UploadImage implements GlanceCommand<Image>{
 			imageForUpload.getProperties().put("x-image-meta-property-" + key, imageForUpload.getProperties().get(key));
 		}
 		return invocationBuilder.post(Entity.entity(imageForUpload.getInputStream(), MediaType.APPLICATION_OCTET_STREAM), Image.class);
+		*/
+		return null;
 	}
 
 }

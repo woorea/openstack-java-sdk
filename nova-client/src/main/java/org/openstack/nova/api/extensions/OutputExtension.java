@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.ConsoleOutput;
 import org.openstack.nova.model.ServerAction.GetConsoleOutput;
@@ -22,8 +20,13 @@ public class OutputExtension {
 		}
 
 		@Override
-		public ConsoleOutput execute(WebTarget target) {
-			return target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action), ConsoleOutput.class);
+		public ConsoleOutput execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request);
+			return null;
 		}
 
 	}

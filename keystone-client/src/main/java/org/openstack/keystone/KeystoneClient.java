@@ -1,19 +1,26 @@
 package org.openstack.keystone;
 
-import org.openstack.common.client.AbstractOpenStackClient;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
-public class KeystoneClient extends AbstractOpenStackClient {
+public class KeystoneClient extends OpenStackClient {
 	
-	public KeystoneClient(String endpointURL, String token) {
-		super(endpointURL, token);
+	public KeystoneClient(String endpoint) {
+		super(endpoint, null);
 	}
 	
-	public KeystoneClient(String endpointURL) {
-		super(endpointURL, null);
+	public KeystoneClient(String endpoint, OpenStackClientConnector connector) {
+		super(endpoint, connector);
 	}
 
 	public <R> R execute(KeystoneCommand<R> command) {
-		return command.execute(create(endpointURL));
+		OpenStackRequest request = new OpenStackRequest();
+		request.endpoint(endpoint);
+		if(token != null) {
+			request.header("X-Auth-Token", token);
+		}
+		return command.execute(connector, request);
 	}
-
+	
 }

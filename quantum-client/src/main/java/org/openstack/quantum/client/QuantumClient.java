@@ -1,21 +1,24 @@
 package org.openstack.quantum.client;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
-import org.openstack.OpenStack;
-import org.openstack.common.client.AbstractOpenStackClient;
-
-public class QuantumClient extends AbstractOpenStackClient {
-	public QuantumClient(String endpointURL, String token) {
-		super(endpointURL, token);
+public class QuantumClient extends OpenStackClient {
+	
+	public QuantumClient(String endpoint, OpenStackClientConnector connector) {
+		super(endpoint, connector);
+	}
+	
+	public QuantumClient(String endpoint) {
+		this(endpoint, null);
 	}
 
 	public <R> R execute(QuantumCommand<R> command) {
-		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
-		if(token != null) {
-			endpoint.register(tokenFilter);
-		}
-		return command.execute(endpoint);
+		OpenStackRequest request = new OpenStackRequest();
+		request.endpoint(endpoint);
+		request.header("X-Auth-Token", properties.getProperty("os.token"));
+		return command.execute(connector, request);
 	}
-
+	
 }

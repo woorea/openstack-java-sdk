@@ -30,7 +30,7 @@ public class NovaCreateServer {
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		
 		//use the token in the following requests
-		keystone.setToken(access.getToken().getId());
+		keystone.token(access.getToken().getId());
 		
 		Tenants tenants = keystone.execute(new ListTenants());
 		
@@ -41,7 +41,7 @@ public class NovaCreateServer {
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()), access.getToken().getId());
-			novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
+			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			//create a new keypair
 			//KeyPair keyPair = novaClient.execute(KeyPairsExtension.createKeyPair("mykeypair"));
 			//System.out.println(keyPair.getPrivateKey());

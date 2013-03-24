@@ -1,8 +1,7 @@
 package org.openstack.quantum.api.networks;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.quantum.client.QuantumCommand;
 
 public class DeleteNetwork implements QuantumCommand<Void> {
@@ -13,8 +12,8 @@ public class DeleteNetwork implements QuantumCommand<Void> {
 		this.id = netId;
 	}
 
-	public Void execute(WebTarget target) {
-		target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).delete();
+	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		//target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}
 	

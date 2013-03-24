@@ -2,10 +2,8 @@ package org.openstack.nova.api.extensions;
 
 import java.util.Map;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.HostAggregate;
 import org.openstack.nova.model.HostAggregates;
@@ -15,8 +13,11 @@ public class AggregatesExtension {
 	public class ListAggregates implements NovaCommand<HostAggregates>{
 
 		@Override
-		public HostAggregates execute(WebTarget target) {
-			return target.path("os-aggregates").request(MediaType.APPLICATION_JSON).get(HostAggregates.class);
+		public HostAggregates execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-aggregates");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, HostAggregates.class);			
 		}
 
 	}
@@ -30,8 +31,11 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public HostAggregate execute(WebTarget target) {
-			return target.path("os-aggregates").path(id).request(MediaType.APPLICATION_JSON).get(HostAggregate.class);
+		public HostAggregate execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-aggregates/").path(id);
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, HostAggregate.class);
 		}
 		
 	}
@@ -49,8 +53,12 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-aggregates").path(id).request(MediaType.APPLICATION_JSON).post(Entity.json("{\"set_metadata\" : }"));
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-aggregates/").path(id);
+		    request.header("Accept", "application/json");
+		    request.json("{\"set_metadata\" : }");
+		    connector.execute(request, HostAggregate.class);
 			return null;
 		}
 
@@ -65,8 +73,11 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-aggregates").path(id).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("DELETE");
+		    request.path("/os-aggregates/").path(id);
+		    request.header("Accept", "application/json");
+		    connector.execute(request);
 			return null;
 		}
 		
@@ -86,8 +97,8 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-aggregates").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"add_host\" : }"));
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//target.path("os-aggregates").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"add_host\" : }"));
 			return null;
 		}
 
@@ -106,8 +117,8 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-aggregates").path("aggregate").path("os-volume-attachments").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"remove_host\" : }"));
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//target.path("os-aggregates").path("aggregate").path("os-volume-attachments").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"remove_host\" : }"));
 			return null;
 		}
 

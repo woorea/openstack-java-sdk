@@ -1,4 +1,4 @@
-package org.openstack;
+package org.openstack.connector;
 
 import java.io.IOException;
 

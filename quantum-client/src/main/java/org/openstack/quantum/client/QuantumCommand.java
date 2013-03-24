@@ -1,9 +1,10 @@
 package org.openstack.quantum.client;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
 public interface QuantumCommand<R> {
 	
-	R execute(WebTarget target);
+	R execute(OpenStackClientConnector connector, OpenStackRequest request);
 
 }

@@ -1,8 +1,7 @@
 package org.openstack.glance.api;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Images;
 
@@ -19,9 +18,11 @@ public class ListImages implements GlanceCommand<Images> {
 	}
 
 	@Override
-	public Images execute(WebTarget target) {
-		String path = detail ? "images/detail" : "images";
-		return target.path(path).request(MediaType.APPLICATION_JSON).get(Images.class);
+	public Images execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("DELETE");
+	    request.path(detail ? "/images/detail" : "images");
+	    request.header("Accept", "application/json");
+	    return connector.execute(request, Images.class);
 	}
 
 }

@@ -34,7 +34,7 @@ public class NovaListServers {
 		Access access = keystone.execute(new Authenticate(authentication));
 		
 		//use the token in the following requests
-		keystone.setToken(access.getToken().getId());
+		keystone.token(access.getToken().getId());
 		
 		Tenants tenants = keystone.execute(new ListTenants());
 		
@@ -51,7 +51,7 @@ public class NovaListServers {
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()), access.getToken().getId());
-			novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
+			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			
 			Servers servers = novaClient.execute(ServersCore.listServers(true));
 			for(Server server : servers) {

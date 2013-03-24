@@ -1,8 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Certificate;
 import org.openstack.nova.model.KeyPairs;
@@ -18,18 +17,24 @@ public class CredentialsExtension {
 		}
 
 		@Override
-		public Certificate execute(WebTarget target) {
-			target.path("os-certificates").path(id).request(MediaType.APPLICATION_JSON).method("POST");
-			return null;
+		public Certificate execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-certificates/").path(id);
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Certificate.class);
 		}
 		
 	}
 	
-	public static class ShowCertificate implements NovaCommand<KeyPairs>{
+	public static class ShowCertificate implements NovaCommand<Void>{
 
 		@Override
-		public KeyPairs execute(WebTarget target) {
-			return target.path("os-keypairs").request(MediaType.APPLICATION_JSON).get(KeyPairs.class);
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-certificates");
+		    request.header("Accept", "application/json");
+		    connector.execute(request, Certificate.class);
+			return null;
 		}
 
 	}

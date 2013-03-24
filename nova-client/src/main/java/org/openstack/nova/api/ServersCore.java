@@ -2,13 +2,12 @@ package org.openstack.nova.api;
 
 import java.util.Map;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Metadata;
 import org.openstack.nova.model.Server;
+import org.openstack.nova.model.Server.Addresses;
 import org.openstack.nova.model.ServerAction.ChangePassword;
 import org.openstack.nova.model.ServerAction.ConfirmResize;
 import org.openstack.nova.model.ServerAction.CreateImage;
@@ -34,9 +33,11 @@ public class ServersCore {
 		}
 
 		@Override
-		public Servers execute(WebTarget target) {
-			String path = detail ? "servers/detail" : "servers";
-			return target.path(path).request(MediaType.APPLICATION_JSON).get(Servers.class);
+		public Servers execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path(detail ? "servers/detail" : "/servers");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Servers.class);
 		}
 
 	}
@@ -50,8 +51,12 @@ public class ServersCore {
 		}
 
 		@Override
-		public Server execute(WebTarget target) {
-			return target.path("servers").request(MediaType.APPLICATION_JSON).post(Entity.json(serverForCreate), Server.class);
+		public Server execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers");
+		    request.header("Accept", "application/json");
+		    request.json(serverForCreate);
+		    return connector.execute(request, Server.class);
 		}
 		
 	}
@@ -65,8 +70,11 @@ public class ServersCore {
 		}
 
 		@Override
-		public Server execute(WebTarget target) {
-			return target.path("servers").path(id).request(MediaType.APPLICATION_JSON).get(Server.class);
+		public Server execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/servers/").path(id);
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Server.class);
 		}
 		
 	}
@@ -80,9 +88,11 @@ public class ServersCore {
 		}
 
 		@Override
-		public Map<String, String> execute(WebTarget target) {
-			Metadata metadata = target.path("servers").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
-			return metadata.getMetadata();
+		public Map<String, String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/servers/").path(id).path("metadata");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Metadata.class).getMetadata();
 		}
 		
 	}
@@ -96,8 +106,11 @@ public class ServersCore {
 		}
 
 		@Override
-		public Server.Addresses execute(WebTarget target) {
-			return target.path("servers").path(id).path("ips").request(MediaType.APPLICATION_JSON).get(Server.Addresses.class);
+		public Server.Addresses execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/servers/").path(id).path("ips");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Addresses.class);
 		}
 		
 	}
@@ -106,15 +119,19 @@ public class ServersCore {
 	
 	public static class UpdateServer implements NovaCommand<Server> {
 
-		private ServerForCreate serverForCreate;
+		private Server server;
 		
-		public UpdateServer(ServerForCreate serverForCreate) {
-			this.serverForCreate = serverForCreate;
+		public UpdateServer(Server server) {
+			this.server = server;
 		}
 
 		@Override
-		public Server execute(WebTarget target) {
-			return target.path("servers").request(MediaType.APPLICATION_JSON).post(Entity.json(serverForCreate), Server.class);
+		public Server execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("PUT");
+		    request.path("/servers/").path(server.getId());
+		    request.header("Accept", "application/json");
+		    request.json(server);
+		    return connector.execute(request, Server.class);
 		}
 		
 	}
@@ -129,9 +146,11 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("DELETE");
+		    request.path("/servers/").path(id);
+		    request.header("Accept", "application/json");
+		    return null;
 		}
 		
 	}
@@ -148,9 +167,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}
@@ -167,9 +190,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}
@@ -186,9 +213,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}
@@ -205,9 +236,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}
@@ -223,9 +258,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(ACTION));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(ACTION);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}
@@ -241,9 +280,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(ACTION));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(ACTION);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}
@@ -260,9 +303,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request, Server.class);
+		    return null;
 		}
 
 	}

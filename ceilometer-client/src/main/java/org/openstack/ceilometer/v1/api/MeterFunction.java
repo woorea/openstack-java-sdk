@@ -1,10 +1,12 @@
 package org.openstack.ceilometer.v1.api;
 
+import java.awt.PageAttributes.MediaType;
 import java.math.BigDecimal;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.xml.ws.Response;
+
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
 public class MeterFunction extends MeterCommand<BigDecimal> {
 	
@@ -37,16 +39,16 @@ public class MeterFunction extends MeterCommand<BigDecimal> {
 	}
 
 	@Override
-	public BigDecimal execute(WebTarget target) {
+	public BigDecimal execute(OpenStackClientConnector connector, OpenStackRequest request) {
 		if(source != null) {
-			target = target.path("sources").path(source);
+			request.path("sources").path(source);
 		} else if(project != null) {
-			target = target.path("projects").path(project);
+			request.path("projects").path(project);
 		} else if(user != null) {
-			target = target.path("users").path(user);
+			request.path("users").path(user);
 		}
-		target = target.path("v1/meters").path(id).path(function);
-		Response response = target.request(MediaType.APPLICATION_JSON).get(Response.class);
+		request.path("v1/meters").path(id).path(function);
+		//Response response = target.request(MediaType.APPLICATION_JSON).get(Response.class);
 		return null;
 	}
 

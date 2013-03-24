@@ -2,11 +2,9 @@ package org.openstack.glance.api;
 
 import java.util.Collection;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.ImageMember;
 
@@ -22,9 +20,13 @@ public class ReplaceImageMemberships implements GlanceCommand<Void>{
 	}
 	
 	@Override
-	public Void execute(WebTarget endpoint) {
-		endpoint.path("images").path(id).path("members").request(MediaType.APPLICATION_JSON).put(Entity.json(new Memberships(imageMembers)));
-		return null;
+	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("PUT");
+	    request.path("/images/").path(id).path("/members");
+	    request.header("Accept", "application/json");
+	    request.json(new Memberships(imageMembers));
+	    connector.execute(request);
+	    return null;
 	}
 	
 	private static class Memberships {

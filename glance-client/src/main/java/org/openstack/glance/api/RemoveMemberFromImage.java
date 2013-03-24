@@ -1,8 +1,7 @@
 package org.openstack.glance.api;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 
 public class RemoveMemberFromImage implements GlanceCommand<Void>{
@@ -17,9 +16,12 @@ public class RemoveMemberFromImage implements GlanceCommand<Void>{
 	}
 	
 	@Override
-	public Void execute(WebTarget endpoint) {
-		endpoint.path("images").path(id).path("members").path(tenantId).request(MediaType.APPLICATION_JSON).delete();
-		return null;
+	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("DELETE");
+	    request.path("/images/").path(id).path("/members/").path(tenantId);
+	    request.header("Accept", "application/json");
+	    connector.execute(request);
+	    return null;
 	}
 
 }

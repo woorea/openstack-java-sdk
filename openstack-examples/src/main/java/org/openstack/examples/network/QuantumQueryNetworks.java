@@ -20,7 +20,7 @@ public class QuantumQueryNetworks {
 		// access with unscoped token
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		// use the token in the following requests
-		keystone.setToken(access.getToken().getId());
+		keystone.token(access.getToken().getId());
 
 		Tenants tenants = keystone.execute(new ListTenants());
 		// try to exchange token using the first tenant
@@ -29,9 +29,8 @@ public class QuantumQueryNetworks {
 			access = keystone.execute(Authenticate.withToken(access.getToken().getId())
 					.withTenantId(tenants.getList().get(0).getId()));
 
-			QuantumClient quantumClient = new QuantumClient(KeystoneUtils
-					.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"), 
-					access.getToken().getId());
+			QuantumClient quantumClient = new QuantumClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"));
+			quantumClient.token(access.getToken().getId());
 
 			Network networkQuery = new Network();
 			networkQuery.setName("benn.cs");

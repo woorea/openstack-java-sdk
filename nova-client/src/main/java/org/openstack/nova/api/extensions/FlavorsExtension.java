@@ -2,10 +2,8 @@ package org.openstack.nova.api.extensions;
 
 import java.util.UUID;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.FlavorForCreate;
@@ -21,11 +19,15 @@ public class FlavorsExtension {
 		}
 
 		@Override
-		public Flavor execute(WebTarget target) {
+		public Flavor execute(OpenStackClientConnector connector, OpenStackRequest request) {
 			if(flavorForCreate.getId() == null) {
 				flavorForCreate.setId(UUID.randomUUID().toString());
 			}
-			return target.path("flavors").request(MediaType.APPLICATION_JSON).post(Entity.json(flavorForCreate), Flavor.class);
+			request.method("POST");
+		    request.path("/flavors/");
+		    request.header("Accept", "application/json");
+		    request.json(flavorForCreate);
+		    return connector.execute(request, Flavor.class);
 		}
 		
 	}
@@ -39,8 +41,11 @@ public class FlavorsExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("flavors").path(id).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("DELETE");
+		    request.path("/flavors/").path(id);
+		    request.header("Accept", "application/json");
+		    connector.execute(request);
 			return null;
 		}
 		

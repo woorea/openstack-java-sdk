@@ -1,8 +1,7 @@
 package org.openstack.keystone.api;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 
 public class DeleteService implements KeystoneCommand<Void> {
@@ -14,8 +13,8 @@ public class DeleteService implements KeystoneCommand<Void> {
 	}
 
 	@Override
-	public Void execute(WebTarget target) {
-		target.path("OS-KSADM/services").path(id).request(MediaType.APPLICATION_JSON).delete();
+	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		//target.path("OS-KSADM/services").path(id).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}
 	

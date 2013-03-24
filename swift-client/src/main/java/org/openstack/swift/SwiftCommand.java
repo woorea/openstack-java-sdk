@@ -1,9 +1,10 @@
 package org.openstack.swift;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
 public interface SwiftCommand<R> {
 
-	R execute(WebTarget endpoint);
+	R execute(OpenStackClientConnector connector, OpenStackRequest request);
 	
 }

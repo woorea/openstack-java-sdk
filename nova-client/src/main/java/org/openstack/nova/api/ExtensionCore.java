@@ -15,11 +15,10 @@
  */
 package org.openstack.nova.api;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Extensions;
-import org.openstack.nova.model.Images;
 
 /**
  *
@@ -40,10 +39,11 @@ public class ExtensionCore {
     }
 
     @Override
-    public Extensions execute(WebTarget target) {
-      String path = detail ? "extensions/detail" : "extensions";
-      return target.path(path).request(MediaType.APPLICATION_JSON).get(Extensions.class);
-      //throw new UnsupportedOperationException("Not supported yet.");
+    public Extensions execute(OpenStackClientConnector connector, OpenStackRequest request) {
+      request.method("GET");
+      request.path(detail ? "extensions/detail" : "extensions");
+      request.header("Accept", "application/json");
+      return connector.execute(request, Extensions.class);
     }
   }
 

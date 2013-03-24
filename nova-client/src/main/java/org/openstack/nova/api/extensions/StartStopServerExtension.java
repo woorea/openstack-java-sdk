@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.Start;
 import org.openstack.nova.model.ServerAction.Stop;
@@ -22,8 +20,12 @@ public class StartStopServerExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request);
 			return null;
 		}
 
@@ -41,8 +43,12 @@ public class StartStopServerExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("servers").path(id).path("action").request(MediaType.APPLICATION_JSON).post(Entity.json(action));
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/servers/").path(id).path("/action");
+		    request.header("Accept", "application/json");
+		    request.json(action);
+		    connector.execute(request);
 			return null;
 		}
 

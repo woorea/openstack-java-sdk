@@ -1,12 +1,9 @@
 package org.openstack.glance.api;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
-import org.openstack.glance.model.ImageMember;
 
 public class UpdateImage implements GlanceCommand<Image>{
 
@@ -17,8 +14,13 @@ public class UpdateImage implements GlanceCommand<Image>{
 	}
 	
 	@Override
-	public Image execute(WebTarget endpoint) {
-		return endpoint.path("images").path(image.getId()).request(MediaType.APPLICATION_JSON).put(Entity.json(image), Image.class);
+	public Image execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("PUT");
+	    request.path("/images/").path(image.getId());
+	    request.header("Accept", "application/json");
+	    request.json(image);
+	    connector.execute(request, Image.class);
+	    return null;
 	}
 
 }

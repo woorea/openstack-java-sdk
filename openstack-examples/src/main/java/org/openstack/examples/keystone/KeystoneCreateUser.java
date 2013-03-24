@@ -29,8 +29,9 @@ public class KeystoneCreateUser {
 		user.setName("Luis");
 		user.setEnabled(Boolean.TRUE);
 
-		keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL, access.getToken().getId());
-		keystone.enableLogging(Logger.getLogger("keystone"), 10000);
+		keystone = new KeystoneClient("http://keystone.x.org/v2.0");
+		keystone.token(access.getToken().getId());
+		//keystone.enableLogging(Logger.getLogger("keystone"), 10000);
 		user = keystone.execute(new CreateUser(user));
 		System.out.println(user);
 		keystone.execute(new DeleteUser(user.getId()));

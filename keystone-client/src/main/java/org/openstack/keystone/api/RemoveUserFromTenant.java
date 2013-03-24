@@ -1,8 +1,7 @@
 package org.openstack.keystone.api;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 
 public class RemoveUserFromTenant implements KeystoneCommand<Void> {
@@ -18,8 +17,11 @@ public class RemoveUserFromTenant implements KeystoneCommand<Void> {
 	}
 	
 	@Override
-	public Void execute(WebTarget target) {
-		target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).delete();
+	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("DELETE");
+		request.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId);
+		request.header("Accept", "application/json");
+		//target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}
 

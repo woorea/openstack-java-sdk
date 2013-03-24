@@ -2,10 +2,8 @@ package org.openstack.glance.api;
 
 import java.util.Calendar;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
 
@@ -18,8 +16,8 @@ public class ShowImage implements GlanceCommand<Image> {
 	}
 
 	@Override
-	public Image execute(WebTarget target) {
-		//
+	public Image execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		/*
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_JSON).head();
 		Image image = new Image();
 		image.setId(response.getHeaderString("X-Image-Meta-Id"));
@@ -45,6 +43,8 @@ public class ShowImage implements GlanceCommand<Image> {
 			}
 		}
 		return image;
+		*/
+		return null;
 	}
 	
 	private Calendar asCalendar(String calendarString) {

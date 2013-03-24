@@ -1,9 +1,10 @@
 package org.openstack.nova;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
 public interface NovaCommand<R> {
 
-	R execute(WebTarget endpoint);
+	R execute(OpenStackClientConnector connector, OpenStackRequest request);
 	
 }

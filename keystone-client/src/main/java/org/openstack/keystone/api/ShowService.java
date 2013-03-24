@@ -1,8 +1,7 @@
 package org.openstack.keystone.api;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Service;
 
@@ -15,8 +14,12 @@ public class ShowService implements KeystoneCommand<Service>{
 	}
 
 	@Override
-	public Service execute(WebTarget target) {
-		return target.path("OS-KSADM/services").path(id).request(MediaType.APPLICATION_JSON).get(Service.class);
+	public Service execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		request.method("GET");
+		request.path("/OS-KSADM/services").path(id);
+		request.header("Accept", "application/json");
+		return connector.execute(request, Service.class);
+		//return target.path("OS-KSADM/services").path(id).request(MediaType.APPLICATION_JSON).get(Service.class);
 	}
 
 }

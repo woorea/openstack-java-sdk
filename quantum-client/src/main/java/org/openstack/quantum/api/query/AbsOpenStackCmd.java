@@ -1,10 +1,8 @@
-package org.openstack.common.command;
+package org.openstack.quantum.api.query;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.ws.rs.client.WebTarget;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -67,6 +65,7 @@ public class AbsOpenStackCmd<T> {
 		return resultMap;
 	}
 
+	/*
 	public WebTarget queryParam(WebTarget target) {
 		Map<String, String> map = getObjectParamMap(this.query);
 		for (String fieldName : map.keySet()) {
@@ -74,5 +73,6 @@ public class AbsOpenStackCmd<T> {
 		}
 		return target;
 	}
+	*/
 
 }

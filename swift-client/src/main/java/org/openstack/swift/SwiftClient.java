@@ -1,22 +1,24 @@
 package org.openstack.swift;
 
-import javax.ws.rs.client.WebTarget;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 
-import org.openstack.OpenStack;
-import org.openstack.common.client.AbstractOpenStackClient;
-
-public class SwiftClient extends AbstractOpenStackClient {
+public class SwiftClient extends OpenStackClient {
 	
-	public SwiftClient(String endpointURL, String token) {
-		super(endpointURL, token);
+	public SwiftClient(String endpoint, OpenStackClientConnector connector) {
+		super(endpoint, connector);
+	}
+	
+	public SwiftClient(String endpoint) {
+		super(endpoint, null);
 	}
 
 	public <R> R execute(SwiftCommand<R> command) {
-		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
-		if(token != null) {
-			endpoint.register(tokenFilter);
-		}
-		return command.execute(endpoint);
+		OpenStackRequest request = new OpenStackRequest();
+		request.endpoint(endpoint);
+		request.header("X-Auth-Token", properties.getProperty("os.token"));
+		return command.execute(connector, request);
 	}
-
+	
 }

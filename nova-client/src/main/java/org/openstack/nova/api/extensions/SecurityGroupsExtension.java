@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.SecurityGroup;
 import org.openstack.nova.model.SecurityGroupForCreate;
@@ -15,8 +13,11 @@ public class SecurityGroupsExtension {
 	public static class ListSecurityGroups implements NovaCommand<SecurityGroups>{
 
 		@Override
-		public SecurityGroups execute(WebTarget target) {
-			return target.path("os-security-groups").request(MediaType.APPLICATION_JSON).get(SecurityGroups.class);
+		public SecurityGroups execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-security-groups");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, SecurityGroups.class);
 		}
 
 	}
@@ -30,8 +31,9 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public SecurityGroup execute(WebTarget target) {
-			return target.path("os-security-groups").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupForCreate), SecurityGroup.class);
+		public SecurityGroup execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//return target.path("os-security-groups").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupForCreate), SecurityGroup.class);
+			return null;
 		}
 		
 	}
@@ -45,8 +47,11 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public SecurityGroup execute(WebTarget target) {
-			return target.path("os-security-groups").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).get(SecurityGroup.class);
+		public SecurityGroup execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-security-groups").path("id");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, SecurityGroup.class);
 		}
 		
 	}
@@ -60,8 +65,11 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-security-groups").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-security-groups").path(String.valueOf(id));
+		    request.header("Accept", "application/json");
+		    connector.execute(request);
 			return null;
 		}
 		
@@ -76,8 +84,9 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public SecurityGroup.Rule execute(WebTarget target) {
-			return target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate), SecurityGroup.Rule.class);
+		public SecurityGroup.Rule execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			return null;
+			//return target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate), SecurityGroup.Rule.class);
 		}
 		
 	}
@@ -91,8 +100,8 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
 		

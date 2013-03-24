@@ -1,8 +1,7 @@
 package org.openstack.quantum.api.networks;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Network;
 
@@ -14,8 +13,9 @@ public class ShowNetwork implements QuantumCommand<Network> {
 		this.id = id;
 	}
 	
-	public Network execute(WebTarget target) {
-		return target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).get(Network.class);
+	public Network execute(OpenStackClientConnector connector, OpenStackRequest request) {
+//		return target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).get(Network.class);
+		return null;
 	}
 
 }

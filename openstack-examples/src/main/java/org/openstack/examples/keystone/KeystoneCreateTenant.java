@@ -25,7 +25,8 @@ public class KeystoneCreateTenant {
 		tenant.setDescription("benn.cs");
 		tenant.setEnabled(true);
 		//Get the adminURL client and use the token got above
-		keystone = new KeystoneClient("http://keystone.x.org/v2.0", access.getToken().getId());
+		keystone = new KeystoneClient("http://keystone.x.org/v2.0");
+		keystone.token(access.getToken().getId());
 		tenant = keystone.execute(new CreateTenant(tenant));
 		System.out.println(tenant);
 		keystone.execute(new DeleteTenant(tenant.getId()));

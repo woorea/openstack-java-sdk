@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Network;
 import org.openstack.nova.model.Networks;
@@ -13,8 +11,11 @@ public class NetworksExtension {
 	public static class ListNetworks implements NovaCommand<Networks>{
 
 		@Override
-		public Networks execute(WebTarget target) {
-			return target.path("os-networks").request(MediaType.APPLICATION_JSON).get(Networks.class);
+		public Networks execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-networks");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Networks.class);
 		}
 
 	}
@@ -28,8 +29,12 @@ public class NetworksExtension {
 		}
 
 		@Override
-		public Network execute(WebTarget target) {
-			return target.path("os-networks").request(MediaType.APPLICATION_JSON).post(Entity.json(network), Network.class);
+		public Network execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-networks");
+		    request.header("Accept", "application/json");
+		    request.json(network);
+		    return connector.execute(request, Network.class);
 		}
 		
 	}
@@ -43,8 +48,11 @@ public class NetworksExtension {
 		}
 		
 		@Override
-		public Network execute(WebTarget target) {
-			return target.path("os-networks").path(id).request(MediaType.APPLICATION_JSON).get(Network.class);
+		public Network execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-networks/").path(id);
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Network.class);
 		}
 
 	}
@@ -59,9 +67,13 @@ public class NetworksExtension {
 		}
 		
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-networks").path(id).request(MediaType.APPLICATION_JSON).post(Entity.json("{\"action\":\"disassociate\"}"));
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-networks/").path(id);
+		    request.header("Accept", "application/json");
+		    request.json("{\"action\":\"disassociate\"}");
+		    connector.execute(request);
+		    return null;
 		}
 
 	}
@@ -75,9 +87,12 @@ public class NetworksExtension {
 		}
 		
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-networks").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("DELTE");
+		    request.path("/os-networks/").path(id);
+		    request.header("Accept", "application/json");
+		    connector.execute(request);
+		    return null;
 		}
 
 	}

@@ -1,9 +1,8 @@
 package org.openstack.quantum.api.subnets;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.common.command.AbsOpenStackCmd;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
+import org.openstack.quantum.api.query.AbsOpenStackCmd;
 import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Subnet;
 import org.openstack.quantum.model.Subnets;
@@ -14,11 +13,11 @@ public class QuerySubnets extends AbsOpenStackCmd<Subnet> implements QuantumComm
 		super(subnet);
 	}
 
-	public Subnets execute(WebTarget target)
-	{
-		target = target.path("v2.0").path("subnets");
-		target = queryParam(target);
-		return target.request(MediaType.APPLICATION_JSON).get(Subnets.class);
+	public Subnets execute(OpenStackClientConnector connector, OpenStackRequest request) {
+//		target = target.path("v2.0").path("subnets");
+//		target = queryParam(target);
+//		return target.request(MediaType.APPLICATION_JSON).get(Subnets.class);
+		return null;
 	}
 
 }

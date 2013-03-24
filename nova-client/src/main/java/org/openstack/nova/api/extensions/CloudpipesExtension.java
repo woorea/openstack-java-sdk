@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Cloudpipe;
 import org.openstack.nova.model.Cloudpipes;
@@ -13,8 +11,11 @@ public class CloudpipesExtension {
 	public static class ListCloudpipes implements NovaCommand<Cloudpipes>{
 
 		@Override
-		public Cloudpipes execute(WebTarget target) {
-			return target.path("os-cloudpipes").request(MediaType.APPLICATION_JSON).get(Cloudpipes.class);
+		public Cloudpipes execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-cloudpipes/");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Cloudpipes.class);
 		}
 
 	}
@@ -28,8 +29,12 @@ public class CloudpipesExtension {
 		}
 
 		@Override
-		public Cloudpipe execute(WebTarget target) {
-			return target.path("os-cloudpipes").request(MediaType.APPLICATION_JSON).post(Entity.json(cloudpipe), Cloudpipe.class);
+		public Cloudpipe execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-cloudpipes/");
+		    request.header("Accept", "application/json");
+		    request.json(cloudpipe);
+		    return connector.execute(request, Cloudpipe.class);
 		}
 		
 	}

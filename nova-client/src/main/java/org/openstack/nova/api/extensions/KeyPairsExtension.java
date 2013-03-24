@@ -1,9 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.KeyPair;
 import org.openstack.nova.model.KeyPairs;
@@ -19,8 +17,12 @@ public class KeyPairsExtension {
 		}
 
 		@Override
-		public KeyPair execute(WebTarget target) {
-			return target.path("os-keypairs").request(MediaType.APPLICATION_JSON).post(Entity.json(keyPairForCreate), KeyPair.class);
+		public KeyPair execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-keypairs");
+		    request.header("Accept", "application/json");
+		    request.json(keyPairForCreate);
+		    return connector.execute(request, KeyPair.class);
 		}
 		
 	}
@@ -34,9 +36,12 @@ public class KeyPairsExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-keypairs").path(name).request(MediaType.APPLICATION_JSON).delete();
-			return null;
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("DELETE");
+		    request.path("/os-keypairs").path(name);
+		    request.header("Accept", "application/json");
+		    connector.execute(request);
+		    return null;
 		}
 		
 	}
@@ -44,8 +49,11 @@ public class KeyPairsExtension {
 	public static class ListKeyPairs implements NovaCommand<KeyPairs>{
 
 		@Override
-		public KeyPairs execute(WebTarget target) {
-			return target.path("os-keypairs").request(MediaType.APPLICATION_JSON).get(KeyPairs.class);
+		public KeyPairs execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-keypairs");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, KeyPairs.class);
 		}
 
 	}

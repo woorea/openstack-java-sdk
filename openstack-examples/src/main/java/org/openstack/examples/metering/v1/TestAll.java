@@ -29,7 +29,8 @@ public class TestAll {
 		//access with unscoped token
 		Access access = keystone.execute(new Authenticate(authentication));
 		
-		CeilometerClient ceilometer = new CeilometerClient(ExamplesConfiguration.CEILOMETER_ENDPOINT, access.getToken().getId());
+		CeilometerClient ceilometer = new CeilometerClient(ExamplesConfiguration.CEILOMETER_ENDPOINT);
+		ceilometer.token(access.getToken().getId());
 		ceilometer.execute(new UserList());
 		ceilometer.execute(new ProjectList());
 		//ceilometer.execute(new SourceList());

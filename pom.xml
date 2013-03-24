@@ -22,6 +22,7 @@
 		<module>ceilometer-model</module>
 		<module>ceilometer-client</module>
 		<module>openstack-examples</module>
+		<module>openstack-client-connectors</module>
 	</modules>
 	<licenses>
 		<license>

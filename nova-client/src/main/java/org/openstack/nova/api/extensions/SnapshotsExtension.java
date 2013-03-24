@@ -2,10 +2,8 @@ package org.openstack.nova.api.extensions;
 
 import java.util.Map;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Metadata;
 import org.openstack.nova.model.Snapshot;
@@ -27,9 +25,11 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public Snapshots execute(WebTarget target) {
-			String path = detail ? "os-snapshots/detail" : "os-snapshots";
-			return target.path(path).request(MediaType.APPLICATION_JSON).get(Snapshots.class);
+		public Snapshots execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path(detail ? "/os-snapshots/detail" : "/os-snapshots");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Snapshots.class);
 		}
 
 	}
@@ -43,8 +43,12 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public Snapshot execute(WebTarget target) {
-			return target.path("os-snapshots").request(MediaType.APPLICATION_JSON).post(Entity.json(snapshotForCreate), Snapshot.class);
+		public Snapshot execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("POST");
+		    request.path("/os-snapshots");
+		    request.header("Accept", "application/json");
+		    request.json(snapshotForCreate);
+		    return connector.execute(request, Snapshot.class);
 		}
 		
 	}
@@ -58,9 +62,11 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public Map<String, String> execute(WebTarget target) {
-			Metadata metadata = target.path("os-snapshots").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
-			return metadata.getMetadata();
+		public Map<String, String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			request.method("GET");
+		    request.path("/os-snapshots/").path(id).path("metadata");
+		    request.header("Accept", "application/json");
+		    return connector.execute(request, Metadata.class).getMetadata();
 		}
 		
 	}
@@ -75,8 +81,8 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-snapshots").path(id).request(MediaType.APPLICATION_JSON).delete();
+		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+			//target.path("os-snapshots").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
 		

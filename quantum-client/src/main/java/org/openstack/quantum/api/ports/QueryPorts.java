@@ -1,9 +1,8 @@
 package org.openstack.quantum.api.ports;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.common.command.AbsOpenStackCmd;
+import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackRequest;
+import org.openstack.quantum.api.query.AbsOpenStackCmd;
 import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Port;
 import org.openstack.quantum.model.Ports;
@@ -14,11 +13,12 @@ public class QueryPorts extends AbsOpenStackCmd<Port> implements QuantumCommand<
 		super(port);
 	}
 
-	public Ports execute(WebTarget target)
+	public Ports execute(OpenStackClientConnector connector, OpenStackRequest request)
 	{
-		target = target.path("v2.0").path("ports");
-		target = queryParam(target);
-		return target.request(MediaType.APPLICATION_JSON).get(Ports.class);
+//		target = target.path("v2.0").path("ports");
+//		target = queryParam(target);
+//		return target.request(MediaType.APPLICATION_JSON).get(Ports.class);
+		return null;
 	}
 
 }
