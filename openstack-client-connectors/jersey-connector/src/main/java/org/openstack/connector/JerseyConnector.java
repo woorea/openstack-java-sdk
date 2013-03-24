@@ -3,9 +3,12 @@ package org.openstack.connector;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 
+import com.google.common.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
@@ -33,15 +36,14 @@ public class JerseyConnector implements OpenStackClientConnector {
 
 	@Override
 	public void execute(OpenStackRequest request) {
-		WebResource target = client.resource(request.endpoint()).path(request.path());
-		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
-			StringBuilder sb = new StringBuilder();
-			for(Object v : h.getValue()) {
-				sb.append(String.valueOf(v));
-			}
-			target.header(h.getKey(), sb);
-		}
+		execute(request, Response.class);
 		
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> T execute(OpenStackRequest request, TypeToken<T> typeToken) {
+		return (T) execute(request, typeToken.getClass());
 	}
 
 }

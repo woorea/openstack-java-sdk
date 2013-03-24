@@ -12,6 +12,8 @@ import javax.ws.rs.core.Response;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 
+import com.google.common.reflect.TypeToken;
+
 public class JaxRs20Connector implements OpenStackClientConnector {
 
 	protected Client client = OpenStack.CLIENT;
@@ -27,13 +29,24 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 			}
 			invocation.header(h.getKey(), sb);
 		}
-		return invocation.method(request.method(), Entity.json(request.entity()), responseType);
+		if(request.entity() != null) {
+			return invocation.method(request.method(), Entity.entity(request.entity().getEntity(),request.entity().getContentType()), responseType);
+		} else {
+			return invocation.method(request.method(), responseType);
+		}
+		
 	}
 
 	@Override
 	public void execute(OpenStackRequest request) {
 		execute(request, Response.class);
 		
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> T execute(OpenStackRequest request, TypeToken<T> typeToken) {
+		return (T) execute(request, typeToken.getClass());
 	}
 	
 }

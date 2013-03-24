@@ -14,7 +14,9 @@ public class DeleteService implements KeystoneCommand<Void> {
 
 	@Override
 	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		//target.path("OS-KSADM/services").path(id).request(MediaType.APPLICATION_JSON).delete();
+		request.method("DELETE");
+	    request.path("/OS-KSADM/services/").path(id);
+	    request.header("Accept", "application/json");
 		return null;
 	}
 	

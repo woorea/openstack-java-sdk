@@ -16,6 +16,23 @@ public class Tenant implements Serializable {
 	private String description;
 	
 	private Boolean enabled;
+	
+	public Tenant(String name, String description, Boolean enabled) {
+		this.name = name;
+		this.description = description;
+		this.enabled = enabled;
+	}
+	
+	public Tenant(String name, String description) {
+		this(name, description, Boolean.TRUE);
+	}
+	
+	public Tenant(String name) {
+		this(name, null);
+	}
+	
+	public Tenant() {
+	}
 
 	/**
 	 * @return the id

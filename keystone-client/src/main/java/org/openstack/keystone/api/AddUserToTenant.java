@@ -20,7 +20,7 @@ public class AddUserToTenant implements KeystoneCommand<Void> {
 	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
 		request.method("PUT");
 		request.path("/tenants").path(tenantId).path("/users").path(userId).path("/roles/OS-KSADM").path(roleId);
-		request.entity(null);
+		request.entity(null,null);
 		request.header("Accept", "application/json");
 		connector.execute(request);
 		return null;

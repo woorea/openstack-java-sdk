@@ -14,7 +14,9 @@ public class DeleteTenant implements KeystoneCommand<Void> {
 
 	@Override
 	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		//target.path("tenants").path(id).request(MediaType.APPLICATION_JSON).delete();
+		request.method("DELETE");
+	    request.path("/tenants/").path(id);
+	    request.header("Accept", "application/json");
 		return null;
 	}
 	

@@ -15,7 +15,7 @@ public class OpenStackRequest {
 	
 	private Map<String, List<Object>> headers = new HashMap<String, List<Object>>();
 	
-	private Object entity;
+	private Entity entity;
 
 	public String execute(String method, String path, Class<String> responseType) {
 		return null;
@@ -57,12 +57,12 @@ public class OpenStackRequest {
 		return headers;
 	}
 	
-	public OpenStackRequest entity(Object entity) {
-		this.entity = entity;
+	public <T> OpenStackRequest entity(T entity, String contentType) {
+		this.entity = new Entity<T>(entity, contentType);
 		return this;	
 	}
 	
-	public Object entity() {
+	public Entity<?> entity() {
 		return entity;
 	}
 
@@ -75,11 +75,50 @@ public class OpenStackRequest {
 				+ ", path=" + path + ", headers=" + headers + "]";
 	}
 
-	public void json(Object entity) {
-		entity(entity);
-		header("Content-Type", "application/json");
+	public <T> void json(T entity) {
+		entity(entity, "application/json");
 	}
 
-	
+	public static class Entity<T> {
+		
+		private T entity;
+		
+		private String contentType;
 
+		public Entity(T entity, String contentType) {
+			super();
+			this.entity = entity;
+			this.contentType = contentType;
+		}
+
+		/**
+		 * @return the entity
+		 */
+		public T getEntity() {
+			return entity;
+		}
+
+		/**
+		 * @param entity the entity to set
+		 */
+		public void setEntity(T entity) {
+			this.entity = entity;
+		}
+
+		/**
+		 * @return the contentType
+		 */
+		public String getContentType() {
+			return contentType;
+		}
+
+		/**
+		 * @param contentType the contentType to set
+		 */
+		public void setContentType(String contentType) {
+			this.contentType = contentType;
+		}
+		
+	}
+	
 }

@@ -14,7 +14,9 @@ public class DeleteRole implements KeystoneCommand<Void> {
 
 	@Override
 	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		//target.path("OS-KSADM/roles").path(id).request(MediaType.APPLICATION_JSON).delete();
+		request.method("DELETE");
+	    request.path("OS-KSADM/roles/").path(id);
+	    request.header("Accept", "application/json");
 		return null;
 	}
 	
