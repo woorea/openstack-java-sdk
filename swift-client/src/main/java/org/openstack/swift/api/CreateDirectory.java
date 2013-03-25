@@ -7,9 +7,9 @@ import org.openstack.swift.SwiftCommand;
 
 public class CreateDirectory implements SwiftCommand<Void> {
 
-	private String container;
+	private final String container;
 	
-	private String path;
+	private final String path;
 	
 	public CreateDirectory(String container, String path) {
 		this.container = container;
