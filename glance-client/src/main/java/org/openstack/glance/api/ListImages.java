@@ -19,7 +19,7 @@ public class ListImages implements GlanceCommand<Images> {
 
 	@Override
 	public Images execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("DELETE");
+		request.method("GET");
 	    request.path(detail ? "/images/detail" : "images");
 	    request.header("Accept", "application/json");
 	    return connector.execute(request, Images.class);
