@@ -11,6 +11,7 @@
 	<modules>
 		<module>jersey-connector</module>
 		<module>jersey2-connector</module>
+		<module>resteasy-connector</module>
 	</modules>
 	<dependencies>
 		<dependency>
