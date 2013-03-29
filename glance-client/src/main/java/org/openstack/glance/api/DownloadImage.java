@@ -22,7 +22,7 @@ public class DownloadImage implements GlanceCommand<ImageDownload> {
 
 	@Override
 	public ImageDownload execute(WebTarget target) {
-		Response response = target.path("images").path(id).request(MediaType.APPLICATION_OCTET_STREAM).head();
+		Response response = target.path("images").path(id).request(MediaType.APPLICATION_OCTET_STREAM).get();
 		Image image = new Image();
 		image.setUri(response.getHeaderString("x-image-meta-uri"));
 		image.setName(response.getHeaderString("x-image-meta-name"));
