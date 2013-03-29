@@ -17,7 +17,8 @@ public class DeleteEndpoint implements KeystoneCommand<Void> {
 		request.method("DELETE");
 	    request.path("/endpoints/").path(id);
 	    request.header("Accept", "application/json");
-		return null;
+	    connector.execute(request);
+	    return null;
 	}
 	
 }

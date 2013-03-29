@@ -17,7 +17,8 @@ public class DeleteRole implements KeystoneCommand<Void> {
 		request.method("DELETE");
 	    request.path("OS-KSADM/roles/").path(id);
 	    request.header("Accept", "application/json");
-		return null;
+	    connector.execute(request);
+	    return null;
 	}
 	
 }

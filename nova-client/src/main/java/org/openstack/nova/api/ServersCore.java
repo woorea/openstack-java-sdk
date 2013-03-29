@@ -150,6 +150,7 @@ public class ServersCore {
 			request.method("DELETE");
 		    request.path("/servers/").path(id);
 		    request.header("Accept", "application/json");
+		    connector.execute(request);
 		    return null;
 		}
 		
