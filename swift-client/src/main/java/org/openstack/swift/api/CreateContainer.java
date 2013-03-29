@@ -8,7 +8,7 @@ import org.openstack.swift.SwiftCommand;
 
 public class CreateContainer implements SwiftCommand<Response>{
 
-	private String containerName;
+	private final String containerName;
 	
 	public CreateContainer(String containerName) {
 		this.containerName = containerName;

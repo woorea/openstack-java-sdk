@@ -11,9 +11,9 @@ import org.openstack.swift.model.ObjectDownload;
 
 public class DownloadObject implements SwiftCommand<ObjectDownload> {
 
-	private String containerName;
+	private final String containerName;
 	
-	private String objectName;
+	private final String objectName;
 	
 	public DownloadObject(String containerName, String objectName) {
 		this.containerName = containerName;
