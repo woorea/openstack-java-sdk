@@ -1,6 +1,7 @@
 package org.openstack.base.client;
 
 import java.util.Properties;
+import java.util.ServiceLoader;
 
 public class OpenStackClient {
 	
@@ -12,9 +13,26 @@ public class OpenStackClient {
 	
 	protected Properties properties = new Properties();
 	
+	protected static OpenStackClientConnector DEFAULT_CONNECTOR;
+
+	static {
+		ServiceLoader<OpenStackClientConnector> connectorLoader;
+		connectorLoader = ServiceLoader.load(OpenStackClientConnector.class);
+
+		for (OpenStackClientConnector clientConnector : connectorLoader) {
+			DEFAULT_CONNECTOR = clientConnector;
+			break;
+		}
+	}
+
+	public OpenStackClient(String endpoint) {
+		this.endpoint = endpoint;
+		this.connector = DEFAULT_CONNECTOR;
+	}
+
 	public OpenStackClient(String endpoint, OpenStackClientConnector connector) {
 		this.endpoint = endpoint;
-		this.connector = connector;
+		this.connector = (connector == null) ? DEFAULT_CONNECTOR : connector;
 	}
 	
 	public <T> T execute(OpenStackCommand<T> command) {
