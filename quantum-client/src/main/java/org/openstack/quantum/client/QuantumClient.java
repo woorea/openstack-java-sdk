@@ -6,12 +6,12 @@ import org.openstack.base.client.OpenStackRequest;
 
 public class QuantumClient extends OpenStackClient {
 	
-	public QuantumClient(String endpoint, OpenStackClientConnector connector) {
-		super(endpoint, connector);
+	public QuantumClient(String endpoint) {
+		super(endpoint);
 	}
 	
-	public QuantumClient(String endpoint) {
-		this(endpoint, null);
+	public QuantumClient(String endpoint, OpenStackClientConnector connector) {
+		super(endpoint, connector);
 	}
 
 	public <R> R execute(QuantumCommand<R> command) {

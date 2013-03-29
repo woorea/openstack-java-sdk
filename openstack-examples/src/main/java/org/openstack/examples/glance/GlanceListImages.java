@@ -1,6 +1,5 @@
 package org.openstack.examples.glance;
 
-import org.openstack.connector.JaxRs20Connector;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.glance.GlanceClient;
 import org.openstack.glance.api.ListImages;
@@ -19,10 +18,8 @@ public class GlanceListImages {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		JaxRs20Connector connector = new JaxRs20Connector();
-
 		KeystoneClient keystone = new KeystoneClient(
-				ExamplesConfiguration.KEYSTONE_AUTH_URL, connector);
+				ExamplesConfiguration.KEYSTONE_AUTH_URL);
 
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(
 				ExamplesConfiguration.KEYSTONE_USERNAME,
@@ -38,7 +35,8 @@ public class GlanceListImages {
 
 			GlanceClient client = new GlanceClient(
 					KeystoneUtils.findEndpointURL(access.getServiceCatalog(),
-							"image", null, "public"), connector);
+							"image", null, "public"));
+			client.token(access.getToken().getId());
 
 			Images images = client.execute(new ListImages(false));
 

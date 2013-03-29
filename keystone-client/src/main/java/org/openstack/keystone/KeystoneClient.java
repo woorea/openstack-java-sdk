@@ -7,7 +7,7 @@ import org.openstack.base.client.OpenStackRequest;
 public class KeystoneClient extends OpenStackClient {
 	
 	public KeystoneClient(String endpoint) {
-		super(endpoint, null);
+		super(endpoint);
 	}
 	
 	public KeystoneClient(String endpoint, OpenStackClientConnector connector) {
