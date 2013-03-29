@@ -6,12 +6,12 @@ import org.openstack.base.client.OpenStackRequest;
 
 public class SwiftClient extends OpenStackClient {
 	
-	public SwiftClient(String endpoint, OpenStackClientConnector connector) {
-		super(endpoint, connector);
+	public SwiftClient(String endpoint) {
+		super(endpoint);
 	}
 	
-	public SwiftClient(String endpoint) {
-		super(endpoint, null);
+	public SwiftClient(String endpoint, OpenStackClientConnector connector) {
+		super(endpoint, connector);
 	}
 
 	public <R> R execute(SwiftCommand<R> command) {

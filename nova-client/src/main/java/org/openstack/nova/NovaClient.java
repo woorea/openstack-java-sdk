@@ -6,12 +6,12 @@ import org.openstack.base.client.OpenStackRequest;
 
 public class NovaClient extends OpenStackClient {
 	
+	public NovaClient(String endpoint) {
+		super(endpoint);
+	}
+
 	public NovaClient(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
-	}
-	
-	public NovaClient(String endpoint, String token) {
-		super(endpoint, null);
 	}
 
 	public <R> R execute(NovaCommand<R> command) {
