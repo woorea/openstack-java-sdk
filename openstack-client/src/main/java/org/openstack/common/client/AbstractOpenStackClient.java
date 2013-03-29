@@ -15,7 +15,7 @@ import org.openstack.OpenStack;
 
 public class AbstractOpenStackClient {
 
-	protected String endpointURL;
+	protected final String endpointURL;
 	
 	protected String token;
 	

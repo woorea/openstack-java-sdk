@@ -8,7 +8,7 @@ import org.openstack.swift.SwiftCommand;
 
 public class DeleteContainer implements SwiftCommand<Response>{
 
-	private String containerName;
+	private final String containerName;
 	
 	public DeleteContainer(String containerName) {
 		this.containerName = containerName;

@@ -8,9 +8,9 @@ import org.openstack.swift.SwiftCommand;
 
 public class DeleteObject implements SwiftCommand<Response>{
 
-	private String containerName;
+	private final String containerName;
 	
-	private String objectName;
+	private final String objectName;
 	
 	public DeleteObject(String containerName, String objectName) {
 		this.containerName = containerName;
