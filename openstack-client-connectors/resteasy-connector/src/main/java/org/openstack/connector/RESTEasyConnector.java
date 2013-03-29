@@ -6,12 +6,15 @@ import java.util.Map.Entry;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ContextResolver;
 
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.jboss.resteasy.client.ClientRequest;
+import org.jboss.resteasy.client.ClientRequestFactory;
+import org.jboss.resteasy.client.core.executors.ApacheHttpClient4Executor;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
@@ -23,6 +26,8 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	public static ObjectMapper DEFAULT_MAPPER;
 
 	public static ObjectMapper WRAPPED_MAPPER;
+
+	public static ClientRequestFactory CLIENT_FACTORY;
 
 	static {
 		DEFAULT_MAPPER = new ObjectMapper();
@@ -39,26 +44,33 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
-		ResteasyProviderFactory.getInstance().addContextResolver(new ContextResolver<ObjectMapper>() {
+		ResteasyProviderFactory providerFactory = new ResteasyProviderFactory();
+		providerFactory.addContextResolver(new ContextResolver<ObjectMapper>() {
 			public ObjectMapper getContext(Class<?> type) {
 				return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
 			}
 		});
+
+		JacksonJsonProvider jsonProvider = new JacksonJsonProvider();
+		providerFactory.addMessageBodyReader(jsonProvider);
+		providerFactory.addMessageBodyWriter(jsonProvider);
+
+		CLIENT_FACTORY = new ClientRequestFactory(new ApacheHttpClient4Executor(), providerFactory);
 	}
 
 	@Override
 	public <T> T execute(OpenStackRequest request, Class<T> responseType) {
-		ClientRequest client = new ClientRequest(request.endpoint() + "/" + request.path());
+		ClientRequest client = CLIENT_FACTORY.createRequest(request.endpoint() + "/" + request.path());
 
-		for(Entry<String, List<Object>> h : request.headers().entrySet()) {
+		for (Entry<String, List<Object>> h : request.headers().entrySet()) {
 			StringBuilder sb = new StringBuilder();
-			for(Object v : h.getValue()) {
+			for (Object v : h.getValue()) {
 				sb.append(String.valueOf(v));
 			}
 			client.header(h.getKey(), sb);
 		}
 
-		if(request.entity() != null) {
+		if (request.entity() != null) {
 			client.body(request.entity().getContentType(), request.entity().getEntity());
 		}
 
