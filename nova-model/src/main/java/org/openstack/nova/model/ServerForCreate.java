@@ -66,6 +66,12 @@ public class ServerForCreate implements Serializable {
 	
 	@JsonProperty("security_groups")
 	private List<SecurityGroup> securityGroups;
+	
+	@JsonProperty("user_data")
+	private String userData;
+	
+	@JsonProperty("availability_zone")
+	private String availabilityZone;
 
 	/**
 	 * @return the name
@@ -243,6 +249,34 @@ public class ServerForCreate implements Serializable {
 			securityGroups = new ArrayList<SecurityGroup>();
 		}
 		return securityGroups;
+	}
+	
+	/**
+	 * @return the userData
+	 */
+	public String getUserData() {
+		return userData;
+	}
+
+	/**
+	 * @param userData the userData to set
+	 */
+	public void setUserData(String userData) {
+		this.userData = userData;
+	}
+
+	/**
+	 * @return the availabilityZone
+	 */
+	public String getAvailabilityZone() {
+		return availabilityZone;
+	}
+
+	/**
+	 * @param availabilityZone the availabilityZone to set
+	 */
+	public void setAvailabilityZone(String availabilityZone) {
+		this.availabilityZone = availabilityZone;
 	}
 	
 }
