@@ -2,7 +2,6 @@ package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.openstack.console.Console;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
@@ -14,12 +13,12 @@ import com.google.common.collect.Lists;
 
 public class KeystoneRoleCreate extends KeystoneCommand {
 	
-	public KeystoneRoleCreate(KeystoneClient client) {
-		super(client, "role-create");
+	public KeystoneRoleCreate() {
+		super( "role-create");
 	}
 
 	@Override
-	public void execute(Console console, CommandLine cmd) {
+	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
 		Role role = new Role();
 		role.setName(cmd.getOptionValue("name"));

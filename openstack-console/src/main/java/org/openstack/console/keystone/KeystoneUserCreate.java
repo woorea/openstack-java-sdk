@@ -2,7 +2,6 @@ package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.openstack.console.Console;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
@@ -15,11 +14,11 @@ import com.google.common.collect.Lists;
 public class KeystoneUserCreate extends KeystoneCommand {
 	
 	public KeystoneUserCreate(KeystoneClient client) {
-		super(client, "user-create");
+		super("user-create");
 	}
 
 	@Override
-	public void execute(Console console, CommandLine cmd) {
+	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
 		User user = new User();
 		user.setName(cmd.getOptionValue("name"));

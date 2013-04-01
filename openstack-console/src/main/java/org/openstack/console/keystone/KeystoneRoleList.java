@@ -1,7 +1,6 @@
 package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
-import org.openstack.console.Console;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
@@ -12,12 +11,12 @@ import org.openstack.keystone.model.Roles;
 
 public class KeystoneRoleList extends KeystoneCommand {
 	
-	public KeystoneRoleList(KeystoneClient client) {
-		super(client, "role-list");
+	public KeystoneRoleList() {
+		super("role-list");
 	}
 
 	@Override
-	public void execute(Console console, CommandLine cmd) {
+	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
 		final Roles roles = keystone.execute(new ListRoles());
 		

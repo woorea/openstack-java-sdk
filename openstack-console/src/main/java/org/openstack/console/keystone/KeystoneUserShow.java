@@ -1,7 +1,6 @@
 package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
-import org.openstack.console.Console;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
@@ -13,12 +12,12 @@ import com.google.common.collect.Lists;
 
 public class KeystoneUserShow extends KeystoneCommand {
 	
-	public KeystoneUserShow(KeystoneClient client) {
-		super(client, "user-show");
+	public KeystoneUserShow() {
+		super("user-show");
 	}
 
 	@Override
-	public void execute(Console console, CommandLine cmd) {
+	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
 		String[] args = cmd.getArgs();
 		if(args.length == 1) {

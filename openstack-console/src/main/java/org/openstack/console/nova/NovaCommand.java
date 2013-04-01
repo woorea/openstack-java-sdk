@@ -1,18 +1,24 @@
 package org.openstack.console.nova;
 
+import org.apache.commons.cli.CommandLine;
 import org.openstack.console.Command;
+import org.openstack.console.Console;
 import org.openstack.nova.NovaClient;
+
 
 public abstract class NovaCommand extends Command {
 	
-	protected NovaClient nova;
-
-	public NovaCommand(NovaClient client, String name) {
-		
+	public NovaCommand(String name) {
 		super(name);
-		
-		this.nova = client;
-	
 	}
+
+	@Override
+	public void execute(Console console, CommandLine args) {
+		NovaEnvironment environment = (NovaEnvironment) console.getEnvironment();
+		execute(environment.CLIENT, args);
+		
+	}
+
+	protected abstract void execute(NovaClient nova, CommandLine args);
 
 }

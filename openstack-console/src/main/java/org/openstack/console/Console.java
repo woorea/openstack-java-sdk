@@ -1,181 +1,94 @@
 package org.openstack.console;
 
+import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.Properties;
 
+import jline.UnsupportedTerminal;
 import jline.console.ConsoleReader;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.openstack.console.utils.ConsoleUtils;
-import org.openstack.console.utils.Environment;
-
-import com.google.common.collect.ImmutableMap;
+import org.apache.commons.cli.ParseException;
 
 public class Console {
 	
-	private ConsoleReader consoleReader;
+	private Properties properties;
 	
+	private ConsoleReader reader;
+
 	private Environment environment;
 	
-	protected Map<String, Object> properties = new HashMap<String, Object>();
-
-	public void init() {
-		
-		properties.put("console.logging", Boolean.TRUE);
-		properties.put("keystone.endpoint", "http://keystone/v2.0");
-		properties.put("keystone.username", "admin");
-		properties.put("keystone.password", "secret0");
-		properties.put("keystone.tenant_name", "admin");
-		properties.put("identity.endpoint", "http://identity/v2.0");
-		
-		try {
-			HelpFormatter helpFormatter = new HelpFormatter();
-			CommandLineParser commandLineParser = new GnuParser();
-			consoleReader = new ConsoleReader();
-			//consoleReader.setHandleUserInterrupt(true);
-			setEnvironment(new OpenStackEnvironment(this));
-			String input = consoleReader.readLine(getPrompt());
-			while(input != null) {
-				String[] cmd = parse(input);
-				if(cmd.length > 0) {
-					Command command = environment.command(cmd[0]);
-					if(command != null) {
-						try {
-							CommandLine commandLine = commandLineParser.parse(command.getOptions(), Arrays.copyOfRange(cmd, 1, cmd.length));
-							command.call(this,commandLine);
-						} catch (Exception e) {
-							helpFormatter.printHelp(command.getName(), command.getOptions());
-							e.printStackTrace();
-							//Console.red(e.getMessage());
-						}
-					}
-				}
-				input = consoleReader.readLine(getPrompt());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			//HelpFormatter formatter = new HelpFormatter();
-			//formatter.printHelp("myapp", header, options, footer, true);
-		}
+	private static final CommandLineParser PARSER = new GnuParser();
+	
+	public Console(Environment environment, Properties properties) {
+		this.properties = properties;
+		this.environment = environment;
 	}
 	
-	public static String[] parse(String input) {
-        if (input == null || input.length() == 0) {
-            //no command? no string
-            return new String[0];
-        }
-        // parse with a simple finite state machine
-
-        final int normal = 0;
-        final int inQuote = 1;
-        final int inDoubleQuote = 2;
-        int state = normal;
-        StringTokenizer tok = new StringTokenizer(input, "\"\' ", true);
-        Vector v = new Vector();
-        StringBuffer current = new StringBuffer();
-        boolean lastTokenHasBeenQuoted = false;
-
-        while (tok.hasMoreTokens()) {
-            String nextTok = tok.nextToken();
-            switch (state) {
-            case inQuote:
-                if ("\'".equals(nextTok)) {
-                    lastTokenHasBeenQuoted = true;
-                    state = normal;
-                } else {
-                    current.append(nextTok);
-                }
-                break;
-            case inDoubleQuote:
-                if ("\"".equals(nextTok)) {
-                    lastTokenHasBeenQuoted = true;
-                    state = normal;
-                } else {
-                    current.append(nextTok);
-                }
-                break;
-            default:
-                if ("\'".equals(nextTok)) {
-                    state = inQuote;
-                } else if ("\"".equals(nextTok)) {
-                    state = inDoubleQuote;
-                } else if (" ".equals(nextTok)) {
-                    if (lastTokenHasBeenQuoted || current.length() != 0) {
-                        v.addElement(current.toString());
-                        current = new StringBuffer();
-                    }
-                } else {
-                    current.append(nextTok);
-                }
-                lastTokenHasBeenQuoted = false;
-                break;
-            }
-        }
-        if (lastTokenHasBeenQuoted || current.length() != 0) {
-            v.addElement(current.toString());
-        }
-        if (state == inQuote || state == inDoubleQuote) {
-            throw new RuntimeException("unbalanced quotes in " + input);
-        }
-        String[] args = new String[v.size()];
-        v.copyInto(args);
-        return args;
-    }
-
-	public void setEnvironment(Environment environment) {
-		if(this.environment != null) {
-			System.out.println(consoleReader.removeCompleter(consoleReader.getCompleters().iterator().next()));
+	public void start() throws IOException {
+		if(System.console() == null) {
+			reader = new ConsoleReader(System.in, System.out, new UnsupportedTerminal());
+		} else {
+			reader = new ConsoleReader();
 		}
-		setProperty("console.prompt", environment.getPrompt());
-		this.environment = environment;
-		consoleReader.addCompleter(environment.completer());
-		
+		do {
+			try {
+				String line = reader.readLine(environment.getPrompt());
+				execute(line);
+			} catch (Exception pe) {
+				pe.printStackTrace();
+				System.err.println(pe.getMessage());
+			}
+		} while(true);
+	}
+	
+	public void execute(String line) throws ParseException {
+		String[] tokens = CommandLineHelper.parse(line);
+		Command command = environment.commands.get(tokens[0]);
+		if(command != null) {
+			CommandLine args = Console.PARSER.parse(command.getOptions(), Arrays.copyOfRange(tokens, 1, tokens.length));
+			command.execute(this, args);
+		}
 	}
 
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
+	}
+	
 	public Environment getEnvironment() {
 		return this.environment;
 	}
 	
 	/**
-	 * @return the consoleReader
+	 * @return the properties
 	 */
-	public ConsoleReader getConsoleReader() {
-		return consoleReader;
+	public String getProperty(String name) {
+		return properties.getProperty(name);
 	}
 	
-	public <T> T getProperty(String property) {
-		return (T) properties.get(property);
-	}
-	
-	public void setProperty(String property, String value) {
-		properties.put(property, value);
-	}
-	
-	public Map<String, Object> getProperties() {
-		return ImmutableMap.copyOf(properties);
-	}
-	
-	public String getPrompt() {
-		ConsoleUtils console = new ConsoleUtils();
-		console.green((String) properties.get("console.prompt"));
-		return console.toString();
-	}
-
-
-
-	private static final Console CONSOLE = new Console();
-
 	/**
-	 * @param args
+	 * @return the properties
 	 */
-	public static void main(String[] args) throws Exception {
-		CONSOLE.init();
+	public void setProperty(String name, Object value) {
+		properties.put(name, value);
 	}
 	
+	public void properties() {
+		for(Map.Entry<Object, Object> entry : properties.entrySet()) {
+			System.out.printf("%25s = %55s",entry.getKey(), entry.getValue());
+		}
+	}
+
+	public void exit() {
+		if(environment.parent == null) {
+			System.out.println("Goodbye");
+			System.exit(1);
+		} else {
+			environment = environment.parent;
+		}
+	}
+
 }

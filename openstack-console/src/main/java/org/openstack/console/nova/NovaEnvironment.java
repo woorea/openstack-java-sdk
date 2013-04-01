@@ -3,53 +3,55 @@ package org.openstack.console.nova;
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
-import org.openstack.console.utils.ConsoleUtils;
-import org.openstack.console.utils.Environment;
+import org.openstack.console.Environment;
+import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.api.Authenticate;
+import org.openstack.keystone.model.Access;
 import org.openstack.nova.NovaClient;
 
 public class NovaEnvironment extends Environment {
 	
-	public NovaEnvironment(Console console) {
+	public final NovaClient CLIENT;
+	
+	public static final Command NOVA = new Command("nova") {
 		
-		super(console);
-		
-		/*
-		KeystoneClient client = new KeystoneClient((String) properties.get("keystone.endpoint"));
-		
-		Access access = client.execute(Authenticate.withPasswordCredentials(
-				(String) properties.get("keystone.username"), 
-				(String) properties.get("keystone.password")
-		).withTenantName((String) properties.get("keystone.tenant_name")));
+		@Override
+		public void execute(Console console, CommandLine args) {
+			
+			if(args.getArgs().length == 1) {
+				KeystoneClient keystone = new KeystoneClient((String) console.getProperty("keystone.endpoint"));
 				
-		client.token(access.getToken().getId());
-		*/
+				Access access = keystone.execute(Authenticate.withPasswordCredentials(
+						(String) console.getProperty("keystone.username"), 
+						(String) console.getProperty("keystone.password")
+				).withTenantName((String) console.getProperty("keystone.tenant_name")));
+								
+				NovaClient client = new NovaClient("http://compute.stacksherpa.org/v2/"+args.getArgs()[0]);
+				client.token(access.getToken().getId());
+				
+				NovaEnvironment environment = new NovaEnvironment(console.getEnvironment(), client);
+				
+				environment.register(new NovaServerList());
+				
+				console.setEnvironment(environment);
+					
+			}
+			
+		}
 		
-		NovaClient client = new NovaClient((String) console.getProperty("compute.endpoint"));
-		
-		add(new NovaServerList(client));
+	};
 	
+	public NovaEnvironment(Environment parent, NovaClient client) {
+		super(parent);
+		CLIENT = client;
 	}
-	
+
 	/* (non-Javadoc)
-	 * @see org.openstack.console.utils.Environment#getPrompt()
+	 * @see org.woorea.wsh.Environment#getPrompt()
 	 */
 	@Override
 	public String getPrompt() {
-		return new ConsoleUtils().green("nova> ").toString();
-	}
-
-
-
-	public static Command command() {
-		
-		return new Command("nova") {
-			
-			@Override
-			public void execute(Console console, CommandLine cmd) {
-				console.setEnvironment(new NovaEnvironment(console));
-				
-			}
-		};
+		return "nova> ";
 	}
 	
 }

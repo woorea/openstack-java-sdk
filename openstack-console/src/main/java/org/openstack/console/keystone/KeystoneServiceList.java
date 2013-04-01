@@ -1,7 +1,6 @@
 package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
-import org.openstack.console.Console;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
@@ -13,11 +12,11 @@ import org.openstack.keystone.model.Services;
 public class KeystoneServiceList extends KeystoneCommand {
 	
 	public KeystoneServiceList(KeystoneClient client) {
-		super(client, "service-list");
+		super("service-list");
 	}
 
 	@Override
-	public void execute(Console console, CommandLine cmd) {
+	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
 		final Services services = keystone.execute(new ListServices());
 		

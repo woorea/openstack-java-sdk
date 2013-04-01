@@ -2,6 +2,7 @@ package org.openstack.connector;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -9,6 +10,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 
@@ -21,6 +23,7 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 	@Override
 	public <T> T execute(OpenStackRequest request, Class<T> responseType) {
 		WebTarget target = client.target(request.endpoint()).path(request.path());
+		target.register(new LoggingFilter(Logger.getLogger("os"),10000));
 		Invocation.Builder invocation = target.request();
 		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
 			StringBuilder sb = new StringBuilder();

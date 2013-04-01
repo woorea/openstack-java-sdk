@@ -1,7 +1,6 @@
 package org.openstack.console.nova;
 
 import org.apache.commons.cli.CommandLine;
-import org.openstack.console.Console;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
@@ -12,12 +11,12 @@ import org.openstack.nova.model.Servers;
 
 public class NovaServerList extends NovaCommand {
 	
-	public NovaServerList(NovaClient client) {
-		super(client, "list");
+	public NovaServerList() {
+		super("list");
 	}
 
 	@Override
-	public void execute(Console console, CommandLine cmd) {
+	public void execute(NovaClient nova, CommandLine cmd) {
 		
 		final Servers servers = nova.execute(new ListServers());
 		
