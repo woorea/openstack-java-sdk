@@ -15,7 +15,7 @@ import jline.console.completer.StringsCompleter;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.HelpFormatter;
 
 public class Console {
 	
@@ -24,6 +24,8 @@ public class Console {
 	private ConsoleReader reader;
 
 	private Environment environment;
+	
+	private HelpFormatter helpFormatter = new HelpFormatter();
 	
 	private static final CommandLineParser PARSER = new GnuParser();
 	
@@ -39,22 +41,24 @@ public class Console {
 			reader = new ConsoleReader();
 		}
 		do {
-			try {
-				String line = reader.readLine(environment.getPrompt());
-				execute(line);
-			} catch (Exception pe) {
-				pe.printStackTrace();
-				System.err.println(pe.getMessage());
-			}
+			String line = reader.readLine(environment.getPrompt());
+			execute(line);
 		} while(true);
 	}
 	
-	public void execute(String line) throws ParseException {
+	public void execute(String line) {
 		String[] tokens = CommandLineHelper.parse(line);
-		Command command = environment.commands.get(tokens[0]);
-		if(command != null) {
-			CommandLine args = Console.PARSER.parse(command.getOptions(), Arrays.copyOfRange(tokens, 1, tokens.length));
-			command.execute(this, args);
+		if(tokens.length > 0) {
+			Command command = environment.commands.get(tokens[0]);
+			if(command != null) {
+				try {
+				CommandLine args = Console.PARSER.parse(command.getOptions(), Arrays.copyOfRange(tokens, 1, tokens.length));
+				command.execute(this, args);
+				} catch (Exception e) {
+					e.printStackTrace();
+					helpFormatter.printHelp(command.name, command.getOptions());
+				}
+			}
 		}
 	}
 
