@@ -12,7 +12,7 @@ public class DeleteNetwork implements QuantumCommand<Void> {
 		this.id = netId;
 	}
 
-	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		//target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}

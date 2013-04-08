@@ -14,7 +14,7 @@ public class ShowExtension implements CeilometerCommand<Extension> {
 	}
 
 	@Override
-	public Extension execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		//return target.path("extensions").path(alias).request(MediaType.APPLICATION_JSON).get(Extension.class);
 		return null;
 	}

@@ -3,7 +3,8 @@ package org.openstack.nova.api.extensions;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.FloatingIp;
@@ -14,11 +15,13 @@ public class FloatingIpsExtension {
 	public static class ListFloatingIps implements NovaCommand<FloatingIps>{
 
 		@Override
-		public FloatingIps execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ips");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, FloatingIps.class);
+		    request.returnType(FloatingIps.class);
+		return request;
 		}
 
 	}
@@ -35,11 +38,13 @@ public class FloatingIpsExtension {
 		}
 
 		@Override
-		public FloatingIp execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/os-floating-ips");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, FloatingIp.class);
+		    request.returnType(FloatingIp.class);
+		return request;
 		}
 
 	}
@@ -53,11 +58,12 @@ public class FloatingIpsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("DELETE");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
 		    request.path("/os-floating-ips/").path(id);
 		    request.header("Accept", "application/json");
-		    connector.execute(request);
+		    
 			return null;
 		}
 		
@@ -76,12 +82,13 @@ public class FloatingIpsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -99,12 +106,13 @@ public class FloatingIpsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 

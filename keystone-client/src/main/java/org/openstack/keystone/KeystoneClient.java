@@ -14,13 +14,10 @@ public class KeystoneClient extends OpenStackClient {
 		super(endpoint, connector);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <R> R execute(KeystoneCommand<R> command) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.endpoint(endpoint);
-		if(token != null) {
-			request.header("X-Auth-Token", token);
-		}
-		return command.execute(connector, request);
+		OpenStackRequest request = command.execute(this);
+		return (R) connector.execute(request, request.returnType());
 	}
 	
 }

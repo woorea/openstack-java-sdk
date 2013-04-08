@@ -14,9 +14,10 @@ public class NovaClient extends OpenStackClient {
 		super(endpoint, connector);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <R> R execute(NovaCommand<R> command) {
-		OpenStackRequest request = newOpenStackRequest();
-		return command.execute(connector, request);
+		OpenStackRequest request = command.execute(this);
+		return (R) connector.execute(request, request.returnType());
 	}
 	
 }

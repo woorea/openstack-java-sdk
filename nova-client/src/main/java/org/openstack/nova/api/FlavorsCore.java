@@ -2,7 +2,8 @@ package org.openstack.nova.api;
 
 import java.util.Map;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Flavor;
@@ -24,11 +25,13 @@ public class FlavorsCore {
 		}
 
 		@Override
-		public Flavors execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path(detail ? "/flavors/detail" : "/flavors");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Flavors.class);
+		    request.returnType(Flavors.class);
+		return request;
 		}
 
 	}
@@ -42,11 +45,13 @@ public class FlavorsCore {
 		}
 
 		@Override
-		public Flavor execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path("/flavors/").path(id);
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Flavor.class);
+		    request.returnType(Flavor.class);
+		return request;
 		}
 		
 	}
@@ -61,11 +66,13 @@ public class FlavorsCore {
 		}
 
 		@Override
-		public Map<String, String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+			OpenStackRequest request = client.newOpenStackRequest();
+			request.method(HttpMethod.GET);
 		    request.path("/flavors/").path(id).path("metadata");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Metadata.class).getMetadata();
+		    request.returnType(Metadata.class);
+		    return request;
 		}
 		
 	}

@@ -1,6 +1,6 @@
 package org.openstack.glance.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
@@ -15,7 +15,7 @@ public class UploadImage implements GlanceCommand<Image>{
 	}
 
 	@Override
-	public Image execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		/*
 		Invocation.Builder invocationBuilder = target.path("images").request(MediaType.APPLICATION_JSON);
 		if(imageForUpload.getName() != null) {

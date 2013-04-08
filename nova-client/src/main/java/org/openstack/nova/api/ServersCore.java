@@ -33,11 +33,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Servers execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path(detail ? "servers/detail" : "/servers");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Servers.class);
+		    request.returnType(Servers.class);
+		return request;
 		}
 
 	}
@@ -51,12 +53,14 @@ public class ServersCore {
 		}
 
 		@Override
-		public Server execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers");
 		    request.header("Accept", "application/json");
 		    request.json(serverForCreate);
-		    return connector.execute(request, Server.class);
+		    request.returnType(Server.class);
+		return request;
 		}
 		
 	}
@@ -70,11 +74,13 @@ public class ServersCore {
 		}
 
 		@Override
-		public Server execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path("/servers/").path(id);
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Server.class);
+		    request.returnType(Server.class);
+		return request;
 		}
 		
 	}
@@ -89,10 +95,11 @@ public class ServersCore {
 
 		@Override
 		public Map<String, String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+			request.method(HttpMethod.GET);
 		    request.path("/servers/").path(id).path("metadata");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Metadata.class).getMetadata();
+		    request.returnType(Metadata.class).getMetadata();
+		return request;
 		}
 		
 	}
@@ -107,10 +114,11 @@ public class ServersCore {
 
 		@Override
 		public Server.Addresses execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+			request.method(HttpMethod.GET);
 		    request.path("/servers/").path(id).path("ips");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Addresses.class);
+		    request.returnType(Addresses.class);
+		return request;
 		}
 		
 	}
@@ -126,12 +134,14 @@ public class ServersCore {
 		}
 
 		@Override
-		public Server execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("PUT");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.PUT);
 		    request.path("/servers/").path(server.getId());
 		    request.header("Accept", "application/json");
 		    request.json(server);
-		    return connector.execute(request, Server.class);
+		    request.returnType(Server.class);
+		return request;
 		}
 		
 	}
@@ -146,11 +156,12 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("DELETE");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
 		    request.path("/servers/").path(id);
 		    request.header("Accept", "application/json");
-		    connector.execute(request);
+		    
 		    return null;
 		}
 		
@@ -168,8 +179,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
@@ -191,8 +203,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
@@ -214,8 +227,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
@@ -237,8 +251,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
@@ -259,8 +274,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(ACTION);
@@ -281,8 +297,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(ACTION);
@@ -304,8 +321,9 @@ public class ServersCore {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);

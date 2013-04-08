@@ -10,7 +10,7 @@ public class ListNetworks implements QuantumCommand<Networks> {
 	public ListNetworks() {
 	}
 	
-	public Networks execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("networks").request(MediaType.APPLICATION_JSON).get(Networks.class);
 		return null;
 	}

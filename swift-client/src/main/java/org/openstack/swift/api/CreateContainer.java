@@ -15,7 +15,7 @@ public class CreateContainer implements SwiftCommand<Response>{
 	}
 	
 	@Override
-	public Response execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		//return target.path(containerName).request().method("PUT",Entity.text("*"));
 		return null;
 	}

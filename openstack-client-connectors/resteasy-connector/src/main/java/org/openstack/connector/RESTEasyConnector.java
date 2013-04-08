@@ -75,7 +75,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		}
 
 		try {
-			return (T) client.httpMethod(request.method(), responseType).getEntity(responseType);
+			return (T) client.httpMethod(request.method().name(), responseType).getEntity(responseType);
 		} catch (Exception e) {
 			return null;
 		}

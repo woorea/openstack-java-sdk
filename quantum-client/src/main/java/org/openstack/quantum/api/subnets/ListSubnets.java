@@ -10,7 +10,7 @@ public class ListSubnets implements QuantumCommand<Subnets> {
 	public ListSubnets() {
 	}
 	
-	public Subnets execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("subnets").request(MediaType.APPLICATION_JSON).get(Subnets.class);
 		return null;
 	}

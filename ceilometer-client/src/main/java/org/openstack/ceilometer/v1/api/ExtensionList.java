@@ -8,7 +8,7 @@ import org.openstack.ceilometer.v1.model.Extensions;
 public class ExtensionList implements CeilometerCommand<Extensions> {
 
 	@Override
-	public Extensions execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		//return target.path("extensions").request(MediaType.APPLICATION_JSON).get(Extensions.class);
 		return null;
 	}

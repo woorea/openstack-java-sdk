@@ -39,7 +39,7 @@ public class MeterFunction extends MeterCommand<BigDecimal> {
 	}
 
 	@Override
-	public BigDecimal execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		if(source != null) {
 			request.path("sources").path(source);
 		} else if(project != null) {

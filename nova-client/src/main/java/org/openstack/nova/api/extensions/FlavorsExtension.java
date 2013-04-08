@@ -2,7 +2,8 @@ package org.openstack.nova.api.extensions;
 
 import java.util.UUID;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Flavor;
@@ -19,15 +20,17 @@ public class FlavorsExtension {
 		}
 
 		@Override
-		public Flavor execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
+			OpenStackRequest request = client.newOpenStackRequest();
 			if(flavorForCreate.getId() == null) {
 				flavorForCreate.setId(UUID.randomUUID().toString());
 			}
-			request.method("POST");
+			request.method(HttpMethod.POST);
 		    request.path("/flavors/");
 		    request.header("Accept", "application/json");
 		    request.json(flavorForCreate);
-		    return connector.execute(request, Flavor.class);
+		    request.returnType(Flavor.class);
+		return request;
 		}
 		
 	}
@@ -41,11 +44,12 @@ public class FlavorsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("DELETE");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
 		    request.path("/flavors/").path(id);
 		    request.header("Accept", "application/json");
-		    connector.execute(request);
+		    
 			return null;
 		}
 		

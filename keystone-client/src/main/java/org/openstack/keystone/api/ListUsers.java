@@ -1,6 +1,7 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Users;
@@ -8,12 +9,13 @@ import org.openstack.keystone.model.Users;
 public class ListUsers implements KeystoneCommand<Users>{
 
 	@Override
-	public Users execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("GET");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		request.path("/users");
 		request.header("Accept", "application/json");
-		return connector.execute(request, Users.class);
-		//return target.path("users").request(MediaType.APPLICATION_JSON).get(Users.class);
+		request.returnType(Users.class);
+		return request;
 	}
 
 }

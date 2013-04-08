@@ -1,5 +1,6 @@
 package org.openstack.glance.api;
 
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
@@ -13,11 +14,12 @@ public class DeleteImage implements GlanceCommand<Void> {
 	}
 
 	@Override
-	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("DELETE");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
 	    request.path("/images/").path(id);
 	    request.header("Accept", "application/json");
-	    connector.execute(request);
+	    
 	    return null;
 	}
 	

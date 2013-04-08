@@ -1,6 +1,7 @@
 package org.openstack.glance.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
@@ -14,13 +15,14 @@ public class UpdateImage implements GlanceCommand<Image>{
 	}
 	
 	@Override
-	public Image execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("PUT");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.PUT);
 	    request.path("/images/").path(image.getId());
 	    request.header("Accept", "application/json");
 	    request.json(image);
-	    connector.execute(request, Image.class);
-	    return null;
+	    request.returnType(Image.class);
+	    return request;
 	}
 
 }

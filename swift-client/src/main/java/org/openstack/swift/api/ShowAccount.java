@@ -9,7 +9,7 @@ import org.openstack.swift.SwiftCommand;
 public class ShowAccount implements SwiftCommand<Response>{
 
 	@Override
-	public Response execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.request(MediaType.APPLICATION_JSON).head();
 		return null;
 	}

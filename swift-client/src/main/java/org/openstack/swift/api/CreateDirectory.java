@@ -16,7 +16,7 @@ public class CreateDirectory implements SwiftCommand<Void> {
 	}
 
 	@Override
-	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		endpoint.path(container).path(path).request().put(Entity.entity(new byte[1],"application/directory"));
 		return null;
 	}

@@ -7,78 +7,6 @@ import java.util.Map;
 
 public class OpenStackRequest {
 	
-	private String endpoint;
-	
-	private String method;
-	
-	private StringBuilder path = new StringBuilder();
-	
-	private Map<String, List<Object>> headers = new HashMap<String, List<Object>>();
-	
-	private Entity entity;
-
-	public String execute(String method, String path, Class<String> responseType) {
-		return null;
-	}
-	
-	public OpenStackRequest endpoint(String endpoint) {
-		this.endpoint = endpoint;
-		return this;
-	}
-	
-	public String endpoint() {
-		return endpoint;
-	}
-
-	public OpenStackRequest method(String method) {
-		this.method = method;
-		return this;
-	}
-	
-	public String method() {
-		return method;
-	}
-	
-	public OpenStackRequest path(String path) {
-		this.path.append(path);
-		return this;
-	}
-	
-	public String path() {
-		return path.toString();
-	}
-
-	public OpenStackRequest header(String name, Object... values) {
-		headers.put(name, Arrays.asList(values));
-		return this;
-	}
-	
-	public Map<String, List<Object>> headers() {
-		return headers;
-	}
-	
-	public <T> OpenStackRequest entity(T entity, String contentType) {
-		this.entity = new Entity<T>(entity, contentType);
-		return this;	
-	}
-	
-	public Entity<?> entity() {
-		return entity;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "OpenStackRequest [endpoint=" + endpoint + ", method=" + method
-				+ ", path=" + path + ", headers=" + headers + "]";
-	}
-
-	public <T> void json(T entity) {
-		entity(entity, "application/json");
-	}
-
 	public static class Entity<T> {
 		
 		private T entity;
@@ -119,6 +47,85 @@ public class OpenStackRequest {
 			this.contentType = contentType;
 		}
 		
+	}
+	
+	private String endpoint;
+	
+	private HttpMethod method;
+	
+	private StringBuilder path = new StringBuilder();
+	
+	private Map<String, List<Object>> headers = new HashMap<String, List<Object>>();
+	
+	private Entity entity;
+	
+	private Class<?> returnType;
+	
+	public OpenStackRequest endpoint(String endpoint) {
+		this.endpoint = endpoint;
+		return this;
+	}
+	
+	public String endpoint() {
+		return endpoint;
+	}
+
+	public OpenStackRequest method(HttpMethod method) {
+		this.method = method;
+		return this;
+	}
+	
+	public HttpMethod method() {
+		return method;
+	}
+	
+	public OpenStackRequest path(String path) {
+		this.path.append(path);
+		return this;
+	}
+	
+	public String path() {
+		return path.toString();
+	}
+
+	public OpenStackRequest header(String name, Object... values) {
+		headers.put(name, Arrays.asList(values));
+		return this;
+	}
+	
+	public Map<String, List<Object>> headers() {
+		return headers;
+	}
+	
+	public <T> OpenStackRequest entity(T entity, String contentType) {
+		this.entity = new Entity<T>(entity, contentType);
+		return this;	
+	}
+	
+	public Entity<?> entity() {
+		return entity;
+	}
+	
+	public <T> void json(T entity) {
+		entity(entity, "application/json");
+	}
+	
+	public void returnType(Class<?> returnType) {
+		this.returnType = returnType;
+	}
+	
+	public Class<?> returnType() {
+		return returnType;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "OpenStackRequest [endpoint=" + endpoint + ", method=" + method
+				+ ", path=" + path + ", headers=" + headers + ", entity="
+				+ entity + ", returnType=" + returnType + "]";
 	}
 	
 }

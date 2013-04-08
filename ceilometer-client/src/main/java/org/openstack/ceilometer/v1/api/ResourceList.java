@@ -29,7 +29,7 @@ public class ResourceList implements CeilometerCommand<Resources> {
 	}
 	
 	@Override
-	public Resources execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		if(source != null) {
 //			target = target.path("sources").path(source);
 //		} else if(project != null) {

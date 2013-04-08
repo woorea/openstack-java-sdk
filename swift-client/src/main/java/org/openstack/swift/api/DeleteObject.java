@@ -18,7 +18,7 @@ public class DeleteObject implements SwiftCommand<Response>{
 	}
 	
 	@Override
-	public Response execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		//return target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}

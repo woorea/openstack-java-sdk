@@ -48,7 +48,7 @@ public class OpenStackClient {
 		this.token = token;
 	}
 	
-	protected OpenStackRequest newOpenStackRequest() {
+	public OpenStackRequest newOpenStackRequest() {
 		OpenStackRequest request = new OpenStackRequest();
 		request.endpoint(endpoint);
 		if(token != null) {

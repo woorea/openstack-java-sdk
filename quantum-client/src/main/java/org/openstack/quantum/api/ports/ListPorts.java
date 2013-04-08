@@ -7,7 +7,7 @@ import org.openstack.quantum.model.Ports;
 
 public class ListPorts implements QuantumCommand<Ports> {
 	
-	public Ports execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("ports").request(MediaType.APPLICATION_JSON).get(Ports.class);
 		return null;
 	}

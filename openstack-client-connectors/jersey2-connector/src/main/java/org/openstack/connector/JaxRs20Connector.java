@@ -33,9 +33,9 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 			invocation.header(h.getKey(), sb);
 		}
 		if(request.entity() != null) {
-			return invocation.method(request.method(), Entity.entity(request.entity().getEntity(),request.entity().getContentType()), responseType);
+			return invocation.method(request.method().name(), Entity.entity(request.entity().getEntity(),request.entity().getContentType()), responseType);
 		} else {
-			return invocation.method(request.method(), responseType);
+			return invocation.method(request.method().name(), responseType);
 		}
 		
 	}

@@ -2,7 +2,7 @@ package org.openstack.glance.api;
 
 import java.util.Calendar;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
@@ -16,7 +16,7 @@ public class ShowImage implements GlanceCommand<Image> {
 	}
 
 	@Override
-	public Image execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 		/*
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_JSON).head();
 		Image image = new Image();

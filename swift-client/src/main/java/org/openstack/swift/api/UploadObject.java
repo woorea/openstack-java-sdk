@@ -16,7 +16,7 @@ public class UploadObject implements SwiftCommand<Response>{
 	}
 	
 	@Override
-	public Response execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		Invocation.Builder invocationBuilder = target.path(objectForUpload.getContainer()).path(objectForUpload.getName()).request(MediaType.APPLICATION_JSON);
 //		for(String key : objectForUpload.getProperties().keySet()) {
 //			invocationBuilder.header("x-object-meta-" + key, objectForUpload.getProperties().get(key));

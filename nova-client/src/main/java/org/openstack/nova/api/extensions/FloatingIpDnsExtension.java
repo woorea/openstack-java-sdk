@@ -1,6 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.FloatingIpDomain;
@@ -11,11 +12,13 @@ public class FloatingIpDnsExtension {
 	public class ListFloatingIpDomains implements NovaCommand<FloatingIpDomains>{
 
 		@Override
-		public FloatingIpDomains execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ip-dns/");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, FloatingIpDomains.class);
+		    request.returnType(FloatingIpDomains.class);
+		return request;
 		}
 
 	}
@@ -29,12 +32,14 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public FloatingIpDomain execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ip-dns/");
 		    request.header("Accept", "application/json");
 		    request.json(floatingIpDomain);
-		    return connector.execute(request, FloatingIpDomain.class);
+		    request.returnType(FloatingIpDomain.class);
+		return request;
 		}
 		
 	}
@@ -48,7 +53,7 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public FloatingIpDomain execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 			//return target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).get(FloatingIpDomain.class);
 			return null;
 		}
@@ -65,7 +70,7 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public FloatingIpDomain execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 			//return target.path("os-floating-ip-dns").request(MediaType.APPLICATION_JSON).post(Entity.json(floatingIpDomain), FloatingIpDomain.class);
 			return null;
 		}
@@ -82,7 +87,7 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 			//target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}

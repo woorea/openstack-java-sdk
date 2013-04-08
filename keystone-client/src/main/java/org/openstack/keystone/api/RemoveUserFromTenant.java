@@ -1,6 +1,7 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 
@@ -17,8 +18,9 @@ public class RemoveUserFromTenant implements KeystoneCommand<Void> {
 	}
 	
 	@Override
-	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("DELETE");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
 		request.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId);
 		request.header("Accept", "application/json");
 		//target.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId).request(MediaType.APPLICATION_JSON).delete();

@@ -14,7 +14,7 @@ public class CreateSubnet implements QuantumCommand<Subnet> {
 		this.SubnetForCreate=subnet;
 	}
 
-	public Subnet execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("subnets").request(MediaType.APPLICATION_JSON).post(Entity.json(SubnetForCreate), Subnet.class);
 		return null;
 	}

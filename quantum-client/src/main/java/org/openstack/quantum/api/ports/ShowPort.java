@@ -13,7 +13,7 @@ private String id;
 		this.id = id;
 	}
 	
-	public Port execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("ports").path(id).request(MediaType.APPLICATION_JSON).get(Port.class);
 		return null;
 	}

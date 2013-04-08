@@ -13,7 +13,7 @@ public class QuerySubnets extends AbsOpenStackCmd<Subnet> implements QuantumComm
 		super(subnet);
 	}
 
-	public Subnets execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		target = target.path("v2.0").path("subnets");
 //		target = queryParam(target);
 //		return target.request(MediaType.APPLICATION_JSON).get(Subnets.class);

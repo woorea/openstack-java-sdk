@@ -17,7 +17,7 @@ public class DownloadObject implements SwiftCommand<ObjectDownload> {
 	}
 	
 	@Override
-	public ObjectDownload execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		Response response = target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).get();
 //		ObjectDownload objectDownload = new ObjectDownload();
 //		objectDownload.setInputStream((InputStream) response.getEntity());

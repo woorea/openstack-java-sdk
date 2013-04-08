@@ -1,6 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.KeyPair;
@@ -17,12 +18,14 @@ public class KeyPairsExtension {
 		}
 
 		@Override
-		public KeyPair execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/os-keypairs");
 		    request.header("Accept", "application/json");
 		    request.json(keyPairForCreate);
-		    return connector.execute(request, KeyPair.class);
+		    request.returnType(KeyPair.class);
+		return request;
 		}
 		
 	}
@@ -36,11 +39,12 @@ public class KeyPairsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("DELETE");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
 		    request.path("/os-keypairs").path(name);
 		    request.header("Accept", "application/json");
-		    connector.execute(request);
+		    
 		    return null;
 		}
 		
@@ -49,11 +53,13 @@ public class KeyPairsExtension {
 	public static class ListKeyPairs implements NovaCommand<KeyPairs>{
 
 		@Override
-		public KeyPairs execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path("/os-keypairs");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, KeyPairs.class);
+		    request.returnType(KeyPairs.class);
+		return request;
 		}
 
 	}

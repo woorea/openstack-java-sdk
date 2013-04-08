@@ -1,12 +1,11 @@
 package org.openstack.nova.api.extensions;
 
 import java.util.Map;
-import java.util.UUID;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
-import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.Volume;
 import org.openstack.nova.model.VolumeAttachment;
 import org.openstack.nova.model.VolumeForCreate;
@@ -27,11 +26,13 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Volumes execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("GET");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		    request.path(detail ? "/os-volumes/detail" : "/os-volumes");
 		    request.header("Accept", "application/json");
-		    return connector.execute(request, Volumes.class);
+		    request.returnType(Volumes.class);
+		return request;
 		}
 
 	}
@@ -46,7 +47,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Volume execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 			//return target.path("os-volumes").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeForCreate), Volume.class);
 			return null;
 		}
@@ -62,7 +63,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Volume execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 			//return target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).get(Volume.class);
 			return null;
 		}
@@ -79,7 +80,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Map<String, String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 //			Metadata metadata = target.path("os-volumes").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
 //			return metadata.getMetadata();
 			return null;
@@ -102,7 +103,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 //			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
 			return null;
 		}
@@ -121,7 +122,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 //			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
@@ -137,7 +138,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+		public OpenStackRequest execute(OpenStackClient client) {
 //			target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}

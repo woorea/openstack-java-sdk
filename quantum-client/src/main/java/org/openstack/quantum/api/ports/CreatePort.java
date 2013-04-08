@@ -14,7 +14,7 @@ public class CreatePort implements QuantumCommand<Port> {
 		this.PortForCreate=port;
 	}
 
-	public Port execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("ports").request(MediaType.APPLICATION_JSON).post(Entity.json(PortForCreate), Port.class);
 		return null;
 	}

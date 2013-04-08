@@ -3,6 +3,7 @@ package org.openstack.glance.api;
 import java.util.Collection;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
@@ -20,12 +21,13 @@ public class ReplaceImageMemberships implements GlanceCommand<Void>{
 	}
 	
 	@Override
-	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("PUT");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.PUT);
 	    request.path("/images/").path(id).path("/members");
 	    request.header("Accept", "application/json");
 	    request.json(new Memberships(imageMembers));
-	    connector.execute(request);
+	    
 	    return null;
 	}
 	

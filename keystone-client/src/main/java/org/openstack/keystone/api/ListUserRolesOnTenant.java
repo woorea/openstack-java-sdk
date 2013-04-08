@@ -1,6 +1,7 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Roles;
@@ -15,13 +16,13 @@ public class ListUserRolesOnTenant implements KeystoneCommand<Roles> {
 		this.userId = userId;
 	}
 
-	@Override
-	public Roles execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("GET");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
 		request.path("/tenants").path(tenantId).path("/users").path(userId).path("/roles");
 		request.header("Accept", "application/json");
-		return connector.execute(request, Roles.class);
-		//return target.path("tenants").path(tenantId).path("users").path(userId).path("roles").request(MediaType.APPLICATION_JSON).get(Roles.class);
+		request.returnType(Roles.class);
+		return request;
 	}
 
 }

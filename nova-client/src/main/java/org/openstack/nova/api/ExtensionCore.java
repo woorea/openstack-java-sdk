@@ -15,7 +15,8 @@
  */
 package org.openstack.nova.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Extensions;
@@ -39,11 +40,13 @@ public class ExtensionCore {
     }
 
     @Override
-    public Extensions execute(OpenStackClientConnector connector, OpenStackRequest request) {
-      request.method("GET");
+    public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
       request.path(detail ? "extensions/detail" : "extensions");
       request.header("Accept", "application/json");
-      return connector.execute(request, Extensions.class);
+      request.returnType(Extensions.class);
+		return request;
     }
   }
 

@@ -1,6 +1,7 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Endpoint;
@@ -14,12 +15,14 @@ public class CreateEndpoint implements KeystoneCommand<Endpoint> {
 	}
 
 	@Override
-	public Endpoint execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("POST");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		request.path("/endpoints");
 		request.json(endpointForCreate);
 		request.header("Accept", "application/json");
-		return connector.execute(request, Endpoint.class);
+		request.returnType(Endpoint.class);
+		return request;
 	}
 	
 }

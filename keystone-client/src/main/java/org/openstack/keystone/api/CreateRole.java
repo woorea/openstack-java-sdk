@@ -1,6 +1,7 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Role;
@@ -14,13 +15,14 @@ public class CreateRole implements KeystoneCommand<Role> {
 	}
 
 	@Override
-	public Role execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("POST");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		request.path("/endpoints");
 		request.json(roleForCreate);
 		request.header("Accept", "application/json");
-		return connector.execute(request, Role.class);
-		//return target.path("OS-KSADM/roles").request(MediaType.APPLICATION_JSON).post(Entity.json(roleForCreate), Role.class);
+		request.returnType(Role.class);
+		return request;
 	}
 	
 }

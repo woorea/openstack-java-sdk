@@ -13,7 +13,7 @@ public class ShowNetwork implements QuantumCommand<Network> {
 		this.id = id;
 	}
 	
-	public Network execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).get(Network.class);
 		return null;
 	}

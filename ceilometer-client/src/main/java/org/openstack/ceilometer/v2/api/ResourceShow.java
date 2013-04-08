@@ -16,7 +16,7 @@ public class ResourceShow implements CeilometerCommand<Resource> {
 	}
 	
 	@Override
-	public Resource execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		if(id == null) {
 //			throw new UnsupportedOperationException("resource id is mandatory");
 //		}

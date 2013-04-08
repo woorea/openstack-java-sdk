@@ -14,7 +14,7 @@ public class CreateNetwork implements QuantumCommand<Network> {
 		this.networkForCreate=net;
 	}
 
-	public Network execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		return target.path("v2.0").path("networks").request(MediaType.APPLICATION_JSON).post(Entity.json(networkForCreate), Network.class)
 		return null;
 	}

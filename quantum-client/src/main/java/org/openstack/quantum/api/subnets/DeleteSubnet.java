@@ -12,7 +12,7 @@ private String id;
 		this.id = SubnetId;
 	}
 
-	public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		target.path("v2.0").path("subnets").path(id).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}

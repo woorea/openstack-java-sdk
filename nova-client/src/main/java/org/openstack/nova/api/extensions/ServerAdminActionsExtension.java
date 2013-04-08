@@ -1,6 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.CreateBackup;
@@ -25,12 +26,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -48,12 +50,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -71,12 +74,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -94,12 +98,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -117,12 +122,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -140,12 +146,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 
@@ -163,12 +170,13 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public Void execute(OpenStackClientConnector connector, OpenStackRequest request) {
-			request.method("POST");
+		public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
 		    request.json(action);
-		    connector.execute(request);
+		    
 			return null;
 		}
 

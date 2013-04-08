@@ -1,6 +1,7 @@
 package org.openstack.glance.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.ImageMember;
@@ -17,11 +18,13 @@ public class AddMemberToImage implements GlanceCommand<ImageMember>{
 	}
 	
 	@Override
-	public ImageMember execute(OpenStackClientConnector connector, OpenStackRequest request) {
-		request.method("PUT");
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.PUT);
 	    request.path("/images/").path(id).path("/members/").path(tenantId);
 	    request.header("Accept", "application/json");
-	    return connector.execute(request, ImageMember.class);
+	    request.returnType(ImageMember.class);
+		return request;
 	}
 
 }
