@@ -7,7 +7,7 @@ import org.openstack.keystone.api.DeleteTenant;
 
 public class KeystoneTenantDelete extends KeystoneCommand {
 	
-	public KeystoneTenantDelete(KeystoneClient client) {
+	public KeystoneTenantDelete() {
 		super("tenant-delete");
 	}
 

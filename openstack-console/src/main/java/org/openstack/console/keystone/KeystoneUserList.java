@@ -11,7 +11,7 @@ import org.openstack.keystone.model.Users;
 
 public class KeystoneUserList extends KeystoneCommand {
 	
-	public KeystoneUserList(KeystoneClient client) {
+	public KeystoneUserList() {
 		super("user-list");
 	}
 

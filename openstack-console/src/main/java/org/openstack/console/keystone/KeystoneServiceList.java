@@ -11,7 +11,7 @@ import org.openstack.keystone.model.Services;
 
 public class KeystoneServiceList extends KeystoneCommand {
 	
-	public KeystoneServiceList(KeystoneClient client) {
+	public KeystoneServiceList() {
 		super("service-list");
 	}
 

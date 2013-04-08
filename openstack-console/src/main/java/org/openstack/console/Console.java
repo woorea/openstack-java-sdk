@@ -2,11 +2,15 @@ package org.openstack.console;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import jline.UnsupportedTerminal;
 import jline.console.ConsoleReader;
+import jline.console.completer.Completer;
+import jline.console.completer.StringsCompleter;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -55,6 +59,15 @@ public class Console {
 	}
 
 	public void setEnvironment(Environment environment) {
+		Set<Completer> completers = new HashSet<Completer>(reader.getCompleters());
+		for(Completer c : completers) {
+			reader.removeCompleter(c);
+		}
+		Set<String> commands = new HashSet<String>();
+		for(Map.Entry<String,Command> c : environment.commands.entrySet()) {
+			commands.add(c.getKey());
+		}
+		reader.addCompleter(new StringsCompleter(commands));
 		this.environment = environment;
 	}
 	

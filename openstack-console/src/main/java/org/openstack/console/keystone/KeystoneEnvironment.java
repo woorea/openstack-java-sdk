@@ -29,7 +29,14 @@ public class KeystoneEnvironment extends Environment {
 			KeystoneEnvironment environment = new KeystoneEnvironment(console.getEnvironment(), client);
 			
 			environment.register(new KeystoneTenantList());
-			
+			environment.register(new KeystoneTenantCreate());
+			environment.register(new KeystoneTenantDelete());
+			environment.register(new KeystoneUserList());
+			environment.register(new KeystoneUserCreate());
+			environment.register(new KeystoneUserDelete());
+			environment.register(new KeystoneRoleList());
+			environment.register(new KeystoneRoleDelete());
+			environment.register(new KeystoneServiceList());	
 			console.setEnvironment(environment);
 		}
 		

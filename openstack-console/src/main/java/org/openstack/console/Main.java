@@ -1,5 +1,6 @@
 package org.openstack.console;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -17,10 +18,7 @@ public class Main {
 		environment.register(NovaEnvironment.NOVA);
 		
 		Properties properties = new Properties();
-		properties.setProperty("keystone.endpoint", "http://keystone/v2.0");
-		properties.setProperty("keystone.username", "admin");
-		properties.setProperty("keystone.password", "secret0");
-		properties.setProperty("keystone.tenant_name", "admin");
+		properties.load(new FileInputStream("src/main/resources/console.properties"));
 		
 		Console console = new Console(environment, properties);
 		console.start();

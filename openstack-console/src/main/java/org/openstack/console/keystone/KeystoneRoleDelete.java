@@ -3,12 +3,12 @@ package org.openstack.console.keystone;
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.utils.ConsoleUtils;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.DeleteUser;
+import org.openstack.keystone.api.DeleteRole;
 
-public class KeystoneUserDelete extends KeystoneCommand {
+public class KeystoneRoleDelete extends KeystoneCommand {
 	
-	public KeystoneUserDelete() {
-		super("user-delete");
+	public KeystoneRoleDelete() {
+		super("role-delete");
 	}
 
 	@Override
@@ -16,7 +16,7 @@ public class KeystoneUserDelete extends KeystoneCommand {
 		
 		String[] args = cmd.getArgs();
 		if(args.length == 1) {
-			keystone.execute(new DeleteUser(args[0]));
+			keystone.execute(new DeleteRole(args[0]));
 			System.out.println(new ConsoleUtils().green("OK"));
 		}
 		

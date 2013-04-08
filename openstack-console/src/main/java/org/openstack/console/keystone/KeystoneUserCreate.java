@@ -13,7 +13,7 @@ import com.google.common.collect.Lists;
 
 public class KeystoneUserCreate extends KeystoneCommand {
 	
-	public KeystoneUserCreate(KeystoneClient client) {
+	public KeystoneUserCreate() {
 		super("user-create");
 	}
 

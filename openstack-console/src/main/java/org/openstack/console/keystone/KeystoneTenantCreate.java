@@ -13,7 +13,7 @@ import com.google.common.collect.Lists;
 
 public class KeystoneTenantCreate extends KeystoneCommand {
 	
-	public KeystoneTenantCreate(KeystoneClient client) {
+	public KeystoneTenantCreate() {
 		super("tenant-create");
 	}
 

@@ -22,11 +22,13 @@ public class NovaEnvironment extends Environment {
 				KeystoneClient keystone = new KeystoneClient((String) console.getProperty("keystone.endpoint"));
 				
 				Access access = keystone.execute(Authenticate.withPasswordCredentials(
-						(String) console.getProperty("keystone.username"), 
-						(String) console.getProperty("keystone.password")
-				).withTenantName((String) console.getProperty("keystone.tenant_name")));
-								
-				NovaClient client = new NovaClient("http://compute.stacksherpa.org/v2/"+args.getArgs()[0]);
+						console.getProperty("keystone.username"), 
+						console.getProperty("keystone.password")
+				).withTenantName(console.getProperty("keystone.tenant_name")));
+				
+				System.out.println(console.getProperty("nova.endpoint"));
+				
+				NovaClient client = new NovaClient(console.getProperty("nova.endpoint")+args.getArgs()[0]);
 				client.token(access.getToken().getId());
 				
 				NovaEnvironment environment = new NovaEnvironment(console.getEnvironment(), client);
