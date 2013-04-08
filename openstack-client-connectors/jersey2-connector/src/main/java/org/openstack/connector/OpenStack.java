@@ -14,8 +14,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.glassfish.jersey.SslConfigurator;
 import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.client.SslConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 public class OpenStack {
@@ -51,12 +51,22 @@ public class OpenStack {
 		*/
 		
 		try {
-			CLIENT = ClientBuilder.newClient();
 			
 			SSLContext context = null;
             context = SSLContext.getInstance("SSL");
             context.init(null, null, null);
-	        CLIENT.property(ClientProperties.SSL_CONFIG, new SslConfig(context));
+            
+            SslConfigurator sslConfig = SslConfigurator.newInstance();
+            		/*
+                    .trustStoreFile("./truststore_client")
+                    .trustStorePassword("asdfgh")
+
+                    .keyStoreFile("./keystore_client")
+                    .keyPassword("asdfgh");
+                    */
+            		//old: CLIENT.property(ClientProperties.SSL_CONFIG, new SslConfig(context));
+            
+            CLIENT = ClientBuilder.newBuilder().sslContext(sslConfig.createSSLContext()).build();
 			
 			DEFAULT_MAPPER = new ObjectMapper();
 			
