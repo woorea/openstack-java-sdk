@@ -1,6 +1,6 @@
 package org.openstack.quantum.api.networks;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Network;
@@ -12,7 +12,7 @@ public class QueryNetworks implements QuantumCommand<Networks> {
 		//super(network);
 	}
 
-	public Networks execute(OpenStackClientConnector connector, OpenStackRequest request)
+	public OpenStackRequest execute(OpenStackClient client)
 	{
 //		target = target.path("v2.0").path("networks");
 //		target = queryParam(target);

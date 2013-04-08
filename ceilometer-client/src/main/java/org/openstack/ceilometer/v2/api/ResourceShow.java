@@ -1,6 +1,6 @@
 package org.openstack.ceilometer.v2.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.ceilometer.CeilometerCommand;
 import org.openstack.ceilometer.v2.model.Resource;
@@ -17,6 +17,7 @@ public class ResourceShow implements CeilometerCommand<Resource> {
 	
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
 //		if(id == null) {
 //			throw new UnsupportedOperationException("resource id is mandatory");
 //		}

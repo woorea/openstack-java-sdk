@@ -1,6 +1,6 @@
 package org.openstack.ceilometer.v1.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.ceilometer.CeilometerCommand;
 import org.openstack.ceilometer.v1.model.Extensions;

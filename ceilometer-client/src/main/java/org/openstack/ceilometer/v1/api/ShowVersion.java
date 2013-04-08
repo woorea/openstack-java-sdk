@@ -1,5 +1,6 @@
 package org.openstack.ceilometer.v1.api;
 
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.ceilometer.CeilometerCommand;
@@ -9,6 +10,7 @@ public class ShowVersion implements CeilometerCommand<Version> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
 		//return target.request(MediaType.APPLICATION_JSON).get(Version.class);
 		return null;
 	}

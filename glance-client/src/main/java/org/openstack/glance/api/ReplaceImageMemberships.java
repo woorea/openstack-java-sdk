@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.ImageMember;

@@ -1,6 +1,6 @@
 package org.openstack.quantum.api.subnets;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Subnets;

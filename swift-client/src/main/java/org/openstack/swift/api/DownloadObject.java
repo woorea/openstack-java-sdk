@@ -1,6 +1,6 @@
 package org.openstack.swift.api;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.swift.SwiftCommand;
 import org.openstack.swift.model.ObjectDownload;

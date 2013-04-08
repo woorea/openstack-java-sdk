@@ -3,7 +3,7 @@ package org.openstack.swift.api;
 import java.util.List;
 import java.util.Map;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.swift.SwiftCommand;
 import org.openstack.swift.model.Object;
@@ -20,7 +20,7 @@ public class ListObjects implements SwiftCommand<List<Object>>{
 	}
 	
 	@Override
-	public List<Object> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
 //		target = target.path(containerName);
 //		for(String filter : new String[]{"prefix","delimiter","path","marker"}) {
 //			if(filters.get(filter) != null) {

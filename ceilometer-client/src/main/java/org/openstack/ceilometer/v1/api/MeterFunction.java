@@ -1,11 +1,8 @@
 package org.openstack.ceilometer.v1.api;
 
-import java.awt.PageAttributes.MediaType;
 import java.math.BigDecimal;
 
-import javax.xml.ws.Response;
-
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 
 public class MeterFunction extends MeterCommand<BigDecimal> {
@@ -40,6 +37,7 @@ public class MeterFunction extends MeterCommand<BigDecimal> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
 		if(source != null) {
 			request.path("sources").path(source);
 		} else if(project != null) {

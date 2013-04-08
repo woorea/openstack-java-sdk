@@ -2,14 +2,15 @@ package org.openstack.ceilometer.v1.api;
 
 import java.util.List;
 
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.ceilometer.v1.model.MeterEvent;
 
 public class MeterList extends MeterCommand<List<MeterEvent>> {
 
 	@Override
-	public List<MeterEvent> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
 		if(source != null) {
 			request.path("sources").path(source);
 		} else if(project != null) {

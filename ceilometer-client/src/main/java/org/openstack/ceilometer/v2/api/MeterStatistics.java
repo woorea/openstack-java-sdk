@@ -2,6 +2,7 @@ package org.openstack.ceilometer.v2.api;
 
 import java.util.List;
 
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.ceilometer.QueriableCeilometerCommand;
@@ -18,7 +19,8 @@ public class MeterStatistics extends QueriableCeilometerCommand<MeterStatistics,
 	}
 	
 	@Override
-	public List<Statistics> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
 //		if(name == null) {
 //			throw new UnsupportedOperationException("meter id is mandatory");
 //		}

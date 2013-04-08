@@ -3,6 +3,7 @@ package org.openstack.ceilometer.v1.api;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.ceilometer.CeilometerCommand;
@@ -24,7 +25,8 @@ public class UserList implements CeilometerCommand<List<String>> {
 	}
 
 	@Override
-	public List<String> execute(OpenStackClientConnector connector, OpenStackRequest request) {
+	public OpenStackRequest execute(OpenStackClient client) {
+		OpenStackRequest request = client.newOpenStackRequest();
 //		if(source != null) {
 //			target = target.path("/sources").path(source);
 //		}

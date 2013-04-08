@@ -1,7 +1,7 @@
 package org.openstack.glance.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.GlanceCommand;
 

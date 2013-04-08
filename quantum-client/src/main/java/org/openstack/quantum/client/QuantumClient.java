@@ -15,10 +15,8 @@ public class QuantumClient extends OpenStackClient {
 	}
 
 	public <R> R execute(QuantumCommand<R> command) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.endpoint(endpoint);
-		request.header("X-Auth-Token", properties.getProperty("os.token"));
-		return command.execute(connector, request);
+		OpenStackRequest request = command.execute(this);
+		return (R) connector.execute(request, request.returnType());
 	}
 	
 }
