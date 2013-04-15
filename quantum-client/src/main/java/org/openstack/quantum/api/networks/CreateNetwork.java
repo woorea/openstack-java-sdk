@@ -1,12 +1,12 @@
 package org.openstack.quantum.api.networks;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.QuantumCommand;
 import org.openstack.quantum.model.Network;
 import org.openstack.quantum.model.NetworkForCreate;
 
-public class CreateNetwork implements QuantumCommand<Network> {
+public class CreateNetwork implements OpenStackCommand<Network> {
 	
 	private NetworkForCreate networkForCreate;
 	

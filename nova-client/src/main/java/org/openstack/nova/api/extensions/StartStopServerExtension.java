@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.Start;
 import org.openstack.nova.model.ServerAction.Stop;
 
 public class StartStopServerExtension {
 
-	public class StartServer implements NovaCommand<Void> {
+	public class StartServer implements OpenStackCommand<Void> {
 		
 		private Start action;
 
@@ -33,7 +33,7 @@ public class StartStopServerExtension {
 
 	}
 	
-	public class StopServer implements NovaCommand<Void> {
+	public class StopServer implements OpenStackCommand<Void> {
 		
 		private Stop action;
 

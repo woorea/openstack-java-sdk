@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.Rescue;
 import org.openstack.nova.model.ServerAction.Unrescue;
 
 public class ServerRescueExtension {
 
-	public class RescueServer implements NovaCommand<Void> {
+	public class RescueServer implements OpenStackCommand<Void> {
 		
 		private Rescue action;
 
@@ -33,7 +33,7 @@ public class ServerRescueExtension {
 
 	}
 
-	public class UnrescueServer implements NovaCommand<Void> {
+	public class UnrescueServer implements OpenStackCommand<Void> {
 		
 		private Unrescue action;
 

@@ -1,10 +1,10 @@
 package org.openstack.quantum.api.ports;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.QuantumCommand;
 
-public class DeletePort implements QuantumCommand<Void> {
+public class DeletePort implements OpenStackCommand<Void> {
 
 private String id;
 	

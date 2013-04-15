@@ -1,12 +1,12 @@
 package org.openstack.ceilometer.v2.api;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.ceilometer.CeilometerCommand;
 import org.openstack.ceilometer.v2.model.Resource;
 
 
-public class ResourceShow implements CeilometerCommand<Resource> {
+public class ResourceShow implements OpenStackCommand<Resource> {
 
 	private String id;
 		

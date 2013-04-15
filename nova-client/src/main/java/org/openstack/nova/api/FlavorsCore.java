@@ -4,15 +4,15 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.Flavors;
 import org.openstack.nova.model.Metadata;
 
 public class FlavorsCore {
 	
-	public static class ListFlavors implements NovaCommand<Flavors>{
+	public static class ListFlavors implements OpenStackCommand<Flavors>{
 
 		boolean detail;
 		
@@ -36,7 +36,7 @@ public class FlavorsCore {
 
 	}
 	
-	public static class ShowFlavor implements NovaCommand<Flavor> {
+	public static class ShowFlavor implements OpenStackCommand<Flavor> {
 
 		private String id;
 		
@@ -57,7 +57,7 @@ public class FlavorsCore {
 	}
 
 	
-	public static class ShowFlavorMetadata implements NovaCommand<Map<String, String>> {
+	public static class ShowFlavorMetadata implements OpenStackCommand<Map<String, String>> {
 
 		private String id;
 		

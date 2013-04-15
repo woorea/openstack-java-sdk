@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.KeyPair;
 import org.openstack.nova.model.KeyPairs;
 
 public class KeyPairsExtension {
 
-	public static class CreateKeyPair implements NovaCommand<KeyPair> {
+	public static class CreateKeyPair implements OpenStackCommand<KeyPair> {
 
 		private KeyPair keyPairForCreate;
 		
@@ -30,7 +30,7 @@ public class KeyPairsExtension {
 		
 	}
 	
-	public static class DeleteKeyPair implements NovaCommand<Void> {
+	public static class DeleteKeyPair implements OpenStackCommand<Void> {
 
 		private String name;
 		
@@ -50,7 +50,7 @@ public class KeyPairsExtension {
 		
 	}
 	
-	public static class ListKeyPairs implements NovaCommand<KeyPairs>{
+	public static class ListKeyPairs implements OpenStackCommand<KeyPairs>{
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {

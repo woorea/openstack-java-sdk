@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.ConsoleOutput;
 import org.openstack.nova.model.ServerAction.GetConsoleOutput;
 
 public class OutputExtension {
 
-	public static class GetConsoleOutputServer implements NovaCommand<ConsoleOutput> {
+	public static class GetConsoleOutputServer implements OpenStackCommand<ConsoleOutput> {
 		
 		private GetConsoleOutput action;
 

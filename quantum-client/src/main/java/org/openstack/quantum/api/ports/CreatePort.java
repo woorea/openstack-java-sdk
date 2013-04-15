@@ -1,12 +1,12 @@
 package org.openstack.quantum.api.ports;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.QuantumCommand;
 import org.openstack.quantum.model.Port;
 import org.openstack.quantum.model.PortForCreate;
 
-public class CreatePort implements QuantumCommand<Port> {
+public class CreatePort implements OpenStackCommand<Port> {
 
 	private PortForCreate PortForCreate;
 	

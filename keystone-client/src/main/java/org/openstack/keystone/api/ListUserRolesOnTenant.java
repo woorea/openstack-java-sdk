@@ -2,11 +2,11 @@ package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Roles;
 
-public class ListUserRolesOnTenant implements KeystoneCommand<Roles> {
+public class ListUserRolesOnTenant implements OpenStackCommand<Roles> {
 	
 	private String tenantId;
 	private String userId;
