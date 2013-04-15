@@ -35,9 +35,10 @@ public class OpenStackClient {
 		this.connector = (connector == null) ? DEFAULT_CONNECTOR : connector;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> T execute(OpenStackCommand<T> command) {
-		OpenStackRequest request = newOpenStackRequest();
-		return command.execute(connector, request);
+		OpenStackRequest request = command.execute(this);
+		return (T) connector.execute(request, request.returnType());
 	}
 
 	public void property(String property, String value) {

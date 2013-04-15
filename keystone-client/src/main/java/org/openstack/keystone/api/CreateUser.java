@@ -2,11 +2,11 @@ package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.User;
 
-public class CreateUser implements KeystoneCommand<User> {
+public class CreateUser implements OpenStackCommand<User> {
 
 	private User userForCreate;
 	

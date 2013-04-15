@@ -2,15 +2,15 @@ package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Authentication;
 import org.openstack.keystone.model.Authentication.ApiAccessKeyCredentials;
 import org.openstack.keystone.model.Authentication.PasswordCredentials;
 import org.openstack.keystone.model.Authentication.Token;
 
-public class Authenticate implements KeystoneCommand<Access> {
+public class Authenticate implements OpenStackCommand<Access> {
 	
 	private Authentication authentication;
 	

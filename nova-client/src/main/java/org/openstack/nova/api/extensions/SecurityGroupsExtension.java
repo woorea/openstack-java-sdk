@@ -2,8 +2,8 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.SecurityGroup;
 import org.openstack.nova.model.SecurityGroupForCreate;
 import org.openstack.nova.model.SecurityGroupRuleForCreate;
@@ -11,8 +11,7 @@ import org.openstack.nova.model.SecurityGroups;
 
 public class SecurityGroupsExtension {
 
-	public static class ListSecurityGroups implements
-			NovaCommand<SecurityGroups> {
+	public static class ListSecurityGroups implements OpenStackCommand<SecurityGroups> {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
@@ -26,8 +25,7 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class CreateSecurityGroup implements
-			NovaCommand<SecurityGroup> {
+	public static class CreateSecurityGroup implements OpenStackCommand<SecurityGroup> {
 
 		private SecurityGroupForCreate securityGroupForCreate;
 
@@ -45,7 +43,7 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class ShowSecurityGroup implements NovaCommand<SecurityGroup> {
+	public static class ShowSecurityGroup implements OpenStackCommand<SecurityGroup> {
 
 		private Integer id;
 
@@ -65,7 +63,7 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class DeleteSecurityGroup implements NovaCommand<Void> {
+	public static class DeleteSecurityGroup implements OpenStackCommand<Void> {
 
 		private Integer id;
 
@@ -85,8 +83,7 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class CreateSecurityGroupRule implements
-			NovaCommand<SecurityGroup.Rule> {
+	public static class CreateSecurityGroupRule implements OpenStackCommand<SecurityGroup.Rule> {
 
 		private SecurityGroupRuleForCreate securityGroupRuleForCreate;
 
@@ -105,7 +102,7 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class DeleteSecurityGroupRule implements NovaCommand<Void> {
+	public static class DeleteSecurityGroupRule implements OpenStackCommand<Void> {
 
 		private Integer id;
 

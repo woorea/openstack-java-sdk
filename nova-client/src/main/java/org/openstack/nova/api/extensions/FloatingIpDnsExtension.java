@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.FloatingIpDomain;
 import org.openstack.nova.model.FloatingIpDomains;
 
 public class FloatingIpDnsExtension {
 	
-	public class ListFloatingIpDomains implements NovaCommand<FloatingIpDomains>{
+	public class ListFloatingIpDomains implements OpenStackCommand<FloatingIpDomains>{
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
@@ -23,7 +23,7 @@ public class FloatingIpDnsExtension {
 
 	}
 
-	public static class CreateFloatingIpDomain implements NovaCommand<FloatingIpDomain> {
+	public static class CreateFloatingIpDomain implements OpenStackCommand<FloatingIpDomain> {
 
 		private FloatingIpDomain floatingIpDomain;
 		
@@ -44,7 +44,7 @@ public class FloatingIpDnsExtension {
 		
 	}
 	
-	public static class ShowFloatingIpDomain implements NovaCommand<FloatingIpDomain> {
+	public static class ShowFloatingIpDomain implements OpenStackCommand<FloatingIpDomain> {
 
 		private String id;
 		
@@ -61,7 +61,7 @@ public class FloatingIpDnsExtension {
 	}
 
 	
-	public static class UpdateFloatingIpDomain implements NovaCommand<FloatingIpDomain> {
+	public static class UpdateFloatingIpDomain implements OpenStackCommand<FloatingIpDomain> {
 
 		private FloatingIpDomain floatingIpDomain;
 		
@@ -78,7 +78,7 @@ public class FloatingIpDnsExtension {
 	}
 
 	
-	public class DeleteFloatingIpDomain implements NovaCommand<Void> {
+	public class DeleteFloatingIpDomain implements OpenStackCommand<Void> {
 
 		private String id;
 		

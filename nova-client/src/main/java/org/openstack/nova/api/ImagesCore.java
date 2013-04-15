@@ -4,15 +4,15 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Image;
 import org.openstack.nova.model.Images;
 import org.openstack.nova.model.Metadata;
 
 public class ImagesCore {
 
-	public static class ListImages implements NovaCommand<Images> {
+	public static class ListImages implements OpenStackCommand<Images> {
 
 		boolean detail;
 
@@ -36,7 +36,7 @@ public class ImagesCore {
 
 	}
 
-	public static class ShowImage implements NovaCommand<Image> {
+	public static class ShowImage implements OpenStackCommand<Image> {
 
 		private String id;
 
@@ -56,8 +56,7 @@ public class ImagesCore {
 
 	}
 
-	public static class ShowImageMetadata implements
-			NovaCommand<Map<String, String>> {
+	public static class ShowImageMetadata implements OpenStackCommand<Map<String, String>> {
 
 		private String id;
 
@@ -77,7 +76,7 @@ public class ImagesCore {
 
 	}
 
-	public static class DeleteImage implements NovaCommand<Void> {
+	public static class DeleteImage implements OpenStackCommand<Void> {
 
 		private String id;
 

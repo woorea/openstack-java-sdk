@@ -1,12 +1,12 @@
 package org.openstack.glance.api;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
 import org.openstack.glance.model.ImageForUpload;
 
-public class UploadImage implements GlanceCommand<Image>{
+public class UploadImage implements OpenStackCommand<Image> {
 	
 	private ImageForUpload imageForUpload;
 	
