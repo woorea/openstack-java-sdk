@@ -2,7 +2,6 @@ package org.openstack.quantum;
 
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackClientConnector;
-import org.openstack.base.client.OpenStackRequest;
 
 public class QuantumClient extends OpenStackClient {
 	
@@ -14,9 +13,4 @@ public class QuantumClient extends OpenStackClient {
 		super(endpoint, connector);
 	}
 
-	public <R> R execute(QuantumCommand<R> command) {
-		OpenStackRequest request = command.execute(this);
-		return (R) connector.execute(request, request.returnType());
-	}
-	
 }
