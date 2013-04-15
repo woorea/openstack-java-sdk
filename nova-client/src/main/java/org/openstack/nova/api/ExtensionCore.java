@@ -17,8 +17,8 @@ package org.openstack.nova.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Extensions;
 
 /**
@@ -27,7 +27,7 @@ import org.openstack.nova.model.Extensions;
  */
 public class ExtensionCore {
 
-  public static class ListExtensions implements NovaCommand<Extensions> {
+  public static class ListExtensions implements OpenStackCommand<Extensions> {
 
     boolean detail;
 

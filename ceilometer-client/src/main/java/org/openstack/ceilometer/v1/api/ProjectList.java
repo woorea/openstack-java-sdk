@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.ceilometer.CeilometerCommand;
 
-public class ProjectList implements CeilometerCommand<List<String>> {
+public class ProjectList implements OpenStackCommand<List<String>> {
 	
 	private static final class Projects {
 		

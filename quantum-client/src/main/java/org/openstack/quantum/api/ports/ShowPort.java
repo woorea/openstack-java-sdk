@@ -1,11 +1,11 @@
 package org.openstack.quantum.api.ports;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Port;
 
-public class ShowPort implements QuantumCommand<Port> {
+public class ShowPort implements OpenStackCommand<Port> {
 
 private String id;
 	

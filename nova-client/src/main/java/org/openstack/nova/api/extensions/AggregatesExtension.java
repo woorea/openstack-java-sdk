@@ -4,14 +4,14 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.HostAggregate;
 import org.openstack.nova.model.HostAggregates;
 
 public class AggregatesExtension {
 
-	public class ListAggregates implements NovaCommand<HostAggregates> {
+	public class ListAggregates implements OpenStackCommand<HostAggregates> {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
@@ -25,7 +25,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class ShowAggregate implements NovaCommand<HostAggregate> {
+	public class ShowAggregate implements OpenStackCommand<HostAggregate> {
 
 		private String id;
 
@@ -45,7 +45,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class UpdateAggregateMetadata implements NovaCommand<Void> {
+	public class UpdateAggregateMetadata implements OpenStackCommand<Void> {
 
 		private String id;
 
@@ -69,7 +69,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class DeleteAggregate implements NovaCommand<Void> {
+	public class DeleteAggregate implements OpenStackCommand<Void> {
 
 		private String id;
 
@@ -88,7 +88,7 @@ public class AggregatesExtension {
 
 	}
 
-	public static class AddHost implements NovaCommand<Void> {
+	public static class AddHost implements OpenStackCommand<Void> {
 
 		private String aggregateId;
 
@@ -107,7 +107,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class RemoveHost implements NovaCommand<Void> {
+	public class RemoveHost implements OpenStackCommand<Void> {
 
 		private String aggregateId;
 

@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Network;
 import org.openstack.nova.model.Networks;
 
 public class NetworksExtension {
 
-	public static class ListNetworks implements NovaCommand<Networks> {
+	public static class ListNetworks implements OpenStackCommand<Networks> {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
@@ -23,7 +23,7 @@ public class NetworksExtension {
 
 	}
 
-	public static class CreateNetwork implements NovaCommand<Network> {
+	public static class CreateNetwork implements OpenStackCommand<Network> {
 
 		private Network network;
 
@@ -44,7 +44,7 @@ public class NetworksExtension {
 
 	}
 
-	public class ShowNetwork implements NovaCommand<Network> {
+	public class ShowNetwork implements OpenStackCommand<Network> {
 
 		private String id;
 
@@ -64,7 +64,7 @@ public class NetworksExtension {
 
 	}
 
-	public static class DisassociateNetwork implements NovaCommand<Void> {
+	public static class DisassociateNetwork implements OpenStackCommand<Void> {
 
 		private String id;
 
@@ -85,7 +85,7 @@ public class NetworksExtension {
 
 	}
 
-	public static class DeleteNetwork implements NovaCommand<Void> {
+	public static class DeleteNetwork implements OpenStackCommand<Void> {
 
 		private String id;
 

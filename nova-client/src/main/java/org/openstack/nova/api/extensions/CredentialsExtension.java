@@ -2,13 +2,13 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Certificate;
 
 public class CredentialsExtension {
 
-	public static class CreateCertificate implements NovaCommand<Certificate> {
+	public static class CreateCertificate implements OpenStackCommand<Certificate> {
 
 		private String id;
 		
@@ -28,7 +28,7 @@ public class CredentialsExtension {
 		
 	}
 	
-	public static class ShowCertificate implements NovaCommand<Void>{
+	public static class ShowCertificate implements OpenStackCommand<Void>{
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {

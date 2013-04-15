@@ -4,14 +4,14 @@ import java.util.UUID;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.FlavorForCreate;
 
 public class FlavorsExtension {
 	
-	public static class CreateFlavor implements NovaCommand<Flavor> {
+	public static class CreateFlavor implements OpenStackCommand<Flavor> {
 
 		private FlavorForCreate flavorForCreate;
 		
@@ -35,7 +35,7 @@ public class FlavorsExtension {
 		
 	}
 
-	public static class DeleteFlavor implements NovaCommand<Void> {
+	public static class DeleteFlavor implements OpenStackCommand<Void> {
 
 		private String id;
 		

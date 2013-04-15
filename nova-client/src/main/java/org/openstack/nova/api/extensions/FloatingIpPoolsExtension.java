@@ -2,13 +2,13 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.FloatingIpPools;
 
 public class FloatingIpPoolsExtension {
 
-	public static class ListFloatingIpPools implements NovaCommand<FloatingIpPools>{
+	public static class ListFloatingIpPools implements OpenStackCommand<FloatingIpPools>{
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {

@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Volume;
 import org.openstack.nova.model.VolumeAttachment;
 import org.openstack.nova.model.VolumeForCreate;
@@ -13,7 +13,7 @@ import org.openstack.nova.model.Volumes;
 
 public class VolumesExtension {
 	
-	public static class ListVolumes implements NovaCommand<Volumes>{
+	public static class ListVolumes implements OpenStackCommand<Volumes>{
 
 		boolean detail;
 		
@@ -38,7 +38,7 @@ public class VolumesExtension {
 	}
 
 	
-	public static class CreateVolume implements NovaCommand<Volume> {
+	public static class CreateVolume implements OpenStackCommand<Volume> {
 
 		private VolumeForCreate volumeForCreate;
 		
@@ -54,7 +54,7 @@ public class VolumesExtension {
 		
 	}
 	
-	public static class ShowVolume implements NovaCommand<Volume> {
+	public static class ShowVolume implements OpenStackCommand<Volume> {
 
 		private String id;
 		
@@ -71,7 +71,7 @@ public class VolumesExtension {
 	}
 
 	
-	public static class ShowVolumeMetadata implements NovaCommand<Map<String, String>> {
+	public static class ShowVolumeMetadata implements OpenStackCommand<Map<String, String>> {
 
 		private String id;
 		
@@ -89,7 +89,7 @@ public class VolumesExtension {
 	}
 
 	
-	public static class AttachVolumeToServer implements NovaCommand<Void> {
+	public static class AttachVolumeToServer implements OpenStackCommand<Void> {
 		
 		private String serverId;
 		
@@ -110,7 +110,7 @@ public class VolumesExtension {
 
 	}
 	
-	public static class DetachVolumeFromServer implements NovaCommand<Void> {
+	public static class DetachVolumeFromServer implements OpenStackCommand<Void> {
 		
 		private String serverId;
 		
@@ -129,7 +129,7 @@ public class VolumesExtension {
 
 	}
 	
-	public static class DeleteVolume implements NovaCommand<Void> {
+	public static class DeleteVolume implements OpenStackCommand<Void> {
 
 		private String id;
 		

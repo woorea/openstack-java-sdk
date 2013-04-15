@@ -5,14 +5,14 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.FloatingIp;
 import org.openstack.nova.model.FloatingIps;
 
 public class FloatingIpsExtension {
 	
-	public static class ListFloatingIps implements NovaCommand<FloatingIps>{
+	public static class ListFloatingIps implements OpenStackCommand<FloatingIps>{
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
@@ -26,7 +26,7 @@ public class FloatingIpsExtension {
 
 	}
 
-	public static class AllocateFloatingIp implements NovaCommand<FloatingIp> {
+	public static class AllocateFloatingIp implements OpenStackCommand<FloatingIp> {
 		
 		private Map<String, String> body;
 			
@@ -49,7 +49,7 @@ public class FloatingIpsExtension {
 
 	}
 	
-	public static class DeallocateFloatingIp implements NovaCommand<Void> {
+	public static class DeallocateFloatingIp implements OpenStackCommand<Void> {
 
 		private String id;
 		
@@ -70,7 +70,7 @@ public class FloatingIpsExtension {
 	}
 
 	
-	public static class AssociateFloatingIp implements NovaCommand<Void> {
+	public static class AssociateFloatingIp implements OpenStackCommand<Void> {
 		
 		private org.openstack.nova.model.ServerAction.AssociateFloatingIp action;
 
@@ -94,7 +94,7 @@ public class FloatingIpsExtension {
 
 	}
 	
-	public static class DisassociateFloatingIp implements NovaCommand<Void> {
+	public static class DisassociateFloatingIp implements OpenStackCommand<Void> {
 		
 		private org.openstack.nova.model.ServerAction.DisassociateFloatingIp action;
 

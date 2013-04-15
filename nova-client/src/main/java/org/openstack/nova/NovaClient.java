@@ -2,7 +2,6 @@ package org.openstack.nova;
 
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackClientConnector;
-import org.openstack.base.client.OpenStackRequest;
 
 public class NovaClient extends OpenStackClient {
 	
@@ -14,10 +13,4 @@ public class NovaClient extends OpenStackClient {
 		super(endpoint, connector);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <R> R execute(NovaCommand<R> command) {
-		OpenStackRequest request = command.execute(this);
-		return (R) connector.execute(request, request.returnType());
-	}
-	
 }

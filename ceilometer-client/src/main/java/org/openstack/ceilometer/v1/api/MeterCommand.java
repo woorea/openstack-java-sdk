@@ -1,8 +1,8 @@
 package org.openstack.ceilometer.v1.api;
 
-import org.openstack.ceilometer.CeilometerCommand;
+import org.openstack.base.client.OpenStackCommand;
 
-public abstract class MeterCommand<R> implements CeilometerCommand<R> {
+public abstract class MeterCommand<R> implements OpenStackCommand<R> {
 
 	protected String source;
 	
