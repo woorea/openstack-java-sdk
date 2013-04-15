@@ -2,7 +2,7 @@ package org.openstack.quantum.api.networks;
 
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.client.QuantumCommand;
+import org.openstack.quantum.QuantumCommand;
 
 public class DeleteNetwork implements QuantumCommand<Void> {
 	

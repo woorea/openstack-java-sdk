@@ -2,7 +2,7 @@ package org.openstack.quantum.api.subnets;
 
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.client.QuantumCommand;
+import org.openstack.quantum.QuantumCommand;
 import org.openstack.quantum.model.Subnets;
 
 public class ListSubnets implements QuantumCommand<Subnets> {

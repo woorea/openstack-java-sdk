@@ -2,8 +2,8 @@ package org.openstack.quantum.api.ports;
 
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
+import org.openstack.quantum.QuantumCommand;
 import org.openstack.quantum.api.query.AbsOpenStackCmd;
-import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Port;
 import org.openstack.quantum.model.Ports;
 
