@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.ServerAction.GetVncConsole;
 import org.openstack.nova.model.ServerAction.VncConsole;
 
 public class VncConsoleExtension {
 
-	public static class GetVncConsoleServer implements NovaCommand<VncConsole> {
+	public static class GetVncConsoleServer implements OpenStackCommand<VncConsole> {
 		
 		private GetVncConsole action;
 

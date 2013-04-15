@@ -1,12 +1,12 @@
 package org.openstack.quantum.api.subnets;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.client.QuantumCommand;
 import org.openstack.quantum.model.Subnet;
 import org.openstack.quantum.model.SubnetForCreate;
 
-public class CreateSubnet implements QuantumCommand<Subnet> {
+public class CreateSubnet implements OpenStackCommand<Subnet> {
 
 	private SubnetForCreate SubnetForCreate;
 	

@@ -2,14 +2,14 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Cloudpipe;
 import org.openstack.nova.model.Cloudpipes;
 
 public class CloudpipesExtension {
 	
-	public static class ListCloudpipes implements NovaCommand<Cloudpipes>{
+	public static class ListCloudpipes implements OpenStackCommand<Cloudpipes>{
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
@@ -23,7 +23,7 @@ public class CloudpipesExtension {
 
 	}
 
-	public static class CreateCloudpipe implements NovaCommand<Cloudpipe> {
+	public static class CreateCloudpipe implements OpenStackCommand<Cloudpipe> {
 
 		private Cloudpipe cloudpipe;
 		

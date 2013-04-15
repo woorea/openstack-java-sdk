@@ -1,11 +1,11 @@
 package org.openstack.swift.api;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.swift.SwiftCommand;
 import org.openstack.swift.model.ObjectDownload;
 
-public class DownloadObject implements SwiftCommand<ObjectDownload> {
+public class DownloadObject implements OpenStackCommand<ObjectDownload> {
 
 	private String containerName;
 	

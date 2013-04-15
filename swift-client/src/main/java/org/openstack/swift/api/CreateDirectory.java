@@ -1,10 +1,10 @@
 package org.openstack.swift.api;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.swift.SwiftCommand;
 
-public class CreateDirectory implements SwiftCommand<Void> {
+public class CreateDirectory implements OpenStackCommand<Void> {
 
 	private String container;
 	

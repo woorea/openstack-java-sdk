@@ -3,11 +3,11 @@ package org.openstack.glance.api;
 import java.util.Calendar;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Image;
 
-public class ShowImage implements GlanceCommand<Image> {
+public class ShowImage implements OpenStackCommand<Image> {
 	
 	private String id;
 	

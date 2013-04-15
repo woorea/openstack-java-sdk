@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.swift.SwiftCommand;
 import org.openstack.swift.model.Object;
 
-public class ListObjects implements SwiftCommand<List<Object>>{
+public class ListObjects implements OpenStackCommand<List<Object>>{
 
 	private String containerName;
 	

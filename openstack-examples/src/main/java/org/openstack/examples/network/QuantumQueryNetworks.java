@@ -7,7 +7,7 @@ import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
-import org.openstack.quantum.client.QuantumClient;
+import org.openstack.quantum.QuantumClient;
 import org.openstack.quantum.model.Network;
 
 public class QuantumQueryNetworks {

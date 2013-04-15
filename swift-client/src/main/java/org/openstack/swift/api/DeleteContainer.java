@@ -3,10 +3,10 @@ package org.openstack.swift.api;
 import javax.xml.ws.Response;
 
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.swift.SwiftCommand;
 
-public class DeleteContainer implements SwiftCommand<Response>{
+public class DeleteContainer implements OpenStackCommand<Response>{
 
 	private String containerName;
 	

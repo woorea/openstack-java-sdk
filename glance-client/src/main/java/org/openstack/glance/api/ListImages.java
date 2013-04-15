@@ -2,11 +2,11 @@ package org.openstack.glance.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.GlanceCommand;
 import org.openstack.glance.model.Images;
 
-public class ListImages implements GlanceCommand<Images> {
+public class ListImages implements OpenStackCommand<Images> {
 
 	boolean detail;
 	

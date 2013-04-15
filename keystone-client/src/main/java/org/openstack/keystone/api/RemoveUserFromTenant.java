@@ -2,10 +2,10 @@ package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.KeystoneCommand;
 
-public class RemoveUserFromTenant implements KeystoneCommand<Void> {
+public class RemoveUserFromTenant implements OpenStackCommand<Void> {
 
 	private String tenantId;
 	private String userId;

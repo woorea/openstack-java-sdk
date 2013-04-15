@@ -4,9 +4,8 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.NovaCommand;
 import org.openstack.nova.model.Metadata;
 import org.openstack.nova.model.Snapshot;
 import org.openstack.nova.model.SnapshotForCreate;
@@ -14,7 +13,7 @@ import org.openstack.nova.model.Snapshots;
 
 public class SnapshotsExtension {
 
-	public static class ListSnapshots implements NovaCommand<Snapshots> {
+	public static class ListSnapshots implements OpenStackCommand<Snapshots> {
 
 		boolean detail;
 
@@ -38,7 +37,7 @@ public class SnapshotsExtension {
 
 	}
 
-	public static class CreateSnapshot implements NovaCommand<Snapshot> {
+	public static class CreateSnapshot implements OpenStackCommand<Snapshot> {
 
 		private SnapshotForCreate snapshotForCreate;
 
@@ -59,8 +58,7 @@ public class SnapshotsExtension {
 
 	}
 
-	public static class ShowSnapshotMetadata implements
-			NovaCommand<Map<String, String>> {
+	public static class ShowSnapshotMetadata implements OpenStackCommand<Map<String, String>> {
 
 		private String id;
 
@@ -80,7 +78,7 @@ public class SnapshotsExtension {
 
 	}
 
-	public static class DeleteSnapshot implements NovaCommand<Void> {
+	public static class DeleteSnapshot implements OpenStackCommand<Void> {
 
 		private String id;
 

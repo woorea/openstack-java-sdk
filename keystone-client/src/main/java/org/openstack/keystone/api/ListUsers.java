@@ -2,11 +2,11 @@ package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.KeystoneCommand;
 import org.openstack.keystone.model.Users;
 
-public class ListUsers implements KeystoneCommand<Users>{
+public class ListUsers implements OpenStackCommand<Users>{
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
