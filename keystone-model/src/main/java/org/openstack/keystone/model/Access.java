@@ -14,56 +14,6 @@ public class Access implements Serializable {
 
 	public static final class Token {
 		
-		public static final class Tenant {
-			
-			private String id;
-			
-			private String name;
-			
-			private String description;
-			
-			private Boolean enabled;
-
-			/**
-			 * @return the id
-			 */
-			public String getId() {
-				return id;
-			}
-
-			/**
-			 * @return the name
-			 */
-			public String getName() {
-				return name;
-			}
-
-			/**
-			 * @return the description
-			 */
-			public String getDescription() {
-				return description;
-			}
-
-			/**
-			 * @return the enabled
-			 */
-			public Boolean getEnabled() {
-				return enabled;
-			}
-
-			/* (non-Javadoc)
-			 * @see java.lang.Object#toString()
-			 */
-			@Override
-			public String toString() {
-				return "Tenant [id=" + id + ", name=" + name + ", description="
-						+ description + ", enabled=" + enabled + "]";
-			}
-			
-			
-		}
-		
 		private String id;
 
 		private Calendar issued_at;
