@@ -7,10 +7,9 @@ import org.openstack.glance.model.Image;
 import org.openstack.glance.model.Images;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Access;
-import org.openstack.keystone.model.Tenants;
-import org.openstack.keystone.utils.KeystoneUtils;
+import org.openstack.keystone.model.Access.Service;
+import org.openstack.keystone.model.Access.Service.Endpoint;
 
 public class GlanceListImages {
 
@@ -21,30 +20,34 @@ public class GlanceListImages {
 		KeystoneClient keystone = new KeystoneClient(
 				ExamplesConfiguration.KEYSTONE_AUTH_URL);
 
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(
-				ExamplesConfiguration.KEYSTONE_USERNAME,
-				ExamplesConfiguration.KEYSTONE_PASSWORD));
-		keystone.token(access.getToken().getId());
+		Access access = keystone.execute(
+				Authenticate.withPasswordCredentials(
+						ExamplesConfiguration.KEYSTONE_USERNAME,
+						ExamplesConfiguration.KEYSTONE_PASSWORD)
+				.withTenantName(ExamplesConfiguration.TENANT_NAME));
 
-		Tenants tenants = keystone.execute(new ListTenants());
+		Service glanceService = null;
 
-		if (tenants.getList().size() > 0) {
-			access = keystone.execute(Authenticate.withToken(
-					access.getToken().getId()).withTenantId(
-					tenants.getList().get(0).getId()));
+		for (Service service : access.getServiceCatalog()) {
+			if (service.getType().equals("image")) {
+				glanceService = service;
+				break;
+			}
+		}
 
-			GlanceClient client = new GlanceClient(
-					KeystoneUtils.findEndpointURL(access.getServiceCatalog(),
-							"image", null, "public"));
-			client.token(access.getToken().getId());
+		if (glanceService == null) {
+			throw new RuntimeException("Glance service not found");
+		}
 
-			Images images = client.execute(new ListImages(false));
+		for (Endpoint endpoint : glanceService.getEndpoints()) {
+			GlanceClient glance = new GlanceClient(endpoint.getPublicURL() + "/v1");
+			glance.token(access.getToken().getId());
+
+			Images images = glance.execute(new ListImages(false));
 
 			for (Image image : images) {
 				System.out.println(image);
 			}
-		} else {
-			System.out.println("No tenants found!");
 		}
 	}
 
