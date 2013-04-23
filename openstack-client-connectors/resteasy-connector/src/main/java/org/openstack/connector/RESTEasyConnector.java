@@ -14,7 +14,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientRequestFactory;
-import org.jboss.resteasy.client.core.executors.ApacheHttpClient4Executor;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
@@ -55,7 +54,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		providerFactory.addMessageBodyReader(jsonProvider);
 		providerFactory.addMessageBodyWriter(jsonProvider);
 
-		CLIENT_FACTORY = new ClientRequestFactory(new ApacheHttpClient4Executor(), providerFactory);
+		CLIENT_FACTORY = new ClientRequestFactory(ClientRequest.getDefaultExecutor(), providerFactory);
 	}
 
 	@Override
