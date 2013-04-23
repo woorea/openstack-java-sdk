@@ -1,5 +1,6 @@
 package org.openstack.quantum.api.networks;
 
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
@@ -14,8 +15,12 @@ public class ShowNetwork implements OpenStackCommand<Network> {
 	}
 	
 	public OpenStackRequest execute(OpenStackClient client) {
-//		return target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).get(Network.class);
-		return null;
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
+		request.path("networks/").path(id);
+		request.header("Accept", "application/json");
+		request.returnType(Network.class);
+		return request;
 	}
 
 }
