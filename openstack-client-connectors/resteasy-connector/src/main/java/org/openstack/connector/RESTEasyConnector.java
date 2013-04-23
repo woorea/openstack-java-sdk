@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ContextResolver;
 
+import org.apache.commons.httpclient.HttpStatus;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -14,8 +15,10 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientRequestFactory;
+import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackNotAuthorized;
 import org.openstack.base.client.OpenStackRequest;
 
 import com.google.common.reflect.TypeToken;
@@ -73,11 +76,27 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 			client.body(request.entity().getContentType(), request.entity().getEntity());
 		}
 
+		ClientResponse<T> response;
+
 		try {
-			return (T) client.httpMethod(request.method().name(), responseType).getEntity(responseType);
+			response = client.httpMethod(request.method().name(), responseType);
 		} catch (Exception e) {
-			return null;
+			throw new RuntimeException("Unexpected client exception", e);
 		}
+
+		if (response.getStatus() == HttpStatus.SC_OK
+		                || response.getStatus() == HttpStatus.SC_NO_CONTENT) {
+		        return (T) response.getEntity(responseType);
+		}
+
+		response.releaseConnection();
+
+		if (response.getStatus() == HttpStatus.SC_UNAUTHORIZED) {
+			throw new OpenStackNotAuthorized();
+		}
+
+		throw new RuntimeException("Unexpected response status code "
+				+ response.getStatus());
 	}
 
 	@Override

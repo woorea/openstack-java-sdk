@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.base.client.OpenStackClientConnector;
+import org.openstack.base.client.OpenStackNotAuthorized;
 import org.openstack.base.client.OpenStackRequest;
 
 import com.google.common.reflect.TypeToken;
@@ -32,12 +34,18 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 			}
 			invocation.header(h.getKey(), sb);
 		}
-		if(request.entity() != null) {
-			return invocation.method(request.method().name(), Entity.entity(request.entity().getEntity(),request.entity().getContentType()), responseType);
-		} else {
-			return invocation.method(request.method().name(), responseType);
-		}
 		
+		try {
+			if (request.entity() != null) {
+				return invocation.method(request.method().name(), Entity
+						.entity(request.entity().getEntity(), request.entity()
+								.getContentType()), responseType);
+			} else {
+				return invocation.method(request.method().name(), responseType);
+			}
+		} catch (NotAuthorizedException e) {
+			throw new OpenStackNotAuthorized();
+		}
 	}
 
 	@Override
