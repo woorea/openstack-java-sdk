@@ -16,8 +16,6 @@ import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackNotAuthorized;
 import org.openstack.base.client.OpenStackRequest;
 
-import com.google.common.reflect.TypeToken;
-
 public class JaxRs20Connector implements OpenStackClientConnector {
 
 	protected Client client = OpenStack.CLIENT;
@@ -66,10 +64,4 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 		
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T> T execute(OpenStackRequest request, TypeToken<T> typeToken) {
-		return (T) execute(request, typeToken.getClass());
-	}
-	
 }

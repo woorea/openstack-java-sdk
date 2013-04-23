@@ -21,8 +21,6 @@ import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackNotAuthorized;
 import org.openstack.base.client.OpenStackRequest;
 
-import com.google.common.reflect.TypeToken;
-
 public class RESTEasyConnector implements OpenStackClientConnector {
 
 	public static ObjectMapper DEFAULT_MAPPER;
@@ -102,12 +100,6 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	@Override
 	public void execute(OpenStackRequest request) {
 		execute(request, Response.class);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T> T execute(OpenStackRequest request, TypeToken<T> typeToken) {
-		return (T) execute(request, typeToken.getClass());
 	}
 
 }
