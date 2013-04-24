@@ -2,6 +2,7 @@ package org.openstack.examples.compute;
 
 import java.util.logging.Logger;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
@@ -35,7 +36,7 @@ public class NovaListImages {
 		Access access = keystone.execute(new Authenticate(authentication));
 		
 		//use the token in the following requests
-		keystone.token(access.getToken().getId());
+		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		
 		Tenants tenants = keystone.execute(new ListTenants());
 		
@@ -52,7 +53,7 @@ public class NovaListImages {
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
-			novaClient.token(access.getToken().getId());
+			novaClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			
 			Images images = novaClient.execute(ImagesCore.listImages(true));

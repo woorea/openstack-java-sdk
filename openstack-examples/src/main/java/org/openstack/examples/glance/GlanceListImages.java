@@ -1,5 +1,6 @@
 package org.openstack.examples.glance;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.glance.GlanceClient;
 import org.openstack.glance.api.ListImages;
@@ -41,7 +42,7 @@ public class GlanceListImages {
 
 		for (Endpoint endpoint : glanceService.getEndpoints()) {
 			GlanceClient glance = new GlanceClient(endpoint.getPublicURL() + "/v1");
-			glance.token(access.getToken().getId());
+			glance.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
 			Images images = glance.execute(new ListImages(false));
 

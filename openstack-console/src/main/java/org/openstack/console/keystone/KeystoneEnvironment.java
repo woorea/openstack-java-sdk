@@ -1,6 +1,7 @@
 package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
 import org.openstack.console.Environment;
@@ -24,7 +25,7 @@ public class KeystoneEnvironment extends Environment {
 					console.getProperty("keystone.password")
 			).withTenantName(console.getProperty("keystone.tenant_name")));
 					
-			client.token(access.getToken().getId());
+			client.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 			
 			KeystoneEnvironment environment = new KeystoneEnvironment(console.getEnvironment(), client);
 			
