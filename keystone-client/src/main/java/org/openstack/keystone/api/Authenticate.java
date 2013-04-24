@@ -56,7 +56,7 @@ public class Authenticate implements OpenStackCommand<Access> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("/tokens");
 		request.json(authentication);

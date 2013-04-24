@@ -18,7 +18,7 @@ public class UpdateUser implements OpenStackCommand<User> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.PUT);
 		request.path("/users").path(id);
 		request.json(userForCreate);

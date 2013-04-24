@@ -16,7 +16,7 @@ public class CreateSubnet implements OpenStackCommand<Subnet> {
 	}
 
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("subnets");
 		request.header("Accept", "application/json");

@@ -14,7 +14,7 @@ public class DeleteNetwork implements OpenStackCommand<Void> {
 	}
 
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		request.path("networks/").path(id);
 		request.header("Accept", "application/json");

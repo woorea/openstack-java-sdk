@@ -19,7 +19,7 @@ public class RemoveUserFromTenant implements OpenStackCommand<Void> {
 	
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		request.path("tenants").path(tenantId).path("users").path(userId).path("roles/OS-KSADM").path(roleId);
 		request.header("Accept", "application/json");

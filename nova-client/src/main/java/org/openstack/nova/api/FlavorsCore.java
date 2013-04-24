@@ -26,7 +26,7 @@ public class FlavorsCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path(detail ? "/flavors/detail" : "/flavors");
 		    request.header("Accept", "application/json");
@@ -46,7 +46,7 @@ public class FlavorsCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/flavors/").path(id);
 		    request.header("Accept", "application/json");
@@ -67,7 +67,7 @@ public class FlavorsCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 		    request.path("/flavors/").path(id).path("metadata");
 		    request.header("Accept", "application/json");

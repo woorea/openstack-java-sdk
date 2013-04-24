@@ -16,7 +16,7 @@ public class CreateEndpoint implements OpenStackCommand<Endpoint> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("/endpoints");
 		request.json(endpointForCreate);

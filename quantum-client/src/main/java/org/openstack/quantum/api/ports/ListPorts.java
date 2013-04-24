@@ -9,7 +9,7 @@ import org.openstack.quantum.model.Ports;
 public class ListPorts implements OpenStackCommand<Ports> {
 	
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("ports");
 		request.header("Accept", "application/json");

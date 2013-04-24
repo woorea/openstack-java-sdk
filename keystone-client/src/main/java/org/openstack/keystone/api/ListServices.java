@@ -9,7 +9,7 @@ import org.openstack.keystone.model.Services;
 public class ListServices implements OpenStackCommand<Services>{
 
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/OS-KSADM/services");
 		request.header("Accept", "application/json");

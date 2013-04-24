@@ -13,7 +13,7 @@ public class CloudpipesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-cloudpipes/");
 		    request.header("Accept", "application/json");
@@ -33,7 +33,7 @@ public class CloudpipesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-cloudpipes/");
 		    request.header("Accept", "application/json");

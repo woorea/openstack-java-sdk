@@ -16,7 +16,7 @@ public class ShowUser implements OpenStackCommand<User>{
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/users").path(id);
 		request.header("Accept", "application/json");

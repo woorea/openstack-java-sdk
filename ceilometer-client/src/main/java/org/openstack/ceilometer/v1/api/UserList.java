@@ -25,7 +25,7 @@ public class UserList implements OpenStackCommand<List<String>> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 //		if(source != null) {
 //			target = target.path("/sources").path(source);
 //		}

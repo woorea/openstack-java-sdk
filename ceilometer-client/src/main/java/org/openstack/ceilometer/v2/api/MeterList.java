@@ -12,7 +12,7 @@ public class MeterList extends QueriableCeilometerCommand<MeterList,List<Meter>>
 		
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		//return query(target.path("meters")).request(MediaType.APPLICATION_JSON).get(new GenericType<List<Meter>>() {});
 		return null;
 	}

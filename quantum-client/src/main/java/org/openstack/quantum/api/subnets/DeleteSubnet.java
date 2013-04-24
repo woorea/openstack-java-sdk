@@ -14,7 +14,7 @@ private String id;
 	}
 
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		request.path("subnets").path(id);
 		request.header("Accept", "application/json");

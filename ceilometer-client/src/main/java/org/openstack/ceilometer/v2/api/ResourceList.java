@@ -12,7 +12,7 @@ public class ResourceList extends QueriableCeilometerCommand<ResourceList, List<
 	
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		//return query(target.path("resources")).request(MediaType.APPLICATION_JSON).get(new GenericType<List<Resource>>() {});
 		return null;
 	}

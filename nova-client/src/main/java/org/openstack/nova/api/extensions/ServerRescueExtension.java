@@ -22,7 +22,7 @@ public class ServerRescueExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -46,7 +46,7 @@ public class ServerRescueExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");

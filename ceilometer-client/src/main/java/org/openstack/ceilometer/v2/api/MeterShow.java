@@ -20,7 +20,7 @@ public class MeterShow extends QueriableCeilometerCommand<MeterShow, List<Sample
 	
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 //		if(name == null) {
 //			throw new UnsupportedOperationException("meter id is mandatory");
 //		}

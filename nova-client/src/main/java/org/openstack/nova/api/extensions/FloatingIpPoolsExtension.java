@@ -12,7 +12,7 @@ public class FloatingIpPoolsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ip-pools/");
 		    request.header("Accept", "application/json");

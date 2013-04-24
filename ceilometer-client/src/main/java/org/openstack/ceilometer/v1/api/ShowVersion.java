@@ -9,7 +9,7 @@ public class ShowVersion implements OpenStackCommand<Version> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		//return target.request(MediaType.APPLICATION_JSON).get(Version.class);
 		return null;
 	}

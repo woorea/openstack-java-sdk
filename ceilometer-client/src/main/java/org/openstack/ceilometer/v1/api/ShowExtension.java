@@ -15,7 +15,7 @@ public class ShowExtension implements OpenStackCommand<Extension> {
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		//return target.path("extensions").path(alias).request(MediaType.APPLICATION_JSON).get(Extension.class);
 		return null;
 	}

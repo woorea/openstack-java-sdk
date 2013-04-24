@@ -18,7 +18,7 @@ public class RemoveMemberFromImage implements OpenStackCommand<Void> {
 	
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 	    request.path("/images/").path(id).path("/members/").path(tenantId);
 	    request.header("Accept", "application/json");

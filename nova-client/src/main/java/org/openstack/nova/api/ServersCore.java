@@ -35,7 +35,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path(detail ? "servers/detail" : "/servers");
 			request.header("Accept", "application/json");
@@ -55,7 +55,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers");
 			request.header("Accept", "application/json");
@@ -76,7 +76,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/servers/").path(id);
 			request.header("Accept", "application/json");
@@ -96,7 +96,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/servers/").path(id).path("metadata");
 			request.header("Accept", "application/json");
@@ -116,7 +116,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/servers/").path(id).path("ips");
 			request.header("Accept", "application/json");
@@ -136,7 +136,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.PUT);
 			request.path("/servers/").path(server.getId());
 			request.header("Accept", "application/json");
@@ -157,7 +157,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.DELETE);
 			request.path("/servers/").path(id);
 			request.header("Accept", "application/json");
@@ -180,7 +180,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");
@@ -204,7 +204,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");
@@ -228,7 +228,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");
@@ -252,7 +252,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");
@@ -275,7 +275,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");
@@ -298,7 +298,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");
@@ -322,7 +322,7 @@ public class ServersCore {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
 			request.header("Accept", "application/json");

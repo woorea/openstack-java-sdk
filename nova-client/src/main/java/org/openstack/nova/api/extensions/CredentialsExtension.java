@@ -18,7 +18,7 @@ public class CredentialsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-certificates/").path(id);
 		    request.header("Accept", "application/json");
@@ -32,7 +32,7 @@ public class CredentialsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-certificates");
 		    request.header("Accept", "application/json");

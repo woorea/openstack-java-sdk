@@ -38,6 +38,10 @@ public class OpenStackClient {
 	@SuppressWarnings("unchecked")
 	public <T> T execute(OpenStackCommand<T> command) {
 		OpenStackRequest request = command.execute(this);
+		request.endpoint(endpoint);
+		if(token != null) {
+			request.header("X-Auth-Token", token);
+		}
 		return (T) connector.execute(request, request.returnType());
 	}
 
@@ -47,15 +51,6 @@ public class OpenStackClient {
 	
 	public void token(String token) {
 		this.token = token;
-	}
-	
-	public OpenStackRequest newOpenStackRequest() {
-		OpenStackRequest request = new OpenStackRequest();
-		request.endpoint(endpoint);
-		if(token != null) {
-			request.header("X-Auth-Token", token);
-		}
-		return request;
 	}
 	
 }

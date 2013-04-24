@@ -10,7 +10,7 @@ public class ListTenants implements OpenStackCommand<Tenants>{
 
 	@Override
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/tenants");
 		request.header("Accept", "application/json");

@@ -27,7 +27,7 @@ public class VolumesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path(detail ? "/os-volumes/detail" : "/os-volumes");
 		    request.header("Accept", "application/json");

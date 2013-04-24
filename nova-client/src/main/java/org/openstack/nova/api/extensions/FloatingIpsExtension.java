@@ -16,7 +16,7 @@ public class FloatingIpsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ips");
 		    request.header("Accept", "application/json");
@@ -39,7 +39,7 @@ public class FloatingIpsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-floating-ips");
 		    request.header("Accept", "application/json");
@@ -59,7 +59,7 @@ public class FloatingIpsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		    request.path("/os-floating-ips/").path(id);
 		    request.header("Accept", "application/json");
@@ -83,7 +83,7 @@ public class FloatingIpsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -107,7 +107,7 @@ public class FloatingIpsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");

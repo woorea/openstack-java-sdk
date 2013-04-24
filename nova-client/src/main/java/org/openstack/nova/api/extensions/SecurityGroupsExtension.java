@@ -15,7 +15,7 @@ public class SecurityGroupsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-security-groups");
 			request.header("Accept", "application/json");
@@ -53,7 +53,7 @@ public class SecurityGroupsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-security-groups").path("id");
 			request.header("Accept", "application/json");
@@ -73,7 +73,7 @@ public class SecurityGroupsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-security-groups").path(String.valueOf(id));
 			request.header("Accept", "application/json");

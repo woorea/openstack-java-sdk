@@ -9,7 +9,7 @@ import org.openstack.keystone.model.Roles;
 public class ListRoles implements OpenStackCommand<Roles>{
 
 	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/OS-KSADM/roles");
 		request.header("Accept", "application/json");

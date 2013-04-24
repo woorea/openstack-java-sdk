@@ -15,7 +15,7 @@ public class AggregatesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-aggregates");
 			request.header("Accept", "application/json");
@@ -35,7 +35,7 @@ public class AggregatesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-aggregates/").path(id);
 			request.header("Accept", "application/json");
@@ -58,7 +58,7 @@ public class AggregatesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/os-aggregates/").path(id);
 			request.header("Accept", "application/json");
@@ -79,7 +79,7 @@ public class AggregatesExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.DELETE);
 			request.path("/os-aggregates/").path(id);
 			request.header("Accept", "application/json");

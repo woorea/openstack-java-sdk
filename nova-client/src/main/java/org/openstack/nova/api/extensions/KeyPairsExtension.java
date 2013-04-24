@@ -19,7 +19,7 @@ public class KeyPairsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-keypairs");
 		    request.header("Accept", "application/json");
@@ -40,7 +40,7 @@ public class KeyPairsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		    request.path("/os-keypairs").path(name);
 		    request.header("Accept", "application/json");
@@ -54,7 +54,7 @@ public class KeyPairsExtension {
 
 		@Override
 		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-keypairs");
 		    request.header("Accept", "application/json");
