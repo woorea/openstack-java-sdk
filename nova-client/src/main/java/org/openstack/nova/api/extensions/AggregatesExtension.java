@@ -14,7 +14,7 @@ public class AggregatesExtension {
 	public class ListAggregates implements OpenStackCommand<HostAggregates> {
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-aggregates");
@@ -34,7 +34,7 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-aggregates/").path(id);
@@ -57,7 +57,7 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/os-aggregates/").path(id);
@@ -78,7 +78,7 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.DELETE);
 			request.path("/os-aggregates/").path(id);
@@ -100,7 +100,7 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-aggregates").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"add_host\" : }"));
 			return null;
 		}
@@ -120,7 +120,7 @@ public class AggregatesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-aggregates").path("aggregate").path("os-volume-attachments").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"remove_host\" : }"));
 			return null;
 		}

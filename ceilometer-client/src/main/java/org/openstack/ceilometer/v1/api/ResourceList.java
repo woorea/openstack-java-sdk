@@ -29,7 +29,7 @@ public class ResourceList implements OpenStackCommand<Resources> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 //		if(source != null) {
 //			target = target.path("sources").path(source);

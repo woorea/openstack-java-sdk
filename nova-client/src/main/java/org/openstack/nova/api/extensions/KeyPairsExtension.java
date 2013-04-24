@@ -18,7 +18,7 @@ public class KeyPairsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-keypairs");
@@ -39,7 +39,7 @@ public class KeyPairsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		    request.path("/os-keypairs").path(name);
@@ -53,7 +53,7 @@ public class KeyPairsExtension {
 	public static class ListKeyPairs implements OpenStackCommand<KeyPairs>{
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-keypairs");

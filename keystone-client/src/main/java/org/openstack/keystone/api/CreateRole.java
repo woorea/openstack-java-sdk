@@ -15,7 +15,7 @@ public class CreateRole implements OpenStackCommand<Role> {
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("/endpoints");

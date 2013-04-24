@@ -14,7 +14,7 @@ public class CreateUser implements OpenStackCommand<User> {
 		this.userForCreate = userForCreate;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("/users");

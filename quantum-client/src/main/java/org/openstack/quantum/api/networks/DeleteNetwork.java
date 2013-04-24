@@ -13,7 +13,7 @@ public class DeleteNetwork implements OpenStackCommand<Void> {
 		this.id = netId;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		request.path("networks/").path(id);

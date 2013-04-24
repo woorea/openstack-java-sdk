@@ -15,7 +15,7 @@ public class CreatePort implements OpenStackCommand<Port> {
 		this.PortForCreate=port;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("ports");
@@ -25,5 +25,4 @@ public class CreatePort implements OpenStackCommand<Port> {
 		return request;
 	}
 	
-
 }

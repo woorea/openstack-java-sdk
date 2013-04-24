@@ -9,7 +9,7 @@ import org.openstack.keystone.model.Users;
 public class ListUsers implements OpenStackCommand<Users>{
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/users");

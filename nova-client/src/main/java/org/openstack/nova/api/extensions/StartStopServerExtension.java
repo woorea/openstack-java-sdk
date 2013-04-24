@@ -21,7 +21,7 @@ public class StartStopServerExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
@@ -45,7 +45,7 @@ public class StartStopServerExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");

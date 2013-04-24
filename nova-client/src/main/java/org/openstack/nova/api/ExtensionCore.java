@@ -40,7 +40,7 @@ public class ExtensionCore {
     }
 
     @Override
-    public OpenStackRequest execute(OpenStackClient client) {
+    public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
       request.path(detail ? "extensions/detail" : "extensions");

@@ -26,7 +26,7 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path(detail ? "/os-snapshots/detail" : "/os-snapshots");
@@ -46,7 +46,7 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/os-snapshots");
@@ -67,7 +67,7 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-snapshots/").path(id).path("metadata");
@@ -87,7 +87,7 @@ public class SnapshotsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-snapshots").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}

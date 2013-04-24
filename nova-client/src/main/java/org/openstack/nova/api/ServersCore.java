@@ -34,7 +34,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path(detail ? "servers/detail" : "/servers");
@@ -54,7 +54,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers");
@@ -75,7 +75,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/servers/").path(id);
@@ -95,7 +95,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/servers/").path(id).path("metadata");
@@ -115,7 +115,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/servers/").path(id).path("ips");
@@ -135,7 +135,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.PUT);
 			request.path("/servers/").path(server.getId());
@@ -156,7 +156,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.DELETE);
 			request.path("/servers/").path(id);
@@ -179,7 +179,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
@@ -203,7 +203,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
@@ -227,7 +227,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
@@ -251,7 +251,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
@@ -274,7 +274,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
@@ -297,7 +297,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");
@@ -321,7 +321,7 @@ public class ServersCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/servers/").path(id).path("/action");

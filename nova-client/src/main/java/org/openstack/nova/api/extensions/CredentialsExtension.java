@@ -17,7 +17,7 @@ public class CredentialsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-certificates/").path(id);
@@ -31,7 +31,7 @@ public class CredentialsExtension {
 	public static class ShowCertificate implements OpenStackCommand<Void>{
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-certificates");

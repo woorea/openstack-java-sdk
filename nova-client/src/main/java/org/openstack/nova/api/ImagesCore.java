@@ -25,7 +25,7 @@ public class ImagesCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path(detail ? "/images/detail" : "/images");
@@ -45,7 +45,7 @@ public class ImagesCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/images/").path(id);
@@ -65,7 +65,7 @@ public class ImagesCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/images/").path(id).path("metadata");
@@ -85,7 +85,7 @@ public class ImagesCore {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/images/").path(id);

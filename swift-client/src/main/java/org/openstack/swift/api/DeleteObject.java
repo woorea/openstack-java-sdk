@@ -18,7 +18,7 @@ public class DeleteObject implements OpenStackCommand<Response>{
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		//return target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).delete();
 		return null;
 	}

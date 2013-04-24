@@ -12,7 +12,7 @@ public class NetworksExtension {
 	public static class ListNetworks implements OpenStackCommand<Networks> {
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-networks");
@@ -32,7 +32,7 @@ public class NetworksExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/os-networks");
@@ -53,7 +53,7 @@ public class NetworksExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-networks/").path(id);
@@ -73,7 +73,7 @@ public class NetworksExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.POST);
 			request.path("/os-networks/").path(id);
@@ -94,7 +94,7 @@ public class NetworksExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.DELETE);
 			request.path("/os-networks/").path(id);

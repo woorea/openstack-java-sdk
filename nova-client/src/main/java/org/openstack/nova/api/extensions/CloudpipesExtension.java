@@ -12,7 +12,7 @@ public class CloudpipesExtension {
 	public static class ListCloudpipes implements OpenStackCommand<Cloudpipes>{
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-cloudpipes/");
@@ -32,7 +32,7 @@ public class CloudpipesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/os-cloudpipes/");

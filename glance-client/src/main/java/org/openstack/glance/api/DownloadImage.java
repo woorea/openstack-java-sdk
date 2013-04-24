@@ -16,7 +16,7 @@ public class DownloadImage implements OpenStackCommand<ImageDownload> {
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		/*
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_OCTET_STREAM).head();
 		Image image = new Image();

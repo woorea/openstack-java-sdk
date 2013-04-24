@@ -13,7 +13,7 @@ public class DeleteUser implements OpenStackCommand<Void> {
 		this.id = id;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 	    request.path("/users/").path(id);

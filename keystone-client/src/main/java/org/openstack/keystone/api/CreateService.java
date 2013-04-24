@@ -14,7 +14,7 @@ public class CreateService implements OpenStackCommand<Service> {
 		this.serviceForCreate = serviceForCreate;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("OS-KSADM/services");

@@ -15,7 +15,7 @@ public class CreateContainer implements OpenStackCommand<Response>{
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		//return target.path(containerName).request().method("PUT",Entity.text("*"));
 		return null;
 	}

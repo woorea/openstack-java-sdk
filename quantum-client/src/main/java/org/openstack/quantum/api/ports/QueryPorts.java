@@ -14,7 +14,7 @@ public class QueryPorts extends AbsOpenStackCmd<Port> implements OpenStackComman
 		super(port);
 	}
 
-	public OpenStackRequest execute(OpenStackClient client)
+	public OpenStackRequest createRequest(OpenStackClient client)
 	{
 //		target = target.path("v2.0").path("ports");
 //		target = queryParam(target);

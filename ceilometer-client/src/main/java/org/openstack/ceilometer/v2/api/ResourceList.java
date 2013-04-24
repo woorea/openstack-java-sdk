@@ -11,7 +11,7 @@ import org.openstack.ceilometer.v2.model.Resource;
 public class ResourceList extends QueriableCeilometerCommand<ResourceList, List<Resource>> {
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		//return query(target.path("resources")).request(MediaType.APPLICATION_JSON).get(new GenericType<List<Resource>>() {});
 		return null;

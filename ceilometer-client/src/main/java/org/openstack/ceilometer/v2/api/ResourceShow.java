@@ -16,7 +16,7 @@ public class ResourceShow implements OpenStackCommand<Resource> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 //		if(id == null) {
 //			throw new UnsupportedOperationException("resource id is mandatory");

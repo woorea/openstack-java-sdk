@@ -15,7 +15,7 @@ public class ShowService implements OpenStackCommand<Service>{
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/OS-KSADM/services").path(id);

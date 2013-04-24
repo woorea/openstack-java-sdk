@@ -24,7 +24,7 @@ public class ProjectList implements OpenStackCommand<List<String>> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		return null;
 		//if(source != null) {

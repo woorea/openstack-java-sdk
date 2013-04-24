@@ -14,7 +14,7 @@ private String id;
 		this.id = id;
 	}
 	
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("subnets").path(id);
@@ -22,4 +22,5 @@ private String id;
 		request.returnType(Subnet.class);
 		return request;
 	}
+
 }

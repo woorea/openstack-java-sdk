@@ -8,7 +8,7 @@ import org.openstack.ceilometer.v1.model.Version;
 public class ShowVersion implements OpenStackCommand<Version> {
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		OpenStackRequest request = new OpenStackRequest();
 		//return target.request(MediaType.APPLICATION_JSON).get(Version.class);
 		return null;

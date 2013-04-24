@@ -15,7 +15,7 @@ public class UploadImage implements OpenStackCommand<Image> {
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		/*
 		Invocation.Builder invocationBuilder = target.path("images").request(MediaType.APPLICATION_JSON);
 		if(imageForUpload.getName() != null) {

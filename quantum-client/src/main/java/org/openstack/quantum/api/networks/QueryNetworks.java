@@ -12,7 +12,7 @@ public class QueryNetworks implements OpenStackCommand<Networks> {
 		//super(network);
 	}
 
-	public OpenStackRequest execute(OpenStackClient client)
+	public OpenStackRequest createRequest(OpenStackClient client)
 	{
 //		target = target.path("v2.0").path("networks");
 //		target = queryParam(target);

@@ -37,7 +37,7 @@ public class OpenStackClient {
 	
 	@SuppressWarnings("unchecked")
 	public <T> T execute(OpenStackCommand<T> command) {
-		OpenStackRequest request = command.execute(this);
+		OpenStackRequest request = command.createRequest(this);
 		request.endpoint(endpoint);
 		if(token != null) {
 			request.header("X-Auth-Token", token);
