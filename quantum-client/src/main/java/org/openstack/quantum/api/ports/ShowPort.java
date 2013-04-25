@@ -1,5 +1,6 @@
 package org.openstack.quantum.api.ports;
 
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
@@ -14,8 +15,12 @@ private String id;
 	}
 	
 	public OpenStackRequest execute(OpenStackClient client) {
-//		return target.path("v2.0").path("ports").path(id).request(MediaType.APPLICATION_JSON).get(Port.class);
-		return null;
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.GET);
+		request.path("ports/").path(id);
+		request.header("Accept", "application/json");
+		request.returnType(Port.class);
+		return request;
 	}
 
 }

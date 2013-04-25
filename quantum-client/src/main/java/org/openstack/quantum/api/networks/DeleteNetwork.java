@@ -1,5 +1,6 @@
 package org.openstack.quantum.api.networks;
 
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
@@ -13,8 +14,11 @@ public class DeleteNetwork implements OpenStackCommand<Void> {
 	}
 
 	public OpenStackRequest execute(OpenStackClient client) {
-		//target.path("v2.0").path("networks").path(id).request(MediaType.APPLICATION_JSON).delete();
-		return null;
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.DELETE);
+		request.path("networks/").path(id);
+		request.header("Accept", "application/json");
+		return request;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package org.openstack.quantum.api.subnets;
 
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
@@ -15,8 +16,13 @@ public class CreateSubnet implements OpenStackCommand<Subnet> {
 	}
 
 	public OpenStackRequest execute(OpenStackClient client) {
-//		return target.path("v2.0").path("subnets").request(MediaType.APPLICATION_JSON).post(Entity.json(SubnetForCreate), Subnet.class);
-		return null;
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
+		request.path("subnets");
+		request.header("Accept", "application/json");
+		request.json(SubnetForCreate);
+		request.returnType(Subnet.class);
+		return request;
 	}
 	
 }

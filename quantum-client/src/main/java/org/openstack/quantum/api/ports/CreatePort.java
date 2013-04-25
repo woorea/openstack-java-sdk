@@ -1,5 +1,6 @@
 package org.openstack.quantum.api.ports;
 
+import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
@@ -15,8 +16,13 @@ public class CreatePort implements OpenStackCommand<Port> {
 	}
 
 	public OpenStackRequest execute(OpenStackClient client) {
-//		return target.path("v2.0").path("ports").request(MediaType.APPLICATION_JSON).post(Entity.json(PortForCreate), Port.class);
-		return null;
+		OpenStackRequest request = client.newOpenStackRequest();
+		request.method(HttpMethod.POST);
+		request.path("ports");
+		request.header("Accept", "application/json");
+		request.json(PortForCreate);
+		request.returnType(Port.class);
+		return request;
 	}
 	
 
