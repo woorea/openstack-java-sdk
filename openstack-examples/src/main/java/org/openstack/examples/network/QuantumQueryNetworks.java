@@ -4,7 +4,6 @@ import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
@@ -23,7 +22,7 @@ public class QuantumQueryNetworks {
 		// use the token in the following requests
 		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
-		Tenants tenants = keystone.execute(new ListTenants());
+		Tenants tenants = keystone.tenants().list().execute();
 		// try to exchange token using the first tenant
 		if (tenants.getList().size() > 0) {
 			// access with tenant

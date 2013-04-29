@@ -7,46 +7,19 @@ import java.util.Map;
 
 public class OpenStackRequest<R> {
 	
-	public static class Entity<T> {
+	private OpenStackClient client;
+	
+	public OpenStackRequest() {
 		
-		private T entity;
-		
-		private String contentType;
-
-		public Entity(T entity, String contentType) {
-			super();
-			this.entity = entity;
-			this.contentType = contentType;
-		}
-
-		/**
-		 * @return the entity
-		 */
-		public T getEntity() {
-			return entity;
-		}
-
-		/**
-		 * @param entity the entity to set
-		 */
-		public void setEntity(T entity) {
-			this.entity = entity;
-		}
-
-		/**
-		 * @return the contentType
-		 */
-		public String getContentType() {
-			return contentType;
-		}
-
-		/**
-		 * @param contentType the contentType to set
-		 */
-		public void setContentType(String contentType) {
-			this.contentType = contentType;
-		}
-		
+	}
+	
+	public OpenStackRequest(OpenStackClient client, HttpMethod method, String path, Entity<?> entity, Class<R> returnType) {
+		this.client = client;
+		this.method = method;
+		this.path = new StringBuilder(path);
+		this.entity = entity;
+		this.returnType = returnType;
+		header("Accept", "application/json");
 	}
 	
 	private String endpoint;
@@ -97,17 +70,16 @@ public class OpenStackRequest<R> {
 		return headers;
 	}
 	
-	public <T> OpenStackRequest entity(T entity, String contentType) {
-		this.entity = new Entity<T>(entity, contentType);
-		return this;	
+	public <T> Entity entity(T entity, String contentType) {
+		return new Entity<T>(entity, contentType);
 	}
 	
 	public Entity<?> entity() {
 		return entity;
 	}
 	
-	public <T> void json(T entity) {
-		entity(entity, "application/json");
+	public <T> Entity json(T entity) {
+		return entity(entity, "application/json");
 	}
 	
 	public void returnType(Class<R> returnType) {
@@ -116,6 +88,10 @@ public class OpenStackRequest<R> {
 	
 	public Class<R> returnType() {
 		return returnType;
+	}
+	
+	public R execute() {
+		return client.execute(this);
 	}
 
 	/* (non-Javadoc)

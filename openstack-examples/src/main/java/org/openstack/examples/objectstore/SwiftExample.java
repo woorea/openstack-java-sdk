@@ -7,13 +7,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
@@ -21,7 +19,6 @@ import org.openstack.swift.SwiftClient;
 import org.openstack.swift.api.CreateContainer;
 import org.openstack.swift.api.DownloadObject;
 import org.openstack.swift.api.ListContainers;
-import org.openstack.swift.api.ListObjects;
 import org.openstack.swift.api.UploadObject;
 import org.openstack.swift.model.ObjectDownload;
 import org.openstack.swift.model.ObjectForUpload;
@@ -41,7 +38,7 @@ public class SwiftExample {
 		//use the token in the following requests
 		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		
-		Tenants tenants = keystone.execute(new ListTenants());
+		Tenants tenants = keystone.tenants().list().execute();
 		
 		//try to exchange token using the first tenant
 		if(tenants.getList().size() > 0) {

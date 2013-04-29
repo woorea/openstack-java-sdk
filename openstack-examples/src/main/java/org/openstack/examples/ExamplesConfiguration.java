@@ -2,9 +2,6 @@ package org.openstack.examples;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.CreateTenant;
-import org.openstack.keystone.api.DeleteTenant;
-import org.openstack.keystone.api.ListTenants;
 import org.openstack.keystone.model.Tenant;
 
 public class ExamplesConfiguration {
@@ -26,11 +23,11 @@ public class ExamplesConfiguration {
 	public static void main(String[] args) {
 		KeystoneClient client = new KeystoneClient(KEYSTONE_ENDPOINT);
 		client.setTokenProvider(new OpenStackSimpleTokenProvider("secret0"));
-		client.execute(new DeleteTenant("36c481aec1d54fc49190c92c3ef6840a"));
-		Tenant tenant = client.execute(new CreateTenant(new Tenant("new_api")));
+		client.tenants().delete("36c481aec1d54fc49190c92c3ef6840a").execute();
+		Tenant tenant = client.tenants().create(new Tenant("new_api")).execute();
 		System.out.println(tenant);
-		System.out.println(client.execute(new ListTenants()));
-		client.execute(new DeleteTenant(tenant.getId()));
+		System.out.println(client.tenants().list().execute());
+		client.tenants().delete(tenant.getId()).execute();
 	}
 	
 }

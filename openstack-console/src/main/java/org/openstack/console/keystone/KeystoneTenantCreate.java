@@ -6,7 +6,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.CreateTenant;
 import org.openstack.keystone.model.Tenant;
 
 import com.google.common.collect.Lists;
@@ -27,7 +26,7 @@ public class KeystoneTenantCreate extends KeystoneCommand {
 			tenant.setEnabled(Boolean.TRUE);
 		}
 		
-		tenant = keystone.execute(new CreateTenant(tenant));
+		tenant = keystone.tenants().create(tenant).execute();
 		
 		Table t = new Table(new TableModel<Tenant>(Lists.newArrayList(tenant)) {
 
