@@ -6,7 +6,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.CreateRole;
 import org.openstack.keystone.model.Role;
 
 import com.google.common.collect.Lists;
@@ -27,7 +26,7 @@ public class KeystoneRoleCreate extends KeystoneCommand {
 			role.setEnabled("True");
 		}
 		
-		role = keystone.execute(new CreateRole(role));
+		role = keystone.roles().create(role).execute();
 		
 		Table t = new Table(new TableModel<Role>(Lists.newArrayList(role)) {
 

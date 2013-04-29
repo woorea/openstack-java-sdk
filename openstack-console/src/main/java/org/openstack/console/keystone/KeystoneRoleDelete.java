@@ -3,7 +3,6 @@ package org.openstack.console.keystone;
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.utils.ConsoleUtils;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.DeleteRole;
 
 public class KeystoneRoleDelete extends KeystoneCommand {
 	
@@ -16,7 +15,7 @@ public class KeystoneRoleDelete extends KeystoneCommand {
 		
 		String[] args = cmd.getArgs();
 		if(args.length == 1) {
-			keystone.execute(new DeleteRole(args[0]));
+			keystone.roles().delete(args[0]).execute();
 			System.out.println(new ConsoleUtils().green("OK"));
 		}
 		

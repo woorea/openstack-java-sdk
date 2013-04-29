@@ -5,7 +5,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.ListRoles;
 import org.openstack.keystone.model.Role;
 import org.openstack.keystone.model.Roles;
 
@@ -18,7 +17,7 @@ public class KeystoneRoleList extends KeystoneCommand {
 	@Override
 	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
-		final Roles roles = keystone.execute(new ListRoles());
+		final Roles roles = keystone.roles().list().execute();
 		
 		Table t = new Table(new TableModel<Role>(roles.getList()) {
 

@@ -6,7 +6,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.CreateUser;
 import org.openstack.keystone.model.User;
 
 import com.google.common.collect.Lists;
@@ -29,7 +28,7 @@ public class KeystoneUserCreate extends KeystoneCommand {
 			user.setEnabled(Boolean.TRUE);
 		}
 		
-		user = keystone.execute(new CreateUser(user));
+		user = keystone.users().create(user).execute();
 		
 		Table t = new Table(new TableModel<User>(Lists.newArrayList(user)) {
 

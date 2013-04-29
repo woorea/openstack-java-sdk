@@ -5,7 +5,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.ListServices;
 import org.openstack.keystone.model.Service;
 import org.openstack.keystone.model.Services;
 
@@ -18,7 +17,7 @@ public class KeystoneServiceList extends KeystoneCommand {
 	@Override
 	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
-		final Services services = keystone.execute(new ListServices());
+		final Services services = keystone.services().list().execute();
 		
 		Table t = new Table(new TableModel<Service>(services.getList()) {
 

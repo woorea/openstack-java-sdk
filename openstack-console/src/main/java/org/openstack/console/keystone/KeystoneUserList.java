@@ -5,7 +5,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.ListUsers;
 import org.openstack.keystone.model.User;
 import org.openstack.keystone.model.Users;
 
@@ -18,7 +17,7 @@ public class KeystoneUserList extends KeystoneCommand {
 	@Override
 	public void execute(KeystoneClient keystone, CommandLine cmd) {
 		
-		final Users users = keystone.execute(new ListUsers());
+		final Users users = keystone.users().list().execute();
 		
 		Table t = new Table(new TableModel<User>(users.getList()) {
 

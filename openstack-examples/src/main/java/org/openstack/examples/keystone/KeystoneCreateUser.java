@@ -1,13 +1,9 @@
 package org.openstack.examples.keystone;
 
-import java.util.logging.Logger;
-
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.CreateUser;
-import org.openstack.keystone.api.DeleteUser;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.User;
 
@@ -33,8 +29,8 @@ public class KeystoneCreateUser {
 		keystone = new KeystoneClient("http://keystone.x.org/v2.0");
 		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		//keystone.enableLogging(Logger.getLogger("keystone"), 10000);
-		user = keystone.execute(new CreateUser(user));
+		user = keystone.users().create(user).execute();
 		System.out.println(user);
-		keystone.execute(new DeleteUser(user.getId()));
+		keystone.users().delete(user.getId()).execute();
 	}
 }

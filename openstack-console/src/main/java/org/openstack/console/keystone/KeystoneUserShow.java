@@ -5,7 +5,6 @@ import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.ShowUser;
 import org.openstack.keystone.model.User;
 
 import com.google.common.collect.Lists;
@@ -21,7 +20,7 @@ public class KeystoneUserShow extends KeystoneCommand {
 		
 		String[] args = cmd.getArgs();
 		if(args.length == 1) {
-			User user = keystone.execute(new ShowUser(args[0]));
+			User user = keystone.users().show(args[0]).execute();
 			Table t = new Table(new TableModel<User>(Lists.newArrayList(user)) {
 
 				@Override
