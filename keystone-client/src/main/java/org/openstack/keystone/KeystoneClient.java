@@ -11,8 +11,26 @@ import org.openstack.keystone.api.UsersResource;
 
 public class KeystoneClient extends OpenStackClient {
 	
+	private final TokensResource TOKENS;
+	
+	private final TenantsResource TENANTS;
+	
+	private final UsersResource USERS;
+	
+	private final RolesResource ROLES;
+	
+	private final ServicesResource SERVICES;
+	
+	private final EndpointsResource ENDPOINTS;
+	
 	public KeystoneClient(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
+		TOKENS = new TokensResource(this);
+		TENANTS = new TenantsResource(this);
+		USERS = new UsersResource(this);
+		ROLES = new RolesResource(this);
+		SERVICES = new ServicesResource(this);
+		ENDPOINTS = new EndpointsResource(this);
 	}
 	
 	public KeystoneClient(String endpoint) {
@@ -20,27 +38,27 @@ public class KeystoneClient extends OpenStackClient {
 	}
 	
 	public TokensResource tokens() {
-		return new TokensResource(this);
+		return TOKENS;
 	}
 	
 	public TenantsResource tenants() {
-		return new TenantsResource(this);
+		return TENANTS;
 	}
 	
 	public UsersResource users() {
-		return new UsersResource(this);
+		return USERS;
 	}
 	
 	public RolesResource roles() {
-		return new RolesResource(this);
+		return ROLES;
 	}
 	
 	public ServicesResource services() {
-		return new ServicesResource(this);
+		return SERVICES;
 	}
 	
 	public EndpointsResource endpoints() {
-		return new EndpointsResource(this);
+		return ENDPOINTS;
 	}
 
 }

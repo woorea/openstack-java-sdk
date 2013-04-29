@@ -12,10 +12,10 @@ import org.openstack.keystone.model.Authentication.Token;
 
 public class TokensResource {
 	
-	private OpenStackClient client;
+	private final OpenStackClient CLIENT;
 	
 	public TokensResource(OpenStackClient client) {
-		this.client = client;
+		CLIENT = client;
 	}
 	
 	public Authenticate authenticate(Authentication authentication) {
@@ -27,7 +27,7 @@ public class TokensResource {
 		private Authentication authentication;
 		
 		public Authenticate(Authentication authentication) {
-			super(client, HttpMethod.POST, "/tokens", Entity.json(authentication), Access.class);
+			super(CLIENT, HttpMethod.POST, "/tokens", Entity.json(authentication), Access.class);
 		}
 		
 		public Authenticate withPasswordCredentials(String username, String password) {
