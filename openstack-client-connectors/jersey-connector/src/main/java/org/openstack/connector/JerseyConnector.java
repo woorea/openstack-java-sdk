@@ -3,8 +3,6 @@ package org.openstack.connector;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Response;
-
 import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.base.client.OpenStackRequest;
 
@@ -17,7 +15,7 @@ public class JerseyConnector implements OpenStackClientConnector {
 	protected Client client = Client.create();
 
 	@Override
-	public <T> T execute(OpenStackRequest request, Class<T> responseType) {
+	public <T> T execute(OpenStackRequest<T> request) {
 		WebResource target = client.resource(request.endpoint()).path(request.path());
 		target.addFilter(new LoggingFilter());
 		
@@ -30,13 +28,7 @@ public class JerseyConnector implements OpenStackClientConnector {
 			tb.header(h.getKey(), sb);
 		}
 		
-		return tb.get(responseType);
-	}
-
-	@Override
-	public void execute(OpenStackRequest request) {
-		execute(request, Response.class);
-		
+		return tb.get(request.returnType());
 	}
 
 }

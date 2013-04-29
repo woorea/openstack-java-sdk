@@ -37,8 +37,7 @@ public class OpenStackClient {
 		this.connector = (connector == null) ? DEFAULT_CONNECTOR : connector;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T> T execute(OpenStackRequest request) {
+	public <T> T execute(OpenStackRequest<T> request) {
 		OpenStackNotAuthorized authException = new OpenStackNotAuthorized();
 
 		for (int i = 0; i <= AUTHENTICATION_RETRIES; i++) {
@@ -49,7 +48,7 @@ public class OpenStackClient {
 			}
 
 			try {
-				return (T) connector.execute(request, request.returnType());
+				return (T) connector.execute(request);
 			} catch (OpenStackNotAuthorized e) {
 				if (tokenProvider == null) {
 					// when the tokenProvider is not present there is no
@@ -70,6 +69,10 @@ public class OpenStackClient {
 	
 	public void setTokenProvider(OpenStackTokenProvider tokenProvider) {
 		this.tokenProvider = tokenProvider;
+	}
+	
+	public void token(String token) {
+		setTokenProvider(new OpenStackSimpleTokenProvider(token));
 	}
 	
 }

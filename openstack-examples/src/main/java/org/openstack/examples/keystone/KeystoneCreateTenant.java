@@ -1,6 +1,5 @@
 package org.openstack.examples.keystone;
 
-import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
@@ -27,7 +26,7 @@ public class KeystoneCreateTenant {
 		tenant.setEnabled(true);
 		//Get the adminURL client and use the token got above
 		keystone = new KeystoneClient("http://keystone.x.org/v2.0");
-		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+		keystone.token(access.getToken().getId());
 		tenant = keystone.execute(new CreateTenant(tenant));
 		System.out.println(tenant);
 		keystone.execute(new DeleteTenant(tenant.getId()));

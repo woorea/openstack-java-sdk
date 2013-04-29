@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OpenStackRequest {
+public class OpenStackRequest<R> {
 	
 	public static class Entity<T> {
 		
@@ -59,7 +59,7 @@ public class OpenStackRequest {
 	
 	private Entity entity;
 	
-	private Class<?> returnType;
+	private Class<R> returnType;
 	
 	public OpenStackRequest endpoint(String endpoint) {
 		this.endpoint = endpoint;
@@ -110,11 +110,11 @@ public class OpenStackRequest {
 		entity(entity, "application/json");
 	}
 	
-	public void returnType(Class<?> returnType) {
+	public void returnType(Class<R> returnType) {
 		this.returnType = returnType;
 	}
 	
-	public Class<?> returnType() {
+	public Class<R> returnType() {
 		return returnType;
 	}
 

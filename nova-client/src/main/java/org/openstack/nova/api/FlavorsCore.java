@@ -1,9 +1,6 @@
 package org.openstack.nova.api;
 
-import java.util.Map;
-
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.Flavors;

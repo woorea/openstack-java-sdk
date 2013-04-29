@@ -3,7 +3,6 @@ package org.openstack.connector;
 import java.util.List;
 import java.util.Map.Entry;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ContextResolver;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -59,7 +58,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	}
 
 	@Override
-	public <T> T execute(OpenStackRequest request, Class<T> responseType) {
+	public <T> T execute(OpenStackRequest<T> request) {
 		ClientRequest client = CLIENT_FACTORY.createRequest(request.endpoint() + "/" + request.path());
 
 		for (Entry<String, List<Object>> h : request.headers().entrySet()) {
@@ -77,14 +76,14 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		ClientResponse<T> response;
 
 		try {
-			response = client.httpMethod(request.method().name(), responseType);
+			response = client.httpMethod(request.method().name(), request.returnType());
 		} catch (Exception e) {
 			throw new RuntimeException("Unexpected client exception", e);
 		}
 
 		if (response.getStatus() == HttpStatus.SC_OK
 		                || response.getStatus() == HttpStatus.SC_NO_CONTENT) {
-		        return (T) response.getEntity(responseType);
+		        return response.getEntity(request.returnType());
 		}
 
 		response.releaseConnection();
@@ -95,11 +94,6 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 		throw new RuntimeException("Unexpected response status code "
 				+ response.getStatus());
-	}
-
-	@Override
-	public void execute(OpenStackRequest request) {
-		execute(request, Response.class);
 	}
 
 }

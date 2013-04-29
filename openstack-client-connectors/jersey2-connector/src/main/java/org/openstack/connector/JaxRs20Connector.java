@@ -9,7 +9,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.openstack.base.client.OpenStackClientConnector;
@@ -21,7 +20,7 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 	protected Client client = OpenStack.CLIENT;
 
 	@Override
-	public <T> T execute(OpenStackRequest request, Class<T> responseType) {
+	public <T> T execute(OpenStackRequest<T> request) {
 		WebTarget target = client.target(request.endpoint()).path(request.path());
 		target.register(new LoggingFilter(Logger.getLogger("os"),10000));
 		Invocation.Builder invocation = target.request();
@@ -39,16 +38,16 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 
 		try {
 			if (entity != null) {
-				if (responseType == null) {
+				if (request.returnType() == null) {
 					invocation.method(request.method().name(), entity);
 				} else {
-					return invocation.method(request.method().name(), entity, responseType);
+					return invocation.method(request.method().name(), entity, request.returnType());
 				}
 			} else {
-				if (responseType == null) {
+				if (request.returnType() == null) {
 					invocation.method(request.method().name());
 				} else {
-					return invocation.method(request.method().name(), responseType);
+					return invocation.method(request.method().name(), request.returnType());
 				}
 			}
 		} catch (NotAuthorizedException e) {
@@ -56,12 +55,6 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 		}
 
 		return null;
-	}
-
-	@Override
-	public void execute(OpenStackRequest request) {
-		execute(request, Response.class);
-		
 	}
 
 }
