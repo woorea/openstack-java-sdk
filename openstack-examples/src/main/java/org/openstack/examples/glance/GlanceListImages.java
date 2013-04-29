@@ -2,7 +2,6 @@ package org.openstack.examples.glance;
 
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.glance.GlanceClient;
-import org.openstack.glance.api.ListImages;
 import org.openstack.glance.model.Image;
 import org.openstack.glance.model.Images;
 import org.openstack.keystone.model.Access;
@@ -41,7 +40,7 @@ public class GlanceListImages {
 			glance.setTokenProvider(keystone
 					.getProviderByTenant(ExamplesConfiguration.TENANT_NAME));
 
-			Images images = glance.execute(new ListImages(false));
+			Images images = glance.images().list(false).execute();
 
 			for (Image image : images) {
 				System.out.println(image);
