@@ -2,6 +2,7 @@ package org.openstack.examples.metering.v2;
 
 import java.util.List;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.ceilometer.CeilometerClient;
 import org.openstack.ceilometer.v2.api.MeterList;
 import org.openstack.ceilometer.v2.api.MeterShow;
@@ -37,7 +38,7 @@ public class TestAll {
 		Access access = keystone.execute(new Authenticate(authentication));
 		
 		CeilometerClient ceilometer = new CeilometerClient(ExamplesConfiguration.CEILOMETER_ENDPOINT);
-		ceilometer.token(access.getToken().getId());
+		ceilometer.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
 		/*
 		List<Resource> resources = ceilometer.execute(new ResourceList().eq("resource_id", "23b55841eedd41e99d5f3f32149ca086"));

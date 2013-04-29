@@ -16,7 +16,7 @@ public class CreateDirectory implements OpenStackCommand<Void> {
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 //		endpoint.path(container).path(path).request().put(Entity.entity(new byte[1],"application/directory"));
 		return null;
 	}

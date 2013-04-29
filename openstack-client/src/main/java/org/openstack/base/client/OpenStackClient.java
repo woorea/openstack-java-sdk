@@ -7,7 +7,9 @@ public class OpenStackClient {
 	
 	protected String endpoint;
 	
-	protected String token;
+	protected OpenStackTokenProvider tokenProvider;
+
+	protected static int AUTHENTICATION_RETRIES = 1;
 
 	protected OpenStackClientConnector connector;
 	
@@ -37,25 +39,38 @@ public class OpenStackClient {
 	
 	@SuppressWarnings("unchecked")
 	public <T> T execute(OpenStackCommand<T> command) {
-		OpenStackRequest request = command.execute(this);
-		return (T) connector.execute(request, request.returnType());
+		OpenStackNotAuthorized authException = new OpenStackNotAuthorized();
+
+		for (int i = 0; i <= AUTHENTICATION_RETRIES; i++) {
+			OpenStackRequest request = command.createRequest(this);
+			request.endpoint(endpoint);
+
+			if (tokenProvider != null) {
+				request.header("X-Auth-Token", tokenProvider.getToken());
+			}
+
+			try {
+				return (T) connector.execute(request, request.returnType());
+			} catch (OpenStackNotAuthorized e) {
+				if (tokenProvider == null) {
+					// when the tokenProvider is not present there is no
+					// reason to retry the authentication
+					throw e;
+				}
+				authException = e;
+				tokenProvider.expireToken();
+			}
+		}
+
+		throw authException;
 	}
 
 	public void property(String property, String value) {
 		properties.put(property, value);
 	}
 	
-	public void token(String token) {
-		this.token = token;
-	}
-	
-	public OpenStackRequest newOpenStackRequest() {
-		OpenStackRequest request = new OpenStackRequest();
-		request.endpoint(endpoint);
-		if(token != null) {
-			request.header("X-Auth-Token", token);
-		}
-		return request;
+	public void setTokenProvider(OpenStackTokenProvider tokenProvider) {
+		this.tokenProvider = tokenProvider;
 	}
 	
 }

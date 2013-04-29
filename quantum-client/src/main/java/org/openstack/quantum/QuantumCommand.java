@@ -6,6 +6,6 @@ import org.openstack.base.client.OpenStackRequest;
 
 public interface QuantumCommand<R> extends OpenStackCommand<R> {
 	
-	OpenStackRequest execute(OpenStackClient client);
+	OpenStackRequest createRequest(OpenStackClient client);
 
 }

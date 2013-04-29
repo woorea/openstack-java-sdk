@@ -17,7 +17,7 @@ public class DownloadObject implements OpenStackCommand<ObjectDownload> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 //		Response response = target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).get();
 //		ObjectDownload objectDownload = new ObjectDownload();
 //		objectDownload.setInputStream((InputStream) response.getEntity());

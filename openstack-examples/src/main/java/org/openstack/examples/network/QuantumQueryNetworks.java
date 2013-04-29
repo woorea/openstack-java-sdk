@@ -1,5 +1,6 @@
 package org.openstack.examples.network;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.Authenticate;
@@ -20,7 +21,7 @@ public class QuantumQueryNetworks {
 		// access with unscoped token
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		// use the token in the following requests
-		keystone.token(access.getToken().getId());
+		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
 		Tenants tenants = keystone.execute(new ListTenants());
 		// try to exchange token using the first tenant
@@ -30,7 +31,7 @@ public class QuantumQueryNetworks {
 					.withTenantId(tenants.getList().get(0).getId()));
 
 			QuantumClient quantumClient = new QuantumClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"));
-			quantumClient.token(access.getToken().getId());
+			quantumClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
 			Network networkQuery = new Network();
 			networkQuery.setName("benn.cs");

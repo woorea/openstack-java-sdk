@@ -1,5 +1,6 @@
 package org.openstack.examples;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.keystone.KeystoneClient;
 import org.openstack.keystone.api.CreateTenant;
 import org.openstack.keystone.api.DeleteTenant;
@@ -16,13 +17,15 @@ public class ExamplesConfiguration {
 	
 	public static final String KEYSTONE_ENDPOINT = "http://keystone.stacksherpa.org/v2.0";
 	
+	public static final String TENANT_NAME = "admin";
+
 	public static final String NOVA_ENDPOINT = "";
 	
 	public static final String CEILOMETER_ENDPOINT = "";
 	
 	public static void main(String[] args) {
 		KeystoneClient client = new KeystoneClient(KEYSTONE_ENDPOINT);
-		client.token("secret0");
+		client.setTokenProvider(new OpenStackSimpleTokenProvider("secret0"));
 		client.execute(new DeleteTenant("36c481aec1d54fc49190c92c3ef6840a"));
 		Tenant tenant = client.execute(new CreateTenant(new Tenant("new_api")));
 		System.out.println(tenant);

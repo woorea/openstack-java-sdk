@@ -15,8 +15,8 @@ public class ListImageMembers implements OpenStackCommand<ImageMembers>{
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 	    request.path("/images/").path(id).path("/members");
 	    request.header("Accept", "application/json");

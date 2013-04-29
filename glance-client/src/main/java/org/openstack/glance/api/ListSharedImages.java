@@ -15,8 +15,8 @@ public class ListSharedImages implements OpenStackCommand<SharedImages>{
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 	    request.path("shared-images").path(tenantId);
 	    request.header("Accept", "application/json");

@@ -20,8 +20,8 @@ public class FlavorsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+			OpenStackRequest request = new OpenStackRequest();
 			if(flavorForCreate.getId() == null) {
 				flavorForCreate.setId(UUID.randomUUID().toString());
 			}
@@ -44,8 +44,8 @@ public class FlavorsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 		    request.path("/flavors/").path(id);
 		    request.header("Accept", "application/json");

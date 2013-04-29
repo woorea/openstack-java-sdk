@@ -12,8 +12,8 @@ public class HostsExtension {
 	public static class ListHosts implements OpenStackCommand<Hosts>{
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-hosts");
 		    request.header("Accept", "application/json");
@@ -32,8 +32,8 @@ public class HostsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-hosts/").path(id);
 		    request.header("Accept", "application/json");

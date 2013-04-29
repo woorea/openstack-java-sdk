@@ -26,8 +26,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -50,8 +50,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -74,8 +74,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -98,8 +98,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -122,8 +122,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -146,8 +146,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");
@@ -170,8 +170,8 @@ public class ServerAdminActionsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		    request.path("/servers/").path(id).path("/action");
 		    request.header("Accept", "application/json");

@@ -26,8 +26,8 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path(detail ? "/os-volumes/detail" : "/os-volumes");
 		    request.header("Accept", "application/json");
@@ -47,7 +47,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-volumes").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeForCreate), Volume.class);
 			return null;
 		}
@@ -63,7 +63,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).get(Volume.class);
 			return null;
 		}
@@ -80,7 +80,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 //			Metadata metadata = target.path("os-volumes").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
 //			return metadata.getMetadata();
 			return null;
@@ -103,7 +103,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 //			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
 			return null;
 		}
@@ -122,7 +122,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 //			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}
@@ -138,7 +138,7 @@ public class VolumesExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 //			target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}

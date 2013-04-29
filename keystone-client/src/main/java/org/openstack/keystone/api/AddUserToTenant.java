@@ -18,8 +18,8 @@ public class AddUserToTenant implements OpenStackCommand<Void> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.PUT);
 		request.path("/tenants").path(tenantId).path("/users").path(userId).path("/roles/OS-KSADM").path(roleId);
 		request.entity(null,null);

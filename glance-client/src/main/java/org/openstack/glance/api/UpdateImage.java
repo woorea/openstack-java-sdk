@@ -15,8 +15,8 @@ public class UpdateImage implements OpenStackCommand<Image> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.PUT);
 	    request.path("/images/").path(image.getId());
 	    request.header("Accept", "application/json");

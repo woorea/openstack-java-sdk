@@ -9,7 +9,7 @@ import org.openstack.base.client.OpenStackRequest;
 public class ShowAccount implements OpenStackCommand<Response>{
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 //		return target.request(MediaType.APPLICATION_JSON).head();
 		return null;
 	}

@@ -14,8 +14,8 @@ public class SecurityGroupsExtension {
 	public static class ListSecurityGroups implements OpenStackCommand<SecurityGroups> {
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-security-groups");
 			request.header("Accept", "application/json");
@@ -34,7 +34,7 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			// return
 			// target.path("os-security-groups").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupForCreate),
 			// SecurityGroup.class);
@@ -52,8 +52,8 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-security-groups").path("id");
 			request.header("Accept", "application/json");
@@ -72,8 +72,8 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-			OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+			OpenStackRequest request = new OpenStackRequest();
 			request.method(HttpMethod.GET);
 			request.path("/os-security-groups").path(String.valueOf(id));
 			request.header("Accept", "application/json");
@@ -93,7 +93,7 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			return null;
 			// return
 			// target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate),
@@ -111,7 +111,7 @@ public class SecurityGroupsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}

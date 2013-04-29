@@ -1,6 +1,7 @@
 package org.openstack.console.nova;
 
 import org.apache.commons.cli.CommandLine;
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
 import org.openstack.console.Environment;
@@ -29,7 +30,7 @@ public class NovaEnvironment extends Environment {
 				System.out.println(console.getProperty("nova.endpoint"));
 				
 				NovaClient client = new NovaClient(console.getProperty("nova.endpoint")+args.getArgs()[0]);
-				client.token(access.getToken().getId());
+				client.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 				
 				NovaEnvironment environment = new NovaEnvironment(console.getEnvironment(), client);
 				

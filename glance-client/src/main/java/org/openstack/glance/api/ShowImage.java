@@ -16,7 +16,7 @@ public class ShowImage implements OpenStackCommand<Image> {
 	}
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		/*
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_JSON).head();
 		Image image = new Image();

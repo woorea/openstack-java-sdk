@@ -11,8 +11,8 @@ public class FloatingIpPoolsExtension {
 	public static class ListFloatingIpPools implements OpenStackCommand<FloatingIpPools>{
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ip-pools/");
 		    request.header("Accept", "application/json");

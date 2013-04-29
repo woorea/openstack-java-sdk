@@ -15,8 +15,8 @@ public class CreateNetwork implements OpenStackCommand<Network> {
 		this.networkForCreate=net;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.POST);
 		request.path("networks");
 		request.header("Accept", "application/json");
@@ -24,6 +24,5 @@ public class CreateNetwork implements OpenStackCommand<Network> {
 		request.returnType(Network.class);
 		return request;
 	}
-	
 	
 }
