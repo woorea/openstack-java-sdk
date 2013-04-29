@@ -1,24 +1,14 @@
 package org.openstack.quantum.api.subnets;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 
-public class DeleteSubnet implements OpenStackCommand<Void> {
-
-private String id;
+public class DeleteSubnet extends OpenStackRequest {
 	
-	public DeleteSubnet(String SubnetId){
-		this.id = SubnetId;
-	}
-
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.DELETE);
-		request.path("subnets").path(id);
-		request.header("Accept", "application/json");
-		return request;
+	public DeleteSubnet(String id){
+		method(HttpMethod.DELETE);
+		path("subnets").path(id);
+		header("Accept", "application/json");
 	}
 
 }

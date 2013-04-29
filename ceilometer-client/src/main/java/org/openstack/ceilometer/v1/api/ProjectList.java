@@ -3,11 +3,9 @@ package org.openstack.ceilometer.v1.api;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 
-public class ProjectList implements OpenStackCommand<List<String>> {
+public class ProjectList extends OpenStackRequest {
 	
 	private static final class Projects {
 		
@@ -23,10 +21,7 @@ public class ProjectList implements OpenStackCommand<List<String>> {
 		return this;
 	}
 	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		return null;
+	public ProjectList() {
 		//if(source != null) {
 		//	target = target.path("sources").path(source);
 		//} 

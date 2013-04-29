@@ -1,25 +1,15 @@
 package org.openstack.quantum.api.ports;
 
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
-import org.openstack.base.client.OpenStackRequest;
-import org.openstack.quantum.QuantumCommand;
 import org.openstack.quantum.api.query.AbsOpenStackCmd;
 import org.openstack.quantum.model.Port;
-import org.openstack.quantum.model.Ports;
 
-public class QueryPorts extends AbsOpenStackCmd<Port> implements OpenStackCommand<Ports> {
+public class QueryPorts extends AbsOpenStackCmd<Port> {
 
 	public QueryPorts(Port port) {
 		super(port);
-	}
-
-	public OpenStackRequest createRequest(OpenStackClient client)
-	{
 //		target = target.path("v2.0").path("ports");
 //		target = queryParam(target);
 //		return target.request(MediaType.APPLICATION_JSON).get(Ports.class);
-		return null;
 	}
 
 }

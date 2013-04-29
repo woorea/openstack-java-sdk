@@ -1,106 +1,68 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Network;
 import org.openstack.nova.model.Networks;
 
 public class NetworksExtension {
 
-	public static class ListNetworks implements OpenStackCommand<Networks> {
+	public static class ListNetworks extends OpenStackRequest {
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
+
+		public ListNetworks() {
 			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-networks");
-			request.header("Accept", "application/json");
-			request.returnType(Networks.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/os-networks");
+			header("Accept", "application/json");
+			returnType(Networks.class);
 		}
 
 	}
 
-	public static class CreateNetwork implements OpenStackCommand<Network> {
+	public static class CreateNetwork extends OpenStackRequest {
 
 		private Network network;
 
 		public CreateNetwork(Network network) {
 			this.network = network;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/os-networks");
-			request.header("Accept", "application/json");
-			request.json(network);
-			request.returnType(Network.class);
-			return request;
+			method(HttpMethod.POST);
+			path("/os-networks");
+			header("Accept", "application/json");
+			json(network);
+			returnType(Network.class);
 		}
 
 	}
 
-	public class ShowNetwork implements OpenStackCommand<Network> {
-
-		private String id;
+	public class ShowNetwork extends OpenStackRequest {
 
 		public ShowNetwork(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-networks/").path(id);
-			request.header("Accept", "application/json");
-			request.returnType(Network.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/os-networks/").path(id);
+			header("Accept", "application/json");
+			returnType(Network.class);
 		}
 
 	}
 
-	public static class DisassociateNetwork implements OpenStackCommand<Void> {
-
-		private String id;
+	public static class DisassociateNetwork extends OpenStackRequest {
 
 		public DisassociateNetwork(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/os-networks/").path(id);
-			request.header("Accept", "application/json");
-			request.json("{\"action\":\"disassociate\"}");
-
-			return null;
+			method(HttpMethod.POST);
+			path("/os-networks/").path(id);
+			header("Accept", "application/json");
+			json("{\"action\":\"disassociate\"}");
 		}
 
 	}
 
-	public static class DeleteNetwork implements OpenStackCommand<Void> {
-
-		private String id;
+	public static class DeleteNetwork extends OpenStackRequest {
 
 		public DeleteNetwork(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.DELETE);
-			request.path("/os-networks/").path(id);
-			request.header("Accept", "application/json");
-
-			return null;
+			method(HttpMethod.DELETE);
+			path("/os-networks/").path(id);
+			header("Accept", "application/json");
 		}
 
 	}

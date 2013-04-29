@@ -18,14 +18,12 @@ public class MeterStatistics extends QueriableCeilometerCommand<MeterStatistics,
 		return this;
 	}
 	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
+	public MeterStatistics() {
 		OpenStackRequest request = new OpenStackRequest();
 //		if(name == null) {
 //			throw new UnsupportedOperationException("meter id is mandatory");
 //		}
 //		return query(target.path("meters").path(name).path("statistics")).request(MediaType.APPLICATION_JSON).get(new GenericType<List<Statistics>>(){});
-		return null;
 	}
 
 }

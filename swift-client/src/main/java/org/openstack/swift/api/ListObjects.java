@@ -1,14 +1,10 @@
 package org.openstack.swift.api;
 
-import java.util.List;
 import java.util.Map;
 
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.swift.model.Object;
 
-public class ListObjects implements OpenStackCommand<List<Object>>{
+public class ListObjects extends OpenStackRequest {
 
 	private String containerName;
 	
@@ -17,10 +13,7 @@ public class ListObjects implements OpenStackCommand<List<Object>>{
 	public ListObjects(String containerName, Map<String, String> filters) {
 		this.containerName = containerName;
 		this.filters = filters;
-	}
-	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
+		//returnType(new TypeToken<List<Object>>(){});
 //		target = target.path(containerName);
 //		for(String filter : new String[]{"prefix","delimiter","path","marker"}) {
 //			if(filters.get(filter) != null) {
@@ -28,7 +21,6 @@ public class ListObjects implements OpenStackCommand<List<Object>>{
 //			}
 //		}
 //		return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Object>>(){});
-		return null;
 	}
-
+	
 }

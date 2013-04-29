@@ -1,15 +1,13 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.ServerAction.GetVncConsole;
 import org.openstack.nova.model.ServerAction.VncConsole;
 
 public class VncConsoleExtension {
 
-	public static class GetVncConsoleServer implements OpenStackCommand<VncConsole> {
+	public static class GetVncConsoleServer extends OpenStackRequest {
 		
 		private GetVncConsole action;
 
@@ -18,17 +16,12 @@ public class VncConsoleExtension {
 		public GetVncConsoleServer(String id, GetVncConsole action) {
 			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    request.returnType(VncConsole.class);
-		return request;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		    returnType(VncConsole.class);
 		}
 
 	}

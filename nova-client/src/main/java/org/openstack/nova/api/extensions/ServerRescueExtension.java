@@ -1,15 +1,13 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.ServerAction.Rescue;
 import org.openstack.nova.model.ServerAction.Unrescue;
 
 public class ServerRescueExtension {
 
-	public class RescueServer implements OpenStackCommand<Void> {
+	public class RescueServer extends OpenStackRequest {
 		
 		private Rescue action;
 
@@ -18,43 +16,27 @@ public class ServerRescueExtension {
 		public RescueServer(String id, Rescue action) {
 			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 
-	public class UnrescueServer implements OpenStackCommand<Void> {
+	public class UnrescueServer extends OpenStackRequest {
 		
 		private Unrescue action;
-
-		private String id;
 		
 		public UnrescueServer(String id) {
-			this.id = id;
+			
 			this.action = new Unrescue();
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
-		}
-
+		
 	}
 	
 	public RescueServer rescue(String serverId, String adminPass) {

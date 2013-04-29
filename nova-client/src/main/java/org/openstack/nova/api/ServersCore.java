@@ -1,10 +1,7 @@
 package org.openstack.nova.api;
 
-import java.util.Map;
-
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Metadata;
 import org.openstack.nova.model.Server;
@@ -21,314 +18,204 @@ import org.openstack.nova.model.Servers;
 
 public class ServersCore {
 
-	public static class ListServers implements OpenStackCommand<Servers> {
-
-		boolean detail;
+	public static class ListServers extends OpenStackRequest {
 
 		public ListServers(boolean detail) {
-			this.detail = detail;
+			method(HttpMethod.GET);
+			path(detail ? "servers/detail" : "/servers");
+			header("Accept", "application/json");
+			returnType(Servers.class);
 		}
 
 		public ListServers() {
 			this(false);
 		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path(detail ? "servers/detail" : "/servers");
-			request.header("Accept", "application/json");
-			request.returnType(Servers.class);
-			return request;
-		}
-
 	}
 
-	public static class CreateServer implements OpenStackCommand<Server> {
+	public static class CreateServer extends OpenStackRequest {
 
 		private ServerForCreate serverForCreate;
 
 		public CreateServer(ServerForCreate serverForCreate) {
 			this.serverForCreate = serverForCreate;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers");
-			request.header("Accept", "application/json");
-			request.json(serverForCreate);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.POST);
+			path("/servers");
+			header("Accept", "application/json");
+			json(serverForCreate);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class ShowServer implements OpenStackCommand<Server> {
-
-		private String id;
+	public static class ShowServer extends OpenStackRequest {
 
 		public ShowServer(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/servers/").path(id);
-			request.header("Accept", "application/json");
-			request.returnType(Server.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/servers/").path(id);
+			header("Accept", "application/json");
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class ShowServerMetadata implements OpenStackCommand<Map<String, String>> {
-
-		private String id;
+	public static class ShowServerMetadata extends OpenStackRequest {
 
 		public ShowServerMetadata(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/servers/").path(id).path("metadata");
-			request.header("Accept", "application/json");
-			request.returnType(Metadata.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/servers/").path(id).path("metadata");
+			header("Accept", "application/json");
+			returnType(Metadata.class);
 		}
 
 	}
 
-	public static class ShowServerAddresses implements OpenStackCommand<Server.Addresses> {
-
-		private String id;
+	public static class ShowServerAddresses extends OpenStackRequest {
 
 		public ShowServerAddresses(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/servers/").path(id).path("ips");
-			request.header("Accept", "application/json");
-			request.returnType(Addresses.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/servers/").path(id).path("ips");
+			header("Accept", "application/json");
+			returnType(Addresses.class);
 		}
 
 	}
 
-	public static class UpdateServer implements OpenStackCommand<Server> {
+	public static class UpdateServer extends OpenStackRequest {
 
 		private Server server;
 
 		public UpdateServer(Server server) {
 			this.server = server;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.PUT);
-			request.path("/servers/").path(server.getId());
-			request.header("Accept", "application/json");
-			request.json(server);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.PUT);
+			path("/servers/").path(server.getId());
+			header("Accept", "application/json");
+			json(server);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class DeleteServer implements OpenStackCommand<Void> {
+	public static class DeleteServer extends OpenStackRequest {
 
 		private String id;
 
 		public DeleteServer(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.DELETE);
-			request.path("/servers/").path(id);
-			request.header("Accept", "application/json");
-
-			return null;
+			method(HttpMethod.DELETE);
+			path("/servers/").path(id);
+			header("Accept", "application/json");
 		}
 
 	}
 
-	public static class ChangePasswordServer implements OpenStackCommand<Void> {
+	public static class ChangePasswordServer extends OpenStackRequest {
 
 		private ChangePassword action;
 
-		private String id;
-
 		public ChangePasswordServer(String id, ChangePassword action) {
-			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(action);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(action);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class RebootServer implements OpenStackCommand<Void> {
+	public static class RebootServer extends OpenStackRequest {
 
 		private Reboot action;
 
 		private String id;
 
 		public RebootServer(String id, Reboot action) {
-			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(action);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(action);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class RebuildServer implements OpenStackCommand<Void> {
+	public static class RebuildServer extends OpenStackRequest {
 
 		private final Rebuild action;
 
-		private final String id;
-
 		public RebuildServer(String id, Rebuild action) {
-			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(action);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(action);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class ResizeServer implements OpenStackCommand<Void> {
+	public static class ResizeServer extends OpenStackRequest {
 
 		private final Resize action;
 
-		private final String id;
-
 		public ResizeServer(String id, Resize action) {
-			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(action);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(action);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class ConfirmResizeServer implements OpenStackCommand<Void> {
+	public static class ConfirmResizeServer extends OpenStackRequest {
 
 		private static final ConfirmResize ACTION = new ConfirmResize();
 
-		private final String id;
-
 		public ConfirmResizeServer(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(ACTION);
-			request.returnType(Server.class);
-			return request;
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(ACTION);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class RevertResizeServer implements OpenStackCommand<Void> {
+	public static class RevertResizeServer extends OpenStackRequest {
 
 		private static final RevertResize ACTION = new RevertResize();
 
-		private final String id;
-
 		public RevertResizeServer(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(ACTION);
-			request.returnType(Server.class);
-			return request;
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(ACTION);
+			returnType(Server.class);
 		}
 
 	}
 
-	public static class CreateImageServer implements OpenStackCommand<Void> {
+	public static class CreateImageServer extends OpenStackRequest {
 
 		private CreateImage action;
 
-		private String id;
-
 		public CreateImageServer(String id, CreateImage action) {
-			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/servers/").path(id).path("/action");
-			request.header("Accept", "application/json");
-			request.json(action);
-			request.returnType(Server.class);
-			return request;
+			
+			method(HttpMethod.POST);
+			path("/servers/").path(id).path("/action");
+			header("Accept", "application/json");
+			json(action);
+			returnType(Server.class);
 		}
 
 	}

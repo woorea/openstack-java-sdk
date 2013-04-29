@@ -2,94 +2,64 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.FloatingIpDomain;
 import org.openstack.nova.model.FloatingIpDomains;
 
 public class FloatingIpDnsExtension {
 	
-	public class ListFloatingIpDomains implements OpenStackCommand<FloatingIpDomains>{
+	public class ListFloatingIpDomains extends OpenStackRequest {
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path("/os-floating-ip-dns/");
-		    request.header("Accept", "application/json");
-		    request.returnType(FloatingIpDomains.class);
-		return request;
+		public ListFloatingIpDomains() {
+			method(HttpMethod.GET);
+		    path("/os-floating-ip-dns/");
+		    header("Accept", "application/json");
+		    returnType(FloatingIpDomains.class);
 		}
 
 	}
 
-	public static class CreateFloatingIpDomain implements OpenStackCommand<FloatingIpDomain> {
+	public static class CreateFloatingIpDomain extends OpenStackRequest {
 
 		private FloatingIpDomain floatingIpDomain;
 		
 		public CreateFloatingIpDomain(FloatingIpDomain floatingIpDomain) {
 			this.floatingIpDomain = floatingIpDomain;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path("/os-floating-ip-dns/");
-		    request.header("Accept", "application/json");
-		    request.json(floatingIpDomain);
-		    request.returnType(FloatingIpDomain.class);
-		return request;
+			method(HttpMethod.GET);
+		    path("/os-floating-ip-dns/");
+		    header("Accept", "application/json");
+		    json(floatingIpDomain);
+		    returnType(FloatingIpDomain.class);
 		}
 		
 	}
 	
-	public static class ShowFloatingIpDomain implements OpenStackCommand<FloatingIpDomain> {
-
-		private String id;
+	public static class ShowFloatingIpDomain extends OpenStackRequest {
 		
 		public ShowFloatingIpDomain(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).get(FloatingIpDomain.class);
-			return null;
 		}
 		
 	}
 
 	
-	public static class UpdateFloatingIpDomain implements OpenStackCommand<FloatingIpDomain> {
+	public static class UpdateFloatingIpDomain extends OpenStackRequest {
 
 		private FloatingIpDomain floatingIpDomain;
 		
 		public UpdateFloatingIpDomain(FloatingIpDomain floatingIpDomain) {
 			this.floatingIpDomain = floatingIpDomain;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
+			
 			//return target.path("os-floating-ip-dns").request(MediaType.APPLICATION_JSON).post(Entity.json(floatingIpDomain), FloatingIpDomain.class);
-			return null;
 		}
 		
 	}
 
 	
-	public class DeleteFloatingIpDomain implements OpenStackCommand<Void> {
-
-		private String id;
+	public class DeleteFloatingIpDomain extends OpenStackRequest {
 		
 		public DeleteFloatingIpDomain(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			//target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
 		}
 		
 	}

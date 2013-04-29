@@ -38,11 +38,10 @@ public class OpenStackClient {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T> T execute(OpenStackCommand<T> command) {
+	public <T> T execute(OpenStackRequest request) {
 		OpenStackNotAuthorized authException = new OpenStackNotAuthorized();
 
 		for (int i = 0; i <= AUTHENTICATION_RETRIES; i++) {
-			OpenStackRequest request = command.createRequest(this);
 			request.endpoint(endpoint);
 
 			if (tokenProvider != null) {

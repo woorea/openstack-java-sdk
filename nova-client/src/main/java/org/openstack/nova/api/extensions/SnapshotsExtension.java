@@ -1,10 +1,7 @@
 package org.openstack.nova.api.extensions;
 
-import java.util.Map;
-
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Metadata;
 import org.openstack.nova.model.Snapshot;
@@ -13,83 +10,53 @@ import org.openstack.nova.model.Snapshots;
 
 public class SnapshotsExtension {
 
-	public static class ListSnapshots implements OpenStackCommand<Snapshots> {
+	public static class ListSnapshots extends OpenStackRequest {
 
 		boolean detail;
 
 		public ListSnapshots(boolean detail) {
-			this.detail = detail;
+			method(HttpMethod.GET);
+			path(detail ? "/os-snapshots/detail" : "/os-snapshots");
+			header("Accept", "application/json");
+			returnType(Snapshots.class);
 		}
 
 		public ListSnapshots() {
 			this(false);
 		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path(detail ? "/os-snapshots/detail" : "/os-snapshots");
-			request.header("Accept", "application/json");
-			request.returnType(Snapshots.class);
-			return request;
-		}
-
 	}
 
-	public static class CreateSnapshot implements OpenStackCommand<Snapshot> {
+	public static class CreateSnapshot extends OpenStackRequest {
 
 		private SnapshotForCreate snapshotForCreate;
 
 		public CreateSnapshot(SnapshotForCreate snapshotForCreate) {
 			this.snapshotForCreate = snapshotForCreate;
+			method(HttpMethod.POST);
+			path("/os-snapshots");
+			header("Accept", "application/json");
+			json(snapshotForCreate);
+			returnType(Snapshot.class);
 		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/os-snapshots");
-			request.header("Accept", "application/json");
-			request.json(snapshotForCreate);
-			request.returnType(Snapshot.class);
-			return request;
-		}
-
+		
 	}
 
-	public static class ShowSnapshotMetadata implements OpenStackCommand<Map<String, String>> {
-
-		private String id;
+	public static class ShowSnapshotMetadata extends OpenStackRequest {
 
 		public ShowSnapshotMetadata(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-snapshots/").path(id).path("metadata");
-			request.header("Accept", "application/json");
-			request.returnType(Metadata.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/os-snapshots/").path(id).path("metadata");
+			header("Accept", "application/json");
+			returnType(Metadata.class);
 		}
 
 	}
 
-	public static class DeleteSnapshot implements OpenStackCommand<Void> {
-
-		private String id;
+	public static class DeleteSnapshot extends OpenStackRequest {
 
 		public DeleteSnapshot(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-snapshots").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
 		}
 
 	}

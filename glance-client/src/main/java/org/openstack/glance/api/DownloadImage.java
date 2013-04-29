@@ -2,21 +2,14 @@ package org.openstack.glance.api;
 
 import java.util.Calendar;
 
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.model.ImageDownload;
 
-public class DownloadImage implements OpenStackCommand<ImageDownload> {
+public class DownloadImage extends OpenStackRequest {
 
 	private String id;
 	
 	public DownloadImage(String id) {
 		this.id = id;
-	}
-
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
 		/*
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_OCTET_STREAM).head();
 		Image image = new Image();
@@ -45,7 +38,6 @@ public class DownloadImage implements OpenStackCommand<ImageDownload> {
 		imageDownload.setInputStream((InputStream) response.getEntity());
 		return imageDownload;
 		*/
-		return null;
 	}
 	
 	private Calendar asCalendar(String calendarString) {

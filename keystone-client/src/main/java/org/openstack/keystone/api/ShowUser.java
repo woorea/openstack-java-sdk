@@ -1,27 +1,16 @@
 package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.model.User;
 
-public class ShowUser implements OpenStackCommand<User>{
-	
-	private String id;
+public class ShowUser extends OpenStackRequest {
 	
 	public ShowUser(String id) {
-		this.id = id;
-	}
-
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		request.path("/users").path(id);
-		request.header("Accept", "application/json");
-		request.returnType(User.class);
-		return request;
+		method(HttpMethod.GET);
+		path("/users").path(id);
+		header("Accept", "application/json");
+		returnType(User.class);
 	}
 
 }

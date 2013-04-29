@@ -1,20 +1,16 @@
 package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.model.Services;
 
-public class ListServices implements OpenStackCommand<Services>{
+public class ListServices extends OpenStackRequest {
 
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		request.path("/OS-KSADM/services");
-		request.header("Accept", "application/json");
-		request.returnType(Services.class);
-		return request;
+	public ListServices() {
+		method(HttpMethod.GET);
+		path("/OS-KSADM/services");
+		header("Accept", "application/json");
+		returnType(Services.class);
 	}
 
 }

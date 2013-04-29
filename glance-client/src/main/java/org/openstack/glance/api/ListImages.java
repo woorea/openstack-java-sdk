@@ -1,31 +1,22 @@
 package org.openstack.glance.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.model.Images;
 
-public class ListImages implements OpenStackCommand<Images> {
+public class ListImages extends OpenStackRequest {
 
 	boolean detail;
 	
 	public ListImages(boolean detail) {
-		this.detail = detail;
+		method(HttpMethod.GET);
+	    path(detail ? "/images/detail" : "images");
+	    header("Accept", "application/json");
+	    returnType(Images.class);
 	}
 	
 	public ListImages() {
 		this(false);
-	}
-
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-	    request.path(detail ? "/images/detail" : "images");
-	    request.header("Accept", "application/json");
-	    request.returnType(Images.class);
-		return request;
 	}
 
 }

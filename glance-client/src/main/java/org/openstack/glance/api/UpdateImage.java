@@ -1,28 +1,19 @@
 package org.openstack.glance.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.model.Image;
 
-public class UpdateImage implements OpenStackCommand<Image> {
+public class UpdateImage extends OpenStackRequest {
 
 	private Image image;
 	
 	public UpdateImage(Image image) {
-		this.image = image;
-	}
-	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.PUT);
-	    request.path("/images/").path(image.getId());
-	    request.header("Accept", "application/json");
-	    request.json(image);
-	    request.returnType(Image.class);
-	    return request;
+		method(HttpMethod.PUT);
+	    path("/images/").path(image.getId());
+	    header("Accept", "application/json");
+	    json(image);
+	    returnType(Image.class);
 	}
 
 }

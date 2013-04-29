@@ -1,27 +1,20 @@
 package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.model.User;
 
-public class CreateUser implements OpenStackCommand<User> {
+public class CreateUser extends OpenStackRequest {
 
 	private User userForCreate;
 	
 	public CreateUser(User userForCreate) {
 		this.userForCreate = userForCreate;
-	}
-
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		request.path("/users");
-		request.json(userForCreate);
-		request.header("Accept", "application/json");
-		request.returnType(User.class);
-		return request;
+		method(HttpMethod.POST);
+		path("/users");
+		json(userForCreate);
+		header("Accept", "application/json");
+		returnType(User.class);
 	}
 	
 }

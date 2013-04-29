@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Flavor;
 import org.openstack.nova.model.Flavors;
@@ -12,67 +11,40 @@ import org.openstack.nova.model.Metadata;
 
 public class FlavorsCore {
 	
-	public static class ListFlavors implements OpenStackCommand<Flavors>{
-
-		boolean detail;
+	public static class ListFlavors extends OpenStackRequest {
 		
 		public ListFlavors(boolean detail) {
-			this.detail = detail;
+			method(HttpMethod.GET);
+		    path(detail ? "/flavors/detail" : "/flavors");
+		    header("Accept", "application/json");
+		    returnType(Flavors.class);
 		}
 		
 		public ListFlavors() {
 			this(false);
 		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path(detail ? "/flavors/detail" : "/flavors");
-		    request.header("Accept", "application/json");
-		    request.returnType(Flavors.class);
-		return request;
-		}
-
 	}
 	
-	public static class ShowFlavor implements OpenStackCommand<Flavor> {
-
-		private String id;
+	public static class ShowFlavor extends OpenStackRequest {
 		
 		public ShowFlavor(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path("/flavors/").path(id);
-		    request.header("Accept", "application/json");
-		    request.returnType(Flavor.class);
-		return request;
+			method(HttpMethod.GET);
+		    path("/flavors/").path(id);
+		    header("Accept", "application/json");
+		    returnType(Flavor.class);
 		}
 		
 	}
 
 	
-	public static class ShowFlavorMetadata implements OpenStackCommand<Map<String, String>> {
-
-		private String id;
+	public static class ShowFlavorMetadata extends OpenStackRequest {
 		
 		public ShowFlavorMetadata(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-		    request.path("/flavors/").path(id).path("metadata");
-		    request.header("Accept", "application/json");
-		    request.returnType(Metadata.class);
-		    return request;
+			method(HttpMethod.GET);
+		    path("/flavors/").path(id).path("metadata");
+		    header("Accept", "application/json");
+		    returnType(Metadata.class);
 		}
 		
 	}

@@ -63,9 +63,9 @@ public class SwiftExample {
 			upload.setInputStream(new FileInputStream(TEST_FILE));
 			swiftClient.execute(new UploadObject(upload));
 			
-			System.out.println(swiftClient.execute(new ListObjects("navidad2", new HashMap<String, String>() {{
-				put("path", "");
-			}})).get(0).getContentType());
+//			System.out.println(swiftClient.execute(new ListObjects("navidad2", new HashMap<String, String>() {{
+//				put("path", "");
+//			}})).get(0).getContentType());
 			
 			
 			ObjectDownload download = swiftClient.execute(new DownloadObject("navidad2", "example2"));

@@ -1,8 +1,6 @@
 package org.openstack.keystone.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Authentication;
@@ -10,12 +8,16 @@ import org.openstack.keystone.model.Authentication.ApiAccessKeyCredentials;
 import org.openstack.keystone.model.Authentication.PasswordCredentials;
 import org.openstack.keystone.model.Authentication.Token;
 
-public class Authenticate implements OpenStackCommand<Access> {
+public class Authenticate extends OpenStackRequest {
 	
 	private Authentication authentication;
 	
 	public Authenticate(Authentication authentication) {
-		this.authentication = authentication;
+		method(HttpMethod.POST);
+		path("/tokens");
+		json(authentication);
+		header("Accept", "application/json");
+		returnType(Access.class);
 	}
 	
 	public static Authenticate withPasswordCredentials(String username, String password) {
@@ -52,18 +54,6 @@ public class Authenticate implements OpenStackCommand<Access> {
 	public Authenticate withTenantName(String tenantName) {
 		authentication.setTenantName(tenantName);
 		return this;
-	}
-
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		request.path("/tokens");
-		request.json(authentication);
-		request.header("Accept", "application/json");
-		request.returnType(Access.class);
-		return request;
-		//return target.path("/tokens").request(MediaType.APPLICATION_JSON).post(Entity.json(authentication), Access.class);
 	}
 
 }

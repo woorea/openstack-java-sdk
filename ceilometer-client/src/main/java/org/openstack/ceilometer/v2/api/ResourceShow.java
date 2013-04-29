@@ -1,12 +1,10 @@
 package org.openstack.ceilometer.v2.api;
 
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.ceilometer.v2.model.Resource;
 
 
-public class ResourceShow implements OpenStackCommand<Resource> {
+public class ResourceShow extends OpenStackRequest {
 
 	private String id;
 		
@@ -15,14 +13,11 @@ public class ResourceShow implements OpenStackCommand<Resource> {
 		return this;
 	}
 	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
+	public ResourceShow(OpenStackClient client) {
 //		if(id == null) {
 //			throw new UnsupportedOperationException("resource id is mandatory");
 //		}
 //		return target.path("resources").path(id).request(MediaType.APPLICATION_JSON).get(Resource.class);
-		return null;
 	}
 
 }

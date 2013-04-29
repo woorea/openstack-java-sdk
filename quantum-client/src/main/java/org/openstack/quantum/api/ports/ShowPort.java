@@ -2,11 +2,10 @@ package org.openstack.quantum.api.ports;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.quantum.model.Port;
 
-public class ShowPort implements OpenStackCommand<Port> {
+public class ShowPort extends OpenStackRequest {
 
 private String id;
 	

@@ -1,15 +1,13 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.ServerAction.Start;
 import org.openstack.nova.model.ServerAction.Stop;
 
 public class StartStopServerExtension {
 
-	public class StartServer implements OpenStackCommand<Void> {
+	public class StartServer extends OpenStackRequest {
 		
 		private Start action;
 
@@ -18,22 +16,16 @@ public class StartStopServerExtension {
 		public StartServer(String id) {
 			this.id = id;
 			this.action = new Start();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 	
-	public class StopServer implements OpenStackCommand<Void> {
+	public class StopServer extends OpenStackRequest {
 		
 		private Stop action;
 
@@ -42,17 +34,11 @@ public class StartStopServerExtension {
 		public StopServer(String id) {
 			this.id = id;
 			this.action = new Stop();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}

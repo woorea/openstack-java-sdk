@@ -1,95 +1,63 @@
 package org.openstack.nova.api.extensions;
 
-import java.util.Map;
-
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.model.Volume;
 import org.openstack.nova.model.VolumeAttachment;
 import org.openstack.nova.model.VolumeForCreate;
 import org.openstack.nova.model.Volumes;
 
 public class VolumesExtension {
 	
-	public static class ListVolumes implements OpenStackCommand<Volumes>{
-
-		boolean detail;
+	public static class ListVolumes extends OpenStackRequest {
 		
 		public ListVolumes(boolean detail) {
-			this.detail = detail;
+			method(HttpMethod.GET);
+		    path(detail ? "/os-volumes/detail" : "/os-volumes");
+		    header("Accept", "application/json");
+		    returnType(Volumes.class);
 		}
 		
 		public ListVolumes() {
 			this(false);
 		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path(detail ? "/os-volumes/detail" : "/os-volumes");
-		    request.header("Accept", "application/json");
-		    request.returnType(Volumes.class);
-		return request;
-		}
-
 	}
 
 	
-	public static class CreateVolume implements OpenStackCommand<Volume> {
+	public static class CreateVolume extends OpenStackRequest {
 
 		private VolumeForCreate volumeForCreate;
 		
 		public CreateVolume(VolumeForCreate volumeForCreate) {
 			this.volumeForCreate = volumeForCreate;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-volumes").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeForCreate), Volume.class);
-			return null;
 		}
 		
 	}
 	
-	public static class ShowVolume implements OpenStackCommand<Volume> {
+	public static class ShowVolume extends OpenStackRequest {
 
 		private String id;
 		
 		public ShowVolume(String id) {
 			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).get(Volume.class);
-			return null;
 		}
 		
 	}
 
 	
-	public static class ShowVolumeMetadata implements OpenStackCommand<Map<String, String>> {
-
-		private String id;
+	public static class ShowVolumeMetadata extends OpenStackRequest {
 		
 		public ShowVolumeMetadata(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 //			Metadata metadata = target.path("os-volumes").path(id).path("metadata").request(MediaType.APPLICATION_JSON).get(Metadata.class);
 //			return metadata.getMetadata();
-			return null;
 		}
 		
 	}
 
 	
-	public static class AttachVolumeToServer implements OpenStackCommand<Void> {
+	public static class AttachVolumeToServer extends OpenStackRequest {
 		
 		private String serverId;
 		
@@ -100,17 +68,12 @@ public class VolumesExtension {
 			volumeAttachment = new VolumeAttachment();
 			volumeAttachment.setVolumeId(volumeId);
 			volumeAttachment.setDevice(device);
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 //			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
-			return null;
 		}
 
 	}
 	
-	public static class DetachVolumeFromServer implements OpenStackCommand<Void> {
+	public static class DetachVolumeFromServer extends OpenStackRequest {
 		
 		private String serverId;
 		
@@ -119,28 +82,18 @@ public class VolumesExtension {
 		public DetachVolumeFromServer(String serverId, String volumeId) {
 			this.serverId = serverId;
 			this.volumeId = volumeId;
-		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 //			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
-			return null;
 		}
 
 	}
 	
-	public static class DeleteVolume implements OpenStackCommand<Void> {
+	public static class DeleteVolume extends OpenStackRequest {
 
-		private String id;
 		
 		public DeleteVolume(String id) {
-			this.id = id;
-		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 //			target.path("os-volumes").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
 		}
 		
 	}

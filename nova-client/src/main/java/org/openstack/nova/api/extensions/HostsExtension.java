@@ -1,44 +1,31 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Host;
 import org.openstack.nova.model.Hosts;
 
 public class HostsExtension {
 
-	public static class ListHosts implements OpenStackCommand<Hosts>{
+	public static class ListHosts extends OpenStackRequest {
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
+		public ListHosts() {
 		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path("/os-hosts");
-		    request.header("Accept", "application/json");
-		    request.returnType(Hosts.class);
-		return request;
+		method(HttpMethod.GET);
+		    path("/os-hosts");
+		    header("Accept", "application/json");
+		    returnType(Hosts.class);
 		}
 
 	}
 
-	public static class ShowHost implements OpenStackCommand<Host> {
-
-		private String id;
+	public static class ShowHost extends OpenStackRequest {
 		
 		public ShowHost(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-		    request.path("/os-hosts/").path(id);
-		    request.header("Accept", "application/json");
-		    request.returnType(Host.class);
-		return request;
+			method(HttpMethod.GET);
+		    path("/os-hosts/").path(id);
+		    header("Accept", "application/json");
+		    returnType(Host.class);
 		}
 		
 	}

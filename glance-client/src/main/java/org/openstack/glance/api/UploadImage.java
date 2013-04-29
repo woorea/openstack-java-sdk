@@ -1,21 +1,13 @@
 package org.openstack.glance.api;
 
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.model.Image;
 import org.openstack.glance.model.ImageForUpload;
 
-public class UploadImage implements OpenStackCommand<Image> {
+public class UploadImage extends OpenStackRequest {
 	
 	private ImageForUpload imageForUpload;
 	
 	public UploadImage(ImageForUpload imageForUpload) {
-		this.imageForUpload = imageForUpload;
-	}
-
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
 		/*
 		Invocation.Builder invocationBuilder = target.path("images").request(MediaType.APPLICATION_JSON);
 		if(imageForUpload.getName() != null) {
@@ -51,7 +43,6 @@ public class UploadImage implements OpenStackCommand<Image> {
 		}
 		return invocationBuilder.post(Entity.entity(imageForUpload.getInputStream(), MediaType.APPLICATION_OCTET_STREAM), Image.class);
 		*/
-		return null;
 	}
 
 }

@@ -13,6 +13,15 @@ public class MeterFunction extends MeterCommand<BigDecimal> {
 	
 	public MeterFunction(String id) {
 		this.id = id;
+		if(source != null) {
+			path("sources").path(source);
+		} else if(project != null) {
+			path("projects").path(project);
+		} else if(user != null) {
+			path("users").path(user);
+		}
+		path("v1/meters").path(id).path(function);
+		//Response response = target.request(MediaType.APPLICATION_JSON).get(Response.class);
 	}
 	
 	public MeterFunction duration() {
@@ -35,19 +44,7 @@ public class MeterFunction extends MeterCommand<BigDecimal> {
 		return this;
 	}
 
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		if(source != null) {
-			request.path("sources").path(source);
-		} else if(project != null) {
-			request.path("projects").path(project);
-		} else if(user != null) {
-			request.path("users").path(user);
-		}
-		request.path("v1/meters").path(id).path(function);
-		//Response response = target.request(MediaType.APPLICATION_JSON).get(Response.class);
-		return null;
-	}
+	
+	
 
 }

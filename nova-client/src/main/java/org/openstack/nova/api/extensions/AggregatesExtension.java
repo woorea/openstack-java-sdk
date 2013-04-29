@@ -3,49 +3,36 @@ package org.openstack.nova.api.extensions;
 import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.HostAggregate;
 import org.openstack.nova.model.HostAggregates;
 
 public class AggregatesExtension {
 
-	public class ListAggregates implements OpenStackCommand<HostAggregates> {
+	public class ListAggregates extends OpenStackRequest {
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-aggregates");
-			request.header("Accept", "application/json");
-			request.returnType(HostAggregates.class);
-			return request;
+		
+		public ListAggregates() {
+			method(HttpMethod.GET);
+			path("/os-aggregates");
+			header("Accept", "application/json");
+			returnType(HostAggregates.class);
 		}
 
 	}
 
-	public class ShowAggregate implements OpenStackCommand<HostAggregate> {
-
-		private String id;
+	public class ShowAggregate extends OpenStackRequest {
 
 		public ShowAggregate(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-aggregates/").path(id);
-			request.header("Accept", "application/json");
-			request.returnType(HostAggregate.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/os-aggregates/").path(id);
+			header("Accept", "application/json");
+			returnType(HostAggregate.class);
 		}
 
 	}
 
-	public class UpdateAggregateMetadata implements OpenStackCommand<Void> {
+	public class UpdateAggregateMetadata extends OpenStackRequest {
 
 		private String id;
 
@@ -54,41 +41,27 @@ public class AggregatesExtension {
 		public UpdateAggregateMetadata(String id, Map<String, String> metadata) {
 			this.id = id;
 			this.metadata = metadata;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.POST);
-			request.path("/os-aggregates/").path(id);
-			request.header("Accept", "application/json");
-			request.json("{\"set_metadata\" : }");
-			request.returnType(HostAggregate.class);
-			return null;
+			
+			method(HttpMethod.POST);
+			path("/os-aggregates/").path(id);
+			header("Accept", "application/json");
+			json("{\"set_metadata\" : }");
+			returnType(HostAggregate.class);
 		}
 
 	}
 
-	public class DeleteAggregate implements OpenStackCommand<Void> {
-
-		private String id;
+	public class DeleteAggregate extends OpenStackRequest {
 
 		public DeleteAggregate(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.DELETE);
-			request.path("/os-aggregates/").path(id);
-			request.header("Accept", "application/json");
-			return request;
+			method(HttpMethod.DELETE);
+			path("/os-aggregates/").path(id);
+			header("Accept", "application/json");
 		}
 
 	}
 
-	public static class AddHost implements OpenStackCommand<Void> {
+	public static class AddHost extends OpenStackRequest {
 
 		private String aggregateId;
 
@@ -97,17 +70,12 @@ public class AggregatesExtension {
 		public AddHost(String aggregateId, String hostId) {
 			this.aggregateId = aggregateId;
 			this.hostId = hostId;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-aggregates").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"add_host\" : }"));
-			return null;
 		}
 
 	}
 
-	public class RemoveHost implements OpenStackCommand<Void> {
+	public class RemoveHost extends OpenStackRequest {
 
 		private String aggregateId;
 
@@ -116,13 +84,8 @@ public class AggregatesExtension {
 		public RemoveHost(String hostId, String aggregateId) {
 			this.aggregateId = aggregateId;
 			this.hostId = hostId;
-
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-aggregates").path("aggregate").path("os-volume-attachments").request(MediaType.APPLICATION_JSON).post(Entity.json("{\"remove_host\" : }"));
-			return null;
+
 		}
 
 	}

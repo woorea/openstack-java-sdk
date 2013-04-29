@@ -18,14 +18,11 @@ public class MeterShow extends QueriableCeilometerCommand<MeterShow, List<Sample
 		return this;
 	}
 	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
+	public MeterShow() {
 //		if(name == null) {
 //			throw new UnsupportedOperationException("meter id is mandatory");
 //		}
 //		return query(target.path("meters").path(name)).request(MediaType.APPLICATION_JSON).get(new GenericType<List<Sample>>() {});
-		return null;
 	}
 
 }

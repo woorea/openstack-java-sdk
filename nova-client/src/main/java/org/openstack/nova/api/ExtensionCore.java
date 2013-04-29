@@ -16,8 +16,6 @@
 package org.openstack.nova.api;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Extensions;
 
@@ -27,27 +25,15 @@ import org.openstack.nova.model.Extensions;
  */
 public class ExtensionCore {
 
-  public static class ListExtensions implements OpenStackCommand<Extensions> {
-
-    boolean detail;
+  public static class ListExtensions extends OpenStackRequest {
 
     public ListExtensions(boolean detail) {
-      this.detail = detail;
+    	method(HttpMethod.GET);
+        path(detail ? "extensions/detail" : "extensions");
+        header("Accept", "application/json");
+        returnType(Extensions.class);
     }
-
-    public ListExtensions() {
-      this(false);
-    }
-
-    @Override
-    public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.GET);
-      request.path(detail ? "extensions/detail" : "extensions");
-      request.header("Accept", "application/json");
-      request.returnType(Extensions.class);
-		return request;
-    }
+    
   }
 
   public static ListExtensions listExtensions(boolean detail) {

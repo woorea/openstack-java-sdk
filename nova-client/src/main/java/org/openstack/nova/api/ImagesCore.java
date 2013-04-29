@@ -1,10 +1,7 @@
 package org.openstack.nova.api;
 
-import java.util.Map;
-
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Image;
 import org.openstack.nova.model.Images;
@@ -12,87 +9,51 @@ import org.openstack.nova.model.Metadata;
 
 public class ImagesCore {
 
-	public static class ListImages implements OpenStackCommand<Images> {
-
-		boolean detail;
+	public static class ListImages extends OpenStackRequest {
 
 		public ListImages(boolean detail) {
-			this.detail = detail;
+			method(HttpMethod.GET);
+			path(detail ? "/images/detail" : "/images");
+			header("Accept", "application/json");
+			returnType(Images.class);
 		}
 
 		public ListImages() {
 			this(false);
 		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path(detail ? "/images/detail" : "/images");
-			request.header("Accept", "application/json");
-			request.returnType(Images.class);
-			return request;
-		}
-
 	}
 
-	public static class ShowImage implements OpenStackCommand<Image> {
-
-		private String id;
+	public static class ShowImage extends OpenStackRequest {
 
 		public ShowImage(String id) {
-			this.id = id;
+			method(HttpMethod.GET);
+			path("/images/").path(id);
+			header("Accept", "application/json");
+			returnType(Image.class);
 		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/images/").path(id);
-			request.header("Accept", "application/json");
-			request.returnType(Image.class);
-			return request;
-		}
-
+		
 	}
 
-	public static class ShowImageMetadata implements OpenStackCommand<Map<String, String>> {
-
-		private String id;
+	public static class ShowImageMetadata extends OpenStackRequest {
 
 		public ShowImageMetadata(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/images/").path(id).path("metadata");
-			request.header("Accept", "application/json");
-			request.returnType(Metadata.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/images/").path(id).path("metadata");
+			header("Accept", "application/json");
+			returnType(Metadata.class);
 		}
 
 	}
 
-	public static class DeleteImage implements OpenStackCommand<Void> {
-
-		private String id;
+	public static class DeleteImage extends OpenStackRequest {
 
 		public DeleteImage(String id) {
-			this.id = id;
+			method(HttpMethod.GET);
+			path("/images/").path(id);
+			header("Accept", "application/json");
 		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/images/").path(id);
-			request.header("Accept", "application/json");
-			return request;
-		}
-
+		
 	}
 
 	public static ListImages listImages(boolean detail) {

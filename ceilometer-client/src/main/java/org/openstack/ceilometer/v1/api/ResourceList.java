@@ -1,11 +1,9 @@
 package org.openstack.ceilometer.v1.api;
 
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.ceilometer.v1.model.Resources;
 
-public class ResourceList implements OpenStackCommand<Resources> {
+public class ResourceList extends OpenStackRequest {
 
 	private String source;
 	
@@ -28,9 +26,7 @@ public class ResourceList implements OpenStackCommand<Resources> {
 		return this;
 	}
 	
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
+	public ResourceList() {
 //		if(source != null) {
 //			target = target.path("sources").path(source);
 //		} else if(project != null) {
@@ -39,7 +35,6 @@ public class ResourceList implements OpenStackCommand<Resources> {
 //			target = target.path("users").path(user);
 //		}
 //		return target.path("resources").request(MediaType.APPLICATION_JSON).get(Resources.class);
-		return null;
 	}
 
 }

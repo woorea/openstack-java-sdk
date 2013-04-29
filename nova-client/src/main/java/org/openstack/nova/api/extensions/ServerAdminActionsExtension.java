@@ -1,8 +1,6 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.ServerAction.CreateBackup;
 import org.openstack.nova.model.ServerAction.Lock;
@@ -14,7 +12,7 @@ import org.openstack.nova.model.ServerAction.Unpause;
 
 public class ServerAdminActionsExtension {
 	
-	public class PauseServer implements OpenStackCommand<Void> {
+	public class PauseServer extends OpenStackRequest {
 		
 		private Pause action;
 
@@ -23,22 +21,15 @@ public class ServerAdminActionsExtension {
 		public PauseServer(String id) {
 			this.id = id;
 			this.action = new Pause();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 	
-	public class UnpauseServer implements OpenStackCommand<Void> {
+	public class UnpauseServer extends OpenStackRequest {
 		
 		private Unpause action;
 
@@ -47,22 +38,17 @@ public class ServerAdminActionsExtension {
 		public UnpauseServer(String id) {
 			this.id = id;
 			this.action = new Unpause();
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
-		}
 
 	}
 
-	public class LockServer implements OpenStackCommand<Void> {
+	public class LockServer extends OpenStackRequest {
 		
 		private Lock action;
 
@@ -71,22 +57,16 @@ public class ServerAdminActionsExtension {
 		public LockServer(String id) {
 			this.id = id;
 			this.action = new Lock();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 
-	public class UnlockServer implements OpenStackCommand<Void> {
+	public class UnlockServer extends OpenStackRequest {
 		
 		private Unlock action;
 
@@ -95,22 +75,16 @@ public class ServerAdminActionsExtension {
 		public UnlockServer(String id) {
 			this.id = id;
 			this.action = new Unlock();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 
-	public class SuspendServer implements OpenStackCommand<Void> {
+	public class SuspendServer extends OpenStackRequest {
 		
 		private Suspend action;
 
@@ -119,22 +93,15 @@ public class ServerAdminActionsExtension {
 		public SuspendServer(String id) {
 			this.id = id;
 			this.action = new Suspend();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 
-	public class ResumeServer implements OpenStackCommand<Void> {
+	public class ResumeServer extends OpenStackRequest {
 		
 		private Resume action;
 
@@ -143,22 +110,15 @@ public class ServerAdminActionsExtension {
 		public ResumeServer(String id) {
 			this.id = id;
 			this.action = new Resume();
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}
 
-	public class CreateBackupServer implements OpenStackCommand<Void> {
+	public class CreateBackupServer extends OpenStackRequest {
 		
 		private	CreateBackup action;
 
@@ -167,17 +127,10 @@ public class ServerAdminActionsExtension {
 		public CreateBackupServer(String id, CreateBackup action) {
 			this.id = id;
 			this.action = action;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-		OpenStackRequest request = new OpenStackRequest();
-		request.method(HttpMethod.POST);
-		    request.path("/servers/").path(id).path("/action");
-		    request.header("Accept", "application/json");
-		    request.json(action);
-		    
-			return null;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
 		}
 
 	}

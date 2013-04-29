@@ -2,7 +2,6 @@ package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.SecurityGroup;
 import org.openstack.nova.model.SecurityGroupForCreate;
@@ -11,111 +10,71 @@ import org.openstack.nova.model.SecurityGroups;
 
 public class SecurityGroupsExtension {
 
-	public static class ListSecurityGroups implements OpenStackCommand<SecurityGroups> {
+	public static class ListSecurityGroups extends OpenStackRequest {
 
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
+		public ListSecurityGroups() {
 			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-security-groups");
-			request.header("Accept", "application/json");
-			request.returnType(SecurityGroups.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/os-security-groups");
+			header("Accept", "application/json");
+			returnType(SecurityGroups.class);
 		}
 
 	}
 
-	public static class CreateSecurityGroup implements OpenStackCommand<SecurityGroup> {
+	public static class CreateSecurityGroup extends OpenStackRequest {
 
 		private SecurityGroupForCreate securityGroupForCreate;
 
 		public CreateSecurityGroup(SecurityGroupForCreate securityGroupForCreate) {
 			this.securityGroupForCreate = securityGroupForCreate;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
+			
 			// return
 			// target.path("os-security-groups").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupForCreate),
 			// SecurityGroup.class);
-			return null;
 		}
 
 	}
 
-	public static class ShowSecurityGroup implements OpenStackCommand<SecurityGroup> {
-
-		private Integer id;
+	public static class ShowSecurityGroup extends OpenStackRequest {
 
 		public ShowSecurityGroup(Integer id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-security-groups").path("id");
-			request.header("Accept", "application/json");
-			request.returnType(SecurityGroup.class);
-			return request;
+			method(HttpMethod.GET);
+			path("/os-security-groups").path("id");
+			header("Accept", "application/json");
+			returnType(SecurityGroup.class);
 		}
 
 	}
 
-	public static class DeleteSecurityGroup implements OpenStackCommand<Void> {
-
-		private Integer id;
+	public static class DeleteSecurityGroup extends OpenStackRequest {
 
 		public DeleteSecurityGroup(Integer id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			OpenStackRequest request = new OpenStackRequest();
-			request.method(HttpMethod.GET);
-			request.path("/os-security-groups").path(String.valueOf(id));
-			request.header("Accept", "application/json");
-
-			return null;
+			method(HttpMethod.DELETE);
+			path("/os-security-groups").path(String.valueOf(id));
+			header("Accept", "application/json");
 		}
 
 	}
 
-	public static class CreateSecurityGroupRule implements OpenStackCommand<SecurityGroup.Rule> {
+	public static class CreateSecurityGroupRule extends OpenStackRequest {
 
 		private SecurityGroupRuleForCreate securityGroupRuleForCreate;
 
 		public CreateSecurityGroupRule(
 				SecurityGroupRuleForCreate securityGroupRuleForCreate) {
 			this.securityGroupRuleForCreate = securityGroupRuleForCreate;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
-			return null;
 			// return
-			// target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate),
-			// SecurityGroup.Rule.class);
+						// target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate),
+						// SecurityGroup.Rule.class);
 		}
-
 	}
 
-	public static class DeleteSecurityGroupRule implements OpenStackCommand<Void> {
-
-		private Integer id;
+	public static class DeleteSecurityGroupRule extends OpenStackRequest {
 
 		public DeleteSecurityGroupRule(Integer id) {
-			this.id = id;
-		}
-
-		@Override
-		public OpenStackRequest createRequest(OpenStackClient client) {
 			// target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
-			return null;
 		}
-
 	}
 
 	public static ListSecurityGroups listSecurityGroups() {

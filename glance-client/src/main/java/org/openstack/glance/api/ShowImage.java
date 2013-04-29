@@ -3,20 +3,13 @@ package org.openstack.glance.api;
 import java.util.Calendar;
 
 import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackCommand;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.model.Image;
 
-public class ShowImage implements OpenStackCommand<Image> {
+public class ShowImage extends OpenStackRequest {
 	
 	private String id;
 	
 	public ShowImage(String id) {
-		this.id = id;
-	}
-
-	@Override
-	public OpenStackRequest createRequest(OpenStackClient client) {
 		/*
 		Response response = target.path("images").path(id).request(MediaType.APPLICATION_JSON).head();
 		Image image = new Image();
@@ -44,7 +37,6 @@ public class ShowImage implements OpenStackCommand<Image> {
 		}
 		return image;
 		*/
-		return null;
 	}
 	
 	private Calendar asCalendar(String calendarString) {

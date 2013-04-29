@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.openstack.base.client.OpenStackRequest;
 
-public class AbsOpenStackCmd<T> {
+public class AbsOpenStackCmd<T> extends OpenStackRequest {
 
 	private T query;
 
