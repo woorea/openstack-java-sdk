@@ -8,8 +8,8 @@ import org.openstack.keystone.model.Endpoints;
 
 public class ListEndpoints implements OpenStackCommand<Endpoints>{
 
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/endpoints");
 		request.header("Accept", "application/json");

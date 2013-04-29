@@ -12,8 +12,8 @@ public class FloatingIpDnsExtension {
 	public class ListFloatingIpDomains implements OpenStackCommand<FloatingIpDomains>{
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ip-dns/");
 		    request.header("Accept", "application/json");
@@ -32,8 +32,8 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+		public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		    request.path("/os-floating-ip-dns/");
 		    request.header("Accept", "application/json");
@@ -53,7 +53,7 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).get(FloatingIpDomain.class);
 			return null;
 		}
@@ -70,7 +70,7 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			//return target.path("os-floating-ip-dns").request(MediaType.APPLICATION_JSON).post(Entity.json(floatingIpDomain), FloatingIpDomain.class);
 			return null;
 		}
@@ -87,7 +87,7 @@ public class FloatingIpDnsExtension {
 		}
 
 		@Override
-		public OpenStackRequest execute(OpenStackClient client) {
+		public OpenStackRequest createRequest(OpenStackClient client) {
 			//target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).delete();
 			return null;
 		}

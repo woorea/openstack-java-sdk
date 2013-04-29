@@ -15,7 +15,7 @@ public class ShowContainer implements OpenStackCommand<Response>{
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 //		return target.path(containerName).request(MediaType.APPLICATION_JSON).head();
 		return null;
 	}

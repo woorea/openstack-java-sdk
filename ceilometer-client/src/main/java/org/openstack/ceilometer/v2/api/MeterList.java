@@ -11,8 +11,8 @@ import org.openstack.ceilometer.v2.model.Meter;
 public class MeterList extends QueriableCeilometerCommand<MeterList,List<Meter>> {
 		
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		//return query(target.path("meters")).request(MediaType.APPLICATION_JSON).get(new GenericType<List<Meter>>() {});
 		return null;
 	}

@@ -20,7 +20,7 @@ public class ListObjects implements OpenStackCommand<List<Object>>{
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 //		target = target.path(containerName);
 //		for(String filter : new String[]{"prefix","delimiter","path","marker"}) {
 //			if(filters.get(filter) != null) {

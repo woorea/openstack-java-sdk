@@ -13,8 +13,8 @@ public class DeleteRole implements OpenStackCommand<Void> {
 		this.id = id;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.DELETE);
 	    request.path("OS-KSADM/roles/").path(id);
 	    request.header("Accept", "application/json");

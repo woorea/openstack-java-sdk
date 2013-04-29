@@ -14,7 +14,7 @@ public class QuerySubnets extends AbsOpenStackCmd<Subnet> implements OpenStackCo
 		super(subnet);
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 //		target = target.path("v2.0").path("subnets");
 //		target = queryParam(target);
 //		return target.request(MediaType.APPLICATION_JSON).get(Subnets.class);

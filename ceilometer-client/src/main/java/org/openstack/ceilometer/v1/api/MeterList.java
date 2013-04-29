@@ -9,8 +9,8 @@ import org.openstack.ceilometer.v1.model.MeterEvent;
 public class MeterList extends MeterCommand<List<MeterEvent>> {
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		if(source != null) {
 			request.path("sources").path(source);
 		} else if(project != null) {

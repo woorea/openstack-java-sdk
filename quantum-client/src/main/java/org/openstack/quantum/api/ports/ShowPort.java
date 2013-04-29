@@ -14,8 +14,8 @@ private String id;
 		this.id = id;
 	}
 	
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("ports/").path(id);
 		request.header("Accept", "application/json");

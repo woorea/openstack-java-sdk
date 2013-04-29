@@ -18,8 +18,8 @@ public class AddMemberToImage implements OpenStackCommand<ImageMember> {
 	}
 	
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.PUT);
 	    request.path("/images/").path(id).path("/members/").path(tenantId);
 	    request.header("Accept", "application/json");

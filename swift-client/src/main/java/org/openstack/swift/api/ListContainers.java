@@ -10,7 +10,7 @@ import org.openstack.swift.model.Container;
 public class ListContainers implements OpenStackCommand<List<Container>>{
 
 	@Override
-	public OpenStackRequest execute(OpenStackClient client) {
+	public OpenStackRequest createRequest(OpenStackClient client) {
 		//return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Container>>(){});
 		return null;
 	}

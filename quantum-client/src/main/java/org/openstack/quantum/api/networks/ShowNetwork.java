@@ -14,8 +14,8 @@ public class ShowNetwork implements OpenStackCommand<Network> {
 		this.id = id;
 	}
 	
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("networks/").path(id);
 		request.header("Accept", "application/json");

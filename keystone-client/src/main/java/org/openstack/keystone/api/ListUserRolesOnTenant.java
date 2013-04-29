@@ -16,8 +16,8 @@ public class ListUserRolesOnTenant implements OpenStackCommand<Roles> {
 		this.userId = userId;
 	}
 
-	public OpenStackRequest execute(OpenStackClient client) {
-		OpenStackRequest request = client.newOpenStackRequest();
+	public OpenStackRequest createRequest(OpenStackClient client) {
+		OpenStackRequest request = new OpenStackRequest();
 		request.method(HttpMethod.GET);
 		request.path("/tenants").path(tenantId).path("/users").path(userId).path("/roles");
 		request.header("Accept", "application/json");
