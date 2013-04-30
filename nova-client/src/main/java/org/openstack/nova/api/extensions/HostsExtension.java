@@ -25,11 +25,7 @@ public class HostsExtension {
 	public class List extends OpenStackRequest<Hosts> {
 
 		public List() {
-		OpenStackRequest request = new OpenStackRequest();
-		method(HttpMethod.GET);
-		    path("/os-hosts");
-		    header("Accept", "application/json");
-		    returnType(Hosts.class);
+			super(CLIENT, HttpMethod.GET, "/os-hosts", null, Hosts.class);
 		}
 
 	}
@@ -37,10 +33,7 @@ public class HostsExtension {
 	public class Show extends OpenStackRequest<Host> {
 		
 		public Show(String id) {
-			method(HttpMethod.GET);
-		    path("/os-hosts/").path(id);
-		    header("Accept", "application/json");
-		    returnType(Host.class);
+			super(CLIENT, HttpMethod.GET, new StringBuffer("/os-hosts/").append(id).toString(), null, Host.class);
 		}
 		
 	}

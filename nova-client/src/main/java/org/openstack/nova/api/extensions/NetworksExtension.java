@@ -1,5 +1,6 @@
 package org.openstack.nova.api.extensions;
 
+import org.openstack.base.client.Entity;
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
@@ -34,11 +35,7 @@ public class NetworksExtension {
 
 
 		public List() {
-			OpenStackRequest request = new OpenStackRequest();
-			method(HttpMethod.GET);
-			path("/os-networks");
-			header("Accept", "application/json");
-			returnType(Networks.class);
+			super(CLIENT, HttpMethod.GET, "/os-networks", null, Networks.class);
 		}
 
 	}
@@ -48,12 +45,8 @@ public class NetworksExtension {
 		private Network network;
 
 		public Create(Network network) {
+			super(CLIENT, HttpMethod.POST, "/os-networks", Entity.json(network), Network.class);
 			this.network = network;
-			method(HttpMethod.POST);
-			path("/os-networks");
-			header("Accept", "application/json");
-			json(network);
-			returnType(Network.class);
 		}
 
 	}
@@ -61,10 +54,7 @@ public class NetworksExtension {
 	public class Show extends OpenStackRequest<Network> {
 
 		public Show(String id) {
-			method(HttpMethod.GET);
-			path("/os-networks/").path(id);
-			header("Accept", "application/json");
-			returnType(Network.class);
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-networks/").append(id).toString(), null, Network.class);
 		}
 
 	}
@@ -72,10 +62,8 @@ public class NetworksExtension {
 	public class Disassociate extends OpenStackRequest<Void> {
 
 		public Disassociate(String id) {
-			method(HttpMethod.POST);
-			path("/os-networks/").path(id);
-			header("Accept", "application/json");
-			json("{\"action\":\"disassociate\"}");
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/os-networks/").append(id).toString(), Entity.json("{\"action\":\"disassociate\"}"), Void.class);
+			;
 		}
 
 	}

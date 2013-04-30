@@ -3,13 +3,10 @@ package org.openstack.nova.api.extensions;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openstack.base.client.Entity;
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
-import org.openstack.nova.model.Cloudpipes;
 import org.openstack.nova.model.FloatingIp;
-import org.openstack.nova.model.FloatingIpDomain;
 import org.openstack.nova.model.FloatingIps;
 
 public class FloatingIpsExtension {
