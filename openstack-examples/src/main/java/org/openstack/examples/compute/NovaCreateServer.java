@@ -3,9 +3,10 @@ package org.openstack.examples.compute;
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.Keystone;
-import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
+import org.openstack.keystone.model.authentication.TokenAuthentication;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.nova.Nova;
 import org.openstack.nova.api.extensions.KeyPairsExtension;
 import org.openstack.nova.model.Flavors;
@@ -22,7 +23,9 @@ public class NovaCreateServer {
 	public static void main(String[] args) {
 		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
 		//access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
+		Access access = keystone.tokens().authenticate(
+			new UsernamePassword(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD))
+			.execute();
 		
 		//use the token in the following requests
 		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
@@ -32,7 +35,7 @@ public class NovaCreateServer {
 		//try to exchange token using the first tenant
 		if(tenants.getList().size() > 0) {
 			
-			access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantId(tenants.getList().get(0).getId()));
+			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));

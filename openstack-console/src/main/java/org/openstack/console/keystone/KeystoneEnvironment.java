@@ -8,6 +8,7 @@ import org.openstack.console.Environment;
 import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 
 public class KeystoneEnvironment extends Environment {
 	
@@ -20,10 +21,13 @@ public class KeystoneEnvironment extends Environment {
 			
 			Keystone client = new Keystone(console.getProperty("keystone.endpoint"));
 			
-			Access access = client.execute(Authenticate.withPasswordCredentials(
+			Access access = client.tokens()
+				.authenticate(new UsernamePassword(
 					console.getProperty("keystone.username"), 
 					console.getProperty("keystone.password")
-			).withTenantName(console.getProperty("keystone.tenant_name")));
+				))
+				.withTenantName(console.getProperty("keystone.tenant_name"))
+				.execute();
 					
 			client.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 			

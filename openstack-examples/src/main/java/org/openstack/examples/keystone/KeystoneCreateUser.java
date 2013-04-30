@@ -3,9 +3,9 @@ package org.openstack.examples.keystone;
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.Keystone;
-import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.User;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 
 public class KeystoneCreateUser {
 
@@ -15,9 +15,10 @@ public class KeystoneCreateUser {
 	public static void main(String[] args) {
 		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		//access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(
-				ExamplesConfiguration.KEYSTONE_USERNAME, 
-				ExamplesConfiguration.KEYSTONE_PASSWORD).withTenantName("admin"));
+		Access access = keystone.tokens()
+			.authenticate(new UsernamePassword(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD))
+			.withTenantName("admin")
+			.execute();
 
 		User user = new User();
 		user.setEmail("luis@woorea.es");

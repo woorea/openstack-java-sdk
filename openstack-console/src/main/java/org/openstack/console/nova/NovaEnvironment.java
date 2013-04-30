@@ -8,6 +8,7 @@ import org.openstack.console.Environment;
 import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.nova.Nova;
 
 public class NovaEnvironment extends Environment {
@@ -22,10 +23,14 @@ public class NovaEnvironment extends Environment {
 			if(args.getArgs().length == 1) {
 				Keystone keystone = new Keystone((String) console.getProperty("keystone.endpoint"));
 				
-				Access access = keystone.execute(Authenticate.withPasswordCredentials(
+				Access access = keystone.tokens().authenticate(
+					new UsernamePassword(
 						console.getProperty("keystone.username"), 
 						console.getProperty("keystone.password")
-				).withTenantName(console.getProperty("keystone.tenant_name")));
+					)
+				)
+				.withTenantName(console.getProperty("keystone.tenant_name"))
+				.execute();
 				
 				System.out.println(console.getProperty("nova.endpoint"));
 				

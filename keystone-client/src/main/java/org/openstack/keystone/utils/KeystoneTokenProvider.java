@@ -1,11 +1,13 @@
 package org.openstack.keystone.utils;
 
+import java.net.PasswordAuthentication;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.openstack.base.client.OpenStackTokenProvider;
 import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 
 public class KeystoneTokenProvider {
 
@@ -27,8 +29,9 @@ public class KeystoneTokenProvider {
 	public Access getAccessByTenant(String tenantName) {
 		Access access = hashTenantAccess.get(tenantName);
 		if (access == null) {
-			access = keystone.execute(Authenticate.withPasswordCredentials(
-					username, password).withTenantName(tenantName));
+			access = keystone.tokens().authenticate(new UsernamePassword(username, password))
+				.withTenantName(tenantName)
+				.execute();
 			hashTenantAccess.put(tenantName, access);
 		}
 		return access;

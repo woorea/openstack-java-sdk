@@ -3,12 +3,10 @@ package org.openstack.examples.compute;
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.Keystone;
-import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
-import org.openstack.keystone.model.Authentication;
-import org.openstack.keystone.model.Authentication.PasswordCredentials;
-import org.openstack.keystone.model.Authentication.Token;
 import org.openstack.keystone.model.Tenants;
+import org.openstack.keystone.model.authentication.TokenAuthentication;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.nova.Nova;
 import org.openstack.nova.model.Server;
 import org.openstack.nova.model.Servers;
@@ -20,14 +18,9 @@ public class NovaListServers {
 	 */
 	public static void main(String[] args) {
 		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
-		Authentication authentication = new Authentication();
-		PasswordCredentials passwordCredentials = new PasswordCredentials();
-		passwordCredentials.setUsername(ExamplesConfiguration.KEYSTONE_USERNAME);
-		passwordCredentials.setPassword(ExamplesConfiguration.KEYSTONE_PASSWORD);
-		authentication.setPasswordCredentials(passwordCredentials);
-		
-		//access with unscoped token
-		Access access = keystone.execute(new Authenticate(authentication));
+		Access access = keystone.tokens().authenticate(
+				new UsernamePassword(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD))
+				.execute();
 		
 		//use the token in the following requests
 		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
@@ -37,13 +30,7 @@ public class NovaListServers {
 		//try to exchange token using the first tenant
 		if(tenants.getList().size() > 0) {
 			
-			authentication = new Authentication();
-			Token token = new Token();
-			token.setId(access.getToken().getId());
-			authentication.setToken(token);
-			authentication.setTenantId(tenants.getList().get(0).getId());
-			
-			access = keystone.execute(new Authenticate(authentication));
+			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
 			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
