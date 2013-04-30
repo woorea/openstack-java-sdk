@@ -8,7 +8,6 @@ import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.model.authentication.TokenAuthentication;
 import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.nova.Nova;
-import org.openstack.nova.api.extensions.KeyPairsExtension;
 import org.openstack.nova.model.Flavors;
 import org.openstack.nova.model.Images;
 import org.openstack.nova.model.KeyPairs;
@@ -38,8 +37,8 @@ public class NovaCreateServer {
 			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
-			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
-			novaClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+			Nova nova = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
+			nova.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			//create a new keypair
 			//KeyPair keyPair = novaClient.execute(KeyPairsExtension.createKeyPair("mykeypair"));
@@ -51,11 +50,11 @@ public class NovaCreateServer {
 			//novaClient.execute(SecurityGroupsExtension.createSecurityGroupRule(securityGroup.getId(), "UDP", 9090, 9092, "0.0.0.0/0"));
 			//novaClient.execute(SecurityGroupsExtension.createSecurityGroupRule(securityGroup.getId(), "TCP", 8080, 8080, "0.0.0.0/0"));
 			
-			KeyPairs keysPairs = novaClient.execute(KeyPairsExtension.listKeyPairs());
+			KeyPairs keysPairs = nova.keyPairs().list().execute();
 			
-			Images images = novaClient.images().list(true).execute();
+			Images images = nova.images().list(true).execute();
 			
-			Flavors flavors = novaClient.flavors().list(true).execute();
+			Flavors flavors = nova.flavors().list(true).execute();
 			
 			ServerForCreate serverForCreate = new ServerForCreate();
 			serverForCreate.setName("woorea");
@@ -65,7 +64,7 @@ public class NovaCreateServer {
 			serverForCreate.getSecurityGroups().add(new ServerForCreate.SecurityGroup("default"));
 			//serverForCreate.getSecurityGroups().add(new ServerForCreate.SecurityGroup(securityGroup.getName()));
 			
-			Server server = novaClient.servers().boot(serverForCreate).execute();
+			Server server = nova.servers().boot(serverForCreate).execute();
 			System.out.println(server);
 			
 		} else {
