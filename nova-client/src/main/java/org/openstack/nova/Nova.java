@@ -6,6 +6,7 @@ import org.openstack.nova.api.ExtensionsResource;
 import org.openstack.nova.api.FlavorsResource;
 import org.openstack.nova.api.ImagesResource;
 import org.openstack.nova.api.ServersResource;
+import org.openstack.nova.api.extensions.AggregatesExtension;
 
 public class Nova extends OpenStackClient {
 	
@@ -17,12 +18,15 @@ public class Nova extends OpenStackClient {
 	
 	private final FlavorsResource FLAVORS;
 	
+	private final AggregatesExtension AGGREGATES;
+	
 	public Nova(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 		EXTENSIONS = new ExtensionsResource(this);
 		SERVERS = new ServersResource(this);
 		IMAGES = new ImagesResource(this);
 		FLAVORS = new FlavorsResource(this);
+		AGGREGATES = new AggregatesExtension(this);
 	}
 	
 	public Nova(String endpoint) {

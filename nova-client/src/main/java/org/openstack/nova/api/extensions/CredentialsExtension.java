@@ -1,40 +1,42 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Certificate;
 
 public class CredentialsExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public CredentialsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public Create createCertificate(String id) {
+		return new Create(id);
+	}
 
-	public static class CreateCertificate extends OpenStackRequest<Certificate> {
+	public Show showCertificate(String id) {
+		return new Show();
+	}
 
-		public CreateCertificate(String id) {
-			method(HttpMethod.POST);
-			path("/os-certificates/").path(id);
-			header("Accept", "application/json");
-			returnType(Certificate.class);
+	public class Create extends OpenStackRequest<Certificate> {
+
+		public Create(String id) {
+			super(CLIENT, HttpMethod.GET, new StringBuffer("/os-certificates").append(id).toString(), null, Certificate.class);
 		}
 
 	}
 
-	public static class ShowCertificate extends OpenStackRequest<Certificate> {
+	public class Show extends OpenStackRequest<Certificate> {
 
-		public ShowCertificate() {
-			OpenStackRequest request = new OpenStackRequest();
-			method(HttpMethod.GET);
-			path("/os-certificates");
-			header("Accept", "application/json");
-			returnType(Certificate.class);
+		public Show() {
+			super(CLIENT, HttpMethod.GET, "/os-certificates", null, Certificate.class);
 		}
 
 	}
 
-	public CreateCertificate createCertificate(String id) {
-		return new CreateCertificate(id);
-	}
-
-	public ShowCertificate showCertificate(String id) {
-		return new ShowCertificate();
-	}
+	
 
 }

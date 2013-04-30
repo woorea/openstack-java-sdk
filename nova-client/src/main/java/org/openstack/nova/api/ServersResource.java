@@ -480,5 +480,45 @@ public class RescueServer extends OpenStackRequest {
 	public UnrescueServer unrescue(String serverId) {
 		return new UnrescueServer(serverId);
 	}
+	
+	public static class AssociateFloatingIp extends OpenStackRequest {
+		
+		private org.openstack.nova.model.ServerAction.AssociateFloatingIp action;
+
+		private String id;
+		
+		public AssociateFloatingIp(String id, org.openstack.nova.model.ServerAction.AssociateFloatingIp action) {
+			this.action = action;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public static class DisassociateFloatingIp extends OpenStackRequest {
+		
+		private org.openstack.nova.model.ServerAction.DisassociateFloatingIp action;
+		
+		public DisassociateFloatingIp(String id, org.openstack.nova.model.ServerAction.DisassociateFloatingIp action) {
+			this.action = action;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public static AssociateFloatingIp associateFloatingIp(String serverId, String floatingIpAddress) {
+		org.openstack.nova.model.ServerAction.AssociateFloatingIp action = new org.openstack.nova.model.ServerAction.AssociateFloatingIp(floatingIpAddress);
+		return new AssociateFloatingIp(serverId, action);
+	}
+	
+	public static DisassociateFloatingIp disassociateFloatingIp(String serverId, String floatingIpAddress) {
+		org.openstack.nova.model.ServerAction.DisassociateFloatingIp action = new org.openstack.nova.model.ServerAction.DisassociateFloatingIp(floatingIpAddress);
+		return new DisassociateFloatingIp(serverId, action);
+	}
 }
 

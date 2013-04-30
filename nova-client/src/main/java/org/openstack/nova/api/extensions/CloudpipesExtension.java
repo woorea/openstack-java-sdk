@@ -1,5 +1,6 @@
 package org.openstack.nova.api.extensions;
 
+import org.openstack.base.client.Entity;
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
@@ -14,39 +15,30 @@ public class CloudpipesExtension {
 		CLIENT = client;
 	}
 	
-	public List listCloudpipes() {
+	public List list() {
 		return new List();
 	}
 	
-	public Create createCloudpipe(Cloudpipe cloudpipe) {
+	public Create create(Cloudpipe cloudpipe) {
 		return new Create(cloudpipe);
 	}
 	
-	public static class List extends OpenStackRequest<Cloudpipes> {
+	public class List extends OpenStackRequest<Cloudpipes> {
 
 		
 		public List() {
-		
-			method(HttpMethod.GET);
-		    path("/os-cloudpipes/");
-		    header("Accept", "application/json");
-		    returnType(Cloudpipes.class);
+			super(CLIENT, HttpMethod.GET, "/os-cloudpipes", null, Cloudpipes.class);
 		}
 
 	}
 
-	public static class Create extends OpenStackRequest<Cloudpipe> {
+	public class Create extends OpenStackRequest<Cloudpipe> {
 
 		private Cloudpipe cloudpipe;
 		
 		public Create(Cloudpipe cloudpipe) {
+			super(CLIENT, HttpMethod.POST, "/os-cloudpipes", Entity.json(cloudpipe), Cloudpipe.class);
 			this.cloudpipe = cloudpipe;
-			
-			method(HttpMethod.POST);
-		    path("/os-cloudpipes/");
-		    header("Accept", "application/json");
-		    json(cloudpipe);
-		    returnType(Cloudpipe.class);
 		}
 
 	}

@@ -1,25 +1,30 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.FloatingIpPools;
 
 public class FloatingIpPoolsExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public FloatingIpPoolsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
 
-	public static class ListFloatingIpPools extends OpenStackRequest {
+	public class List extends OpenStackRequest<FloatingIpPools> {
 
-		public ListFloatingIpPools() {
-			method(HttpMethod.GET);
-			path("/os-floating-ip-pools/");
-			header("Accept", "application/json");
-			returnType(FloatingIpPools.class);
-
+		public List() {
+			super(CLIENT, HttpMethod.GET, "/os-floating-ip-pools", null, FloatingIpPools.class);
 		}
 
 	}
 
-	public static ListFloatingIpPools listFloatingIpPools() {
-		return new ListFloatingIpPools();
-	}
+	
 
 }
