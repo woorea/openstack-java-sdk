@@ -42,7 +42,16 @@ public class AccessKey extends Authentication {
 		
 	}
 	
-	private ApiAccessKeyCredentials apiAccessKeyCredentials;
+	private ApiAccessKeyCredentials apiAccessKeyCredentials = new ApiAccessKeyCredentials();
+	
+	public AccessKey() {
+		
+	}
+	
+	public AccessKey(String accessKey, String secretKey) {
+		apiAccessKeyCredentials.setAccessKey(accessKey);
+		apiAccessKeyCredentials.setSecretKey(secretKey);
+	}
 
 	/**
 	 * @return the apiAccessKeyCredentials
