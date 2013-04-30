@@ -1,66 +1,64 @@
 package org.openstack.nova.api.extensions;
 
+import org.openstack.base.client.Entity;
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.KeyPair;
 import org.openstack.nova.model.KeyPairs;
 
 public class KeyPairsExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public KeyPairsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
 
-	public static class CreateKeyPair extends OpenStackRequest {
+	public Create create(String name, String publicKey) {
+		KeyPair keyPairForCreate = new KeyPair(name, publicKey);
+		return new Create(keyPairForCreate);
+	}
+
+	public Create create(String name) {
+		return create(name, null);
+	}
+
+	public Delete delete(String name) {
+		return new Delete(name);
+	}
+
+	public class Create extends OpenStackRequest<KeyPair> {
 
 		private KeyPair keyPairForCreate;
 
-		public CreateKeyPair(KeyPair keyPairForCreate) {
+		public Create(KeyPair keyPairForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-keypairs", Entity.json(keyPairForCreate), KeyPair.class);
 			this.keyPairForCreate = keyPairForCreate;
-			
-			method(HttpMethod.POST);
-			path("/os-keypairs");
-			header("Accept", "application/json");
-			json(keyPairForCreate);
-			returnType(KeyPair.class);
 		}
 
 	}
 
-	public static class DeleteKeyPair extends OpenStackRequest {
+	public class Delete extends OpenStackRequest<Void> {
 
 		private String name;
 
-		public DeleteKeyPair(String name) {
-			method(HttpMethod.DELETE);
-			path("/os-keypairs").path(name);
-			header("Accept", "application/json");
+		public Delete(String name) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-keypairs/").append(name).toString(), null, Void.class);
 		}
 
 	}
 
-	public static class ListKeyPairs extends OpenStackRequest {
+	public class List extends OpenStackRequest<KeyPairs> {
 
-		public ListKeyPairs() {
-			method(HttpMethod.GET);
-			path("/os-keypairs");
-			header("Accept", "application/json");
-			returnType(KeyPairs.class);
+		public List() {
+			super(CLIENT, HttpMethod.GET, "/os-keypairs", null, KeyPairs.class);
 		}
 
 	}
-
-	public static ListKeyPairs listKeyPairs() {
-		return new ListKeyPairs();
-	}
-
-	public static CreateKeyPair createKeyPair(String name, String publicKey) {
-		KeyPair keyPairForCreate = new KeyPair(name, publicKey);
-		return new CreateKeyPair(keyPairForCreate);
-	}
-
-	public static CreateKeyPair createKeyPair(String name) {
-		return createKeyPair(name, null);
-	}
-
-	public static DeleteKeyPair delete(String name) {
-		return new DeleteKeyPair(name);
-	}
-
+	
 }
