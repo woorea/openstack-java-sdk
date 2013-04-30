@@ -1,7 +1,6 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.SecurityGroup;
 import org.openstack.nova.model.SecurityGroupForCreate;
@@ -10,9 +9,9 @@ import org.openstack.nova.model.SecurityGroups;
 
 public class SecurityGroupsExtension {
 
-	public static class ListSecurityGroups extends OpenStackRequest {
+	public static class List extends OpenStackRequest {
 
-		public ListSecurityGroups() {
+		public List() {
 			OpenStackRequest request = new OpenStackRequest();
 			method(HttpMethod.GET);
 			path("/os-security-groups");
@@ -22,11 +21,11 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class CreateSecurityGroup extends OpenStackRequest {
+	public static class Create extends OpenStackRequest {
 
 		private SecurityGroupForCreate securityGroupForCreate;
 
-		public CreateSecurityGroup(SecurityGroupForCreate securityGroupForCreate) {
+		public Create(SecurityGroupForCreate securityGroupForCreate) {
 			this.securityGroupForCreate = securityGroupForCreate;
 			
 			// return
@@ -36,9 +35,9 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class ShowSecurityGroup extends OpenStackRequest {
+	public static class Show extends OpenStackRequest {
 
-		public ShowSecurityGroup(Integer id) {
+		public Show(Integer id) {
 			method(HttpMethod.GET);
 			path("/os-security-groups").path("id");
 			header("Accept", "application/json");
@@ -47,9 +46,9 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class DeleteSecurityGroup extends OpenStackRequest {
+	public static class Delete extends OpenStackRequest {
 
-		public DeleteSecurityGroup(Integer id) {
+		public Delete(Integer id) {
 			method(HttpMethod.DELETE);
 			path("/os-security-groups").path(String.valueOf(id));
 			header("Accept", "application/json");
@@ -57,11 +56,11 @@ public class SecurityGroupsExtension {
 
 	}
 
-	public static class CreateSecurityGroupRule extends OpenStackRequest {
+	public static class CreateRule extends OpenStackRequest {
 
 		private SecurityGroupRuleForCreate securityGroupRuleForCreate;
 
-		public CreateSecurityGroupRule(
+		public CreateRule(
 				SecurityGroupRuleForCreate securityGroupRuleForCreate) {
 			this.securityGroupRuleForCreate = securityGroupRuleForCreate;
 			// return
@@ -70,54 +69,54 @@ public class SecurityGroupsExtension {
 		}
 	}
 
-	public static class DeleteSecurityGroupRule extends OpenStackRequest {
+	public static class DeleteRule extends OpenStackRequest {
 
-		public DeleteSecurityGroupRule(Integer id) {
+		public DeleteRule(Integer id) {
 			// target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
 		}
 	}
 
-	public static ListSecurityGroups listSecurityGroups() {
-		return new ListSecurityGroups();
+	public static List listSecurityGroups() {
+		return new List();
 	}
 
-	public static CreateSecurityGroup createSecurityGroup(String name,
+	public static Create createSecurityGroup(String name,
 			String description) {
-		return new CreateSecurityGroup(new SecurityGroupForCreate(name,
+		return new Create(new SecurityGroupForCreate(name,
 				description));
 	}
 
-	public static CreateSecurityGroup createSecurityGroup(String name) {
+	public static Create createSecurityGroup(String name) {
 		return createSecurityGroup(name, null);
 	}
 
-	public static ShowSecurityGroup showSecurityGroup(Integer id) {
-		return new ShowSecurityGroup(id);
+	public static Show showSecurityGroup(Integer id) {
+		return new Show(id);
 	}
 
-	public static DeleteSecurityGroup deleteSecurityGroup(Integer id) {
-		return new DeleteSecurityGroup(id);
+	public static Delete deleteSecurityGroup(Integer id) {
+		return new Delete(id);
 	}
 
-	public static CreateSecurityGroupRule createSecurityGroupRule(
+	public static CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, String cidr) {
 		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
 				parentSecurityGroupId, ipProtocol, fromPort, toPort, cidr);
-		return new CreateSecurityGroupRule(securityGroupRuleForCreate);
+		return new CreateRule(securityGroupRuleForCreate);
 	}
 
-	public static CreateSecurityGroupRule createSecurityGroupRule(
+	public static CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, Integer sourceGroupId) {
 		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
 				parentSecurityGroupId, ipProtocol, fromPort, toPort,
 				sourceGroupId);
-		return new CreateSecurityGroupRule(securityGroupRuleForCreate);
+		return new CreateRule(securityGroupRuleForCreate);
 	}
 
-	public static DeleteSecurityGroupRule deleteSecurityGroupRule(Integer id) {
-		return new DeleteSecurityGroupRule(id);
+	public static DeleteRule deleteSecurityGroupRule(Integer id) {
+		return new DeleteRule(id);
 	}
 
 }

@@ -30,6 +30,7 @@ import org.openstack.nova.model.ServerAction.Unrescue;
 import org.openstack.nova.model.ServerAction.VncConsole;
 import org.openstack.nova.model.ServerForCreate;
 import org.openstack.nova.model.Servers;
+import org.openstack.nova.model.VolumeAttachment;
 
 public class ServersResource {
 	
@@ -520,5 +521,45 @@ public class RescueServer extends OpenStackRequest {
 		org.openstack.nova.model.ServerAction.DisassociateFloatingIp action = new org.openstack.nova.model.ServerAction.DisassociateFloatingIp(floatingIpAddress);
 		return new DisassociateFloatingIp(serverId, action);
 	}
+	
+	public  class AttachVolume extends OpenStackRequest<Void> {
+		
+		private String serverId;
+		
+		private VolumeAttachment volumeAttachment;
+		
+		public AttachVolume(String serverId, String volumeId, String device) {
+			this.serverId = serverId;
+			volumeAttachment = new VolumeAttachment();
+			volumeAttachment.setVolumeId(volumeId);
+			volumeAttachment.setDevice(device);
+//			target.path("servers").path(serverId).path("os-volume_attachments").request(MediaType.APPLICATION_JSON).post(Entity.json(volumeAttachment));
+		}
+
+	}
+	
+	public class DetachVolume extends OpenStackRequest<Void> {
+		
+		private String serverId;
+		
+		private String volumeId;
+		
+		public DetachVolume(String serverId, String volumeId) {
+			this.serverId = serverId;
+			this.volumeId = volumeId;
+
+//			target.path("servers").path(serverId).path("os-volume_attachments").path(volumeId).request(MediaType.APPLICATION_JSON).delete();
+		}
+
+	}
+
+	public AttachVolume attachVolume(String serverId, String volumeId, String device) {
+		return new AttachVolume(serverId, volumeId, device);
+	}
+	
+	public DetachVolume detachVolume(String serverId, String volumeId) {
+		return new DetachVolume(serverId, volumeId);
+	}
+	
 }
 
