@@ -1,16 +1,39 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Network;
 import org.openstack.nova.model.Networks;
 
 public class NetworksExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public NetworksExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
 
-	public static class ListNetworks extends OpenStackRequest {
+	public Show show(String id) {
+		return new Show(id);
+	}
+
+	public Delete delete(String id) {
+		return new Delete(id);
+	}
+
+	public Disassociate disassociate(String id) {
+		return new Disassociate(id);
+	}
+
+	public class List extends OpenStackRequest<Networks> {
 
 
-		public ListNetworks() {
+		public List() {
 			OpenStackRequest request = new OpenStackRequest();
 			method(HttpMethod.GET);
 			path("/os-networks");
@@ -20,11 +43,11 @@ public class NetworksExtension {
 
 	}
 
-	public static class CreateNetwork extends OpenStackRequest {
+	public class Create extends OpenStackRequest<Network> {
 
 		private Network network;
 
-		public CreateNetwork(Network network) {
+		public Create(Network network) {
 			this.network = network;
 			method(HttpMethod.POST);
 			path("/os-networks");
@@ -35,9 +58,9 @@ public class NetworksExtension {
 
 	}
 
-	public class ShowNetwork extends OpenStackRequest {
+	public class Show extends OpenStackRequest<Network> {
 
-		public ShowNetwork(String id) {
+		public Show(String id) {
 			method(HttpMethod.GET);
 			path("/os-networks/").path(id);
 			header("Accept", "application/json");
@@ -46,9 +69,9 @@ public class NetworksExtension {
 
 	}
 
-	public static class DisassociateNetwork extends OpenStackRequest {
+	public class Disassociate extends OpenStackRequest<Void> {
 
-		public DisassociateNetwork(String id) {
+		public Disassociate(String id) {
 			method(HttpMethod.POST);
 			path("/os-networks/").path(id);
 			header("Accept", "application/json");
@@ -57,30 +80,14 @@ public class NetworksExtension {
 
 	}
 
-	public static class DeleteNetwork extends OpenStackRequest {
+	public class Delete extends OpenStackRequest<Void> {
 
-		public DeleteNetwork(String id) {
-			method(HttpMethod.DELETE);
-			path("/os-networks/").path(id);
-			header("Accept", "application/json");
+		public Delete(String id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-networks/").append(id).toString(), null, Void.class);
 		}
 
 	}
 
-	public ListNetworks listNetworks() {
-		return new ListNetworks();
-	}
-
-	public ShowNetwork showNetwork(String id) {
-		return new ShowNetwork(id);
-	}
-
-	public DeleteNetwork deleteNetwork(String id) {
-		return new DeleteNetwork(id);
-	}
-
-	public DisassociateNetwork disassociateNetwork(String id) {
-		return new DisassociateNetwork(id);
-	}
+	
 
 }

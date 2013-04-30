@@ -1,15 +1,30 @@
 package org.openstack.nova.api.extensions;
 
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Host;
 import org.openstack.nova.model.Hosts;
 
 public class HostsExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public HostsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
+	
+	public Show show(String id) {
+		return new Show(id);
+	}
 
-	public static class ListHosts extends OpenStackRequest {
+	public class List extends OpenStackRequest<Hosts> {
 
-		public ListHosts() {
+		public List() {
 		OpenStackRequest request = new OpenStackRequest();
 		method(HttpMethod.GET);
 		    path("/os-hosts");
@@ -19,9 +34,9 @@ public class HostsExtension {
 
 	}
 
-	public static class ShowHost extends OpenStackRequest {
+	public class Show extends OpenStackRequest<Host> {
 		
-		public ShowHost(String id) {
+		public Show(String id) {
 			method(HttpMethod.GET);
 		    path("/os-hosts/").path(id);
 		    header("Accept", "application/json");
@@ -30,12 +45,6 @@ public class HostsExtension {
 		
 	}
 
-	public static ListHosts listHosts() {
-		return new ListHosts();
-	}
 	
-	public static ShowHost showHost(String id) {
-		return new ShowHost(id);
-	}
 	
 }
