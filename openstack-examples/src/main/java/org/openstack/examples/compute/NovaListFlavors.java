@@ -1,6 +1,5 @@
 package org.openstack.examples.compute;
 
-import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Access;
@@ -23,7 +22,7 @@ public class NovaListFlavors {
 				.execute();
 		
 		//use the token in the following requests
-		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+		keystone.token(access.getToken().getId());
 		
 		Tenants tenants = keystone.tenants().list().execute();
 		
@@ -33,8 +32,8 @@ public class NovaListFlavors {
 			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
-			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
-			novaClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat("/").concat(tenants.getList().get(0).getId()));
+			novaClient.token(access.getToken().getId());
 			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			
 			Flavors flavors = novaClient.flavors().list(true).execute();

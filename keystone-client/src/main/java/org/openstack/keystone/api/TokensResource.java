@@ -25,6 +25,7 @@ public class TokensResource {
 		
 		public Authenticate(Authentication authentication) {
 			super(CLIENT, HttpMethod.POST, "/tokens", Entity.json(authentication), Access.class);
+			this.authentication = authentication;
 		}
 		
 		public Authenticate withTenantId(String tenantId) {

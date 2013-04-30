@@ -10,13 +10,13 @@ public class ExamplesConfiguration {
 	
 	public static final String KEYSTONE_USERNAME = "admin";
 	
-	public static final String KEYSTONE_PASSWORD = "secret0";
+	public static final String KEYSTONE_PASSWORD = "";
 	
-	public static final String KEYSTONE_ENDPOINT = "http://keystone.stacksherpa.org/v2.0";
+	public static final String KEYSTONE_ENDPOINT = "http://keystone/v2.0";
 	
 	public static final String TENANT_NAME = "admin";
 
-	public static final String NOVA_ENDPOINT = "";
+	public static final String NOVA_ENDPOINT = "http://compute/v2";
 	
 	public static final String CEILOMETER_ENDPOINT = "";
 	
