@@ -30,11 +30,11 @@ public class OpenStackRequest<R> {
 	
 	private Map<String, List<Object>> headers = new HashMap<String, List<Object>>();
 	
-	private Entity entity;
+	private Entity<?> entity;
 	
 	private Class<R> returnType;
 	
-	public OpenStackRequest endpoint(String endpoint) {
+	public OpenStackRequest<R> endpoint(String endpoint) {
 		this.endpoint = endpoint;
 		return this;
 	}
@@ -43,7 +43,7 @@ public class OpenStackRequest<R> {
 		return endpoint;
 	}
 
-	public OpenStackRequest method(HttpMethod method) {
+	public OpenStackRequest<R> method(HttpMethod method) {
 		this.method = method;
 		return this;
 	}
@@ -52,7 +52,7 @@ public class OpenStackRequest<R> {
 		return method;
 	}
 	
-	public OpenStackRequest path(String path) {
+	public OpenStackRequest<R> path(String path) {
 		this.path.append(path);
 		return this;
 	}
@@ -61,8 +61,10 @@ public class OpenStackRequest<R> {
 		return path.toString();
 	}
 
-	public OpenStackRequest header(String name, Object... values) {
-		headers.put(name, Arrays.asList(values));
+	public OpenStackRequest<R> header(String name, Object... values) {
+		if(values != null) {
+			headers.put(name, Arrays.asList(values));
+		}
 		return this;
 	}
 	
@@ -70,7 +72,7 @@ public class OpenStackRequest<R> {
 		return headers;
 	}
 	
-	public <T> Entity entity(T entity, String contentType) {
+	public <T> Entity<T> entity(T entity, String contentType) {
 		return new Entity<T>(entity, contentType);
 	}
 	
@@ -78,7 +80,7 @@ public class OpenStackRequest<R> {
 		return entity;
 	}
 	
-	public <T> Entity json(T entity) {
+	public <T> Entity<T> json(T entity) {
 		return entity(entity, "application/json");
 	}
 	

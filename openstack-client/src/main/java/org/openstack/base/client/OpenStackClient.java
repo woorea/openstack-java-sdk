@@ -62,6 +62,11 @@ public class OpenStackClient {
 
 		throw authException;
 	}
+	
+	//Allow to change the response type from the request
+	public <R, T> T execute(OpenStackRequest<R> request, Class<T> type) {
+		return null;
+	}
 
 	public void property(String property, String value) {
 		properties.put(property, value);

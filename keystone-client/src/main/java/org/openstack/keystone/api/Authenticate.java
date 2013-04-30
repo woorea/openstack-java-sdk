@@ -8,7 +8,7 @@ import org.openstack.keystone.model.Authentication.ApiAccessKeyCredentials;
 import org.openstack.keystone.model.Authentication.PasswordCredentials;
 import org.openstack.keystone.model.Authentication.Token;
 
-public class Authenticate extends OpenStackRequest {
+public class Authenticate extends OpenStackRequest<Access> {
 	
 	private Authentication authentication;
 	

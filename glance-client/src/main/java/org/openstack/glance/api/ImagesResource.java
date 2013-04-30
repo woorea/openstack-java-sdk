@@ -1,18 +1,28 @@
 package org.openstack.glance.api;
 
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Map;
+
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.openstack.base.client.Entity;
 import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
+import org.openstack.base.client.OpenStackResponse;
 import org.openstack.glance.model.Image;
+import org.openstack.glance.model.ImageDownload;
+import org.openstack.glance.model.ImageForUpload;
+import org.openstack.glance.model.ImageMember;
+import org.openstack.glance.model.ImageMembers;
 import org.openstack.glance.model.Images;
 
 public class ImagesResource {
 
-	private OpenStackClient client;
+	private final OpenStackClient CLIENT;
 	
 	public ImagesResource(OpenStackClient client) {
-		this.client = client;
+		CLIENT = client;
 	}
 	
 	public List list(boolean detail) {
@@ -34,11 +44,35 @@ public class ImagesResource {
 	public Delete delete(String id) {
 		return new Delete(id);
 	}
+	
+	public Upload upload(ImageForUpload image) {
+		return new Upload(image);
+	}
+	
+	public Download download(String id) {
+		return new Download(id);
+	}
+	
+	public ListMembers listMembers(String id) {
+		return new ListMembers(id);
+	}
+	
+	public ReplaceMembers replaceMembers(String id, Collection<ImageMember> members) {
+		return new ReplaceMembers(id, members);
+	}
+	
+	public AddMember addMember(String id, String tenantId) {
+		return new AddMember(id, tenantId);
+	}
+	
+	public AddMember removeMember(String id, String tenantId) {
+		return new AddMember(id, tenantId);
+	}
 
 	public class List extends OpenStackRequest<Images> {
 		
 		public List(boolean detail) {
-			super(client, HttpMethod.GET, detail ? "/images/detail" : "images", null, Images.class);
+			super(CLIENT, HttpMethod.GET, detail ? "/images/detail" : "images", null, Images.class);
 		}
 
 	}
@@ -48,18 +82,10 @@ public class ImagesResource {
 		private Image image;
 		
 		public Create(Image image) {
-			super(client, HttpMethod.POST, "/images", Entity.json(image), Image.class);
+			super(CLIENT, HttpMethod.POST, "/images", Entity.json(image), Image.class);
 			this.image = image;
 		}
 		
-	}
-	
-	public class Show extends OpenStackRequest<Image> {
-		
-		public Show(String id) {
-			super(client, HttpMethod.GET, new StringBuilder("/images/").append(id).toString(), null, Image.class);
-		}
-
 	}
 	
 	public class Update extends OpenStackRequest<Image> {
@@ -67,7 +93,7 @@ public class ImagesResource {
 		private Image image;
 		
 		public Update(String id, Image image) {
-			super(client, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(), Entity.json(image), Image.class);
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(), Entity.json(image), Image.class);
 			this.image = image;
 		}
 
@@ -76,7 +102,167 @@ public class ImagesResource {
 	public class Delete extends OpenStackRequest<Void> {
 		
 		public Delete(String id) {
-			super(client, HttpMethod.DELETE, new StringBuilder("/images/").append(id).toString(), null, Void.class);
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/images/").append(id).toString(), null, Void.class);
+		}
+		
+	}
+	
+	public class Show extends OpenStackRequest<Image> {
+		
+		public Show(String id) {
+			super(CLIENT, HttpMethod.HEAD, new StringBuilder("/images/").append(id).toString(), null, Image.class);
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.openstack.base.client.OpenStackRequest#execute()
+		 */
+		@Override
+		public Image execute() {
+			//custom parsing here
+			OpenStackResponse response = CLIENT.execute(this, OpenStackResponse.class);
+			return parse(response.headers());
+		}
+		
+	}
+	
+	public class Upload extends OpenStackRequest<Image> {
+		
+		private ImageForUpload imageForUpload;
+		
+		public Upload(ImageForUpload imageForUpload) {
+			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageForUpload.getInputStream()), Image.class);
+			header("x-image-meta-name", imageForUpload.getName());
+			header("x-image-meta-disk_format", imageForUpload.getDiskFormat());
+			header("x-image-meta-container_format", imageForUpload.getContainerFormat());
+			header("x-image-meta-id", imageForUpload.getId());
+			//file,s3,swift
+			header("x-image-meta-store", imageForUpload.getStore());
+			header("x-image-meta-size", imageForUpload.getSize());
+			header("x-image-meta-checksum", imageForUpload.getChecksum());
+			header("x-image-meta-is-public", imageForUpload.isPublic());
+			header("x-image-meta-owner", imageForUpload.getOwner());
+			for(String key : imageForUpload.getProperties().keySet()) {
+				imageForUpload.getProperties().put("x-image-meta-property-" + key, imageForUpload.getProperties().get(key));
+			}
+		}
+
+	}
+	
+	public class Download extends OpenStackRequest<ImageDownload> {
+		
+		public Download(String id) {
+			super(CLIENT, HttpMethod.HEAD, new StringBuilder("/images/").append(id).toString(), null, ImageDownload.class);
+			header("Accept", "application/octet-stream");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.openstack.base.client.OpenStackRequest#execute()
+		 */
+		@Override
+		public ImageDownload execute() {
+			//custom parsing here
+			OpenStackResponse response = CLIENT.execute(this, OpenStackResponse.class);
+			ImageDownload imageDownload = new ImageDownload();
+			imageDownload.setImage(parse(response.headers()));
+			imageDownload.setInputStream(response.getInputStream());
+			return imageDownload;
+		}
+		
+		
+
+	}
+	
+	public class ListMembers extends OpenStackRequest<ImageMembers> {
+		
+		public ListMembers(String id) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/images/").append(id).append("/members").toString(), null, ImageMembers.class);
+		}
+		
+	}
+	
+	public class ReplaceMembers extends OpenStackRequest<Void> {
+		
+		public ReplaceMembers(String id, Collection<ImageMember> members) {
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).append("/members").toString(), Entity.json(new Memberships(members)), Void.class);
+		}
+		
+	}
+
+	public class AddMember extends OpenStackRequest<ImageMember> {
+	
+	public AddMember(String id, String tenantId) {
+		super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).append("/members").append(tenantId).toString(), null, ImageMember.class);
+	}
+	
+}
+
+	public class RemoveMember extends OpenStackRequest<Void> {
+	
+	public RemoveMember(String id, String tenantId) {
+		super(CLIENT, HttpMethod.DELETE, new StringBuilder("/images/").append(id).append("/members/").append(tenantId).toString(), null, Void.class);
+	}
+	
+}
+	
+	public static Image parse(Map<String, String> headers) {
+		Image image = new Image();
+		image.setId(headers.get("X-Image-Meta-Id"));
+		image.setUri(headers.get("Location"));
+		image.setName(headers.get("X-Image-Meta-Name"));
+		image.setDiskFormat(headers.get("X-Image-Meta-Disk_format"));
+		image.setContainerFormat(headers.get("X-Image-Meta-Container_format"));
+		image.setSize(asLong(headers.get("X-Image-Meta-Size")));
+		image.setChecksum(headers.get("X-Image-Meta-Checksum"));
+		image.setCreatedAt(asCalendar(headers.get("X-Image-Meta-Created_at")));
+		image.setUpdatedAt(asCalendar(headers.get("X-Image-Meta-Updated_at")));
+		image.setDeletedAt(asCalendar(headers.get("X-Image-Meta-Deleted_at")));
+		image.setDeleted(asBoolean(headers.get("X-Image-Meta-Deleted")));
+		image.setStatus(headers.get("X-Image-Meta-Status"));
+		image.setProtected(asBoolean(headers.get("X-Image-Meta-Protected")));
+		image.setPublic(asBoolean(headers.get("X-Image-Meta-Is_public")));
+		image.setMinRam(asInteger(headers.get("X-Image-Meta-Min_ram")));
+		image.setMinDisk(asInteger(headers.get("X-Image-Meta-Min_disk")));
+		image.setOwner(headers.get("X-Image-Meta-Owner"));
+		for(String key : headers.keySet()) {
+			if(key.startsWith("x-image-meta-property-")) {
+				image.getProperties().put(key.substring(22), headers.get(key));
+			}
+		}
+		return image;
+	}
+	
+	private static Calendar asCalendar(String calendarString) {
+		return Calendar.getInstance();
+	}
+	
+	private static Integer asInteger(String integerString) {
+		if(integerString != null) {
+			return Integer.parseInt(integerString);
+		}
+		return 0;
+	}
+	
+	private static Boolean asBoolean(String booleanString) {
+		if(booleanString != null) {
+			return Boolean.parseBoolean(booleanString);
+		}
+		return Boolean.FALSE;
+	}
+	
+	private static Long asLong(String longString) {
+		if(longString != null) {
+			return Long.parseLong(longString);
+		}
+		return 0L;
+	}
+	
+	public static class Memberships {
+		
+		@JsonProperty("memberships")
+		private Collection<ImageMember> memberships;
+		
+		public Memberships(Collection<ImageMember> memberships) {
+			this.memberships = memberships;
 		}
 		
 	}

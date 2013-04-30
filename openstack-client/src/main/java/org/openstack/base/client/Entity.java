@@ -1,5 +1,7 @@
 package org.openstack.base.client;
 
+import java.io.InputStream;
+
 
 public class Entity<T> {
 	
@@ -9,6 +11,10 @@ public class Entity<T> {
 	
 	public static <T> Entity<T> json(T entity) {
 		return new Entity<T>(entity, "application/json");
+	}
+	
+	public static <T> Entity<T> stream(T entity) {
+		return new Entity<T>(entity, "application/octet-stream");
 	}
 
 	public Entity(T entity, String contentType) {
