@@ -3,7 +3,7 @@ package org.openstack.console.nova;
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
-import org.openstack.nova.NovaClient;
+import org.openstack.nova.Nova;
 
 
 public abstract class NovaCommand extends Command {
@@ -19,6 +19,6 @@ public abstract class NovaCommand extends Command {
 		
 	}
 
-	protected abstract void execute(NovaClient nova, CommandLine args);
+	protected abstract void execute(Nova nova, CommandLine args);
 
 }

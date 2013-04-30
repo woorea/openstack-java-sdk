@@ -3,13 +3,13 @@ package org.openstack.swift;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackClientConnector;
 
-public class SwiftClient extends OpenStackClient {
+public class Swift extends OpenStackClient {
 	
-	public SwiftClient(String endpoint) {
+	public Swift(String endpoint) {
 		super(endpoint);
 	}
 	
-	public SwiftClient(String endpoint, OpenStackClientConnector connector) {
+	public Swift(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 	}
 

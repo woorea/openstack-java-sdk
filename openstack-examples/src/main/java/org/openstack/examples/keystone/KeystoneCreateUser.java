@@ -2,7 +2,7 @@ package org.openstack.examples.keystone;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.User;
@@ -13,7 +13,7 @@ public class KeystoneCreateUser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		//access with unscoped token
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(
 				ExamplesConfiguration.KEYSTONE_USERNAME, 
@@ -26,7 +26,7 @@ public class KeystoneCreateUser {
 		user.setName("Luis");
 		user.setEnabled(Boolean.TRUE);
 
-		keystone = new KeystoneClient("http://keystone.x.org/v2.0");
+		keystone = new Keystone("http://keystone.x.org/v2.0");
 		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		//keystone.enableLogging(Logger.getLogger("keystone"), 10000);
 		user = keystone.users().create(user).execute();

@@ -10,12 +10,12 @@ import java.io.OutputStream;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.utils.KeystoneUtils;
-import org.openstack.swift.SwiftClient;
+import org.openstack.swift.Swift;
 import org.openstack.swift.api.CreateContainer;
 import org.openstack.swift.api.DownloadObject;
 import org.openstack.swift.api.ListContainers;
@@ -31,7 +31,7 @@ public class SwiftExample {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
 		//access with unscoped token
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		
@@ -45,7 +45,7 @@ public class SwiftExample {
 			
 			access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantId(tenants.getList().get(0).getId()));
 			
-			SwiftClient swiftClient = new SwiftClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"));
+			Swift swiftClient = new Swift(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"));
 			swiftClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		
 			//swiftClient.execute(new DeleteContainer("navidad2"));

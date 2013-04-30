@@ -1,6 +1,6 @@
 package org.openstack.examples.hpcloud;
 
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Authentication;
@@ -18,7 +18,7 @@ public class KeystoneAuthentication {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(KEYSTONE_AUTH_URL);
 		
 		//access with unscoped token
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(KEYSTONE_USERNAME, KEYSTONE_PASSWORD));

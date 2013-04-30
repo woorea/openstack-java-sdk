@@ -1,7 +1,7 @@
 package org.openstack.examples;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Tenant;
 
 public class ExamplesConfiguration {
@@ -21,7 +21,7 @@ public class ExamplesConfiguration {
 	public static final String CEILOMETER_ENDPOINT = "";
 	
 	public static void main(String[] args) {
-		KeystoneClient client = new KeystoneClient(KEYSTONE_ENDPOINT);
+		Keystone client = new Keystone(KEYSTONE_ENDPOINT);
 		client.setTokenProvider(new OpenStackSimpleTokenProvider("secret0"));
 		client.tenants().delete("36c481aec1d54fc49190c92c3ef6840a").execute();
 		Tenant tenant = client.tenants().create(new Tenant("new_api")).execute();

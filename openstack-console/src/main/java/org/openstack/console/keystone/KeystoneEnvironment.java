@@ -5,20 +5,20 @@ import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
 import org.openstack.console.Environment;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 
 public class KeystoneEnvironment extends Environment {
 	
-	public final KeystoneClient CLIENT;
+	public final Keystone CLIENT;
 	
 	public static final Command KEYSTONE = new Command("keystone") {
 		
 		@Override
 		public void execute(Console console, CommandLine args) {
 			
-			KeystoneClient client = new KeystoneClient(console.getProperty("keystone.endpoint"));
+			Keystone client = new Keystone(console.getProperty("keystone.endpoint"));
 			
 			Access access = client.execute(Authenticate.withPasswordCredentials(
 					console.getProperty("keystone.username"), 
@@ -43,7 +43,7 @@ public class KeystoneEnvironment extends Environment {
 		
 	};
 	
-	public KeystoneEnvironment(Environment parent, KeystoneClient client) {
+	public KeystoneEnvironment(Environment parent, Keystone client) {
 		super(parent);
 		CLIENT = client;
 	}

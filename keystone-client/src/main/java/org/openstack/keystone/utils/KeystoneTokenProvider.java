@@ -3,13 +3,13 @@ package org.openstack.keystone.utils;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.openstack.base.client.OpenStackTokenProvider;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 
 public class KeystoneTokenProvider {
 
-	protected KeystoneClient keystone;
+	protected Keystone keystone;
 
 	protected String username;
 
@@ -18,7 +18,7 @@ public class KeystoneTokenProvider {
 	ConcurrentHashMap<String, Access> hashTenantAccess;
 
 	public KeystoneTokenProvider(String endpoint, String username, String password) {
-		this.keystone = new KeystoneClient(endpoint);
+		this.keystone = new Keystone(endpoint);
 		this.username = username;
 		this.password = password;
 		this.hashTenantAccess = new ConcurrentHashMap<String, Access>();

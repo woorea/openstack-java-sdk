@@ -2,14 +2,11 @@ package org.openstack.examples.compute;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
-import org.openstack.nova.NovaClient;
-import org.openstack.nova.api.FlavorsCore;
-import org.openstack.nova.api.ImagesCore;
-import org.openstack.nova.api.ServersCore;
+import org.openstack.nova.Nova;
 import org.openstack.nova.api.extensions.KeyPairsExtension;
 import org.openstack.nova.model.Flavors;
 import org.openstack.nova.model.Images;
@@ -23,7 +20,7 @@ public class NovaCreateServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
 		//access with unscoped token
 		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
 		
@@ -38,7 +35,7 @@ public class NovaCreateServer {
 			access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantId(tenants.getList().get(0).getId()));
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
-			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
+			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
 			novaClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			//create a new keypair
@@ -53,9 +50,9 @@ public class NovaCreateServer {
 			
 			KeyPairs keysPairs = novaClient.execute(KeyPairsExtension.listKeyPairs());
 			
-			Images images = novaClient.execute(ImagesCore.listImages());
+			Images images = novaClient.images().list(true).execute();
 			
-			Flavors flavors = novaClient.execute(FlavorsCore.listFlavors());
+			Flavors flavors = novaClient.flavors().list(true).execute();
 			
 			ServerForCreate serverForCreate = new ServerForCreate();
 			serverForCreate.setName("woorea");
@@ -65,7 +62,7 @@ public class NovaCreateServer {
 			serverForCreate.getSecurityGroups().add(new ServerForCreate.SecurityGroup("default"));
 			//serverForCreate.getSecurityGroups().add(new ServerForCreate.SecurityGroup(securityGroup.getName()));
 			
-			Server server = novaClient.execute(ServersCore.createServer(serverForCreate));
+			Server server = novaClient.servers().boot(serverForCreate).execute();
 			System.out.println(server);
 			
 		} else {

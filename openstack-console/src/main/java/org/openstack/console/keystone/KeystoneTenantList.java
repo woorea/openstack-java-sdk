@@ -4,7 +4,7 @@ import org.apache.commons.cli.CommandLine;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Tenant;
 import org.openstack.keystone.model.Tenants;
 
@@ -15,7 +15,7 @@ public class KeystoneTenantList extends KeystoneCommand {
 	}
 
 	@Override
-	public void execute(KeystoneClient keystone, CommandLine args) {
+	public void execute(Keystone keystone, CommandLine args) {
 		
 		final Tenants tenants = keystone.tenants().list().execute();
 		

@@ -3,7 +3,7 @@ package org.openstack.console.keystone;
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 
 public abstract class KeystoneCommand extends Command {
 	
@@ -18,6 +18,6 @@ public abstract class KeystoneCommand extends Command {
 		
 	}
 
-	protected abstract void execute(KeystoneClient keystone, CommandLine args);
+	protected abstract void execute(Keystone keystone, CommandLine args);
 
 }

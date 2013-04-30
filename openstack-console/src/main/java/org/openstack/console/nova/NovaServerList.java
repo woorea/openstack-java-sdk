@@ -4,8 +4,7 @@ import org.apache.commons.cli.CommandLine;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
-import org.openstack.nova.NovaClient;
-import org.openstack.nova.api.ServersCore.ListServers;
+import org.openstack.nova.Nova;
 import org.openstack.nova.model.Server;
 import org.openstack.nova.model.Servers;
 
@@ -16,9 +15,9 @@ public class NovaServerList extends NovaCommand {
 	}
 
 	@Override
-	public void execute(NovaClient nova, CommandLine cmd) {
+	public void execute(Nova nova, CommandLine cmd) {
 		
-		final Servers servers = nova.execute(new ListServers());
+		final Servers servers = nova.servers().list(true).execute();
 		
 		Table t = new Table(new TableModel<Server>(servers.getList()) {
 

@@ -9,7 +9,7 @@ import org.openstack.keystone.api.TenantsResource;
 import org.openstack.keystone.api.TokensResource;
 import org.openstack.keystone.api.UsersResource;
 
-public class KeystoneClient extends OpenStackClient {
+public class Keystone extends OpenStackClient {
 	
 	private final TokensResource TOKENS;
 	
@@ -23,7 +23,7 @@ public class KeystoneClient extends OpenStackClient {
 	
 	private final EndpointsResource ENDPOINTS;
 	
-	public KeystoneClient(String endpoint, OpenStackClientConnector connector) {
+	public Keystone(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 		TOKENS = new TokensResource(this);
 		TENANTS = new TenantsResource(this);
@@ -33,7 +33,7 @@ public class KeystoneClient extends OpenStackClient {
 		ENDPOINTS = new EndpointsResource(this);
 	}
 	
-	public KeystoneClient(String endpoint) {
+	public Keystone(String endpoint) {
 		this(endpoint, null);
 	}
 	

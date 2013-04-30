@@ -2,15 +2,14 @@ package org.openstack.examples.compute;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Authentication;
 import org.openstack.keystone.model.Authentication.PasswordCredentials;
 import org.openstack.keystone.model.Authentication.Token;
 import org.openstack.keystone.model.Tenants;
-import org.openstack.nova.NovaClient;
-import org.openstack.nova.api.ServersCore;
+import org.openstack.nova.Nova;
 import org.openstack.nova.model.Server;
 import org.openstack.nova.model.Servers;
 
@@ -20,7 +19,7 @@ public class NovaListServers {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		Authentication authentication = new Authentication();
 		PasswordCredentials passwordCredentials = new PasswordCredentials();
 		passwordCredentials.setUsername(ExamplesConfiguration.KEYSTONE_USERNAME);
@@ -47,11 +46,11 @@ public class NovaListServers {
 			access = keystone.execute(new Authenticate(authentication));
 			
 			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
-			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
+			Nova novaClient = new Nova(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()));
 			novaClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 			//novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			
-			Servers servers = novaClient.execute(ServersCore.listServers(true));
+			Servers servers = novaClient.servers().list(true).execute();
 			for(Server server : servers) {
 				System.out.println(server);
 			}

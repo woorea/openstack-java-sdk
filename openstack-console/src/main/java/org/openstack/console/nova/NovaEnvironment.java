@@ -5,14 +5,14 @@ import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.console.Command;
 import org.openstack.console.Console;
 import org.openstack.console.Environment;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
-import org.openstack.nova.NovaClient;
+import org.openstack.nova.Nova;
 
 public class NovaEnvironment extends Environment {
 	
-	public final NovaClient CLIENT;
+	public final Nova CLIENT;
 	
 	public static final Command NOVA = new Command("nova") {
 		
@@ -20,7 +20,7 @@ public class NovaEnvironment extends Environment {
 		public void execute(Console console, CommandLine args) {
 			
 			if(args.getArgs().length == 1) {
-				KeystoneClient keystone = new KeystoneClient((String) console.getProperty("keystone.endpoint"));
+				Keystone keystone = new Keystone((String) console.getProperty("keystone.endpoint"));
 				
 				Access access = keystone.execute(Authenticate.withPasswordCredentials(
 						console.getProperty("keystone.username"), 
@@ -29,7 +29,7 @@ public class NovaEnvironment extends Environment {
 				
 				System.out.println(console.getProperty("nova.endpoint"));
 				
-				NovaClient client = new NovaClient(console.getProperty("nova.endpoint")+args.getArgs()[0]);
+				Nova client = new Nova(console.getProperty("nova.endpoint")+args.getArgs()[0]);
 				client.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 				
 				NovaEnvironment environment = new NovaEnvironment(console.getEnvironment(), client);
@@ -44,7 +44,7 @@ public class NovaEnvironment extends Environment {
 		
 	};
 	
-	public NovaEnvironment(Environment parent, NovaClient client) {
+	public NovaEnvironment(Environment parent, Nova client) {
 		super(parent);
 		CLIENT = client;
 	}

@@ -6,7 +6,7 @@ import org.openstack.ceilometer.v1.api.ProjectList;
 import org.openstack.ceilometer.v1.api.ResourceList;
 import org.openstack.ceilometer.v1.api.UserList;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Authentication;
@@ -19,7 +19,7 @@ public class TestAll {
 	 */
 	public static void main(String[] args) {
 		
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		Authentication authentication = new Authentication();
 		PasswordCredentials passwordCredentials = new PasswordCredentials();
 		passwordCredentials.setUsername(ExamplesConfiguration.KEYSTONE_USERNAME);

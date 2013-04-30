@@ -1,7 +1,7 @@
 package org.openstack.examples.glance;
 
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.glance.GlanceClient;
+import org.openstack.glance.Glance;
 import org.openstack.glance.model.Image;
 import org.openstack.glance.model.Images;
 import org.openstack.keystone.model.Access;
@@ -36,7 +36,7 @@ public class GlanceListImages {
 		}
 
 		for (Endpoint endpoint : glanceService.getEndpoints()) {
-			GlanceClient glance = new GlanceClient(endpoint.getPublicURL() + "/v1");
+			Glance glance = new Glance(endpoint.getPublicURL() + "/v1");
 			glance.setTokenProvider(keystone
 					.getProviderByTenant(ExamplesConfiguration.TENANT_NAME));
 

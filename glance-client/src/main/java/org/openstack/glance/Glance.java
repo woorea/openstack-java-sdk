@@ -5,19 +5,19 @@ import org.openstack.base.client.OpenStackClientConnector;
 import org.openstack.glance.api.ImagesResource;
 import org.openstack.glance.api.SharedImagesResource;
 
-public class GlanceClient extends OpenStackClient {
+public class Glance extends OpenStackClient {
 	
 	private final ImagesResource IMAGES;
 	
 	private final SharedImagesResource SHARED_IMAGES;
 
-	public GlanceClient(String endpoint, OpenStackClientConnector connector) {
+	public Glance(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 		IMAGES = new ImagesResource(this);
 		SHARED_IMAGES = new SharedImagesResource(this);
 	}
 	
-	public GlanceClient(String endpoint) {
+	public Glance(String endpoint) {
 		this(endpoint, null);
 	}
 	

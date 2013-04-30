@@ -2,7 +2,7 @@ package org.openstack.console.keystone;
 
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.utils.ConsoleUtils;
-import org.openstack.keystone.KeystoneClient;
+import org.openstack.keystone.Keystone;
 
 public class KeystoneRoleDelete extends KeystoneCommand {
 	
@@ -11,7 +11,7 @@ public class KeystoneRoleDelete extends KeystoneCommand {
 	}
 
 	@Override
-	public void execute(KeystoneClient keystone, CommandLine cmd) {
+	public void execute(Keystone keystone, CommandLine cmd) {
 		
 		String[] args = cmd.getArgs();
 		if(args.length == 1) {
