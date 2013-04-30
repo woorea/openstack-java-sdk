@@ -6,7 +6,7 @@ import org.openstack.nova.model.Certificate;
 
 public class CredentialsExtension {
 
-	public static class CreateCertificate extends OpenStackRequest {
+	public static class CreateCertificate extends OpenStackRequest<Certificate> {
 
 		public CreateCertificate(String id) {
 			method(HttpMethod.POST);
@@ -17,7 +17,7 @@ public class CredentialsExtension {
 
 	}
 
-	public static class ShowCertificate extends OpenStackRequest {
+	public static class ShowCertificate extends OpenStackRequest<Certificate> {
 
 		public ShowCertificate() {
 			OpenStackRequest request = new OpenStackRequest();

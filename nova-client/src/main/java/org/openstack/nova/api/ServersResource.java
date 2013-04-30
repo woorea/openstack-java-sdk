@@ -6,15 +6,29 @@ import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Metadata;
 import org.openstack.nova.model.Server;
-import org.openstack.nova.model.ServerForCreate;
 import org.openstack.nova.model.Server.Addresses;
 import org.openstack.nova.model.ServerAction.ChangePassword;
 import org.openstack.nova.model.ServerAction.ConfirmResize;
+import org.openstack.nova.model.ServerAction.CreateBackup;
 import org.openstack.nova.model.ServerAction.CreateImage;
+import org.openstack.nova.model.ServerAction.GetConsoleOutput;
+import org.openstack.nova.model.ServerAction.GetVncConsole;
+import org.openstack.nova.model.ServerAction.Lock;
+import org.openstack.nova.model.ServerAction.Pause;
 import org.openstack.nova.model.ServerAction.Reboot;
 import org.openstack.nova.model.ServerAction.Rebuild;
+import org.openstack.nova.model.ServerAction.Rescue;
 import org.openstack.nova.model.ServerAction.Resize;
+import org.openstack.nova.model.ServerAction.Resume;
 import org.openstack.nova.model.ServerAction.RevertResize;
+import org.openstack.nova.model.ServerAction.Start;
+import org.openstack.nova.model.ServerAction.Stop;
+import org.openstack.nova.model.ServerAction.Suspend;
+import org.openstack.nova.model.ServerAction.Unlock;
+import org.openstack.nova.model.ServerAction.Unpause;
+import org.openstack.nova.model.ServerAction.Unrescue;
+import org.openstack.nova.model.ServerAction.VncConsole;
+import org.openstack.nova.model.ServerForCreate;
 import org.openstack.nova.model.Servers;
 
 public class ServersResource {
@@ -181,7 +195,290 @@ public class ServersResource {
 		}
 
 	}
-
 	
+	//
+	
+	public class StartServer extends OpenStackRequest {
+		
+		private Start action;
+
+		private String id;
+		
+		public StartServer(String id) {
+			this.id = id;
+			this.action = new Start();
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public class StopServer extends OpenStackRequest {
+		
+		private Stop action;
+
+		private String id;
+		
+		public StopServer(String id) {
+			this.id = id;
+			this.action = new Stop();
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public StartServer start(String id) {
+		return new StartServer(id);
+	}
+	
+	public StopServer stop(String id) {
+		return new StopServer(id);
+	}
+
+	public static class GetVncConsoleServer extends OpenStackRequest {
+		
+		private GetVncConsole action;
+
+		private String id;
+		
+		public GetVncConsoleServer(String id, GetVncConsole action) {
+			this.id = id;
+			this.action = action;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		    returnType(VncConsole.class);
+		}
+
+	}
+	
+	public static GetVncConsoleServer getVncConsole(String id, String type) {
+		GetVncConsole action = new GetVncConsole(type);
+		return new GetVncConsoleServer(id, action);
+	}
+	
+	public static class GetConsoleOutputServer extends OpenStackRequest {
+		
+		private GetConsoleOutput action;
+
+		private String id;
+		
+		public GetConsoleOutputServer(String id, GetConsoleOutput action) {
+			this.id = id;
+			this.action = action;
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public static GetConsoleOutputServer getConsoleOutput(String id, int length) {
+		GetConsoleOutput action = new GetConsoleOutput(length);
+		return new GetConsoleOutputServer(id, action);
+	}
+	
+public class PauseServer extends OpenStackRequest {
+		
+		private Pause action;
+
+		private String id;
+		
+		public PauseServer(String id) {
+			this.id = id;
+			this.action = new Pause();
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public class UnpauseServer extends OpenStackRequest {
+		
+		private Unpause action;
+
+		private String id;
+		
+		public UnpauseServer(String id) {
+			this.id = id;
+			this.action = new Unpause();
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+
+	}
+
+	public class LockServer extends OpenStackRequest {
+		
+		private Lock action;
+
+		private String id;
+		
+		public LockServer(String id) {
+			this.id = id;
+			this.action = new Lock();
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+
+	public class UnlockServer extends OpenStackRequest {
+		
+		private Unlock action;
+
+		private String id;
+		
+		public UnlockServer(String id) {
+			this.id = id;
+			this.action = new Unlock();
+			
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+
+	public class SuspendServer extends OpenStackRequest {
+		
+		private Suspend action;
+
+		private String id;
+		
+		public SuspendServer(String id) {
+			this.id = id;
+			this.action = new Suspend();
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+
+	public class ResumeServer extends OpenStackRequest {
+		
+		private Resume action;
+
+		private String id;
+		
+		public ResumeServer(String id) {
+			this.id = id;
+			this.action = new Resume();
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+
+	public class CreateBackupServer extends OpenStackRequest {
+		
+		private	CreateBackup action;
+
+		private String id;
+		
+		public CreateBackupServer(String id, CreateBackup action) {
+			this.id = id;
+			this.action = action;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+	
+	public PauseServer pause(String serverId) {
+		return new PauseServer(serverId);
+	}
+	
+	public UnpauseServer unpause(String serverId) {
+		return new UnpauseServer(serverId);
+	}
+	
+	public LockServer lock(String serverId) {
+		return new LockServer(serverId);
+	}
+	
+	public UnlockServer unlock(String serverId) {
+		return new UnlockServer(serverId);
+	}
+	
+	public SuspendServer suspend(String serverId) {
+		return new SuspendServer(serverId);
+	}
+	
+	public ResumeServer resume(String serverId) {
+		return new ResumeServer(serverId);
+	}
+	
+	public CreateBackupServer createBackup(String serverId, CreateBackup action) {
+		return new CreateBackupServer(serverId, action);
+	}
+	
+public class RescueServer extends OpenStackRequest {
+		
+		private Rescue action;
+
+		private String id;
+		
+		public RescueServer(String id, Rescue action) {
+			this.id = id;
+			this.action = action;
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+
+	}
+
+	public class UnrescueServer extends OpenStackRequest {
+		
+		private Unrescue action;
+		
+		public UnrescueServer(String id) {
+			
+			this.action = new Unrescue();
+			method(HttpMethod.POST);
+		    path("/servers/").path(id).path("/action");
+		    header("Accept", "application/json");
+		    json(action);
+		}
+		
+	}
+	
+	public RescueServer rescue(String serverId, String adminPass) {
+		Rescue action = new Rescue(adminPass);
+		return new RescueServer(serverId, action);
+	}
+	
+	public UnrescueServer unrescue(String serverId) {
+		return new UnrescueServer(serverId);
+	}
 }
 

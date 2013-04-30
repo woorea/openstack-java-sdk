@@ -8,7 +8,7 @@ import org.openstack.nova.model.FloatingIpDomains;
 
 public class FloatingIpDnsExtension {
 	
-	public class ListFloatingIpDomains extends OpenStackRequest {
+	public class ListFloatingIpDomains extends OpenStackRequest<FloatingIpDomains> {
 
 		public ListFloatingIpDomains() {
 			method(HttpMethod.GET);

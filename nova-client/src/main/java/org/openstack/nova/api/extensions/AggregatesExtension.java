@@ -3,25 +3,54 @@ package org.openstack.nova.api.extensions;
 import java.util.Map;
 
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.HostAggregate;
 import org.openstack.nova.model.HostAggregates;
 
 public class AggregatesExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public AggregatesExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
 
-	public class ListAggregates extends OpenStackRequest {
+	public ShowAggregate showAggregate(String id) {
+		return new ShowAggregate(id);
+	}
+
+	public UpdateAggregateMetadata updateAggregateMetadata(String id,
+			Map<String, String> metadata) {
+		return new UpdateAggregateMetadata(id, metadata);
+	}
+
+	public DeleteAggregate deleteAggregate(String id) {
+		return new DeleteAggregate(id);
+	}
+
+	public AddHost addHost(String aggregateId, String hostId) {
+		return new AddHost(aggregateId, hostId);
+	}
+
+	public RemoveHost removeHost(String aggregateId, String hostId) {
+		return new RemoveHost(hostId, aggregateId);
+	}
+
+	public class List extends OpenStackRequest<HostAggregates> {
 
 		
-		public ListAggregates() {
-			method(HttpMethod.GET);
-			path("/os-aggregates");
-			header("Accept", "application/json");
-			returnType(HostAggregates.class);
+		public List() {
+			super(CLIENT, HttpMethod.GET, "/os-aggregates", null, HostAggregates.class);
 		}
 
 	}
 
-	public class ShowAggregate extends OpenStackRequest {
+	public class ShowAggregate extends OpenStackRequest<HostAggregate> {
 
 		public ShowAggregate(String id) {
 			method(HttpMethod.GET);
@@ -32,7 +61,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class UpdateAggregateMetadata extends OpenStackRequest {
+	public class UpdateAggregateMetadata extends OpenStackRequest<HostAggregate> {
 
 		private String id;
 
@@ -51,7 +80,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class DeleteAggregate extends OpenStackRequest {
+	public class DeleteAggregate extends OpenStackRequest<Void> {
 
 		public DeleteAggregate(String id) {
 			method(HttpMethod.DELETE);
@@ -75,7 +104,7 @@ public class AggregatesExtension {
 
 	}
 
-	public class RemoveHost extends OpenStackRequest {
+	public class RemoveHost extends OpenStackRequest<Void> {
 
 		private String aggregateId;
 
@@ -88,31 +117,6 @@ public class AggregatesExtension {
 
 		}
 
-	}
-
-	public ListAggregates listAggregates() {
-		return new ListAggregates();
-	}
-
-	public ShowAggregate showAggregate(String id) {
-		return new ShowAggregate(id);
-	}
-
-	public UpdateAggregateMetadata updateAggregateMetadata(String id,
-			Map<String, String> metadata) {
-		return new UpdateAggregateMetadata(id, metadata);
-	}
-
-	public DeleteAggregate deleteAggregate(String id) {
-		return new DeleteAggregate(id);
-	}
-
-	public AddHost addHost(String aggregateId, String hostId) {
-		return new AddHost(aggregateId, hostId);
-	}
-
-	public RemoveHost removeHost(String aggregateId, String hostId) {
-		return new RemoveHost(hostId, aggregateId);
 	}
 
 }
