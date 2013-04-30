@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.openstack.base.client.OpenStackRequest;
 
-public abstract class QueriableCeilometerCommand<T,R> extends OpenStackRequest {
+public abstract class QueriableCeilometerCommand<T,R> extends OpenStackRequest<R> {
 	
 	protected List<String> fields = new ArrayList<String>();
 	

@@ -28,6 +28,10 @@ public class ContainersResource {
 		return new Delete(name);
 	}
 	
+	public ContainerResource container(String name) {
+		return new ContainerResource(CLIENT, name);
+	}
+	
 	public class List extends OpenStackRequest<java.util.List<Container>> {
 
 		public List() {

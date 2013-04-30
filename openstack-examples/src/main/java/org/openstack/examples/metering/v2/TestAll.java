@@ -3,9 +3,7 @@ package org.openstack.examples.metering.v2;
 import java.util.List;
 
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
-import org.openstack.ceilometer.CeilometerClient;
-import org.openstack.ceilometer.v2.api.MeterList;
-import org.openstack.ceilometer.v2.api.MeterStatistics;
+import org.openstack.ceilometer.Ceilometer;
 import org.openstack.ceilometer.v2.model.Meter;
 import org.openstack.ceilometer.v2.model.Statistics;
 import org.openstack.examples.ExamplesConfiguration;
@@ -25,7 +23,7 @@ public class TestAll {
 				.withTenantName("admin")
 				.execute();
 		
-		CeilometerClient ceilometer = new CeilometerClient(ExamplesConfiguration.CEILOMETER_ENDPOINT);
+		Ceilometer ceilometer = new Ceilometer(ExamplesConfiguration.CEILOMETER_ENDPOINT);
 		ceilometer.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
 		/*
@@ -37,7 +35,8 @@ public class TestAll {
 		}
 		*/
 		
-		List<Meter> meters = ceilometer.execute(new MeterList().eq("project_id", "948eeb593acd4223ad572c49e1ef5709"));
+		/*
+		//List<Meter> meters = ceilometer.meters().list().execute(); //execute(new MeterList().eq("project_id", "948eeb593acd4223ad572c49e1ef5709"));
 		
 		
 		for(Meter m : meters) {
@@ -48,13 +47,14 @@ public class TestAll {
 //				System.out.println("\t" + s);
 //			}
 			
-			List<Statistics> stats = ceilometer.execute(new MeterStatistics().name(m.getName()));
+			List<Statistics> stats = ceilometer.meters().statistics().execute(); // (new MeterStatistics().name(m.getName()));
 			for(Statistics s : stats) {
 				System.out.println("\t\t" + s);
 			}
 			
 			
 		}
+		*/
 		
 	}
 

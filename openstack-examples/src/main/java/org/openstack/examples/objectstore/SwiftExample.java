@@ -17,8 +17,6 @@ import org.openstack.keystone.model.authentication.TokenAuthentication;
 import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.keystone.utils.KeystoneUtils;
 import org.openstack.swift.Swift;
-import org.openstack.swift.api.DownloadObject;
-import org.openstack.swift.api.UploadObject;
 import org.openstack.swift.model.ObjectDownload;
 import org.openstack.swift.model.ObjectForUpload;
 
@@ -46,27 +44,27 @@ public class SwiftExample {
 			
 			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 			
-			Swift swiftClient = new Swift(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"));
-			swiftClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+			Swift swift = new Swift(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"));
+			swift.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		
 			//swiftClient.execute(new DeleteContainer("navidad2"));
 			
-			swiftClient.containers().create("navidad2").execute();
+			swift.containers().create("navidad2").execute();
 			
-			System.out.println(swiftClient.containers().list());
+			System.out.println(swift.containers().list());
 			
 			ObjectForUpload upload = new ObjectForUpload();
 			upload.setContainer("navidad2");
 			upload.setName("example2");
 			upload.setInputStream(new FileInputStream(TEST_FILE));
-			swiftClient.execute(new UploadObject(upload));
+			swift.containers().container("navidad2").upload(upload).execute();
 			
 //			System.out.println(swiftClient.execute(new ListObjects("navidad2", new HashMap<String, String>() {{
 //				put("path", "");
 //			}})).get(0).getContentType());
 			
 			
-			ObjectDownload download = swiftClient.execute(new DownloadObject("navidad2", "example2"));
+			ObjectDownload download = swift.containers().container("navidad").download("example2").execute();
 			write(download.getInputStream(), "example2");
 		}
 
