@@ -9,7 +9,7 @@ import org.openstack.keystone.model.authentication.TokenAuthentication;
 import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.keystone.utils.KeystoneUtils;
 import org.openstack.quantum.Quantum;
-import org.openstack.quantum.api.NetworkCore;
+import org.openstack.quantum.api.NetworksResource;
 import org.openstack.quantum.model.Network;
 import org.openstack.quantum.model.Networks;
 
@@ -33,10 +33,10 @@ public class QuantumListNetworks {
 			// access with tenant
 			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 
-			Quantum quantumClient = new Quantum(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"));
-			quantumClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+			Quantum quantum = new Quantum(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"));
+			quantum.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
-			Networks networks = quantumClient.execute(NetworkCore.listNetworks());
+			Networks networks = quantum.networks().list().execute();
 			for (Network network : networks) {
 				System.out.println(network);
 			}
