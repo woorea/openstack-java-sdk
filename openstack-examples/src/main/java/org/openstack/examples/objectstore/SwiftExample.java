@@ -11,16 +11,13 @@ import java.io.OutputStream;
 import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
 import org.openstack.keystone.Keystone;
-import org.openstack.keystone.api.Authenticate;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
 import org.openstack.keystone.model.authentication.TokenAuthentication;
 import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.keystone.utils.KeystoneUtils;
 import org.openstack.swift.Swift;
-import org.openstack.swift.api.CreateContainer;
 import org.openstack.swift.api.DownloadObject;
-import org.openstack.swift.api.ListContainers;
 import org.openstack.swift.api.UploadObject;
 import org.openstack.swift.model.ObjectDownload;
 import org.openstack.swift.model.ObjectForUpload;
@@ -54,9 +51,9 @@ public class SwiftExample {
 		
 			//swiftClient.execute(new DeleteContainer("navidad2"));
 			
-			swiftClient.execute(new CreateContainer("navidad2"));
+			swiftClient.containers().create("navidad2").execute();
 			
-			System.out.println(swiftClient.execute(new ListContainers()));
+			System.out.println(swiftClient.containers().list());
 			
 			ObjectForUpload upload = new ObjectForUpload();
 			upload.setContainer("navidad2");
