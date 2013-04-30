@@ -1,6 +1,8 @@
 package org.openstack.nova.api.extensions;
 
+import org.openstack.base.client.Entity;
 import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.SecurityGroup;
 import org.openstack.nova.model.SecurityGroupForCreate;
@@ -8,97 +10,87 @@ import org.openstack.nova.model.SecurityGroupRuleForCreate;
 import org.openstack.nova.model.SecurityGroups;
 
 public class SecurityGroupsExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public SecurityGroupsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
 
-	public static class List extends OpenStackRequest {
+	public class List extends OpenStackRequest<SecurityGroups> {
 
 		public List() {
-			OpenStackRequest request = new OpenStackRequest();
-			method(HttpMethod.GET);
-			path("/os-security-groups");
-			header("Accept", "application/json");
-			returnType(SecurityGroups.class);
+			super(CLIENT, HttpMethod.GET, "/os-security-groups", null, SecurityGroups.class);
 		}
 
 	}
 
-	public static class Create extends OpenStackRequest {
+	public class Create extends OpenStackRequest<SecurityGroup> {
 
 		private SecurityGroupForCreate securityGroupForCreate;
 
 		public Create(SecurityGroupForCreate securityGroupForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-security-groups", Entity.json(securityGroupForCreate), SecurityGroup.class);
 			this.securityGroupForCreate = securityGroupForCreate;
-			
-			// return
-			// target.path("os-security-groups").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupForCreate),
-			// SecurityGroup.class);
 		}
 
 	}
 
-	public static class Show extends OpenStackRequest {
+	public class Show extends OpenStackRequest<SecurityGroup> {
 
 		public Show(Integer id) {
-			method(HttpMethod.GET);
-			path("/os-security-groups").path("id");
-			header("Accept", "application/json");
-			returnType(SecurityGroup.class);
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-security-groups/").append(id).toString(), null, SecurityGroup.class);
 		}
 
 	}
 
-	public static class Delete extends OpenStackRequest {
+	public class Delete extends OpenStackRequest<Void> {
 
 		public Delete(Integer id) {
-			method(HttpMethod.DELETE);
-			path("/os-security-groups").path(String.valueOf(id));
-			header("Accept", "application/json");
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-groups/").append(String.valueOf(id)).toString(), null, Void.class);
 		}
 
 	}
 
-	public static class CreateRule extends OpenStackRequest {
+	public class CreateRule extends OpenStackRequest<SecurityGroup.Rule> {
 
 		private SecurityGroupRuleForCreate securityGroupRuleForCreate;
 
-		public CreateRule(
-				SecurityGroupRuleForCreate securityGroupRuleForCreate) {
+		public CreateRule(SecurityGroupRuleForCreate securityGroupRuleForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-security-group-rules", Entity.json(securityGroupRuleForCreate), SecurityGroup.Rule.class);
 			this.securityGroupRuleForCreate = securityGroupRuleForCreate;
-			// return
-						// target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate),
-						// SecurityGroup.Rule.class);
 		}
 	}
 
-	public static class DeleteRule extends OpenStackRequest {
+	public class DeleteRule extends OpenStackRequest<Void> {
 
 		public DeleteRule(Integer id) {
-			// target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-group-rules/").append(String.valueOf(id)).toString(), null, Void.class);
 		}
 	}
 
-	public static List listSecurityGroups() {
+	public List listSecurityGroups() {
 		return new List();
 	}
 
-	public static Create createSecurityGroup(String name,
+	public Create createSecurityGroup(String name,
 			String description) {
-		return new Create(new SecurityGroupForCreate(name,
-				description));
+		return new Create(new SecurityGroupForCreate(name, description));
 	}
 
-	public static Create createSecurityGroup(String name) {
+	public Create createSecurityGroup(String name) {
 		return createSecurityGroup(name, null);
 	}
 
-	public static Show showSecurityGroup(Integer id) {
+	public Show showSecurityGroup(Integer id) {
 		return new Show(id);
 	}
 
-	public static Delete deleteSecurityGroup(Integer id) {
+	public Delete deleteSecurityGroup(Integer id) {
 		return new Delete(id);
 	}
 
-	public static CreateRule createSecurityGroupRule(
+	public CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, String cidr) {
 		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
@@ -106,7 +98,7 @@ public class SecurityGroupsExtension {
 		return new CreateRule(securityGroupRuleForCreate);
 	}
 
-	public static CreateRule createSecurityGroupRule(
+	public CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, Integer sourceGroupId) {
 		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
@@ -115,7 +107,7 @@ public class SecurityGroupsExtension {
 		return new CreateRule(securityGroupRuleForCreate);
 	}
 
-	public static DeleteRule deleteSecurityGroupRule(Integer id) {
+	public DeleteRule deleteSecurityGroupRule(Integer id) {
 		return new DeleteRule(id);
 	}
 
