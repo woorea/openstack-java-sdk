@@ -4,6 +4,7 @@ import org.openstack.base.client.HttpMethod;
 import org.openstack.base.client.OpenStackClient;
 import org.openstack.base.client.OpenStackRequest;
 import org.openstack.glance.model.Images;
+import org.openstack.glance.model.SharedImages;
 
 public class SharedImagesResource {
 
@@ -17,10 +18,10 @@ public class SharedImagesResource {
 		return new List(tenantId, detail);
 	}
 
-	public class List extends OpenStackRequest<Images> {
+	public class List extends OpenStackRequest<SharedImages> {
 		
 		public List(String tenantId, boolean detail) {
-			super(CLIENT, HttpMethod.GET, new StringBuffer(detail ? "/shared-images/detail" : "/shared-images/").append(tenantId).toString(), null, Images.class);
+			super(CLIENT, HttpMethod.GET, new StringBuffer(detail ? "/shared-images/detail" : "/shared-images/").append(tenantId).toString(), null, SharedImages.class);
 		}
 
 	}

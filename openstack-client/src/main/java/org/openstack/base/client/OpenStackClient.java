@@ -38,7 +38,7 @@ public class OpenStackClient {
 	}
 	
 	public <T> T execute(OpenStackRequest<T> request) {
-		OpenStackNotAuthorized authException = new OpenStackNotAuthorized();
+		OpenStackResponseException authException = null;
 
 		for (int i = 0; i <= AUTHENTICATION_RETRIES; i++) {
 			request.endpoint(endpoint);
@@ -49,10 +49,9 @@ public class OpenStackClient {
 
 			try {
 				return (T) connector.execute(request);
-			} catch (OpenStackNotAuthorized e) {
-				if (tokenProvider == null) {
-					// when the tokenProvider is not present there is no
-					// reason to retry the authentication
+			} catch (OpenStackResponseException e) {
+				if (e.getStatus() != OpenStackResponseStatus.NOT_AUTHORIZED
+						|| tokenProvider == null) {
 					throw e;
 				}
 				authException = e;
