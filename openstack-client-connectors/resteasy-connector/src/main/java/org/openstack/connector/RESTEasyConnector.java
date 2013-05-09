@@ -17,8 +17,8 @@ import org.jboss.resteasy.client.ClientRequestFactory;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.openstack.base.client.OpenStackClientConnector;
-import org.openstack.base.client.OpenStackNotAuthorized;
 import org.openstack.base.client.OpenStackRequest;
+import org.openstack.base.client.OpenStackResponseException;
 
 public class RESTEasyConnector implements OpenStackClientConnector {
 
@@ -88,12 +88,8 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 		response.releaseConnection();
 
-		if (response.getStatus() == HttpStatus.SC_UNAUTHORIZED) {
-			throw new OpenStackNotAuthorized();
-		}
-
-		throw new RuntimeException("Unexpected response status code "
-				+ response.getStatus());
+		throw new OpenStackResponseException(response.getResponseStatus()
+				.getReasonPhrase(), response.getStatus());
 	}
 
 }
