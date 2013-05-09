@@ -17,12 +17,22 @@ public class Server implements Serializable {
 		
 		public static final class Address implements Serializable {
 			
+			@JsonProperty("OS-EXT-IPS-MAC:mac_addr")
+			private String macAddr;
+
 			private String version;
 			
 			private String addr;
 			
 			@JsonProperty("OS-EXT-IPS:type")
 			private String type;
+
+                        /**
+                         * @return the macAddr
+                         */
+			public String getMacAddr() {
+				return macAddr;
+			}
 
 			/**
 			 * @return the version
@@ -66,7 +76,13 @@ public class Server implements Serializable {
 			public void setType(String type) {
 				this.type = type;
 			}
-			
+
+			/**
+			 * @param macAddr the mac addr to set
+			 */
+			public void setMacAddr(String macAddr) {
+				this.macAddr= macAddr;
+			}
 		}
 
 		private Map<String, List<Address>> addresses = new HashMap<String, List<Address>>();
