@@ -1,10 +1,9 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.nova.NovaCommand;
+import org.openstack.base.client.Entity;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.SecurityGroup;
 import org.openstack.nova.model.SecurityGroupForCreate;
 import org.openstack.nova.model.SecurityGroupRuleForCreate;
@@ -12,124 +11,104 @@ import org.openstack.nova.model.SecurityGroups;
 
 public class SecurityGroupsExtension {
 	
-	public static class ListSecurityGroups implements NovaCommand<SecurityGroups>{
+	private final OpenStackClient CLIENT;
+	
+	public SecurityGroupsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
 
-		@Override
-		public SecurityGroups execute(WebTarget target) {
-			return target.path("os-security-groups").request(MediaType.APPLICATION_JSON).get(SecurityGroups.class);
+	public class List extends OpenStackRequest<SecurityGroups> {
+
+		public List() {
+			super(CLIENT, HttpMethod.GET, "/os-security-groups", null, SecurityGroups.class);
 		}
 
 	}
 
-	public static class CreateSecurityGroup implements NovaCommand<SecurityGroup> {
+	public class Create extends OpenStackRequest<SecurityGroup> {
 
 		private SecurityGroupForCreate securityGroupForCreate;
-		
-		public CreateSecurityGroup(SecurityGroupForCreate securityGroupForCreate) {
+
+		public Create(SecurityGroupForCreate securityGroupForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-security-groups", Entity.json(securityGroupForCreate), SecurityGroup.class);
 			this.securityGroupForCreate = securityGroupForCreate;
 		}
 
-		@Override
-		public SecurityGroup execute(WebTarget target) {
-			return target.path("os-security-groups").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupForCreate), SecurityGroup.class);
-		}
-		
 	}
-	
-	public static class ShowSecurityGroup implements NovaCommand<SecurityGroup> {
 
-		private Integer id;
-		
-		public ShowSecurityGroup(Integer id) {
-			this.id = id;
+	public class Show extends OpenStackRequest<SecurityGroup> {
+
+		public Show(Integer id) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-security-groups/").append(id).toString(), null, SecurityGroup.class);
 		}
 
-		@Override
-		public SecurityGroup execute(WebTarget target) {
-			return target.path("os-security-groups").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).get(SecurityGroup.class);
-		}
-		
 	}
-	
-	public static class DeleteSecurityGroup implements NovaCommand<Void> {
 
-		private Integer id;
-		
-		public DeleteSecurityGroup(Integer id) {
-			this.id = id;
+	public class Delete extends OpenStackRequest<Void> {
+
+		public Delete(Integer id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-groups/").append(String.valueOf(id)).toString(), null, Void.class);
 		}
 
-		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-security-groups").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
-			return null;
-		}
-		
 	}
-	
-	public static class CreateSecurityGroupRule implements NovaCommand<SecurityGroup.Rule> {
+
+	public class CreateRule extends OpenStackRequest<SecurityGroup.Rule> {
 
 		private SecurityGroupRuleForCreate securityGroupRuleForCreate;
-		
-		public CreateSecurityGroupRule(SecurityGroupRuleForCreate securityGroupRuleForCreate) {
+
+		public CreateRule(SecurityGroupRuleForCreate securityGroupRuleForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-security-group-rules", Entity.json(securityGroupRuleForCreate), SecurityGroup.Rule.class);
 			this.securityGroupRuleForCreate = securityGroupRuleForCreate;
 		}
+	}
 
-		@Override
-		public SecurityGroup.Rule execute(WebTarget target) {
-			return target.path("os-security-group-rules").request(MediaType.APPLICATION_JSON).post(Entity.json(securityGroupRuleForCreate), SecurityGroup.Rule.class);
-		}
-		
-	}
-	
-	public static class DeleteSecurityGroupRule implements NovaCommand<Void> {
+	public class DeleteRule extends OpenStackRequest<Void> {
 
-		private Integer id;
-		
-		public DeleteSecurityGroupRule(Integer id) {
-			this.id = id;
+		public DeleteRule(Integer id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-group-rules/").append(String.valueOf(id)).toString(), null, Void.class);
 		}
+	}
 
-		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-security-group-rules").path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
-			return null;
-		}
-		
+	public List listSecurityGroups() {
+		return new List();
 	}
-	
-	public static ListSecurityGroups listSecurityGroups() {
-		return new ListSecurityGroups();
+
+	public Create createSecurityGroup(String name,
+			String description) {
+		return new Create(new SecurityGroupForCreate(name, description));
 	}
-	
-	public static CreateSecurityGroup createSecurityGroup(String name, String description) {
-		return new CreateSecurityGroup(new SecurityGroupForCreate(name, description));
-	}
-	
-	public static CreateSecurityGroup createSecurityGroup(String name) {
+
+	public Create createSecurityGroup(String name) {
 		return createSecurityGroup(name, null);
 	}
-	
-	public static ShowSecurityGroup showSecurityGroup(Integer id) {
-		return new ShowSecurityGroup(id);
+
+	public Show showSecurityGroup(Integer id) {
+		return new Show(id);
 	}
-	
-	public static DeleteSecurityGroup deleteSecurityGroup(Integer id) {
-		return new DeleteSecurityGroup(id);
+
+	public Delete deleteSecurityGroup(Integer id) {
+		return new Delete(id);
 	}
-	
-	public static CreateSecurityGroupRule createSecurityGroupRule(Integer parentSecurityGroupId, String ipProtocol, Integer fromPort, Integer toPort, String cidr) {
-		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(parentSecurityGroupId, ipProtocol, fromPort, toPort, cidr);
-		return new CreateSecurityGroupRule(securityGroupRuleForCreate);
+
+	public CreateRule createSecurityGroupRule(
+			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
+			Integer toPort, String cidr) {
+		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
+				parentSecurityGroupId, ipProtocol, fromPort, toPort, cidr);
+		return new CreateRule(securityGroupRuleForCreate);
 	}
-	
-	public static CreateSecurityGroupRule createSecurityGroupRule(Integer parentSecurityGroupId, String ipProtocol, Integer fromPort, Integer toPort, Integer sourceGroupId) {
-		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(parentSecurityGroupId, ipProtocol, fromPort, toPort, sourceGroupId);
-		return new CreateSecurityGroupRule(securityGroupRuleForCreate);
+
+	public CreateRule createSecurityGroupRule(
+			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
+			Integer toPort, Integer sourceGroupId) {
+		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
+				parentSecurityGroupId, ipProtocol, fromPort, toPort,
+				sourceGroupId);
+		return new CreateRule(securityGroupRuleForCreate);
 	}
-	
-	public static DeleteSecurityGroupRule deleteSecurityGroupRule(Integer id) {
-		return new DeleteSecurityGroupRule(id);
+
+	public DeleteRule deleteSecurityGroupRule(Integer id) {
+		return new DeleteRule(id);
 	}
 
 }

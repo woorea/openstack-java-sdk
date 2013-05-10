@@ -1,45 +1,42 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.nova.NovaCommand;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Certificate;
-import org.openstack.nova.model.KeyPairs;
 
 public class CredentialsExtension {
-
-	public static class CreateCertificate implements NovaCommand<Certificate> {
-
-		private String id;
-		
-		public CreateCertificate(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public Certificate execute(WebTarget target) {
-			target.path("os-certificates").path(id).request(MediaType.APPLICATION_JSON).method("POST");
-			return null;
-		}
-		
+	
+	private final OpenStackClient CLIENT;
+	
+	public CredentialsExtension(OpenStackClient client) {
+		CLIENT = client;
 	}
 	
-	public static class ShowCertificate implements NovaCommand<KeyPairs>{
+	public Create createCertificate(String id) {
+		return new Create(id);
+	}
 
-		@Override
-		public KeyPairs execute(WebTarget target) {
-			return target.path("os-keypairs").request(MediaType.APPLICATION_JSON).get(KeyPairs.class);
+	public Show showCertificate(String id) {
+		return new Show();
+	}
+
+	public class Create extends OpenStackRequest<Certificate> {
+
+		public Create(String id) {
+			super(CLIENT, HttpMethod.GET, new StringBuffer("/os-certificates").append(id).toString(), null, Certificate.class);
 		}
 
 	}
-	
-	public CreateCertificate createCertificate(String id) {
-		return new CreateCertificate(id);
+
+	public class Show extends OpenStackRequest<Certificate> {
+
+		public Show() {
+			super(CLIENT, HttpMethod.GET, "/os-certificates", null, Certificate.class);
+		}
+
 	}
+
 	
-	public ShowCertificate showCertificate(String id) {
-		return new ShowCertificate();
-	}
-	
+
 }

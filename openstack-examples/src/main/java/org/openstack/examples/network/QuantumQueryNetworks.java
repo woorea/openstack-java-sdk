@@ -1,13 +1,14 @@
 package org.openstack.examples.network;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.ListTenants;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
+import org.openstack.keystone.model.authentication.TokenAuthentication;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.keystone.utils.KeystoneUtils;
-import org.openstack.quantum.client.QuantumClient;
+import org.openstack.quantum.Quantum;
 import org.openstack.quantum.model.Network;
 
 public class QuantumQueryNetworks {
@@ -16,22 +17,22 @@ public class QuantumQueryNetworks {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		// access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
+		Access access = keystone.tokens().authenticate(
+				new UsernamePassword(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD))
+				.execute();
 		// use the token in the following requests
-		keystone.setToken(access.getToken().getId());
+		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
-		Tenants tenants = keystone.execute(new ListTenants());
+		Tenants tenants = keystone.tenants().list().execute();
 		// try to exchange token using the first tenant
 		if (tenants.getList().size() > 0) {
 			// access with tenant
-			access = keystone.execute(Authenticate.withToken(access.getToken().getId())
-					.withTenantId(tenants.getList().get(0).getId()));
+			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 
-			QuantumClient quantumClient = new QuantumClient(KeystoneUtils
-					.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"), 
-					access.getToken().getId());
+			Quantum quantumClient = new Quantum(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "network",	null, "public"));
+			quantumClient.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 
 			Network networkQuery = new Network();
 			networkQuery.setName("benn.cs");

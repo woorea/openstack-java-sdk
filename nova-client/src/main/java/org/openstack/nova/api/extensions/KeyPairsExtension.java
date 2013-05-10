@@ -1,70 +1,64 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.nova.NovaCommand;
+import org.openstack.base.client.Entity;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.KeyPair;
 import org.openstack.nova.model.KeyPairs;
 
 public class KeyPairsExtension {
+	
+	private final OpenStackClient CLIENT;
+	
+	public KeyPairsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
 
-	public static class CreateKeyPair implements NovaCommand<KeyPair> {
+	public Create create(String name, String publicKey) {
+		KeyPair keyPairForCreate = new KeyPair(name, publicKey);
+		return new Create(keyPairForCreate);
+	}
+
+	public Create create(String name) {
+		return create(name, null);
+	}
+
+	public Delete delete(String name) {
+		return new Delete(name);
+	}
+
+	public class Create extends OpenStackRequest<KeyPair> {
 
 		private KeyPair keyPairForCreate;
-		
-		public CreateKeyPair(KeyPair keyPairForCreate) {
+
+		public Create(KeyPair keyPairForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-keypairs", Entity.json(keyPairForCreate), KeyPair.class);
 			this.keyPairForCreate = keyPairForCreate;
 		}
 
-		@Override
-		public KeyPair execute(WebTarget target) {
-			return target.path("os-keypairs").request(MediaType.APPLICATION_JSON).post(Entity.json(keyPairForCreate), KeyPair.class);
-		}
-		
 	}
-	
-	public static class DeleteKeyPair implements NovaCommand<Void> {
+
+	public class Delete extends OpenStackRequest<Void> {
 
 		private String name;
-		
-		public DeleteKeyPair(String name) {
-			this.name = name;
+
+		public Delete(String name) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-keypairs/").append(name).toString(), null, Void.class);
 		}
 
-		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-keypairs").path(name).request(MediaType.APPLICATION_JSON).delete();
-			return null;
-		}
-		
 	}
-	
-	public static class ListKeyPairs implements NovaCommand<KeyPairs>{
 
-		@Override
-		public KeyPairs execute(WebTarget target) {
-			return target.path("os-keypairs").request(MediaType.APPLICATION_JSON).get(KeyPairs.class);
+	public class List extends OpenStackRequest<KeyPairs> {
+
+		public List() {
+			super(CLIENT, HttpMethod.GET, "/os-keypairs", null, KeyPairs.class);
 		}
 
 	}
 	
-	public static ListKeyPairs listKeyPairs() {
-		return new ListKeyPairs();
-	}
-	
-	public static CreateKeyPair createKeyPair(String name, String publicKey) {
-		KeyPair keyPairForCreate = new KeyPair(name, publicKey);
-		return new CreateKeyPair(keyPairForCreate);
-	}
-	
-	public static CreateKeyPair createKeyPair(String name) {
-		return createKeyPair(name, null);
-	}
-	
-	public static DeleteKeyPair delete(String name) {
-		return new DeleteKeyPair(name);
-	}
-
 }

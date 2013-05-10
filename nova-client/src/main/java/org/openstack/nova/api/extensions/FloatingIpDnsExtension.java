@@ -1,105 +1,88 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.nova.NovaCommand;
+import org.openstack.base.client.Entity;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.FloatingIpDomain;
 import org.openstack.nova.model.FloatingIpDomains;
 
 public class FloatingIpDnsExtension {
 	
-	public class ListFloatingIpDomains implements NovaCommand<FloatingIpDomains>{
+	private final OpenStackClient CLIENT;
+	
+	public FloatingIpDnsExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public ListDomains listFloatingIpDomains() {
+		return new ListDomains();
+	}
+	
+	public CreateDomain create(FloatingIpDomain floatingIpDomain) {
+		return new CreateDomain(floatingIpDomain);
+	}
+	
+	public ShowDomain show(String id) {
+		return new ShowDomain(id);
+	}
+	
+	public UpdateDomain update(FloatingIpDomain floatingIpDomain) {
+		return new UpdateDomain(floatingIpDomain);
+	}
+	
+	public DeleteDomain delete(String id) {
+		return new DeleteDomain(id);
+	}
+	
+	public class ListDomains extends OpenStackRequest<FloatingIpDomains> {
 
-		@Override
-		public FloatingIpDomains execute(WebTarget target) {
-			return target.path("os-floating-ip-dns").request(MediaType.APPLICATION_JSON).get(FloatingIpDomains.class);
+		public ListDomains() {
+			super(CLIENT, HttpMethod.GET, "/os-floating-ip-dns", null, FloatingIpDomains.class);
 		}
 
 	}
 
-	public static class CreateFloatingIpDomain implements NovaCommand<FloatingIpDomain> {
+	public class CreateDomain extends OpenStackRequest<FloatingIpDomain> {
 
 		private FloatingIpDomain floatingIpDomain;
 		
-		public CreateFloatingIpDomain(FloatingIpDomain floatingIpDomain) {
+		public CreateDomain(FloatingIpDomain floatingIpDomain) {
+			super(CLIENT, HttpMethod.POST, "/os-floating-ip-dns", Entity.json(floatingIpDomain), FloatingIpDomain.class);
 			this.floatingIpDomain = floatingIpDomain;
 		}
-
-		@Override
-		public FloatingIpDomain execute(WebTarget target) {
-			return target.path("os-floating-ip-dns").request(MediaType.APPLICATION_JSON).post(Entity.json(floatingIpDomain), FloatingIpDomain.class);
-		}
 		
 	}
 	
-	public static class ShowFloatingIpDomain implements NovaCommand<FloatingIpDomain> {
-
-		private String id;
+	public class ShowDomain extends OpenStackRequest<FloatingIpDomain> {
 		
-		public ShowFloatingIpDomain(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public FloatingIpDomain execute(WebTarget target) {
-			return target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).get(FloatingIpDomain.class);
+		public ShowDomain(String id) {
+			super(CLIENT, HttpMethod.GET, new StringBuffer("/os-floating-ip-dns/").append(id).toString(), null, FloatingIpDomain.class);
 		}
 		
 	}
 
 	
-	public static class UpdateFloatingIpDomain implements NovaCommand<FloatingIpDomain> {
+	public static class UpdateDomain extends OpenStackRequest<FloatingIpDomain> {
 
 		private FloatingIpDomain floatingIpDomain;
 		
-		public UpdateFloatingIpDomain(FloatingIpDomain floatingIpDomain) {
+		public UpdateDomain(FloatingIpDomain floatingIpDomain) {
+			//super(CLIENT, HttpMethod.PUT, new StringBuffer("/os-floating-ip-dns/").append(id).toString(), Entity.json(floatingIpDomain), FloatingIpDomain.class);
 			this.floatingIpDomain = floatingIpDomain;
 		}
-
-		@Override
-		public FloatingIpDomain execute(WebTarget target) {
-			return target.path("os-floating-ip-dns").request(MediaType.APPLICATION_JSON).post(Entity.json(floatingIpDomain), FloatingIpDomain.class);
-		}
 		
 	}
 
 	
-	public class DeleteFloatingIpDomain implements NovaCommand<Void> {
-
-		private String id;
+	public class DeleteDomain extends OpenStackRequest<Void> {
 		
-		public DeleteFloatingIpDomain(String id) {
-			this.id = id;
-		}
-
-		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-floating-ip-dns").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
+		public DeleteDomain(String id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuffer("/os-floating-ip-dns/").append(id).toString(), null, Void.class);
 		}
 		
 	}
 	
-	public ListFloatingIpDomains listFloatingIpDomains() {
-		return new ListFloatingIpDomains();
-	}
 	
-	public CreateFloatingIpDomain createFloatingIpDomain(FloatingIpDomain floatingIpDomain) {
-		return new CreateFloatingIpDomain(floatingIpDomain);
-	}
-	
-	public ShowFloatingIpDomain showFloatingIpDomain(String id) {
-		return new ShowFloatingIpDomain(id);
-	}
-	
-	public UpdateFloatingIpDomain updateFloatingIpDomain(FloatingIpDomain floatingIpDomain) {
-		return new UpdateFloatingIpDomain(floatingIpDomain);
-	}
-	
-	public DeleteFloatingIpDomain deleteFloatingIpDomain(String id) {
-		return new DeleteFloatingIpDomain(id);
-	}
 	
 }

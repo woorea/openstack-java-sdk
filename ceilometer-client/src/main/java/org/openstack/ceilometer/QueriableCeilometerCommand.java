@@ -4,13 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
+import org.openstack.base.client.OpenStackRequest;
 
-import org.openstack.ceilometer.v2.model.Resource;
-
-public abstract class QueriableCeilometerCommand<T,R> implements CeilometerCommand<R>{
+public abstract class QueriableCeilometerCommand<T,R> extends OpenStackRequest<R> {
 	
 	protected List<String> fields = new ArrayList<String>();
 	
@@ -49,6 +45,7 @@ public abstract class QueriableCeilometerCommand<T,R> implements CeilometerComma
 		return filter(field, "gt", value);
 	}
 
+	/*
 	public WebTarget query(WebTarget target) {
 		if(fields.size() > 0) {
 			target = target.queryParam("q.field", fields.toArray());
@@ -57,5 +54,5 @@ public abstract class QueriableCeilometerCommand<T,R> implements CeilometerComma
 		}
 		return target;
 	}
-	
+	*/
 }

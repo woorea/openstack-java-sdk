@@ -1,14 +1,11 @@
 package org.openstack.examples.keystone;
 
-import java.util.logging.Logger;
-
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.CreateUser;
-import org.openstack.keystone.api.DeleteUser;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.User;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 
 public class KeystoneCreateUser {
 
@@ -16,11 +13,12 @@ public class KeystoneCreateUser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);
 		//access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(
-				ExamplesConfiguration.KEYSTONE_USERNAME, 
-				ExamplesConfiguration.KEYSTONE_PASSWORD).withTenantName("admin"));
+		Access access = keystone.tokens()
+			.authenticate(new UsernamePassword(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD))
+			.withTenantName("admin")
+			.execute();
 
 		User user = new User();
 		user.setEmail("luis@woorea.es");
@@ -29,10 +27,11 @@ public class KeystoneCreateUser {
 		user.setName("Luis");
 		user.setEnabled(Boolean.TRUE);
 
-		keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL, access.getToken().getId());
-		keystone.enableLogging(Logger.getLogger("keystone"), 10000);
-		user = keystone.execute(new CreateUser(user));
+		keystone = new Keystone("http://keystone.x.org/v2.0");
+		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
+		//keystone.enableLogging(Logger.getLogger("keystone"), 10000);
+		user = keystone.users().create(user).execute();
 		System.out.println(user);
-		keystone.execute(new DeleteUser(user.getId()));
+		keystone.users().delete(user.getId()).execute();
 	}
 }

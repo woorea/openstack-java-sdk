@@ -1,101 +1,81 @@
 package org.openstack.nova.api.extensions;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
-import org.openstack.nova.NovaCommand;
+import org.openstack.base.client.Entity;
+import org.openstack.base.client.HttpMethod;
+import org.openstack.base.client.OpenStackClient;
+import org.openstack.base.client.OpenStackRequest;
 import org.openstack.nova.model.Network;
 import org.openstack.nova.model.Networks;
 
 public class NetworksExtension {
 	
-	public static class ListNetworks implements NovaCommand<Networks>{
+	private final OpenStackClient CLIENT;
+	
+	public NetworksExtension(OpenStackClient client) {
+		CLIENT = client;
+	}
+	
+	public List list() {
+		return new List();
+	}
 
-		@Override
-		public Networks execute(WebTarget target) {
-			return target.path("os-networks").request(MediaType.APPLICATION_JSON).get(Networks.class);
+	public Show show(String id) {
+		return new Show(id);
+	}
+
+	public Delete delete(String id) {
+		return new Delete(id);
+	}
+
+	public Disassociate disassociate(String id) {
+		return new Disassociate(id);
+	}
+
+	public class List extends OpenStackRequest<Networks> {
+
+
+		public List() {
+			super(CLIENT, HttpMethod.GET, "/os-networks", null, Networks.class);
 		}
 
 	}
 
-	public static class CreateNetwork implements NovaCommand<Network> {
+	public class Create extends OpenStackRequest<Network> {
 
 		private Network network;
-		
-		public CreateNetwork(Network network) {
+
+		public Create(Network network) {
+			super(CLIENT, HttpMethod.POST, "/os-networks", Entity.json(network), Network.class);
 			this.network = network;
 		}
 
-		@Override
-		public Network execute(WebTarget target) {
-			return target.path("os-networks").request(MediaType.APPLICATION_JSON).post(Entity.json(network), Network.class);
-		}
-		
 	}
-	
-	public class ShowNetwork implements NovaCommand<Network>{
 
-		private String id;
-		
-		public ShowNetwork(String id) {
-			this.id = id;
-		}
-		
-		@Override
-		public Network execute(WebTarget target) {
-			return target.path("os-networks").path(id).request(MediaType.APPLICATION_JSON).get(Network.class);
+	public class Show extends OpenStackRequest<Network> {
+
+		public Show(String id) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-networks/").append(id).toString(), null, Network.class);
 		}
 
 	}
 
-	
-	public static class DisassociateNetwork implements NovaCommand<Void>{
+	public class Disassociate extends OpenStackRequest<Void> {
 
-		private String id;
-		
-		public DisassociateNetwork(String id) {
-			this.id = id;
-		}
-		
-		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-networks").path(id).request(MediaType.APPLICATION_JSON).post(Entity.json("{\"action\":\"disassociate\"}"));
-			return null;
+		public Disassociate(String id) {
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/os-networks/").append(id).toString(), Entity.json("{\"action\":\"disassociate\"}"), Void.class);
+			;
 		}
 
 	}
-	
-	public static class DeleteNetwork implements NovaCommand<Void>{
 
-		private String id;
-		
-		public DeleteNetwork(String id) {
-			this.id = id;
-		}
-		
-		@Override
-		public Void execute(WebTarget target) {
-			target.path("os-networks").path(id).request(MediaType.APPLICATION_JSON).delete();
-			return null;
+	public class Delete extends OpenStackRequest<Void> {
+
+		public Delete(String id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-networks/").append(id).toString(), null, Void.class);
 		}
 
 	}
+
 	
-	public ListNetworks listNetworks() {
-		return new ListNetworks();
-	}
-	
-	public ShowNetwork showNetwork(String id) {
-		return new ShowNetwork(id);
-	}
-	
-	public DeleteNetwork deleteNetwork(String id) {
-		return new DeleteNetwork(id);
-	}
-	
-	public DisassociateNetwork disassociateNetwork(String id) {
-		return new DisassociateNetwork(id);
-	}
-	
+
 }

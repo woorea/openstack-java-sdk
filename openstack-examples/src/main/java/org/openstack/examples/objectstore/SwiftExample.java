@@ -7,21 +7,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 
+import org.openstack.base.client.OpenStackSimpleTokenProvider;
 import org.openstack.examples.ExamplesConfiguration;
-import org.openstack.keystone.KeystoneClient;
-import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.api.ListTenants;
+import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Access;
 import org.openstack.keystone.model.Tenants;
+import org.openstack.keystone.model.authentication.TokenAuthentication;
+import org.openstack.keystone.model.authentication.UsernamePassword;
 import org.openstack.keystone.utils.KeystoneUtils;
-import org.openstack.swift.SwiftClient;
-import org.openstack.swift.api.CreateContainer;
-import org.openstack.swift.api.DownloadObject;
-import org.openstack.swift.api.ListContainers;
-import org.openstack.swift.api.ListObjects;
-import org.openstack.swift.api.UploadObject;
+import org.openstack.swift.Swift;
 import org.openstack.swift.model.ObjectDownload;
 import org.openstack.swift.model.ObjectForUpload;
 
@@ -33,40 +28,43 @@ public class SwiftExample {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		KeystoneClient keystone = new KeystoneClient(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
+		Keystone keystone = new Keystone(ExamplesConfiguration.KEYSTONE_AUTH_URL);		
 		//access with unscoped token
-		Access access = keystone.execute(Authenticate.withPasswordCredentials(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD));
+		Access access = keystone.tokens().authenticate(
+				new UsernamePassword(ExamplesConfiguration.KEYSTONE_USERNAME, ExamplesConfiguration.KEYSTONE_PASSWORD))
+				.execute();
 		
 		//use the token in the following requests
-		keystone.setToken(access.getToken().getId());
+		keystone.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		
-		Tenants tenants = keystone.execute(new ListTenants());
+		Tenants tenants = keystone.tenants().list().execute();
 		
 		//try to exchange token using the first tenant
 		if(tenants.getList().size() > 0) {
 			
-			access = keystone.execute(Authenticate.withToken(access.getToken().getId()).withTenantId(tenants.getList().get(0).getId()));
+			access = keystone.tokens().authenticate(new TokenAuthentication(access.getToken().getId())).withTenantId(tenants.getList().get(0).getId()).execute();
 			
-			SwiftClient swiftClient = new SwiftClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"), access.getToken().getId());
+			Swift swift = new Swift(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "object-store", null, "public"));
+			swift.setTokenProvider(new OpenStackSimpleTokenProvider(access.getToken().getId()));
 		
 			//swiftClient.execute(new DeleteContainer("navidad2"));
 			
-			swiftClient.execute(new CreateContainer("navidad2"));
+			swift.containers().create("navidad2").execute();
 			
-			System.out.println(swiftClient.execute(new ListContainers()));
+			System.out.println(swift.containers().list());
 			
 			ObjectForUpload upload = new ObjectForUpload();
 			upload.setContainer("navidad2");
 			upload.setName("example2");
 			upload.setInputStream(new FileInputStream(TEST_FILE));
-			swiftClient.execute(new UploadObject(upload));
+			swift.containers().container("navidad2").upload(upload).execute();
 			
-			System.out.println(swiftClient.execute(new ListObjects("navidad2", new HashMap<String, String>() {{
-				put("path", "");
-			}})).get(0).getContentType());
+//			System.out.println(swiftClient.execute(new ListObjects("navidad2", new HashMap<String, String>() {{
+//				put("path", "");
+//			}})).get(0).getContentType());
 			
 			
-			ObjectDownload download = swiftClient.execute(new DownloadObject("navidad2", "example2"));
+			ObjectDownload download = swift.containers().container("navidad").download("example2").execute();
 			write(download.getInputStream(), "example2");
 		}
 

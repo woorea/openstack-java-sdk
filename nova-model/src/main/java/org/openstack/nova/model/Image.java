@@ -188,8 +188,8 @@ public class Image implements Serializable {
 	public String toString() {
 		return "Image [id=" + id + ", status=" + status + ", name=" + name
 				+ ", progress=" + progress + ", minRam=" + minRam
-				+ ", minDisk=" + minDisk + ", created=" + created
-				+ ", updated=" + updated + ", size=" + size + ", metadata="
+				+ ", minDisk=" + minDisk + ", created=" + (created != null ? created.getTime() : null)
+				+ ", updated=" + (updated != null ? updated.getTime() : null) + ", size=" + size + ", metadata="
 				+ metadata + ", links=" + links + "]";
 	}
 	
