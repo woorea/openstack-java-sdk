@@ -10,11 +10,35 @@
 	<name>OpenStack Client Connectors</name>
 	<description>OpenStack Client Connectors</description>
 	<packaging>pom</packaging>
-	<modules>
-		<module>jersey-connector</module>
-		<module>jersey2-connector</module>
-		<module>resteasy-connector</module>
-	</modules>
+	<profiles>
+		<profile>
+			<id>jersey</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>jersey-connector</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>jersey2</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>jersey2-connector</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>resteasy</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>resteasy-connector</module>
+			</modules>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.openstack</groupId>
