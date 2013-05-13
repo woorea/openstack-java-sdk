@@ -6,8 +6,8 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>openstack-examples</artifactId>
-  <name>OpenStack Java Examples</name>
-  <description>OpenStack Java Examples</description>
+  <name>OpenStack Examples</name>
+  <description>OpenStack Examples</description>
   <dependencies>
   	<dependency>
   		<groupId>org.openstack</groupId>

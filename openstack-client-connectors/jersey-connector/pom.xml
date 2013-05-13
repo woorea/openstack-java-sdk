@@ -6,6 +6,8 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>jersey-connector</artifactId>
+  <name>OpenStack Jersey Connector</name>
+  <description>OpenStack Jersey Connector</description>
   <dependencies>
   <dependency>
   	<groupId>com.sun.jersey</groupId>
