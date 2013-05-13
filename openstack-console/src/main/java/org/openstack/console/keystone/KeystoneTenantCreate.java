@@ -1,5 +1,7 @@
 package org.openstack.console.keystone;
 
+import java.util.Arrays;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.openstack.console.utils.Column;
@@ -7,8 +9,6 @@ import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.Tenant;
-
-import com.google.common.collect.Lists;
 
 public class KeystoneTenantCreate extends KeystoneCommand {
 	
@@ -28,7 +28,7 @@ public class KeystoneTenantCreate extends KeystoneCommand {
 		
 		tenant = keystone.tenants().create(tenant).execute();
 		
-		Table t = new Table(new TableModel<Tenant>(Lists.newArrayList(tenant)) {
+		Table t = new Table(new TableModel<Tenant>(Arrays.asList(tenant)) {
 
 			@Override
 			public Column[] getHeaders() {
