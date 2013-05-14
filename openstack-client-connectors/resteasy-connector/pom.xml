@@ -6,6 +6,8 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>resteasy-connector</artifactId>
+  <name>OpenStack RESTEasy Connector</name>
+  <description>OpenStack RESTEasy Connector</description>
   <dependencies>
   	<dependency>
   		<groupId>org.jboss.resteasy</groupId>

@@ -9,7 +9,8 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>jersey2-connector</artifactId>
-	<name>jersey2-connector</name>
+	<name>OpenStack Jersey2 Connector</name>
+	<description>OpenStack Jersey2 Connector</description>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -7,8 +7,8 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>quantum-client</artifactId>
-	<name>Quantum Client</name>
-	<description>Quantum Client</description>
+	<name>OpenStack Quantum Client</name>
+	<description>OpenStack Quantum Client</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.openstack</groupId>

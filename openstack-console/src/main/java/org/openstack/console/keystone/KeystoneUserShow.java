@@ -1,13 +1,13 @@
 package org.openstack.console.keystone;
 
+import java.util.Arrays;
+
 import org.apache.commons.cli.CommandLine;
 import org.openstack.console.utils.Column;
 import org.openstack.console.utils.Table;
 import org.openstack.console.utils.TableModel;
 import org.openstack.keystone.Keystone;
 import org.openstack.keystone.model.User;
-
-import com.google.common.collect.Lists;
 
 public class KeystoneUserShow extends KeystoneCommand {
 	
@@ -21,7 +21,7 @@ public class KeystoneUserShow extends KeystoneCommand {
 		String[] args = cmd.getArgs();
 		if(args.length == 1) {
 			User user = keystone.users().show(args[0]).execute();
-			Table t = new Table(new TableModel<User>(Lists.newArrayList(user)) {
+			Table t = new Table(new TableModel<User>(Arrays.asList(user)) {
 
 				@Override
 				public Column[] getHeaders() {
