@@ -7,6 +7,6 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>quantum-model</artifactId>
-	<name>Quantum Model</name>
-	<description>Quantum Model</description>
+	<name>OpenStack Quantum Model</name>
+	<description>OpenStack Quantum Model</description>
 </project>
