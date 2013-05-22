@@ -14,5 +14,10 @@
   	<artifactId>jersey-client</artifactId>
   	<version>1.17.1</version>
   </dependency>
+  <dependency>
+  	<groupId>org.codehaus.jackson</groupId>
+  	<artifactId>jackson-jaxrs</artifactId>
+  	<version>1.9.12</version>
+  </dependency>
   </dependencies>
 </project>
