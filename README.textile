@@ -7,10 +7,10 @@ You can continue using the latest source from v1.x essex branch
 h2. Maven
 
 |groupId|artifactId|version|
-|org.openstack|keystone-client|2.0.0-SNAPSHOT|
-|org.openstack|nova-client|2.0.0-SNAPSHOT|
-|org.openstack|glance-client|2.0.0-SNAPSHOT|
-|org.openstack|swift-client|2.0.0-SNAPSHOT|
+|org.openstack|keystone-client|3.0.0-SNAPSHOT|
+|org.openstack|nova-client|3.0.0-SNAPSHOT|
+|org.openstack|glance-client|3.0.0-SNAPSHOT|
+|org.openstack|swift-client|3.0.0-SNAPSHOT|
 
 h3. Maven Repositories
 
