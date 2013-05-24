@@ -2,6 +2,7 @@ package org.openstack.base.client;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,5 +106,15 @@ public class OpenStackRequest<R> {
 				+ ", path=" + path + ", headers=" + headers + ", entity="
 				+ entity + ", returnType=" + returnType + "]";
 	}
-	
+
+	private Map<String, Object> queryParams = new LinkedHashMap<String, Object>();
+
+	public Map<String, Object> queryParams() {
+		return queryParams;
+	}
+
+	public OpenStackRequest<R> queryParam(String key, Object value) {
+		queryParams.put(key, value);
+		return this;
+	}
 }
