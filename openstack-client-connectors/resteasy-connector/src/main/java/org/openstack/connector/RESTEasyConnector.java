@@ -1,6 +1,7 @@
 package org.openstack.connector;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.ws.rs.ext.ContextResolver;
@@ -60,7 +61,9 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	@Override
 	public <T> T execute(OpenStackRequest<T> request) {
 		ClientRequest client = CLIENT_FACTORY.createRequest(request.endpoint() + "/" + request.path());
-
+		for(Map.Entry<String, Object> entry : request.queryParams().entrySet()) {
+			client = client.queryParameter(entry.getKey(), String.valueOf(entry.getValue()));
+		}
 		for (Entry<String, List<Object>> h : request.headers().entrySet()) {
 			StringBuilder sb = new StringBuilder();
 			for (Object v : h.getValue()) {
