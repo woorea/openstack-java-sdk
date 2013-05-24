@@ -110,7 +110,7 @@ public class TenantsResource {
 	public class AddUser extends OpenStackRequest<Void> {
 		
 		public AddUser(String tenantId, String userId, String roleId) {
-			super(client, HttpMethod.PUT, new StringBuilder("/tenants/").append(tenantId).append("/users").append(userId).append("/roles/OS-KSADM").append(roleId).toString(), null, Void.class);
+			super(client, HttpMethod.PUT, new StringBuilder("/tenants/").append(tenantId).append("/users/").append(userId).append("/roles/OS-KSADM/").append(roleId).toString(), null, Void.class);
 		}
 
 	}
@@ -118,7 +118,7 @@ public class TenantsResource {
 	public class RemoveUser extends OpenStackRequest<Void> {
 		
 		public RemoveUser(String tenantId, String userId, String roleId) {
-			super(client, HttpMethod.DELETE, new StringBuilder("/tenants/").append(tenantId).append("/users").append(userId).append("/roles/OS-KSADM").append(roleId).toString(), null, Void.class);
+			super(client, HttpMethod.DELETE, new StringBuilder("/tenants/").append(tenantId).append("/users/").append(userId).append("/roles/OS-KSADM/").append(roleId).toString(), null, Void.class);
 		}
 
 	}
@@ -126,7 +126,7 @@ public class TenantsResource {
 	public class ListUserRoles extends OpenStackRequest<Roles> {
 		
 		public ListUserRoles(String tenantId, String userId) {
-			super(client, HttpMethod.GET, new StringBuilder("/tenants/").append(tenantId).append("/users").append(userId).append("/roles").toString(), null, Roles.class);
+			super(client, HttpMethod.GET, new StringBuilder("/tenants/").append(tenantId).append("/users/").append(userId).append("/roles").toString(), null, Roles.class);
 		}
 
 	}
