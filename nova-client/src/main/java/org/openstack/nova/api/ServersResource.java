@@ -145,7 +145,7 @@ public class ServersResource {
 
 		private Reboot action;
 
-		public RebootAction(String id, ChangePassword action) {
+		public RebootAction(String id, Reboot action) {
 			super(id, Entity.json(action), Server.class);
 		}
 
