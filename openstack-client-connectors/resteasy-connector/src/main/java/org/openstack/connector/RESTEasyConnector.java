@@ -85,6 +85,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		}
 
 		if (response.getStatus() == HttpStatus.SC_OK
+		                || response.getStatus() == HttpStatus.SC_CREATED
 		                || response.getStatus() == HttpStatus.SC_NO_CONTENT) {
 		        return response.getEntity(request.returnType());
 		}
