@@ -116,5 +116,14 @@ public class OpenStackRequest<R> {
 	public OpenStackRequest<R> queryParam(String key, Object value) {
 		queryParams.put(key, value);
 		return this;
+    }
+	
+	protected static String buildPath(String ... elements) {
+	    StringBuilder stringBuilder = new StringBuilder();
+	    for (String element : elements) {
+            stringBuilder.append(element);
+        }
+
+	    return stringBuilder.toString();
 	}
 }
