@@ -106,4 +106,12 @@ public class OpenStackRequest<R> {
 				+ entity + ", returnType=" + returnType + "]";
 	}
 	
+	protected static String buildPath(String ... elements) {
+	    StringBuilder stringBuilder = new StringBuilder();
+	    for (String element : elements) {
+            stringBuilder.append(element);
+        }
+
+	    return stringBuilder.toString();
+	}
 }
