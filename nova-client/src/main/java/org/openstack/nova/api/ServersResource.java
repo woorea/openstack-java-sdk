@@ -126,7 +126,7 @@ public class ServersResource {
 	public abstract class Action<T> extends OpenStackRequest<T> {
 
 		public Action(String id, Entity<?> entity, Class<T> returnType) {
-			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/").append(id).append("/action").toString(), entity, returnType);
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action").toString(), entity, returnType);
 		}
 
 	}
@@ -141,12 +141,12 @@ public class ServersResource {
 
 	}
 
-	public class RebootAction extends Action<Server> {
+	public class RebootAction extends Action<Void> {
 
 		private Reboot action;
 
-		public RebootAction(String id, ChangePassword action) {
-			super(id, Entity.json(action), Server.class);
+		public RebootAction(String id, Reboot action) {
+			super(id, Entity.json(action), Void.class);
 		}
 
 	}
@@ -290,7 +290,7 @@ public class ServersResource {
 		return new GetConsoleOutputServer(id, action);
 	}
 	
-public class PauseServer extends OpenStackRequest {
+	public class PauseServer extends OpenStackRequest {
 		
 		private Pause action;
 
@@ -441,7 +441,7 @@ public class PauseServer extends OpenStackRequest {
 		return new CreateBackupServer(serverId, action);
 	}
 	
-public class RescueServer extends OpenStackRequest {
+	public class RescueServer extends OpenStackRequest {
 		
 		private Rescue action;
 

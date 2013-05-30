@@ -41,13 +41,13 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 
 		try {
 			if (entity != null) {
-				if (request.returnType() == null) {
+				if (request.returnType() == null || request.returnType() == Void.class) {
 					invocation.method(request.method().name(), entity);
 				} else {
 					return invocation.method(request.method().name(), entity, request.returnType());
 				}
 			} else {
-				if (request.returnType() == null) {
+				if (request.returnType() == null || request.returnType() == Void.class) {
 					invocation.method(request.method().name());
 				} else {
 					return invocation.method(request.method().name(), request.returnType());
