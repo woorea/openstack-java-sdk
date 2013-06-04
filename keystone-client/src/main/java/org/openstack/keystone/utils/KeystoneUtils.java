@@ -2,7 +2,7 @@ package org.openstack.keystone.utils;
 
 import java.util.List;
 
-import org.openstack.keystone.model.Access.Service;
+import com.woorea.openstack.keystone.model.Access.Service;
 
 public class KeystoneUtils {
 

@@ -1,12 +1,13 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.model.Access;
-import org.openstack.keystone.model.Authentication;
-import org.openstack.keystone.model.authentication.AccessKey;
-import org.openstack.keystone.model.authentication.TokenAuthentication;
-import org.openstack.keystone.model.authentication.UsernamePassword;
+
+import com.woorea.openstack.base.client.HttpMethod;
+import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.keystone.model.Access;
+import com.woorea.openstack.keystone.model.Authentication;
+import com.woorea.openstack.keystone.model.authentication.AccessKey;
+import com.woorea.openstack.keystone.model.authentication.TokenAuthentication;
+import com.woorea.openstack.keystone.model.authentication.UsernamePassword;
 
 public class Authenticate extends OpenStackRequest<Access> {
 	

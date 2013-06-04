@@ -1,11 +1,12 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.Entity;
-import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.model.Role;
-import org.openstack.keystone.model.Roles;
+
+import com.woorea.openstack.base.client.Entity;
+import com.woorea.openstack.base.client.HttpMethod;
+import com.woorea.openstack.base.client.OpenStackClient;
+import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.keystone.model.Role;
+import com.woorea.openstack.keystone.model.Roles;
 
 public class RolesResource {
 	

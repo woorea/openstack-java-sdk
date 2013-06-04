@@ -3,11 +3,12 @@ package org.openstack.keystone.utils;
 import java.net.PasswordAuthentication;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.openstack.base.client.OpenStackTokenProvider;
-import org.openstack.keystone.Keystone;
 import org.openstack.keystone.api.Authenticate;
-import org.openstack.keystone.model.Access;
-import org.openstack.keystone.model.authentication.UsernamePassword;
+
+import com.woorea.openstack.base.client.OpenStackTokenProvider;
+import com.woorea.openstack.keystone.Keystone;
+import com.woorea.openstack.keystone.model.Access;
+import com.woorea.openstack.keystone.model.authentication.UsernamePassword;
 
 public class KeystoneTokenProvider {
 

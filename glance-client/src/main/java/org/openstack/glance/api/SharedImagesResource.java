@@ -1,10 +1,11 @@
 package org.openstack.glance.api;
 
-import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackRequest;
-import org.openstack.glance.model.Images;
-import org.openstack.glance.model.SharedImages;
+
+import com.woorea.openstack.base.client.HttpMethod;
+import com.woorea.openstack.base.client.OpenStackClient;
+import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.glance.model.Images;
+import com.woorea.openstack.glance.model.SharedImages;
 
 public class SharedImagesResource {
 

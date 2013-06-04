@@ -1,11 +1,12 @@
 package org.openstack.keystone.api;
 
-import org.openstack.base.client.Entity;
-import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackRequest;
-import org.openstack.keystone.model.Endpoint;
-import org.openstack.keystone.model.Endpoints;
+
+import com.woorea.openstack.base.client.Entity;
+import com.woorea.openstack.base.client.HttpMethod;
+import com.woorea.openstack.base.client.OpenStackClient;
+import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.keystone.model.Endpoint;
+import com.woorea.openstack.keystone.model.Endpoints;
 
 public class EndpointsResource {
 	

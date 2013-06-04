@@ -5,17 +5,18 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.openstack.base.client.Entity;
-import org.openstack.base.client.HttpMethod;
-import org.openstack.base.client.OpenStackClient;
-import org.openstack.base.client.OpenStackRequest;
-import org.openstack.base.client.OpenStackResponse;
-import org.openstack.glance.model.Image;
-import org.openstack.glance.model.ImageDownload;
-import org.openstack.glance.model.ImageForUpload;
-import org.openstack.glance.model.ImageMember;
-import org.openstack.glance.model.ImageMembers;
-import org.openstack.glance.model.Images;
+
+import com.woorea.openstack.base.client.Entity;
+import com.woorea.openstack.base.client.HttpMethod;
+import com.woorea.openstack.base.client.OpenStackClient;
+import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.base.client.OpenStackResponse;
+import com.woorea.openstack.glance.model.Image;
+import com.woorea.openstack.glance.model.ImageDownload;
+import com.woorea.openstack.glance.model.ImageForUpload;
+import com.woorea.openstack.glance.model.ImageMember;
+import com.woorea.openstack.glance.model.ImageMembers;
+import com.woorea.openstack.glance.model.Images;
 
 public class ImagesResource {
 
