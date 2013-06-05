@@ -1,6 +1,6 @@
 package com.woorea.openstack.examples.network;
 
-import org.openstack.keystone.utils.KeystoneUtils;
+import com.woorea.openstack.keystone.utils.KeystoneUtils;
 
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.examples.ExamplesConfiguration;

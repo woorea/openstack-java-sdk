@@ -36,8 +36,8 @@ public class OpenStackClient {
 		this.endpoint = endpoint;
 		this.connector = (connector == null) ? DEFAULT_CONNECTOR : connector;
 	}
-	
-	public <T> T execute(OpenStackRequest<T> request) {
+
+	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
 		OpenStackResponseException authException = null;
 
 		for (int i = 0; i <= AUTHENTICATION_RETRIES; i++) {
@@ -48,7 +48,7 @@ public class OpenStackClient {
 			}
 
 			try {
-				return (T) connector.execute(request);
+				return connector.request(request);
 			} catch (OpenStackResponseException e) {
 				if (e.getStatus() != OpenStackResponseStatus.NOT_AUTHORIZED
 						|| tokenProvider == null) {
@@ -61,10 +61,10 @@ public class OpenStackClient {
 
 		throw authException;
 	}
-	
-	//Allow to change the response type from the request
-	public <R, T> T execute(OpenStackRequest<R> request, Class<T> type) {
-		return null;
+
+	public <T> T execute(OpenStackRequest<T> request) {
+		OpenStackResponse response =  request(request);
+		return request.returnType() != null ? response.getEntity(request.returnType()) : null;
 	}
 
 	public void property(String property, String value) {

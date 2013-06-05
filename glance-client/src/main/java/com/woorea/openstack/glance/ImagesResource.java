@@ -1,4 +1,4 @@
-package org.openstack.glance.api;
+package com.woorea.openstack.glance;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -113,15 +113,11 @@ public class ImagesResource {
 		public Show(String id) {
 			super(CLIENT, HttpMethod.HEAD, new StringBuilder("/images/").append(id).toString(), null, Image.class);
 		}
-		
-		/* (non-Javadoc)
-		 * @see org.openstack.base.client.OpenStackRequest#execute()
-		 */
+
 		@Override
 		public Image execute() {
-			//custom parsing here
-			OpenStackResponse response = CLIENT.execute(this, OpenStackResponse.class);
-			return parse(response.headers());
+			// custom parsing here
+			return parse(CLIENT.request(this).headers());
 		}
 		
 	}
@@ -156,20 +152,15 @@ public class ImagesResource {
 			header("Accept", "application/octet-stream");
 		}
 
-		/* (non-Javadoc)
-		 * @see org.openstack.base.client.OpenStackRequest#execute()
-		 */
 		@Override
 		public ImageDownload execute() {
-			//custom parsing here
-			OpenStackResponse response = CLIENT.execute(this, OpenStackResponse.class);
+			// custom parsing here
+			OpenStackResponse response = CLIENT.request(this);
 			ImageDownload imageDownload = new ImageDownload();
 			imageDownload.setImage(parse(response.headers()));
 			imageDownload.setInputStream(response.getInputStream());
 			return imageDownload;
 		}
-		
-		
 
 	}
 	

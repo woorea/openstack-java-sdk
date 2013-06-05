@@ -1,4 +1,4 @@
-package org.openstack.keystone.api;
+package com.woorea.openstack.keystone.api;
 
 
 import com.woorea.openstack.base.client.Entity;

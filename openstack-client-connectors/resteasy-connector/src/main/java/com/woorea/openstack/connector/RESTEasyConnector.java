@@ -20,6 +20,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.base.client.OpenStackResponseException;
 
 public class RESTEasyConnector implements OpenStackClientConnector {
@@ -59,12 +60,13 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		CLIENT_FACTORY = new ClientRequestFactory(ClientRequest.getDefaultExecutor(), providerFactory);
 	}
 
-	@Override
-	public <T> T execute(OpenStackRequest<T> request) {
+	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
 		ClientRequest client = CLIENT_FACTORY.createRequest(request.endpoint() + "/" + request.path());
+
 		for(Map.Entry<String, Object> entry : request.queryParams().entrySet()) {
 			client = client.queryParameter(entry.getKey(), String.valueOf(entry.getValue()));
 		}
+
 		for (Entry<String, List<Object>> h : request.headers().entrySet()) {
 			StringBuilder sb = new StringBuilder();
 			for (Object v : h.getValue()) {
@@ -86,9 +88,9 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		}
 
 		if (response.getStatus() == HttpStatus.SC_OK
-		                || response.getStatus() == HttpStatus.SC_CREATED
-		                || response.getStatus() == HttpStatus.SC_NO_CONTENT) {
-		        return response.getEntity(request.returnType());
+				|| response.getStatus() == HttpStatus.SC_CREATED
+				|| response.getStatus() == HttpStatus.SC_NO_CONTENT) {
+			return new RESTEasyResponse(response);
 		}
 
 		response.releaseConnection();

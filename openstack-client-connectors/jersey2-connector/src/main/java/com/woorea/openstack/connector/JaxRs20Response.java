@@ -17,6 +17,11 @@ public class JaxRs20Response implements OpenStackResponse {
 	}
 
 	@Override
+	public <T> T getEntity(Class<T> returnType) {
+		return response.readEntity(returnType);
+	}
+
+	@Override
 	public InputStream getInputStream() {
 		return (InputStream) response.getEntity();
 	}
