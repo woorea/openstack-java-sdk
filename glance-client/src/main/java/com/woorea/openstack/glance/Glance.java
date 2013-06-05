@@ -1,8 +1,5 @@
 package com.woorea.openstack.glance;
 
-import org.openstack.glance.api.ImagesResource;
-import org.openstack.glance.api.SharedImagesResource;
-
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 

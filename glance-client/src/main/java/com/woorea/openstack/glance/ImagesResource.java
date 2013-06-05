@@ -1,4 +1,4 @@
-package org.openstack.glance.api;
+package com.woorea.openstack.glance;
 
 import java.util.Calendar;
 import java.util.Collection;

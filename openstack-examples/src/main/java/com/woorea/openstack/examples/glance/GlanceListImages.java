@@ -1,6 +1,6 @@
 package com.woorea.openstack.examples.glance;
 
-import org.openstack.keystone.utils.KeystoneTokenProvider;
+import com.woorea.openstack.keystone.utils.KeystoneTokenProvider;
 
 import com.woorea.openstack.examples.ExamplesConfiguration;
 import com.woorea.openstack.glance.Glance;
