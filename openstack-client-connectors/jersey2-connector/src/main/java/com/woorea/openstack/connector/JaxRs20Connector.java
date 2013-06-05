@@ -14,6 +14,7 @@ import org.glassfish.jersey.filter.LoggingFilter;
 
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.base.client.OpenStackResponseException;
 
 public class JaxRs20Connector implements OpenStackClientConnector {
@@ -21,13 +22,16 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 	protected Client client = OpenStack.CLIENT;
 
 	@Override
-	public <T> T execute(OpenStackRequest<T> request) {
+	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
 		WebTarget target = client.target(request.endpoint()).path(request.path());
+
 		for(Map.Entry<String, Object> entry : request.queryParams().entrySet()) {
 			target = target.queryParam(entry.getKey(), entry.getValue());
 		}
-		target.register(new LoggingFilter(Logger.getLogger("os"),10000));
+
+		target.register(new LoggingFilter(Logger.getLogger("os"), 10000));
 		Invocation.Builder invocation = target.request();
+
 		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
 			StringBuilder sb = new StringBuilder();
 			for(Object v : h.getValue()) {
@@ -36,30 +40,19 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 			invocation.header(h.getKey(), sb);
 		}
 
-		Entity<?> entity = (request.entity() == null) ? null : Entity
-				.entity(request.entity().getEntity(), request.entity()
-						.getContentType());
+		Entity<?> entity = (request.entity() == null) ? null :
+				Entity.entity(request.entity().getEntity(), request.entity().getContentType());
 
 		try {
 			if (entity != null) {
-				if (request.returnType() == null || request.returnType() == Void.class) {
-					invocation.method(request.method().name(), entity);
-				} else {
-					return invocation.method(request.method().name(), entity, request.returnType());
-				}
+				return new JaxRs20Response(invocation.method(request.method().name(), entity));
 			} else {
-				if (request.returnType() == null || request.returnType() == Void.class) {
-					invocation.method(request.method().name());
-				} else {
-					return invocation.method(request.method().name(), request.returnType());
-				}
+				return new JaxRs20Response(invocation.method(request.method().name()));
 			}
 		} catch (ClientErrorException e) {
 			throw new OpenStackResponseException(e.getResponse()
 					.getStatusInfo().toString(), e.getResponse().getStatus());
 		}
-
-		return null;
 	}
 
 }

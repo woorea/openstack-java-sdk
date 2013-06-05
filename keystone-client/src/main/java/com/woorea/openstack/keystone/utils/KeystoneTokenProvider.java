@@ -1,9 +1,6 @@
-package org.openstack.keystone.utils;
+package com.woorea.openstack.keystone.utils;
 
-import java.net.PasswordAuthentication;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.openstack.keystone.api.Authenticate;
 
 import com.woorea.openstack.base.client.OpenStackTokenProvider;
 import com.woorea.openstack.keystone.Keystone;

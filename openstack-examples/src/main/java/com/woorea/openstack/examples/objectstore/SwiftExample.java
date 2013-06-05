@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.openstack.keystone.utils.KeystoneUtils;
+import com.woorea.openstack.keystone.utils.KeystoneUtils;
 
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.examples.ExamplesConfiguration;

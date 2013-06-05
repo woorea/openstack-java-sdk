@@ -1,7 +1,6 @@
 package com.woorea.openstack.console.nova;
 
 import org.apache.commons.cli.CommandLine;
-import org.openstack.keystone.api.Authenticate;
 
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.console.Command;

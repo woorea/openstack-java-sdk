@@ -14,7 +14,7 @@
 		<profile>
 			<id>jersey</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>jersey-connector</module>
