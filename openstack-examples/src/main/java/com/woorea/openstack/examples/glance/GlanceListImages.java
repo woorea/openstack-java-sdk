@@ -44,7 +44,7 @@ public class GlanceListImages {
 			Images images = glance.images().list(false).execute();
 
 			for (Image image : images) {
-				System.out.println(image);
+				System.out.println(glance.images().show(image.getId()).execute());
 			}
 		}
 	}
