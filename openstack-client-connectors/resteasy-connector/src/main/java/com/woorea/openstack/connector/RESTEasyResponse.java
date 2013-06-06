@@ -23,7 +23,7 @@ public class RESTEasyResponse implements OpenStackResponse {
 
     @Override
     public InputStream getInputStream() {
-        return (InputStream) response.getEntity();
+		return (InputStream) response.getEntity(InputStream.class);
     }
 
     @Override
