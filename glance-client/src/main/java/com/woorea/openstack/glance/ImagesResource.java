@@ -80,22 +80,16 @@ public class ImagesResource {
 	
 	public class Create extends OpenStackRequest<Image> {
 
-		private Image image;
-		
 		public Create(Image image) {
 			super(CLIENT, HttpMethod.POST, "/images", Entity.json(image), Image.class);
-			this.image = image;
 		}
 		
 	}
 	
 	public class Update extends OpenStackRequest<Image> {
 		
-		private Image image;
-		
 		public Update(String id, Image image) {
 			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(), Entity.json(image), Image.class);
-			this.image = image;
 		}
 
 	}
@@ -123,8 +117,6 @@ public class ImagesResource {
 	}
 	
 	public class Upload extends OpenStackRequest<Image> {
-		
-		private ImageForUpload imageForUpload;
 		
 		public Upload(ImageForUpload imageForUpload) {
 			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageForUpload.getInputStream()), Image.class);
@@ -182,19 +174,19 @@ public class ImagesResource {
 
 	public class AddMember extends OpenStackRequest<ImageMember> {
 	
-	public AddMember(String id, String tenantId) {
-		super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).append("/members").append(tenantId).toString(), null, ImageMember.class);
+		public AddMember(String id, String tenantId) {
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).append("/members").append(tenantId).toString(), null, ImageMember.class);
+		}
+
 	}
-	
-}
 
 	public class RemoveMember extends OpenStackRequest<Void> {
 	
-	public RemoveMember(String id, String tenantId) {
-		super(CLIENT, HttpMethod.DELETE, new StringBuilder("/images/").append(id).append("/members/").append(tenantId).toString(), null, Void.class);
+		public RemoveMember(String id, String tenantId) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/images/").append(id).append("/members/").append(tenantId).toString(), null, Void.class);
+		}
+
 	}
-	
-}
 	
 	public static Image parse(Map<String, String> headers) {
 		Image image = new Image();
