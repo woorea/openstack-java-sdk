@@ -62,9 +62,9 @@ public class OpenStackRequest<R> {
 		return path.toString();
 	}
 
-	public OpenStackRequest<R> header(String name, Object... values) {
-		if(values != null) {
-			headers.put(name, Arrays.asList(values));
+	public OpenStackRequest<R> header(String name, Object value) {
+		if(value != null) {
+			headers.put(name, Arrays.asList(value));
 		}
 		return this;
 	}
