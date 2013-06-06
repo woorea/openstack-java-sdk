@@ -147,7 +147,7 @@ public class ImagesResource {
 	public class Download extends OpenStackRequest<ImageDownload> {
 		
 		public Download(String id) {
-			super(CLIENT, HttpMethod.HEAD, new StringBuilder("/images/").append(id).toString(), null, ImageDownload.class);
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/images/").append(id).toString(), null, ImageDownload.class);
 			header("Accept", "application/octet-stream");
 		}
 

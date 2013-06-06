@@ -1,5 +1,6 @@
 package com.woorea.openstack.examples.glance;
 
+import com.woorea.openstack.glance.model.ImageDownload;
 import com.woorea.openstack.glance.model.ImageUpload;
 import com.woorea.openstack.keystone.utils.KeystoneTokenProvider;
 
@@ -12,6 +13,7 @@ import com.woorea.openstack.keystone.model.Access.Service;
 import com.woorea.openstack.keystone.model.Access.Service.Endpoint;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class GlanceListImages {
 
@@ -57,6 +59,16 @@ public class GlanceListImages {
 			ImageUpload uploadImage = new ImageUpload(newImage);
 			uploadImage.setInputStream(new ByteArrayInputStream(IMAGE_CONTENT.getBytes()));
 			glance.images().upload(newImage.getId(), uploadImage).execute();
+
+			// Downloading the image and displaying the image content
+			try {
+				byte[] imgContent = new byte[IMAGE_CONTENT.length()];
+				ImageDownload downloadImage = glance.images().download(newImage.getId()).execute();
+				downloadImage.getInputStream().read(imgContent, 0, imgContent.length);
+				System.out.println(new String(imgContent));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			Images images = glance.images().list(false).execute();
 
