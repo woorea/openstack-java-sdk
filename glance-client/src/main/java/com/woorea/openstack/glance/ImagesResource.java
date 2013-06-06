@@ -51,6 +51,10 @@ public class ImagesResource {
 		return new Upload(image);
 	}
 	
+	public Upload upload(String id, ImageUpload image) {
+		return new Upload(id, image);
+	}
+
 	public Download download(String id) {
 		return new Download(id);
 	}
@@ -122,6 +126,11 @@ public class ImagesResource {
 	
 	public class Upload extends OpenStackRequest<Image> {
 		
+		public Upload(String id, ImageUpload imageUpload) {
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(),
+					Entity.stream(imageUpload.getInputStream()), Image.class);
+		}
+
 		public Upload(ImageUpload imageUpload) {
 			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageUpload.getInputStream()), Image.class);
 
