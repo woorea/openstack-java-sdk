@@ -13,7 +13,7 @@ import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.glance.model.Image;
 import com.woorea.openstack.glance.model.ImageDownload;
-import com.woorea.openstack.glance.model.ImageForUpload;
+import com.woorea.openstack.glance.model.ImageUpload;
 import com.woorea.openstack.glance.model.ImageMember;
 import com.woorea.openstack.glance.model.ImageMembers;
 import com.woorea.openstack.glance.model.Images;
@@ -46,7 +46,7 @@ public class ImagesResource {
 		return new Delete(id);
 	}
 	
-	public Upload upload(ImageForUpload image) {
+	public Upload upload(ImageUpload image) {
 		return new Upload(image);
 	}
 	
@@ -118,20 +118,20 @@ public class ImagesResource {
 	
 	public class Upload extends OpenStackRequest<Image> {
 		
-		public Upload(ImageForUpload imageForUpload) {
-			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageForUpload.getInputStream()), Image.class);
-			header("x-image-meta-name", imageForUpload.getName());
-			header("x-image-meta-disk_format", imageForUpload.getDiskFormat());
-			header("x-image-meta-container_format", imageForUpload.getContainerFormat());
-			header("x-image-meta-id", imageForUpload.getId());
+		public Upload(ImageUpload imageUpload) {
+			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageUpload.getInputStream()), Image.class);
+			header("x-image-meta-name", imageUpload.getImage().getName());
+			header("x-image-meta-disk_format", imageUpload.getImage().getDiskFormat());
+			header("x-image-meta-container_format", imageUpload.getImage().getContainerFormat());
+			header("x-image-meta-id", imageUpload.getImage().getId());
 			//file,s3,swift
-			header("x-image-meta-store", imageForUpload.getStore());
-			header("x-image-meta-size", imageForUpload.getSize());
-			header("x-image-meta-checksum", imageForUpload.getChecksum());
-			header("x-image-meta-is-public", imageForUpload.isPublic());
-			header("x-image-meta-owner", imageForUpload.getOwner());
-			for(String key : imageForUpload.getProperties().keySet()) {
-				imageForUpload.getProperties().put("x-image-meta-property-" + key, imageForUpload.getProperties().get(key));
+			header("x-image-meta-store", imageUpload.getStore());
+			header("x-image-meta-size", imageUpload.getImage().getSize());
+			header("x-image-meta-checksum", imageUpload.getImage().getChecksum());
+			header("x-image-meta-is-public", imageUpload.getImage().isPublic());
+			header("x-image-meta-owner", imageUpload.getImage().getOwner());
+			for(String key : imageUpload.getProperties().keySet()) {
+				imageUpload.getProperties().put("x-image-meta-property-" + key, imageUpload.getProperties().get(key));
 			}
 		}
 
