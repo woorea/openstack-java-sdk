@@ -41,11 +41,20 @@ public class GlanceListImages {
 			glance.setTokenProvider(keystone
 					.getProviderByTenant(ExamplesConfiguration.TENANT_NAME));
 
+			// Creating a new image
+			Image newImage = new Image();
+			newImage.setDiskFormat("raw");
+			newImage.setContainerFormat("bare");
+			newImage.setName("os-java-glance-test");
+			newImage = glance.images().create(newImage).execute();
+
 			Images images = glance.images().list(false).execute();
 
 			for (Image image : images) {
 				System.out.println(glance.images().show(image.getId()).execute());
 			}
+
+			glance.images().delete(newImage.getId()).execute();
 		}
 	}
 

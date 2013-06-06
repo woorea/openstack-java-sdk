@@ -2,6 +2,7 @@ package com.woorea.openstack.glance;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -81,7 +82,10 @@ public class ImagesResource {
 	public class Create extends OpenStackRequest<Image> {
 
 		public Create(Image image) {
-			super(CLIENT, HttpMethod.POST, "/images", Entity.json(image), Image.class);
+			super(CLIENT, HttpMethod.POST, "/images", null, Image.class);
+			for (Map.Entry<String, String> entry : compose(image).entrySet()) {
+				header(entry.getKey(), entry.getValue());
+			}
 		}
 		
 	}
@@ -120,19 +124,13 @@ public class ImagesResource {
 		
 		public Upload(ImageUpload imageUpload) {
 			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageUpload.getInputStream()), Image.class);
-			header("x-image-meta-name", imageUpload.getImage().getName());
-			header("x-image-meta-disk_format", imageUpload.getImage().getDiskFormat());
-			header("x-image-meta-container_format", imageUpload.getImage().getContainerFormat());
-			header("x-image-meta-id", imageUpload.getImage().getId());
+
+			for (Map.Entry<String, String> entry : compose(imageUpload.getImage()).entrySet()) {
+				header(entry.getKey(), entry.getValue());
+			}
+
 			//file,s3,swift
 			header("x-image-meta-store", imageUpload.getStore());
-			header("x-image-meta-size", imageUpload.getImage().getSize());
-			header("x-image-meta-checksum", imageUpload.getImage().getChecksum());
-			header("x-image-meta-is-public", imageUpload.getImage().isPublic());
-			header("x-image-meta-owner", imageUpload.getImage().getOwner());
-			for(String key : imageUpload.getProperties().keySet()) {
-				imageUpload.getProperties().put("x-image-meta-property-" + key, imageUpload.getProperties().get(key));
-			}
 		}
 
 	}
@@ -187,7 +185,26 @@ public class ImagesResource {
 		}
 
 	}
-	
+
+	public static Map<String, String> compose(Image image) {
+		Map<String, String> headers = new HashMap<String, String>();
+
+		headers.put("X-Image-Meta-Name", image.getName());
+		headers.put("X-Image-Meta-Disk_format", image.getDiskFormat());
+		headers.put("X-Image-Meta-Container_format", image.getContainerFormat());
+		headers.put("X-Image-Meta-Id", image.getId());
+		headers.put("X-Image-Meta-Size", (image.getSize() != null) ? image.getSize().toString() : null);
+		headers.put("X-Image-Meta-Checksum", image.getChecksum());
+		headers.put("X-Image-Meta-Is_public", String.valueOf(image.isPublic()));
+		headers.put("X-Image-Meta-Owner", image.getOwner());
+
+		for(String key : image.getProperties().keySet()) {
+			image.getProperties().put("x-image-meta-property-" + key, image.getProperties().get(key));
+		}
+
+		return headers;
+	}
+
 	public static Image parse(Map<String, String> headers) {
 		Image image = new Image();
 		image.setId(headers.get("X-Image-Meta-Id"));
