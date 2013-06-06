@@ -2,6 +2,7 @@ package com.woorea.openstack.glance;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -13,7 +14,7 @@ import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.glance.model.Image;
 import com.woorea.openstack.glance.model.ImageDownload;
-import com.woorea.openstack.glance.model.ImageForUpload;
+import com.woorea.openstack.glance.model.ImageUpload;
 import com.woorea.openstack.glance.model.ImageMember;
 import com.woorea.openstack.glance.model.ImageMembers;
 import com.woorea.openstack.glance.model.Images;
@@ -46,10 +47,14 @@ public class ImagesResource {
 		return new Delete(id);
 	}
 	
-	public Upload upload(ImageForUpload image) {
+	public Upload upload(ImageUpload image) {
 		return new Upload(image);
 	}
 	
+	public Upload upload(String id, ImageUpload image) {
+		return new Upload(id, image);
+	}
+
 	public Download download(String id) {
 		return new Download(id);
 	}
@@ -80,22 +85,19 @@ public class ImagesResource {
 	
 	public class Create extends OpenStackRequest<Image> {
 
-		private Image image;
-		
 		public Create(Image image) {
-			super(CLIENT, HttpMethod.POST, "/images", Entity.json(image), Image.class);
-			this.image = image;
+			super(CLIENT, HttpMethod.POST, "/images", null, Image.class);
+			for (Map.Entry<String, String> entry : compose(image).entrySet()) {
+				header(entry.getKey(), entry.getValue());
+			}
 		}
 		
 	}
 	
 	public class Update extends OpenStackRequest<Image> {
 		
-		private Image image;
-		
 		public Update(String id, Image image) {
 			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(), Entity.json(image), Image.class);
-			this.image = image;
 		}
 
 	}
@@ -124,23 +126,20 @@ public class ImagesResource {
 	
 	public class Upload extends OpenStackRequest<Image> {
 		
-		private ImageForUpload imageForUpload;
-		
-		public Upload(ImageForUpload imageForUpload) {
-			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageForUpload.getInputStream()), Image.class);
-			header("x-image-meta-name", imageForUpload.getName());
-			header("x-image-meta-disk_format", imageForUpload.getDiskFormat());
-			header("x-image-meta-container_format", imageForUpload.getContainerFormat());
-			header("x-image-meta-id", imageForUpload.getId());
-			//file,s3,swift
-			header("x-image-meta-store", imageForUpload.getStore());
-			header("x-image-meta-size", imageForUpload.getSize());
-			header("x-image-meta-checksum", imageForUpload.getChecksum());
-			header("x-image-meta-is-public", imageForUpload.isPublic());
-			header("x-image-meta-owner", imageForUpload.getOwner());
-			for(String key : imageForUpload.getProperties().keySet()) {
-				imageForUpload.getProperties().put("x-image-meta-property-" + key, imageForUpload.getProperties().get(key));
+		public Upload(String id, ImageUpload imageUpload) {
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(),
+					Entity.stream(imageUpload.getInputStream()), Image.class);
+		}
+
+		public Upload(ImageUpload imageUpload) {
+			super(CLIENT, HttpMethod.POST, "/images", Entity.stream(imageUpload.getInputStream()), Image.class);
+
+			for (Map.Entry<String, String> entry : compose(imageUpload.getImage()).entrySet()) {
+				header(entry.getKey(), entry.getValue());
 			}
+
+			//file,s3,swift
+			header("x-image-meta-store", imageUpload.getStore());
 		}
 
 	}
@@ -148,7 +147,7 @@ public class ImagesResource {
 	public class Download extends OpenStackRequest<ImageDownload> {
 		
 		public Download(String id) {
-			super(CLIENT, HttpMethod.HEAD, new StringBuilder("/images/").append(id).toString(), null, ImageDownload.class);
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/images/").append(id).toString(), null, ImageDownload.class);
 			header("Accept", "application/octet-stream");
 		}
 
@@ -182,20 +181,39 @@ public class ImagesResource {
 
 	public class AddMember extends OpenStackRequest<ImageMember> {
 	
-	public AddMember(String id, String tenantId) {
-		super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).append("/members").append(tenantId).toString(), null, ImageMember.class);
+		public AddMember(String id, String tenantId) {
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).append("/members").append(tenantId).toString(), null, ImageMember.class);
+		}
+
 	}
-	
-}
 
 	public class RemoveMember extends OpenStackRequest<Void> {
 	
-	public RemoveMember(String id, String tenantId) {
-		super(CLIENT, HttpMethod.DELETE, new StringBuilder("/images/").append(id).append("/members/").append(tenantId).toString(), null, Void.class);
+		public RemoveMember(String id, String tenantId) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/images/").append(id).append("/members/").append(tenantId).toString(), null, Void.class);
+		}
+
 	}
-	
-}
-	
+
+	public static Map<String, String> compose(Image image) {
+		Map<String, String> headers = new HashMap<String, String>();
+
+		headers.put("X-Image-Meta-Name", image.getName());
+		headers.put("X-Image-Meta-Disk_format", image.getDiskFormat());
+		headers.put("X-Image-Meta-Container_format", image.getContainerFormat());
+		headers.put("X-Image-Meta-Id", image.getId());
+		headers.put("X-Image-Meta-Size", (image.getSize() != null) ? image.getSize().toString() : null);
+		headers.put("X-Image-Meta-Checksum", image.getChecksum());
+		headers.put("X-Image-Meta-Is_public", String.valueOf(image.isPublic()));
+		headers.put("X-Image-Meta-Owner", image.getOwner());
+
+		for(String key : image.getProperties().keySet()) {
+			image.getProperties().put("x-image-meta-property-" + key, image.getProperties().get(key));
+		}
+
+		return headers;
+	}
+
 	public static Image parse(Map<String, String> headers) {
 		Image image = new Image();
 		image.setId(headers.get("X-Image-Meta-Id"));
