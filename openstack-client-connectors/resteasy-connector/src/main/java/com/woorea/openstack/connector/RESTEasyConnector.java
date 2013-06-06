@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.ContextResolver;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -30,7 +31,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 	public static ObjectMapper WRAPPED_MAPPER;
 
-	public static ClientRequestFactory CLIENT_FACTORY;
+	private static ResteasyProviderFactory providerFactory;
 
 	static {
 		DEFAULT_MAPPER = new ObjectMapper();
@@ -47,7 +48,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
-		ResteasyProviderFactory providerFactory = new ResteasyProviderFactory();
+		providerFactory = new ResteasyProviderFactory();
 		providerFactory.addContextResolver(new ContextResolver<ObjectMapper>() {
 			public ObjectMapper getContext(Class<?> type) {
 				return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
@@ -61,12 +62,11 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		InputStreamProvider streamProvider = new InputStreamProvider();
 		providerFactory.addMessageBodyReader(streamProvider);
 		providerFactory.addMessageBodyWriter(streamProvider);
-
-		CLIENT_FACTORY = new ClientRequestFactory(ClientRequest.getDefaultExecutor(), providerFactory);
 	}
 
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
-		ClientRequest client = CLIENT_FACTORY.createRequest(request.endpoint() + "/" + request.path());
+		ClientRequest client = new ClientRequest(UriBuilder.fromUri(request.endpoint() + "/" + request.path()),
+				ClientRequest.getDefaultExecutor(), providerFactory);
 
 		for(Map.Entry<String, Object> entry : request.queryParams().entrySet()) {
 			client = client.queryParameter(entry.getKey(), String.valueOf(entry.getValue()));
