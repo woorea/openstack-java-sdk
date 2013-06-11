@@ -3,10 +3,12 @@ package com.woorea.openstack.quantum.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("port")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Port implements Serializable {
 	
 	public static final class Ip implements Serializable {
