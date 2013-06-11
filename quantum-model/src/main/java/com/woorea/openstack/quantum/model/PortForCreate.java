@@ -13,6 +13,15 @@ public class PortForCreate {
 	private String name;
 	@JsonProperty("network_id")
 	private String networkId;
+
+    @JsonProperty("mac_address")
+    private String macAddress;
+
+    @JsonProperty("device_owner")
+    private String deviceOwner;
+
+    @JsonProperty("tenant_id")
+    private String tenantId;
 	
 	/**
 	 * @return the adminStateUp
@@ -69,6 +78,28 @@ public class PortForCreate {
 	public void setNetworkId(String networkId) {
 		this.networkId = networkId;
 	}
-	
-	
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    public String getDeviceOwner() {
+        return deviceOwner;
+    }
+
+    public void setDeviceOwner(String deviceOwner) {
+        this.deviceOwner = deviceOwner;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
