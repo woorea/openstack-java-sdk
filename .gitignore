@@ -3,6 +3,7 @@
 .classpath
 .project
 .settings/
+*.json
 target/
 bin/logs/
 
