@@ -8,6 +8,9 @@
 	<name>OpenStack Java SDK</name>
 	<description>OpenStack Java SDK</description>
 
+	<properties>
+		<skip.sign>false</skip.sign>
+	</properties>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -102,6 +105,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.4</version>
+				<configuration>
+					<skip>${skip.sign}</skip>
+				</configuration>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
