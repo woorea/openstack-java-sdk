@@ -12,7 +12,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 public class Image implements Serializable {
 	private String id;
 
-	private String uri; //
+	private String uri;
 	
 	private String name;
 	
