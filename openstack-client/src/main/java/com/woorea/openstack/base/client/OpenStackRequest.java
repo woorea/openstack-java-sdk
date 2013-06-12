@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class OpenStackRequest<R> {
@@ -107,14 +108,22 @@ public class OpenStackRequest<R> {
 				+ entity + ", returnType=" + returnType + "]";
 	}
 
-	private Map<String, Object> queryParams = new LinkedHashMap<String, Object>();
+	private Map<String, List<Object> > queryParams = new LinkedHashMap<String, List<Object> >();
 
-	public Map<String, Object> queryParams() {
+	public Map<String, List<Object> > queryParams() {
 		return queryParams;
 	}
 
 	public OpenStackRequest<R> queryParam(String key, Object value) {
-		queryParams.put(key, value);
+		if (queryParams.containsKey(key)) {
+			List<Object> values = queryParams.get(key);
+			values.add(value);
+		} else {
+			List<Object> values = new ArrayList<Object>();
+			values.add(value);
+			queryParams.put(key, values);
+		}
+
 		return this;
     }
 	

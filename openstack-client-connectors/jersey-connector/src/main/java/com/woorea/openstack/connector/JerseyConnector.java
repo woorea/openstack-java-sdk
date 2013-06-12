@@ -37,8 +37,10 @@ public class JerseyConnector implements OpenStackClientConnector {
 	@Override
 	public <T> T execute(OpenStackRequest<T> request) {
 		WebResource target = client.resource(request.endpoint()).path(request.path());
-		for(Map.Entry<String, Object> entry : request.queryParams().entrySet()) {
-			target = target.queryParam(entry.getKey(), String.valueOf(entry.getValue()));
+		for(Map.Entry<String, List<Object> > entry : request.queryParams().entrySet()) {
+			for (Object o : entry.getValue()) {
+				target = target.queryParam(entry.getKey(), String.valueOf(o));
+			}
 		}
 		target.addFilter(new LoggingFilter());
 		
