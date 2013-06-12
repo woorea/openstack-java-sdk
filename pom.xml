@@ -76,8 +76,8 @@
 	</developers>
 
 	<scm>
-		<connection>scm:http://github.com/woorea/openstack-java-sdk.git</connection>
-		<developerConnection>scm:http://github.com/woorea/openstack-java-sdk.git</developerConnection>
+		<connection>scm:git:https://github.com/woorea/openstack-java-sdk.git</connection>
+		<developerConnection>scm:git:https://github.com/woorea/openstack-java-sdk.git</developerConnection>
 		<url>http://github.com/woorea/openstack-java-sdk.git</url>
 	</scm>
 
