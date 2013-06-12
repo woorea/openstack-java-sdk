@@ -11,5 +11,4 @@ public class NovaClient extends AbstractOpenStackClient {
 	public <R> R execute(NovaCommand<R> command) {
 		return command.execute(create(endpointURL));
 	}
-
 }

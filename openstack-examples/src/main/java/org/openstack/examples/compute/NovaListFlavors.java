@@ -49,8 +49,8 @@ public class NovaListFlavors {
 			
 			access = keystone.execute(new Authenticate(authentication));
 			
-			//NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
-			NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()), access.getToken().getId());
+			NovaClient novaClient = new NovaClient(KeystoneUtils.findEndpointURL(access.getServiceCatalog(), "compute", null, "public"), access.getToken().getId());
+			//NovaClient novaClient = new NovaClient(ExamplesConfiguration.NOVA_ENDPOINT.concat(tenants.getList().get(0).getId()), access.getToken().getId());
 			novaClient.enableLogging(Logger.getLogger("nova"), 100 * 1024);
 			
 			Flavors flavors = novaClient.execute(FlavorsCore.listFlavors(true));
