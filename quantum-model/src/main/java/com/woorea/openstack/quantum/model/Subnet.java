@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("subnet")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Subnet implements Serializable{
 	
 	private String name;
