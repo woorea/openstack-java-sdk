@@ -2,6 +2,7 @@ package org.openstack.nova.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -27,6 +28,9 @@ public class SimpleTenantUsage implements Serializable {
 	
 	@JsonProperty("total_hours")
 	private String totalHours;
+	
+	@JsonProperty("server_usages")
+	private List<SimpleServerUsage> serverUsages;
 
 	/**
 	 * @return the totalMemoryMbUsage
@@ -126,9 +130,15 @@ public class SimpleTenantUsage implements Serializable {
 		this.totalHours = totalHours;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
+	public List<SimpleServerUsage> getServerUsages() {
+		return serverUsages;
+	}
+
+	public void setServerUsages(List<SimpleServerUsage> serverUsages) {
+		this.serverUsages = serverUsages;
+	}
+
 	@Override
 	public String toString() {
 		return "SimpleTenantUsage [totalMemoryMbUsage=" + totalMemoryMbUsage
@@ -136,7 +146,5 @@ public class SimpleTenantUsage implements Serializable {
 				+ ", totalLocalGbUsage=" + totalLocalGbUsage + ", start="
 				+ start + ", stop=" + stop + ", tenantId=" + tenantId
 				+ ", totalHours=" + totalHours + "]";
-	}
-
-	
+	}	
 }

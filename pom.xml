@@ -21,6 +21,8 @@
 		<module>quantum-model</module>
 		<module>ceilometer-model</module>
 		<module>ceilometer-client</module>
+		<module>heat-client</module>
+		<module>heat-model</module>
 		<module>openstack-examples</module>
 	</modules>
 	<licenses>
