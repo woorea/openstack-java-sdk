@@ -3,6 +3,7 @@ package com.woorea.openstack.connector;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
@@ -14,13 +15,17 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
+import com.sun.jersey.client.impl.ClientRequestImpl;
+import com.sun.jersey.core.header.OutBoundHeaders;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.base.client.OpenStackResponseException;
 
 public class JerseyConnector implements OpenStackClientConnector {
@@ -35,7 +40,7 @@ public class JerseyConnector implements OpenStackClientConnector {
 	}
 
 	@Override
-	public <T> T execute(OpenStackRequest<T> request) {
+	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
 		WebResource target = client.resource(request.endpoint()).path(request.path());
 		for(Map.Entry<String, List<Object> > entry : request.queryParams().entrySet()) {
 			for (Object o : entry.getValue()) {
@@ -43,38 +48,28 @@ public class JerseyConnector implements OpenStackClientConnector {
 			}
 		}
 		target.addFilter(new LoggingFilter());
-		
-		WebResource.Builder tb = target.getRequestBuilder();
+		MultivaluedMap<String, Object> headers = new OutBoundHeaders();
 		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
-			StringBuilder sb = new StringBuilder();
 			for(Object v : h.getValue()) {
-				sb.append(String.valueOf(v));
+				headers.add(h.getKey(), v);
 			}
-			tb.header(h.getKey(), sb);
 		}
 		if(request.entity() != null && request.entity().getContentType() != null) {
-			tb.header("Content-Type", request.entity().getContentType());
+			headers.add("Content-Type", request.entity().getContentType());
 		} else {
-			tb.header("Content-Type", "application/json");
+			headers.add("Content-Type", "application/json");
 		}
 		try {
+			ClientResponse response = null;
 			if (request.entity() != null && request.entity().getEntity() != null) {
-				if (request.returnType() == null || Void.class == request.returnType()) {
-					tb.method(request.method().name(), request.entity().getEntity());
-				} else {
-					return tb.method(request.method().name(), request.returnType(), request.entity().getEntity());
-				}
+				response = target.getHeadHandler().handle(new ClientRequestImpl(target.getURI(), request.method().name(), request.entity().getEntity(), headers));
 			} else {
-				if (request.returnType() == null || Void.class == request.returnType()) {
-					tb.method(request.method().name());
-				} else {
-					return tb.method(request.method().name(), request.returnType());
-				}
+				response = target.getHeadHandler().handle(new ClientRequestImpl(target.getURI(), request.method().name(), null, headers));
 			}
+			return new JerseyResponse(response);
 		} catch (UniformInterfaceException e) {
 			throw new OpenStackResponseException(e.getResponse().getClientResponseStatus().getReasonPhrase(), e.getResponse().getStatus());
 		}
-		return null;
 	}
 
 	@Provider

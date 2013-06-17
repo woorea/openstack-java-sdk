@@ -9,9 +9,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 
+import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
@@ -49,7 +51,11 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 			if (entity != null) {
 				return new JaxRs20Response(invocation.method(request.method().name(), entity));
 			} else {
-				return new JaxRs20Response(invocation.method(request.method().name()));
+				if(HttpMethod.PUT == request.method()) {
+					return new JaxRs20Response(invocation.method(request.method().name(), Entity.entity("", MediaType.APPLICATION_JSON)));
+				} else {
+					return new JaxRs20Response(invocation.method(request.method().name()));
+				}
 			}
 		} catch (ClientErrorException e) {
 			throw new OpenStackResponseException(e.getResponse()
