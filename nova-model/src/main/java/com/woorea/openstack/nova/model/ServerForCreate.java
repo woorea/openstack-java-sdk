@@ -73,6 +73,9 @@ public class ServerForCreate implements Serializable {
 	@JsonProperty("availability_zone")
 	private String availabilityZone;
 
+	@JsonProperty("config_drive")
+	private boolean configDrive;
+
 	/**
 	 * @return the name
 	 */
@@ -278,5 +281,12 @@ public class ServerForCreate implements Serializable {
 	public void setAvailabilityZone(String availabilityZone) {
 		this.availabilityZone = availabilityZone;
 	}
-	
+
+	public boolean isConfigDrive() {
+		return configDrive;
+	}
+
+	public void setConfigDrive(boolean configDrive) {
+		this.configDrive = configDrive;
+	}
 }

@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-java-sdk</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.1</version>
 	</parent>
 	<artifactId>openstack-client-connectors</artifactId>
 	<name>OpenStack Client Connectors</name>
@@ -13,7 +13,7 @@
 		<profile>
 			<id>jersey</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
 				<module>jersey-connector</module>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
