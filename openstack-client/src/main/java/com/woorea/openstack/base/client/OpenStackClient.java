@@ -64,7 +64,7 @@ public class OpenStackClient {
 
 	public <T> T execute(OpenStackRequest<T> request) {
 		OpenStackResponse response =  request(request);
-		return request.returnType() != null ? response.getEntity(request.returnType()) : null;
+		return (request.returnType() != null && request.returnType() != Void.class) ? response.getEntity(request.returnType()) : null;
 	}
 
 	public void property(String property, String value) {
