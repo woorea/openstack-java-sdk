@@ -15,7 +15,7 @@ public class OpenStackRequest<R> {
 		
 	}
 	
-	public OpenStackRequest(OpenStackClient client, HttpMethod method, String path, Entity<?> entity, Class<R> returnType) {
+	public OpenStackRequest(OpenStackClient client, HttpMethod method, CharSequence path, Entity<?> entity, Class<R> returnType) {
 		this.client = client;
 		this.method = method;
 		this.path = new StringBuilder(path);
