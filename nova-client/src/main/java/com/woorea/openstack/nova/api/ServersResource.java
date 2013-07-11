@@ -421,11 +421,8 @@ public class ServersResource {
 	
 	public  class AttachVolume extends OpenStackRequest<Void> {
 		
-		public AttachVolume(String serverId, final String volumeId, final String device) {
-			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(serverId).append("/os-volume_attachments"), Entity.json(new VolumeAttachment() {{
-				setVolumeId(volumeId);
-				setDevice(device);
-			}}), Void.class);
+		public AttachVolume(String serverId, final VolumeAttachment volumeAttachment) { 
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(serverId).append("/os-volume_attachments"), Entity.json(volumeAttachment), Void.class);
 		}
 
 	}
@@ -442,8 +439,11 @@ public class ServersResource {
 
 	}
 
-	public AttachVolume attachVolume(String serverId, String volumeId, String device) {
-		return new AttachVolume(serverId, volumeId, device);
+	public AttachVolume attachVolume(String serverId, String volumeId, String device) { 
+		VolumeAttachment volumeAttachment = new VolumeAttachment();
+		volumeAttachment.setVolumeId(volumeId);
+		volumeAttachment.setDevice(device);
+		return new AttachVolume(serverId, volumeAttachment);
 	}
 	
 	public DetachVolume detachVolume(String serverId, String volumeId) {

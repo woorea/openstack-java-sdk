@@ -7,6 +7,7 @@ import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.nova.model.Metadata;
 import com.woorea.openstack.nova.model.Volume;
+import com.woorea.openstack.nova.model.VolumeForCreate;
 import com.woorea.openstack.nova.model.Volumes;
 
 public class VolumesExtension {
@@ -21,8 +22,8 @@ public class VolumesExtension {
 		return new List(detail);
 	}
 	
-	public Create create(Volume volume) {
-		return new Create(volume);
+	public Create create(VolumeForCreate volumeForCreate) { 
+		return new Create(volumeForCreate);
 	}
 	
 	public Show show(String id) {
@@ -48,11 +49,8 @@ public class VolumesExtension {
 	
 	public class Create extends OpenStackRequest<Volume> {
 
-		private Volume volume;
-		
-		public Create(Volume volume) {
-			super(CLIENT, HttpMethod.POST, "/os-volumes", Entity.json(volume), Volume.class);
-			this.volume = volume;
+		public Create(VolumeForCreate volumeForCreate) { 
+			super(CLIENT, HttpMethod.POST, "/os-volumes", Entity.json(volumeForCreate), Volume.class);
 		}
 		
 	}
