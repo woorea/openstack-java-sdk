@@ -33,6 +33,7 @@ import com.woorea.openstack.nova.model.ServerAction.VncConsole;
 import com.woorea.openstack.nova.model.ServerForCreate;
 import com.woorea.openstack.nova.model.Servers;
 import com.woorea.openstack.nova.model.VolumeAttachment;
+import com.woorea.openstack.nova.model.VolumeAttachments;
 
 public class ServersResource {
 	
@@ -429,12 +430,24 @@ public class ServersResource {
 	
 	public class DetachVolume extends OpenStackRequest<Void> {
 		
-		private String serverId;
-		
-		private String volumeId;
-		
 		public DetachVolume(String serverId, String volumeId) {
-			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/servers/").append(serverId).append("/os-volume_attachments").append(volumeId), null, Void.class);
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/servers/").append(serverId).append("/os-volume_attachments/").append(volumeId), null, Void.class);
+		}
+
+	}
+	
+	public  class ListVolumeAttachments extends OpenStackRequest<VolumeAttachments> {
+		
+		public ListVolumeAttachments(String serverId) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/").append(serverId).append("/os-volume_attachments"), null, VolumeAttachments.class);
+		}
+
+	}
+	
+	public  class ShowVolumeAttachment extends OpenStackRequest<VolumeAttachment> {
+		
+		public ShowVolumeAttachment(String serverId, String volumeAttachmentId) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/").append(serverId).append("/os-volume_attachments/").append(volumeAttachmentId), null, VolumeAttachment.class);
 		}
 
 	}
@@ -448,6 +461,14 @@ public class ServersResource {
 	
 	public DetachVolume detachVolume(String serverId, String volumeId) {
 		return new DetachVolume(serverId, volumeId);
+	}
+	
+	public ListVolumeAttachments listVolumeAttachments(String serverId) {
+		return new ListVolumeAttachments(serverId);
+	}
+	
+	public ShowVolumeAttachment showVolumeAttachment(String serverId, String volumeAttachmentId) {
+		return new ShowVolumeAttachment(serverId, volumeAttachmentId);
 	}
 	
 }
