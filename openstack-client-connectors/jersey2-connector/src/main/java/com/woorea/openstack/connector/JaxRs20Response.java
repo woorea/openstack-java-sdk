@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.ws.rs.core.Response;
 
 import com.woorea.openstack.base.client.OpenStackResponse;
+import com.woorea.openstack.base.client.OpenStackResponseException;
 
 public class JaxRs20Response implements OpenStackResponse {
 	
@@ -18,6 +19,10 @@ public class JaxRs20Response implements OpenStackResponse {
 
 	@Override
 	public <T> T getEntity(Class<T> returnType) {
+		if(response.getStatus() >= 400) {
+			throw new OpenStackResponseException(response.getStatusInfo().getReasonPhrase(),
+					response.getStatusInfo().getStatusCode());
+		}
 		return response.readEntity(returnType);
 	}
 
