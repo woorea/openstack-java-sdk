@@ -11,8 +11,6 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.filter.LoggingFilter;
-
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
@@ -22,6 +20,7 @@ import com.woorea.openstack.base.client.OpenStackResponseException;
 public class JaxRs20Connector implements OpenStackClientConnector {
 
 	protected Client client = OpenStack.CLIENT;
+    private Jersey2LoggingFilter logger = new Jersey2LoggingFilter(Logger.getLogger("os"), 10000);
 
 	@Override
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
@@ -32,8 +31,7 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 				target = target.queryParam(entry.getKey(), o);
 			}
 		}
-
-		target.register(new LoggingFilter(Logger.getLogger("os"), 10000));
+        target.register(logger);
 		Invocation.Builder invocation = target.request();
 
 		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
@@ -62,5 +60,4 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 					.getStatusInfo().toString(), e.getResponse().getStatus());
 		}
 	}
-
 }

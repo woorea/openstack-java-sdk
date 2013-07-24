@@ -2,6 +2,7 @@ package com.woorea.openstack.connector;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.ContextResolver;
@@ -20,7 +21,6 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.client.impl.ClientRequestImpl;
 import com.sun.jersey.core.header.OutBoundHeaders;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
@@ -31,6 +31,8 @@ import com.woorea.openstack.base.client.OpenStackResponseException;
 public class JerseyConnector implements OpenStackClientConnector {
 	
 	protected Client client = null;
+    protected boolean logPassword;
+    private JerseyLoggingFilter logger = new JerseyLoggingFilter(Logger.getLogger("os"));
 
 	public JerseyConnector() {
 		ClientConfig clientConfig = new DefaultClientConfig();
@@ -47,7 +49,7 @@ public class JerseyConnector implements OpenStackClientConnector {
 				target = target.queryParam(entry.getKey(), String.valueOf(o));
 			}
 		}
-		target.addFilter(new LoggingFilter());
+		target.addFilter(logger);
 		MultivaluedMap<String, Object> headers = new OutBoundHeaders();
 		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
 			for(Object v : h.getValue()) {
