@@ -36,6 +36,12 @@ public class QuotaSet {
 	@JsonProperty("security_group_rules")
 	private Integer securityGroupRules;
 
+	@JsonProperty("injected_file_path_bytes")
+	private Integer injectedFilePathBytes;
+
+	@JsonProperty("key_pairs")
+	private Integer keyPairs;
+
 	public String getId() {
 		return id;
 	}
@@ -131,5 +137,20 @@ public class QuotaSet {
 	public void setSecurityGroupRules(Integer securityGroupRules) {
 		this.securityGroupRules = securityGroupRules;
 	}
-	
+
+	public Integer getKeyPairs() {
+		return keyPairs;
+	}
+
+	public void setKeyPairs(Integer keyPairs) {
+		this.keyPairs = keyPairs;
+	}
+
+	public Integer getInjectedFilePathBytes() {
+		return injectedFilePathBytes;
+	}
+
+	public void setInjectedFilePathBytes(Integer injectedFilePathBytes) {
+		this.injectedFilePathBytes = injectedFilePathBytes;
+	}
 }

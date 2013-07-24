@@ -2,6 +2,7 @@ package com.woorea.openstack.nova.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -27,6 +28,9 @@ public class SimpleTenantUsage implements Serializable {
 	
 	@JsonProperty("total_hours")
 	private String totalHours;
+
+	@JsonProperty("server_usages")
+	private List<ServerUsage> serverUsages;
 
 	/**
 	 * @return the totalMemoryMbUsage
@@ -126,6 +130,14 @@ public class SimpleTenantUsage implements Serializable {
 		this.totalHours = totalHours;
 	}
 
+	public List<ServerUsage> getServerUsages() {
+		return serverUsages;
+	}
+
+	public void setServerUsages(List<ServerUsage> serverUsages) {
+		this.serverUsages = serverUsages;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -138,5 +150,83 @@ public class SimpleTenantUsage implements Serializable {
 				+ ", totalHours=" + totalHours + "]";
 	}
 
+	public static final class ServerUsage implements Serializable {
+		@JsonProperty("instance_id")
+		private String instanceId;
+
+		private Integer uptime;
+
+		@JsonProperty("started_at")
+		private String startedAt;
 	
+		@JsonProperty("ended_at")
+		private String endedAt;
+
+		@JsonProperty("memory_mb")
+		private Integer memoryMb;
+
+		@JsonProperty("tenant_id")
+		private String tenantId;
+
+		private String state;
+
+		private Double hours;
+
+		private Integer vcpus;
+
+		private String flavor;
+
+		@JsonProperty("local_gb")
+		private Integer localDiskSize;
+
+		private String name;
+
+		public String getInstanceId() {
+			return instanceId;
+		}
+
+		public Integer getUptime() {
+			return uptime;
+		}
+
+		public String getStartedAt() {
+			return startedAt;
+		}
+
+		public String getEndedAt() {
+			return endedAt;
+		}
+
+		public Integer getMemoryMb() {
+			return memoryMb;
+		}
+
+		public String getTenantId() {
+			return tenantId;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public Double getHours() {
+			return hours;
+		}
+
+		public Integer getVcpus() {
+			return vcpus;
+		}
+
+		public String getFlavor() {
+			return flavor;
+		}
+
+		public Integer getLocalDiskSize() {
+			return localDiskSize;
+		}
+
+		public String getName() {
+			return name;
+		}
+	}
 }
