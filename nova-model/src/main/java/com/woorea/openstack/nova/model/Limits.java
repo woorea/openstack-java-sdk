@@ -25,6 +25,8 @@ public class Limits implements Serializable {
 			
 			private Integer available;
 
+			private Integer value;
+	
 			/**
 			 * @return the nextAvailable
 			 */
@@ -60,6 +62,12 @@ public class Limits implements Serializable {
 				return available;
 			}
 
+			/**
+			 * @return the value
+			 */
+			public Integer getValue() {
+				return value;
+			}
 			/* (non-Javadoc)
 			 * @see java.lang.Object#toString()
 			 */
@@ -67,7 +75,7 @@ public class Limits implements Serializable {
 			public String toString() {
 				return "LimitEntry [nextAvailable=" + nextAvailable + ", unit="
 						+ unit + ", verb=" + verb + ", remaining=" + remaining
-						+ ", available=" + available + "]";
+						+ ", available=" + available + ", value=" + value + "]";
 			}
 			
 			
@@ -128,6 +136,32 @@ public class Limits implements Serializable {
 		
 		private Integer maxTotalRAMSize;
 
+		private Integer totalVolumesUsed;
+
+		private Integer maxSecurityGroupRules;
+
+		private Integer maxTotalKeypairs;
+
+		private Integer totalCoresUsed;
+
+		private Integer maxTotalVolumes;
+
+		private Integer totalRAMUsed;
+
+		private Integer totalInstancesUsed;
+
+		private Integer maxSecurityGroups;
+
+		private Integer totalVolumeGigabytesUsed;
+
+		private Integer totalSecurityGroupsUsed;
+
+		private Integer maxTotalFloatingIps;
+
+		private Integer totalKeyPairsUsed;
+
+		private Integer maxTotalVolumeGigabytes;
+
 		/**
 		 * @return the maxServerMeta
 		 */
@@ -175,6 +209,58 @@ public class Limits implements Serializable {
 		 */
 		public Integer getMaxTotalRAMSize() {
 			return maxTotalRAMSize;
+		}
+
+		public Integer getTotalVolumesUsed() {
+			return totalVolumesUsed;
+		}
+
+		public Integer getMaxSecurityGroupRules() {
+			return maxSecurityGroupRules;
+		}
+
+		public Integer getMaxTotalKeypairs() {
+			return maxTotalKeypairs;
+		}
+
+		public Integer getTotalCoresUsed() {
+			return totalCoresUsed;
+		}
+
+		public Integer getMaxTotalVolumes() {
+			return maxTotalVolumes;
+		}
+
+		public Integer getTotalRAMUsed() {
+			return totalRAMUsed;
+		}
+
+		public Integer getTotalInstancesUsed() {
+			return totalInstancesUsed;
+		}
+
+		public Integer getMaxSecurityGroups() {
+			return maxSecurityGroups;
+		}
+
+		public Integer getTotalVolumeGigabytesUsed() {
+			return totalVolumeGigabytesUsed;
+		}
+
+		public Integer getTotalSecurityGroupsUsed() {
+			return totalSecurityGroupsUsed;
+		}
+
+		public Integer getMaxTotalFloatingIps() {
+			return maxTotalFloatingIps;
+		}
+
+		public Integer getTotalKeyPairsUsed() {
+			return totalKeyPairsUsed;
+		}
+
+		public Integer getMaxTotalVolumeGigabytes() {
+			return maxTotalVolumeGigabytes;
 		}
 
 		/* (non-Javadoc)
