@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-java-sdk</artifactId>
-    <version>3.2.1-SNAPSHOT</version>
+    <version>3.2.1</version>
   </parent>
   <artifactId>openstack-examples</artifactId>
   <name>OpenStack Examples</name>
@@ -12,32 +12,32 @@
   	<dependency>
   		<groupId>com.woorea</groupId>
   		<artifactId>keystone-client</artifactId>
-  		<version>3.2.1-SNAPSHOT</version>
+  		<version>3.2.1</version>
   	</dependency>
   	<dependency>
   		<groupId>com.woorea</groupId>
   		<artifactId>nova-client</artifactId>
-  		<version>3.2.1-SNAPSHOT</version>
+  		<version>3.2.1</version>
   	</dependency>
   	<dependency>
   		<groupId>com.woorea</groupId>
   		<artifactId>swift-client</artifactId>
-  		<version>3.2.1-SNAPSHOT</version>
+  		<version>3.2.1</version>
   	</dependency>
 	<dependency>
 		<groupId>com.woorea</groupId>
 		<artifactId>quantum-client</artifactId>
-		<version>3.2.1-SNAPSHOT</version>
+		<version>3.2.1</version>
 	</dependency>
 	<dependency>
 		<groupId>com.woorea</groupId>
 		<artifactId>ceilometer-client</artifactId>
-		<version>3.2.1-SNAPSHOT</version>
+		<version>3.2.1</version>
 	</dependency>
 	<dependency>
 		<groupId>com.woorea</groupId>
 		<artifactId>glance-client</artifactId>
-		<version>3.2.1-SNAPSHOT</version>
+		<version>3.2.1</version>
 	</dependency>
   </dependencies>
   <profiles>
