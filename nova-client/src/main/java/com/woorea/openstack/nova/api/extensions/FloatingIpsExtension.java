@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import com.woorea.openstack.base.client.Entity;
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
@@ -28,15 +29,8 @@ public class FloatingIpsExtension {
 
 	public class Allocate extends OpenStackRequest<FloatingIp> {
 		
-		private Map<String, String> body;
-			
-		public Allocate(String pool) {
-			super(CLIENT, HttpMethod.POST, "/os-floating-ips", null, FloatingIp.class);
-			body = new HashMap<String, String>();
-			if(pool != null) {
-				body.put("pool", pool);
-			}
-			entity(body, "application/json");
+		public Allocate(Entity<?> entity) {
+			super(CLIENT, HttpMethod.POST, "/os-floating-ips", entity, FloatingIp.class);
 		}
 
 	}
@@ -54,7 +48,13 @@ public class FloatingIpsExtension {
 	}
 	
 	public Allocate allocate(String pool) {
-		return new Allocate(pool);
+		Entity<?> entity=null;
+		if(pool!=null) {
+			Map<String, String> body = new HashMap<String, String>();
+			body.put("pool", pool);
+			entity=Entity.json(body);
+		}
+		return new Allocate(entity);
 	}
 	
 	public Deallocate deallocate(String id) {
@@ -64,3 +64,4 @@ public class FloatingIpsExtension {
 	
 	
 }
+
