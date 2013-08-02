@@ -225,16 +225,10 @@ public class ServersResource {
 		private Stop action;
 
 		private String id;
-		
-		public StopServer(String id) {
-			this.id = id;
-			this.action = new Stop();
-			
-			method(HttpMethod.POST);
-		    path("/servers/").path(id).path("/action");
-		    header("Accept", "application/json");
-		    json(action);
-		}
+
+        public StopServer(String id) {
+            super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(new Stop()), Void.class);
+        }
 
 	}
 	
