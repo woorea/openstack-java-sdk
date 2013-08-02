@@ -39,6 +39,67 @@ public class ServerForCreate implements Serializable {
 		
 	}
 	
+	public static final class Network implements Serializable { 
+		
+		private String uuid;
+		
+		private String fixed_ip;
+		
+		private String port;
+
+		public Network() {
+		}
+		
+		public Network(String uuid, String fixed_ip, String port) {
+			this.uuid = uuid;
+			this.fixed_ip = fixed_ip;
+			this.port = port;
+		}
+
+		/**
+		 * @return the network uuid
+		 */
+		public String getUuid() {
+			return uuid;
+		}
+
+		/**
+		 * @param uuid the network uuid to set
+		 */
+		public void setUuid(String uuid) {
+			this.uuid = uuid;
+		}
+
+		/**
+		 * @return the IP address to assign to the interface
+		 */
+		public String getFixed_ip() {
+			return fixed_ip;
+		}
+
+		/**
+		 * @param name the IP address to set
+		 */
+		public void setFixed_ip(String fixed_ip) {
+			this.fixed_ip = fixed_ip;
+		}
+
+		/**
+		 * @return the port uuid
+		 */
+		public String getPort() {
+			return port;
+		}
+
+		/**
+		 * @param port the port uuid to set
+		 */
+		public void setPort(String port) {
+			this.port = port;
+		}
+		
+	}
+	
 	private String name;
 	
 	private String adminPass;
@@ -66,6 +127,9 @@ public class ServerForCreate implements Serializable {
 	
 	@JsonProperty("security_groups")
 	private List<SecurityGroup> securityGroups;
+	
+	@JsonProperty("networks")
+	private List<Network> networks;
 	
 	@JsonProperty("user_data")
 	private String userData;
@@ -252,6 +316,16 @@ public class ServerForCreate implements Serializable {
 			securityGroups = new ArrayList<SecurityGroup>();
 		}
 		return securityGroups;
+	}
+
+	/**
+	 * @return the networks
+	 */
+	public List<Network> getNetworks() {
+		if(networks == null) {
+			networks = new ArrayList<Network>();
+		}
+		return networks;
 	}
 	
 	/**
