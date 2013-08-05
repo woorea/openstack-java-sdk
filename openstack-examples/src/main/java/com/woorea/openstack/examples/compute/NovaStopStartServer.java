@@ -24,11 +24,12 @@ public class NovaStopStartServer {
         Servers servers = novaClient.servers().list(true).execute();
         if(servers.getList().size() > 0) {
 
+            // Server has to be in activated state.
             ServersResource.StopServer stopServer = novaClient.servers().stop(servers.getList().get(0).getId());
             stopServer.endpoint(ExamplesConfiguration.NOVA_ENDPOINT);
             stopServer.execute();
 
-            // Wait until server shutdown.
+            // Wait until server shutdown. Or 400 error occurs.
             Thread.sleep(5000);
 
             ServersResource.StartServer startServer = novaClient.servers().start(servers.getList().get(0).getId());
