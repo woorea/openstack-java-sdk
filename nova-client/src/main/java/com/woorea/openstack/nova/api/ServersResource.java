@@ -247,7 +247,7 @@ public class ServersResource {
 		private String id;
 		
 		public GetVncConsoleServer(String id, GetVncConsole action) {
-			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(new GetVncConsole()), VncConsole.class);
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(action), VncConsole.class);
 		}
 
 	}
@@ -260,7 +260,7 @@ public class ServersResource {
 	public class GetConsoleOutputServer extends OpenStackRequest {
 		
 		public GetConsoleOutputServer(String id, GetConsoleOutput action) {
-			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(new GetConsoleOutput()), ConsoleOutput.class);
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(action), ConsoleOutput.class);
 		}
 
 	}
