@@ -19,5 +19,10 @@
   		<artifactId>jackson-jaxrs</artifactId>
   		<version>1.9.4</version>
   	</dependency>
+	<dependency>
+		<groupId>commons-httpclient</groupId>
+		<artifactId>commons-httpclient</artifactId>
+		<version>3.1</version>
+	</dependency>
   </dependencies>
 </project>
