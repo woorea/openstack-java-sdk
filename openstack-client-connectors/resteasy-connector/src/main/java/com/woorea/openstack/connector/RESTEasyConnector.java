@@ -15,7 +15,6 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientRequestFactory;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.plugins.providers.InputStreamProvider;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
@@ -31,7 +30,32 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 	public static ObjectMapper WRAPPED_MAPPER;
 
-	private static ResteasyProviderFactory providerFactory;
+	static class OpenStackProviderFactory extends ResteasyProviderFactory {
+
+		private JacksonJsonProvider jsonProvider;
+		private InputStreamProvider streamProvider;
+
+		public OpenStackProviderFactory() {
+			super();
+
+			addContextResolver(new ContextResolver<ObjectMapper>() {
+				public ObjectMapper getContext(Class<?> type) {
+					return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
+				}
+			});
+
+			jsonProvider = new JacksonJsonProvider();
+			addMessageBodyReader(jsonProvider);
+			addMessageBodyWriter(jsonProvider);
+
+			streamProvider = new InputStreamProvider();
+			addMessageBodyReader(streamProvider);
+			addMessageBodyWriter(streamProvider);
+		}
+
+	}
+
+	private static OpenStackProviderFactory providerFactory;
 
 	static {
 		DEFAULT_MAPPER = new ObjectMapper();
@@ -48,20 +72,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
-		providerFactory = new ResteasyProviderFactory();
-		providerFactory.addContextResolver(new ContextResolver<ObjectMapper>() {
-			public ObjectMapper getContext(Class<?> type) {
-				return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
-			}
-		});
-
-		JacksonJsonProvider jsonProvider = new JacksonJsonProvider();
-		providerFactory.addMessageBodyReader(jsonProvider);
-		providerFactory.addMessageBodyWriter(jsonProvider);
-
-		InputStreamProvider streamProvider = new InputStreamProvider();
-		providerFactory.addMessageBodyReader(streamProvider);
-		providerFactory.addMessageBodyWriter(streamProvider);
+		providerFactory = new OpenStackProviderFactory();
 	}
 
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {

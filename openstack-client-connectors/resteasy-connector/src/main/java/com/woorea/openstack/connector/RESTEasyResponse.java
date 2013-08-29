@@ -28,19 +28,16 @@ public class RESTEasyResponse implements OpenStackResponse {
 
     @Override
     public String header(String name) {
-        @SuppressWarnings("unchecked")
-        MultivaluedMap<String, String> responseHeaders = response.getHeaders();
-        return responseHeaders.getFirst(name);
+        return response.getHeaders().getFirst(name).toString();
     }
 
     @Override
     public Map<String, String> headers() {
         Map<String, String> headers = new HashMap<String, String>();
+        MultivaluedMap<String, Object> responseHeaders = response.getHeaders();
 
-        @SuppressWarnings("unchecked")
-        MultivaluedMap<String, String> responseHeaders = response.getHeaders();
         for (String key : responseHeaders.keySet()) {
-            headers.put(key, responseHeaders.getFirst(key));
+            headers.put(key, responseHeaders.getFirst(key).toString());
         }
 
         return headers;
