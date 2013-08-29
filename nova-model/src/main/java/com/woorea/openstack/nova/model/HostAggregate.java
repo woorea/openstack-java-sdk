@@ -28,7 +28,7 @@ public class HostAggregate implements Serializable {
 	
 	private Boolean deleted;
 	
-	private List<Host> hosts;
+	private List<String> hosts;
 	
 	private Map<String, String> metadata;
 
@@ -84,7 +84,7 @@ public class HostAggregate implements Serializable {
 	/**
 	 * @return the hosts
 	 */
-	public List<Host> getHosts() {
+	public List<String> getHosts() {
 		return hosts;
 	}
 
