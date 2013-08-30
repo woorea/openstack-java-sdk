@@ -5,7 +5,9 @@ import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.quantum.api.NetworksResource;
 import com.woorea.openstack.quantum.api.PortsResource;
+import com.woorea.openstack.quantum.api.RoutersResource;
 import com.woorea.openstack.quantum.api.SubnetsResource;
+
 
 public class Quantum extends OpenStackClient {
 	
@@ -14,12 +16,15 @@ public class Quantum extends OpenStackClient {
 	private final PortsResource PORTS;
 	
 	private final SubnetsResource SUBNETS;
+	private final RoutersResource ROUTERS;
 	
 	public Quantum(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 		NETWORKS = new NetworksResource(this);
 		PORTS = new PortsResource(this);
 		SUBNETS = new SubnetsResource(this);
+		ROUTERS=new RoutersResource(this);	
+		
 	}
 	
 	public Quantum(String endpoint) {
@@ -37,5 +42,10 @@ public class Quantum extends OpenStackClient {
 	public SubnetsResource subnets() {
 		return SUBNETS;
 	}
+	public RoutersResource routers()
+	{
+		return ROUTERS;
+	}
+	
 
 }
