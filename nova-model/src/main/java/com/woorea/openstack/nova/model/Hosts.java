@@ -10,6 +10,8 @@ public class Hosts implements Iterable<Hosts.Host>, Serializable {
 	
 	public static final class Host {
 		
+		private String zone;
+		
 		@JsonProperty("host_name")
 		private String hostName;
 		
@@ -27,6 +29,14 @@ public class Hosts implements Iterable<Hosts.Host>, Serializable {
 		 */
 		public String getService() {
 			return service;
+		}
+		
+		public String getZone() {
+			return zone;
+		}
+
+		public void setZone(String zone) {
+			this.zone = zone;
 		}
 
 		/* (non-Javadoc)
