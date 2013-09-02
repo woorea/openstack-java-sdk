@@ -82,5 +82,21 @@ public class RoutersResource {
 			}	
 			
 		}
+		public Detach deleteInterface(RouterForAddInterface interfaceRouter) {
+			return new Detach(interfaceRouter);
+		}
+
+		public class Detach extends OpenStackRequest<RouterInterface> {
+
+		public Detach(RouterForAddInterface interfaceToAdd) {
+			super(CLIENT, HttpMethod.PUT, buildPath("routers/",
+					interfaceToAdd.getRouterId(), "/remove_router_interface"),
+					Entity.json(interfaceToAdd), RouterInterface.class);
+		}
+
+	}
+
+	
+		
 
 }
