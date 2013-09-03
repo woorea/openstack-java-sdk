@@ -95,6 +95,19 @@ public class RoutersResource {
 		}
 
 	}
+		public SetExternalGateway setExternalGateway(ExternalGatewayForCreate externalGatewayForCreate) {
+		return new SetExternalGateway(externalGatewayForCreate);
+	}
+
+	public class SetExternalGateway extends OpenStackRequest<RouterExternalGateway> {
+
+		public SetExternalGateway(ExternalGatewayForCreate externalGatewayForCreate) {
+			super(CLIENT, HttpMethod.PUT, buildPath("routers/",
+					externalGatewayForCreate.getRouterId()),
+					Entity.json(externalGatewayForCreate), RouterExternalGateway.class);
+		}
+
+	}
 
 	
 		
