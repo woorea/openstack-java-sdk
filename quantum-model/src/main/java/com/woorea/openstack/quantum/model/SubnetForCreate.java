@@ -12,7 +12,7 @@ public class SubnetForCreate implements Serializable{
 	
 	private String name;
 	@JsonProperty("network_id")
-	private String networkid;
+	private String networkId;
 	@JsonProperty("ip_version")
 	private int ipVersion;
 	private String cidr;
@@ -36,14 +36,14 @@ public class SubnetForCreate implements Serializable{
 	 * @return the id
 	 */
 	public String getNetworkId() {
-		return networkid;
+		return networkId;
 	}
 	
 	/**
 	 * @param id the id to set
 	 */
 	public void setNetworkId(String id) {
-		this.networkid = id;
+		this.networkId = id;
 	}
 	
 	
