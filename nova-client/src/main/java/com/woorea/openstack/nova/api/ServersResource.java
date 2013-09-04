@@ -464,6 +464,21 @@ public class ServersResource {
 	public ShowVolumeAttachment showVolumeAttachment(String serverId, String volumeAttachmentId) {
 		return new ShowVolumeAttachment(serverId, volumeAttachmentId);
 	}
+	public Diagnostics getServerDiagnostics(String id) {
+		return new Diagnostics(id);
+	}
+
+	public class Diagnostics extends OpenStackRequest<ServerDiagnostics> {
+
+		public Diagnostics(String id) {
+
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/")
+					.append(id).append("/diagnostics"), null,
+					ServerDiagnostics.class);
+		}
+
+	}
+	
 	
 }
 
