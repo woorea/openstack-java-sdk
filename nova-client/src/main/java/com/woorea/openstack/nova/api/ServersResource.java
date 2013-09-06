@@ -71,9 +71,6 @@ public class ServersResource {
 		}
 
 	}
-	public QuotaDefaults getquotaDefaults(String id) {
-		return new QuotaDefaults(id);
-	}
 	
 	public class Boot extends OpenStackRequest<Server> {
 
@@ -481,16 +478,7 @@ public class ServersResource {
 		}
 
 	}
-		public class QuotaDefaults extends OpenStackRequest<VolumeQuotaDefaults> {
-
-		public QuotaDefaults(String id) {
-
-			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-quota-sets/")
-					.append(id).append("/defaults"), null,
-					VolumeQuotaDefaults.class);
-		}
-
-	}
+		
 	
 	
 }
