@@ -21,6 +21,8 @@ public class ExamplesConfiguration {
 	
 	public static final String CEILOMETER_ENDPOINT = "";
 	
+	public static final String CINDER_ENDPOINT ="http://volume/v1";
+	
 	public static void main(String[] args) {
 		Keystone client = new Keystone(KEYSTONE_ENDPOINT);
 		client.setTokenProvider(new OpenStackSimpleTokenProvider("secret0"));
