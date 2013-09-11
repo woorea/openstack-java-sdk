@@ -478,7 +478,36 @@ public class ServersResource {
 		}
 
 	}
-		
+
+		public LiveMigration liveMigration(LiveMigrationSet liveMigrationSet) {
+		return new LiveMigration(liveMigrationSet);
+	}
+
+	public GetServerForMigration getServerForMigration(
+			LiveMigrationSet liveMigrationSet) {
+		return new GetServerForMigration(liveMigrationSet);
+	}
+
+	public class GetServerForMigration extends OpenStackRequest<Server> {
+
+		public GetServerForMigration(LiveMigrationSet liveMigrationSet) {
+
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/")
+					.append(liveMigrationSet.getServerId()), null, Server.class);
+
+		}
+
+	}
+
+	public class LiveMigration extends OpenStackRequest<Void> {
+		LiveMigration(LiveMigrationSet liveMigrationSet) {
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/")
+					.append(liveMigrationSet.getServerId()).append("/action"),
+					Entity.json(liveMigrationSet), Void.class);
+
+		}
+
+	}	
 	
 	
 }
