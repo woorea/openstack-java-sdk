@@ -39,7 +39,14 @@ public class SecurityGroupsExtension {
 
 	public class Show extends OpenStackRequest<SecurityGroup> {
 
+		/**
+		 * @deprecated
+		 * @param id
+		 */
 		public Show(Integer id) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-security-groups/").append(id).toString(), null, SecurityGroup.class);
+		}
+		public Show(String id) {
 			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-security-groups/").append(id).toString(), null, SecurityGroup.class);
 		}
 
@@ -47,8 +54,16 @@ public class SecurityGroupsExtension {
 
 	public class Delete extends OpenStackRequest<Void> {
 
+		/**
+		 * 
+		 * @param id
+		 * @deprecated
+		 */
 		public Delete(Integer id) {
 			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-groups/").append(String.valueOf(id)).toString(), null, Void.class);
+		}
+		public Delete(String id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-groups/").append(id).toString(), null, Void.class);
 		}
 
 	}
@@ -65,7 +80,16 @@ public class SecurityGroupsExtension {
 
 	public class DeleteRule extends OpenStackRequest<Void> {
 
+		/**
+		 * 
+		 * @param id
+		 * @deprecated
+		 */
 		public DeleteRule(Integer id) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-group-rules/").append(String.valueOf(id)).toString(), null, Void.class);
+		}
+		
+		public DeleteRule(String id) {
 			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-security-group-rules/").append(String.valueOf(id)).toString(), null, Void.class);
 		}
 	}
@@ -84,13 +108,30 @@ public class SecurityGroupsExtension {
 	}
 
 	public Show showSecurityGroup(Integer id) {
+		return new Show(String.valueOf(id));
+	}
+	
+	public Show showSecurityGroup(String id) {
 		return new Show(id);
 	}
-
 	public Delete deleteSecurityGroup(Integer id) {
+		return new Delete(String.valueOf(id));
+	}
+	
+	public Delete deleteSecurityGroup(String id) {
 		return new Delete(id);
 	}
 
+	/**
+	 * 
+	 * @param parentSecurityGroupId
+	 * @param ipProtocol
+	 * @param fromPort
+	 * @param toPort
+	 * @param cidr
+	 * @return
+	 * @deprecated Use {@link #createSecurityGroupRule(String, String, Integer, Integer, String)}
+	 */
 	public CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, String cidr) {
@@ -98,7 +139,16 @@ public class SecurityGroupsExtension {
 				parentSecurityGroupId, ipProtocol, fromPort, toPort, cidr);
 		return new CreateRule(securityGroupRuleForCreate);
 	}
-
+	/**
+	 * 
+	 * @param parentSecurityGroupId
+	 * @param ipProtocol
+	 * @param fromPort
+	 * @param toPort
+	 * @param cidr
+	 * @return
+	 * @deprecated Use {@link #createSecurityGroupRule(String, String, String, Integer, Integer)}
+	 */
 	public CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, Integer sourceGroupId) {
@@ -107,9 +157,28 @@ public class SecurityGroupsExtension {
 				sourceGroupId);
 		return new CreateRule(securityGroupRuleForCreate);
 	}
+	
+	public CreateRule createSecurityGroupRule(
+			String parentSecurityGroupId, String ipProtocol, Integer fromPort,
+			Integer toPort, String cidr) {
+		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
+				parentSecurityGroupId, ipProtocol, fromPort, toPort, cidr);
+		return new CreateRule(securityGroupRuleForCreate);
+	}
 
-	public DeleteRule deleteSecurityGroupRule(Integer id) {
+	public CreateRule createSecurityGroupRule(
+			String parentSecurityGroupId,String sourceGroupId,String ipProtocol, Integer fromPort,
+			Integer toPort) {
+		SecurityGroupRuleForCreate securityGroupRuleForCreate = new SecurityGroupRuleForCreate(
+				parentSecurityGroupId, sourceGroupId,ipProtocol, fromPort, toPort
+				);
+		return new CreateRule(securityGroupRuleForCreate);
+	}
+	public DeleteRule deleteSecurityGroupRule(String id) {
 		return new DeleteRule(id);
+	}
+	public DeleteRule deleteSecurityGroupRule(Integer id) {
+		return new DeleteRule(String.valueOf(id));
 	}
 
 }

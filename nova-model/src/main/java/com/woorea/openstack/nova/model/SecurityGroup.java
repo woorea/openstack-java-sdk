@@ -49,12 +49,12 @@ public class SecurityGroup implements Serializable {
 
 	    }
 
-	    private Integer id;
+	    private String id;
 
 	    private String name;
 
 	    @JsonProperty("parent_group_id")
-	    private Integer parentGroupId;
+	    private String parentGroupId;
 
 	    @JsonProperty("from_port")
 	    private Integer fromPort;
@@ -73,7 +73,7 @@ public class SecurityGroup implements Serializable {
 		/**
 		 * @return the id
 		 */
-		public Integer getId() {
+		public String getId() {
 			return id;
 		}
 
@@ -87,7 +87,7 @@ public class SecurityGroup implements Serializable {
 		/**
 		 * @return the parentGroupId
 		 */
-		public Integer getParentGroupId() {
+		public String getParentGroupId() {
 			return parentGroupId;
 		}
 
@@ -139,7 +139,7 @@ public class SecurityGroup implements Serializable {
 		
 	}
 
-	private Integer id;
+	private String id;
 	
 	private String name;
 	
@@ -155,7 +155,7 @@ public class SecurityGroup implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
