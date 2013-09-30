@@ -1,5 +1,6 @@
 package com.woorea.openstack.connector;
 
+import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import com.woorea.openstack.base.client.OpenStackResponse;
 
@@ -10,9 +11,12 @@ import java.util.Map;
 
 public class RESTEasyResponse implements OpenStackResponse {
 
+    private ClientRequest client;
+
     private ClientResponse response;
 
-    public RESTEasyResponse(ClientResponse response) {
+    public RESTEasyResponse(ClientRequest client, ClientResponse response) {
+        this.client = client;
         this.response = response;
     }
 
@@ -23,7 +27,7 @@ public class RESTEasyResponse implements OpenStackResponse {
 
     @Override
     public InputStream getInputStream() {
-		return (InputStream) response.getEntity(InputStream.class);
+		return new RESTEasyInputStream((InputStream) response.getEntity(InputStream.class), client.getExecutor());
     }
 
     @Override
