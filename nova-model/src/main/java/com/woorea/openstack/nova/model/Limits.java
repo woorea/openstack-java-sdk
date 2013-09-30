@@ -120,7 +120,7 @@ public class Limits implements Serializable {
 		
 	}
 	
-	private static final class AbsoluteLimit {
+	public static final class AbsoluteLimit {
 	
 		private Integer maxServerMeta;
 		
