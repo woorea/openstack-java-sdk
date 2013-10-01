@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-client-connectors</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>jersey-connector</artifactId>
   <name>OpenStack Jersey Connector</name>

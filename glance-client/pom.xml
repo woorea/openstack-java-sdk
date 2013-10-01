@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-java-sdk</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>glance-client</artifactId>
   <name>OpenStack Glance Client</name>
@@ -12,13 +12,13 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.0.1</version>
+			<version>3.0.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>glance-model</artifactId>
-			<version>3.0.1</version>
+			<version>3.0.2-SNAPSHOT</version>
 		</dependency>
   </dependencies>
 </project>
