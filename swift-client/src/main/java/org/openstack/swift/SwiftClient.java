@@ -12,11 +12,12 @@ public class SwiftClient extends AbstractOpenStackClient {
 	}
 
 	public <R> R execute(SwiftCommand<R> command) {
-		WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
+		final WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
 		if(token != null) {
-			endpoint.register(tokenFilter);
+			return command.execute(endpoint, token);
+		} else {
+			return command.execute(endpoint);
 		}
-		return command.execute(endpoint);
 	}
 
 }

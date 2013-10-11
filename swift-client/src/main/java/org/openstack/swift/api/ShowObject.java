@@ -1,5 +1,6 @@
 package org.openstack.swift.api;
 
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -19,7 +20,18 @@ public class ShowObject implements SwiftCommand<Response> {
 	
 	@Override
 	public Response execute(WebTarget target) {
-		return target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).head();
+		return execute(target, null);
+	}
+
+	@Override
+	public Response execute(WebTarget target, String token) {
+		Invocation.Builder invocationBuilder = target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON);
+        
+        if(token != null) {
+        	invocationBuilder.header(REQ_HEADER_AUTH_TOKEN, token);
+        }
+        
+        return invocationBuilder.head();
 	}
 
 }
