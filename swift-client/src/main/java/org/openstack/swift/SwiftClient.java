@@ -7,21 +7,17 @@ import org.openstack.common.client.AbstractOpenStackClient;
 
 public class SwiftClient extends AbstractOpenStackClient {
 	
-	private WebTarget endpoint = null;
-	
 	public SwiftClient(String endpointURL, String token) {
 		super(endpointURL, token);
 	}
 
 	public <R> R execute(SwiftCommand<R> command) {
-		if(endpoint == null) {
-			endpoint = OpenStack.CLIENT.target(endpointURL);
-			if(token != null) {
-				endpoint.register(tokenFilter);
-			}
+		final WebTarget endpoint = OpenStack.CLIENT.target(endpointURL);
+		if(token != null) {
+			return command.execute(endpoint, token);
+		} else {
+			return command.execute(endpoint);
 		}
-		
-		return command.execute(endpoint);
 	}
 
 }

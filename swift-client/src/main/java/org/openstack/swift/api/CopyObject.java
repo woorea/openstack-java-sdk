@@ -39,6 +39,11 @@ public class CopyObject implements SwiftCommand<Response>{
 	
 	@Override
 	public Response execute(WebTarget target) {
+		return execute(target, null);
+	}
+
+	@Override
+	public Response execute(WebTarget target, String token) {
         // set up the value for the X-Copy-From header
         StringBuilder sb = new StringBuilder(2
                                              + sourceContainerName.length()
@@ -50,8 +55,10 @@ public class CopyObject implements SwiftCommand<Response>{
 		Invocation.Builder invocationBuilder = target.path(destContainerName).path(destObjectName).request();
         
         invocationBuilder.header(REQ_HEADER_COPY_FROM, source);
+        if(token != null) {
+        	invocationBuilder.header(REQ_HEADER_AUTH_TOKEN, token);
+        }
 
 		return invocationBuilder.put(Entity.entity("", mimeType));
 	}
-
 }
