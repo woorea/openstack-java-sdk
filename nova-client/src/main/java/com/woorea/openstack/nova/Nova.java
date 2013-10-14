@@ -15,6 +15,7 @@ import com.woorea.openstack.nova.api.extensions.SecurityGroupsExtension;
 import com.woorea.openstack.nova.api.extensions.SnapshotsExtension;
 import com.woorea.openstack.nova.api.extensions.VolumesExtension;
 import com.woorea.openstack.nova.api.extensions.HostsExtension;
+import com.woorea.openstack.nova.api.extensions.AvailabilityZoneInfoExtension;
 
 public class Nova extends OpenStackClient {
 	
@@ -42,6 +43,8 @@ public class Nova extends OpenStackClient {
 	
 	private final HostsExtension HOSTS;
 
+	private final AvailabilityZoneInfoExtension AVAILABILITYZONE;
+
 	public Nova(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 		EXTENSIONS = new ExtensionsResource(this);
@@ -56,6 +59,7 @@ public class Nova extends OpenStackClient {
 		AGGREGATES = new AggregatesExtension(this);
 		QUOTA_SETS = new QuotaSetsResource(this);
 		HOSTS = new HostsExtension(this);
+		AVAILABILITYZONE = new AvailabilityZoneInfoExtension(this);
 	}
 	
 	public Nova(String endpoint) {
@@ -108,6 +112,10 @@ public class Nova extends OpenStackClient {
 
 	public HostsExtension hosts() {
 		return HOSTS;
+	}
+
+	public AvailabilityZoneInfoExtension availabilityZoneInfo() {
+		return AVAILABILITYZONE;
 	}
 
 }
