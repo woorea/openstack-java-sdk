@@ -21,7 +21,7 @@ public class ExtensionsResource {
 	public class List extends OpenStackRequest<Extensions> {
 
 	    public List(boolean detail) {
-	    	super(CLIENT, HttpMethod.GET, detail ? "extensions/detail" : "extensions", null, Extensions.class);
+	    	super(CLIENT, HttpMethod.GET, detail ? "/extensions/detail" : "/extensions", null, Extensions.class);
 	    }
 	    
 	 }
