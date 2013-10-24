@@ -73,6 +73,7 @@ public class OpenStack {
 			DEFAULT_MAPPER.setSerializationInclusion(Inclusion.NON_NULL);
 			DEFAULT_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
 			DEFAULT_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+			DEFAULT_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
 			
 			WRAPPED_MAPPER = new ObjectMapper();
 			
@@ -81,6 +82,7 @@ public class OpenStack {
 			WRAPPED_MAPPER.enable(SerializationConfig.Feature.WRAP_ROOT_VALUE);
 			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+			WRAPPED_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
 			
 			CLIENT.register(new JacksonFeature()).register(new ContextResolver<ObjectMapper>() {
 
