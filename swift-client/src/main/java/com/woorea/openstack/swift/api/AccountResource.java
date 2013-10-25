@@ -11,7 +11,7 @@ public class AccountResource {
 		CLIENT = client;
 	}
 
-	public class ShowAccount extends OpenStackRequest {
+	public class ShowAccount extends OpenStackRequest<Void> {
 
 		public ShowAccount() {
 //			return target.request(MediaType.APPLICATION_JSON).head();

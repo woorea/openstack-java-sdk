@@ -2,7 +2,6 @@ package com.woorea.openstack.nova.api.extensions;
 
 import java.util.Map;
 
-
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
@@ -91,7 +90,7 @@ public class AggregatesExtension {
 
 	}
 
-	public static class AddHost extends OpenStackRequest {
+	public static class AddHost extends OpenStackRequest<Void> {
 
 		private String aggregateId;
 
