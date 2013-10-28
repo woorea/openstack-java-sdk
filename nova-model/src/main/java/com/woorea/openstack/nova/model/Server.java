@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonAnySetter;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
@@ -227,6 +228,15 @@ public class Server implements Serializable {
 	
 	@JsonProperty("OS-EXT-AZ:availability_zone")
 	private String availabilityZone;
+
+    @JsonProperty("OS-SRV-USG:launched_at")
+    private String launchedAt;
+
+    @JsonProperty("OS-SRV-USG:terminated_at")
+    private String terminatedAt;
+
+    @JsonProperty("os-extended-volumes:volumes_attached")
+    private List<String> osExtendedVolumesAttached;
 	
 	private String uuid;
 	
@@ -442,7 +452,28 @@ public class Server implements Serializable {
 		return availabilityZone;
 	}
 
-	/**
+    /**
+     * @return the launchedAt
+     */
+    public String getLaunchedAt() {
+        return launchedAt;
+    }
+
+    /**
+     * @return the terminatedAt
+     */
+    public String getTerminatedAt() {
+        return terminatedAt;
+    }
+
+    /**
+     * @return the osExtendedVolumesAttached
+     */
+    public List<String> getOsExtendedVolumesAttached() {
+        return osExtendedVolumesAttached;
+    }
+
+    /**
 	 * @return the uuid
 	 */
 	public String getUuid() {
@@ -474,7 +505,9 @@ public class Server implements Serializable {
 				+ vmState + ", host=" + host + ", instanceName=" + instanceName
 				+ ", hypervisorHostname=" + hypervisorHostname
 				+ ", diskConfig=" + diskConfig + ", availabilityZone="
-				+ availabilityZone + ", uuid=" + uuid + ", adminPass="
+				+ availabilityZone + ", launchedAt=" + launchedAt + ", terminatedAt="
+                + ", " + "osExtendedVolumesAttached=" + osExtendedVolumesAttached
+                + ", uuid=" + uuid + ", adminPass="
 				+ adminPass + "]";
 	}
 
