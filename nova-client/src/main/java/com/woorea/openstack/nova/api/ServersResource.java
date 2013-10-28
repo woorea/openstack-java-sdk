@@ -58,6 +58,14 @@ public class ServersResource {
 	public ShowMetadata showMetadata(String id) {
 		return new ShowMetadata(id);
 	}
+	
+	public CreateOrUpdateMetadata createOrUpdateMetadata(String id,Metadata metadata) {
+		return new CreateOrUpdateMetadata(id,metadata);
+	}
+	
+	public ReplaceMetadata replaceMetadata(String id,Metadata metadata) {
+		return new ReplaceMetadata(id,metadata);
+	}
 
 
 	public Delete delete(String id) {
@@ -98,7 +106,23 @@ public class ServersResource {
 		}
 
 	}
+	
+	public class CreateOrUpdateMetadata extends OpenStackRequest<Metadata> {
 
+		public CreateOrUpdateMetadata(String id,Metadata metadata) {
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/metadata"), Entity.json(metadata), Metadata.class);
+		}
+
+	}
+	public class ReplaceMetadata extends OpenStackRequest<Metadata> {
+
+		public ReplaceMetadata(String id,Metadata metadata) {
+			super(CLIENT, HttpMethod.PUT, new StringBuilder("/servers/").append(id).append("/metadata"), Entity.json(metadata), Metadata.class);
+		}
+
+	}
+	
+	
 	public class Delete extends OpenStackRequest<Void> {
 
 		public Delete(String id) {

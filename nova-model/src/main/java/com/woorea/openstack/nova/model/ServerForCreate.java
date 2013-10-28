@@ -112,8 +112,10 @@ public class ServerForCreate implements Serializable {
 	
 	private String accessIPv6;
 	
+	@JsonProperty("min_count")
 	private Integer min;
 	
+	@JsonProperty("max_count")
 	private Integer max;
 	
 	private String diskConfig;
