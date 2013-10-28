@@ -7,6 +7,7 @@ import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.nova.model.Metadata;
 import com.woorea.openstack.nova.model.Snapshot;
+import com.woorea.openstack.nova.model.SnapshotForCreate;
 import com.woorea.openstack.nova.model.Snapshots;
 
 public class SnapshotsExtension {
@@ -21,8 +22,8 @@ public class SnapshotsExtension {
 		return new List(detail);
 	}
 	
-	public Create create(Snapshot snapshot) {
-		return new Create(snapshot);
+	public Create create(SnapshotForCreate snapshotForCreate) {
+		return new Create(snapshotForCreate);
 	}
 	
 	public Show show(String id) {
@@ -46,13 +47,13 @@ public class SnapshotsExtension {
 
 	}
 	
-	public class Create extends OpenStackRequest<Snapshot> {
+	public class Create extends OpenStackRequest<SnapshotForCreate> {
 
-		private Snapshot snapshot;
+		private SnapshotForCreate snapshotForCreate;
 		
-		public Create(Snapshot snapshot) {
-			super(CLIENT, HttpMethod.POST, "/os-snapshots", Entity.json(snapshot), Snapshot.class);
-			this.snapshot = snapshot;
+		public Create(SnapshotForCreate snapshotForCreate) {
+			super(CLIENT, HttpMethod.POST, "/os-snapshots", Entity.json(snapshotForCreate), SnapshotForCreate.class);
+			this.snapshotForCreate = snapshotForCreate;
 		}
 		
 	}
