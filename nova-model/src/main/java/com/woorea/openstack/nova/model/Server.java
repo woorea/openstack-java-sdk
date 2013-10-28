@@ -12,7 +12,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("server")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Server implements Serializable {
 	
 	public static final class Addresses implements Serializable {
