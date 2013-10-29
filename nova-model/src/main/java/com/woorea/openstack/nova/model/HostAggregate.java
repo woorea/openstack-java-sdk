@@ -7,7 +7,7 @@ import java.util.Map;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
-@JsonRootName("aggreagate")
+@JsonRootName("aggregate")
 public class HostAggregate implements Serializable {
 	
 	private String id;
