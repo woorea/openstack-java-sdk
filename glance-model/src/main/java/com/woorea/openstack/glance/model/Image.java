@@ -17,6 +17,7 @@ public class Image implements Serializable {
 	
 	private String name;
 	
+	
 	@JsonProperty("disk_format")
 	private String diskFormat;
 	
@@ -54,6 +55,18 @@ public class Image implements Serializable {
 	
 	@JsonProperty("protected")
 	private boolean isProtected;
+	
+	@JsonProperty("location")
+	private String location;
+	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	
 	private Map<String, Object> properties;
 
