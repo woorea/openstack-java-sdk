@@ -206,6 +206,7 @@ public class ImagesResource {
 		headers.put("X-Image-Meta-Checksum", image.getChecksum());
 		headers.put("X-Image-Meta-Is_public", String.valueOf(image.isPublic()));
 		headers.put("X-Image-Meta-Owner", image.getOwner());
+		headers.put("X-Image-Meta-Location", image.getLocation());
 
 		for(String key : image.getProperties().keySet()) {
 			image.getProperties().put("x-image-meta-property-" + key, image.getProperties().get(key));
@@ -233,6 +234,7 @@ public class ImagesResource {
 		image.setMinRam(asInteger(headers.get("X-Image-Meta-Min_ram")));
 		image.setMinDisk(asInteger(headers.get("X-Image-Meta-Min_disk")));
 		image.setOwner(headers.get("X-Image-Meta-Owner"));
+		image.setLocation(headers.get("X-Image-Meta-Location"));
 		for(String key : headers.keySet()) {
 			if(key.startsWith("x-image-meta-property-")) {
 				image.getProperties().put(key.substring(22), headers.get(key));
