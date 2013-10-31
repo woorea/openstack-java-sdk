@@ -125,7 +125,7 @@ public class ImagesResource {
 	}
 	
 	public class Upload extends OpenStackRequest<Image> {
-		
+		l
 		public Upload(String id, ImageUpload imageUpload) {
 			super(CLIENT, HttpMethod.PUT, new StringBuilder("/images/").append(id).toString(),
 					Entity.stream(imageUpload.getInputStream()), Image.class);
@@ -234,6 +234,7 @@ public class ImagesResource {
 		image.setMinRam(asInteger(headers.get("X-Image-Meta-Min_ram")));
 		image.setMinDisk(asInteger(headers.get("X-Image-Meta-Min_disk")));
 		image.setOwner(headers.get("X-Image-Meta-Owner"));
+		//setting this location option will not copy the image to glance store
 		image.setLocation(headers.get("X-Image-Meta-Location"));
 		for(String key : headers.keySet()) {
 			if(key.startsWith("x-image-meta-property-")) {
