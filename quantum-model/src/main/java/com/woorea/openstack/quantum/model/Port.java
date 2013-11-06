@@ -74,7 +74,8 @@ public class Port implements Serializable {
 	private String status;
 	@JsonProperty("tenant_id")
 	private String tenantId;
-	
+	@JsonProperty("security_groups")
+	private List<String> securityGroups;
 	
 	
 	/**
@@ -255,14 +256,27 @@ public class Port implements Serializable {
 		this.tenantId = tenantId;
 	}
 
+    /**
+     * @return the associated security group IDs
+     */
+    public List<String> getSecurityGroups() {
+        return securityGroups;
+    }
 
+    /**
+     * @param securityGroups IDs of security groups to associate to the port
+     */
+    public void setSecurityGroups(List<String> securityGroups) {
+        this.securityGroups = securityGroups;
+    }
 
-	@Override
+    @Override
 	public String toString() {
 		return "Port [id=" + id + ", name=" + name + ", mac_address="
 				+ macAddress + ", admin_state_up=" + adminStateUp + ", device_id=" + deviceId
 				+ ", device_owner=" + deviceOwner + ", fixed_ips=" + list
 				+ ", network_id=" + networkId + ", status=" + status
-				+ ", tenant_id=" + tenantId  + "]";
+				+ ", tenant_id=" + tenantId
+				+ ", securityGroups=" + securityGroups + "]";
 	}
 }
