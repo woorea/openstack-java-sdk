@@ -28,7 +28,9 @@ public class RESTEasyInputStream extends FilterInputStream {
 		try {
 			super.close();
 		} catch (SocketException e) {
-			// We expect this to fail because the socket is closed
+			// We expect this exception because the socket is closed
+		} catch (IllegalStateException e) {
+			// We expect this exception because the socket is closed (httpclient 4.2)
 		}
 	}
 
