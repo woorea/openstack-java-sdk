@@ -1,40 +1,46 @@
 package com.woorea.openstack.quantum.model;
 
 import java.util.List;
+import java.io.Serializable;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
-@JsonRootName("router")
-public class Router {
 
-	/**
-	 * @param args
-	 */
+@JsonRootName("router")
+public class Router implements Serializable {
+
 	@JsonProperty("status")
-	String status;
+	private String status;
+
 	@JsonProperty("external_gateway_info")
-	String externalGatewayInfo;
+	private GatewayInfo externalGatewayInfo;
+
 	@JsonProperty("name")
-	String name;
+	private String name;
+
 	@JsonProperty("admin_state_up")
-	String admin_state_up;
+	private String admin_state_up;
+
 	@JsonProperty("tenant_id")
-	String tenantId;
+	private String tenantId;
+
 	@JsonProperty("id")
-	String id;
+	private String id;
+
 	@JsonProperty("routes")
-	private List<String> routers;
+	private List<HostRoute> routes;
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<String> getRouters() {
-		return routers;
+	public List<HostRoute> getRoutes() {
+		return routes;
 	}
-	public void setRouters(List<String> routers) {
-		this.routers = routers;
+	public void setRoutes(List<HostRoute> routes) {
+		this.routes = routes;
 	}
 	public String getAdmin_state_up() {
 		return admin_state_up;
@@ -48,10 +54,10 @@ public class Router {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getExternalGatewayInfo() {
+	public GatewayInfo getExternalGatewayInfo() {
 		return externalGatewayInfo;
 	}
-	public void setExternalGatewayInfo(String externalGatewayInfo) {
+	public void setExternalGatewayInfo(GatewayInfo externalGatewayInfo) {
 		this.externalGatewayInfo = externalGatewayInfo;
 	}
 	public String getTenantId() {
