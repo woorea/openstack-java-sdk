@@ -20,16 +20,16 @@ public class PortsResource {
 		return new List();
 	}
 
-	public Create create(Port net){
-		return new Create(net);
+	public Create create(Port port){
+		return new Create(port);
 	}
 
-	public Delete delete(String netId){
-		return new Delete(netId);
+	public Delete delete(String portId){
+		return new Delete(portId);
 	}
 
-	public Show show(String netId){
-		return new Show(netId);
+	public Show show(String portId){
+		return new Show(portId);
 	}
 
 	public class List extends OpenStackRequest<Ports> {
