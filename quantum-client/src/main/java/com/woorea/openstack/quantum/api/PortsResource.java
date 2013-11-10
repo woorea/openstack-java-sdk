@@ -24,6 +24,10 @@ public class PortsResource {
 		return new Create(port);
 	}
 
+	public Update update(Port port){
+	    return new Update(port);
+	}
+
 	public Delete delete(String portId){
 		return new Delete(portId);
 	}
@@ -56,6 +60,13 @@ public class PortsResource {
 		public Create(Port port){
 		    super(CLIENT, HttpMethod.POST, "ports", Entity.json(port), Port.class);
 		}
+	}
+
+	public class Update extends OpenStackRequest<Port> {
+
+	    public Update(Port port){
+	        super(CLIENT, HttpMethod.PUT, buildPath("ports/", port.getId()), Entity.json(port), Port.class);
+	    }
 	}
 
 	public class Show extends OpenStackRequest<Port> {
