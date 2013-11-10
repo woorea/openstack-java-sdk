@@ -3,6 +3,7 @@ package com.woorea.openstack.quantum.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -58,7 +59,7 @@ public class Port implements Serializable {
 	}
 	
 	@JsonProperty("admin_state_up")
-	private String adminStateUp;
+	private Boolean adminStateUp;
 	@JsonProperty("device_id")
 	private String deviceId;
 	@JsonProperty("device_owner")
@@ -81,7 +82,7 @@ public class Port implements Serializable {
 	/**
 	 * @return the adminStateUp
 	 */
-	public String getAdminStateUp() {
+	public Boolean getAdminStateUp() {
 		return adminStateUp;
 	}
 
@@ -90,10 +91,10 @@ public class Port implements Serializable {
 	/**
 	 * @param adminStateUp the adminStateUp to set
 	 */
-	public void setAdminStateUp(String adminStateUp) {
+	public void setAdminStateUp(Boolean adminStateUp) {
 		this.adminStateUp = adminStateUp;
 	}
-
+    
 
 
 	/**
@@ -153,6 +154,7 @@ public class Port implements Serializable {
 	/**
 	 * @return the id
 	 */
+	@JsonIgnore
 	public String getId() {
 		return id;
 	}
@@ -162,6 +164,7 @@ public class Port implements Serializable {
 	/**
 	 * @param id the id to set
 	 */
+	@JsonProperty
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -225,6 +228,7 @@ public class Port implements Serializable {
 	/**
 	 * @return the status
 	 */
+	@JsonIgnore
 	public String getStatus() {
 		return status;
 	}
@@ -234,6 +238,7 @@ public class Port implements Serializable {
 	/**
 	 * @param status the status to set
 	 */
+	@JsonProperty
 	public void setStatus(String status) {
 		this.status = status;
 	}
