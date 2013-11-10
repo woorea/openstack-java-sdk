@@ -6,7 +6,6 @@ import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.quantum.model.Port;
-import com.woorea.openstack.quantum.model.PortForCreate;
 import com.woorea.openstack.quantum.model.Ports;
 
 public class PortsResource {
@@ -21,7 +20,7 @@ public class PortsResource {
 		return new List();
 	}
 
-	public Create create(PortForCreate net){
+	public Create create(Port net){
 		return new Create(net);
 	}
 
@@ -54,7 +53,7 @@ public class PortsResource {
 
 	public class Create extends OpenStackRequest<Port> {
 
-		public Create(PortForCreate port){
+		public Create(Port port){
 		    super(CLIENT, HttpMethod.POST, "ports", Entity.json(port), Port.class);
 		}
 	}

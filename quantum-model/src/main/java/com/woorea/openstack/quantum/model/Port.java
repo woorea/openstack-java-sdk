@@ -97,6 +97,7 @@ public class Port implements Serializable {
     
 
 
+
 	/**
 	 * @return the deviceId
 	 */
