@@ -18,6 +18,8 @@ public class SubnetForCreate implements Serializable{
 	private String cidr;
 	@JsonProperty("allocation_pools")
 	private List<Pool> list;
+    @JsonProperty("tenant_id")
+    private String tenantId;
 	
 	/**
 	 * @param name the name to set
@@ -89,7 +91,17 @@ public class SubnetForCreate implements Serializable{
 		this.list = list;
 	}
 
-	
-	
-	
+    /**
+     * @return the tenantId
+     */
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    /**
+     * @param tenantId the tenantId to set
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
