@@ -12,12 +12,14 @@ public class SubnetForCreate implements Serializable{
 	
 	private String name;
 	@JsonProperty("network_id")
-	private String networkid;
+	private String networkId;
 	@JsonProperty("ip_version")
 	private int ipVersion;
 	private String cidr;
 	@JsonProperty("allocation_pools")
 	private List<Pool> list;
+    @JsonProperty("tenant_id")
+    private String tenantId;
 	
 	/**
 	 * @param name the name to set
@@ -36,14 +38,14 @@ public class SubnetForCreate implements Serializable{
 	 * @return the id
 	 */
 	public String getNetworkId() {
-		return networkid;
+		return networkId;
 	}
 	
 	/**
 	 * @param id the id to set
 	 */
 	public void setNetworkId(String id) {
-		this.networkid = id;
+		this.networkId = id;
 	}
 	
 	
@@ -89,7 +91,17 @@ public class SubnetForCreate implements Serializable{
 		this.list = list;
 	}
 
-	
-	
-	
+    /**
+     * @return the tenantId
+     */
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    /**
+     * @param tenantId the tenantId to set
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
