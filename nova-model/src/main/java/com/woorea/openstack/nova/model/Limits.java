@@ -9,24 +9,24 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("limits")
 public class Limits implements Serializable {
-	
+
 	public static final class RateLimit implements Serializable {
-		
+
 		public static final class LimitEntry implements Serializable {
-		
+
 			@JsonProperty("next-available")
 			private Calendar nextAvailable;
-			
+
 			private String unit;
-			
+
 			private String verb;
-			
+
 			private Integer remaining;
-			
+
 			private Integer available;
 
 			private Integer value;
-	
+
 			/**
 			 * @return the nextAvailable
 			 */
@@ -68,7 +68,10 @@ public class Limits implements Serializable {
 			public Integer getValue() {
 				return value;
 			}
-			/* (non-Javadoc)
+
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.lang.Object#toString()
 			 */
 			@Override
@@ -77,15 +80,13 @@ public class Limits implements Serializable {
 						+ unit + ", verb=" + verb + ", remaining=" + remaining
 						+ ", available=" + available + ", value=" + value + "]";
 			}
-			
-			
-			
+
 		}
-		
+
 		private String regex;
-		
+
 		private String uri;
-		
+
 		private List<LimitEntry> limit;
 
 		/**
@@ -109,7 +110,9 @@ public class Limits implements Serializable {
 			return limit;
 		}
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Object#toString()
 		 */
 		@Override
@@ -117,50 +120,49 @@ public class Limits implements Serializable {
 			return "RateLimit [regex=" + regex + ", uri=" + uri + ", limit="
 					+ limit + "]";
 		}
-		
+
 	}
-	
+
 	public static final class AbsoluteLimit {
-	
+
 		private Integer maxServerMeta;
-		
+		private Integer serverMetaUsed;
+
 		private Integer maxPersonality;
-		
+		private Integer personalityUsed;
+
 		private Integer maxImageMeta;
-		
+		private Integer imageMetaUsed;
+
 		private Integer maxPersonalitySize;
-		
+		private Integer personalitySizeUsed;
+
 		private Integer maxTotalCores;
-		
-		private Integer maxTotalInstances;
-		
-		private Integer maxTotalRAMSize;
-
-		private Integer totalVolumesUsed;
-
-		private Integer maxSecurityGroupRules;
-
-		private Integer maxTotalKeypairs;
-
 		private Integer totalCoresUsed;
 
-		private Integer maxTotalVolumes;
-
-		private Integer totalRAMUsed;
-
+		private Integer maxTotalInstances;
 		private Integer totalInstancesUsed;
 
+		private Integer maxTotalRAMSize;
+		private Integer totalRAMUsed;
+
+		private Integer maxSecurityGroupRules;
+		private Integer securityGroupRulesUsed;
+
+		private Integer maxTotalKeypairs;
+		private Integer totalKeyPairsUsed;
+
+		private Integer maxTotalVolumes;
+		private Integer totalVolumesUsed;
+
 		private Integer maxSecurityGroups;
-
-		private Integer totalVolumeGigabytesUsed;
-
 		private Integer totalSecurityGroupsUsed;
 
 		private Integer maxTotalFloatingIps;
-
-		private Integer totalKeyPairsUsed;
+		private Integer totalFloatingIpsUsed;
 
 		private Integer maxTotalVolumeGigabytes;
+		private Integer totalVolumeGigabytesUsed;
 
 		/**
 		 * @return the maxServerMeta
@@ -211,59 +213,142 @@ public class Limits implements Serializable {
 			return maxTotalRAMSize;
 		}
 
+		/**
+		 * @return the totalVolumesUsed
+		 */
 		public Integer getTotalVolumesUsed() {
 			return totalVolumesUsed;
 		}
 
+		/**
+		 * @return the maxSecurityGroupRules
+		 */
 		public Integer getMaxSecurityGroupRules() {
 			return maxSecurityGroupRules;
 		}
-
+		
+		/**
+		 * @return the maxTotalKeypairs
+		 */
 		public Integer getMaxTotalKeypairs() {
 			return maxTotalKeypairs;
 		}
 
+		/**
+		 * @return the totalCoresUsed
+		 */
 		public Integer getTotalCoresUsed() {
 			return totalCoresUsed;
 		}
 
+		/**
+		 * @return the maxTotalVolumes
+		 */
 		public Integer getMaxTotalVolumes() {
 			return maxTotalVolumes;
 		}
 
+		/**
+		 * @return the totalRAMUsed
+		 */
 		public Integer getTotalRAMUsed() {
 			return totalRAMUsed;
 		}
 
+		/**
+		 * @return the totalInstancesUsed
+		 */
 		public Integer getTotalInstancesUsed() {
 			return totalInstancesUsed;
 		}
 
+		/**
+		 * @return the maxSecurityGroups
+		 */
 		public Integer getMaxSecurityGroups() {
 			return maxSecurityGroups;
 		}
-
+		
+		/**
+		 * @return the totalVolumeGigabytesUsed
+		 */
 		public Integer getTotalVolumeGigabytesUsed() {
 			return totalVolumeGigabytesUsed;
 		}
 
+		/**
+		 * @return the totalSecurityGroupsUsed
+		 */
 		public Integer getTotalSecurityGroupsUsed() {
 			return totalSecurityGroupsUsed;
 		}
 
+		/**
+		 * @return the maxTotalFloatingIps
+		 */
 		public Integer getMaxTotalFloatingIps() {
 			return maxTotalFloatingIps;
 		}
 
+		/**
+		 * @return the totalKeyPairsUsed
+		 */
 		public Integer getTotalKeyPairsUsed() {
 			return totalKeyPairsUsed;
 		}
 
+		/**
+		 * @return the maxTotalVolumeGigabytes
+		 */
 		public Integer getMaxTotalVolumeGigabytes() {
 			return maxTotalVolumeGigabytes;
 		}
 
-		/* (non-Javadoc)
+		/**
+		 * @return the serverMetaUsed
+		 */
+		public Integer getServerMetaUsed() {
+			return serverMetaUsed;
+		}
+
+		/**
+		 * @return the personalityUsed
+		 */
+		public Integer getPersonalityUsed() {
+			return personalityUsed;
+		}
+
+		/**
+		 * @return the imageMetaUsed
+		 */
+		public Integer getImageMetaUsed() {
+			return imageMetaUsed;
+		}
+
+		/**
+		 * @return the personalitySizeUsed
+		 */
+		public Integer getPersonalitySizeUsed() {
+			return personalitySizeUsed;
+		}
+
+		/**
+		 * @return the securityGroupRulesUsed
+		 */
+		public Integer getSecurityGroupRulesUsed() {
+			return securityGroupRulesUsed;
+		}
+
+		/**
+		 * @return the totalFloatingIpsUsed
+		 */
+		public Integer getTotalFloatingIpsUsed() {
+			return totalFloatingIpsUsed;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Object#toString()
 		 */
 		@Override
@@ -275,11 +360,11 @@ public class Limits implements Serializable {
 					+ ", maxTotalInstances=" + maxTotalInstances
 					+ ", maxTotalRAMSize=" + maxTotalRAMSize + "]";
 		}
-		
+
 	}
-	
+
 	private List<RateLimit> rate;
-	
+
 	private AbsoluteLimit absolute;
 
 	/**
@@ -296,7 +381,9 @@ public class Limits implements Serializable {
 		return absolute;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
