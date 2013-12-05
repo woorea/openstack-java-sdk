@@ -10,6 +10,33 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("image")
 public class Image implements Serializable {
+	
+	public static final class Server implements Serializable {
+		
+		private String id;
+		
+		private List<Link> links;
+		
+		/**
+		 * @return the id
+		 */
+		public String getId() {
+			return id;
+		}
+		
+		/**
+		 * @return the links
+		 */
+		public List<Link> getLinks() {
+			return links;
+		}
+		
+		@Override
+		public String toString() {
+			return "Server [id=" + id + ", links=" + links + "]";
+		}
+		
+	}
 
 	private String id;
 	
@@ -31,6 +58,8 @@ public class Image implements Serializable {
 	private Long size;
 	
 	private Map<String, String> metadata;
+	
+	private Server server;
 		
 	private List<Link> links;
 
@@ -166,6 +195,13 @@ public class Image implements Serializable {
 	public void setMetadata(Map<String, String> metadata) {
 		this.metadata = metadata;
 	}
+	
+	/**
+	 * @return the server
+	 */
+	public Server getServer() {
+		return server;
+	}
 
 	/**
 	 * @return the links
@@ -190,7 +226,7 @@ public class Image implements Serializable {
 				+ ", progress=" + progress + ", minRam=" + minRam
 				+ ", minDisk=" + minDisk + ", created=" + (created != null ? created.getTime() : null)
 				+ ", updated=" + (updated != null ? updated.getTime() : null) + ", size=" + size + ", metadata="
-				+ metadata + ", links=" + links + "]";
+				+ metadata + ", server="+server+", links=" + links + "]";
 	}
 	
 }
