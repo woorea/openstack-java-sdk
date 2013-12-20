@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-java-sdk</artifactId>
-		<version>3.0.2</version>
+		<version>3.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>swift-client</artifactId>
 	<name>OpenStack Swift Client</name>
@@ -12,12 +12,12 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.0.2</version>
+			<version>3.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>swift-model</artifactId>
-			<version>3.0.2</version>
+			<version>3.0.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
