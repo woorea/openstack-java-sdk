@@ -178,6 +178,12 @@ public class ServersResource {
 
 	}
 
+	public RebootAction reboot(String serverId, String rebootType) {  
+		Reboot reboot = new Reboot();
+		reboot.setType(rebootType);
+		return new RebootAction(serverId, reboot);
+	}
+
 	public class RebuildAction extends Action<Server> {
 
 		private Rebuild action;
