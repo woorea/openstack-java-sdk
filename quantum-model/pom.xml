@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-java-sdk</artifactId>
-		<version>3.0.2-SNAPSHOT</version>
+		<version>3.0.2</version>
 	</parent>
 	<artifactId>quantum-model</artifactId>
 	<name>OpenStack Quantum Model</name>
