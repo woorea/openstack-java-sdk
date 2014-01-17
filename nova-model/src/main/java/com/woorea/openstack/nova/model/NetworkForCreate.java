@@ -9,7 +9,9 @@ public class NetworkForCreate {
 	private String id;
 	@JsonProperty("fixed_ip")
 	private String fixedIp;
-
+	@JsonProperty("port")
+	private String port;	
+	
 	public String getId() {
 		return id;
 	}
@@ -18,6 +20,10 @@ public class NetworkForCreate {
 		return fixedIp;
 	}
 
+	public String getPort() {
+		return port;
+	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -26,4 +32,7 @@ public class NetworkForCreate {
 		this.fixedIp = fixedIp;
 	}
 
+	public void setPort(String port) {
+		this.port = port;
+	}
 }
