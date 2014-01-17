@@ -316,10 +316,11 @@ public class ServerForCreate implements Serializable {
 		this.networks = networks;
 	}
 
-	public void addNetworks(String id, String fixedIp) {
+	public void addNetworks(String id, String fixedIp, String port) {
 		NetworkForCreate net = new NetworkForCreate();
 		net.setId(id);
 		net.setFixedIp(fixedIp);
+		net.setPort(port);
 		this.networks.add(net);
 	}
 
