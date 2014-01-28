@@ -12,7 +12,7 @@ public class User implements Serializable {
 	
 	private String username;
 	
-	@JsonProperty("OS_KSADM_password")
+	@JsonProperty("OS-KSADM:password")
 	private String password;
 	
 	private String tenantId;
