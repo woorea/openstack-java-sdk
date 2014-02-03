@@ -214,15 +214,13 @@ public class ServersResource {
 
 	}
 
-	public class CreateImageAction extends Action<Server> {
+    public class CreateImageAction extends Action<Void> {
 
-		private CreateImage action;
+        public CreateImageAction(String id, CreateImage createImage) {
+            super(id, Entity.json(createImage), Void.class);
+        }
 
-		public CreateImageAction(String id) {
-			super(id, Entity.json(new CreateImage()), Server.class);
-		}
-
-	}
+    }
 
 	public class StartServer extends OpenStackRequest<Void> {
 
@@ -247,6 +245,10 @@ public class ServersResource {
 		}
 
 	}
+
+    public CreateImageAction createImage(String id, CreateImage createImage) {
+        return new CreateImageAction(id, createImage);
+    }
 
 	public StartServer start(String id) {
 		return new StartServer(id);
