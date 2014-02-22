@@ -15,6 +15,7 @@ import com.woorea.openstack.nova.api.extensions.SecurityGroupsExtension;
 import com.woorea.openstack.nova.api.extensions.SnapshotsExtension;
 import com.woorea.openstack.nova.api.extensions.VolumesExtension;
 import com.woorea.openstack.nova.api.extensions.HostsExtension;
+import com.woorea.openstack.nova.api.extensions.ServicesExtension;
 
 public class Nova extends OpenStackClient {
 	
@@ -41,6 +42,8 @@ public class Nova extends OpenStackClient {
 	private final QuotaSetsResource QUOTA_SETS;
 	
 	private final HostsExtension HOSTS;
+	
+	private final ServicesExtension SERVICES;
 
 	public Nova(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
@@ -56,6 +59,7 @@ public class Nova extends OpenStackClient {
 		AGGREGATES = new AggregatesExtension(this);
 		QUOTA_SETS = new QuotaSetsResource(this);
 		HOSTS = new HostsExtension(this);
+		SERVICES = new ServicesExtension(this);
 	}
 	
 	public Nova(String endpoint) {
@@ -110,4 +114,7 @@ public class Nova extends OpenStackClient {
 		return HOSTS;
 	}
 
+	public ServicesExtension services() {
+		return SERVICES;
+	}
 }
