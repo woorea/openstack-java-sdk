@@ -64,12 +64,17 @@ public class PortTest {
 
     @Before
     public void setUp() throws Exception {
-        objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(Inclusion.NON_NULL);
-        objectMapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-        objectMapper.enable(SerializationConfig.Feature.WRAP_ROOT_VALUE);
-        objectMapper.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
-        objectMapper.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        objectMapper = initializeObjectMapper();
+    }
+
+    public static ObjectMapper initializeObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(Inclusion.NON_NULL)
+                .enable(SerializationConfig.Feature.INDENT_OUTPUT)
+                .enable(SerializationConfig.Feature.WRAP_ROOT_VALUE)
+                .enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE)
+                .enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        return objectMapper;
     }
 
     @Test
