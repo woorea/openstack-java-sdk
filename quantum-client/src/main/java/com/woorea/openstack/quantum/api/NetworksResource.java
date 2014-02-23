@@ -6,7 +6,6 @@ import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.quantum.model.Network;
-import com.woorea.openstack.quantum.model.NetworkForCreate;
 import com.woorea.openstack.quantum.model.Networks;
 
 public class NetworksResource {
@@ -21,7 +20,7 @@ public class NetworksResource {
 		return new List();
 	}
 
-	public Create create(NetworkForCreate net){
+    public Create create(Network net) {
 		return new Create(net);
 	}
 
@@ -53,7 +52,7 @@ public class NetworksResource {
 
 	public class Create extends OpenStackRequest<Network> {
 
-		public Create(NetworkForCreate net){
+        public Create(Network net) {
 		    super(CLIENT, HttpMethod.POST, "networks", Entity.json(net), Network.class);
 		}
 	}
