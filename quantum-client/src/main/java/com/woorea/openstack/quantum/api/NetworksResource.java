@@ -24,6 +24,10 @@ public class NetworksResource {
 		return new Create(net);
 	}
 
+    public Update update(Network net) {
+        return new Update(net);
+    }
+
 	public Delete delete(String netId){
 		return new Delete(netId);
 	}
@@ -56,6 +60,13 @@ public class NetworksResource {
 		    super(CLIENT, HttpMethod.POST, "networks", Entity.json(net), Network.class);
 		}
 	}
+
+    public class Update extends OpenStackRequest<Network> {
+
+        public Update(Network net) {
+            super(CLIENT, HttpMethod.PUT, buildPath("networks/", net.getId()), Entity.json(net), Network.class);
+        }
+    }
 
 	public class Show extends OpenStackRequest<Network> {
 
