@@ -3,6 +3,7 @@ package com.woorea.openstack.quantum.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -25,13 +26,13 @@ public class Network implements Serializable {
     private String tenantId;
 
     @JsonProperty("provider:physical_network")
-    private String providerPhyNet;
+    private String providerPhysicalNetwork;
 
     @JsonProperty("provider:network_type")
-    private String netType;
+    private String providerNetworkType;
 
     @JsonProperty("provider:segmentation_id")
-    private String providerSegID;
+    private Integer providerSegmentationId;
 
     @JsonProperty("router:external")
     private String routerExternal;
@@ -43,6 +44,7 @@ public class Network implements Serializable {
     /**
      * @return the status
      */
+    @JsonIgnore
     public String getStatus() {
         return status;
     }
@@ -51,6 +53,7 @@ public class Network implements Serializable {
      * @param status
      *            the status to set
      */
+    @JsonProperty
     public void setStatus(String status) {
         this.status = status;
     }
@@ -58,6 +61,7 @@ public class Network implements Serializable {
     /**
      * @return the subnets
      */
+    @JsonIgnore
     public List<String> getSubnets() {
         return subnets;
     }
@@ -66,6 +70,7 @@ public class Network implements Serializable {
      * @param subnets
      *            the subnets to set
      */
+    @JsonProperty
     public void setSubnets(List<String> subnets) {
         this.subnets = subnets;
     }
@@ -87,17 +92,23 @@ public class Network implements Serializable {
 
     /**
      * @return the providerPhyNet
+     * @deprecated
      */
+    @Deprecated
+    @JsonIgnore
     public String getProviderPhyNet() {
-        return providerPhyNet;
+        return getProviderPhysicalNetwork();
     }
 
     /**
      * @param providerPhyNet
      *            the providerPhyNet to set
+     * @deprecated
      */
+    @Deprecated
+    @JsonIgnore
     public void setProviderPhyNet(String providerPhyNet) {
-        this.providerPhyNet = providerPhyNet;
+        setProviderPhysicalNetwork(providerPhyNet);
     }
 
     /**
@@ -132,17 +143,23 @@ public class Network implements Serializable {
 
     /**
      * @return the netType
+     * @deprecated
      */
+    @Deprecated
+    @JsonIgnore
     public String getNetType() {
-        return netType;
+        return getProviderNetworkType();
     }
 
     /**
      * @param netType
      *            the netType to set
+     * @deprecated
      */
+    @Deprecated
+    @JsonIgnore
     public void setNetType(String netType) {
-        this.netType = netType;
+        setProviderNetworkType(netType);
     }
 
     /**
@@ -163,6 +180,7 @@ public class Network implements Serializable {
     /**
      * @return the id
      */
+    @JsonIgnore
     public String getId() {
         return id;
     }
@@ -171,6 +189,7 @@ public class Network implements Serializable {
      * @param id
      *            the id to set
      */
+    @JsonProperty
     public void setId(String id) {
         this.id = id;
     }
@@ -192,17 +211,47 @@ public class Network implements Serializable {
 
     /**
      * @return the providerSegID
+     * @deprecated
      */
+    @Deprecated
+    @JsonIgnore
     public String getProviderSegID() {
-        return providerSegID;
+        return getProviderSegmentationId() == null ? null : Integer.toString(getProviderSegmentationId());
     }
 
     /**
      * @param providerSegID
      *            the providerSegID to set
+     * @deprecated
      */
+    @Deprecated
+    @JsonIgnore
     public void setProviderSegID(String providerSegID) {
-        this.providerSegID = providerSegID;
+        setProviderSegmentationId(providerSegID == null ? null : Integer.parseInt(providerSegID));
+    }
+
+    public String getProviderNetworkType() {
+        return providerNetworkType;
+    }
+
+    public void setProviderNetworkType(String providerNetworkType) {
+        this.providerNetworkType = providerNetworkType;
+    }
+
+    public String getProviderPhysicalNetwork() {
+        return providerPhysicalNetwork;
+    }
+
+    public void setProviderPhysicalNetwork(String providerPhysicalNetwork) {
+        this.providerPhysicalNetwork = providerPhysicalNetwork;
+    }
+
+    public Integer getProviderSegmentationId() {
+        return providerSegmentationId;
+    }
+
+    public void setProviderSegmentationId(Integer providerSegmentationId) {
+        this.providerSegmentationId = providerSegmentationId;
     }
 
     /*
@@ -214,8 +263,8 @@ public class Network implements Serializable {
     public String toString() {
         return "Network [id=" + id + ", name=" + name + ", subnets="
                 + subnets + ", status=" + status + ", admin_state_up=" + adminStateUp + ", tenant_id=" +
-                tenantId + ", shared=" + shared + ", provider:physical_network=" + providerPhyNet +
-                ", provider:network_type=" + netType + ", router:external=" + routerExternal +
-                ", provider:segmentation_id=" + providerSegID + "]";
+                tenantId + ", shared=" + shared + ", provider:physical_network=" + providerPhysicalNetwork +
+                ", provider:network_type=" + providerNetworkType + ", router:external=" + routerExternal +
+                ", provider:segmentation_id=" + providerSegmentationId + "]";
     }
 }
