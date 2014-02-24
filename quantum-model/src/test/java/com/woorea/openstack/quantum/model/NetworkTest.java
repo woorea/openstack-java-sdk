@@ -86,6 +86,14 @@ public class NetworkTest {
     }
 
     @Test
+    public void testSerializationEmpty() throws Exception {
+        Network network = new Network();
+        serializedNetwork = objectMapper.writeValueAsString(network);
+
+        assertThat(serializedNetwork, containsString("\"network\" : { }"));
+    }
+
+    @Test
     public void testDeserializationReadOnlyFields() throws Exception {
         Network network = objectMapper.readValue(NETWORK_JSON, Network.class);
 

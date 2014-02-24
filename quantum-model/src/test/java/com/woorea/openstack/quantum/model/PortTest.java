@@ -113,6 +113,14 @@ public class PortTest {
     }
 
     @Test
+    public void testSerializationEmpty() throws Exception {
+        Port port = new Port();
+        serializedPort = objectMapper.writeValueAsString(port);
+
+        assertThat(serializedPort, containsString("\"port\" : { }"));
+    }
+
+    @Test
     public void testDeserializationReadOnlyFields() throws Exception {
         Port port = objectMapper.readValue(PORT_JSON, Port.class);
 

@@ -96,6 +96,14 @@ public class SubnetTest {
     }
 
     @Test
+    public void testSerializationEmpty() throws Exception {
+        Subnet subnet = new Subnet();
+        serializedSubnet = objectMapper.writeValueAsString(subnet);
+
+        assertThat(serializedSubnet, containsString("\"subnet\" : { }"));
+    }
+
+    @Test
     public void testDeserializationReadOnlyFields() throws Exception {
         Subnet subnet = objectMapper.readValue(SUBNET_JSON, Subnet.class);
 
