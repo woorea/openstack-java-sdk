@@ -20,7 +20,7 @@ public class Network implements Serializable {
     private String name;
 
     @JsonProperty("admin_state_up")
-    private boolean adminStateUp;
+    private Boolean adminStateUp;
 
     @JsonProperty("tenant_id")
     private String tenantId;
@@ -114,7 +114,12 @@ public class Network implements Serializable {
     /**
      * @return the adminStateUp
      */
+    @JsonIgnore
     public boolean isAdminStateUp() {
+        return adminStateUp;
+    }
+
+    public Boolean getAdminStateUp() {
         return adminStateUp;
     }
 
@@ -122,7 +127,7 @@ public class Network implements Serializable {
      * @param adminStateUp
      *            the adminStateUp to set
      */
-    public void setAdminStateUp(boolean adminStateUp) {
+    public void setAdminStateUp(Boolean adminStateUp) {
         this.adminStateUp = adminStateUp;
     }
 

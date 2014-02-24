@@ -18,7 +18,7 @@ public class Subnet implements Serializable {
     private String name;
 
     @JsonProperty("enable_dhcp")
-    private boolean enableDHCP;
+    private Boolean enableDHCP;
 
     @JsonProperty("network_id")
     private String networkId;
@@ -93,7 +93,12 @@ public class Subnet implements Serializable {
     /**
      * @return the enableDHCP
      */
+    @JsonIgnore
     public boolean isEnableDHCP() {
+        return enableDHCP;
+    }
+
+    public Boolean getEnableDHCP() {
         return enableDHCP;
     }
 
@@ -101,7 +106,7 @@ public class Subnet implements Serializable {
      * @param enableDHCP
      *            the enableDHCP to set
      */
-    public void setEnableDHCP(boolean enableDHCP) {
+    public void setEnableDHCP(Boolean enableDHCP) {
         this.enableDHCP = enableDHCP;
     }
 
