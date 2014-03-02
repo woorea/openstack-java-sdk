@@ -25,6 +25,7 @@
 		<module>swift-client</module>
 		<module>quantum-client</module>
 		<module>openstack-client</module>
+        <module>heat-client</module>
 		<module>nova-model</module>
 		<module>glance-model</module>
 		<module>keystone-model</module>
@@ -33,6 +34,7 @@
 		<module>ceilometer-model</module>
 		<module>ceilometer-client</module>
 		<module>openstack-client-connectors</module>
+        <module>heat-model</module>
 	</modules>
 
 	<profiles>

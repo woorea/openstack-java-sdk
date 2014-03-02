@@ -19,6 +19,11 @@
   		<artifactId>nova-client</artifactId>
   		<version>3.2.2-SNAPSHOT</version>
   	</dependency>
+      <dependency>
+          <groupId>com.woorea</groupId>
+          <artifactId>heat-client</artifactId>
+          <version>3.2.2-SNAPSHOT</version>
+      </dependency>
   	<dependency>
   		<groupId>com.woorea</groupId>
   		<artifactId>swift-client</artifactId>
