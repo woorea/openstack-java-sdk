@@ -9,10 +9,12 @@ import com.woorea.openstack.base.client.OpenStackClientConnector;
 public class Heat extends OpenStackClient {
 
     private final StackResource stacks;
+    private final ResourcesResource resources;
 
     public Heat(String endpoint, OpenStackClientConnector connector) {
         super(endpoint, connector);
         stacks = new StackResource(this);
+        resources = new ResourcesResource(this);
     }
 
     public Heat(String endpoint) {
@@ -21,5 +23,9 @@ public class Heat extends OpenStackClient {
 
     public StackResource getStacks() {
         return stacks;
+    }
+
+    public ResourcesResource getResources() {
+        return resources;
     }
 }
