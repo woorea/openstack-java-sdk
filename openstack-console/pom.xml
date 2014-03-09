@@ -37,7 +37,7 @@
 				<dependency>
 					<groupId>com.woorea</groupId>
 					<artifactId>jersey-connector</artifactId>
-					<version>3.0.2-SNAPSHOT</version>
+					<version>3.0.3-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -47,7 +47,7 @@
 				<dependency>
 					<groupId>com.woorea</groupId>
 					<artifactId>jersey2-connector</artifactId>
-					<version>3.0.2-SNAPSHOT</version>
+					<version>3.0.3-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -57,7 +57,7 @@
 				<dependency>
 					<groupId>com.woorea</groupId>
 					<artifactId>resteasy-connector</artifactId>
-					<version>3.0.2-SNAPSHOT</version>
+					<version>3.0.3-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
