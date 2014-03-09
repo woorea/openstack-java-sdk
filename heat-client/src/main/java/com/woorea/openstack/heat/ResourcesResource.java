@@ -20,10 +20,6 @@ public class ResourcesResource {
         return new ListResources(name);
     }
 
-    public List list(String name) {
-        return new List(name);
-    }
-
     /**
      * v1/​{tenant_id}​/stacks/​{stack_name}​/resources
      */
@@ -32,14 +28,4 @@ public class ResourcesResource {
             super(client, HttpMethod.GET, "/stacks/" + name + "/resources", null, Resources.class);
         }
     }
-
-    /**
-     * v1/​{tenant_id}​/stacks/​{stack_name}​/​{stack_id}​/resources
-     */
-    public class List extends OpenStackRequest<String> {
-        public List(String name) {
-            super(client, HttpMethod.GET, "", null, String.class);
-        }
-    }
-
 }
