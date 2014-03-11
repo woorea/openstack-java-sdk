@@ -9,6 +9,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonValue;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @SuppressWarnings("serial")
 @JsonRootName("subnet")
@@ -39,7 +41,8 @@ public class Subnet implements Serializable {
     private IpVersion ipversion;
 
     @JsonProperty("gateway_ip")
-    private String gw;
+    @JsonSerialize(include=Inclusion.NON_DEFAULT)
+    private String gw = "";
 
     private String cidr;
 
