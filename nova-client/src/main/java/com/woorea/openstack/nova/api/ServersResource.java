@@ -66,7 +66,9 @@ public class ServersResource {
 	public ReplaceMetadata replaceMetadata(String id,Metadata metadata) {
 		return new ReplaceMetadata(id,metadata);
 	}
-
+	public DeleteMetadata deleteMetadata(String id, String key) {
+		return new DeleteMetadata(id,key);
+	}
 
 	public Delete delete(String id) {
 		return new Delete(id);
@@ -118,6 +120,14 @@ public class ServersResource {
 
 		public ReplaceMetadata(String id,Metadata metadata) {
 			super(CLIENT, HttpMethod.PUT, new StringBuilder("/servers/").append(id).append("/metadata"), Entity.json(metadata), Metadata.class);
+		}
+
+	}
+	
+	public class DeleteMetadata extends OpenStackRequest<Void> {
+
+		public DeleteMetadata(String id,String key) {
+			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/servers/").append(id).append("/metadata/").append(key), null, Void.class);
 		}
 
 	}
