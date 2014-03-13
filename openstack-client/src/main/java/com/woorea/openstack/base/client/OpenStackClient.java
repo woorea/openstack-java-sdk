@@ -79,4 +79,8 @@ public class OpenStackClient {
 		setTokenProvider(new OpenStackSimpleTokenProvider(token));
 	}
 	
+	public <R> OpenStackRequest<R> get(String path, Class<R> returnType) {
+		return new OpenStackRequest<R>(this, HttpMethod.GET, path, null, returnType);
+	}
+	
 }

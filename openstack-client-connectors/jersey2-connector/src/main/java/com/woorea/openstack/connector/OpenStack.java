@@ -15,7 +15,6 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.glassfish.jersey.SslConfigurator;
-import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 public class OpenStack {

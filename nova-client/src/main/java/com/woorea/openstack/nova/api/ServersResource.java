@@ -1,6 +1,8 @@
 package com.woorea.openstack.nova.api;
 
 
+import java.util.Map;
+
 import com.woorea.openstack.base.client.Entity;
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
@@ -159,6 +161,14 @@ public class ServersResource {
 		}
 
 	}
+	
+	public UpdateServer update(String serverId, String name, String accessIPv4, String accessIPv6) {
+	    Server server = new Server();
+	    //server.setName(name);
+	    //server.setAccessIPv4(accessIPv4);
+	    //server.setAccessIPv6(accessIPv6);
+	    return new UpdateServer(serverId, server);
+	  }
 
 	public abstract class Action<T> extends OpenStackRequest<T> {
 
@@ -177,6 +187,12 @@ public class ServersResource {
 		}
 
 	}
+	
+	public ChangePasswordAction changePassword(String serverId, String adminPass) {
+	    ChangePassword changePassword = new ChangePassword();
+	    changePassword.setAdminPass(adminPass);
+	    return new ChangePasswordAction(serverId, changePassword);
+	  }
 
 	public class RebootAction extends Action<Void> {
 
@@ -203,6 +219,10 @@ public class ServersResource {
 		}
 
 	}
+	
+	public RebuildAction rebuild(String serverId, Rebuild rebuild) {
+		return new RebuildAction(serverId, rebuild);
+	}
 
 	public class ResizeAction extends Action<Server> {
 
@@ -213,6 +233,13 @@ public class ServersResource {
 		}
 
 	}
+	
+	 public ResizeAction resize(String serverId, String flavorId, String diskConfig) {
+	    Resize resize = new Resize();
+	    resize.setFlavorRef(flavorId);
+	    resize.setDiskConfig(diskConfig);
+	    return new ResizeAction(serverId, resize);
+	  }
 
 	public class ConfirmResizeAction extends Action<Server> {
 
@@ -221,14 +248,22 @@ public class ServersResource {
 		}
 
 	}
+	
+	public ConfirmResizeAction confirmResize(String serverId) {
+	    return new ConfirmResizeAction(serverId);
+	  }
 
-	public class ReverResizeAction extends Action<Server> {
+	public class RevertResizeAction extends Action<Server> {
 
-		public ReverResizeAction(String id) {
+		public RevertResizeAction(String id) {
 			super(id, Entity.json(new RevertResize()), Server.class);
 		}
 
 	}
+	
+	public RevertResizeAction revertResize(String serverId) {
+	    return new RevertResizeAction(serverId);
+	  }
 
     public class CreateImageAction extends Action<Void> {
 
@@ -237,6 +272,13 @@ public class ServersResource {
         }
 
     }
+    
+    public CreateImageAction createImage(String serverId, String name, Map<String, String> metadata) {
+    	CreateImage createImage = new CreateImage();
+    	createImage.setName(name);
+    	createImage.setMetadata(metadata);
+        return new CreateImageAction(serverId, createImage);
+      }
 
 	public class StartServer extends OpenStackRequest<Void> {
 
@@ -261,18 +303,14 @@ public class ServersResource {
 		}
 
 	}
-
-    public CreateImageAction createImage(String id, CreateImage createImage) {
-        return new CreateImageAction(id, createImage);
-    }
-
+	
 	public StartServer start(String id) {
-		return new StartServer(id);
-	}
-
-	public StopServer stop(String id) {
-		return new StopServer(id);
-	}
+	    return new StartServer(id);
+	  }
+	
+	  public StopServer stop(String id) {
+	    return new StopServer(id);
+	  }
 
 	public class GetVncConsoleServer extends OpenStackRequest<VncConsole> {
 
