@@ -1,13 +1,13 @@
 package com.woorea.openstack.keystone.v3.api;
 
 import com.woorea.openstack.base.client.OpenStackClient;
-import com.woorea.openstack.keystone.model.Service;
-import com.woorea.openstack.keystone.model.Services;
+import com.woorea.openstack.keystone.v3.model.Group;
+import com.woorea.openstack.keystone.v3.model.Groups;
 
-public class GroupsResource extends GenericResource<Service, Services> {
+public class GroupsResource extends GenericResource<Group, Groups> {
 
 	public GroupsResource(OpenStackClient client) {
-		super(client, "/domains", Service.class, Services.class);
+		super(client, "/groups", Group.class, Groups.class);
 	}
 	
 	public DomainUserRolesResource userRoles(String domainId, String userId) {

@@ -1,8 +1,8 @@
 package com.woorea.openstack.keystone.v3.api;
 
 import com.woorea.openstack.base.client.OpenStackClient;
-import com.woorea.openstack.keystone.model.Endpoint;
-import com.woorea.openstack.keystone.model.Endpoints;
+import com.woorea.openstack.keystone.v3.model.Endpoint;
+import com.woorea.openstack.keystone.v3.model.Endpoints;
 
 public class EndpointsResource extends GenericResource<Endpoint, Endpoints> {
 

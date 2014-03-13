@@ -1,0 +1,55 @@
+package com.woorea.openstack.keystone.v3.model;
+
+import org.codehaus.jackson.annotate.JsonProperty;
+
+public class User {
+
+	private String id;
+	
+	@JsonProperty("domain_id")
+	private String domainId;
+	
+	@JsonProperty("default_project_id")
+	private String defaultProjectId;
+	
+	private String name;
+	
+	private String email;
+	
+	private String description;
+	
+	private Boolean enabled;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(String domainId) {
+		this.domainId = domainId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+}

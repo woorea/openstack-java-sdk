@@ -2,14 +2,14 @@ package com.woorea.openstack.keystone.v3.api;
 
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
-import com.woorea.openstack.keystone.model.Service;
-import com.woorea.openstack.keystone.model.Services;
 import com.woorea.openstack.keystone.model.Users;
+import com.woorea.openstack.keystone.v3.model.Project;
+import com.woorea.openstack.keystone.v3.model.Projects;
 
-public class ProjectsResource extends GenericResource<Service, Services> {
+public class ProjectsResource extends GenericResource<Project, Projects> {
 
 	public ProjectsResource(OpenStackClient client) {
-		super(client, "/projects", Service.class, Services.class);
+		super(client, "/projects", Project.class, Projects.class);
 	}
 	
 	public OpenStackRequest<Users> users(String projectId) {

@@ -1,13 +1,13 @@
 package com.woorea.openstack.keystone.v3.api;
 
 import com.woorea.openstack.base.client.OpenStackClient;
-import com.woorea.openstack.keystone.model.Endpoint;
-import com.woorea.openstack.keystone.model.Endpoints;
+import com.woorea.openstack.keystone.v3.model.Credential;
+import com.woorea.openstack.keystone.v3.model.Credentials;
 
-public class CredentialsResources extends GenericResource<Endpoint, Endpoints> {
+public class CredentialsResources extends GenericResource<Credential, Credentials> {
 
 	public CredentialsResources(OpenStackClient client) {
-		super(client, "/credentials", Endpoint.class, Endpoints.class);
+		super(client, "/credentials", Credential.class, Credentials.class);
 	}
 
 }
