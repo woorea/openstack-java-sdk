@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
+import com.woorea.openstack.keystone.v3.model.Authentication.Scope;
+
 @JsonRootName("auth")
 public class Authentication implements Serializable {
 	
@@ -152,6 +154,25 @@ public class Authentication implements Serializable {
 	
 	public static final class Scope {
 		
+		public static Scope project(String projectId) {
+			Scope scope = new Scope();
+			Project project = new Project();
+			project.setId(projectId);
+			scope.setProject(project);
+			return scope;
+		}
+		
+		public static Scope project(String domainName, String projectName) {
+			Scope scope = new Scope();
+			com.woorea.openstack.keystone.v3.model.Authentication.Scope.Project.Domain domain = new com.woorea.openstack.keystone.v3.model.Authentication.Scope.Project.Domain();
+			domain.setName(domainName);
+			Project project = new Project();
+			project.setDomain(domain);
+			project.setName(projectName);
+			scope.setProject(project);
+			return scope;
+		}
+		
 		public static final class Project {
 		
 			public static final class Domain {
@@ -179,7 +200,10 @@ public class Authentication implements Serializable {
 			
 			private String id;
 			
+			private Domain domain;
+			
 			private String name;
+			
 
 			public String getId() {
 				return id;
@@ -187,6 +211,14 @@ public class Authentication implements Serializable {
 
 			public void setId(String id) {
 				this.id = id;
+			}
+
+			public Domain getDomain() {
+				return domain;
+			}
+
+			public void setDomain(Domain domain) {
+				this.domain = domain;
 			}
 
 			public String getName() {
@@ -197,6 +229,16 @@ public class Authentication implements Serializable {
 				this.name = name;
 			}
 			
+		}
+		
+		private Project project;
+
+		public Project getProject() {
+			return project;
+		}
+
+		public void setProject(Project project) {
+			this.project = project;
 		}
 		
 	}
