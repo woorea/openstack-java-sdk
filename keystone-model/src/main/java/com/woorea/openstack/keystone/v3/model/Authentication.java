@@ -13,13 +13,35 @@ public class Authentication implements Serializable {
 	
 	public static final class Identity {
 		
-		public static final Identity password(String name, String password) {
+		public static final Identity password(String userId, String password) {
 			Identity identity = new Identity();
 			identity.getMethods().add("password");
 			Password method = new Password();
-			method.getUser().setName(name);
+			method.getUser().setId(userId);
 			method.getUser().setPassword(password);
 			identity.setPassword(method);
+			return identity;
+		}
+		
+		public static final Identity password(String domainName, String username, String password) {
+			Identity identity = new Identity();
+			identity.getMethods().add("password");
+			Password method = new Password();
+			com.woorea.openstack.keystone.v3.model.Authentication.Identity.Password.User.Domain domain = new com.woorea.openstack.keystone.v3.model.Authentication.Identity.Password.User.Domain();
+			domain.setName(domainName);
+			method.getUser().setDomain(domain);
+			method.getUser().setName(username);
+			method.getUser().setPassword(password);
+			identity.setPassword(method);
+			return identity;
+		}
+		
+		public static final Identity token(String token) {
+			Identity identity = new Identity();
+			identity.getMethods().add("token");
+			Token method = new Token();
+			method.setId(token);
+			identity.setToken(method);
 			return identity;
 		}
 		
@@ -154,10 +176,10 @@ public class Authentication implements Serializable {
 	
 	public static final class Scope {
 		
-		public static Scope project(String projectId) {
+		public static Scope project(String id) {
 			Scope scope = new Scope();
 			Project project = new Project();
-			project.setId(projectId);
+			project.setId(id);
 			scope.setProject(project);
 			return scope;
 		}

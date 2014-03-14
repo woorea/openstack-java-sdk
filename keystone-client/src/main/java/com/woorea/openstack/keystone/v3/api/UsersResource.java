@@ -3,8 +3,8 @@ package com.woorea.openstack.keystone.v3.api;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.keystone.model.Services;
-import com.woorea.openstack.keystone.model.User;
-import com.woorea.openstack.keystone.model.Users;
+import com.woorea.openstack.keystone.v3.model.User;
+import com.woorea.openstack.keystone.v3.model.Users;
 
 public class UsersResource extends GenericResource<User, Users> {
 

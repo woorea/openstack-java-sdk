@@ -1,7 +1,9 @@
 package com.woorea.openstack.keystone.v3.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
+@JsonRootName("project")
 public class Project {
 
 	private String id;

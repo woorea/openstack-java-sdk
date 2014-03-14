@@ -3,6 +3,9 @@ package com.woorea.openstack.keystone.v3.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jackson.map.annotate.JsonRootName;
+
+@JsonRootName("credential")
 public class Credential {
 	
 	private String id;

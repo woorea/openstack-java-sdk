@@ -1,18 +1,20 @@
 package com.woorea.openstack.keystone.v3;
 
+import com.woorea.openstack.keystone.v3.api.DomainsResource;
 import com.woorea.openstack.keystone.v3.api.EndpointsResource;
 import com.woorea.openstack.keystone.v3.api.RolesResource;
 import com.woorea.openstack.keystone.v3.api.ServicesResource;
 import com.woorea.openstack.keystone.v3.api.ProjectsResource;
 import com.woorea.openstack.keystone.v3.api.TokensResource;
 import com.woorea.openstack.keystone.v3.api.UsersResource;
-
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 
 public class Keystone extends OpenStackClient {
 	
 	private final TokensResource TOKENS;
+	
+	private final DomainsResource DOMAINS;
 	
 	private final ProjectsResource PROJECTS;
 	
@@ -27,6 +29,7 @@ public class Keystone extends OpenStackClient {
 	public Keystone(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
 		TOKENS = new TokensResource(this);
+		DOMAINS = new DomainsResource(this);
 		PROJECTS = new ProjectsResource(this);
 		USERS = new UsersResource(this);
 		ROLES = new RolesResource(this);
@@ -40,6 +43,10 @@ public class Keystone extends OpenStackClient {
 	
 	public TokensResource tokens() {
 		return TOKENS;
+	}
+	
+	public DomainsResource domains() {
+		return DOMAINS;
 	}
 	
 	public ProjectsResource projects() {

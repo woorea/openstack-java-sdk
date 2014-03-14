@@ -18,6 +18,10 @@ public class TokensResource {
 	public Authenticate authenticate(Authentication authentication) {
 		return new Authenticate(authentication);
 	}
+	
+	public OpenStackRequest<Token> show() {
+		return CLIENT.get("/auth/tokens", Token.class);
+	}
 
 	public class Authenticate extends OpenStackRequest<Token> {
 		

@@ -1,5 +1,8 @@
 package com.woorea.openstack.keystone.v3.model;
 
+import org.codehaus.jackson.map.annotate.JsonRootName;
+
+@JsonRootName("domain")
 public class Domain {
 
 	private String id;

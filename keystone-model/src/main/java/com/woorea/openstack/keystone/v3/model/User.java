@@ -1,7 +1,9 @@
 package com.woorea.openstack.keystone.v3.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
+@JsonRootName("user")
 public class User {
 
 	private String id;
@@ -13,6 +15,8 @@ public class User {
 	private String defaultProjectId;
 	
 	private String name;
+	
+	private String password;
 	
 	private String email;
 	
@@ -36,6 +40,14 @@ public class User {
 		this.domainId = domainId;
 	}
 
+	public String getDefaultProjectId() {
+		return defaultProjectId;
+	}
+
+	public void setDefaultProjectId(String defaultProjectId) {
+		this.defaultProjectId = defaultProjectId;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -43,7 +55,31 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Boolean getEnabled() {
 		return enabled;
 	}

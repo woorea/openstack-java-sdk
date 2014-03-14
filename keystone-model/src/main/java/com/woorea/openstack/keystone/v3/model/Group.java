@@ -1,7 +1,9 @@
 package com.woorea.openstack.keystone.v3.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 
+@JsonRootName("group")
 public class Group {
 
 	private String id;
