@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
-import com.woorea.openstack.keystone.v3.model.Authentication.Scope;
-
 @JsonRootName("auth")
 public class Authentication implements Serializable {
 	
