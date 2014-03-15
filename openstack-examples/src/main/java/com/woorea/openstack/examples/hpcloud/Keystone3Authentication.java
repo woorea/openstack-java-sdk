@@ -3,9 +3,9 @@ package com.woorea.openstack.examples.hpcloud;
 
 import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.examples.ExamplesConfiguration;
+import com.woorea.openstack.keystone.v3.Keystone;
 import com.woorea.openstack.keystone.v3.model.Authentication;
 import com.woorea.openstack.keystone.v3.model.Authentication.Identity;
-import com.woorea.openstack.keystone.v3.Keystone;
 import com.woorea.openstack.keystone.v3.model.Token;
 
 public class Keystone3Authentication {

@@ -2,7 +2,6 @@ package com.woorea.openstack.ceilometer.v2.api;
 
 
 import com.woorea.openstack.base.client.OpenStackClient;
-import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.ceilometer.QueriableCeilometerCommand;
 import com.woorea.openstack.ceilometer.v2.model.Sample;
 

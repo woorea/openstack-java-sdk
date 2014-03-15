@@ -4,7 +4,6 @@ package com.woorea.openstack.glance;
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
-import com.woorea.openstack.glance.model.Images;
 import com.woorea.openstack.glance.model.SharedImages;
 
 public class SharedImagesResource {

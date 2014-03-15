@@ -9,6 +9,8 @@ public class ExamplesConfiguration {
 
 	public static final String KEYSTONE_AUTH_URL = "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v3";
 	
+	public static final String KEYSTONE_ADMIN_AUTH_URL = "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v3";
+	
 	public static final String KEYSTONE_USERNAME = "";
 	
 	public static final String KEYSTONE_PASSWORD = "";

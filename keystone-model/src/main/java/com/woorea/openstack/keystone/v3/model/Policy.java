@@ -3,7 +3,7 @@ package com.woorea.openstack.keystone.v3.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("policy")
 public class Policy {

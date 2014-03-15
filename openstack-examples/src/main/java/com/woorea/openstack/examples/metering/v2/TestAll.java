@@ -1,12 +1,7 @@
 package com.woorea.openstack.examples.metering.v2;
 
-import java.util.List;
-
-
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.ceilometer.Ceilometer;
-import com.woorea.openstack.ceilometer.v2.model.Meter;
-import com.woorea.openstack.ceilometer.v2.model.Statistics;
 import com.woorea.openstack.examples.ExamplesConfiguration;
 import com.woorea.openstack.keystone.Keystone;
 import com.woorea.openstack.keystone.model.Access;

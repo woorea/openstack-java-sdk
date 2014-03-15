@@ -1,7 +1,5 @@
 package com.woorea.openstack.examples.network;
 
-import com.woorea.openstack.keystone.utils.KeystoneUtils;
-
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.examples.ExamplesConfiguration;
 import com.woorea.openstack.keystone.Keystone;
@@ -9,6 +7,7 @@ import com.woorea.openstack.keystone.model.Access;
 import com.woorea.openstack.keystone.model.Tenants;
 import com.woorea.openstack.keystone.model.authentication.TokenAuthentication;
 import com.woorea.openstack.keystone.model.authentication.UsernamePassword;
+import com.woorea.openstack.keystone.utils.KeystoneUtils;
 import com.woorea.openstack.quantum.Quantum;
 import com.woorea.openstack.quantum.model.Network;
 import com.woorea.openstack.quantum.model.Networks;

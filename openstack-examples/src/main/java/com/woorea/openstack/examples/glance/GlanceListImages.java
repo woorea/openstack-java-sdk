@@ -1,19 +1,18 @@
 package com.woorea.openstack.examples.glance;
 
-import com.woorea.openstack.glance.model.ImageDownload;
-import com.woorea.openstack.glance.model.ImageUpload;
-import com.woorea.openstack.keystone.utils.KeystoneTokenProvider;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import com.woorea.openstack.examples.ExamplesConfiguration;
 import com.woorea.openstack.glance.Glance;
 import com.woorea.openstack.glance.model.Image;
+import com.woorea.openstack.glance.model.ImageDownload;
+import com.woorea.openstack.glance.model.ImageUpload;
 import com.woorea.openstack.glance.model.Images;
 import com.woorea.openstack.keystone.model.Access;
 import com.woorea.openstack.keystone.model.Access.Service;
 import com.woorea.openstack.keystone.model.Access.Service.Endpoint;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import com.woorea.openstack.keystone.utils.KeystoneTokenProvider;
 
 public class GlanceListImages {
 

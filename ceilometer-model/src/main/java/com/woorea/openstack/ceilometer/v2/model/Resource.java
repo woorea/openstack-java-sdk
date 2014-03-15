@@ -2,7 +2,7 @@ package com.woorea.openstack.ceilometer.v2.model;
 
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Resource {
 	//{"resource_id": "23b55841eedd41e99d5f3f32149ca086", "timestamp": "2013-03-03T15:19:00", "project_id": "23b55841eedd41e99d5f3f32149ca086", "user_id": null, "metadata": {}}

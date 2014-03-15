@@ -9,16 +9,16 @@ import javax.ws.rs.ext.ContextResolver;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonRootName;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.plugins.providers.InputStreamProvider;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
@@ -60,19 +60,19 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	static {
 		DEFAULT_MAPPER = new ObjectMapper();
 
-		DEFAULT_MAPPER.setSerializationInclusion(Inclusion.NON_NULL);
-		DEFAULT_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-		DEFAULT_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-		DEFAULT_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+		DEFAULT_MAPPER.setSerializationInclusion(Include.NON_NULL);
+		DEFAULT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
+		DEFAULT_MAPPER.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+		DEFAULT_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 		WRAPPED_MAPPER = new ObjectMapper();
 
-		WRAPPED_MAPPER.setSerializationInclusion(Inclusion.NON_NULL);
-		WRAPPED_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-		WRAPPED_MAPPER.enable(SerializationConfig.Feature.WRAP_ROOT_VALUE);
-		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
-		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-		WRAPPED_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+		WRAPPED_MAPPER.setSerializationInclusion(Include.NON_NULL);
+		WRAPPED_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
+		WRAPPED_MAPPER.enable(SerializationFeature.WRAP_ROOT_VALUE);
+		WRAPPED_MAPPER.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+		WRAPPED_MAPPER.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+		WRAPPED_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 		providerFactory = new OpenStackProviderFactory();
 	}

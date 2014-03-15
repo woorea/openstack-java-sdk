@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.woorea.openstack.quantum.model.Port.Ip;
 
 public class PortTest {
@@ -69,11 +69,11 @@ public class PortTest {
 
     public static ObjectMapper initializeObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(Inclusion.NON_NULL)
-                .enable(SerializationConfig.Feature.INDENT_OUTPUT)
-                .enable(SerializationConfig.Feature.WRAP_ROOT_VALUE)
-                .enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE)
-                .enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        objectMapper.setSerializationInclusion(Include.NON_NULL)
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .enable(SerializationFeature.WRAP_ROOT_VALUE)
+                .enable(DeserializationFeature.UNWRAP_ROOT_VALUE)
+                .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         return objectMapper;
     }
 

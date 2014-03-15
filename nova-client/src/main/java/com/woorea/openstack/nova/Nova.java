@@ -10,11 +10,11 @@ import com.woorea.openstack.nova.api.QuotaSetsResource;
 import com.woorea.openstack.nova.api.ServersResource;
 import com.woorea.openstack.nova.api.extensions.AggregatesExtension;
 import com.woorea.openstack.nova.api.extensions.FloatingIpsExtension;
+import com.woorea.openstack.nova.api.extensions.HostsExtension;
 import com.woorea.openstack.nova.api.extensions.KeyPairsExtension;
 import com.woorea.openstack.nova.api.extensions.SecurityGroupsExtension;
 import com.woorea.openstack.nova.api.extensions.SnapshotsExtension;
 import com.woorea.openstack.nova.api.extensions.VolumesExtension;
-import com.woorea.openstack.nova.api.extensions.HostsExtension;
 
 public class Nova extends OpenStackClient {
 	

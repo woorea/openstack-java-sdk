@@ -1,9 +1,9 @@
 package com.woorea.openstack.heat.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Resource {
     @JsonProperty("resource_name")

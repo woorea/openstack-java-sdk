@@ -1,143 +1,101 @@
 package com.woorea.openstack.swift.api;
 
+import java.io.InputStream;
 import java.util.Map;
 
-
+import com.woorea.openstack.base.client.Entity;
+import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.swift.model.ObjectDownload;
 import com.woorea.openstack.swift.model.ObjectForUpload;
+import com.woorea.openstack.swift.model.Objects;
+
 
 public class ContainerResource {
-	
-	private final OpenStackClient CLIENT;
-	
-	private String container;
-	
-	public ContainerResource(OpenStackClient client, String container) {
-		CLIENT = client;
-		this.container = container;
-	}
-	
-	public List list() {
-		return new List(container, null);
-	}
-	
-	public CreateDirectory createDirectory(String path) {
-		return new CreateDirectory(container, path);
-	}
-	
-	public Show show(String path) {
-		return new Show(container, path);
-	}
-	
-	public Upload upload(ObjectForUpload objectForUpload) {
-		return new Upload(objectForUpload);
-	}
-	
-	public Download download(String path) {
-		return new Download(container, path);
-	}
-	
-	public Delete delete(String path) {
-		return new Delete(container, path);
-	}
-	
-	public class List extends OpenStackRequest<java.util.List<Object>> {
+    private final OpenStackClient CLIENT;
+    private String container;
 
-		private String containerName;
-		
-		private Map<String, String> filters;
-		
-		public List(String containerName, Map<String, String> filters) {
-			this.containerName = containerName;
-			this.filters = filters;
-			//returnType(new TypeToken<List<Object>>(){});
-//			target = target.path(containerName);
-//			for(String filter : new String[]{"prefix","delimiter","path","marker"}) {
-//				if(filters.get(filter) != null) {
-//					target = target.queryParam(filter, filters.get(filter));
-//				}
-//			}
-//			return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Object>>(){});
-		}
-		
-	}
+    public ContainerResource(OpenStackClient client, String container) {
+        CLIENT = client;
+        this.container = container;
+    }
 
-	public class CreateDirectory extends OpenStackRequest<Void> {
+    public List list() {
+        return new List(container, null);
+    }
 
-		private String container;
-		
-		private String path;
-		
-		public CreateDirectory(String container, String path) {
-			this.container = container;
-			this.path = path;
-//			endpoint.path(container).path(path).request().put(Entity.entity(new byte[1],"application/directory"));
-		}
-		
-	}
-	
-	public class Show extends OpenStackRequest<Object> {
+    public CreateDirectory createDirectory(String path) {
+        return new CreateDirectory(container, path);
+    }
 
-		private String containerName;
-		
-		private String objectName;
-		
-		public Show(String containerName, String objectName) {
-			this.containerName = containerName;
-			this.objectName = objectName;
-//			return target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).head();
-		}
+    public Show show(String path) {
+        return new Show(container, path);
+    }
 
-	}
-	
-	public class Upload extends OpenStackRequest<OpenStackResponse> {
+    public Upload upload(ObjectForUpload objectForUpload) {
+        return new Upload(objectForUpload);
+    }
 
-		private ObjectForUpload objectForUpload;
-		
-		public Upload(ObjectForUpload objectForUpload) {
-			this.objectForUpload = objectForUpload;
-//			Invocation.Builder invocationBuilder = target.path(objectForUpload.getContainer()).path(objectForUpload.getName()).request(MediaType.APPLICATION_JSON);
-//			for(String key : objectForUpload.getProperties().keySet()) {
-//				invocationBuilder.header("x-object-meta-" + key, objectForUpload.getProperties().get(key));
-//			}
-//			return invocationBuilder.put(Entity.entity(objectForUpload.getInputStream(), MediaType.APPLICATION_OCTET_STREAM), Response.class);
-		}
+    public Download download(String path) {
+        return new Download(container, path);
+    }
 
-	}
-	
-	public class Download extends OpenStackRequest<ObjectDownload> {
+    public Delete delete(String path) {
+        return new Delete(container, path);
+    }
 
-		private String containerName;
-		
-		private String objectName;
-		
-		public Download(String containerName, String objectName) {
-			this.containerName = containerName;
-			this.objectName = objectName;
-//			Response response = target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).get();
-//			ObjectDownload objectDownload = new ObjectDownload();
-//			objectDownload.setInputStream((InputStream) response.getEntity());
-//			return objectDownload;
-		}
+    public class List extends OpenStackRequest<Objects> {
+        public List(String containerName, Map<String, String> filters) {
+            super(CLIENT, HttpMethod.GET, "/" + container + "/", null,
+                Objects.class);
+        }
+    }
 
-	}
+    public class CreateDirectory extends OpenStackRequest<Void> {
+        public CreateDirectory(String container, String path) {
+            super(CLIENT, HttpMethod.PUT, buildPath(container, "/", path),
+                Entity.json("*"), null);
+        }
+    }
 
-	
-	public class Delete extends OpenStackRequest<Void> {
+    public class Show extends OpenStackRequest<Object> {
+        public Show(String containerName, String objectName) {
+            super(CLIENT, HttpMethod.GET,
+                buildPath(containerName, "/", objectName), Entity.json("*"),
+                Object.class);
+        }
+    }
 
-		private String containerName;
-		
-		private String objectName;
-		
-		public Delete(String containerName, String objectName) {
-			this.containerName = containerName;
-			this.objectName = objectName;
-			//return target.path(containerName).path(objectName).request(MediaType.APPLICATION_JSON).delete();
-		}
+    public class Upload extends OpenStackRequest<OpenStackResponse> {
+        public Upload(ObjectForUpload objectForUpload) {
+            super(CLIENT, HttpMethod.PUT,
+                buildPath(objectForUpload.getContainer(), "/",
+                    objectForUpload.getName()),
+                new Entity<InputStream>(objectForUpload.getInputStream(),
+                    objectForUpload.getProperties().get("Content-Type")
+                                   .toString()), null);
 
-	}
+            for (String key : objectForUpload.getProperties().keySet()) {
+                header("x-object-meta-" + key,
+                    objectForUpload.getProperties().get(key));
+            }
+        }
+    }
 
+    public class Download extends OpenStackRequest<ObjectDownload> {
+        public Download(String containerName, String objectName) {
+            super(CLIENT, HttpMethod.GET,
+                buildPath(containerName, "/", objectName), null,
+                ObjectDownload.class);
+        }
+    }
+
+    public class Delete extends OpenStackRequest<Void> {
+        public Delete(String containerName, String objectName) {
+            super(CLIENT, HttpMethod.DELETE,
+                buildPath(containerName, "/", objectName), null, null);
+        }
+    }
 }

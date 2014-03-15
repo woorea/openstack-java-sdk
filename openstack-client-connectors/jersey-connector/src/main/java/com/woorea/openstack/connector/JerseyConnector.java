@@ -9,12 +9,15 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonRootName;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+
+
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
@@ -80,17 +83,17 @@ public class JerseyConnector implements OpenStackClientConnector {
 		static ObjectMapper WRAPPED_MAPPER;
 		static {
 			DEFAULT_MAPPER = new ObjectMapper();
-			DEFAULT_MAPPER.setSerializationInclusion(Inclusion.NON_NULL);
-			DEFAULT_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-			DEFAULT_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-			DEFAULT_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+			DEFAULT_MAPPER.setSerializationInclusion(Include.NON_NULL);
+			DEFAULT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
+			DEFAULT_MAPPER.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+			DEFAULT_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 			WRAPPED_MAPPER = new ObjectMapper();
-			WRAPPED_MAPPER.setSerializationInclusion(Inclusion.NON_NULL);
-			WRAPPED_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-			WRAPPED_MAPPER.enable(SerializationConfig.Feature.WRAP_ROOT_VALUE);
-			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
-			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-			WRAPPED_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+			WRAPPED_MAPPER.setSerializationInclusion(Include.NON_NULL);
+			WRAPPED_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
+			WRAPPED_MAPPER.enable(SerializationFeature.WRAP_ROOT_VALUE);
+			WRAPPED_MAPPER.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+			WRAPPED_MAPPER.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+			WRAPPED_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		}
 		
 		@Override

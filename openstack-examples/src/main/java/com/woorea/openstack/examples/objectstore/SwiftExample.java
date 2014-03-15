@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.woorea.openstack.keystone.utils.KeystoneUtils;
-
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.examples.ExamplesConfiguration;
 import com.woorea.openstack.keystone.Keystone;
@@ -17,6 +15,7 @@ import com.woorea.openstack.keystone.model.Access;
 import com.woorea.openstack.keystone.model.Tenants;
 import com.woorea.openstack.keystone.model.authentication.TokenAuthentication;
 import com.woorea.openstack.keystone.model.authentication.UsernamePassword;
+import com.woorea.openstack.keystone.utils.KeystoneUtils;
 import com.woorea.openstack.swift.Swift;
 import com.woorea.openstack.swift.model.ObjectDownload;
 import com.woorea.openstack.swift.model.ObjectForUpload;

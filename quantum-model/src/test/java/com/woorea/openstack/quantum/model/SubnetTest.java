@@ -9,12 +9,12 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
 
 import java.util.Arrays;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woorea.openstack.quantum.model.Subnet.IpVersion;
 
 public class SubnetTest {

@@ -1,6 +1,5 @@
 package com.woorea.openstack.base.client;
 
-import java.io.InputStream;
 
 
 public class Entity<T> {
