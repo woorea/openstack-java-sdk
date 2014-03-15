@@ -8,7 +8,6 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.ContextResolver;
 
 import org.apache.commons.httpclient.HttpStatus;
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.plugins.providers.InputStreamProvider;
@@ -19,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
