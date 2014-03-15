@@ -1,14 +1,13 @@
 package com.woorea.openstack.keystone;
 
+import com.woorea.openstack.base.client.OpenStackClient;
+import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.keystone.api.EndpointsResource;
 import com.woorea.openstack.keystone.api.RolesResource;
 import com.woorea.openstack.keystone.api.ServicesResource;
 import com.woorea.openstack.keystone.api.TenantsResource;
 import com.woorea.openstack.keystone.api.TokensResource;
 import com.woorea.openstack.keystone.api.UsersResource;
-
-import com.woorea.openstack.base.client.OpenStackClient;
-import com.woorea.openstack.base.client.OpenStackClientConnector;
 
 public class Keystone extends OpenStackClient {
 	

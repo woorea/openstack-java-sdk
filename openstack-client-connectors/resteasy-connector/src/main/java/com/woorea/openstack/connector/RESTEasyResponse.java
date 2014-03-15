@@ -1,13 +1,15 @@
 package com.woorea.openstack.connector;
 
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-import com.woorea.openstack.base.client.OpenStackResponse;
-
-import javax.ws.rs.core.MultivaluedMap;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.jboss.resteasy.client.ClientRequest;
+import org.jboss.resteasy.client.ClientResponse;
+
+import com.woorea.openstack.base.client.OpenStackResponse;
 
 public class RESTEasyResponse implements OpenStackResponse {
 

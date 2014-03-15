@@ -1,10 +1,9 @@
 package com.woorea.openstack.nova.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("flavor")
 public class FlavorForCreate implements Serializable {

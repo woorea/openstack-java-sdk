@@ -1,7 +1,7 @@
 package com.woorea.openstack.quantum.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * Please use {@link Subnet} directly.

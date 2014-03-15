@@ -3,7 +3,6 @@ package com.woorea.openstack.nova.api.extensions;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import com.woorea.openstack.base.client.Entity;
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;

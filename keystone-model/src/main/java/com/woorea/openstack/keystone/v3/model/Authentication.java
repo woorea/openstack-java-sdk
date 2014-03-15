@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
-
-import com.woorea.openstack.keystone.v3.model.Authentication.Scope;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("auth")
 public class Authentication implements Serializable {

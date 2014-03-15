@@ -1,8 +1,8 @@
 package com.woorea.openstack.heat.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CreateStackParam {
     @JsonProperty("stack_name")

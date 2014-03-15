@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.woorea</groupId>
 	<artifactId>openstack-java-sdk</artifactId>
@@ -8,7 +9,7 @@
 	<description>OpenStack Java SDK</description>
 
 	<properties>
-		<skip.sign>false</skip.sign>
+		<skip.sign>true</skip.sign>
 	</properties>
 
 	<parent>
@@ -25,7 +26,7 @@
 		<module>swift-client</module>
 		<module>quantum-client</module>
 		<module>openstack-client</module>
-        <module>heat-client</module>
+		<module>heat-client</module>
 		<module>nova-model</module>
 		<module>glance-model</module>
 		<module>keystone-model</module>
@@ -34,7 +35,7 @@
 		<module>ceilometer-model</module>
 		<module>ceilometer-client</module>
 		<module>openstack-client-connectors</module>
-        <module>heat-model</module>
+		<module>heat-model</module>
 	</modules>
 
 	<profiles>
@@ -84,9 +85,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.3.1</version>
 		</dependency>
 	</dependencies>
 
@@ -131,18 +132,18 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

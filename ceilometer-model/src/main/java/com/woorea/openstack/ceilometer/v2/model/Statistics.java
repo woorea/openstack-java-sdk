@@ -2,7 +2,7 @@ package com.woorea.openstack.ceilometer.v2.model;
 
 import java.math.BigDecimal;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Statistics {
 	
