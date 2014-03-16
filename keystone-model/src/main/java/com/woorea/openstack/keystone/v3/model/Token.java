@@ -23,13 +23,68 @@ public class Token implements Serializable {
 	private List<String> methods;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)
-	private static final class Domain {
+	public static final class Domain {
 		
 		private String id;
 		
 		private String name;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
 		
 	}
+	
+	private Domain domain;
+	
+	@JsonIgnoreProperties(ignoreUnknown=true)
+	public static final class Project {
+		
+		private Domain domain;
+		
+		private String id;
+		
+		private String name;
+
+		public Domain getDomain() {
+			return domain;
+		}
+
+		public void setDomain(Domain domain) {
+			this.domain = domain;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+	}
+	
+	private Project project;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static final class User {
@@ -40,12 +95,44 @@ public class Token implements Serializable {
 			private String id;
 			
 			private String name;
+
+			public String getId() {
+				return id;
+			}
+
+			public void setId(String id) {
+				this.id = id;
+			}
+
+			public String getName() {
+				return name;
+			}
+
+			public void setName(String name) {
+				this.name = name;
+			}
 			
 		}
 		
 		private String id;
 		
 		private String name;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
 		
 	}
 	
@@ -162,71 +249,122 @@ public class Token implements Serializable {
 		
 	}
 	
-	public List<Service> catalog;
+	private List<Service> catalog;
+
 
 	public String getId() {
 		return id;
 	}
 
+
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
+
 
 	public Calendar getExpiresAt() {
 		return expiresAt;
 	}
 
+
+
 	public void setExpiresAt(Calendar expiresAt) {
 		this.expiresAt = expiresAt;
 	}
+
+
 
 	public Calendar getIssuedAt() {
 		return issuedAt;
 	}
 
+
+
 	public void setIssuedAt(Calendar issuedAt) {
 		this.issuedAt = issuedAt;
 	}
+
+
 
 	public List<String> getMethods() {
 		return methods;
 	}
 
+
+
 	public void setMethods(List<String> methods) {
 		this.methods = methods;
 	}
+
+
+
+	public Domain getDomain() {
+		return domain;
+	}
+
+
+
+	public void setDomain(Domain domain) {
+		this.domain = domain;
+	}
+
+
+
+	public Project getProject() {
+		return project;
+	}
+
+
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+
 
 	public User getUser() {
 		return user;
 	}
 
+
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+
 
 	public List<Role> getRoles() {
 		return roles;
 	}
 
+
+
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+
 
 	public List<Service> getCatalog() {
 		return catalog;
 	}
 
+
+
 	public void setCatalog(List<Service> catalog) {
 		this.catalog = catalog;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Token [id=" + id + ", expiresAt=" + expiresAt.getTime() + ", issuedAt="
-				+ issuedAt.getTime() + ", methods=" + methods + ", user=" + user
-				+ ", roles=" + roles + ", catalog=" + catalog + "]";
+		return "Token [id=" + id + ", expiresAt=" + expiresAt + ", issuedAt="
+				+ issuedAt + ", methods=" + methods + ", domain=" + domain
+				+ ", project=" + project + ", user=" + user + ", roles="
+				+ roles + ", catalog=" + catalog + "]";
 	}
 
-	
-	
 }
