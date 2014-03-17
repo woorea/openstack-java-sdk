@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-java-sdk</artifactId>
-		<version>3.0.3-SNAPSHOT</version>
+		<version>3.0.3</version>
 	</parent>
 	<artifactId>openstack-console</artifactId>
 	<name>OpenStack Console</name>
@@ -22,12 +22,12 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>keystone-client</artifactId>
-			<version>3.0.3-SNAPSHOT</version>
+			<version>3.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>nova-client</artifactId>
-			<version>3.0.3-SNAPSHOT</version>
+			<version>3.0.3</version>
 		</dependency>
 	</dependencies>
 	<profiles>
