@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.ContextResolver;
 
@@ -11,13 +12,16 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.plugins.providers.InputStreamProvider;
+import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.woorea.openstack.base.client.OpenStackClientConnector;
 import com.woorea.openstack.base.client.OpenStackRequest;
@@ -29,22 +33,21 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	public static ObjectMapper DEFAULT_MAPPER;
 
 	public static ObjectMapper WRAPPED_MAPPER;
-
+	
 	static class OpenStackProviderFactory extends ResteasyProviderFactory {
 
-		private JacksonJsonProvider jsonProvider;
+		private JacksonJaxbJsonProvider jsonProvider;
 		private InputStreamProvider streamProvider;
 
 		public OpenStackProviderFactory() {
 			super();
-
 			addContextResolver(new ContextResolver<ObjectMapper>() {
 				public ObjectMapper getContext(Class<?> type) {
-					return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
+				return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
 				}
 			});
+			jsonProvider = new ResteasyJackson2Provider();
 
-			jsonProvider = new JacksonJsonProvider();
 			addMessageBodyReader(jsonProvider);
 			addMessageBodyWriter(jsonProvider);
 
@@ -73,7 +76,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		WRAPPED_MAPPER.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
 		WRAPPED_MAPPER.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 		WRAPPED_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
+		
 		providerFactory = new OpenStackProviderFactory();
 	}
 
