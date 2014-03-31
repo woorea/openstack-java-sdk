@@ -2,8 +2,6 @@ package com.woorea.openstack.keystone.model;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
-
 public abstract class Authentication implements Serializable {
 
 	private String tenantId;

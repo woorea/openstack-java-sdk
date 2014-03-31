@@ -5,8 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.woorea.openstack.base.client.Entity;
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
@@ -14,9 +13,9 @@ import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.base.client.OpenStackResponse;
 import com.woorea.openstack.glance.model.Image;
 import com.woorea.openstack.glance.model.ImageDownload;
-import com.woorea.openstack.glance.model.ImageUpload;
 import com.woorea.openstack.glance.model.ImageMember;
 import com.woorea.openstack.glance.model.ImageMembers;
+import com.woorea.openstack.glance.model.ImageUpload;
 import com.woorea.openstack.glance.model.Images;
 
 public class ImagesResource {

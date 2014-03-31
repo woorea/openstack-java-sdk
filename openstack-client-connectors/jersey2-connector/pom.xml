@@ -17,17 +17,7 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>2.6</version>
-		</dependency>
-		<dependency>
-			<groupId>com.woorea</groupId>
-			<artifactId>openstack-client</artifactId>
-			<version>3.2.2-SNAPSHOT</version>
+			<version>2.7</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,10 +1,10 @@
 package com.woorea.openstack.heat.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Resources implements Iterable<Resource>, Serializable {
     @JsonProperty("resources")

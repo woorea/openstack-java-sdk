@@ -1,10 +1,10 @@
 package com.woorea.openstack.quantum.model;
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("router")
 public class Router implements Serializable {

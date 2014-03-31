@@ -3,7 +3,8 @@ package com.woorea.openstack.quantum.model;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-import org.codehaus.jackson.annotate.JsonProperty;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Networks implements Iterable<Network>, Serializable{
 	

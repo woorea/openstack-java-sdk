@@ -1,28 +1,24 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.woorea</groupId>
-    <artifactId>openstack-client-connectors</artifactId>
-    <version>3.2.2-SNAPSHOT</version>
-  </parent>
-  <artifactId>resteasy-connector</artifactId>
-  <name>OpenStack RESTEasy Connector</name>
-  <description>OpenStack RESTEasy Connector</description>
-  <dependencies>
-  	<dependency>
-  		<groupId>org.jboss.resteasy</groupId>
-  		<artifactId>resteasy-jaxrs</artifactId>
-  		<version>2.3.2.Final</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.codehaus.jackson</groupId>
-  		<artifactId>jackson-jaxrs</artifactId>
-  		<version>1.9.4</version>
-  	</dependency>
-	<dependency>
-		<groupId>commons-httpclient</groupId>
-		<artifactId>commons-httpclient</artifactId>
-		<version>3.1</version>
-	</dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.woorea</groupId>
+		<artifactId>openstack-client-connectors</artifactId>
+		<version>3.2.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>resteasy-connector</artifactId>
+	<name>OpenStack RESTEasy Connector</name>
+	<description>OpenStack RESTEasy Connector</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>2.3.2.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+	</dependencies>
 </project>
