@@ -21,11 +21,11 @@ import com.woorea.openstack.base.client.OpenStackResponseException;
 
 public class JaxRs20Connector implements OpenStackClientConnector {
 
-	protected Client client = OpenStack.CLIENT;
     private LoggingFilter logger = new LoggingFilter(Logger.getLogger("os"), 10000);
 
 	@Override
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
+		Client client = OpenStack.newClient();
 		WebTarget target = client.target(request.endpoint()).path(request.path());
 
 		for(Map.Entry<String, List<Object> > entry : request.queryParams().entrySet()) {
@@ -60,6 +60,8 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 		} catch (ClientErrorException e) {
 			throw new OpenStackResponseException(e.getResponse()
 					.getStatusInfo().toString(), e.getResponse().getStatus());
+		} finally {
+			client.close();
 		}
 	}
 }
