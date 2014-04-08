@@ -9,6 +9,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.ContextResolver;
 
 import org.apache.commons.httpclient.HttpStatus;
+import org.jboss.resteasy.client.ClientExecutor;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.plugins.providers.InputStreamProvider;
@@ -34,11 +35,26 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 	public static ObjectMapper WRAPPED_MAPPER;
 	
-	static class OpenStackProviderFactory extends ResteasyProviderFactory {
+	public static ClientExecutor clientExecutor = ClientRequest.getDefaultExecutor();
+	
+	public RESTEasyConnector() {}
+	
+	public RESTEasyConnector(ClientExecutor ce) {
+		clientExecutor = ce;
+	}
+	
+	public static class OpenStackProviderFactory extends ResteasyProviderFactory {
 
 		private JacksonJaxbJsonProvider jsonProvider;
 		private InputStreamProvider streamProvider;
+		
 
+		public OpenStackProviderFactory(ClientExecutor ce) {
+			this();
+			clientExecutor=ce;
+		}
+		
+		
 		public OpenStackProviderFactory() {
 			super();
 			addContextResolver(new ContextResolver<ObjectMapper>() {
@@ -55,7 +71,6 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 			addMessageBodyReader(streamProvider);
 			addMessageBodyWriter(streamProvider);
 		}
-
 	}
 
 	private static OpenStackProviderFactory providerFactory;
@@ -81,8 +96,11 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	}
 
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
+		
+		//executor!!  ApacheHttpClient4Executor
+		
 		ClientRequest client = new ClientRequest(UriBuilder.fromUri(request.endpoint() + "/" + request.path()),
-				ClientRequest.getDefaultExecutor(), providerFactory);
+				clientExecutor, providerFactory);
 
 		for(Map.Entry<String, List<Object> > entry : request.queryParams().entrySet()) {
 			for (Object o : entry.getValue()) {
@@ -121,6 +139,10 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 		throw new OpenStackResponseException(response.getResponseStatus()
 				.getReasonPhrase(), response.getStatus());
+	}
+
+	public static OpenStackProviderFactory getProviderFactory() {
+		return providerFactory;
 	}
 
 }

@@ -22,7 +22,8 @@ public class RESTEasyResponse implements OpenStackResponse {
         this.response = response;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public <T> T getEntity(Class<T> returnType) {
         return (T) response.getEntity(returnType);
     }

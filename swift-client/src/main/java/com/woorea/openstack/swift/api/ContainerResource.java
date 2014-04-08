@@ -48,7 +48,7 @@ public class ContainerResource {
 
     public class List extends OpenStackRequest<Objects> {
         public List(String containerName, Map<String, String> filters) {
-            super(CLIENT, HttpMethod.GET, "/" + container + "/", null,
+            super(CLIENT, HttpMethod.GET, container + "/", null,
                 Objects.class);
         }
     }
