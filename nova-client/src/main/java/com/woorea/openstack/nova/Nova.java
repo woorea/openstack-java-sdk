@@ -9,8 +9,10 @@ import com.woorea.openstack.nova.api.ImagesResource;
 import com.woorea.openstack.nova.api.QuotaSetsResource;
 import com.woorea.openstack.nova.api.ServersResource;
 import com.woorea.openstack.nova.api.extensions.AggregatesExtension;
+import com.woorea.openstack.nova.api.extensions.FloatingIpPoolsExtension;
 import com.woorea.openstack.nova.api.extensions.FloatingIpsExtension;
 import com.woorea.openstack.nova.api.extensions.KeyPairsExtension;
+import com.woorea.openstack.nova.api.extensions.NetworksExtension;
 import com.woorea.openstack.nova.api.extensions.SecurityGroupsExtension;
 import com.woorea.openstack.nova.api.extensions.SnapshotsExtension;
 import com.woorea.openstack.nova.api.extensions.VolumesExtension;
@@ -28,7 +30,11 @@ public class Nova extends OpenStackClient {
 	
 	private final KeyPairsExtension KEY_PAIRS;
 	
+	private final NetworksExtension NETWORKS;
+	
 	private final FloatingIpsExtension FLOATING_IPS;
+	
+	private final FloatingIpPoolsExtension FLOATING_IP_POOLS;
 	
 	private final SecurityGroupsExtension SECURITY_GROUPS;
 	
@@ -49,6 +55,8 @@ public class Nova extends OpenStackClient {
 		IMAGES = new ImagesResource(this);
 		FLAVORS = new FlavorsResource(this);
 		KEY_PAIRS = new KeyPairsExtension(this);
+		NETWORKS = new NetworksExtension(this);
+		FLOATING_IP_POOLS = new FloatingIpPoolsExtension(this);
 		FLOATING_IPS = new FloatingIpsExtension(this);
 		SECURITY_GROUPS = new SecurityGroupsExtension(this);
 		SNAPSHOTS = new SnapshotsExtension(this);
@@ -80,6 +88,14 @@ public class Nova extends OpenStackClient {
 	
 	public KeyPairsExtension keyPairs() {
 		return KEY_PAIRS;
+	}
+	
+	public NetworksExtension networks() {
+		return NETWORKS;
+	}
+	
+	public FloatingIpPoolsExtension floatingIpPools() {
+		return FLOATING_IP_POOLS;
 	}
 	
 	public FloatingIpsExtension floatingIps() {

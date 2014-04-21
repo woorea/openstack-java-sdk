@@ -235,7 +235,7 @@ public class Server implements Serializable {
     private String terminatedAt;
 
     @JsonProperty("os-extended-volumes:volumes_attached")
-    private List<String> osExtendedVolumesAttached;
+    private List<VolumeAttachment> osExtendedVolumesAttached;
 	
 	private String uuid;
 	
@@ -468,7 +468,7 @@ public class Server implements Serializable {
     /**
      * @return the osExtendedVolumesAttached
      */
-    public List<String> getOsExtendedVolumesAttached() {
+    public List<VolumeAttachment> getOsExtendedVolumesAttached() {
         return osExtendedVolumesAttached;
     }
 

@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.woorea.openstack.keystone.model.User;
 
 public class Users implements Iterable<User>,  Serializable {
 
