@@ -1,18 +1,17 @@
 package com.woorea.openstack.quantum.model;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.containsString;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
+import org.hamcrest.CustomMatcher;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -142,23 +141,15 @@ public class PortTest {
         assertThat(port.getTenantId(), is(equalTo(TENANT_ID)));
 
         assertThat(port.getSecurityGroups(), hasItem(equalTo(SEC_GROUP)));
-        assertThat(port.getList(), hasItem(new IpMatcher()));
-    }
+        assertThat(port.getList(), hasItem(new CustomMatcher<Ip>(
+                "an Ip object with address " + IP_ADDRESS + " and subnet id " + IP_SUBNET_ID) {
 
-    private final class IpMatcher extends BaseMatcher<Ip> {
-        @Override
-        public boolean matches(Object item) {
-            assertThat(item, is(Ip.class));
-            Ip ip = (Ip) item;
-            return IP_ADDRESS.equals(ip.getAddress()) && IP_SUBNET_ID.equals(ip.getSubnetId());
-        }
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("an Ip object with address ");
-            description.appendValue(IP_ADDRESS);
-            description.appendText(" and subnet id ");
-            description.appendValue(IP_SUBNET_ID);
-        }
+            @Override
+            public boolean matches(Object ip) {
+                return ip instanceof Ip
+                        && IP_ADDRESS.equals(((Ip) ip).getAddress())
+                        && IP_SUBNET_ID.equals(((Ip) ip).getSubnetId());
+            }
+        }));
     }
 }
