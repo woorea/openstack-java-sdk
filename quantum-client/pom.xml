@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-java-sdk</artifactId>
-		<version>3.0.4-SNAPSHOT</version>
+		<version>3.0.4</version>
 	</parent>
 	<artifactId>quantum-client</artifactId>
 	<name>OpenStack Quantum Client</name>
@@ -12,12 +12,12 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.0.4-SNAPSHOT</version>
+			<version>3.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>quantum-model</artifactId>
-			<version>3.0.4-SNAPSHOT</version>
+			<version>3.0.4</version>
 		</dependency>
 	</dependencies>
 </project>
