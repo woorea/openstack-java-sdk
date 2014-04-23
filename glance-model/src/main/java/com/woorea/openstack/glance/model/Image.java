@@ -24,6 +24,9 @@ public class Image implements Serializable {
 	private String containerFormat;
 	
 	private Long size;
+
+	@JsonProperty("virtual_size")
+	private Long virtualSize;
 	
 	private String checksum;
 	
@@ -139,6 +142,20 @@ public class Image implements Serializable {
 	 */
 	public void setSize(Long size) {
 		this.size = size;
+	}
+
+	/**
+	 * @return the virtual size
+	 */
+	public Long getVirtualSize() {
+		return virtualSize;
+	}
+
+	/**
+	 * @param size the virtual size to set
+	 */
+	public void setVirtualSize(Long virtualSize) {
+		this.virtualSize = virtualSize;
 	}
 
 	/**
