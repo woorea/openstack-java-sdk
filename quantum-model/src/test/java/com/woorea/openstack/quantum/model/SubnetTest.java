@@ -1,17 +1,16 @@
 package com.woorea.openstack.quantum.model;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.containsString;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 
 import java.util.Arrays;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
+import org.hamcrest.CustomMatcher;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -124,25 +123,15 @@ public class SubnetTest {
         assertThat(subnet.getName(), is(equalTo(NAME)));
         assertThat(subnet.getNetworkId(), is(equalTo(NETWORK_ID)));
         assertThat(subnet.getTenantId(), is(equalTo(TENANT_ID)));
-        assertThat(subnet.getList(), hasItem(new PoolMatcher()));
-    }
+        assertThat(subnet.getList(), hasItem(new CustomMatcher<Pool>(
+                "a Pool object with start " + POOL_START + " and end " + POOL_END) {
 
-    private class PoolMatcher extends BaseMatcher<Pool> {
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("a Pool object with start ");
-            description.appendValue(POOL_START);
-            description.appendText(" and end ");
-            description.appendValue(POOL_END);
-        }
-
-        @Override
-        public boolean matches(Object item) {
-            assertThat(item, is(Pool.class));
-            Pool pool = (Pool) item;
-            return POOL_START.equals(pool.getStart()) && POOL_END.equals(pool.getEnd());
-        }
-
+            @Override
+            public boolean matches(Object pool) {
+                return pool instanceof Pool
+                        && POOL_START.equals(((Pool) pool).getStart())
+                        && POOL_END.equals(((Pool) pool).getEnd());
+            }
+        }));
     }
 }
