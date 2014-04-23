@@ -5,10 +5,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("image")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Image implements Serializable {
 
 	private String id;
