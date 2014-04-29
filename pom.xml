@@ -25,6 +25,7 @@
 		<module>swift-client</module>
 		<module>quantum-client</module>
 		<module>openstack-client</module>
+        <module>heat-client</module>
 		<module>nova-model</module>
 		<module>glance-model</module>
 		<module>keystone-model</module>
@@ -33,6 +34,7 @@
 		<module>ceilometer-model</module>
 		<module>ceilometer-client</module>
 		<module>openstack-client-connectors</module>
+        <module>heat-model</module>
 	</modules>
 
 	<profiles>
@@ -84,7 +86,7 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.4</version>
+			<version>1.9.13</version>
 		</dependency>
 	</dependencies>
 
@@ -93,10 +95,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>

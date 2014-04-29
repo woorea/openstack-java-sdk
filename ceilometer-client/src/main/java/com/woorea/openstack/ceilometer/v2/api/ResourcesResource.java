@@ -2,7 +2,6 @@ package com.woorea.openstack.ceilometer.v2.api;
 
 import java.util.List;
 
-
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.ceilometer.QueriableCeilometerCommand;
@@ -25,7 +24,7 @@ public class ResourcesResource {
 
 	}
 	
-	public class ResourceShow extends OpenStackRequest {
+	public class ResourceShow extends OpenStackRequest<Void> {
 
 		private String id;
 			

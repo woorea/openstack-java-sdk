@@ -7,13 +7,13 @@ import com.woorea.openstack.keystone.model.Tenant;
 
 public class ExamplesConfiguration {
 
-	public static final String KEYSTONE_AUTH_URL = "http://identity/v2.0";
+	public static final String KEYSTONE_AUTH_URL = "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v3";
 	
 	public static final String KEYSTONE_USERNAME = "";
 	
 	public static final String KEYSTONE_PASSWORD = "";
 	
-	public static final String KEYSTONE_ENDPOINT = "http://keystone/v2.0";
+	public static final String KEYSTONE_ENDPOINT = "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v3";
 	
 	public static final String TENANT_NAME = "admin";
 

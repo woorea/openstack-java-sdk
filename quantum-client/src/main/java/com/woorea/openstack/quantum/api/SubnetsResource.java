@@ -6,7 +6,6 @@ import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.quantum.model.Subnet;
-import com.woorea.openstack.quantum.model.SubnetForCreate;
 import com.woorea.openstack.quantum.model.Subnets;
 
 public class SubnetsResource {
@@ -21,9 +20,13 @@ public class SubnetsResource {
 		return new List();
 	}
 
-	public Create create(SubnetForCreate net){
+    public Create create(Subnet net) {
 		return new Create(net);
 	}
+
+    public Update update(Subnet net) {
+        return new Update(net);
+    }
 
 	public Delete delete(String netId){
 		return new Delete(netId);
@@ -53,10 +56,17 @@ public class SubnetsResource {
 
 	public class Create extends OpenStackRequest<Subnet> {
 
-		public Create(SubnetForCreate subnet){
+        public Create(Subnet subnet) {
 		    super(CLIENT, HttpMethod.POST, "subnets", Entity.json(subnet), Subnet.class);
 		}
 	}
+
+    public class Update extends OpenStackRequest<Subnet> {
+
+        public Update(Subnet subnet) {
+            super(CLIENT, HttpMethod.PUT, buildPath("subnets/", subnet.getId()), Entity.json(subnet), Subnet.class);
+        }
+    }
 
 	public class Show extends OpenStackRequest<Subnet> {
 

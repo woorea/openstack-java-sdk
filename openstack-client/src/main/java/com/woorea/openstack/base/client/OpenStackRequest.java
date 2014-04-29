@@ -97,6 +97,10 @@ public class OpenStackRequest<R> {
 	public R execute() {
 		return client.execute(this);
 	}
+	
+	public OpenStackResponse request() {
+		return client.request(this);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
