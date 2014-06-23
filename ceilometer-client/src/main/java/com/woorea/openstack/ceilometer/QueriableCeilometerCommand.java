@@ -1,10 +1,9 @@
 package com.woorea.openstack.ceilometer;
 
+import com.woorea.openstack.base.client.OpenStackRequest;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.woorea.openstack.base.client.OpenStackRequest;
 
 public abstract class QueriableCeilometerCommand<T,R> extends OpenStackRequest<R> {
 	
