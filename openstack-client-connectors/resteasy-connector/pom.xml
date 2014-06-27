@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-client-connectors</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6-SNAPSHOT</version>
   </parent>
   <artifactId>resteasy-connector</artifactId>
   <name>OpenStack RESTEasy Connector</name>
