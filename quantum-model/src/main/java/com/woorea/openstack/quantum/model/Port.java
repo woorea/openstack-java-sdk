@@ -2,10 +2,12 @@ package com.woorea.openstack.quantum.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonUnwrapped;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @SuppressWarnings("serial")
@@ -58,6 +60,89 @@ public class Port implements Serializable {
 
     }
 
+    public static final class Binding {
+
+        /**
+         * The host on which the port will be allocated.
+         */
+        @JsonProperty("binding:host_id")
+        private String hostId;
+
+        /**
+         * The vif type for the specific port.
+         */
+        @JsonProperty("binding:vif_type")
+        private String vifType;
+
+        /**
+         * The type of vnic that this port should be attached to
+         */
+        @JsonProperty("binding:vnic_type")
+        private String vnicType;
+
+        /**
+         * A map containing additional information needed by the interface driver
+         */
+        @JsonProperty("binding:vif_details")
+        private Map<String, String> vifDetails;
+
+        /**
+         * A map to enable applications running on the specific host to pass and receive vif port specific information
+         * to the plugin.
+         */
+        @JsonProperty("binding:profile")
+        private Map<String, String> profile;
+
+        public String getHostId() {
+            return hostId;
+        }
+
+        public void setHostId(String hostId) {
+            this.hostId = hostId;
+        }
+
+        public String getVifType() {
+            return vifType;
+        }
+
+        public void setVifType(String vifType) {
+            this.vifType = vifType;
+        }
+
+        public String getVnicType() {
+            return vnicType;
+        }
+
+        public void setVnicType(String vnicType) {
+            this.vnicType = vnicType;
+        }
+
+        public Map<String, String> getVifDetails() {
+            return vifDetails;
+        }
+
+        public void setVifDetails(Map<String, String> vifDetails) {
+            this.vifDetails = vifDetails;
+        }
+
+        public Map<String, String> getProfile() {
+            return profile;
+        }
+
+        public void setProfile(Map<String, String> profile) {
+            this.profile = profile;
+        }
+
+        @Override
+        public String toString() {
+            return "Binding [hostId=" + hostId
+                    + ", vifType=" + vifType +
+                    ", vnicType=" + vnicType +
+                    ", vifDetails=" + vifDetails +
+                    ", profile=" + profile + "]";
+        }
+    }
+
     @JsonProperty("admin_state_up")
     private Boolean adminStateUp;
 
@@ -87,6 +172,9 @@ public class Port implements Serializable {
 
     @JsonProperty("security_groups")
     private List<String> securityGroups;
+
+    @JsonUnwrapped
+    private Binding binding;
 
     /**
      * @return the adminStateUp
@@ -257,6 +345,21 @@ public class Port implements Serializable {
         this.securityGroups = securityGroups;
     }
 
+    /**
+     * @return the binding of the port
+     */
+    public Binding getBinding() {
+        return binding;
+    }
+
+    /**
+     * @param binding
+     *            The port bindings by which the port is bind to network on host
+     */
+    public void setBinding(Binding binding) {
+        this.binding = binding;
+    }
+
     @Override
     public String toString() {
         return "Port [id=" + id + ", name=" + name + ", mac_address="
@@ -264,6 +367,7 @@ public class Port implements Serializable {
                 + ", device_owner=" + deviceOwner + ", fixed_ips=" + list
                 + ", network_id=" + networkId + ", status=" + status
                 + ", tenant_id=" + tenantId
-                + ", securityGroups=" + securityGroups + "]";
+                + ", securityGroups=" + securityGroups
+                + ", binding=" + binding + "]";
     }
 }
