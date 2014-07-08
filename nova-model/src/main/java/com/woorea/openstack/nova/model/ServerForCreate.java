@@ -40,6 +40,49 @@ public class ServerForCreate implements Serializable {
 
 	}
 
+	public static final class BlockDeviceMapping implements Serializable {
+
+		@JsonProperty("device_name")
+		private String deviceName;
+		
+		@JsonProperty("volume_id")
+		private String volumeId;
+		
+		@JsonProperty("delete_on_termination")
+		private boolean deleteOnTermination;
+
+		public BlockDeviceMapping() {
+		}
+
+		public String getDeviceName() {
+			return deviceName;
+		}
+
+		public void setDeviceName(String deviceName) {
+			this.deviceName = deviceName;
+		}
+
+		public String getVolumeId() {
+			return volumeId;
+		}
+
+		public void setVolumeId(String volumeId) {
+			this.volumeId = volumeId;
+		}
+
+		public boolean isDeleteOnTermination() {
+			return deleteOnTermination;
+		}
+
+		public void setDeleteOnTermination(boolean deleteOnTermination) {
+			this.deleteOnTermination = deleteOnTermination;
+		}
+
+		
+		
+
+	}
+
 	private String name;
 
 	private String adminPass;
@@ -52,8 +95,10 @@ public class ServerForCreate implements Serializable {
 
 	private String accessIPv6;
 
+	@JsonProperty("min_count")
 	private Integer min;
 
+	@JsonProperty("max_count")
 	private Integer max;
 
 	private String diskConfig;
@@ -79,6 +124,9 @@ public class ServerForCreate implements Serializable {
 
 	@JsonProperty("networks")
 	private List<NetworkForCreate> networks = new ArrayList<NetworkForCreate>();
+	
+	@JsonProperty("block_device_mapping")
+	private List<BlockDeviceMapping> blockDeviceMappings;
 
 	/**
 	 * @return the name
@@ -316,11 +364,21 @@ public class ServerForCreate implements Serializable {
 		this.networks = networks;
 	}
 
+	
 	public void addNetworks(String id, String fixedIp) {
 		NetworkForCreate net = new NetworkForCreate();
 		net.setId(id);
 		net.setFixedIp(fixedIp);
 		this.networks.add(net);
 	}
+	
+	public List<BlockDeviceMapping> getBlockDeviceMappings() {
+		return blockDeviceMappings;
+	}
 
+	public void setBlockDeviceMappings(List<BlockDeviceMapping> blockDeviceMappings) {
+		this.blockDeviceMappings = blockDeviceMappings;
+	}
+
+	
 }
