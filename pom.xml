@@ -1,136 +1,137 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.woorea</groupId>
-	<artifactId>openstack-java-sdk</artifactId>
-	<version>3.2.2-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>OpenStack Java SDK</name>
-	<description>OpenStack Java SDK</description>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.woorea</groupId>
+    <artifactId>openstack-java-sdk</artifactId>
+    <version>3.2.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>OpenStack Java SDK</name>
+    <description>OpenStack Java SDK</description>
 
-	<properties>
-		<skip.sign>false</skip.sign>
-	</properties>
+    <properties>
+        <skip.sign>false</skip.sign>
+    </properties>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
-
-	<modules>
-		<module>nova-client</module>
-		<module>glance-client</module>
-		<module>keystone-client</module>
-		<module>swift-client</module>
-		<module>quantum-client</module>
-		<module>openstack-client</module>
+    <modules>
+        <module>nova-client</module>
+        <module>glance-client</module>
+        <module>keystone-client</module>
+        <module>swift-client</module>
+        <module>quantum-client</module>
+        <module>openstack-client</module>
         <module>heat-client</module>
-		<module>nova-model</module>
-		<module>glance-model</module>
-		<module>keystone-model</module>
-		<module>swift-model</module>
-		<module>quantum-model</module>
-		<module>ceilometer-model</module>
-		<module>ceilometer-client</module>
-		<module>openstack-client-connectors</module>
+        <module>nova-model</module>
+        <module>glance-model</module>
+        <module>keystone-model</module>
+        <module>swift-model</module>
+        <module>quantum-model</module>
+        <module>ceilometer-model</module>
+        <module>ceilometer-client</module>
+        <module>openstack-client-connectors</module>
         <module>heat-model</module>
-	</modules>
+        <module>cinder-model</module>
+        <module>cinder-client</module>
+    </modules>
 
-	<profiles>
-		<profile>
-			<id>console</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>openstack-console</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>examples</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>openstack-examples</module>
-			</modules>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>console</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>openstack-console</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>examples</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>openstack-examples</module>
+            </modules>
+        </profile>
+    </profiles>
 
-	<licenses>
-		<license>
-			<name>Apache2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>Apache2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
-	<inceptionYear>2012</inceptionYear>
+    <inceptionYear>2012</inceptionYear>
 
-	<developers>
-		<developer>
-			<id>woorea</id>
-			<name>Luis Gervaso</name>
-			<email>luis@woorea.es</email>
-			<timezone>+1</timezone>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>woorea</id>
+            <name>Luis Gervaso</name>
+            <email>luis@woorea.es</email>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
 
-	<scm>
-		<connection>scm:git:https://github.com/woorea/openstack-java-sdk.git</connection>
-		<developerConnection>scm:git:https://github.com/woorea/openstack-java-sdk.git</developerConnection>
-		<url>http://github.com/woorea/openstack-java-sdk.git</url>
-	</scm>
+    <scm>
+        <connection>scm:git:https://github.com/woorea/openstack-java-sdk.git</connection>
+        <developerConnection>scm:git:https://github.com/woorea/openstack-java-sdk.git</developerConnection>
+        <url>http://github.com/woorea/openstack-java-sdk.git</url>
+    </scm>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.4</version>
-				<configuration>
-					<skip>${skip.sign}</skip>
-				</configuration>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <skip>${skip.sign}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.9</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>2.2.1</version>
                 <executions>
@@ -143,6 +144,6 @@
                     </execution>
                 </executions>
             </plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 </project>
