@@ -8,7 +8,7 @@
 	<description>OpenStack Java SDK</description>
 
 	<properties>
-		<skip.sign>false</skip.sign>
+		<skip.sign>true</skip.sign>
 	</properties>
 
 	<parent>
