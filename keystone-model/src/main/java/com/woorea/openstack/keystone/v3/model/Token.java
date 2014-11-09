@@ -21,6 +21,8 @@ public class Token implements Serializable {
 	private Calendar issuedAt;
 	
 	private List<String> methods;
+
+    private String[] audit_ids;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static final class Domain {
@@ -357,6 +359,16 @@ public class Token implements Serializable {
 	public void setCatalog(List<Service> catalog) {
 		this.catalog = catalog;
 	}
+
+
+    public String[] getAudit_ids() {
+        return audit_ids;
+    }
+
+
+    public void setAudit_ids(String[] audit_ids) {
+        this.audit_ids = audit_ids;
+    }
 
 	
 	@Override

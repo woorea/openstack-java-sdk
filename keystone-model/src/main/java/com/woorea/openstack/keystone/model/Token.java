@@ -12,6 +12,8 @@ public final class Token {
 
 	private Tenant tenant;
 
+    private String[] audit_ids;
+
 	/**
 	 * @return the id
 	 */
@@ -39,6 +41,10 @@ public final class Token {
 	public Tenant getTenant() {
 		return tenant;
 	}
+
+    public String[] getAudit_ids() {
+        return audit_ids;
+    }
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
