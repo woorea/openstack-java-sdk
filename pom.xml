@@ -21,12 +21,14 @@
 	<modules>
 		<module>nova-client</module>
 		<module>glance-client</module>
+		<module>cinder-client</module>
 		<module>keystone-client</module>
 		<module>swift-client</module>
 		<module>quantum-client</module>
 		<module>openstack-client</module>
 		<module>nova-model</module>
 		<module>glance-model</module>
+		<module>cinder-model</module>
 		<module>keystone-model</module>
 		<module>swift-model</module>
 		<module>quantum-model</module>
