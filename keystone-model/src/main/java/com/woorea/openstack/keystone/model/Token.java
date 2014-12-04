@@ -1,7 +1,10 @@
 package com.woorea.openstack.keystone.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.Calendar;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public final class Token {
 
 	private String id;
