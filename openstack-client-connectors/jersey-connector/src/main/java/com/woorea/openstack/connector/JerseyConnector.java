@@ -84,6 +84,8 @@ public class JerseyConnector implements OpenStackClientConnector {
 			DEFAULT_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
 			DEFAULT_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 			DEFAULT_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+			DEFAULT_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+
 			WRAPPED_MAPPER = new ObjectMapper();
 			WRAPPED_MAPPER.setSerializationInclusion(Inclusion.NON_NULL);
 			WRAPPED_MAPPER.enable(SerializationConfig.Feature.INDENT_OUTPUT);
@@ -91,6 +93,7 @@ public class JerseyConnector implements OpenStackClientConnector {
 			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE);
 			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 			WRAPPED_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+			WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		}
 		
 		@Override
