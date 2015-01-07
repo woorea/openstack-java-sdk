@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-java-sdk</artifactId>
-    <version>3.0.6-SNAPSHOT</version>
+    <version>3.0.6</version>
   </parent>
   <artifactId>keystone-client</artifactId>
   <name>OpenStack Keystone Client</name>
@@ -12,12 +12,12 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.0.6-SNAPSHOT</version>
+			<version>3.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>keystone-model</artifactId>
-			<version>3.0.6-SNAPSHOT</version>
+			<version>3.0.6</version>
 		</dependency>
   </dependencies>
 </project>
