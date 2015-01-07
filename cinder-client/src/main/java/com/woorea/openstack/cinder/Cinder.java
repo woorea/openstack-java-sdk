@@ -11,11 +11,14 @@ public class Cinder extends OpenStackClient {
 
     private final VolumeTypesExtension VOLUME_TYPES;
 
+    private final LimitsExtension LIMITS;
+
     public Cinder(String endpoint, OpenStackClientConnector connector) {
         super(endpoint, connector);
         VOLUMES = new VolumesExtension(this);
         SNAPSHOTS = new SnapshotsExtension(this);
         VOLUME_TYPES = new VolumeTypesExtension(this);
+        LIMITS = new LimitsExtension(this);
     }
 
     public Cinder(String endpoint) {
@@ -32,5 +35,9 @@ public class Cinder extends OpenStackClient {
 
     public final VolumeTypesExtension volumeTypes() {
         return VOLUME_TYPES;
+    }
+
+    public final LimitsExtension limits() {
+        return LIMITS;
     }
 }

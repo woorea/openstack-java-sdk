@@ -9,7 +9,6 @@ import com.woorea.openstack.cinder.model.Snapshot;
 import com.woorea.openstack.cinder.model.SnapshotForCreate;
 import com.woorea.openstack.cinder.model.SnapshotForUpdate;
 import com.woorea.openstack.cinder.model.Snapshots;
-import com.woorea.openstack.cinder.model.VolumeForUpdate;
 
 public class SnapshotsExtension {
 
