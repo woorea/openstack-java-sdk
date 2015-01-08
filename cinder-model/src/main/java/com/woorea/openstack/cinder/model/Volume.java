@@ -1,11 +1,11 @@
 package com.woorea.openstack.cinder.model;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonRootName;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("volume")
 public class Volume implements Serializable {
@@ -37,6 +37,7 @@ public class Volume implements Serializable {
 
     private Map<String, String> metadata;
 
+    @JsonProperty("created_at")
     private String createdAt;
 
     private Integer size;
