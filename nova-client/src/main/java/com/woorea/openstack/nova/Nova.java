@@ -15,6 +15,9 @@ import com.woorea.openstack.nova.api.extensions.SecurityGroupsExtension;
 import com.woorea.openstack.nova.api.extensions.SnapshotsExtension;
 import com.woorea.openstack.nova.api.extensions.VolumesExtension;
 import com.woorea.openstack.nova.api.extensions.HostsExtension;
+import com.woorea.openstack.nova.api.extensions.NetworksExtension;
+import com.woorea.openstack.nova.api.extensions.ServicesExtension;
+import com.woorea.openstack.nova.api.extensions.TenantNetworksExtension;
 
 public class Nova extends OpenStackClient {
 	
@@ -41,6 +44,12 @@ public class Nova extends OpenStackClient {
 	private final QuotaSetsResource QUOTA_SETS;
 	
 	private final HostsExtension HOSTS;
+	
+	private final ServicesExtension SERVICES;
+
+	private final NetworksExtension NETWORKS;
+
+	private final TenantNetworksExtension TENANT_NETWORKS;
 
 	public Nova(String endpoint, OpenStackClientConnector connector) {
 		super(endpoint, connector);
@@ -56,6 +65,9 @@ public class Nova extends OpenStackClient {
 		AGGREGATES = new AggregatesExtension(this);
 		QUOTA_SETS = new QuotaSetsResource(this);
 		HOSTS = new HostsExtension(this);
+		SERVICES = new ServicesExtension(this);
+		NETWORKS = new NetworksExtension(this);
+		TENANT_NETWORKS = new TenantNetworksExtension(this);
 	}
 	
 	public Nova(String endpoint) {
@@ -110,4 +122,15 @@ public class Nova extends OpenStackClient {
 		return HOSTS;
 	}
 
+	public ServicesExtension services() {
+		return SERVICES;
+	}
+
+	public NetworksExtension networks() {
+		return NETWORKS;
+	}
+
+	public TenantNetworksExtension tenantNetworks() {
+		return TENANT_NETWORKS;
+	}
 }
