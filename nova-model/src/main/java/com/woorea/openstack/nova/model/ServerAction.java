@@ -607,4 +607,69 @@ public interface ServerAction extends Serializable {
 		
 	}
 	
+	@JsonRootName("addSecurityGroup")
+	public static final class AddSecurityGroup implements ServerAction {
+	
+		private String name;
+
+		public AddSecurityGroup() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public AddSecurityGroup(String securityGroupName) {
+			super();
+			this.name = securityGroupName;
+		}
+
+	
+
+		/**
+		 * @return the security group name
+		 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * @param name the security group name to set
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+	}
+	
+	@JsonRootName("removeSecurityGroup")
+	public static final class RemoveSecurityGroup implements ServerAction {
+	
+		private String name;
+
+		public RemoveSecurityGroup() {
+			super();
+		}
+
+		public RemoveSecurityGroup(String securityGroupName) {
+			super();
+			this.name = securityGroupName;
+		}
+
+	
+
+		/**
+		 * @return the security group name
+		 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * @param name the security group name to set
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+	}
+	
 }
