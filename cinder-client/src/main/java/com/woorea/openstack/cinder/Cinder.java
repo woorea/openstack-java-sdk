@@ -13,7 +13,7 @@ public class Cinder extends OpenStackClient {
 
     private final LimitsExtension LIMITS;
 
-    private final SchedulerStatsExtension SCHEDULERSTATS;
+    private final SchedulerStatsExtension SCHEDULER_STATS;
 
     public Cinder(String endpoint, OpenStackClientConnector connector) {
         super(endpoint, connector);
@@ -21,7 +21,7 @@ public class Cinder extends OpenStackClient {
         SNAPSHOTS = new SnapshotsExtension(this);
         VOLUME_TYPES = new VolumeTypesExtension(this);
         LIMITS = new LimitsExtension(this);
-        SCHEDULERSTATS = new SchedulerStatsExtension(this);
+        SCHEDULER_STATS = new SchedulerStatsExtension(this);
     }
 
     public Cinder(String endpoint) {
@@ -45,6 +45,6 @@ public class Cinder extends OpenStackClient {
     }
 
     public final SchedulerStatsExtension schedulerStats() {
-        return SCHEDULERSTATS;
+        return SCHEDULER_STATS;
     }
 }

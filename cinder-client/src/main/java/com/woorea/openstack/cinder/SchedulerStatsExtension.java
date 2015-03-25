@@ -25,7 +25,7 @@ public class SchedulerStatsExtension {
     public class List extends OpenStackRequest<Pools> {
 
         public List(boolean detail) {
-            super(CLIENT, HttpMethod.GET, "/scheduler-stats/get_pools" + (detail ? "?detail=True" : ""), null, Pools.class);
+            super(CLIENT, HttpMethod.GET, (new StringBuilder("/scheduler-stats/get_pools")).append(detail ? "?detail=True":""), null, Pools.class);
         }
     }
 
