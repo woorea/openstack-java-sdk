@@ -8,8 +8,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
  * Model for Volume
- *
- * @author Ahmed Saba
  */
 @JsonRootName("capabilities")
 public class Capabilities implements Serializable {
@@ -42,100 +40,100 @@ public class Capabilities implements Serializable {
     private Map<String, String> extraSpecs;
 
     public String getPoolName() {
-		return poolName;
-	}
-	public void setPoolName(String poolName) {
-		this.poolName = poolName;
-	}
-	public boolean isQosSupport() {
-		return qosSupport;
-	}
-	public void setQosSupport(boolean qosSupport) {
-		this.qosSupport = qosSupport;
-	}
-	public Long getAllocatedCapacityGb() {
-		return allocatedCapacityGb;
-	}
-	public void setAllocatedCapacityGb(Long allocatedCapacityGb) {
-		this.allocatedCapacityGb = allocatedCapacityGb;
-	}
-	public String getDriverVersion() {
-		return driverVersion;
-	}
-	public void setDriverVersion(String driverVersion) {
-		this.driverVersion = driverVersion;
-	}
-	public Long getFreeCapacityGb() {
-		return freeCapacityGb;
-	}
-	public void setFreeCapacityGb(Long freeCapacityGb) {
-		this.freeCapacityGb = freeCapacityGb;
-	}
-	public String getLocationInfo() {
-		return locationInfo;
-	}
-	public void setLocationInfo(String locationInfo) {
-		this.locationInfo = locationInfo;
-	}
-	public String getTimestamp() {
-		return timestamp;
-	}
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
-	}
-	public String getVolumeBackendName() {
-		return volumeBackendName;
-	}
-	public void setVolumeBackendName(String volumeBackendName) {
-		this.volumeBackendName = volumeBackendName;
-	}
-	public Long getTotalCapacityGb() {
-		return totalCapacityGb;
-	}
-	public void setTotalCapacityGb(Long totalCapacityGb) {
-		this.totalCapacityGb = totalCapacityGb;
-	}
-	public Integer getReservedPercentage() {
-		return reservedPercentage;
-	}
-	public void setReservedPercentage(Integer reservedPercentage) {
-		this.reservedPercentage = reservedPercentage;
-	}
-	public String getVendorName() {
-		return vendorName;
-	}
-	public void setVendorName(String vendorName) {
-		this.vendorName = vendorName;
-	}
-	public String getStorageProtocol() {
-		return storageProtocol;
-	}
-	public void setStorageProtocol(String storageProtocol) {
-		this.storageProtocol = storageProtocol;
-	}
-	public Map<String, String> getExtraSpecs() {
-		return extraSpecs;
-	}
-	public void setExtraSpecs(Map<String, String> extraSpecs) {
-		this.extraSpecs = extraSpecs;
-	}
+        return poolName;
+    }
+    public void setPoolName(String poolName) {
+        this.poolName = poolName;
+    }
+    public boolean isQosSupport() {
+        return qosSupport;
+    }
+    public void setQosSupport(boolean qosSupport) {
+        this.qosSupport = qosSupport;
+    }
+    public Long getAllocatedCapacityGb() {
+        return allocatedCapacityGb;
+    }
+    public void setAllocatedCapacityGb(Long allocatedCapacityGb) {
+        this.allocatedCapacityGb = allocatedCapacityGb;
+    }
+    public String getDriverVersion() {
+        return driverVersion;
+    }
+    public void setDriverVersion(String driverVersion) {
+        this.driverVersion = driverVersion;
+    }
+    public Long getFreeCapacityGb() {
+        return freeCapacityGb;
+    }
+    public void setFreeCapacityGb(Long freeCapacityGb) {
+        this.freeCapacityGb = freeCapacityGb;
+    }
+    public String getLocationInfo() {
+        return locationInfo;
+    }
+    public void setLocationInfo(String locationInfo) {
+        this.locationInfo = locationInfo;
+    }
+    public String getTimestamp() {
+        return timestamp;
+    }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+    public String getVolumeBackendName() {
+        return volumeBackendName;
+    }
+    public void setVolumeBackendName(String volumeBackendName) {
+        this.volumeBackendName = volumeBackendName;
+    }
+    public Long getTotalCapacityGb() {
+        return totalCapacityGb;
+    }
+    public void setTotalCapacityGb(Long totalCapacityGb) {
+        this.totalCapacityGb = totalCapacityGb;
+    }
+    public Integer getReservedPercentage() {
+        return reservedPercentage;
+    }
+    public void setReservedPercentage(Integer reservedPercentage) {
+        this.reservedPercentage = reservedPercentage;
+    }
+    public String getVendorName() {
+        return vendorName;
+    }
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+    public String getStorageProtocol() {
+        return storageProtocol;
+    }
+    public void setStorageProtocol(String storageProtocol) {
+        this.storageProtocol = storageProtocol;
+    }
+    public Map<String, String> getExtraSpecs() {
+        return extraSpecs;
+    }
+    public void setExtraSpecs(Map<String, String> extraSpecs) {
+        this.extraSpecs = extraSpecs;
+    }
 
     @Override
     public String toString() {
         return "Capabilities{"
-                + "poolName='" + poolName + '\''
-                + ", qosSupport='" + qosSupport + '\''
-                + ", allocatedCapacityGb='" + allocatedCapacityGb + '\''
-                + ", driverVersion='" + driverVersion + '\''
-                + ", freeCapacityGb='" + freeCapacityGb + '\''
-                + ", locationInfo='" + locationInfo + '\''
-                + ", timestamp='" + timestamp + '\''
-                + ", volumeBackendName='" + volumeBackendName + '\''
-                + ", totalCapacityGb='" + totalCapacityGb + '\''
-                + ", reservedPercentage='" + reservedPercentage + '\''
-                + ", vendorName='" + vendorName + '\''
-                + ", storageProtocol='" + storageProtocol + '\''
-                + ", extraSpecs='" + extraSpecs + '\''
+                + "poolName='" + poolName
+                + ", qosSupport='" + qosSupport
+                + ", allocatedCapacityGb='" + allocatedCapacityGb
+                + ", driverVersion='" + driverVersion
+                + ", freeCapacityGb='" + freeCapacityGb
+                + ", locationInfo='" + locationInfo
+                + ", timestamp='" + timestamp
+                + ", volumeBackendName='" + volumeBackendName
+                + ", totalCapacityGb='" + totalCapacityGb
+                + ", reservedPercentage='" + reservedPercentage
+                + ", vendorName='" + vendorName
+                + ", storageProtocol='" + storageProtocol
+                + ", extraSpecs='" + extraSpecs
                 + '}';
     }
 }

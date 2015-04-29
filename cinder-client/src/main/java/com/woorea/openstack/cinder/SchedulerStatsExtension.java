@@ -7,8 +7,6 @@ import com.woorea.openstack.cinder.model.Pools;
 
 /**
  * Cinder Scheduler Stats Management
- *
- * @author Ahmed Saba
  */
 public class SchedulerStatsExtension {
 

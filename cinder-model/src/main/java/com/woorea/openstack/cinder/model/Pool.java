@@ -8,8 +8,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
  * Model for Pool
- *
- * @author Ahmed Saba
  */
 @JsonRootName("pool")
 public class Pool implements Serializable {
@@ -37,8 +35,8 @@ public class Pool implements Serializable {
     @Override
     public String toString() {
         return "Pool{"
-                + "name='" + name + '\''
-                + ", capabilities='" + capabilities + '\''
+                + "name='" + name
+                + ", capabilities='" + capabilities
                 + '}';
     }
 }
