@@ -7,8 +7,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Model for List of pools
- *
- * @author Ahmed Saba
  */
 public class Pools implements Iterable<Pool>, Serializable {
 
