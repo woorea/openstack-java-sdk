@@ -62,7 +62,6 @@ public class Nova extends OpenStackClient {
 		AGGREGATES = new AggregatesExtension(this);
 		QUOTA_SETS = new QuotaSetsResource(this);
 		HOSTS = new HostsExtension(this);
-		SERVER_GROUPS = new ServerGroupsExtension(this);
 		SERVICES = new ServicesResource(this);
 		HYPERVISORS = new HypervisorsResource(this);
 	}
