@@ -9,6 +9,10 @@ import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.nova.model.Hypervisor;
 import com.woorea.openstack.nova.model.Hypervisors;
 
+/**
+ * Model for HypervisorsResource
+ *
+ */
 
 public class HypervisorsResource {
 

@@ -9,6 +9,10 @@ import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.nova.model.Service;
 import com.woorea.openstack.nova.model.Services;
 
+/**
+ * Model for ServicesResource
+ *
+ */
 
 public class ServicesResource {
 
