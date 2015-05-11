@@ -17,7 +17,6 @@ import com.woorea.openstack.nova.api.extensions.SecurityGroupsExtension;
 import com.woorea.openstack.nova.api.extensions.SnapshotsExtension;
 import com.woorea.openstack.nova.api.extensions.VolumesExtension;
 import com.woorea.openstack.nova.api.extensions.HostsExtension;
-import com.woorea.openstack.nova.api.extensions.ServerGroupsExtension;
 
 public class Nova extends OpenStackClient {
 	
@@ -45,8 +44,6 @@ public class Nova extends OpenStackClient {
 	
 	private final HostsExtension HOSTS;
 
-	private final ServerGroupsExtension SERVER_GROUPS;
-	
 	private final ServicesResource SERVICES;
 	
 	private final HypervisorsResource HYPERVISORS;
@@ -122,10 +119,6 @@ public class Nova extends OpenStackClient {
 		return HOSTS;
 	}
 
-	public ServerGroupsExtension serverGroups() {
-		return SERVER_GROUPS;
-	}
-	
 	public ServicesResource services() {
 		return SERVICES;
 	}
