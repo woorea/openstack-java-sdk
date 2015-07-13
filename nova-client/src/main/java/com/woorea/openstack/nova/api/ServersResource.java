@@ -224,12 +224,12 @@ public class ServersResource {
 		return new RebuildAction(serverId, rebuild);
 	}
 
-	public class ResizeAction extends Action<Server> {
+	public class ResizeAction extends Action<Void> {
 
 		private Resize action;
 
 		public ResizeAction(String id, Resize action) {
-			super(id, Entity.json(action), Server.class);
+			super(id, Entity.json(action), Void.class);
 		}
 
 	}
@@ -241,10 +241,10 @@ public class ServersResource {
 	    return new ResizeAction(serverId, resize);
 	  }
 
-	public class ConfirmResizeAction extends Action<Server> {
+	public class ConfirmResizeAction extends Action<Void> {
 
 		public ConfirmResizeAction(String id) {
-			super(id, Entity.json(new ConfirmResize()), Server.class);
+			super(id, Entity.json(new ConfirmResize()), Void.class);
 		}
 
 	}
