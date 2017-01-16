@@ -14,6 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.jboss.resteasy.client.ClientExecutor;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.plugins.providers.InputStreamProvider;
@@ -79,9 +80,13 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		providerFactory = new OpenStackProviderFactory();
 	}
 
+	protected ClientExecutor createClientExecutor() {
+		return ClientRequest.getDefaultExecutor();
+	}
+
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
 		ClientRequest client = new ClientRequest(UriBuilder.fromUri(request.endpoint() + "/" + request.path()),
-				ClientRequest.getDefaultExecutor(), providerFactory);
+				createClientExecutor(), providerFactory);
 
 		for(Map.Entry<String, List<Object> > entry : request.queryParams().entrySet()) {
 			for (Object o : entry.getValue()) {
