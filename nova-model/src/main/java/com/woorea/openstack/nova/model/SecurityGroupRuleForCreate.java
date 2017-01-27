@@ -51,11 +51,11 @@ public class SecurityGroupRuleForCreate implements Serializable {
 	}
 	/**
 	 * 
-	 * @param parentSecurityGroupId
+	 * @param parentGroupId
 	 * @param ipProtocol
 	 * @param fromPort
 	 * @param toPort
-	 * @param cidr
+	 * @param sourceGroupId
 	 * @deprecated Ids in some installs have shown to use strings .Use {@link #SecurityGroupRuleForCreate(String, String, String, Integer, Integer)}
 	 */
 	@Deprecated

@@ -145,7 +145,7 @@ public class SecurityGroupsExtension {
 	 * @param ipProtocol
 	 * @param fromPort
 	 * @param toPort
-	 * @param cidr
+	 * @param sourceGroupId
 	 * @return
 	 * @deprecated Use {@link #createSecurityGroupRule(String, String, String, Integer, Integer)}
 	 */
