@@ -32,8 +32,14 @@ public class SecurityGroupRuleForCreate implements Serializable {
 		
 	}
 	
-	
-
+	/**
+	 * 
+	 * @param parentSecurityGroupId
+	 * @param ipProtocol
+	 * @param fromPort
+	 * @param toPort
+	 * @param cidr
+	 */
 	public SecurityGroupRuleForCreate(Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,Integer toPort, String cidr) {
 		this.parentGroupId = parentSecurityGroupId;
 		this.ipProtocol = ipProtocol;

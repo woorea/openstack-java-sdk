@@ -154,7 +154,7 @@ public class Image implements Serializable {
 	}
 
 	/**
-	 * @param size the virtual size to set
+	 * @param virtualSize the virtual size to set
 	 */
 	public void setVirtualSize(Long virtualSize) {
 		this.virtualSize = virtualSize;

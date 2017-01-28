@@ -99,6 +99,15 @@ public class SecurityGroupsExtension {
 		return new CreateRule(securityGroupRuleForCreate);
 	}
 
+	/**
+	 * 
+	 * @param parentSecurityGroupId
+	 * @param ipProtocol
+	 * @param fromPort
+	 * @param toPort
+	 * @param sourceGroupId
+	 * @return
+	 */
 	public CreateRule createSecurityGroupRule(
 			Integer parentSecurityGroupId, String ipProtocol, Integer fromPort,
 			Integer toPort, Integer sourceGroupId) {
