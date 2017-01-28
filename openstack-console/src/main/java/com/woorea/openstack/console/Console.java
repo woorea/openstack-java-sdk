@@ -87,7 +87,8 @@ public class Console {
 	}
 	
 	/**
-	 * @return the properties
+	 * @param name
+	 * @param value
 	 */
 	public void setProperty(String name, Object value) {
 		properties.put(name, value);
