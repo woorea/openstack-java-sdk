@@ -24,6 +24,10 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 	protected Client client = OpenStack.CLIENT;
     private LoggingFilter logger = new LoggingFilter(Logger.getLogger("os"), 10000);
 
+	public JaxRs20Connector() {
+		client.register(logger);
+	}
+
 	@Override
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
 		WebTarget target = client.target(request.endpoint()).path(request.path());
@@ -33,7 +37,7 @@ public class JaxRs20Connector implements OpenStackClientConnector {
 				target = target.queryParam(entry.getKey(), o);
 			}
 		}
-        target.register(logger);
+
 		Invocation.Builder invocation = target.request();
 
 		for(Map.Entry<String, List<Object>> h : request.headers().entrySet()) {
