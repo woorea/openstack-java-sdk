@@ -4,8 +4,8 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 import java.io.Serializable;
 
-@JsonRootName("os-initialize_connection")
-public class ConnectionForInitialize extends BaseConnection implements Serializable {
+@JsonRootName("os-terminate_connection")
+public class ConnectionForTerminate extends BaseConnection implements Serializable {
 
     /*
      * (non-Javadoc)

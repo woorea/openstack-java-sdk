@@ -5,6 +5,7 @@ import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.cinder.model.ConnectionForInitialize;
+import com.woorea.openstack.cinder.model.ConnectionForTerminate;
 import com.woorea.openstack.cinder.model.ConnectionInfo;
 import com.woorea.openstack.cinder.model.Metadata;
 import com.woorea.openstack.cinder.model.Volume;
@@ -58,6 +59,10 @@ public class VolumesExtension {
 
     public InitializeConnection initializeConnection(String id, ConnectionForInitialize connectionForInitialize) {
         return new InitializeConnection(id, connectionForInitialize);
+    }
+
+    public TerminateConnection terminateConnection(String id, ConnectionForTerminate connectionForTerminate) {
+        return new TerminateConnection(id, connectionForTerminate);
     }
 
     public class List extends OpenStackRequest<Volumes> {
@@ -142,6 +147,16 @@ public class VolumesExtension {
             super(CLIENT, HttpMethod.POST, new StringBuilder("/volumes/")
                     .append(id).append("/action").toString(),
                     Entity.json(connectionForInitialize), ConnectionInfo.class);
+        }
+
+    }
+
+    public class TerminateConnection extends OpenStackRequest<Void> {
+
+        public TerminateConnection(String id, ConnectionForTerminate connectionForTerminate) {
+            super(CLIENT, HttpMethod.POST, new StringBuilder("/volumes/")
+                            .append(id).append("/action").toString(),
+                    Entity.json(connectionForTerminate), Void.class);
         }
 
     }
