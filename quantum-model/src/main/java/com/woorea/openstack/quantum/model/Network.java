@@ -41,6 +41,8 @@ public class Network implements Serializable {
 
     private String shared;
 
+    private Integer mtu;
+
     /**
      * @return the status
      */
@@ -259,6 +261,21 @@ public class Network implements Serializable {
         this.providerSegmentationId = providerSegmentationId;
     }
 
+    /**
+     * @return the MTU
+     */
+    public Integer getMtu() {
+        return mtu;
+    }
+
+    /**
+     * @param mtu
+     *            the MTU to set
+     */
+    public void setMtu(Integer mtu) {
+        this.mtu = mtu;
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -268,8 +285,8 @@ public class Network implements Serializable {
     public String toString() {
         return "Network [id=" + id + ", name=" + name + ", subnets="
                 + subnets + ", status=" + status + ", admin_state_up=" + adminStateUp + ", tenant_id=" +
-                tenantId + ", shared=" + shared + ", provider:physical_network=" + providerPhysicalNetwork +
-                ", provider:network_type=" + providerNetworkType + ", router:external=" + routerExternal +
-                ", provider:segmentation_id=" + providerSegmentationId + "]";
+                tenantId + ", shared=" + shared + ", mtu=" + mtu + ", provider:physical_network=" +
+                providerPhysicalNetwork + ", provider:network_type=" + providerNetworkType + ", router:external=" +
+                routerExternal + ", provider:segmentation_id=" + providerSegmentationId + "]";
     }
 }
