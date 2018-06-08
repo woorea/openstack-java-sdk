@@ -536,6 +536,33 @@ public class ServersResource {
 	public ShowVolumeAttachment showVolumeAttachment(String serverId, String volumeAttachmentId) {
 		return new ShowVolumeAttachment(serverId, volumeAttachmentId);
 	}
+	
+	public class AddSecurityGroup extends OpenStackRequest<Void> {
+
+		public AddSecurityGroup(String id, com.woorea.openstack.nova.model.ServerAction.AddSecurityGroup action) {
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(action), Void.class);
+		}
+
+	}
+
+	public class RemoveSecurityGroup extends OpenStackRequest<Void> {
+
+		public RemoveSecurityGroup(String id, com.woorea.openstack.nova.model.ServerAction.RemoveSecurityGroup action) {
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(id).append("/action"), Entity.json(action), Void.class);
+		}
+
+	}
+	
+	public AddSecurityGroup addSecurityGroup(String serverId, String securityGroupName) {
+		com.woorea.openstack.nova.model.ServerAction.AddSecurityGroup securityGroupAddAction = new com.woorea.openstack.nova.model.ServerAction.AddSecurityGroup(securityGroupName);
+		return new AddSecurityGroup(serverId, securityGroupAddAction);
+	}
+
+	public RemoveSecurityGroup removeSecurityGroup(String serverId, String securityGroupName) {
+		com.woorea.openstack.nova.model.ServerAction.RemoveSecurityGroup securityGroupRemoveAction = new com.woorea.openstack.nova.model.ServerAction.RemoveSecurityGroup(securityGroupName);
+		return new RemoveSecurityGroup(serverId, securityGroupRemoveAction);
+	}
+
 
 }
 
