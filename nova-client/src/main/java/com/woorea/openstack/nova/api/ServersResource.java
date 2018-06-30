@@ -7,6 +7,9 @@ import com.woorea.openstack.base.client.Entity;
 import com.woorea.openstack.base.client.HttpMethod;
 import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
+import com.woorea.openstack.nova.model.InterfaceAttachment;
+import com.woorea.openstack.nova.model.InterfaceAttachmentForCreate;
+import com.woorea.openstack.nova.model.InterfaceAttachments;
 import com.woorea.openstack.nova.model.Metadata;
 import com.woorea.openstack.nova.model.Server;
 import com.woorea.openstack.nova.model.Server.Addresses;
@@ -537,5 +540,41 @@ public class ServersResource {
 		return new ShowVolumeAttachment(serverId, volumeAttachmentId);
 	}
 
+	public class ListInterfaceAttachments extends OpenStackRequest<InterfaceAttachments> {
+
+		public ListInterfaceAttachments(String serverId) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/").append(serverId).append("/os-interface"), null, InterfaceAttachments.class);
+		}
+
+	}
+
+	public class ShowInterfaceAttachment extends OpenStackRequest<InterfaceAttachment> {
+
+		public ShowInterfaceAttachment(String serverId, String interfaceAttachmentId) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/servers/").append(serverId).append("/os-interface/").append(interfaceAttachmentId), null, InterfaceAttachment.class);
+		}
+
+	}
+
+	public class CreateInterfaceAttachment extends OpenStackRequest<InterfaceAttachment> {
+
+		public CreateInterfaceAttachment(String serverId, InterfaceAttachmentForCreate action) {
+			super(CLIENT, HttpMethod.POST, new StringBuilder("/servers/").append(serverId).append("/os-interface"), Entity.json(action), InterfaceAttachment.class);
+		}
+
+	}
+
+	public ListInterfaceAttachments listInterfaceAttachments(String serverId) {
+		return new ListInterfaceAttachments(serverId);
+	}
+
+	public ShowInterfaceAttachment showInterfaceAttachment(String serverId, String interfaceAttachmentId) {
+		return new ShowInterfaceAttachment(serverId, interfaceAttachmentId);
+	}
+
+	public CreateInterfaceAttachment createInterfaceAttachment(String serverId, InterfaceAttachmentForCreate interfaceAttachmentForCreate) {
+		return new CreateInterfaceAttachment(serverId, interfaceAttachmentForCreate);
+	}
+	
 }
 

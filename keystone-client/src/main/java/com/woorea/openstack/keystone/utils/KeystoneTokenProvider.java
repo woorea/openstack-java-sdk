@@ -17,7 +17,8 @@ public class KeystoneTokenProvider {
 
 	ConcurrentHashMap<String, Access> hashTenantAccess;
 
-	public KeystoneTokenProvider(String endpoint, String username, String password) {
+	public KeystoneTokenProvider(String endpoint, String username,
+			String password) {
 		this.keystone = new Keystone(endpoint);
 		this.username = username;
 		this.password = password;
@@ -27,10 +28,21 @@ public class KeystoneTokenProvider {
 	public Access getAccessByTenant(String tenantName) {
 		Access access = hashTenantAccess.get(tenantName);
 		if (access == null) {
-			access = keystone.tokens().authenticate(new UsernamePassword(username, password))
-				.withTenantName(tenantName)
-				.execute();
+			access = keystone.tokens()
+					.authenticate(new UsernamePassword(username, password))
+					.withTenantName(tenantName).execute();
 			hashTenantAccess.put(tenantName, access);
+		}
+		return access;
+	}
+
+	public Access getAccessByTenantId(String tenantId) {
+		Access access = hashTenantAccess.get(tenantId);
+		if (access == null) {
+			access = keystone.tokens()
+					.authenticate(new UsernamePassword(username, password))
+					.withTenantId(tenantId).execute();
+			hashTenantAccess.put(tenantId, access);
 		}
 		return access;
 	}
@@ -47,9 +59,26 @@ public class KeystoneTokenProvider {
 				return keystoneTokenProvider.getAccessByTenant(tenantName)
 						.getToken().getId();
 			}
+
 			@Override
 			public void expireToken() {
 				keystoneTokenProvider.expireAccessByTenant(tenantName);
+			}
+		};
+	}
+
+	public OpenStackTokenProvider getProviderByTenantId(final String tenantId) {
+		final KeystoneTokenProvider keystoneTokenProvider = this;
+		return new OpenStackTokenProvider() {
+			@Override
+			public String getToken() {
+				return keystoneTokenProvider.getAccessByTenantId(tenantId)
+						.getToken().getId();
+			}
+
+			@Override
+			public void expireToken() {
+				keystoneTokenProvider.expireAccessByTenant(tenantId);
 			}
 		};
 	}
