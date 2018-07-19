@@ -39,7 +39,7 @@ public class SubnetsResource {
 	public class List extends OpenStackRequest<Subnets> {
 
 		public List() {
-		    super(CLIENT, HttpMethod.GET, "subnets", null, Subnets.class);
+		    super(CLIENT, HttpMethod.GET, buildPath("subnets"), null, Subnets.class);
 		}
 	}
 
@@ -57,28 +57,28 @@ public class SubnetsResource {
 	public class Create extends OpenStackRequest<Subnet> {
 
         public Create(Subnet subnet) {
-		    super(CLIENT, HttpMethod.POST, "subnets", Entity.json(subnet), Subnet.class);
+		    super(CLIENT, HttpMethod.POST, buildPath("subnets"), Entity.json(subnet), Subnet.class);
 		}
 	}
 
     public class Update extends OpenStackRequest<Subnet> {
 
         public Update(Subnet subnet) {
-            super(CLIENT, HttpMethod.PUT, buildPath("subnets/", subnet.getId()), Entity.json(subnet), Subnet.class);
+            super(CLIENT, HttpMethod.PUT, buildPath("subnets", subnet.getId()), Entity.json(subnet), Subnet.class);
         }
     }
 
 	public class Show extends OpenStackRequest<Subnet> {
 
 		public Show(String id) {
-            super(CLIENT, HttpMethod.GET, buildPath("subnets/", id), null, Subnet.class);
+            super(CLIENT, HttpMethod.GET, buildPath("subnets", id), null, Subnet.class);
 		}
 	}
 
 	public class Delete extends OpenStackRequest<Void> {
 
 		public Delete(String id){
-            super(CLIENT, HttpMethod.DELETE, buildPath("subnets/", id), null, Void.class);
+            super(CLIENT, HttpMethod.DELETE, buildPath("subnets", id), null, Void.class);
 		}
 	}
 }
