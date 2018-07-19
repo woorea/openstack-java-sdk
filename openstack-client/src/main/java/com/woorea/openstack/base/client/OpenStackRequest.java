@@ -133,7 +133,9 @@ public class OpenStackRequest<R> {
 	
 	protected static String buildPath(String ... elements) {
 	    StringBuilder stringBuilder = new StringBuilder();
+	    final String PATH_SEPARATOR = "/";
 	    for (String element : elements) {
+            stringBuilder.append(PATH_SEPARATOR);
             stringBuilder.append(element);
         }
 

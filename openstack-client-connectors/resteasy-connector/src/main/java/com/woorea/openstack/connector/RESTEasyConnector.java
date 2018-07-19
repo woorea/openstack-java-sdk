@@ -85,7 +85,7 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 	}
 
 	public <T> OpenStackResponse request(OpenStackRequest<T> request) {
-		ClientRequest client = new ClientRequest(UriBuilder.fromUri(request.endpoint() + "/" + request.path()),
+		ClientRequest client = new ClientRequest(UriBuilder.fromUri(request.endpoint() + request.path()),
 				createClientExecutor(), providerFactory);
 
 		for(Map.Entry<String, List<Object> > entry : request.queryParams().entrySet()) {

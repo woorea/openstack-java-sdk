@@ -39,7 +39,7 @@ public class PortsResource {
 	public class List extends OpenStackRequest<Ports> {
 
 		public List() {
-		    super(CLIENT, HttpMethod.GET, "ports", null, Ports.class);
+		    super(CLIENT, HttpMethod.GET, buildPath("ports"), null, Ports.class);
 		}
 	}
 
@@ -58,28 +58,28 @@ public class PortsResource {
 	public class Create extends OpenStackRequest<Port> {
 
 		public Create(Port port){
-		    super(CLIENT, HttpMethod.POST, "ports", Entity.json(port), Port.class);
+		    super(CLIENT, HttpMethod.POST, buildPath("ports"), Entity.json(port), Port.class);
 		}
 	}
 
 	public class Update extends OpenStackRequest<Port> {
 
 	    public Update(Port port){
-	        super(CLIENT, HttpMethod.PUT, buildPath("ports/", port.getId()), Entity.json(port), Port.class);
+	        super(CLIENT, HttpMethod.PUT, buildPath("ports", port.getId()), Entity.json(port), Port.class);
 	    }
 	}
 
 	public class Show extends OpenStackRequest<Port> {
 
 		public Show(String id) {
-		    super(CLIENT, HttpMethod.GET, buildPath("ports/", id), null, Port.class);
+		    super(CLIENT, HttpMethod.GET, buildPath("ports", id), null, Port.class);
 		}
 	}
 
 	public class Delete extends OpenStackRequest<Void> {
 
 		public Delete(String id){
-            super(CLIENT, HttpMethod.DELETE, buildPath("ports/", id), null, Void.class);
+            super(CLIENT, HttpMethod.DELETE, buildPath("ports", id), null, Void.class);
 		}
 	}
 }

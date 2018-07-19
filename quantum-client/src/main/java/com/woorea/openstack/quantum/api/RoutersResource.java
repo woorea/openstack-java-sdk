@@ -37,7 +37,7 @@ public class RoutersResource {
 		public class List extends OpenStackRequest<Routers> {
 
 			public List() {
-			    super(CLIENT, HttpMethod.GET, "routers", null, Routers.class);
+			    super(CLIENT, HttpMethod.GET, buildPath("routers"), null, Routers.class);
 			}
 		}
 
@@ -53,7 +53,7 @@ public class RoutersResource {
 		public class Create extends OpenStackRequest<Router> {
 
 			public Create(RouterForCreate router){
-			    super(CLIENT, HttpMethod.POST, "routers", Entity.json(router), Router.class);
+			    super(CLIENT, HttpMethod.POST, buildPath("routers"), Entity.json(router), Router.class);
 			}
 		}
 
@@ -62,14 +62,14 @@ public class RoutersResource {
 		public class Show extends OpenStackRequest<Router> {
 
 			public Show(String id) {
-			    super(CLIENT, HttpMethod.GET, buildPath("routers/", id), null, Router.class);
+			    super(CLIENT, HttpMethod.GET, buildPath("routers", id), null, Router.class);
 			}
 		}
 
 		public class Delete extends OpenStackRequest<Void> {
 
 			public Delete(String id){
-			    super(CLIENT, HttpMethod.DELETE, buildPath("routers/", id), null, Void.class);
+			    super(CLIENT, HttpMethod.DELETE, buildPath("routers", id), null, Void.class);
 			}
 		}
 		public Attach addInterface(RouterForAddInterface interfaceToAdd){
@@ -78,7 +78,7 @@ public class RoutersResource {
 		public class Attach extends OpenStackRequest<RouterInterface> {
 
 			public Attach(RouterForAddInterface interfaceToAdd){
-			    super(CLIENT, HttpMethod.PUT, buildPath("routers/",interfaceToAdd.getRouterId(),"/add_router_interface"), Entity.json(interfaceToAdd),RouterInterface.class);
+			    super(CLIENT, HttpMethod.PUT, buildPath("routers",interfaceToAdd.getRouterId(),"add_router_interface"), Entity.json(interfaceToAdd),RouterInterface.class);
 			}	
 			
 		}
@@ -89,8 +89,8 @@ public class RoutersResource {
 		public class Detach extends OpenStackRequest<RouterInterface> {
 
 		public Detach(RouterForAddInterface interfaceToAdd) {
-			super(CLIENT, HttpMethod.PUT, buildPath("routers/",
-					interfaceToAdd.getRouterId(), "/remove_router_interface"),
+			super(CLIENT, HttpMethod.PUT, buildPath("routers",
+					interfaceToAdd.getRouterId(), "remove_router_interface"),
 					Entity.json(interfaceToAdd), RouterInterface.class);
 		}
 
