@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-client-connectors</artifactId>
-		<version>3.2.3-SNAPSHOT</version>
+		<version>3.2.3</version>
 	</parent>
 	<artifactId>jersey2-connector</artifactId>
 	<name>OpenStack Jersey2 Connector</name>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.2.3-SNAPSHOT</version>
+			<version>3.2.3</version>
 		</dependency>
 	</dependencies>
 </project>
