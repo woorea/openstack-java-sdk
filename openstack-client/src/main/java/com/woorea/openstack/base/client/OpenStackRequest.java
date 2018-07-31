@@ -8,11 +8,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class OpenStackRequest<R> {
-	
+
 	private OpenStackClient client;
 	
 	public OpenStackRequest() {
 		
+	}
+
+	public OpenStackRequest(OpenStackClient client, HttpMethod method, String path, Entity<?> entity, Class<R> returnType) {
+		this(client, method, (CharSequence)path, entity, returnType);
 	}
 	
 	public OpenStackRequest(OpenStackClient client, HttpMethod method, CharSequence path, Entity<?> entity, Class<R> returnType) {
