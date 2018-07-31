@@ -1,3 +1,6 @@
+# 3.2.4 / 2018
+* Improved backward compatibility to 3.1.3
+
 # 3.2.3 / 2018-06-24
 * No user visible changes
 
