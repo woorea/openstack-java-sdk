@@ -3,11 +3,11 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-java-sdk</artifactId>
-    <version>3.2.4-SNAPSHOT</version>
+    <version>3.2.4</version>
   </parent>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <openstack-sdk.version>3.2.4-SNAPSHOT</openstack-sdk.version>
+    <openstack-sdk.version>3.2.4</openstack-sdk.version>
   </properties>
   <artifactId>openstack-examples</artifactId>
   <name>OpenStack Examples</name>
