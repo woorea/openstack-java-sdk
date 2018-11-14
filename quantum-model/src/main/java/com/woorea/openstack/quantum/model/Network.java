@@ -43,6 +43,9 @@ public class Network implements Serializable {
 
     private Integer mtu;
 
+    @JsonProperty("port_security_enabled")
+    private Boolean portSecurityEnabled;
+
     /**
      * @return the status
      */
@@ -276,6 +279,26 @@ public class Network implements Serializable {
         this.mtu = mtu;
     }
 
+    /**
+     * @return the portSecurityEnabled
+     */
+    @JsonIgnore
+    public boolean isPortSecurityEnabled() {
+        return portSecurityEnabled;
+    }
+
+    public Boolean getPortSecurityEnabled() {
+        return portSecurityEnabled;
+    }
+
+    /**
+     *
+     * @param portSecurityEnabled enable / disable the default portSecurityEnabled for all future ports in this network
+     */
+    public void setPortSecurityEnabled(Boolean portSecurityEnabled) {
+        this.portSecurityEnabled = portSecurityEnabled;
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -287,6 +310,7 @@ public class Network implements Serializable {
                 + subnets + ", status=" + status + ", admin_state_up=" + adminStateUp + ", tenant_id=" +
                 tenantId + ", shared=" + shared + ", mtu=" + mtu + ", provider:physical_network=" +
                 providerPhysicalNetwork + ", provider:network_type=" + providerNetworkType + ", router:external=" +
-                routerExternal + ", provider:segmentation_id=" + providerSegmentationId + "]";
+                routerExternal + ", provider:segmentation_id=" + providerSegmentationId +
+                ", port_security_enabled=" + portSecurityEnabled + "]";
     }
 }
