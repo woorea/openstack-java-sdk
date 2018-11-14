@@ -37,6 +37,8 @@ public class NetworkTest {
 
     private static final String ROUTER_EXTERNAL = "routerExternal";
 
+    private static final Boolean PORT_SECURITY_ENABLED = Boolean.FALSE;
+
     /**
      * JSON with read only attributes.
      */
@@ -70,6 +72,7 @@ public class NetworkTest {
         network.setName(NAME);
         network.setShared(SHARED);
         network.setTenantId(TENANT_ID);
+        network.setPortSecurityEnabled(PORT_SECURITY_ENABLED);
 
         serializedNetwork = objectMapper.writeValueAsString(network);
         assertThat(serializedNetwork, not(containsString(ID)));
@@ -83,6 +86,7 @@ public class NetworkTest {
         assertThat(serializedNetwork, containsString(PROVIDER_NETWORK_TYPE));
         assertThat(serializedNetwork, containsString(PROVIDER_PHYSICAL_NETWORK));
         assertThat(serializedNetwork, containsString(Integer.toString(PROVIDER_SEGMENTATION_ID)));
+        assertThat(serializedNetwork, containsString("\"port_security_enabled\" : " + PORT_SECURITY_ENABLED));
     }
 
     @Test
@@ -115,5 +119,6 @@ public class NetworkTest {
         assertThat(network.getProviderNetworkType(), is(equalTo(PROVIDER_NETWORK_TYPE)));
         assertThat(network.getProviderPhysicalNetwork(), is(equalTo(PROVIDER_PHYSICAL_NETWORK)));
         assertThat(network.getProviderSegmentationId(), is(equalTo(PROVIDER_SEGMENTATION_ID)));
+        assertThat(network.getPortSecurityEnabled(), is(equalTo(PORT_SECURITY_ENABLED)));
     }
 }
