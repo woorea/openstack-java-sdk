@@ -7,7 +7,7 @@
   </parent>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <openstack-sdk.version>3.2.5</openstack-sdk.version>
+    <openstack-sdk.version>3.2.6-SNAPSHOT</openstack-sdk.version>
   </properties>
   <artifactId>openstack-examples</artifactId>
   <name>OpenStack Examples</name>
