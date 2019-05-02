@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
@@ -31,32 +34,15 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 
 	public static ObjectMapper WRAPPED_MAPPER;
 
-	static class OpenStackProviderFactory extends ResteasyProviderFactory {
-
-		private JacksonJsonProvider jsonProvider;
-		private InputStreamProvider streamProvider;
-
-		public OpenStackProviderFactory() {
-			super();
-
-			addContextResolver(new ContextResolver<ObjectMapper>() {
-				public ObjectMapper getContext(Class<?> type) {
-					return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
-				}
-			});
-
-			jsonProvider = new JacksonJsonProvider();
-			addMessageBodyReader(jsonProvider);
-			addMessageBodyWriter(jsonProvider);
-
-			streamProvider = new InputStreamProvider();
-			addMessageBodyReader(streamProvider);
-			addMessageBodyWriter(streamProvider);
+	@Provider
+	@Produces(MediaType.APPLICATION_JSON)
+	static class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+		public ObjectMapper getContext(Class<?> type) {
+			return type.getAnnotation(JsonRootName.class) == null ? DEFAULT_MAPPER : WRAPPED_MAPPER;
 		}
-
 	}
 
-	private static OpenStackProviderFactory providerFactory;
+	private static ResteasyProviderFactory providerFactory;
 
 	static {
 		DEFAULT_MAPPER = new ObjectMapper();
@@ -77,7 +63,10 @@ public class RESTEasyConnector implements OpenStackClientConnector {
 		WRAPPED_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
 		WRAPPED_MAPPER.enable(DeserializationConfig.Feature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 
-		providerFactory = new OpenStackProviderFactory();
+		providerFactory = new ResteasyProviderFactory();
+		providerFactory.registerProviderInstance(new JacksonJsonProvider());
+		providerFactory.registerProviderInstance(new ObjectMapperContextResolver());
+		providerFactory.registerProviderInstance(new InputStreamProvider());
 	}
 
 	protected ClientExecutor createClientExecutor() {
