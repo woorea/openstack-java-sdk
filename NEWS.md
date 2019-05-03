@@ -1,3 +1,9 @@
+# 3.2.7 / 2019-05-03
+* Remove maven-gpg-plugin
+
+# 3.2.6 / 2019-05-03
+* RESTEasyConnector: Support RESTEasy 3.6.3.Final
+
 # 3.2.5 / 2018-11-14
 * neutron: Add support for `port_security_enabled` on Networks
 
