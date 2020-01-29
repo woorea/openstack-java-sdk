@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("security_group_rule")
 public class SecurityGroupRuleForCreate implements Serializable {

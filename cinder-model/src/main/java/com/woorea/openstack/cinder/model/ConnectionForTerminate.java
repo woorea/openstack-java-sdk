@@ -1,6 +1,6 @@
 package com.woorea.openstack.cinder.model;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import java.io.Serializable;
 

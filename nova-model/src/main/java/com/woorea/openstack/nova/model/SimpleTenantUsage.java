@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("tenant_usage")
 public class SimpleTenantUsage implements Serializable {

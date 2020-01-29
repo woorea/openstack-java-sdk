@@ -2,7 +2,7 @@ package com.woorea.openstack.keystone.model;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("error")
 public class Error implements Serializable {

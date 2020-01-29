@@ -3,8 +3,7 @@ package com.woorea.openstack.swift.model;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Object implements Serializable {
 	
