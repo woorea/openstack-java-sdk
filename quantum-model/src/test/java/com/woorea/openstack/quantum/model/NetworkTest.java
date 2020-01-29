@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 

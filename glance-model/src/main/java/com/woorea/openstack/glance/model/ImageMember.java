@@ -2,7 +2,7 @@ package com.woorea.openstack.glance.model;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ImageMember implements Serializable {
 

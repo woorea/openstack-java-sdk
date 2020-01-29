@@ -2,7 +2,7 @@ package com.woorea.openstack.nova.model;
 
 import java.util.Iterator;
 import java.util.List;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Model for List of Services

@@ -3,8 +3,8 @@ package com.woorea.openstack.cinder.model;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("snapshot")
 public class Snapshot implements Serializable {

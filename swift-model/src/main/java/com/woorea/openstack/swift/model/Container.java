@@ -2,7 +2,7 @@ package com.woorea.openstack.swift.model;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Container implements Serializable {
 	

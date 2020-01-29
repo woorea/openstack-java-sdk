@@ -3,7 +3,7 @@ package com.woorea.openstack.nova.model;
 import java.io.Serializable;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Host implements Serializable {
 	
