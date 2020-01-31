@@ -1,5 +1,6 @@
 # 3.2.8 / 2020-01-29
 * jackson upgraded to com.fasterxml version 2.9.x
+* commons-httpclient upgraded to org.apache.httpcomponents 4.5
 
 # 3.2.7 / 2019-05-03
 * Remove maven-gpg-plugin
