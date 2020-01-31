@@ -11,7 +11,7 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.apache.commons.httpclient.HttpStatus;
+import org.apache.http.HttpStatus;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
