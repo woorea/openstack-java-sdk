@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.woorea</groupId>
     <artifactId>openstack-java-sdk</artifactId>
-    <version>3.2.8-SNAPSHOT</version>
+    <version>3.2.8</version>
   </parent>
   <artifactId>heat-client</artifactId>
   <name>OpenStack Heat Client</name>
@@ -12,13 +12,13 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.2.8-SNAPSHOT</version>
+			<version>3.2.8</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>heat-model</artifactId>
-			<version>3.2.8-SNAPSHOT</version>
+			<version>3.2.8</version>
 		</dependency>
   </dependencies>
 </project>
