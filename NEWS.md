@@ -1,3 +1,6 @@
+# 3.2.9 / 2020-04-07
+* glance: Add Support for Image Service API v2
+
 # 3.2.8 / 2020-01-29
 * jackson upgraded to com.fasterxml version 2.9.x
 * commons-httpclient upgraded to org.apache.httpcomponents 4.5
