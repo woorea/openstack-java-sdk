@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.woorea</groupId>
 		<artifactId>openstack-java-sdk</artifactId>
-		<version>3.2.9-SNAPSHOT</version>
+		<version>3.2.9</version>
 	</parent>
 	<artifactId>openstack-client-connectors</artifactId>
 	<name>OpenStack Client Connectors</name>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>com.woorea</groupId>
 			<artifactId>openstack-client</artifactId>
-			<version>3.2.9-SNAPSHOT</version>
+			<version>3.2.9</version>
 		</dependency>
 	</dependencies>
 </project>
