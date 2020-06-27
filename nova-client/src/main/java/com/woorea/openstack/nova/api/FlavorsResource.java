@@ -7,7 +7,7 @@ import com.woorea.openstack.base.client.OpenStackClient;
 import com.woorea.openstack.base.client.OpenStackRequest;
 import com.woorea.openstack.nova.model.Flavor;
 import com.woorea.openstack.nova.model.Flavors;
-import com.woorea.openstack.nova.model.Metadata;
+import com.woorea.openstack.nova.model.ExtraSpecs;
 
 public class FlavorsResource {
 	
@@ -29,8 +29,8 @@ public class FlavorsResource {
 		return new Show(id);
 	}
 	
-	public ShowMetadata showMetadata(String id) {
-		return new ShowMetadata(id);
+	public ShowExtraSpecs showExtraSpecs(String id) {
+		return new ShowExtraSpecs(id);
 	}
 
 	
@@ -65,10 +65,10 @@ public class FlavorsResource {
 
 	}
 	
-	public class ShowMetadata extends OpenStackRequest<Metadata> {
+	public class ShowExtraSpecs extends OpenStackRequest<ExtraSpecs> {
 		
-		public ShowMetadata(String id) {
-			super(CLIENT, HttpMethod.GET, new StringBuilder("/flavors/").append(id).append("/metadata").toString(), null, Metadata.class);
+		public ShowExtraSpecs(String id) {
+			super(CLIENT, HttpMethod.GET, new StringBuilder("/flavors/").append(id).append("/os-extra_specs").toString(), null, ExtraSpecs.class);
 		}
 
 	}
